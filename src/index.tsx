@@ -2,7 +2,6 @@ import * as React from 'react';
 import {checkIsMobile, getMediaSetting, getTranslateParams, generateMedia, initDataList} from './library/ImreactCarousel/utils';
 import * as CSS from 'csstype';
 import {IData, IBreakpoints, TToNext, TToPrev, IInfo, ITouchStart, TSlidesPerView, IBreakpointSettingActual} from './library/ImreactCarousel/types';
-// import styled, {css} from 'styled-components';
 import {elClassName} from './library/ImreactCarousel/config';
 
 import copyIcon from 'copy-icon.png';

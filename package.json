@@ -1,7 +1,7 @@
 {
   "name": "imreact-carousel",
   "version": "1.0.0",
-  "description": "Made with create-react-library",
+  "description": "Most modern mobile touch slider with hardware accelerated transitions by react",
   "author": "imagine10255",
   "license": "MIT",
   "repository": "imagine10255/imreact-carousel",
@@ -23,13 +23,11 @@
     "test:watch": "react-scripts test --env=jsdom",
     "storybook": "cd example && yarn install && yarn run storybook",
     "predeploy": "cd example && yarn install && yarn run build-storybook",
-    "deploy": "gh-pages -d example/storybook-static"
+    "deploy-gh": "gh-pages -d example/storybook-static",
+    "npm:publish": "npm publish"
   },
   "peerDependencies": {
     "react": "^16.0.0"
-  },
-  "dependencies": {
-    "styled-components": "5.3.1"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^4.2.4",
@@ -41,7 +39,6 @@
     "@types/react-dom": "^16.9.7",
     "@typescript-eslint/eslint-plugin": "^2.26.0",
     "@typescript-eslint/parser": "^2.26.0",
-    "@types/styled-components": "5.1.15",
     "microbundle-crl": "^0.13.10",
     "babel-eslint": "^10.0.3",
     "cross-env": "^7.0.2",
