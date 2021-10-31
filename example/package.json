@@ -1,5 +1,5 @@
 {
-  "name": "im-carousel-example",
+  "name": "imreact-carousel-example",
   "homepage": ".",
   "version": "0.0.0",
   "private": true,
@@ -21,7 +21,7 @@
     "react-dom": "link:../node_modules/react-dom",
     "react-scripts": "link:../node_modules/react-scripts",
     "typescript": "link:../node_modules/typescript",
-    "im-carousel": "link:..",
+    "imreact-carousel": "link:..",
     "styled-components": "5.3.1"
   },
   "devDependencies": {

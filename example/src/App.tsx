@@ -1,7 +1,7 @@
 import React from 'react'
 
-import ImCarousel from 'im-carousel'
-import 'im-carousel/dist/index.css'
+import ImReactCarousel from 'imreact-carousel'
+import 'imreact-carousel/dist/index.css'
 
 
 
@@ -33,7 +33,7 @@ const useBgData = bgList.map(row => {
 
 
 const App = () => {
-  return <ImCarousel
+  return <ImReactCarousel
     isDebug={true}
     isEnablePagination={true}
     data={useBgData}

@@ -1,5 +1,5 @@
 
-.im-carousel__pagination-group{
+.imreact-carousel__pagination-group{
     position: absolute;
     bottom: 10px;
     text-align: center;
@@ -7,7 +7,7 @@
     z-index: 10;
 }
 
-.im-carousel__pagination-button{
+.imreact-carousel__pagination-button{
     width: 10px;
     height: 10px;
     border-radius: 7px;
@@ -20,15 +20,15 @@
     opacity: 0.6;
 }
 
-.im-carousel__pagination-button[data-active]{
+.imreact-carousel__pagination-button[data-active]{
     background-color: #00a3e0;
 }
 
 
-.im-carousel__pagination-content{}
+.imreact-carousel__pagination-content{}
 
 
-.im-carousel__test-number{
+.imreact-carousel__test-number{
     position: absolute;
     top: 0;
     bottom: 0;
@@ -45,7 +45,7 @@
 
 
 
-.im-carousel__clone-icon-group{
+.imreact-carousel__clone-icon-group{
     position: absolute;
     top: 10px;
     left: 10px;
@@ -56,14 +56,14 @@
     color: #fff;
 }
 
-.im-carousel__clone-icon{
+.imreact-carousel__clone-icon{
     width: 20px;
     height: 20px;
     background: transparent url('/images/copy-icon.png') no-repeat center center;
     background-size: 100%;
 }
 
-.im-carousel__nav-button{
+.imreact-carousel__nav-button{
     border: none;
     outline: none;
     color: #fff;
@@ -80,10 +80,10 @@
     margin: auto 0;
 }
 
-.im-carousel__nav-button > .im-carousel__nav-prev-button{
+.imreact-carousel__nav-button > .imreact-carousel__nav-prev-button{
     left: 0;
 }
-.im-carousel__nav-button > .im-carousel__nav-next-button{
+.imreact-carousel__nav-button > .imreact-carousel__nav-next-button{
     right: 0;
 }
 
@@ -91,7 +91,7 @@
 
 
 
-.im-carousel__slide-item{
+.imreact-carousel__slide-item{
     transition-property: transform;
     position: relative;
 }
@@ -100,7 +100,7 @@
 
 
 
-.im-carousel__container{
+.imreact-carousel__container{
     position: relative;
     display: flex;
 
@@ -110,7 +110,7 @@
 }
 
 
-.im-carousel__container[draggable="true"] {
+.imreact-carousel__container[draggable="true"] {
     /*
        To prevent user selecting inside the drag source
       */
@@ -121,12 +121,12 @@
 }
 
 
-.im-carousel__container .slide-item{
+.imreact-carousel__container .slide-item{
 
 }
 
 
-.im-carousel__content{
+.imreact-carousel__content{
     overflow-x: hidden;
     flex: 1;
     display: flex;
@@ -135,7 +135,7 @@
 }
 
 
-.im-carousel__root{
+.imreact-carousel__root{
     position: relative;
     display: flex;
     flex-direction: column;

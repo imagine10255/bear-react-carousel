@@ -1,9 +1,9 @@
 import * as React from 'react';
-import {checkIsMobile, getMediaSetting, getTranslateParams, generateMedia, initDataList} from './library/ImCarousel/utils';
+import {checkIsMobile, getMediaSetting, getTranslateParams, generateMedia, initDataList} from './library/ImReactCarousel/utils';
 import * as CSS from 'csstype';
-import {IData, IBreakpoints, TToNext, TToPrev, IInfo, ITouchStart, TSlidesPerView, IBreakpointSettingActual} from './library/ImCarousel/types';
+import {IData, IBreakpoints, TToNext, TToPrev, IInfo, ITouchStart, TSlidesPerView, IBreakpointSettingActual} from './library/ImReactCarousel/types';
 // import styled, {css} from 'styled-components';
-import {elClassName} from './library/ImCarousel/config';
+import {elClassName} from './library/ImReactCarousel/config';
 
 import './styles.css';
 
@@ -41,7 +41,7 @@ interface IProps {
 }
 
 
-class ImCarousel extends React.Component<IProps, IState> {
+class ImReactCarousel extends React.Component<IProps, IState> {
   static defaultProps = {
     data: [],
     slidesPerView :1,
@@ -817,5 +817,5 @@ class ImCarousel extends React.Component<IProps, IState> {
 
 
 
-export default ImCarousel;
+export default ImReactCarousel;
 

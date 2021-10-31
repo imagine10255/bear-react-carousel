@@ -1,10 +1,10 @@
 {
-  "name": "im-carousel",
+  "name": "imreact-carousel",
   "version": "1.0.0",
   "description": "Made with create-react-library",
   "author": "imagine10255",
   "license": "MIT",
-  "repository": "imagine10255/im-carousel",
+  "repository": "imagine10255/imreact-carousel",
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "source": "src/index.tsx",
