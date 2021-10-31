@@ -138,6 +138,7 @@
     flex: 1;
 
     visibility: hidden; /* 避免瞬間移動, 故移動完才改為顯示 */
+
 }
 
 
@@ -149,6 +150,10 @@
     -moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
+}
+
+.imreact-carousel__container[data-is-enable-mouse-move="true"] {
+    cursor: pointer;
 }
 
 

@@ -678,7 +678,7 @@ class ImreactCarousel extends React.Component<IProps, IState> {
 
 
   render() {
-    const {style, className, isDebug} = this.props;
+    const {style, className, isEnableMouseMove, isDebug} = this.props;
     const {windowSize} = this.state;
 
 
@@ -710,10 +710,7 @@ class ImreactCarousel extends React.Component<IProps, IState> {
           <div
             ref={this.carouselRef}
             className={elClassName.carouselContainer}
-            // slidesPerView={this.rwdMedia.slidesPerView}
-            // slidesPerViewActual={this.rwdMedia.slidesPerViewActual}
-            // breakpoints={breakpoints}
-            // spaceBetween={this.rwdMedia.spaceBetween}
+            data-is-enable-mouse-move={isEnableMouseMove}
             data-actual={`${this.info.actual.minIndex},${this.info.actual.firstIndex}-${this.info.actual.lastIndex},${this.info.actual.maxIndex}`}
           >
             {this.info.formatElement.map((row, i) => (
