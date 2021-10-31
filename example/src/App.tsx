@@ -39,17 +39,6 @@ const App = () => {
     data={useBgData}
     slidesPerView={1}
     slidesPerGroup={1}
-    breakpoints={{
-      768: {
-        slidesPerView: 2,
-        slidesPerGroup: 1,
-        isEnableLoop: false,
-        isEnablePagination: true,
-        isEnableNavButton: true,
-        isCenteredSlides: false,
-        spaceBetween: 10,
-      }
-    }}
   />
 }
 
