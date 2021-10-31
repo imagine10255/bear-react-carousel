@@ -1,4 +1,4 @@
-import { IBreakpointSetting, IBreakpoints, IElement, TSlidesPerView, IBreakpointSettingActual, IInfo, IProps } from './types'
+import { IBreakpointSetting, IBreakpoints, IElement, TSlidesPerView, IBreakpointSettingActual, IInfo, IProps, IPropsBreakpoints } from './types'
 import { elClassName } from './config'
 
 
@@ -27,7 +27,7 @@ const getMediaRangeSize = (breakpointSizes: string[]) => {
  * @param setting
  * @param breakpoints
  */
-const getMediaSetting = (setting: IBreakpointSetting, breakpoints: IBreakpoints): IBreakpointSettingActual => {
+const getMediaSetting = (setting: IBreakpointSetting, breakpoints: IPropsBreakpoints): IBreakpointSettingActual => {
 
     // @ts-ignore
     const selectSize = getMediaRangeSize(Object.keys(breakpoints));

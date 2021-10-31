@@ -1,6 +1,6 @@
 {
   "name": "imreact-carousel",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Most modern mobile touch slider with hardware accelerated transitions by react",
   "author": "imagine10255",
   "license": "MIT",
@@ -23,8 +23,7 @@
     "test:watch": "react-scripts test --env=jsdom",
     "storybook": "cd example && yarn install && yarn run storybook",
     "predeploy": "cd example && yarn install && yarn run build-storybook",
-    "deploy-gh": "gh-pages -d example/storybook-static",
-    "npm:publish": "npm publish"
+    "deploy": "gh-pages -d example/storybook-static"
   },
   "peerDependencies": {
     "react": "^16.0.0"

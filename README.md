@@ -70,6 +70,12 @@ const useBgData = bgList.map(row => {
 }
 ```
 
+## npm Push
+```bash
+npm publish
+```
+
+
 ## License
 
 MIT © [imagine10255](https://github.com/imagine10255)
