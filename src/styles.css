@@ -1,4 +1,36 @@
 
+
+
+.imreact-carousel__test-number{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 2;
+    font-size: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    background-color: rgba(0, 0, 0, .5);
+}
+
+.imreact-carousel__window-size{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    background-color: rgba(0, 0, 0, .5);
+    font-size: 12px;
+    padding: 5px 10px;
+}
+
+
 .imreact-carousel__pagination-group{
     position: absolute;
     bottom: 10px;
@@ -28,22 +60,6 @@
 .imreact-carousel__pagination-content{}
 
 
-.imreact-carousel__test-number{
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    z-index: 2;
-    font-size: 60px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-    background-color: rgba(0, 0, 0, .5);
-}
-
-
 
 .imreact-carousel__clone-icon-group{
     position: absolute;
@@ -63,7 +79,9 @@
     background-size: 100%;
 }
 
-.imreact-carousel__nav-button{
+.imreact-carousel__nav-prev-button,
+.imreact-carousel__nav-next-button
+{
     border: none;
     outline: none;
     color: #fff;
@@ -71,20 +89,33 @@
     width: 40px;
     height: 40px;
     cursor: pointer;
-    background-color: red;
+    background-color: rgba(255, 255, 255, .5);
+    border-radius: 99em;
 
     position: absolute;
-    z-index: 10;
+    z-index: 11;
     top: 0;
     bottom: 0;
     margin: auto 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+}
+.imreact-carousel__nav-prev-button > img,
+.imreact-carousel__nav-next-button > img{
+    width: 25px;
+    height: 25px;
+}
+.imreact-carousel__nav-prev-button > img{
+    transform: rotate(180deg);
 }
 
-.imreact-carousel__nav-button > .imreact-carousel__nav-prev-button{
-    left: 0;
+.imreact-carousel__nav-group > .imreact-carousel__nav-prev-button{
+    left: 20px;
 }
-.imreact-carousel__nav-button > .imreact-carousel__nav-next-button{
-    right: 0;
+.imreact-carousel__nav-group > .imreact-carousel__nav-next-button{
+    right: 20px;
 }
 
 
@@ -120,10 +151,6 @@
     -ms-user-select: none;
 }
 
-
-.imreact-carousel__container .slide-item{
-
-}
 
 
 .imreact-carousel__content{

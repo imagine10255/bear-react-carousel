@@ -1,5 +1,26 @@
-import {IBreakpointSetting, IBreakpoints, IElement, TSlidesPerView, IBreakpointSettingActual} from './types';
+import { IBreakpointSetting, IBreakpoints, IElement, TSlidesPerView, IBreakpointSettingActual, IInfo, IProps } from './types'
 import { elClassName } from './config'
+
+
+/**
+ * 取得螢幕尺寸對應設定尺寸
+ * @param breakpointSizes
+ */
+const getMediaRangeSize = (breakpointSizes: string[]) => {
+    const windowSize = typeof document !== 'undefined' ? window.innerWidth : 0;
+
+    // @ts-ignore
+    const filterArray: number[] = breakpointSizes.filter(
+      (size) => Number(size) <= windowSize
+    ) as number[];
+    filterArray.sort((a, b) => Number(b) - Number(a));
+
+    if (filterArray.length > 0) {
+        return filterArray[0];
+    }
+    return 0;
+}
+
 
 /**
  * 取得響應式設定
@@ -7,18 +28,12 @@ import { elClassName } from './config'
  * @param breakpoints
  */
 const getMediaSetting = (setting: IBreakpointSetting, breakpoints: IBreakpoints): IBreakpointSettingActual => {
-    const windowSize = typeof document !== 'undefined' ? window.innerWidth : 0;
 
     // @ts-ignore
-    const filterArray: number[] = Object.keys(breakpoints).filter(
-        (size) => Number(size) <= windowSize
-    ) as number[];
-    filterArray.sort((a, b) => Number(b) - Number(a));
-
-    if (filterArray.length > 0) {
-        setting = Object.assign(setting, breakpoints[filterArray[0]]);
+    const selectSize = getMediaRangeSize(Object.keys(breakpoints));
+    if(selectSize > 0){
+        setting = Object.assign(setting, breakpoints[selectSize]);
     }
-
 
     // 若顯示項目大於來源項目, 則關閉Loop
     // if (setting.slidesPerView > dataLength) {
@@ -34,6 +49,85 @@ const getMediaSetting = (setting: IBreakpointSetting, breakpoints: IBreakpoints)
     };
 };
 
+
+const getMediaInfo = (props: IProps): {rwdMedia: IBreakpointSettingActual, info: IInfo} => {
+
+    const {data, breakpoints, slidesPerGroup, slidesPerView, spaceBetween, isEnableLoop, isEnableNavButton, isEnablePagination, isCenteredSlides} = props;
+
+    const rwdMedia = getMediaSetting({
+        slidesPerView: slidesPerView,
+        slidesPerGroup: slidesPerGroup,
+        spaceBetween: spaceBetween,
+        isEnableLoop: isEnableLoop,
+        isEnableNavButton: isEnableNavButton,
+        isEnablePagination: isEnablePagination,
+        isCenteredSlides: isCenteredSlides,
+    }, breakpoints);
+
+
+    // console.log('rwdMedia', rwdMedia);
+    const divisible = data.length % rwdMedia.slidesPerGroup; // 餘數
+    let sliceData = divisible > 0 ? data.slice(0, data.length - divisible) : data;
+    let sourceTotal = sliceData.length;
+    const formatElement = initDataList(
+      sliceData,
+      rwdMedia.slidesPerViewActual,
+      rwdMedia.slidesPerGroup,
+      rwdMedia.isEnableLoop
+    );
+
+
+    const elementTotal = formatElement.length;
+    const cloneBeforeTotal = rwdMedia.isEnableLoop ? rwdMedia.slidesPerViewActual : 0;
+    const cloneAfterTotal = cloneBeforeTotal;
+    const actualMinIndex = 0;
+    const actualMaxIndex = elementTotal - 1;
+
+    // if (rwdMedia.slidesPerGroup > rwdMedia.slidesPerViewActual) {
+    //     // throw Error(
+    //     //     `slidesPerGroup(${rwdMedia.slidesPerGroup}) can't > slidesPerView(${rwdMedia.slidesPerViewActual})`
+    //     // );
+    // } else if (Math.ceil(rwdMedia.slidesPerGroup) !== rwdMedia.slidesPerGroup) {
+    //     throw Error(
+    //         `slidesPerGroup(${rwdMedia.slidesPerGroup}) can't has floating .xx`
+    //     );
+    // }
+
+    let fakeTotalPage = Math.ceil(sourceTotal / rwdMedia.slidesPerGroup);
+    if(!rwdMedia.isEnableLoop && rwdMedia.slidesPerView !== 'auto' && !rwdMedia.isCenteredSlides){
+        fakeTotalPage = fakeTotalPage - (rwdMedia.slidesPerView - rwdMedia.slidesPerGroup);
+    }
+
+    const info: IInfo = {
+        formatElement,
+        sourceTotal, // 來源總數
+        // 從0開始
+        element: {
+            total: elementTotal,
+            firstIndex: 0,
+            lastIndex: elementTotal - 1
+        },
+        // 0為實際一開始的位置(往前為負數), 結束值為最後結束位置
+        actual: {
+            minIndex: actualMinIndex,
+            maxIndex: actualMaxIndex,
+            firstIndex: Math.ceil(cloneBeforeTotal),
+            lastIndex: Math.ceil(sourceTotal + cloneAfterTotal - 1)
+        },
+        // 總頁數
+        // pageTotal: fakeTotalPage - (rwdMedia.slidesPerView - (elementTotal % rwdMedia.slidesPerView)),
+        pageTotal: fakeTotalPage,
+        isDivisible: divisible === 0,
+        residue: elementTotal % rwdMedia.slidesPerGroup,
+        isVisiblePagination: rwdMedia.isEnablePagination && formatElement.length > 0,
+        isVisibleNavButton: rwdMedia.isEnableNavButton && formatElement.length > 0
+    };
+
+    return {
+        info,
+        rwdMedia,
+    };
+}
 
 
 /**
@@ -81,7 +175,7 @@ const initDataList = (sourceList: Array<any> = [], slidesPerView: TSlidesPerView
             actualIndex: index,
             matchIndex: index,
             inPage: Math.ceil((pageFirstIndex + 1) / slidesPerGroup),
-            // inPage: this.info.pageTotal - (this.rwdMedia.slidesPerView - (this.info.element.total % this.rwdMedia.slidesPerView)),
+            // inPage: info.pageTotal - (rwdMedia.slidesPerView - (info.element.total % rwdMedia.slidesPerView)),
             isClone: false,
             element: row.children,
         };
@@ -129,15 +223,6 @@ const getCss = (slidesPerView: TSlidesPerView) => {
     `;
 };
 
-const generateMedia = (breakpoints: any) => Object.keys(breakpoints)
-    .filter(size => typeof breakpoints[size] !== 'undefined')
-    .map(size => {
-        return `@media screen and (min-width: ${size}px){
-            .${elClassName.slideItem}{
-                ${getCss(breakpoints[size].slidesPerView)};
-            }
-        }`;
-    });
 
 
 /**
@@ -158,17 +243,6 @@ const getTranslateParams = (el: any) => {
     };
 };
 
-/**
- * 取得隨機顏色
- */
-const getRandomColor = () => {
-    const letters = '0123456789ABCDEF';
-    let color = '#';
-    for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-};
 
 
-export {getMediaSetting, initDataList, checkIsMobile, generateMedia, getTranslateParams, getRandomColor};
+export {getMediaRangeSize, getMediaSetting, getMediaInfo, initDataList, checkIsMobile, getTranslateParams};

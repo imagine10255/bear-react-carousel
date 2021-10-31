@@ -179,6 +179,28 @@ AutoPlay.args = {
   autoPlayTime: 3000,
   data: useBgData,
 };
+export const Breakpoints = Template.bind({});
+Breakpoints.args = {
+  isDebug: true,
+  isEnablePagination: true,
+  isEnableLoop: true,
+  data: useBgData,
+  slidesPerView: 1,
+  breakpoints: {
+    768: {
+      slidesPerView: 2,
+      isEnableLoop: false,
+      isEnablePagination: false,
+      isEnableNavButton: false,
+    },
+    1200: {
+      slidesPerView: 4,
+      isEnableLoop: true,
+      isEnablePagination: true,
+      isEnableNavButton: true,
+    }
+  }
+};
 
 
 

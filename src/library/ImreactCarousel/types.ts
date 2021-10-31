@@ -1,8 +1,33 @@
 import {ReactNode} from 'react';
+import * as CSS from 'csstype'
 
 export type TSlidesPerView = number|'auto'
 export type TSlidesPerViewActual = number
 
+
+export interface IProps {
+  style?: CSS.Properties
+  className?: string
+  data: IData[];
+  slidesPerView: TSlidesPerView;
+  slidesPerGroup: number
+  isEnableLoop: boolean
+  isEnableMouseMove: boolean
+  isEnablePagination: boolean
+  isEnableNavButton: boolean
+  moveTime: number
+  autoPlayTime: number
+  isDebug: boolean
+  breakpoints: IPropsBreakpoints
+  spaceBetween: number
+  renderNavButton?: (
+    toPrev: TToPrev,
+    toNext: TToNext,
+  ) => void
+  isCenteredSlides: boolean,
+  // emitSetFunc: (params: ICommonFunc) => void
+  onChange?: (index: number, page: number) => void
+}
 
 export interface ITouchStart {
   pageX: number,
@@ -60,7 +85,6 @@ export interface IBreakpointSetting {
   isEnablePagination: boolean
   isEnableNavButton: boolean
   isCenteredSlides: boolean
-  // mode: mode
   spaceBetween: number
 }
 export interface IBreakpointSettingActual extends IBreakpointSetting {
@@ -70,8 +94,8 @@ export interface IBreakpointSettingActual extends IBreakpointSetting {
 export interface IBreakpoints {
   [key: number]: IBreakpointSetting
 }
-export interface IBreakpointsActual {
-  [key: number]: IBreakpointSettingActual
+export interface IPropsBreakpoints {
+  [key: number]: Partial<IBreakpointSetting>
 }
 
 export type TToPrev = () => void

@@ -1,67 +1,37 @@
 import * as React from 'react';
-import {checkIsMobile, getMediaSetting, getTranslateParams, generateMedia, initDataList} from './library/ImreactCarousel/utils';
-import * as CSS from 'csstype';
-import {IData, IBreakpoints, TToNext, TToPrev, IInfo, ITouchStart, TSlidesPerView, IBreakpointSettingActual} from './library/ImreactCarousel/types';
+import { throttle } from '@github/mini-throttle'
+import { checkIsMobile, getTranslateParams, getMediaInfo, getMediaRangeSize } from './library/ImreactCarousel/utils'
+import { IInfo, ITouchStart, IBreakpointSettingActual, IProps } from './library/ImreactCarousel/types'
 import {elClassName} from './library/ImreactCarousel/config';
 
-import copyIcon from 'copy-icon.png';
+import copyIcon from 'library/ImreactCarousel/assets/copy-icon.png';
+import rightArrowIcon from 'library/ImreactCarousel/assets/right-arrow-icon.png';
 import './styles.css';
 
-// let count = 0;
 // 滑動觸發移動距離
 const triggerTouchDistance = 60;
 
 interface IState {
-  // rwdMedia: IBreakpointSetting,
+  windowSize: number,
 }
 
-interface IProps {
-  style?: CSS.Properties
-  className?: string
-  data: IData[];
-  slidesPerView: TSlidesPerView;
-  slidesPerGroup: number
-  isEnableLoop: boolean
-  isEnableMouseMove: boolean
-  isEnablePagination: boolean
-  isEnableNavButton: boolean
-  moveTime: number
-  autoPlayTime: number
-  isDebug: boolean
-  breakpoints: IBreakpoints
-  spaceBetween: number
-  renderNavButton: (
-    toPrev: TToPrev,
-    toNext: TToNext,
-    navGroupClassName: string
-  ) => void
-  isCenteredSlides: boolean,
-  // emitSetFunc: (params: ICommonFunc) => void
-  onChange?: (index: number, page: number) => void
-}
 
 
 class ImreactCarousel extends React.Component<IProps, IState> {
   static defaultProps = {
     data: [],
-    slidesPerView :1,
-    slidesPerGroup :1, // 不可為小數
-    isEnableLoop :false,
-    moveTime :350,
-    breakpoints :{},
-    isEnableMouseMove :true,
-    isEnablePagination :false,
-    isEnableNavButton :false,
-    isCenteredSlides :false,
-    isDebug :false,
-    spaceBetween :0,
-    autoPlayTime :0,
-    renderNavButton: ( toPrev: TToPrev,  toNext: TToNext, navGroupClassName: string) => {
-      return (<div className={navGroupClassName}>
-        <button type="button" className={elClassName.navPrevButton} onClick={toPrev}>{'<'}</button>
-        <button type="button" className={elClassName.navNextButton} onClick={toNext}>{'>'}</button>
-      </div>);
-    },
+    slidesPerView: 1,
+    slidesPerGroup: 1, // 不可為小數
+    isEnableLoop: false,
+    moveTime: 350,
+    breakpoints: {},
+    isEnableMouseMove: true,
+    isEnablePagination: false,
+    isEnableNavButton: false,
+    isCenteredSlides: false,
+    isDebug: false,
+    spaceBetween: 0,
+    autoPlayTime: 0,
   };
 
   timer?: any;
@@ -111,6 +81,9 @@ class ImreactCarousel extends React.Component<IProps, IState> {
     movePositionX: 0,
     movePositionY: 0,
   };
+  state = {
+    windowSize: 0,
+  };
 
   // Ref
   rootRef: React.RefObject<HTMLDivElement> = React.createRef();
@@ -122,28 +95,21 @@ class ImreactCarousel extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
 
-    const {slidesPerGroup, slidesPerView, spaceBetween, isEnableLoop, isEnableNavButton, isEnablePagination, isCenteredSlides} = props;
     // @ts-ignore
     this.slideItemRef['current'] = [];
     // @ts-ignore
     this.pageRef['current'] = [];
 
-    this.rwdMedia = getMediaSetting({
-      slidesPerView: slidesPerView,
-      slidesPerGroup: slidesPerGroup,
-      spaceBetween: spaceBetween,
-      isEnableLoop: isEnableLoop,
-      isEnableNavButton: isEnableNavButton,
-      isEnablePagination: isEnablePagination,
-      isCenteredSlides: isCenteredSlides,
-    }, {});
-
-    this.info = this.getInfo();
-
+    const {rwdMedia, info} = getMediaInfo(props);
+    this.rwdMedia = rwdMedia;
+    this.info = info;
+    this.state = {
+      windowSize: getMediaRangeSize(Object.keys(props.breakpoints)),
+    }
   }
 
-  componentDidMount() {
 
+  componentDidMount() {
     const {isEnableMouseMove} = this.props;
     const element = this.carouselRef.current as HTMLElement;
 
@@ -154,7 +120,7 @@ class ImreactCarousel extends React.Component<IProps, IState> {
     this.goToActualIndex(this.info.actual.firstIndex, false);
 
     // 視窗大小變更時
-    // window.addEventListener('resize', debounce(handleResize, 200));
+    window.addEventListener('resize', throttle(this.handleResize, 400));
 
 
     // 移動動畫結束復歸
@@ -180,7 +146,12 @@ class ImreactCarousel extends React.Component<IProps, IState> {
     const element = this.carouselRef.current as HTMLElement;
     element.removeEventListener('touchstart', this.mobileTouchStart);
     element.removeEventListener('transitionend', () => this.resetPageByLoop());
+    window.removeEventListener('resize', throttle(this.handleResize, 400));
+
   }
+
+
+
 
   /***
    * 優化渲染
@@ -188,28 +159,17 @@ class ImreactCarousel extends React.Component<IProps, IState> {
    * @param nextState
    */
   shouldComponentUpdate(nextProps: IProps, nextState: IState) {
+    const {windowSize: nextWindowSize} = nextState;
+    const {windowSize} = this.state;
     const {data, ...otherParams} = this.props;
     const {data: nextData, ...nextOtherProps} = nextProps;
 
-    if(otherParams !== nextOtherProps){
-
-      const {slidesPerGroup, slidesPerView, spaceBetween, isEnableLoop, isEnableNavButton, isEnablePagination, isCenteredSlides} = nextOtherProps;
-
-      this.rwdMedia = getMediaSetting({
-        slidesPerGroup: slidesPerGroup,
-        slidesPerView: slidesPerView,
-        spaceBetween: spaceBetween,
-        isEnableLoop: isEnableLoop,
-        isEnableNavButton: isEnableNavButton,
-        isEnablePagination: isEnablePagination,
-        isCenteredSlides: isCenteredSlides,
-      }, {});
-
-      this.info = this.getInfo();
-
+    if((otherParams !== nextOtherProps) || (nextWindowSize != windowSize)){
+      const {rwdMedia, info} = getMediaInfo(nextProps);
+      this.rwdMedia = rwdMedia;
+      this.info = info;
 
       return true;
-
     }
 
     const oldKey = data.map((row) => row.key).join('_');
@@ -445,67 +405,6 @@ class ImreactCarousel extends React.Component<IProps, IState> {
   }
 
 
-  getInfo(): IInfo {
-    const {data} = this.props;
-
-    // console.log('this.rwdMedia', this.rwdMedia);
-    const divisible = data.length % this.rwdMedia.slidesPerGroup; // 餘數
-    let sliceData = divisible > 0 ? data.slice(0, data.length - divisible) : data;
-    let sourceTotal = sliceData.length;
-    const formatElement = initDataList(
-      sliceData,
-      this.rwdMedia.slidesPerViewActual,
-      this.rwdMedia.slidesPerGroup,
-      this.rwdMedia.isEnableLoop
-    );
-
-
-    const elementTotal = formatElement.length;
-    const cloneBeforeTotal = this.rwdMedia.isEnableLoop ? this.rwdMedia.slidesPerViewActual : 0;
-    const cloneAfterTotal = cloneBeforeTotal;
-    const actualMinIndex = 0;
-    const actualMaxIndex = elementTotal - 1;
-
-    // if (this.rwdMedia.slidesPerGroup > this.rwdMedia.slidesPerViewActual) {
-    //     // throw Error(
-    //     //     `slidesPerGroup(${this.rwdMedia.slidesPerGroup}) can't > slidesPerView(${this.rwdMedia.slidesPerViewActual})`
-    //     // );
-    // } else if (Math.ceil(this.rwdMedia.slidesPerGroup) !== this.rwdMedia.slidesPerGroup) {
-    //     throw Error(
-    //         `slidesPerGroup(${this.rwdMedia.slidesPerGroup}) can't has floating .xx`
-    //     );
-    // }
-
-    let fakeTotalPage = Math.ceil(sourceTotal / this.rwdMedia.slidesPerGroup);
-    if(!this.rwdMedia.isEnableLoop && this.rwdMedia.slidesPerView !== 'auto' && !this.rwdMedia.isCenteredSlides){
-      fakeTotalPage = fakeTotalPage - (this.rwdMedia.slidesPerView - this.rwdMedia.slidesPerGroup);
-    }
-
-    return {
-      formatElement,
-      sourceTotal, // 來源總數
-      // 從0開始
-      element: {
-        total: elementTotal,
-        firstIndex: 0,
-        lastIndex: elementTotal - 1
-      },
-      // 0為實際一開始的位置(往前為負數), 結束值為最後結束位置
-      actual: {
-        minIndex: actualMinIndex,
-        maxIndex: actualMaxIndex,
-        firstIndex: Math.ceil(cloneBeforeTotal),
-        lastIndex: Math.ceil(sourceTotal + cloneAfterTotal - 1)
-      },
-      // 總頁數
-      // pageTotal: fakeTotalPage - (this.rwdMedia.slidesPerView - (elementTotal % this.rwdMedia.slidesPerView)),
-      pageTotal: fakeTotalPage,
-      isDivisible: divisible === 0,
-      residue: elementTotal % this.rwdMedia.slidesPerGroup,
-      isVisiblePagination: this.rwdMedia.isEnablePagination && formatElement.length > 0,
-      isVisibleNavButton: this.rwdMedia.isEnableNavButton && formatElement.length > 0
-    };
-  }
 
   /**
    * 重置頁面位置 (LoopMode)
@@ -514,6 +413,28 @@ class ImreactCarousel extends React.Component<IProps, IState> {
     if(this.info.formatElement[this.activeActualIndex].isClone){
       this.goToActualIndex(this.info.formatElement[this.activeActualIndex].matchIndex, false);
     }
+  };
+
+  /**
+   * 處理更改螢幕尺寸時
+   */
+  handleResize = () => {
+    const {breakpoints} = this.props;
+    const {windowSize} = this.state;
+
+    // 只在區間內有設定的值才會 setState
+    const selectSize = getMediaRangeSize(Object.keys(breakpoints));
+
+    // 自動導引到目前位置
+    const goIndex = this.activeActualIndex > this.info.actual.lastIndex ? this.info.actual.lastIndex: this.activeActualIndex;
+    this.goToActualIndex(goIndex);
+
+    if(windowSize != selectSize){
+      this.setState({
+        windowSize: selectSize,
+      });
+    }
+
   };
 
 
@@ -703,6 +624,26 @@ class ImreactCarousel extends React.Component<IProps, IState> {
     }
   }
 
+  /**
+   * 渲染左右導航區塊
+   */
+  renderNavButton(){
+
+    const {renderNavButton} = this.props;
+
+    if(typeof renderNavButton !== 'undefined'){
+      return renderNavButton(() => this.toPrev(), () => this.toNext());
+    }
+
+    return (<div className={elClassName.navGroup}>
+      <button type="button" className={elClassName.navPrevButton} onClick={() => this.toPrev()}>
+        <img src={rightArrowIcon}/>
+      </button>
+      <button type="button" className={elClassName.navNextButton} onClick={() => this.toNext()}>
+        <img src={rightArrowIcon}/>
+      </button>
+    </div>);
+  }
 
   /**
    * 渲染按鈕區塊
@@ -725,9 +666,6 @@ class ImreactCarousel extends React.Component<IProps, IState> {
           className={elClassName.paginationButton}
           data-active={this.activePage === i + 1 ? true : undefined}
           data-page={i + 1}
-          // style={{
-          //   backgroundColor: this.activePage ? paginationActiveColor: paginationColor,
-          // }}
         >
           <div className={elClassName.paginationContent}>
             {data[i]?.paginationContent}
@@ -740,7 +678,8 @@ class ImreactCarousel extends React.Component<IProps, IState> {
 
 
   render() {
-    const {breakpoints, renderNavButton, style, className, isDebug} = this.props;
+    const {style, className, isDebug} = this.props;
+    const {windowSize} = this.state;
 
 
     // 產生需要的樣式
@@ -748,12 +687,9 @@ class ImreactCarousel extends React.Component<IProps, IState> {
         flex: ${this.rwdMedia.slidesPerView === 'auto'? '0 0 auto' : `1 0 ${100 / this.rwdMedia.slidesPerViewActual}%`};
         padding-left: ${this.rwdMedia.spaceBetween / 2}px;
         padding-right: ${this.rwdMedia.spaceBetween / 2}px;
-        
     `;
 
 
-    // count += 1;
-    // console.log(`render: ${count}`, 'this.info.formatElement', this.info.formatElement.length);
     return (
       <div style={style} className={[className, elClassName.root].join(' ')} ref={this.rootRef}>
 
@@ -764,10 +700,11 @@ class ImreactCarousel extends React.Component<IProps, IState> {
           .${elClassName.cloneIcon}{
             background-image: url('${copyIcon}');
           }
-          ${generateMedia(breakpoints)}
         `}</style>
 
-        {this.info.isVisibleNavButton && renderNavButton(() => this.toPrev(), () => this.toNext(), elClassName.navGroup)}
+
+        {/* 左右導航按鈕 */}
+        {this.info.isVisibleNavButton && this.renderNavButton()}
 
         <div className={elClassName.content}>
           <div
@@ -817,6 +754,11 @@ class ImreactCarousel extends React.Component<IProps, IState> {
             {this.info.formatElement.length > 0 && this.renderPagination()}
           </div>
         )}
+
+        {/* 顯示目前偵測尺寸(除錯) */}
+        {isDebug && (<div className={elClassName.testWindowSize}>
+          {windowSize}
+        </div>)}
       </div>
     );
   }

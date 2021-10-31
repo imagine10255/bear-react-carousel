@@ -14,6 +14,7 @@ export const elClassName = {
     paginationContent: 'imreact-carousel__pagination-content',
 
     testNumber: 'imreact-carousel__test-number',
+    testWindowSize: 'imreact-carousel__window-size',
     cloneIconGroup: 'imreact-carousel__clone-icon-group',
     cloneIcon: 'imreact-carousel__clone-icon',
 };

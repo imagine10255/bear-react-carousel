@@ -23,6 +23,7 @@ const carouselData = bgList.map(row => {
   return {
     key: String(row.id),
     children: <div
+      className="carousel_item"
       style={{
         backgroundImage: `url(${row.image})`,
       }}
@@ -38,6 +39,20 @@ const App = () => {
     data={carouselData}
     slidesPerView={1}
     slidesPerGroup={1}
+    breakpoints={{
+      768: {
+        slidesPerView: 2,
+        isEnableLoop: false,
+        isEnablePagination: false,
+        isEnableNavButton: false,
+      },
+      1200: {
+        slidesPerView: 4,
+        isEnableLoop: true,
+        isEnablePagination: true,
+        isEnableNavButton: true,
+      }
+    }}
   />
 }
 
