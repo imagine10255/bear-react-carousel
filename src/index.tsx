@@ -176,13 +176,16 @@ class ImreactCarousel extends React.Component<IProps, IState> {
     if(this.timer){
       clearTimeout(this.timer);
     }
+
+    const element = this.carouselRef.current as HTMLElement;
+    element.removeEventListener('touchstart', this.mobileTouchStart);
+    element.removeEventListener('transitionend', () => this.resetPageByLoop());
   }
 
   /***
    * 優化渲染
    * @param nextProps
    * @param nextState
-   * @param nextContext
    */
   shouldComponentUpdate(nextProps: IProps, nextState: IState) {
     const {data, ...otherParams} = this.props;
