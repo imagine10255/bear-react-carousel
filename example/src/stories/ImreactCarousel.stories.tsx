@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import ImReactCarousel from 'imreact-carousel'
+import ImreactCarousel from 'imreact-carousel'
 import styled from 'styled-components/macro'
 import 'imreact-carousel/dist/index.css'
 
@@ -61,16 +61,16 @@ const useImageData = imageList.map(row => {
 });
 
 export default {
-  title: 'ImReactCarousel/Base',
-  component: ImReactCarousel,
+  title: 'ImreactCarousel/Base',
+  component: ImreactCarousel,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
     backgroundColor: { control: 'color' },
   },
-} as ComponentMeta<typeof ImReactCarousel>;
+} as ComponentMeta<typeof ImreactCarousel>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof ImReactCarousel> = (args) => <ImReactCarousel {...args}/>;
+const Template: ComponentStory<typeof ImreactCarousel> = (args) => <ImreactCarousel {...args}/>;
 
 export const Default = Template.bind({});
 Default.args = {
