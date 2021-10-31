@@ -17,33 +17,33 @@ const CarouselItem = styled.div<any>`
 const CarouselImage = styled.img<any>`
     //height: 500px;
     height: 200px;
-    width: auto;
+    width: auto; 
     display: flex;
 `;
 
 const bgList = [
-  {id: 1, image: '/images/01.jpeg'},
-  {id: 2, image: '/images/02.jpeg'},
-  {id: 3, image: '/images/03.jpeg'},
-  {id: 4, image: '/images/04.jpeg'},
-  {id: 5, image: '/images/05.jpeg'},
-  {id: 6, image: '/images/06.jpeg'},
-  {id: 7, image: '/images/07.jpeg'},
-  {id: 8, image: '/images/08.jpeg'},
-  {id: 9, image: '/images/09.jpeg'},
-  // {id: 10, image: '/images/10.jpeg'},
+  {id: 1, image: './static/sample/01.jpg'},
+  {id: 2, image: './static/sample/02.jpg'},
+  {id: 3, image: './static/sample/03.jpg'},
+  {id: 4, image: './static/sample/04.jpg'},
+  {id: 5, image: './static/sample/05.jpg'},
+  {id: 6, image: './static/sample/06.jpg'},
+  {id: 7, image: './static/sample/07.jpg'},
+  {id: 8, image: './static/sample/08.jpg'},
+  {id: 9, image: './static/sample/09.jpg'},
+  // {id: 10, image: '/static/sample/10.jpg'},
 ];
 
 const imageList = [
-  {id: 1, image: '/images/01.jpeg'},
-  {id: 2, image: '/images/auto-01.jpeg'},
-  {id: 4, image: '/images/04.jpeg'},
-  {id: 3, image: '/images/auto-02.jpeg'},
-  {id: 5, image: '/images/05.jpeg'},
-  {id: 6, image: '/images/06.jpeg'},
-  {id: 7, image: '/images/07.jpeg'},
-  {id: 8, image: '/images/08.jpeg'},
-  {id: 9, image: '/images/09.jpeg'},
+  {id: 1, image: './static/sample/01.jpg'},
+  {id: 2, image: './static/sample/auto-01.jpg'},
+  {id: 4, image: './static/sample/04.jpg'},
+  {id: 3, image: './static/sample/auto-02.jpg'},
+  {id: 5, image: './static/sample/05.jpg'},
+  {id: 6, image: './static/sample/06.jpg'},
+  {id: 7, image: './static/sample/07.jpg'},
+  {id: 8, image: './static/sample/08.jpg'},
+  {id: 9, image: './static/sample/09.jpg'},
 ];
 
 
@@ -67,10 +67,10 @@ export default {
   argTypes: {
     backgroundColor: { control: 'color' },
   },
-} as ComponentMeta<typeof ImCarousel>;
+} as ComponentMeta<typeof ImReactCarousel>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof ImCarousel> = (args) => <ImReactCarousel {...args}/>;
+const Template: ComponentStory<typeof ImReactCarousel> = (args) => <ImReactCarousel {...args}/>;
 
 export const Default = Template.bind({});
 Default.args = {

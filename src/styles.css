@@ -59,7 +59,7 @@
 .imreact-carousel__clone-icon{
     width: 20px;
     height: 20px;
-    background: transparent url('/images/copy-icon.png') no-repeat center center;
+    background: transparent no-repeat center center;
     background-size: 100%;
 }
 

@@ -13,6 +13,7 @@
   },
   "scripts": {
     "build": "microbundle-crl --no-compress --no-css-modules --format modern,cjs",
+    "dev": "cd example && yarn install && yarn run start",
     "start": "microbundle-crl watch --no-compress --no-css-modules --format modern,cjs",
     "prepare": "run-s build",
     "test": "run-s test:unit test:lint test:build",
@@ -20,8 +21,9 @@
     "test:lint": "eslint .",
     "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
     "test:watch": "react-scripts test --env=jsdom",
-    "predeploy": "cd example && yarn install && yarn run build",
-    "deploy": "gh-pages -d example/build"
+    "storybook": "cd example && yarn install && yarn run storybook",
+    "predeploy": "cd example && yarn install && yarn run build-storybook",
+    "deploy": "gh-pages -d example/storybook-static"
   },
   "peerDependencies": {
     "react": "^16.0.0"

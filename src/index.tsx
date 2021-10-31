@@ -5,6 +5,7 @@ import {IData, IBreakpoints, TToNext, TToPrev, IInfo, ITouchStart, TSlidesPerVie
 // import styled, {css} from 'styled-components';
 import {elClassName} from './library/ImReactCarousel/config';
 
+import copyIcon from 'copy-icon.png';
 import './styles.css';
 
 // let count = 0;
@@ -758,6 +759,9 @@ class ImReactCarousel extends React.Component<IProps, IState> {
           .${elClassName.slideItem}{
              ${slideItemStyle}
           }
+          .${elClassName.cloneIcon}{
+            background-image: url('${copyIcon}');
+          }
           ${generateMedia(breakpoints)}
         `}</style>
 
@@ -805,6 +809,7 @@ class ImReactCarousel extends React.Component<IProps, IState> {
           </div>
         </div>
 
+        {/* 頁數導航按鈕 */}
         {this.info.isVisiblePagination && (
           <div className={elClassName.paginationGroup}>
             {this.info.formatElement.length > 0 && this.renderPagination()}
