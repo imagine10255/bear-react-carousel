@@ -134,9 +134,9 @@
 .imreact-carousel__container{
     position: relative;
     display: flex;
+    flex-direction: row;
 
-    flex: 1;
-
+    /*flex: 1;*/
     visibility: hidden; /* 避免瞬間移動, 故移動完才改為顯示 */
 
 }
@@ -160,15 +160,17 @@
 
 .imreact-carousel__content{
     overflow-x: hidden;
-    flex: 1;
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: column;
+    height: inherit;
+    /*flex: 1;*/
+    /*display: flex;*/
+    /*flex-wrap: nowrap;*/
+    /*flex-direction: column;*/
 }
 
 
 .imreact-carousel__root{
     position: relative;
-    display: flex;
-    flex-direction: column;
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    height: inherit;
 }

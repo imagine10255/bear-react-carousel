@@ -1,7 +1,7 @@
 /**
  * css class setting
  */
-export const elClassName = {
+export default {
     root: 'imreact-carousel__root',
     content: 'imreact-carousel__content',
     carouselContainer: 'imreact-carousel__container',

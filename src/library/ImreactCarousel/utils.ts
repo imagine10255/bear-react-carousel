@@ -1,5 +1,4 @@
-import { IBreakpointSetting, IBreakpoints, IElement, TSlidesPerView, IBreakpointSettingActual, IInfo, IProps, IPropsBreakpoints } from './types'
-import { elClassName } from './config'
+import { IBreakpointSetting, TSlidesPerView, IBreakpointSettingActual, IInfo, IProps, IPropsBreakpoints } from './types'
 
 
 /**
