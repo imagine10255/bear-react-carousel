@@ -1,13 +1,13 @@
-# imreact-carousel
+# react-carousel
 
 > Most modern mobile touch slider with hardware accelerated transitions by react
 
-[![NPM](https://img.shields.io/npm/v/imreact-carousel.svg)](https://www.npmjs.com/package/imreact-carousel) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/react-carousel.svg)](https://www.npmjs.com/package/react-carousel) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Install
 
 ```bash
-yarn add imreact-carousel
+yarn add react-carousel
 ```
 
 ## Usage
@@ -15,8 +15,8 @@ yarn add imreact-carousel
 ```tsx
 import React, { Component } from 'react'
 
-import ImreactCarousel from 'imreact-carousel'
-import 'imreact-carousel/dist/index.css'
+import ReactCarousel from '@imagine10255/react-carousel'
+import '@imagine10255/react-carousel/dist/index.css'
 
 
 const bgList = [
@@ -59,7 +59,7 @@ const useBgData = bgList.map(row => {
 });
 
   render() {
-    return <ImreactCarousel
+    return <ReactCarousel
         isDebug={true}
         isEnablePagination={true}
         data={carouselData}

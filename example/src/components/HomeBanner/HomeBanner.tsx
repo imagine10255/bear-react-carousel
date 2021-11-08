@@ -1,7 +1,7 @@
 import React from 'react';
-import styled, {css, keyframes} from 'styled-components/macro';
+import styled, {css} from 'styled-components/macro';
 import {Col, Container, media, Row} from 'imreact-styled-grid';
-import ImreactCarousel, {elClassName} from 'imreact-carousel';
+import ReactCarousel, {elClassName} from '@imagine10255/react-carousel';
 
 import CSS from 'csstype';
 interface FCProps {
@@ -53,7 +53,7 @@ const HomeBanner = ({
 }: IProps) => {
 
     return (<BannerRoot className={className} style={style}>
-        <ImreactCarousel
+        <ReactCarousel
             {...setting}
             data={data.map(row => {
                 return {
@@ -112,15 +112,6 @@ const PaginateGroup = styled.div`
     width: 100%;
 `;
 
-const progress = keyframes`
-    from {
-        width: 0;
-    }
-
-    to {
-        width: 100%;
-    }
-`;
 
 const PageHeaderRoot = styled.div<{
     image?: string,

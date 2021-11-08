@@ -1,4 +1,4 @@
-import { IBreakpointSetting, TSlidesPerView, IBreakpointSettingActual, IInfo, IProps, IPropsBreakpoints } from './types'
+import {IBreakpointSetting, TSlidesPerView, IBreakpointSettingActual, IInfo, IProps, IPropsBreakpoints} from './types';
 
 
 /**
@@ -10,7 +10,7 @@ const getMediaRangeSize = (breakpointSizes: string[]) => {
 
     // @ts-ignore
     const filterArray: number[] = breakpointSizes.filter(
-      (size) => Number(size) <= windowSize
+        (size) => Number(size) <= windowSize
     ) as number[];
     filterArray.sort((a, b) => Number(b) - Number(a));
 
@@ -18,7 +18,7 @@ const getMediaRangeSize = (breakpointSizes: string[]) => {
         return filterArray[0];
     }
     return 0;
-}
+};
 
 
 /**
@@ -69,10 +69,10 @@ const getMediaInfo = (props: IProps): {rwdMedia: IBreakpointSettingActual, info:
     let sliceData = divisible > 0 ? data.slice(0, data.length - divisible) : data;
     let sourceTotal = sliceData.length;
     const formatElement = initDataList(
-      sliceData,
-      rwdMedia.slidesPerViewActual,
-      rwdMedia.slidesPerGroup,
-      rwdMedia.isEnableLoop
+        sliceData,
+        rwdMedia.slidesPerViewActual,
+        rwdMedia.slidesPerGroup,
+        rwdMedia.isEnableLoop
     );
 
 
@@ -126,7 +126,7 @@ const getMediaInfo = (props: IProps): {rwdMedia: IBreakpointSettingActual, info:
         info,
         rwdMedia,
     };
-}
+};
 
 
 /**
@@ -206,20 +206,6 @@ const initDataList = (sourceList: Array<any> = [], slidesPerView: TSlidesPerView
  */
 const checkIsMobile = () => {
     try { document.createEvent('TouchEvent'); return true; } catch (e) { return false; }
-};
-
-const getCss = (slidesPerView: TSlidesPerView) => {
-    if(slidesPerView === 'auto'){
-        return `
-        flex: 0 0 auto;
-        max-width: none;
-        `;
-    }
-
-    return `
-        flex: 1 0 ${100 / slidesPerView}%;
-        max-width: ${100 / slidesPerView}%;
-    `;
 };
 
 

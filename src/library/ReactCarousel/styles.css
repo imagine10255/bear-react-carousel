@@ -1,7 +1,7 @@
 
 
 
-.imreact-carousel__test-number{
+.react-carousel__test-number{
     position: absolute;
     top: 0;
     bottom: 0;
@@ -16,7 +16,7 @@
     background-color: rgba(0, 0, 0, .5);
 }
 
-.imreact-carousel__window-size{
+.react-carousel__window-size{
     position: absolute;
     bottom: 0;
     left: 0;
@@ -31,7 +31,7 @@
 }
 
 
-.imreact-carousel__pagination-group{
+.react-carousel__pagination-group{
     position: absolute;
     bottom: 10px;
     text-align: center;
@@ -39,7 +39,7 @@
     z-index: 10;
 }
 
-.imreact-carousel__pagination-button{
+.react-carousel__pagination-button{
     width: 10px;
     height: 10px;
     border-radius: 7px;
@@ -52,16 +52,16 @@
     opacity: 0.6;
 }
 
-.imreact-carousel__pagination-button[data-active]{
+.react-carousel__pagination-button[data-active]{
     background-color: #00a3e0;
 }
 
 
-.imreact-carousel__pagination-content{}
+.react-carousel__pagination-content{}
 
 
 
-.imreact-carousel__clone-icon-group{
+.react-carousel__clone-icon-group{
     position: absolute;
     top: 10px;
     left: 10px;
@@ -72,15 +72,15 @@
     color: #fff;
 }
 
-.imreact-carousel__clone-icon{
+.react-carousel__clone-icon{
     width: 20px;
     height: 20px;
     background: transparent no-repeat center center;
     background-size: 100%;
 }
 
-.imreact-carousel__nav-prev-button,
-.imreact-carousel__nav-next-button
+.react-carousel__nav-prev-button,
+.react-carousel__nav-next-button
 {
     border: none;
     outline: none;
@@ -102,19 +102,19 @@
     align-content: center;
     justify-content: center;
 }
-.imreact-carousel__nav-prev-button > img,
-.imreact-carousel__nav-next-button > img{
+.react-carousel__nav-prev-button > img,
+.react-carousel__nav-next-button > img{
     width: 25px;
     height: 25px;
 }
-.imreact-carousel__nav-prev-button > img{
+.react-carousel__nav-prev-button > img{
     transform: rotate(180deg);
 }
 
-.imreact-carousel__nav-group > .imreact-carousel__nav-prev-button{
+.react-carousel__nav-group > .react-carousel__nav-prev-button{
     left: 20px;
 }
-.imreact-carousel__nav-group > .imreact-carousel__nav-next-button{
+.react-carousel__nav-group > .react-carousel__nav-next-button{
     right: 20px;
 }
 
@@ -122,7 +122,7 @@
 
 
 
-.imreact-carousel__slide-item{
+.react-carousel__slide-item{
     transition-property: transform;
     position: relative;
 }
@@ -131,7 +131,7 @@
 
 
 
-.imreact-carousel__container{
+.react-carousel__container{
     position: relative;
     display: flex;
     flex-direction: row;
@@ -142,7 +142,7 @@
 }
 
 
-.imreact-carousel__container[draggable="true"] {
+.react-carousel__container[draggable="true"] {
     /*
        To prevent user selecting inside the drag source
       */
@@ -152,13 +152,13 @@
     -ms-user-select: none;
 }
 
-.imreact-carousel__container[data-is-enable-mouse-move="true"] {
+.react-carousel__container[data-is-enable-mouse-move="true"] {
     cursor: pointer;
 }
 
 
 
-.imreact-carousel__content{
+.react-carousel__content{
     overflow-x: hidden;
     height: inherit;
     /*flex: 1;*/
@@ -168,7 +168,7 @@
 }
 
 
-.imreact-carousel__root{
+.react-carousel__root{
     position: relative;
     /*display: flex;*/
     /*flex-direction: column;*/
