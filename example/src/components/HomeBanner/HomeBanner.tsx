@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react'
 import styled, {css} from 'styled-components/macro';
 import {Col, Container, media, Row} from 'imreact-styled-grid';
 import ReactCarousel, {elClassName} from '@imagine10255/react-carousel';
@@ -51,9 +51,16 @@ const HomeBanner = ({
     style,
     data = [],
 }: IProps) => {
+    const controlRef = useRef(undefined);
+
+    const handleGoItem = (index: number) => {
+        // @ts-ignore
+        controlRef.current.goToActualIndex(index);
+    };
 
     return (<BannerRoot className={className} style={style}>
         <ReactCarousel
+            setControlRef={(ref) => controlRef.current = ref}
             {...setting}
             data={data.map(row => {
                 return {
@@ -64,10 +71,20 @@ const HomeBanner = ({
                 };
             })}
         />
+
+        <br/>
+        <br/>
+        {data.map((row, index) => {
+            return <ItemControl type="button" onClick={() => handleGoItem(index)}>{index}</ItemControl>
+        })}
     </BannerRoot>);
 };
 
 export default HomeBanner;
+
+const ItemControl = styled.button`
+  
+`;
 
 const NavButton = styled.button`
     width: 28px;

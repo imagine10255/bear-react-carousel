@@ -6,6 +6,7 @@ export type TSlidesPerViewActual = number
 
 
 export interface IProps {
+  setControlRef: (ref: any) => void,
   style?: CSS.Properties
   className?: string
   data: IData[];

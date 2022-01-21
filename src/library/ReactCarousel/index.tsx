@@ -86,6 +86,7 @@ class ReactCarousel extends React.Component<IProps, IState> {
   };
 
   // Ref
+  // controlRef: React.RefObject<{goToActualIndex: any}> = React.createRef();
   rootRef: React.RefObject<HTMLDivElement> = React.createRef();
   slideItemRef: React.RefObject<Array<HTMLDivElement>> = React.createRef();
   carouselRef: React.RefObject<HTMLDivElement> = React.createRef();
@@ -99,6 +100,14 @@ class ReactCarousel extends React.Component<IProps, IState> {
       this.slideItemRef['current'] = [];
       // @ts-ignore
       this.pageRef['current'] = [];
+
+      console.log('props.setControlRef', props.setControlRef);
+      console.log('props.typeof props.setControlRef', typeof props.setControlRef);
+      if(typeof props.setControlRef !== 'undefined'){
+        // @ts-ignore
+        props.setControlRef(this);
+      }
+
 
       const {rwdMedia, info} = getMediaInfo(props);
       this.rwdMedia = rwdMedia;
