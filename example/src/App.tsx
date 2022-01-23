@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react'
 
 import ReactCarousel from '@imagine10255/react-carousel';
 import '@imagine10255/react-carousel/dist/index.css';
@@ -33,10 +33,18 @@ const carouselData = bgList.map(row => {
 
 
 const App = () => {
+    const [data, setData] = useState<Array<{key: string, children: React.ReactElement}>>([]);
+
+    useEffect(() => {
+        setTimeout(() => {
+            setData(carouselData);
+        }, 800);
+    }, [])
+
     return <ReactCarousel
         isDebug={true}
         isEnablePagination={true}
-        data={carouselData}
+        data={data}
         slidesPerView={1}
         slidesPerGroup={1}
         breakpoints={{
@@ -47,7 +55,7 @@ const App = () => {
                 isEnableNavButton: false,
             },
             1200: {
-                slidesPerView: 4,
+                slidesPerView: 1,
                 isEnableLoop: true,
                 isEnablePagination: true,
                 isEnableNavButton: true,
