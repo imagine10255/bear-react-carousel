@@ -20,7 +20,7 @@ const bgList = [
 
 const useBgData = bgList.map(row => {
     return {
-        key: String(row.id),
+        key: row.id,
         name: row.name,
         image: row.image,
     };

@@ -1,6 +1,6 @@
 import React, {useRef} from 'react'
 import styled, {css} from 'styled-components/macro';
-import {Col, Container, media, Row} from 'imreact-styled-grid';
+import {Col, Container, media, Row} from '@imagine10255/react-styled-grid';
 import ReactCarousel, {elClassName} from '@imagine10255/react-carousel';
 
 import CSS from 'csstype';
@@ -10,7 +10,7 @@ interface FCProps {
 }
 interface IProps extends FCProps{
     data: Array<{
-        key: string,
+        key: string|number,
         name: string,
         image: string,
     }>
@@ -54,8 +54,9 @@ const HomeBanner = ({
     const controlRef = useRef(undefined);
 
     const handleGoItem = (index: number) => {
-        // @ts-ignore
-        controlRef.current.goToActualIndex(index);
+        if(controlRef.current){
+            controlRef.current.goToActualIndex(index);
+        }
     };
 
     return (<BannerRoot className={className} style={style}>
