@@ -1,6 +1,6 @@
 {
   "name": "@imagine10255/react-carousel",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "Most modern mobile touch slider with hardware accelerated transitions by react",
   "author": "imagine10255",
   "license": "MIT",
@@ -12,6 +12,9 @@
   "module": "dist/index.modern.js",
   "source": "src/index.tsx",
   "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "engines": {
     "node": ">=10"
   },
@@ -52,9 +55,6 @@
     "typescript": "4.1.5",
     "@github/mini-throttle": "2.1.0"
   },
-  "files": [
-    "dist"
-  ],
   "eslintConfig": {
     "extends": [
       "react-app"

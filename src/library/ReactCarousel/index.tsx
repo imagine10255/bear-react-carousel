@@ -105,8 +105,8 @@ class ReactCarousel extends React.Component<IProps, IState> {
       console.log('props.setControlRef', props.setControlRef);
       console.log('props.typeof props.setControlRef', typeof props.setControlRef);
       if(typeof props.setControlRef !== 'undefined'){
-        // @ts-ignore
-        props.setControlRef(this);
+          // @ts-ignore
+          props.setControlRef(this);
       }
 
 
@@ -579,11 +579,11 @@ class ReactCarousel extends React.Component<IProps, IState> {
           const position = this.getMoveDistance(this.activeActualIndex);
           const element = this.carouselRef.current;
           if(element){
-            element.style.visibility = 'visible';
-            element.style.transitionDuration = isUseAnimation
-              ? `${moveTime}ms`
-              : '0ms';
-            element.style.transform = `translate3d(${position}px, 0px, 0px)`;
+              element.style.visibility = 'visible';
+              element.style.transitionDuration = isUseAnimation
+                  ? `${moveTime}ms`
+                  : '0ms';
+              element.style.transform = `translate3d(${position}px, 0px, 0px)`;
           }
 
 
