@@ -5,29 +5,20 @@ export type TSlidesPerView = number|'auto'
 export type TSlidesPerViewActual = number
 
 
-export interface IProps {
+export interface IProps extends IBreakpointSetting{
   setControlRef?: (ref: any) => void,
   style?: CSS.Properties
   className?: string
   data: IData[];
-  slidesPerView: TSlidesPerView;
-  slidesPerGroup: number
-  isEnableLoop: boolean
-  isEnableMouseMove: boolean
-  isEnablePagination: boolean
-  isEnableNavButton: boolean
   moveTime: number
   autoPlayTime: number
-  isDebug: boolean
   breakpoints: IPropsBreakpoints
-  spaceBetween: number
   renderNavButton?: (
     toPrev: TToPrev,
     toNext: TToNext,
   ) => void
-  isCenteredSlides: boolean,
-  // emitSetFunc: (params: ICommonFunc) => void
   onChange?: (index: number, page: number) => void
+  isDebug: boolean
 }
 
 export interface ITouchStart {
@@ -82,11 +73,12 @@ export interface IData {
 export interface IBreakpointSetting {
   slidesPerView: TSlidesPerView
   slidesPerGroup: number
+  spaceBetween: number
+  isCenteredSlides: boolean
   isEnableLoop: boolean
   isEnablePagination: boolean
   isEnableNavButton: boolean
-  isCenteredSlides: boolean
-  spaceBetween: number
+  isEnableMouseMove: boolean
 }
 export interface IBreakpointSettingActual extends IBreakpointSetting {
   slidesPerViewActual: TSlidesPerViewActual

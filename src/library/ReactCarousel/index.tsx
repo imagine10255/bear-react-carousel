@@ -67,10 +67,11 @@ class ReactCarousel extends React.Component<IProps, IState> {
       slidesPerViewActual: 1,
       slidesPerGroup: 1,
       spaceBetween: 0,
+      isCenteredSlides: false,
       isEnableLoop: false,
       isEnableNavButton: true,
       isEnablePagination: true,
-      isCenteredSlides: false,
+      isEnableMouseMove: true,
   };
 
   touchStart: ITouchStart = {
@@ -119,7 +120,6 @@ class ReactCarousel extends React.Component<IProps, IState> {
 
 
   componentDidMount() {
-      const {isEnableMouseMove} = this.props;
       const element = this.carouselRef.current as HTMLElement;
 
       // 檢查並開啟自動輪播
@@ -136,13 +136,12 @@ class ReactCarousel extends React.Component<IProps, IState> {
       element.addEventListener('transitionend', () => this.resetPageByLoop());
 
 
-      // @ts-ignore
       if (checkIsMobile()) {
-      // Mobile 壓住拖動
+          // Mobile 壓住拖動
           element.addEventListener('touchstart', this.mobileTouchStart);
 
-      } else if (isEnableMouseMove) {
-      // 電腦網頁滑鼠拖拉
+      } else {
+          // 電腦網頁滑鼠拖拉
           element.onmousedown = (event) => this.webMouseStart(event);
       }
   }
@@ -265,8 +264,9 @@ class ReactCarousel extends React.Component<IProps, IState> {
       const translateX = moveX - this.touchStart.x;
       const element = this.carouselRef.current as HTMLElement;
 
-      if(this.slideItemRef.current){
-      // 取得移動限制
+      console.log('this.rwdMedia.isEnableMouseMove', this.rwdMedia.isEnableMouseMove);
+      if(this.rwdMedia.isEnableMouseMove && this.slideItemRef.current){
+          // 取得移動限制
           const distance = {
               min: this.getMoveDistance(this.info.actual.minIndex),
               max: this.getMoveDistance(this.info.actual.lastIndex),
@@ -577,12 +577,15 @@ class ReactCarousel extends React.Component<IProps, IState> {
 
           // 移動EL位置
           const position = this.getMoveDistance(this.activeActualIndex);
-          const element = this.carouselRef.current as HTMLElement;
-          element.style.visibility = 'visible';
-          element.style.transitionDuration = isUseAnimation
+          const element = this.carouselRef.current;
+          if(element){
+            element.style.visibility = 'visible';
+            element.style.transitionDuration = isUseAnimation
               ? `${moveTime}ms`
               : '0ms';
-          element.style.transform = `translate3d(${position}px, 0px, 0px)`;
+            element.style.transform = `translate3d(${position}px, 0px, 0px)`;
+          }
+
 
           // 提供是否為第一頁/最後一頁的判斷屬性
           if (this.rootRef?.current) {
@@ -687,7 +690,7 @@ class ReactCarousel extends React.Component<IProps, IState> {
 
 
   render() {
-      const {style, className, isEnableMouseMove, isDebug} = this.props;
+      const {style, className, isDebug} = this.props;
       const {windowSize} = this.state;
 
 
@@ -719,7 +722,7 @@ class ReactCarousel extends React.Component<IProps, IState> {
                   <div
                       ref={this.carouselRef}
                       className={elClassName.carouselContainer}
-                      data-is-enable-mouse-move={isEnableMouseMove}
+                      data-is-enable-mouse-move={this.rwdMedia.isEnableMouseMove}
                       data-actual={`${this.info.actual.minIndex},${this.info.actual.firstIndex}-${this.info.actual.lastIndex},${this.info.actual.maxIndex}`}
                   >
                       {this.info.formatElement.map((row, i) => (

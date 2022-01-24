@@ -51,16 +51,17 @@ const getMediaSetting = (setting: IBreakpointSetting, breakpoints: IPropsBreakpo
 
 const getMediaInfo = (props: IProps): {rwdMedia: IBreakpointSettingActual, info: IInfo} => {
 
-    const {data, breakpoints, slidesPerGroup, slidesPerView, spaceBetween, isEnableLoop, isEnableNavButton, isEnablePagination, isCenteredSlides} = props;
+    const {data, breakpoints, slidesPerGroup, slidesPerView, spaceBetween, isEnableLoop, isEnableNavButton, isEnableMouseMove, isEnablePagination, isCenteredSlides} = props;
 
     const rwdMedia = getMediaSetting({
         slidesPerView: slidesPerView,
         slidesPerGroup: slidesPerGroup,
         spaceBetween: spaceBetween,
+        isCenteredSlides: isCenteredSlides,
         isEnableLoop: isEnableLoop,
         isEnableNavButton: isEnableNavButton,
         isEnablePagination: isEnablePagination,
-        isCenteredSlides: isCenteredSlides,
+        isEnableMouseMove: isEnableMouseMove,
     }, breakpoints);
 
 

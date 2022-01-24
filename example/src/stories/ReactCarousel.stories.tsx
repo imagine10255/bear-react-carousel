@@ -75,6 +75,7 @@ const Template: ComponentStory<typeof ReactCarousel> = (args) => <ReactCarousel 
 export const Default = Template.bind({});
 Default.args = {
     isDebug: true,
+    isEnableMouseMove: true,
     data: useBgData,
 };
 
@@ -121,6 +122,7 @@ SpaceBetween.args = {
 export const InfiniteLoop = Template.bind({});
 InfiniteLoop.args = {
     isDebug: true,
+    isEnableMouseMove: true,
     isEnablePagination: true,
     isEnableLoop: true,
     data: useBgData,
@@ -131,6 +133,7 @@ InfiniteLoopWithSlidesPerView.args = {
     isDebug: true,
     slidesPerView: 3,
     spaceBetween: 10,
+    isEnableMouseMove: true,
     isEnablePagination: true,
     isEnableLoop: true,
     data: useBgData.slice(0, 7),
@@ -142,6 +145,7 @@ InfiniteLoopWithSlidesPerGroup.args = {
     slidesPerView: 3,
     slidesPerGroup: 3,
     spaceBetween: 10,
+    isEnableMouseMove: true,
     isEnablePagination: true,
     isEnableLoop: true,
     data: useBgData,
@@ -153,6 +157,7 @@ InfiniteLoopWithSlidesPerGroupNotDivisible.args = {
     slidesPerView: 3,
     slidesPerGroup: 3,
     spaceBetween: 10,
+    isEnableMouseMove: true,
     isEnablePagination: true,
     isEnableLoop: true,
     data: useBgData.slice(0, 7),
@@ -165,6 +170,7 @@ Centered.args = {
     isDebug: true,
     slidesPerView: 4,
     spaceBetween: 10,
+    isEnableMouseMove: true,
     isEnablePagination: true,
     isCenteredSlides: true,
     data: useBgData,
@@ -176,6 +182,7 @@ AutoPlay.args = {
     isDebug: true,
     isEnablePagination: true,
     isEnableLoop: true,
+    isEnableMouseMove: true,
     autoPlayTime: 3000,
     data: useBgData,
 };
@@ -183,6 +190,7 @@ export const Breakpoints = Template.bind({});
 Breakpoints.args = {
     isDebug: true,
     isEnablePagination: true,
+    isEnableMouseMove: true,
     isEnableLoop: true,
     data: useBgData,
     slidesPerView: 1,
@@ -192,12 +200,14 @@ Breakpoints.args = {
             isEnableLoop: false,
             isEnablePagination: false,
             isEnableNavButton: false,
+            isEnableMouseMove: false,
         },
         1200: {
             slidesPerView: 4,
             isEnableLoop: true,
             isEnablePagination: true,
             isEnableNavButton: true,
+            isEnableMouseMove: true,
         }
     }
 };
