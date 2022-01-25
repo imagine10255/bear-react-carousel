@@ -3,7 +3,7 @@ import {ComponentStory, Meta} from '@storybook/react';
 
 import HomeBanner from 'components/HomeBanner';
 
-import '@imagine10255/react-carousel/dist/index.css';
+import 'imagine-react-carousel/dist/index.css';
 
 
 const bgList = [

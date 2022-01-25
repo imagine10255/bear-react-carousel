@@ -1,9 +1,9 @@
 import React from 'react';
 import {ComponentStory, ComponentMeta} from '@storybook/react';
 
-import ReactCarousel from '@imagine10255/react-carousel';
+import ReactCarousel from 'imagine-react-carousel';
 import styled from 'styled-components/macro';
-import '@imagine10255/react-carousel/dist/index.css';
+import 'imagine-react-carousel/dist/index.css';
 
 
 const CarouselItem = styled.div<any>`

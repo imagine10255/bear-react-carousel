@@ -1,7 +1,7 @@
 import React, {useRef} from 'react'
 import styled, {css} from 'styled-components/macro';
-import {Col, Container, media, Row} from '@imagine10255/react-styled-grid';
-import ReactCarousel, {elClassName} from '@imagine10255/react-carousel';
+import {Col, Container, media, Row} from 'imagine-react-styled-grid';
+import ReactCarousel, {elClassName} from 'imagine-react-carousel';
 
 import CSS from 'csstype';
 interface FCProps {

@@ -1,6 +1,6 @@
 {
-  "name": "@imagine10255/react-carousel",
-  "version": "1.0.5",
+  "name": "imagine-react-carousel",
+  "version": "1.0.1",
   "description": "Most modern mobile touch slider with hardware accelerated transitions by react",
   "author": "imagine10255",
   "license": "MIT",
@@ -8,9 +8,9 @@
     "type": "git",
     "url": "https://github.com/imagine10255/react-carousel.git"
   },
+  "source": "src/ReactCarousel/index.ts",
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
-  "source": "src/index.tsx",
   "types": "dist/index.d.ts",
   "files": [
     "dist"
@@ -19,7 +19,7 @@
     "node": ">=10"
   },
   "scripts": {
-    "build": "microbundle-crl --no-compress --no-css-modules --format modern,cjs",
+    "build": "rm -rf ./dist && microbundle-crl --no-compress --no-css-modules --format modern,cjs",
     "dev": "cd example && yarn install && yarn run start",
     "start": "microbundle-crl watch --no-compress --no-css-modules --format modern,cjs",
     "prepare": "run-s build",

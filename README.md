@@ -2,12 +2,12 @@
 
 > Most modern mobile touch slider with hardware accelerated transitions by react
 
-[![NPM](https://img.shields.io/npm/v/@imagine10255/react-carousel.svg)](https://www.npmjs.com/package/@imagine10255/react-carousel) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/imagine-react-carousel.svg)](https://www.npmjs.com/package/imagine-react-carousel) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Install
 
 ```bash
-yarn add @imagine10255/react-carousel
+yarn add imagine-react-carousel
 ```
 
 ## Usage
@@ -15,8 +15,8 @@ yarn add @imagine10255/react-carousel
 ```tsx
 import React from 'react'
 
-import ReactCarousel from '@imagine10255/react-carousel'
-import '@imagine10255/react-carousel/dist/index.css'
+import ReactCarousel from 'imagine-react-carousel'
+import 'imagine-react-carousel/dist/index.css'
 
 
 const imageList = [

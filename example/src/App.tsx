@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 
-import ReactCarousel from '@imagine10255/react-carousel';
-import '@imagine10255/react-carousel/dist/index.css';
+import ReactCarousel from 'imagine-react-carousel';
+import 'imagine-react-carousel/dist/index.css';
 
 
 

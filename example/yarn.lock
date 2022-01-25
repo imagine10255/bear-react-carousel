@@ -1755,13 +1755,13 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@imagine10255/react-carousel@link:..":
+"imagine-react-carousel@link:..":
   version "0.0.0"
   uid ""
 
-"@imagine10255/react-styled-grid@1.0.6":
+"imagine-react-styled-grid@1.0.6":
   version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@imagine10255/react-styled-grid/-/react-styled-grid-1.0.6.tgz#ca3cd3cfca35ad68f721070d70685ebf10d49702"
+  resolved "https://registry.yarnpkg.com/imagine-react-styled-grid/-/react-styled-grid-1.0.6.tgz#ca3cd3cfca35ad68f721070d70685ebf10d49702"
   integrity sha512-NnslGnAqV/u+Fm0UdFjboMgarXRBdgxqR7lCAnFrEvE12/I+HhSyRl5zYppczMbOOOiTXi9+/cUaZNhexgx6Kw==
   dependencies:
     styled-components "5.2.1"

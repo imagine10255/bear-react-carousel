@@ -65,7 +65,7 @@ export interface IInfo {
   isVisibleNavButton: boolean,
 }
 export interface IData {
-  key: string
+  key: string|number
   paginationContent?: ReactNode
   children: ReactNode
 }
@@ -84,9 +84,6 @@ export interface IBreakpointSettingActual extends IBreakpointSetting {
   slidesPerViewActual: TSlidesPerViewActual
 }
 
-export interface IBreakpoints {
-  [key: number]: IBreakpointSetting
-}
 export interface IPropsBreakpoints {
   [key: number]: Partial<IBreakpointSetting>
 }
