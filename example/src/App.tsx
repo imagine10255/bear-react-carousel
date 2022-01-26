@@ -21,11 +21,13 @@ const bgList = [
 
 const carouselData = bgList.map(row => {
     return {
-        key: String(row.id),
+        key: row.id,
         children: <div
             className="carousel_item"
             style={{
                 backgroundImage: `url(${row.image})`,
+                backgroundSize: "cover",
+                height: "200px"
             }}
         />
     };
@@ -33,7 +35,7 @@ const carouselData = bgList.map(row => {
 
 
 const App = () => {
-    const [data, setData] = useState<Array<{key: string, children: React.ReactElement}>>([]);
+    const [data, setData] = useState<Array<{key: number, children: React.ReactElement}>>([]);
 
     useEffect(() => {
         setTimeout(() => {
