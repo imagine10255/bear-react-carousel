@@ -19,19 +19,30 @@
     "node": ">=10"
   },
   "scripts": {
-    "build": "rm -rf ./dist && microbundle-crl --no-compress --no-css-modules --format modern,cjs",
+    "build": "run-s build:claer && microbundle-crl --no-compress --no-css-modules --format modern,cjs",
+    "build:claer": "rm -rf ./dist",
     "dev": "cd example && yarn install && yarn run start",
-    "start": "microbundle-crl watch --no-compress --no-css-modules --format modern,cjs",
-    "prepare": "run-s build",
+    "start": "run-s build:claer && microbundle-crl watch --no-compress --no-css-modules --format modern,cjs",
+    "prepublishOnly": "run-s build",
     "test": "run-s test:unit test:lint test:build",
     "test:build": "run-s build",
     "test:lint": "eslint .",
     "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
     "test:watch": "react-scripts test --env=jsdom",
-    "storybook": "cd example && yarn install && yarn run storybook",
     "predeploy": "cd example && yarn install && yarn run build-storybook",
     "deploy": "gh-pages -d example/storybook-static",
-    "lint:fix": "eslint ./src --fix"
+    "gitlog": "git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cblueby %an %Cgreen(%cr)%Creset'",
+    "lint:fix": "eslint ./src --fix",
+    "cz": "git cz",
+    "release": "standard-version --release-as",
+    "release:major": "standard-version -r major",
+    "release:minor": "standard-version -r minor",
+    "release:patch": "standard-version -r patch",
+    "release:alpha": "standard-version --prerelease alpha",
+    "storybook": "cd example && yarn install && yarn run storybook"
+  },
+  "resolutions": {
+    "react-error-overlay": "6.0.9"
   },
   "peerDependencies": {
     "react": "17.0.2"
@@ -53,7 +64,10 @@
     "react-dom": "17.0.2",
     "react-scripts": "4.0.3",
     "typescript": "4.1.5",
-    "@github/mini-throttle": "2.1.0"
+    "@github/mini-throttle": "2.1.0",
+    "cz-conventional-changelog": "3.3.0",
+    "cz-customizable": "6.3.0",
+    "standard-version": "9.3.0"
   },
   "eslintConfig": {
     "extends": [
@@ -76,7 +90,10 @@
         "error",
         "never"
       ],
-      "import/no-anonymous-default-export": "off"
+      "no-useless-escape": "off",
+      "import/no-anonymous-default-export": "off",
+      "react-hooks/exhaustive-deps": "off",
+      "@typescript-eslint/no-unused-vars": "off"
     }
   }
 }

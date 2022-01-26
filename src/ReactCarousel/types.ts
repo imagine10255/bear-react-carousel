@@ -1,25 +1,13 @@
 import {ReactNode} from 'react';
-import * as CSS from 'csstype';
 
 export type TSlidesPerView = number|'auto'
 export type TSlidesPerViewActual = number
 
 
-export interface IProps extends IBreakpointSetting{
-  setControlRef?: (ref: any) => void,
-  style?: CSS.Properties
-  className?: string
-  data: IData[];
-  moveTime: number
-  autoPlayTime: number
-  breakpoints: IPropsBreakpoints
-  renderNavButton?: (
-    toPrev: TToPrev,
-    toNext: TToNext,
-  ) => void
-  onChange?: (index: number, page: number) => void
-  isDebug: boolean
+export interface IReactCarouselRef {
+  goToActualIndex: (slideIndex: number, isUseAnimation?: boolean) => void;
 }
+
 
 export interface ITouchStart {
   pageX: number,
