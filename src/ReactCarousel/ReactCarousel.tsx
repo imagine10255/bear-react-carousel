@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {throttle} from '@github/mini-throttle';
 import {checkIsMobile, getTranslateParams, getMediaInfo, getMediaRangeSize} from './utils';
-import { IInfo, ITouchStart, IBreakpointSettingActual, IBreakpointSetting, IData, IPropsBreakpoints, TToPrev, TToNext } from './types'
+import { IInfo, ITouchStart, IBreakpointSettingActual, IReactCarouselProps} from './types'
 import elClassName from './el-class-name';
 
 import copyIcon from 'assets/copy-icon.png';
@@ -16,25 +16,10 @@ interface IState {
   windowSize: number,
 }
 
-interface IProps extends IBreakpointSetting{
-  setControlRef?: (ref: ReactCarousel) => void,
-    style?: CSS.Properties
-  className?: string
-  data: IData[];
-  moveTime: number
-  autoPlayTime: number
-  breakpoints: IPropsBreakpoints
-  renderNavButton?: (
-    toPrev: TToPrev,
-    toNext: TToNext,
-  ) => void
-    onChange?: (index: number, page: number) => void
-    isDebug: boolean
-}
 
 
 
-class ReactCarousel extends React.Component<IProps, IState> {
+class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
   static defaultProps = {
       data: [],
       slidesPerView: 1,
