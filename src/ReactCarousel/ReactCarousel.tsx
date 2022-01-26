@@ -7,7 +7,6 @@ import elClassName from './el-class-name';
 import copyIcon from 'assets/copy-icon.png';
 import rightArrowIcon from 'assets/right-arrow-icon.png';
 import './styles.css';
-import * as CSS from 'csstype'
 
 // 滑動觸發移動距離
 const triggerTouchDistance = 60;
@@ -96,7 +95,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
   pageRef: React.RefObject<Array<HTMLDivElement>> = React.createRef();
 
 
-  constructor(props: IProps) {
+  constructor(props: IReactCarouselProps) {
       super(props);
 
       // @ts-ignore
@@ -158,7 +157,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
   }
 
 
-  componentDidUpdate(prevProps: Readonly<IProps>, prevState: Readonly<IState>, snapshot?: any): void {
+  componentDidUpdate(prevProps: Readonly<IReactCarouselProps>, prevState: Readonly<IState>, snapshot?: any): void {
     const data = this.props.data;
     const prevData = prevProps.data;
 
@@ -175,7 +174,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
    * @param nextProps
    * @param nextState
    */
-  shouldComponentUpdate(nextProps: IProps, nextState: IState) {
+  shouldComponentUpdate(nextProps: IReactCarouselProps, nextState: IState) {
       const {windowSize: nextWindowSize} = nextState;
       const {windowSize} = this.state;
       const {data, ...otherParams} = this.props;
