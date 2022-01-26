@@ -2,7 +2,10 @@
 
 > Most modern mobile touch slider with hardware accelerated transitions by react
 
-[![NPM](https://img.shields.io/npm/v/imagine-react-carousel.svg)](https://www.npmjs.com/package/imagine-react-carousel) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/imagine-react-carousel.svg)](https://www.npmjs.com/package/imagine-react-carousel)
+[![npm](https://img.shields.io/npm/dm/imagine-react-carousel.svg)](https://www.npmjs.com/package/imagine-react-carousel)
+
+This project [demo](https://imagine10255.github.io/react-carousel/)
 
 ## Install
 
@@ -38,6 +41,7 @@ const carouselData = imageList.map(row => {
     children: <div
       style={{
         height: '100px',   <~ you need give hieght or use padding-bottom: %
+        backgroundSize: 'cover',
         backgroundImage: `url(${row.imageUrl})`,
       }}
     />
@@ -99,6 +103,11 @@ class ExampleComponent () => {
     />
 }
 ```
+
+There is also a codesandbox template that you can fork and play with it:
+
+[![Edit react-editext-template](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/react-carousel-9h6eu)
+
 
 
 ## if your need control by out component, but not use loop

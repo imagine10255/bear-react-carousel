@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {throttle} from '@github/mini-throttle';
 import {checkIsMobile, getTranslateParams, getMediaInfo, getMediaRangeSize} from './utils';
-import {IInfo, ITouchStart, IBreakpointSettingActual, IProps} from './types';
+import { IInfo, ITouchStart, IBreakpointSettingActual, IReactCarouselProps} from './types'
 import elClassName from './el-class-name';
 
 import copyIcon from 'assets/copy-icon.png';
@@ -17,7 +17,8 @@ interface IState {
 
 
 
-class ReactCarousel extends React.Component<IProps, IState> {
+
+class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
   static defaultProps = {
       data: [],
       slidesPerView: 1,
@@ -94,7 +95,7 @@ class ReactCarousel extends React.Component<IProps, IState> {
   pageRef: React.RefObject<Array<HTMLDivElement>> = React.createRef();
 
 
-  constructor(props: IProps) {
+  constructor(props: IReactCarouselProps) {
       super(props);
 
       // @ts-ignore
@@ -102,10 +103,7 @@ class ReactCarousel extends React.Component<IProps, IState> {
       // @ts-ignore
       this.pageRef['current'] = [];
 
-      console.log('props.setControlRef', props.setControlRef);
-      console.log('props.typeof props.setControlRef', typeof props.setControlRef);
       if(typeof props.setControlRef !== 'undefined'){
-          // @ts-ignore
           props.setControlRef(this);
       }
 
@@ -159,6 +157,16 @@ class ReactCarousel extends React.Component<IProps, IState> {
   }
 
 
+  componentDidUpdate(prevProps: Readonly<IReactCarouselProps>, prevState: Readonly<IState>, snapshot?: any): void {
+    const data = this.props.data;
+    const prevData = prevProps.data;
+
+    const nextKey = data.map((row) => row.key).join('_');
+    const oldKey = prevData.map((row) => row.key).join('_');
+    if(oldKey !== nextKey){
+      this.goToActualIndex(this.info.actual.firstIndex, false);
+    }
+  }
 
 
   /***
@@ -166,7 +174,7 @@ class ReactCarousel extends React.Component<IProps, IState> {
    * @param nextProps
    * @param nextState
    */
-  shouldComponentUpdate(nextProps: IProps, nextState: IState) {
+  shouldComponentUpdate(nextProps: IReactCarouselProps, nextState: IState) {
       const {windowSize: nextWindowSize} = nextState;
       const {windowSize} = this.state;
       const {data, ...otherParams} = this.props;

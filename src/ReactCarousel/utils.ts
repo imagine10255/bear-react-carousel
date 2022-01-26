@@ -1,4 +1,4 @@
-import {IBreakpointSetting, TSlidesPerView, IBreakpointSettingActual, IInfo, IProps, IPropsBreakpoints} from './types';
+import { IBreakpointSetting, TSlidesPerView, IBreakpointSettingActual, IInfo, IPropsBreakpoints, IReactCarouselProps } from './types'
 
 
 /**
@@ -49,7 +49,7 @@ const getMediaSetting = (setting: IBreakpointSetting, breakpoints: IPropsBreakpo
 };
 
 
-const getMediaInfo = (props: IProps): {rwdMedia: IBreakpointSettingActual, info: IInfo} => {
+const getMediaInfo = (props: IReactCarouselProps): {rwdMedia: IBreakpointSettingActual, info: IInfo} => {
 
     const {data, breakpoints, slidesPerGroup, slidesPerView, spaceBetween, isEnableLoop, isEnableNavButton, isEnableMouseMove, isEnablePagination, isCenteredSlides} = props;
 

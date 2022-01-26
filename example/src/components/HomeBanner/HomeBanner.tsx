@@ -1,9 +1,10 @@
-import React, {useRef} from 'react'
-import styled, {css} from 'styled-components/macro';
-import {Col, Container, media, Row} from 'imagine-react-styled-grid';
-import ReactCarousel, {elClassName} from 'imagine-react-carousel';
+import React, { useRef } from 'react'
+import styled, { css } from 'styled-components/macro'
+import { Col, Container, EColType, media, Row } from 'imagine-react-styled-grid'
+import ReactCarousel, { elClassName, IReactCarouselRef } from 'imagine-react-carousel'
 
-import CSS from 'csstype';
+import CSS from 'csstype'
+
 interface FCProps {
     style?: CSS.Properties,
     className?: string,
@@ -29,12 +30,12 @@ const setting = {
         <PaginateGroup className={elClassName.paginationGroup}>
             <Container>
                 <Row className="justify-content-center justify-content-lg-end">
-                    <Col col="auto">
+                    <Col col={EColType.auto}>
                         <NavButton type="button" onClick={() => handleToPrev()}>
                             <div>{'<'}</div>
                         </NavButton>
                     </Col>
-                    <Col col="auto">
+                    <Col col={EColType.auto}>
                         <NavButton type="button" onClick={() => handleToNext()}>
                             <div>{'>'}</div>
                         </NavButton>
@@ -51,7 +52,7 @@ const HomeBanner = ({
     style,
     data = [],
 }: IProps) => {
-    const controlRef = useRef(undefined);
+    const controlRef = useRef<IReactCarouselRef>();
 
     const handleGoItem = (index: number) => {
         if(controlRef.current){
