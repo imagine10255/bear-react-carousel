@@ -1,6 +1,15 @@
 import { IBreakpointSetting, TSlidesPerView, IBreakpointSettingActual, IInfo, IPropsBreakpoints, IReactCarouselProps } from './types'
 
 
+const dd = (...log: any) => {
+    const dom = document.getElementById('debug-textarea') as HTMLTextAreaElement;
+    if(dom){
+        const date = new Date();
+        const num = `${date.getMinutes()}${date.getSeconds()}`;
+        dom.value = `${num}: ${log}\n${dom.value}`;
+    }
+}
+
 /**
  * 取得螢幕尺寸對應設定尺寸
  * @param breakpointSizes
@@ -231,4 +240,4 @@ const getTranslateParams = (el: any) => {
 
 
 
-export {getMediaRangeSize, getMediaSetting, getMediaInfo, initDataList, checkIsMobile, getTranslateParams};
+export {dd, getMediaRangeSize, getMediaSetting, getMediaInfo, initDataList, checkIsMobile, getTranslateParams};
