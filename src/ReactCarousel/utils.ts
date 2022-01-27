@@ -103,7 +103,6 @@ const getMediaInfo = (props: IReactCarouselProps): {rwdMedia: IBreakpointSetting
     }, breakpoints);
 
 
-    // console.log('rwdMedia', rwdMedia);
     const divisible = data.length % rwdMedia.slidesPerGroup; // 餘數
     let sliceData = divisible > 0 ? data.slice(0, data.length - divisible) : data;
     let sourceTotal = sliceData.length;

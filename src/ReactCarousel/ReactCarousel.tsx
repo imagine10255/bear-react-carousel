@@ -484,7 +484,6 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
       // const goIndex = this.activeActualIndex > this.info.actual.lastIndex ? this.info.actual.lastIndex: this.activeActualIndex;
       this.goToPage(1, false);
 
-      console.log('_handleResize');
       if(windowSize !== selectSize){
           this.setState({
               windowSize: selectSize,
