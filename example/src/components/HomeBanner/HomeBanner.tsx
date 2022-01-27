@@ -1,9 +1,9 @@
-import React, { useRef } from 'react'
-import styled, { css } from 'styled-components/macro'
-import { Col, Container, EColType, media, Row } from 'imagine-react-styled-grid'
-import ReactCarousel, { elClassName, IReactCarouselRef } from 'imagine-react-carousel'
+import React, {useRef} from 'react';
+import styled, {css} from 'styled-components/macro';
+import {Col, Container, EColType, media, Row} from 'imagine-react-styled-grid';
+import ReactCarousel, {elClassName, IReactCarouselRef} from 'imagine-react-carousel';
 
-import CSS from 'csstype'
+import CSS from 'csstype';
 
 interface FCProps {
     style?: CSS.Properties,
@@ -77,7 +77,7 @@ const HomeBanner = ({
         <br/>
         <br/>
         {data.map((row, index) => {
-            return <ItemControl type="button" onClick={() => handleGoItem(index)}>{index}</ItemControl>
+            return <ItemControl type="button" onClick={() => handleGoItem(index)}>{index}</ItemControl>;
         })}
     </BannerRoot>);
 };

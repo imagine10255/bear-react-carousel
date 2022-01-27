@@ -1,4 +1,4 @@
-import { IBreakpointSetting, TSlidesPerView, IBreakpointSettingActual, IInfo, IPropsBreakpoints, IReactCarouselProps } from './types'
+import {IBreakpointSetting, TSlidesPerView, IBreakpointSettingActual, IInfo, IPropsBreakpoints, IReactCarouselProps} from './types';
 
 
 const dd = (...log: any) => {
@@ -8,7 +8,7 @@ const dd = (...log: any) => {
         const num = `${date.getMinutes()}${date.getSeconds()}`;
         dom.value = `${num}: ${log}\n${dom.value}`;
     }
-}
+};
 
 /**
  * 取得螢幕尺寸對應設定尺寸

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react';
 
 import ReactCarousel from 'imagine-react-carousel';
 import 'imagine-react-carousel/dist/index.css';
@@ -26,8 +26,8 @@ const carouselData = bgList.map(row => {
             className="carousel_item"
             style={{
                 backgroundImage: `url(${row.image})`,
-                backgroundSize: "cover",
-                height: "200px"
+                backgroundSize: 'cover',
+                height: '200px'
             }}
         />
     };
@@ -42,37 +42,37 @@ const App = () => {
         setTimeout(() => {
             setData(carouselData);
         }, 800);
-    }, [])
+    }, []);
 
     return <>
         <ReactCarousel
-          isDebug={true}
-          isEnablePagination={true}
-          isEnableMouseMove={isEnableMouseMove}
-          data={data}
-          slidesPerView={1}
-          slidesPerGroup={1}
-          breakpoints={{
-              768: {
-                  slidesPerView: 2,
-                  isEnableLoop: false,
-                  isEnablePagination: false,
-                  isEnableNavButton: false,
-              },
-              1200: {
-                  slidesPerView: 1,
-                  isEnableLoop: true,
-                  isEnablePagination: true,
-                  isEnableNavButton: true,
-              }
-          }}
+            isDebug={true}
+            isEnablePagination={true}
+            isEnableMouseMove={isEnableMouseMove}
+            data={data}
+            slidesPerView={1}
+            slidesPerGroup={1}
+            breakpoints={{
+                768: {
+                    slidesPerView: 2,
+                    isEnableLoop: false,
+                    isEnablePagination: false,
+                    isEnableNavButton: false,
+                },
+                1200: {
+                    slidesPerView: 1,
+                    isEnableLoop: true,
+                    isEnablePagination: true,
+                    isEnableNavButton: true,
+                }
+            }}
         />
 
 
         <label style={{marginTop: '30px', display: 'block'}}>
             <input type="checkbox"
-                   checked={isEnableMouseMove}
-                   onChange={() => setIsEnableMouseMove(prev => !prev)}
+                checked={isEnableMouseMove}
+                onChange={() => setIsEnableMouseMove(prev => !prev)}
             />
             isEnableMouseMove: {String(isEnableMouseMove)}
         </label>

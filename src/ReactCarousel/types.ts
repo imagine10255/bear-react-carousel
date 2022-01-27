@@ -1,6 +1,5 @@
 import {ReactNode} from 'react';
-import * as CSS from 'csstype'
-import ReactCarousel from './ReactCarousel'
+import * as CSS from 'csstype';
 
 export type TSlidesPerView = number|'auto'
 export type TSlidesPerViewActual = number
