@@ -110,7 +110,7 @@ There is also a codesandbox template that you can fork and play with it:
 
 
 
-## if your need control by out component, but not use loop
+## if your need control by out component
 
 ```tsx
 const HomeBanner = ({
