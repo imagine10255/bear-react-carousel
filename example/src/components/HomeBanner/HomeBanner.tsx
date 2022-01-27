@@ -1,7 +1,7 @@
-import React, {useRef} from 'react';
+import React, { useCallback, useRef, useState } from 'react'
 import styled, {css} from 'styled-components/macro';
 import {Col, Container, EColType, media, Row} from 'imagine-react-styled-grid';
-import ReactCarousel, {elClassName, IReactCarouselRef} from 'imagine-react-carousel';
+import ReactCarousel, {elClassName, IReactCarouselObj} from 'imagine-react-carousel';
 
 import CSS from 'csstype';
 
@@ -52,18 +52,23 @@ const HomeBanner = ({
     style,
     data = [],
 }: IProps) => {
-    const controlRef = useRef<IReactCarouselRef>();
+    const [control, setCarousel] = useState<IReactCarouselObj>();
 
-    const handleGoItem = (index: number) => {
-        if(controlRef.current){
-            controlRef.current.goToActualIndex(index);
-        }
+    const handleGoPage = (index: number): void => {
+        control?.goToPage(index);
     };
+
+    const getPageTotal = (): number => {
+        return control?.info.pageTotal?? 0;
+    }
+
+    const handleSetCarousel = useCallback(setCarousel, [])
+
 
     return (<BannerRoot className={className} style={style}>
         <ReactCarousel
-            setControlRef={(ref) => controlRef.current = ref}
             {...setting}
+            setCarousel={handleSetCarousel}
             data={data.map(row => {
                 return {
                     key: row.key,
@@ -76,8 +81,13 @@ const HomeBanner = ({
 
         <br/>
         <br/>
-        {data.map((row, index) => {
-            return <ItemControl type="button" onClick={() => handleGoItem(index)}>{index}</ItemControl>;
+        {new Array(getPageTotal()).fill('').map((row, index) => {
+            return <button key={`page_${index}`}
+                           type="button"
+                           style={{marginBottom: '20px',marginLeft: '5px'}}
+                           onClick={() => handleGoPage(index + 1)}>
+                {index + 1}
+            </button>
         })}
     </BannerRoot>);
 };
@@ -123,10 +133,6 @@ const NavButton = styled.button`
 const PaginateGroup = styled.div`
     position: absolute;
     bottom: 60px;
-    
-    
-    
-    
     z-index: 1;
     width: 100%;
 `;
@@ -135,10 +141,11 @@ const PaginateGroup = styled.div`
 const PageHeaderRoot = styled.div<{
     image?: string,
 }>`
-      height: 100%;
+      height: 200px;
       background: center center no-repeat;
       background-size: cover;
       color: #fff;
+      
 
       ${props => props.image && css`
           background-image: url("${props.image}");
@@ -146,6 +153,7 @@ const PageHeaderRoot = styled.div<{
 
 
     ${media.sm`
+        height: auto;
         padding-bottom: 36.5%;
     `}
 `;

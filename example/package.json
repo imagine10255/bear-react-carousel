@@ -37,41 +37,6 @@
     "@storybook/preset-create-react-app": "^3.2.0",
     "@storybook/react": "^6.3.12"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ],
-    "overrides": [
-      {
-        "files": [
-          "**/*.stories.*"
-        ],
-        "rules": {
-          "import/no-anonymous-default-export": "off"
-        }
-      }
-    ],
-    "rules": {
-      "quotes": [
-        "warn",
-        "single"
-      ],
-      "semi": [
-        "warn",
-        "always"
-      ],
-      "indent": [
-        "warn",
-        4
-      ],
-      "object-curly-spacing": [
-        "error",
-        "never"
-      ],
-      "import/no-anonymous-default-export": "off"
-    }
-  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -83,5 +48,32 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "eslintConfig": {
+  "extends": [
+    "react-app"
+  ],
+  "rules": {
+    "quotes": [
+      "warn",
+      "single"
+    ],
+    "semi": [
+      "warn",
+      "always"
+    ],
+    "indent": [
+      "warn",
+      4
+    ],
+    "object-curly-spacing": [
+      "warn",
+      "never"
+    ],
+    "no-useless-escape": "off",
+    "import/no-anonymous-default-export": "off",
+    "react-hooks/exhaustive-deps": "off",
+    "@typescript-eslint/no-unused-vars": "off"
   }
+}
 }

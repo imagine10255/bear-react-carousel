@@ -27,6 +27,17 @@ const uuid = () => {
     });
 }
 
+
+const shallowCompare = (obj: any, prevObj: any) => {
+    for (const key in obj){
+        if(obj[key] !== prevObj[key]) return true;
+    }
+    return false;
+}
+
+
+
+
 /**
  * 取得螢幕尺寸對應設定尺寸
  * @param breakpointSizes
@@ -257,4 +268,4 @@ const getTranslateParams = (el: any) => {
 
 
 
-export {dd, uuid, getMediaRangeSize, getMediaSetting, getMediaInfo, initDataList, checkIsMobile, getTranslateParams};
+export {dd, uuid, shallowCompare, getMediaRangeSize, getMediaSetting, getMediaInfo, initDataList, checkIsMobile, getTranslateParams};

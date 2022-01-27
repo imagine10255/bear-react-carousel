@@ -114,16 +114,20 @@ There is also a codesandbox template that you can fork and play with it:
 
 ```tsx
 const HomeBanner = ({
-    const controlRef = useRef(undefined);
-    
-    const handleGoItem = (index: number) => {
-        if(controlRef.current){
-            controlRef.current.goToActualIndex(index);
-        }
+    const [control, setCarousel] = useState<IReactCarouselObj>();
+   
+    const handleSetCarousel = useCallback(setCarousel, [])
+
+    const handleGoPage = (index: number): void => {
+        control?.goToPage(index);
     };
 
+    const getPageTotal = (): number => {
+        return control?.info.pageTotal?? 0;
+    }
+
     <ReactCarousel
-        setControlRef={(ref) => controlRef.current = ref}
+        setCarousel={handleSetCarousel}
         {...setting}
         data={carouselData}
     />

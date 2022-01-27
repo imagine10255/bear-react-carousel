@@ -1,6 +1,8 @@
 import * as React from 'react';
-import {throttle} from '@github/mini-throttle';
-import { checkIsMobile, getTranslateParams, getMediaInfo, getMediaRangeSize, dd, uuid } from './utils'
+import { throttle } from '@github/mini-throttle'
+import deepEqual from 'deep-equal';
+import { checkIsMobile, getTranslateParams, getMediaInfo, getMediaRangeSize, uuid, shallowCompare } from './utils'
+// import {dd} from './utils'
 import {IInfo, ITouchStart, IBreakpointSettingActual, IReactCarouselProps} from './types';
 import elClassName from './el-class-name';
 
@@ -88,12 +90,11 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
   };
 
   // Ref
-  // controlRef: React.RefObject<{goToActualIndex: any}> = React.createRef();
   rootRef: React.RefObject<HTMLDivElement> = React.createRef();
   slideItemRef: React.RefObject<Array<HTMLDivElement>> = React.createRef();
   carouselRef: React.RefObject<HTMLDivElement> = React.createRef();
   pageRef: React.RefObject<Array<HTMLDivElement>> = React.createRef();
-
+  _throttleHandleResize = () => {};
 
   constructor(props: IReactCarouselProps) {
       super(props);
@@ -103,10 +104,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
       // @ts-ignore
       this.pageRef['current'] = [];
 
-      if(typeof props.setControlRef !== 'undefined'){
-          props.setControlRef(this);
-      }
-
+     this._throttleHandleResize = throttle(this._handleResize, 400);
 
       const {rwdMedia, info} = getMediaInfo(props);
       this.rwdMedia = rwdMedia;
@@ -130,7 +128,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
           this.goToActualIndex(this.info.actual.firstIndex, false);
 
           // 視窗大小變更時
-          window.addEventListener('resize', this._throttleHandleResize);
+          window.addEventListener('resize', this._throttleHandleResize, false);
 
 
           // 移動動畫結束復歸
@@ -145,6 +143,13 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
           // 電腦網頁滑鼠拖拉
               element.onmousedown = (event) => this._webMouseStart(event);
           }
+      }
+
+      if(this.props.setCarousel){
+        this.props.setCarousel({
+          goToPage: this.goToPage,
+          info: this.info,
+        });
       }
 
   }
@@ -165,18 +170,6 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
   }
 
 
-  componentDidUpdate(prevProps: Readonly<IReactCarouselProps>, prevState: Readonly<IState>, snapshot?: any): void {
-      const data = this.props.data;
-      const prevData = prevProps.data;
-
-      const nextKey = data.map((row) => row.key).join('_');
-      const oldKey = prevData.map((row) => row.key).join('_');
-      if(oldKey !== nextKey){
-          this.goToActualIndex(this.info.actual.firstIndex, false);
-      }
-  }
-
-
   /***
    * 優化渲染
    * @param nextProps
@@ -188,16 +181,34 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
       const {data, ...otherParams} = this.props;
       const {data: nextData, ...nextOtherProps} = nextProps;
 
-      if((otherParams !== nextOtherProps) || (nextWindowSize !== windowSize)){
-          const {rwdMedia, info} = getMediaInfo(nextProps);
-          this.rwdMedia = rwdMedia;
-          this.info = info;
-          return true;
-      }
-
       const oldKey = data.map((row) => row.key).join('_');
       const nextKey = nextData.map((row) => row.key).join('_');
-      return oldKey !== nextKey;
+      if(oldKey !== nextKey ||
+        !deepEqual(otherParams, nextOtherProps) ||
+        nextWindowSize !== windowSize
+      ){
+        const {rwdMedia, info} = getMediaInfo(nextProps);
+        this.rwdMedia = rwdMedia;
+        this.info = info;
+
+        // 重置頁面位置
+        const $this = this;
+        setTimeout(() => {
+          $this.goToPage(1, false);
+        }, 0)
+
+        // 設定給外部使用
+        if(otherParams.setCarousel){
+          otherParams.setCarousel({
+            goToPage: this.goToPage,
+            info: this.info,
+          });
+        }
+
+        return true;
+      }
+
+      return false;
   }
 
 
@@ -206,7 +217,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
    * @param event
    */
   _mobileTouchStart = (event: TouchEvent): void => {
-      // event.preventDefault();
+      event.preventDefault();
 
       if(this.carouselRef?.current){
           const element = this.carouselRef.current;
@@ -264,7 +275,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
    * @param event
    */
   _mobileTouchEnd = (event: TouchEvent): void => {
-      // event.preventDefault();
+      event.preventDefault();
 
       if (this.carouselRef?.current) {
           const element = this.carouselRef.current;
@@ -470,9 +481,10 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
       const selectSize = getMediaRangeSize(Object.keys(breakpoints));
 
       // 自動導引到目前位置
-      const goIndex = this.activeActualIndex > this.info.actual.lastIndex ? this.info.actual.lastIndex: this.activeActualIndex;
-      this.goToActualIndex(goIndex);
+      // const goIndex = this.activeActualIndex > this.info.actual.lastIndex ? this.info.actual.lastIndex: this.activeActualIndex;
+      this.goToPage(1, false);
 
+      console.log('_handleResize');
       if(windowSize !== selectSize){
           this.setState({
               windowSize: selectSize,
@@ -480,10 +492,6 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
       }
 
   };
-
-  _throttleHandleResize = () => {
-      throttle(this._handleResize, 400);
-  }
 
 
 
@@ -541,7 +549,6 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
       }
 
       this.goToActualIndex(index);
-
   }
 
   /**
@@ -563,8 +570,8 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
   /**
    * 前往頁面
    */
-  goToPage = (page: number): void => {
-      this.goToActualIndex(page * this.rwdMedia.slidesPerGroup + (this.info.actual.firstIndex - 1));
+  goToPage = (page: number, isUseAnimation = true): void => {
+      this.goToActualIndex(page * this.rwdMedia.slidesPerGroup + (this.info.actual.firstIndex - 1), isUseAnimation);
   }
 
 
@@ -799,7 +806,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
               {/* 頁數導航按鈕 */}
               {this.info.isVisiblePagination && (
                   <div className={elClassName.paginationGroup}>
-                      {this.info.formatElement.length > 0 && this._renderPagination()}
+                      {this.info.pageTotal > 0 && this._renderPagination()}
                   </div>
               )}
 
