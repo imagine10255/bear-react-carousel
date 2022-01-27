@@ -38,34 +38,36 @@ const App = () => {
     const [isEnableMouseMove, setIsEnableMouseMove] = useState<boolean>(true);
     const [data, setData] = useState<Array<{key: number, children: React.ReactElement}>>([]);
 
-    useEffect(() => {
-        setTimeout(() => {
-            setData(carouselData);
-        }, 800);
-    }, []);
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         setData(carouselData);
+    //     }, 800);
+    // }, []);
 
     return <>
         <ReactCarousel
             isDebug={true}
             isEnablePagination={true}
             isEnableMouseMove={isEnableMouseMove}
-            data={data}
+            isEnableNavButton
+            isEnableLoop={true}
+            data={carouselData}
             slidesPerView={1}
             slidesPerGroup={1}
-            breakpoints={{
-                768: {
-                    slidesPerView: 2,
-                    isEnableLoop: false,
-                    isEnablePagination: false,
-                    isEnableNavButton: false,
-                },
-                1200: {
-                    slidesPerView: 1,
-                    isEnableLoop: true,
-                    isEnablePagination: true,
-                    isEnableNavButton: true,
-                }
-            }}
+            // breakpoints={{
+            //     768: {
+            //         slidesPerView: 2,
+            //         isEnableLoop: false,
+            //         isEnablePagination: false,
+            //         isEnableNavButton: false,
+            //     },
+            //     1200: {
+            //         slidesPerView: 1,
+            //         isEnableLoop: true,
+            //         isEnablePagination: true,
+            //         isEnableNavButton: true,
+            //     }
+            // }}
         />
 
 

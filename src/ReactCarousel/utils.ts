@@ -10,6 +10,23 @@ const dd = (...log: any) => {
     }
 };
 
+
+/**
+ * 產生UUID
+ * @private
+ */
+const uuid = () => {
+    let d = Date.now();
+    if (typeof performance !== 'undefined' && typeof performance.now === 'function'){
+        d += performance.now(); //use high-precision timer if available
+    }
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        let r = (d + Math.random() * 16) % 16 | 0;
+        d = Math.floor(d / 16);
+        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+    });
+}
+
 /**
  * 取得螢幕尺寸對應設定尺寸
  * @param breakpointSizes
@@ -240,4 +257,4 @@ const getTranslateParams = (el: any) => {
 
 
 
-export {dd, getMediaRangeSize, getMediaSetting, getMediaInfo, initDataList, checkIsMobile, getTranslateParams};
+export {dd, uuid, getMediaRangeSize, getMediaSetting, getMediaInfo, initDataList, checkIsMobile, getTranslateParams};

@@ -9,6 +9,7 @@ export default {
     navGroup: 'react-carousel__nav-group',
     navPrevButton: 'react-carousel__nav-prev-button',
     navNextButton: 'react-carousel__nav-next-button',
+    navIcon: 'react-carousel__nav-icon',
     paginationGroup: 'react-carousel__pagination-group',
     paginationButton: 'react-carousel__pagination-button',
     paginationContent: 'react-carousel__pagination-content',

@@ -1,11 +1,9 @@
 import * as React from 'react';
 import {throttle} from '@github/mini-throttle';
-import {checkIsMobile, getTranslateParams, getMediaInfo, getMediaRangeSize, dd} from './utils';
+import { checkIsMobile, getTranslateParams, getMediaInfo, getMediaRangeSize, dd, uuid } from './utils'
 import {IInfo, ITouchStart, IBreakpointSettingActual, IReactCarouselProps} from './types';
 import elClassName from './el-class-name';
 
-import copyIcon from 'assets/copy-icon.png';
-import rightArrowIcon from 'assets/right-arrow-icon.png';
 import './styles.css';
 
 // 滑動觸發移動距離
@@ -34,6 +32,8 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
       spaceBetween: 0,
       autoPlayTime: 0,
   };
+
+  _carouselId = uuid();
 
   timer?: any;
   activePage = 0;        // 真實頁面位置
@@ -115,9 +115,6 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
           windowSize: getMediaRangeSize(Object.keys(props.breakpoints)),
       };
 
-      this._mobileTouchStart = this._mobileTouchStart.bind(this);
-      this._mobileTouchMove = this._mobileTouchMove.bind(this);
-      this._mobileTouchEnd = this._mobileTouchEnd.bind(this);
   }
 
 
@@ -137,7 +134,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
 
 
           // 移動動畫結束復歸
-          element.addEventListener('transitionend', this.resetPageByLoop);
+          element.addEventListener('transitionend', this._resetPageByLoop);
 
 
           if (checkIsMobile()) {
@@ -160,7 +157,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
       if(this.carouselRef?.current){
           const element = this.carouselRef.current;
           element.removeEventListener('touchstart', this._mobileTouchStart);
-          element.removeEventListener('transitionend', this.resetPageByLoop);
+          element.removeEventListener('transitionend', this._resetPageByLoop);
       }
 
       window.removeEventListener('resize', this._throttleHandleResize);
@@ -208,7 +205,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
    * 手機手指按壓
    * @param event
    */
-  _mobileTouchStart(event: TouchEvent): void {
+  _mobileTouchStart = (event: TouchEvent): void => {
       // event.preventDefault();
 
       if(this.carouselRef?.current){
@@ -235,7 +232,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
       }
   };
 
-  _mobileTouchMove(event: TouchEvent): void {
+  _mobileTouchMove = (event: TouchEvent): void => {
       const endX = event.changedTouches[0].pageX;
       const endY = event.changedTouches[0].pageY;
       const direction = this._getSlideDirection(this.touchStart.pageX, this.touchStart.pageY, endX, endY);
@@ -266,7 +263,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
    * 手機手指放開
    * @param event
    */
-  _mobileTouchEnd(event: TouchEvent): void {
+  _mobileTouchEnd = (event: TouchEvent): void => {
       // event.preventDefault();
 
       if (this.carouselRef?.current) {
@@ -282,7 +279,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
    *
    * @param moveX 移動X軸
    */
-  _elementMove(moveX: number): void{
+  _elementMove = (moveX: number): void => {
 
       const translateX = moveX - this.touchStart.x;
       if(this.carouselRef?.current){
@@ -310,7 +307,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
   /**
    * 物件移動結束 (確認停下位置 應該吸在哪個Index位置)
    */
-  _elementMoveDone(): void {
+  _elementMoveDone = (): void => {
 
       if(this.carouselRef?.current){
           const element = this.carouselRef.current;
@@ -338,7 +335,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
    * 網頁滑鼠按下
    * @param event
    */
-  _webMouseStart(event: MouseEvent): void {
+  _webMouseStart = (event: MouseEvent): void => {
       event.preventDefault();
 
       if(this.carouselRef?.current){
@@ -427,14 +424,14 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
    * @param dx
    * @param dy
    */
-  _getSlideAngle(dx: number, dy: number): number {
+  _getSlideAngle = (dx: number, dy: number): number => {
       return Math.atan2(dy, dx) * 180 / Math.PI;
   }
 
   /**
    * 檢查並自動播放功能
    */
-  _checkAndAutoPlay(): void {
+  _checkAndAutoPlay = (): void => {
       const {autoPlayTime} = this.props;
 
       // 清除上一次的計時器
@@ -453,10 +450,11 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
 
   /**
    * 重置頁面位置 (LoopMode)
+   * 如果元素內是 isClone 則返回到他應該真實顯示的位置
    */
-  resetPageByLoop(): void {
+  _resetPageByLoop = (): void =>  {
       const formatElement = this.info?.formatElement ? this.info.formatElement : [];
-      if(formatElement.length > (this.activeActualIndex - 1)){
+      if(formatElement.length > (this.activeActualIndex - 1) && formatElement[this.activeActualIndex].isClone){
           this.goToActualIndex(formatElement[this.activeActualIndex].matchIndex, false);
       }
   };
@@ -483,7 +481,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
 
   };
 
-  _throttleHandleResize(){
+  _throttleHandleResize = () => {
       throttle(this._handleResize, 400);
   }
 
@@ -492,14 +490,14 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
   /**
    * 取得下一頁
    */
-  getNextPage(): number {
+  getNextPage = ():number => {
       return this.activePage + 1;
   };
 
   /**
    * 取得下一頁
    */
-  getNextPageFirstIndex(): number {
+  getNextPageFirstIndex = ():number => {
       if(this.rwdMedia.isCenteredSlides){
           return this.activeActualIndex + this.rwdMedia.slidesPerGroup;
       }
@@ -510,14 +508,14 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
   /**
    * 取得最大Index
    */
-  getMaxIndex(): number {
+  getMaxIndex = ():number => {
       return this.info.formatElement.length - 1;
   };
 
   /**
    * 取得虛擬Index
    */
-  checkActualIndexInRange(slideIndex: number): boolean {
+  checkActualIndexInRange = (slideIndex: number): boolean => {
       return slideIndex <= this.info.actual.maxIndex && slideIndex >= this.info.actual.minIndex;
   }
 
@@ -525,7 +523,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
   /**
    * 前往下一頁
    */
-  toNext(): void {
+  toNext = (): void => {
 
       const nextPage = this.getNextPage();
       let index = this.activeActualIndex; // 預設為回到原地 (對滑動移動有用)
@@ -549,7 +547,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
   /**
    * 前往上一個
    */
-  toPrev(): void {
+  toPrev = (): void => {
       let index = this.activeActualIndex; // 預設為回到原地 (對滑動移動有用)
       if (this.rwdMedia.isEnableLoop && this.activePage === 1 && this.info.residue > 0) {
       // 檢查若為Loop(第一頁移動不整除的時候, 移動位置需要復歸到第一個)
@@ -565,7 +563,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
   /**
    * 前往頁面
    */
-  goToPage(page: number): void {
+  goToPage = (page: number): void => {
       this.goToActualIndex(page * this.rwdMedia.slidesPerGroup + (this.info.actual.firstIndex - 1));
   }
 
@@ -575,8 +573,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
    * 取得目標項目距離寬度(px)
    * @param slideIndex
    */
-  _getMoveDistance(slideIndex: number): number {
-      // const {spaceBetween} = this.props;
+  _getMoveDistance = (slideIndex: number): number => {
 
       if(this.slideItemRef.current){
           const dom = this.slideItemRef.current[slideIndex];
@@ -596,7 +593,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
   /**
    * 前往實際位置
    */
-  goToActualIndex(slideIndex: number, isUseAnimation = true) {
+  goToActualIndex = (slideIndex: number, isUseAnimation = true) => {
       const {moveTime, onChange} = this.props;
 
       if (Math.ceil(slideIndex) !== slideIndex) {
@@ -683,7 +680,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
   /**
    * 渲染左右導航區塊
    */
-  _renderNavButton(){
+  _renderNavButton = () => {
 
       const {renderNavButton} = this.props;
 
@@ -693,10 +690,10 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
 
       return (<div className={elClassName.navGroup}>
           <button type="button" className={elClassName.navPrevButton} onClick={() => this.toPrev()}>
-              <img src={rightArrowIcon} alt="prev-button"/>
+              <div className={elClassName.navIcon}/>
           </button>
           <button type="button" className={elClassName.navNextButton} onClick={() => this.toNext()}>
-              <img src={rightArrowIcon} alt="next-button"/>
+              <div className={elClassName.navIcon}/>
           </button>
       </div>);
   }
@@ -704,7 +701,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
   /**
    * 渲染按鈕區塊
    */
-  _renderPagination(){
+  _renderPagination = () => {
       const {data} = this.props;
       const pageElement = [];
 
@@ -738,26 +735,24 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
       const {windowSize} = this.state;
 
 
-      // 產生需要的樣式
-      const slideItemStyle: any = `
-        flex: ${this.rwdMedia.slidesPerView === 'auto'? '0 0 auto' : `1 0 ${100 / this.rwdMedia.slidesPerViewActual}%`};
-        padding-left: ${this.rwdMedia.spaceBetween / 2}px;
-        padding-right: ${this.rwdMedia.spaceBetween / 2}px;
-    `;
+      // 產生需要的樣式 (注意結尾符號 ;)
+      const slideItemStyle: string = [
+        `flex: ${this.rwdMedia.slidesPerView === 'auto'? '0 0 auto' : `1 0 ${100 / this.rwdMedia.slidesPerViewActual}%`};`,
+        `padding-left: ${this.rwdMedia.spaceBetween / 2}px;`,
+        `padding-right: ${this.rwdMedia.spaceBetween / 2}px;`,
+    ].join('');
 
 
       return (
-          <div style={style} className={[className, elClassName.root].join(' ')} ref={this.rootRef}>
+          <div
+            data-carousel-id={this._carouselId}
+            style={style}
+            className={[className, elClassName.root].join(' ')}
+            ref={this.rootRef}
+          >
 
-              <style scoped>{`
-          .${elClassName.slideItem}{
-             ${slideItemStyle}
-          }
-          .${elClassName.cloneIcon}{
-            background-image: url('${copyIcon}');
-          }
-        `}</style>
-
+              {/* Item CSS 樣式 */}
+              <style scoped>{`.${elClassName.root}[data-carousel-id="${this._carouselId}"] .${elClassName.slideItem}{${slideItemStyle}}`}</style>
 
               {/* 左右導航按鈕 */}
               {this.info.isVisibleNavButton && this._renderNavButton()}
