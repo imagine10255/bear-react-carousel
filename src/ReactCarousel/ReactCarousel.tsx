@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {throttle} from '@github/mini-throttle';
-import {checkIsMobile, getTranslateParams, getMediaInfo, getMediaRangeSize} from './utils';
+import {checkIsMobile, getTranslateParams, getMediaInfo, getMediaRangeSize, dd} from './utils';
 import { IInfo, ITouchStart, IBreakpointSettingActual, IReactCarouselProps} from './types'
 import elClassName from './el-class-name';
 
@@ -114,34 +114,42 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
       this.state = {
           windowSize: getMediaRangeSize(Object.keys(props.breakpoints)),
       };
+
+      this._mobileTouchStart = this._mobileTouchStart.bind(this);
+      this._mobileTouchMove = this._mobileTouchMove.bind(this);
+      this._mobileTouchEnd = this._mobileTouchEnd.bind(this);
   }
 
 
   componentDidMount() {
-      const element = this.carouselRef.current as HTMLElement;
 
-      // 檢查並開啟自動輪播
-      this.checkAndAutoPlay();
+    if(this.carouselRef?.current){
+        const element = this.carouselRef.current;
 
-      // 首次移動到正確位置
-      this.goToActualIndex(this.info.actual.firstIndex, false);
+        // 檢查並開啟自動輪播
+        this._checkAndAutoPlay();
 
-      // 視窗大小變更時
-      window.addEventListener('resize', throttle(this.handleResize, 400));
+        // 首次移動到正確位置
+        this.goToActualIndex(this.info.actual.firstIndex, false);
 
-
-      // 移動動畫結束復歸
-      element.addEventListener('transitionend', () => this.resetPageByLoop());
+        // 視窗大小變更時
+        window.addEventListener('resize', this._throttleHandleResize);
 
 
-      if (checkIsMobile()) {
+        // 移動動畫結束復歸
+        element.addEventListener('transitionend', this.resetPageByLoop);
+
+
+        if (checkIsMobile()) {
           // Mobile 壓住拖動
-          element.addEventListener('touchstart', this.mobileTouchStart);
+          element.addEventListener('touchstart', this._mobileTouchStart, false);
 
-      } else {
+        } else {
           // 電腦網頁滑鼠拖拉
-          element.onmousedown = (event) => this.webMouseStart(event);
+          element.onmousedown = (event) => this._webMouseStart(event);
+        }
       }
+
   }
 
   componentWillUnmount() {
@@ -149,10 +157,13 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
           clearTimeout(this.timer);
       }
 
-      const element = this.carouselRef.current as HTMLElement;
-      element.removeEventListener('touchstart', this.mobileTouchStart);
-      element.removeEventListener('transitionend', () => this.resetPageByLoop());
-      window.removeEventListener('resize', throttle(this.handleResize, 400));
+      if(this.carouselRef?.current){
+        const element = this.carouselRef.current;
+        element.removeEventListener('touchstart', this._mobileTouchStart);
+        element.removeEventListener('transitionend', this.resetPageByLoop);
+      }
+
+      window.removeEventListener('resize', this._throttleHandleResize);
 
   }
 
@@ -184,7 +195,6 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
           const {rwdMedia, info} = getMediaInfo(nextProps);
           this.rwdMedia = rwdMedia;
           this.info = info;
-
           return true;
       }
 
@@ -198,34 +208,37 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
    * 手機手指按壓
    * @param event
    */
-  mobileTouchStart(event: TouchEvent): void {
+  _mobileTouchStart(event: TouchEvent): void {
       // event.preventDefault();
 
-      const element = this.carouselRef.current as HTMLElement;
-      const movePosition = getTranslateParams(element);
+      if(this.carouselRef?.current){
+        const element = this.carouselRef.current;
+        const movePosition = getTranslateParams(element);
 
-      // 紀錄位置
-      this.touchStart = {
+        // 紀錄位置
+        this.touchStart = {
           pageX: event.touches[0].pageX,
           pageY: event.touches[0].pageY,
           x: event.touches[0].pageX - movePosition.x,
           y: event.touches[0].pageY - element.offsetTop,
           movePositionX: movePosition.x,
           movePositionY: movePosition.y,
-      };
+        };
 
-      element.addEventListener('touchmove', this.mobileTouchMove);
-      element.addEventListener('touchend', this.mobileTouchEnd);
+        element.addEventListener('touchmove', this._mobileTouchMove, false);
+        element.addEventListener('touchend', this._mobileTouchEnd, false);
+      }
+
 
       if (this.timer) {
           clearTimeout(this.timer);
       }
   };
 
-  mobileTouchMove(event: TouchEvent): void {
+  _mobileTouchMove(event: TouchEvent): void {
       const endX = event.changedTouches[0].pageX;
       const endY = event.changedTouches[0].pageY;
-      const direction = this.getSlideDirection(this.touchStart.pageX, this.touchStart.pageY, endX, endY);
+      const direction = this._getSlideDirection(this.touchStart.pageX, this.touchStart.pageY, endX, endY);
       switch (direction) {
       case 0:
           // // console.log('沒有滑動');
@@ -241,7 +254,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
 
           event.preventDefault();
           const moveX = event.touches[0].pageX;
-          this.elementMove(moveX);
+          this._elementMove(moveX);
           break;
 
       default:
@@ -253,39 +266,43 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
    * 手機手指放開
    * @param event
    */
-  mobileTouchEnd(event: TouchEvent): void {
+  _mobileTouchEnd(event: TouchEvent): void {
       // event.preventDefault();
 
-      const element = this.carouselRef.current as HTMLElement;
-      element.removeEventListener('touchmove', this.mobileTouchMove);
-      element.removeEventListener('touchend', this.mobileTouchEnd);
+      if (this.carouselRef?.current) {
+        const element = this.carouselRef.current;
 
-      this.elementMoveDone();
+        element.removeEventListener('touchmove', this._mobileTouchMove.bind(this), false);
+        element.removeEventListener('touchend', this._mobileTouchEnd.bind(this), false);
+      }
+      this._elementMoveDone();
   };
 
   /**
    *
    * @param moveX 移動X軸
    */
-  elementMove(moveX: number): void{
+  _elementMove(moveX: number): void{
 
       const translateX = moveX - this.touchStart.x;
-      const element = this.carouselRef.current as HTMLElement;
-
-      console.log('this.rwdMedia.isEnableMouseMove', this.rwdMedia.isEnableMouseMove);
-      if(this.rwdMedia.isEnableMouseMove && this.slideItemRef.current){
+      if(this.carouselRef?.current){
+        const element = this.carouselRef.current;
+        if(this.rwdMedia.isEnableMouseMove && this.slideItemRef.current){
           // 取得移動限制
           const distance = {
-              min: this.getMoveDistance(this.info.actual.minIndex),
-              max: this.getMoveDistance(this.info.actual.lastIndex),
+            min: this._getMoveDistance(this.info.actual.minIndex),
+            max: this._getMoveDistance(this.info.actual.lastIndex),
           };
 
           if ((distance.max < translateX && distance.min > translateX) || this.rwdMedia.isEnableLoop) {
-              // 拖動
-              element.style.transform = `translate3d(${translateX}px, 0px, 0px)`;
-              element.style.transitionDuration = '0ms';
+            // 拖動
+            element.style.transform = `translate3d(${translateX}px, 0px, 0px)`;
+            element.style.transitionDuration = '0ms';
           }
+        }
       }
+
+
 
   };
 
@@ -293,22 +310,27 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
   /**
    * 物件移動結束 (確認停下位置 應該吸在哪個Index位置)
    */
-  elementMoveDone(): void {
-      const element = this.carouselRef.current;
+  _elementMoveDone(): void {
 
-      // 取得移動位置
-      const movePosition = getTranslateParams(element).x;
+      if(this.carouselRef?.current){
+        const element = this.carouselRef.current;
 
-      // 確認移動距離
-      const checkMove = movePosition - this.touchStart.movePositionX;
+        // 取得移動位置
+        const movePosition = getTranslateParams(element).x;
 
-      if(checkMove <= triggerTouchDistance && checkMove >= -triggerTouchDistance){
+        // 確認移動距離
+        const checkMove = movePosition - this.touchStart.movePositionX;
+
+        if(checkMove <= triggerTouchDistance && checkMove >= -triggerTouchDistance){
           this.goToActualIndex(this.activeActualIndex);
-      }else if (checkMove >= -triggerTouchDistance) {
+
+        }else if (checkMove >= -triggerTouchDistance) {
           this.toPrev();
-      } else if (checkMove <= triggerTouchDistance) {
+        } else if (checkMove <= triggerTouchDistance) {
           this.toNext();
+        }
       }
+
 
   };
 
@@ -316,23 +338,26 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
    * 網頁滑鼠按下
    * @param event
    */
-  webMouseStart(event: MouseEvent): void {
+  _webMouseStart(event: MouseEvent): void {
       event.preventDefault();
 
-      const element = this.carouselRef.current as HTMLElement;
-      const movePosition = getTranslateParams(element);
+      if(this.carouselRef?.current){
+        const element = this.carouselRef.current;
+        const movePosition = getTranslateParams(element);
 
-      this.touchStart = {
+        this.touchStart = {
           pageX: event.clientX,
           pageY: event.clientY,
           x: event.clientX - movePosition.x,
           y: event.clientY - element.offsetTop,
           movePositionX: movePosition.x,
           movePositionY: movePosition.y,
-      };
+        };
 
-      element.onmousemove = this.webMouseMove;
-      element.onmouseup = this.webMouseEnd;
+        element.onmousemove = this._webMouseMove;
+        element.onmouseup = this._webMouseEnd;
+
+      }
 
       if (this.timer) {
           clearTimeout(this.timer);
@@ -342,45 +367,48 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
 
   /**
    * 網頁滑鼠移動
-   * @param e
+   * @param event
    */
-  webMouseMove = (event: MouseEvent) => {
+  _webMouseMove = (event: MouseEvent) => {
       event.preventDefault();
       const moveX = event.clientX;
 
-      this.elementMove(moveX);
+      this._elementMove(moveX);
   };
 
   /**
    * 網頁滑鼠放開
    * @param event
    */
-  webMouseEnd = (event: MouseEvent) => {
+  _webMouseEnd = (event: MouseEvent) => {
       event.preventDefault();
 
-      const element = this.carouselRef.current as HTMLElement;
-      element.onmousemove = null;
-      element.onmouseup = null;
+      if(this.carouselRef?.current){
+        const element = this.carouselRef.current;
+        element.onmousemove = null;
+        element.onmouseup = null;
+      }
 
-      this.elementMoveDone();
+
+      this._elementMoveDone();
   };
 
   /**
-   * 根据起点和终点返回方向 1：向上，2：向下，3：向左，4：向右,0：未滑动
+   * 根據起點和終點的返回方向 1：向上，2：向下，3：向左，4：向右,0：未移動
    * @param startX
    * @param startY
    * @param endX
    * @param endY
    */
-  getSlideDirection = (startX: number, startY: number, endX: number, endY: number) => {
+  _getSlideDirection = (startX: number, startY: number, endX: number, endY: number) => {
       const dy = startY - endY;
       const dx = endX - startX;
       let result = 0;
-      //如果滑动距离太短
+      //如果滑動距離太短
       if (Math.abs(dx) < 2 && Math.abs(dy) < 2) {
           return result;
       }
-      const angle = this.getSlideAngle(dx, dy);
+      const angle = this._getSlideAngle(dx, dy);
       if (angle >= -45 && angle < 45) {
           result = 4;
       } else if (angle >= 45 && angle < 135) {
@@ -399,14 +427,14 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
    * @param dx
    * @param dy
    */
-  getSlideAngle(dx: number, dy: number): number {
+  _getSlideAngle(dx: number, dy: number): number {
       return Math.atan2(dy, dx) * 180 / Math.PI;
   }
 
   /**
    * 檢查並自動播放功能
    */
-  checkAndAutoPlay(): void {
+  _checkAndAutoPlay(): void {
       const {autoPlayTime} = this.props;
 
       // 清除上一次的計時器
@@ -427,15 +455,16 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
    * 重置頁面位置 (LoopMode)
    */
   resetPageByLoop(): void {
-      if(this.info.formatElement[this.activeActualIndex].isClone){
-          this.goToActualIndex(this.info.formatElement[this.activeActualIndex].matchIndex, false);
+      const formatElement = this.info?.formatElement ? this.info.formatElement : [];
+      if(formatElement.length > (this.activeActualIndex - 1)){
+          this.goToActualIndex(formatElement[this.activeActualIndex].matchIndex, false);
       }
   };
 
   /**
    * 處理更改螢幕尺寸時
    */
-  handleResize = () => {
+  _handleResize = () => {
       const {breakpoints} = this.props;
       const {windowSize} = this.state;
 
@@ -453,6 +482,10 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
       }
 
   };
+
+  _throttleHandleResize(){
+    throttle(this._handleResize, 400)
+  }
 
 
 
@@ -542,7 +575,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
    * 取得目標項目距離寬度(px)
    * @param slideIndex
    */
-  getMoveDistance(slideIndex: number): number {
+  _getMoveDistance(slideIndex: number): number {
       // const {spaceBetween} = this.props;
 
       if(this.slideItemRef.current){
@@ -584,15 +617,18 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
 
 
           // 移動EL位置
-          const position = this.getMoveDistance(this.activeActualIndex);
-          const element = this.carouselRef.current;
-          if(element){
+          const position = this._getMoveDistance(this.activeActualIndex);
+          if(this.carouselRef?.current){
+            const element = this.carouselRef.current;
+            if(element){
               element.style.visibility = 'visible';
               element.style.transitionDuration = isUseAnimation
-                  ? `${moveTime}ms`
-                  : '0ms';
+                ? `${moveTime}ms`
+                : '0ms';
               element.style.transform = `translate3d(${position}px, 0px, 0px)`;
+            }
           }
+
 
 
           // 提供是否為第一頁/最後一頁的判斷屬性
@@ -636,7 +672,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
           }
 
           // 結束移動後再繼續自動模式
-          this.checkAndAutoPlay();
+          this._checkAndAutoPlay();
 
           if (onChange) {
               onChange(this.activeActualIndex, this.activePage);
@@ -647,7 +683,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
   /**
    * 渲染左右導航區塊
    */
-  renderNavButton(){
+  _renderNavButton(){
 
       const {renderNavButton} = this.props;
 
@@ -668,7 +704,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
   /**
    * 渲染按鈕區塊
    */
-  renderPagination(){
+  _renderPagination(){
       const {data} = this.props;
       const pageElement = [];
 
@@ -724,7 +760,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
 
 
               {/* 左右導航按鈕 */}
-              {this.info.isVisibleNavButton && this.renderNavButton()}
+              {this.info.isVisibleNavButton && this._renderNavButton()}
 
               <div className={elClassName.content}>
                   <div
@@ -768,7 +804,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
               {/* 頁數導航按鈕 */}
               {this.info.isVisiblePagination && (
                   <div className={elClassName.paginationGroup}>
-                      {this.info.formatElement.length > 0 && this.renderPagination()}
+                      {this.info.formatElement.length > 0 && this._renderPagination()}
                   </div>
               )}
 
@@ -776,7 +812,10 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
               {isDebug && (<div className={elClassName.testWindowSize}>
                   {windowSize}
               </div>)}
-          </div>
+
+          {/*<textarea id="debug-textarea" rows={50}/>*/}
+        </div>
+
       );
   }
 }
@@ -784,4 +823,5 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
 
 
 export default ReactCarousel;
+
 

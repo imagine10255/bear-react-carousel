@@ -8,7 +8,7 @@
     "type": "git",
     "url": "https://github.com/imagine10255/react-carousel.git"
   },
-  "source": "src/ReactCarousel/index.ts",
+  "source": "src/index.ts",
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "types": "dist/index.d.ts",

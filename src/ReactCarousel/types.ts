@@ -12,7 +12,7 @@ export interface IReactCarouselRef {
 
 
 export interface IReactCarouselProps extends IBreakpointSetting{
-  setControlRef?: (ref: ReactCarousel) => void,
+  setControlRef?: (ref: IReactCarouselRef) => void,
   style?: CSS.Properties
   className?: string
   data: IData[];
