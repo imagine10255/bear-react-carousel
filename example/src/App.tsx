@@ -1,8 +1,8 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, {useCallback, useEffect, useState} from 'react';
 
 import ReactCarousel from 'imagine-react-carousel';
 import 'imagine-react-carousel/dist/index.css';
-import { IReactCarouselObj } from '../../src/ReactCarousel'
+import {IReactCarouselObj} from '../../src/ReactCarousel';
 
 
 
@@ -54,70 +54,70 @@ const App = () => {
 
     const getPageTotal = (): number => {
         return control?.info.pageTotal?? 0;
-    }
+    };
 
-    const handleSetCarousel = useCallback(setCarousel, [])
+    const handleSetCarousel = useCallback(setCarousel, []);
 
 
     return <div>
 
         {isVisible && (<>
             <ReactCarousel
-              setCarousel={handleSetCarousel}
-              isDebug={true}
-              isEnablePagination={true}
-              isEnableMouseMove={isEnableMouseMove}
-              isEnableNavButton
-              isEnableLoop={true}
-              data={data}
-              slidesPerView={1}
-              slidesPerGroup={1}
-              breakpoints={{
-                  768: {
-                      slidesPerView: 2,
-                      isEnableLoop: false,
-                      isEnablePagination: false,
-                      isEnableNavButton: false,
-                  },
-                  1200: {
-                      slidesPerView: 1,
-                      isEnableLoop: true,
-                      isEnablePagination: true,
-                      isEnableNavButton: true,
-                  }
-              }}
+                setCarousel={handleSetCarousel}
+                isDebug={true}
+                isEnablePagination={true}
+                isEnableMouseMove={isEnableMouseMove}
+                isEnableNavButton
+                isEnableLoop={true}
+                data={data}
+                slidesPerView={1}
+                slidesPerGroup={1}
+                breakpoints={{
+                    768: {
+                        slidesPerView: 2,
+                        isEnableLoop: false,
+                        isEnablePagination: false,
+                        isEnableNavButton: false,
+                    },
+                    1200: {
+                        slidesPerView: 1,
+                        isEnableLoop: true,
+                        isEnablePagination: true,
+                        isEnableNavButton: true,
+                    }
+                }}
             />
 
 
 
             <label style={{marginTop: '20px', marginBottom: '20px', display: 'block'}}>
                 <input type="checkbox"
-                       checked={isEnableMouseMove}
-                       onChange={() => setIsEnableMouseMove(prev => !prev)}
+                    checked={isEnableMouseMove}
+                    onChange={() => setIsEnableMouseMove(prev => !prev)}
                 />
                 isEnableMouseMove: {String(isEnableMouseMove)}
             </label>
 
             {new Array(getPageTotal()).fill('').map((row, index) => {
                 return <button key={`page_${index}`}
-                               type="button"
-                               style={{marginBottom: '20px',marginLeft: '5px'}}
-                               onClick={() => handleGoPage(index + 1)}>
+                    type="button"
+                    style={{marginBottom: '20px',marginLeft: '5px'}}
+                    onClick={() => handleGoPage(index + 1)}>
                     {index + 1}
-                </button>
+                </button>;
             })}
         </>)}
 
         <label style={{marginTop: '20px', marginBottom: '20px', display: 'block'}}>
             <input type="checkbox"
-                   checked={isVisible}
-                   onChange={() => setVisible(prev => !prev)}
+                checked={isVisible}
+                onChange={() => setVisible(prev => !prev)}
             />
             isVisible: {String(isVisible)}
         </label>
 
 
-    </div>
+    </div>;
 
 };
 

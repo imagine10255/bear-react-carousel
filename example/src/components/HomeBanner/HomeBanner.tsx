@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react'
+import React, {useCallback, useRef, useState} from 'react';
 import styled, {css} from 'styled-components/macro';
 import {Col, Container, EColType, media, Row} from 'imagine-react-styled-grid';
 import ReactCarousel, {elClassName, IReactCarouselObj} from 'imagine-react-carousel';
@@ -60,9 +60,9 @@ const HomeBanner = ({
 
     const getPageTotal = (): number => {
         return control?.info.pageTotal?? 0;
-    }
+    };
 
-    const handleSetCarousel = useCallback(setCarousel, [])
+    const handleSetCarousel = useCallback(setCarousel, []);
 
 
     return (<BannerRoot className={className} style={style}>
@@ -83,11 +83,11 @@ const HomeBanner = ({
         <br/>
         {new Array(getPageTotal()).fill('').map((row, index) => {
             return <button key={`page_${index}`}
-                           type="button"
-                           style={{marginBottom: '20px',marginLeft: '5px'}}
-                           onClick={() => handleGoPage(index + 1)}>
+                type="button"
+                style={{marginBottom: '20px',marginLeft: '5px'}}
+                onClick={() => handleGoPage(index + 1)}>
                 {index + 1}
-            </button>
+            </button>;
         })}
     </BannerRoot>);
 };

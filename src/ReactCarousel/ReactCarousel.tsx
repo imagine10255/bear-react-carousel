@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { throttle } from '@github/mini-throttle'
+import {throttle} from '@github/mini-throttle';
 import deepEqual from 'deep-equal';
-import { checkIsMobile, getTranslateParams, getMediaInfo, getMediaRangeSize, uuid, shallowCompare } from './utils'
+import {checkIsMobile, getTranslateParams, getMediaInfo, getMediaRangeSize, uuid, shallowCompare} from './utils';
 // import {dd} from './utils'
 import {IInfo, ITouchStart, IBreakpointSettingActual, IReactCarouselProps} from './types';
 import elClassName from './el-class-name';
@@ -104,7 +104,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
       // @ts-ignore
       this.pageRef['current'] = [];
 
-     this._throttleHandleResize = throttle(this._handleResize, 400);
+      this._throttleHandleResize = throttle(this._handleResize, 400);
 
       const {rwdMedia, info} = getMediaInfo(props);
       this.rwdMedia = rwdMedia;
@@ -146,10 +146,10 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
       }
 
       if(this.props.setCarousel){
-        this.props.setCarousel({
-          goToPage: this.goToPage,
-          info: this.info,
-        });
+          this.props.setCarousel({
+              goToPage: this.goToPage,
+              info: this.info,
+          });
       }
 
   }
@@ -187,25 +187,25 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
         !deepEqual(otherParams, nextOtherProps) ||
         nextWindowSize !== windowSize
       ){
-        const {rwdMedia, info} = getMediaInfo(nextProps);
-        this.rwdMedia = rwdMedia;
-        this.info = info;
+          const {rwdMedia, info} = getMediaInfo(nextProps);
+          this.rwdMedia = rwdMedia;
+          this.info = info;
 
-        // 重置頁面位置
-        const $this = this;
-        setTimeout(() => {
-          $this.goToPage(1, false);
-        }, 0)
+          // 重置頁面位置
+          const $this = this;
+          setTimeout(() => {
+              $this.goToPage(1, false);
+          }, 0);
 
-        // 設定給外部使用
-        if(otherParams.setCarousel){
-          otherParams.setCarousel({
-            goToPage: this.goToPage,
-            info: this.info,
-          });
-        }
+          // 設定給外部使用
+          if(otherParams.setCarousel){
+              otherParams.setCarousel({
+                  goToPage: this.goToPage,
+                  info: this.info,
+              });
+          }
 
-        return true;
+          return true;
       }
 
       return false;
@@ -744,18 +744,18 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
 
       // 產生需要的樣式 (注意結尾符號 ;)
       const slideItemStyle: string = [
-        `flex: ${this.rwdMedia.slidesPerView === 'auto'? '0 0 auto' : `1 0 ${100 / this.rwdMedia.slidesPerViewActual}%`};`,
-        `padding-left: ${this.rwdMedia.spaceBetween / 2}px;`,
-        `padding-right: ${this.rwdMedia.spaceBetween / 2}px;`,
-    ].join('');
+          `flex: ${this.rwdMedia.slidesPerView === 'auto'? '0 0 auto' : `1 0 ${100 / this.rwdMedia.slidesPerViewActual}%`};`,
+          `padding-left: ${this.rwdMedia.spaceBetween / 2}px;`,
+          `padding-right: ${this.rwdMedia.spaceBetween / 2}px;`,
+      ].join('');
 
 
       return (
           <div
-            data-carousel-id={this._carouselId}
-            style={style}
-            className={[className, elClassName.root].join(' ')}
-            ref={this.rootRef}
+              data-carousel-id={this._carouselId}
+              style={style}
+              className={[className, elClassName.root].join(' ')}
+              ref={this.rootRef}
           >
 
               {/* Item CSS 樣式 */}

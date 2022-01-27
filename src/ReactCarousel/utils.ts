@@ -25,7 +25,7 @@ const uuid = () => {
         d = Math.floor(d / 16);
         return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
     });
-}
+};
 
 
 const shallowCompare = (obj: any, prevObj: any) => {
@@ -33,12 +33,13 @@ const shallowCompare = (obj: any, prevObj: any) => {
         if(obj[key] !== prevObj[key]) return true;
     }
     return false;
-}
+};
 
 
 
 
 /**
+ *
  * 取得螢幕尺寸對應設定尺寸
  * @param breakpointSizes
  */
