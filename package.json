@@ -2,12 +2,21 @@
   "name": "imagine-react-carousel",
   "version": "1.1.4",
   "description": "Most modern mobile touch slider with hardware accelerated transitions by react",
+  "keywords": [
+    "react",
+    "typescript",
+    "flexbox",
+    "slider",
+    "carousel",
+    "swiper"
+  ],
   "author": "imagine10255",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/imagine10255/react-carousel.git"
   },
+  "homepage": "https://imagine10255.github.io/react-carousel",
   "source": "src/index.ts",
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
