@@ -134,12 +134,6 @@ const HomeBanner = ({
 }
 ```
 
-## npm Push
-```bash
-npm publish --access public
-```
-
-
 ## License
 
 MIT © [imagine10255](https://github.com/imagine10255)
