@@ -67,7 +67,7 @@ const App = () => {
                 isDebug={true}
                 isEnablePagination={true}
                 isEnableMouseMove={isEnableMouseMove}
-                isEnableNavButton
+                isEnableNavButton={false}
                 isEnableLoop={true}
                 data={data}
                 slidesPerView={1}
@@ -116,6 +116,7 @@ const App = () => {
             isVisible: {String(isVisible)}
         </label>
 
+        <textarea id="console" rows={50}/>
 
     </div>;
 

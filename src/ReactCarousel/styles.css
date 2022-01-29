@@ -1,18 +1,4 @@
 
-#debug-textarea{
-    position: fixed;
-    bottom: 0;
-    z-index: 99;
-    display: flex;
-    font-size: 10px;
-    border: none;
-    background: #1f1f1f;
-    color: #ccb444;
-    border-radius: 0;
-    width: 100%;
-    height: 400px;
-}
-
 .react-carousel__nav-icon{
     background: no-repeat center;
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAQAAAAHUWYVAAACQklEQVR42u3dS44QZRiGURZH2AFzR62grSKKV0TFCyja3tEtsJae9Ipe40Al0kypJ+GcFVTypFK3///qyhUAAAAAAAAAAAAAAAAAgBduV3eyk13d0QfC3/bZ/nEmyeF2fU97IsnBdrFJErJnSXKknUuSsjubJCm7J0nMPpUkZnclidknksTsY0li9pEkMftQkpi9L0mMR8WcvSdJzN6VJGa3JYnZO5LE7JYkMXtbkpi9JUnM3pQkZm9IErPXJYnZTUlidkOSmL0mScxelSRmJ5LEOEtyXEtyJMlxE5zjUTHHC5UcSXK8Cc7ZqSQxPmHlSJLj23uOFSo51nHlSJJjAWqOZdo5NjPkSJJjF1aOvYo5dvTmSJKzDySJMR0ixwyVHElyDH/KMSItxyDBHElynjMB9Y4kh7l0TvCFIAd66gcZ/zn6oF5el+Y4F+Qg+9w1JGRfuMsKkSNl9+UI2ZdyhOwrOULkSNnXcoTsGzlC9kCOEDlS9lCOkH0rR8i+kyNEjpQ9kiNk38sRsh/kCJEjZWdyhOxHOULkSNlPcoTsZzlC9oscIXKk7Fc5QvabHCH7XY4QOVL2WI6Q/SFHyP6UI8TZkeLakeLOKsVjYIqXJCleIab43pHia2CKlSQp1lmlWBSaYsl0ig0FKXY/pdgbmGLnbIpt/ilmkqQYoJRivFiK4Xspz5kUKscxLp2jK8dRdl2OlF3IkSJHzM7lSPnfD1LlON5e+TfHmRwJu7bTne6aHAAAAAAAAAAAAAAAAADwgv0FPMG4gCHz+FUAAAAASUVORK5CYII=');
