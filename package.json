@@ -31,7 +31,7 @@
     "build": "run-s build:claer && microbundle-crl --no-compress --no-css-modules --format modern,cjs",
     "build:claer": "rm -rf ./dist",
     "dev": "cd example && yarn install && yarn run start",
-    "start": "run-s build:claer && microbundle-crl watch --no-compress --no-css-modules --format modern,cjs",
+    "start": "microbundle-crl watch --no-compress --no-css-modules --format modern,cjs",
     "prepublishOnly": "run-s build",
     "test": "run-s test:unit test:lint test:build",
     "test:build": "run-s build",
@@ -78,7 +78,6 @@
     "react-scripts": "4.0.3",
     "standard-version": "9.3.0",
     "typescript": "4.1.5",
-    "deep-equal": "^2.0.5",
     "imagine-js-utils": "0.0.23"
   },
   "eslintConfig": {

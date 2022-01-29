@@ -37,6 +37,7 @@ const carouselData = bgList.map(row => {
 
 const App = () => {
     const [isEnableMouseMove, setIsEnableMouseMove] = useState<boolean>(true);
+    const [isEnableLoop, setIsEnableLoop] = useState<boolean>(true);
     const [data, setData] = useState<Array<{key: number, children: React.ReactElement}>>([]);
     const [control, setCarousel] = useState<IReactCarouselObj>();
     const [isVisible, setVisible] = useState<boolean>(true);
@@ -57,6 +58,25 @@ const App = () => {
     };
 
     const handleSetCarousel = useCallback(setCarousel, []);
+
+    const renderControlContent = () => {
+
+        const data = [
+            {name: 'isEnableMouseMove', state: isEnableMouseMove, setState: setIsEnableMouseMove},
+            {name: 'isEnableLoop', state: isEnableLoop, setState: setIsEnableLoop},
+        ]
+
+        return data.map(row => {
+
+            return <label style={{marginTop: '20px', marginBottom: '20px', display: 'block'}}>
+                <input type="checkbox"
+                       checked={row.state}
+                       onChange={() => row.setState(prev => !prev)}
+                />
+                {row.name}: {String(row.state)}
+            </label>
+        });
+    }
 
 
     return <div>
@@ -90,13 +110,7 @@ const App = () => {
 
 
 
-            <label style={{marginTop: '20px', marginBottom: '20px', display: 'block'}}>
-                <input type="checkbox"
-                    checked={isEnableMouseMove}
-                    onChange={() => setIsEnableMouseMove(prev => !prev)}
-                />
-                isEnableMouseMove: {String(isEnableMouseMove)}
-            </label>
+            {renderControlContent()}
 
             {new Array(getPageTotal()).fill('').map((row, index) => {
                 return <button key={`page_${index}`}

@@ -209,7 +209,7 @@ function initDataList(sourceList: Array<any> = [], slidesPerView: TSlidesPerView
  * @param dy
  */
 export function getSlideAngle(dx: number, dy: number): number {
-    return Math.atan2(dy, dx) * 180 / Math.PI
+    return Math.atan2(dy, dx) * 180 / Math.PI;
 }
 
 
@@ -217,7 +217,7 @@ export function getSlideAngle(dx: number, dy: number): number {
  * 取得 transform 3d x 移動參數
  * @param el
  */
-export function getTranslateParams(el: any): {x: number, y: number, z: number}{
+export function getTranslateParams(el: HTMLDivElement): {x: number, y: number, z: number}{
     const values = el.style.transform.split(/\w+\(|\);?/);
     if (!values[1] || !values[1].length) {
         return {x: 0, y: 0, z: 0};
@@ -242,24 +242,24 @@ export function getTranslateParams(el: any): {x: number, y: number, z: number}{
  * @return 1:向上, 2:向下, 3:向左, 4:向右, 0:未移動
  */
 export function getSlideDirection(startX: number, startY: number, endX: number, endY: number): number{
-    const dy = startY - endY
-    const dx = endX - startX
-    let result = 0
+    const dy = startY - endY;
+    const dx = endX - startX;
+    let result = 0;
     //如果滑動距離太短
     if (Math.abs(dx) < 2 && Math.abs(dy) < 2) {
-        return result
+        return result;
     }
-    const angle = getSlideAngle(dx, dy)
+    const angle = getSlideAngle(dx, dy);
     if (angle >= -45 && angle < 45) {
-        result = 4
+        result = 4;
     } else if (angle >= 45 && angle < 135) {
-        result = 1
+        result = 1;
     } else if (angle >= -135 && angle < -45) {
-        result = 2
+        result = 2;
     } else if ((angle >= 135 && angle <= 180) || (angle >= -180 && angle < -135)) {
-        result = 3
+        result = 3;
     }
-    return result
+    return result;
 }
 
 
