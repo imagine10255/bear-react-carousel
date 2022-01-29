@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.6](https://github.com/imagine10255/react-carousel/compare/v1.1.5...v1.1.6) (2022-01-29)
+
+
+### Features
+
+* 更改 js-utils 版本 ([738ae24](https://github.com/imagine10255/react-carousel/commit/738ae248b2f9027c792b173dc927dc2db8ac18ff))
+
+
+### Bug Fixes
+
+* 修正 移動到複製內容的時候, 頁數顯示需要等待一下才會正確顯示 ([f4fd66c](https://github.com/imagine10255/react-carousel/commit/f4fd66c7e76837580f6e8f272d2b10acaa1b2903))
+
 ### [1.1.5](https://github.com/imagine10255/react-carousel/compare/v1.1.4...v1.1.5) (2022-01-29)
 
 ### [1.1.4](https://github.com/imagine10255/react-carousel/compare/v1.1.3...v1.1.4) (2022-01-27)
