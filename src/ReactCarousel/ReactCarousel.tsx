@@ -138,11 +138,11 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
 
           if (checkIsMobile()) {
           // Mobile 壓住拖動
-              element.addEventListener('touchstart', this._mobileTouchStart, false);
+              element.addEventListener('touchstart', this._onMobileTouchStart, false);
 
           } else {
           // 電腦網頁滑鼠拖拉
-              element.onmousedown = (event) => this._webMouseStart(event);
+              element.onmousedown = (event) => this._onWebMouseStart(event);
           }
       }
 
@@ -162,7 +162,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
 
       if(this.carouselRef?.current){
           const element = this.carouselRef.current;
-          element.removeEventListener('touchstart', this._mobileTouchStart);
+          element.removeEventListener('touchstart', this._onMobileTouchStart);
           element.removeEventListener('transitionend', this._resetPageByLoop);
       }
 
@@ -217,7 +217,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
    * 手機手指按壓
    * @param event
    */
-  _mobileTouchStart = (event: TouchEvent): void => {
+  _onMobileTouchStart = (event: TouchEvent): void => {
       event.preventDefault();
 
       if(this.carouselRef?.current){
@@ -234,8 +234,8 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
               movePositionY: movePosition.y,
           };
 
-          element.addEventListener('touchmove', this._mobileTouchMove, false);
-          element.addEventListener('touchend', this._mobileTouchEnd, false);
+          element.addEventListener('touchmove', this._onMobileTouchMove, false);
+          element.addEventListener('touchend', this._onMobileTouchEnd, false);
       }
 
 
@@ -244,7 +244,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
       }
   };
 
-  _mobileTouchMove = (event: TouchEvent): void => {
+  _onMobileTouchMove = (event: TouchEvent): void => {
       const endX = event.changedTouches[0].pageX;
       const endY = event.changedTouches[0].pageY;
       const direction = this._getSlideDirection(this.touchStart.pageX, this.touchStart.pageY, endX, endY);
@@ -275,14 +275,14 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
    * 手機手指放開
    * @param event
    */
-  _mobileTouchEnd = (event: TouchEvent): void => {
+  _onMobileTouchEnd = (event: TouchEvent): void => {
       event.preventDefault();
 
       if (this.carouselRef?.current) {
           const element = this.carouselRef.current;
 
-          element.removeEventListener('touchmove', this._mobileTouchMove.bind(this), false);
-          element.removeEventListener('touchend', this._mobileTouchEnd.bind(this), false);
+          element.removeEventListener('touchmove', this._onMobileTouchMove.bind(this), false);
+          element.removeEventListener('touchend', this._onMobileTouchEnd.bind(this), false);
       }
       this._elementMoveDone();
   };
@@ -347,7 +347,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
    * 網頁滑鼠按下
    * @param event
    */
-  _webMouseStart = (event: MouseEvent): void => {
+  _onWebMouseStart = (event: MouseEvent): void => {
       event.preventDefault();
 
       if(this.carouselRef?.current){
@@ -363,8 +363,8 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
               movePositionY: movePosition.y,
           };
 
-          element.onmousemove = this._webMouseMove;
-          element.onmouseup = this._webMouseEnd;
+          element.onmousemove = this._onWebMouseMove;
+          element.onmouseup = this._onWebMouseEnd;
 
       }
 
@@ -378,7 +378,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
    * 網頁滑鼠移動
    * @param event
    */
-  _webMouseMove = (event: MouseEvent) => {
+  _onWebMouseMove = (event: MouseEvent) => {
       event.preventDefault();
       const moveX = event.clientX;
 
@@ -389,7 +389,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
    * 網頁滑鼠放開
    * @param event
    */
-  _webMouseEnd = (event: MouseEvent) => {
+  _onWebMouseEnd = (event: MouseEvent) => {
       event.preventDefault();
 
       if(this.carouselRef?.current){
