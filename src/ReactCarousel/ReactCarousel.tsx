@@ -1,7 +1,8 @@
 import * as React from 'react';
 import {throttle} from '@github/mini-throttle';
 import deepEqual from 'deep-equal';
-import {checkIsMobile, getTranslateParams, getMediaInfo, getMediaRangeSize, uuid, shallowCompare} from './utils';
+import { checkIsMobile, getTranslateParams, getMediaInfo, getMediaRangeSize} from './utils'
+import {uuid} from 'imagine-js-utils/key';
 // import {dd} from './utils'
 import {IInfo, ITouchStart, IBreakpointSettingActual, IReactCarouselProps} from './types';
 import elClassName from './el-class-name';

@@ -6705,6 +6705,11 @@ ignore@^5.1.4, ignore@^5.1.8, ignore@^5.2.0:
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.2.0.tgz#6d3bac8fa7fe0d45d9f9be7bac2fc279577e345a"
   integrity sha512-CmxgYGiEPCLhfLnpPp1MoRmifwEIOgjcHXxOBjv7mY96c+eWScsOP9c112ZyLdWHi0FxHjI+4uVhKYp/gcdRmQ==
 
+imagine-js-utils@0.0.23:
+  version "0.0.23"
+  resolved "https://registry.yarnpkg.com/imagine-js-utils/-/imagine-js-utils-0.0.23.tgz#9dba9d6fd9be90157d5198cf2cafb2ed1a29a66a"
+  integrity sha512-bxbMJTn0XMBVe44S3VPYJIkIopY/tyHW8OnTZvZYsFWaTFAXa0TIiz55/945+djTp5zcqPN3urr1ewOpii2iaw==
+
 immer@8.0.1:
   version "8.0.1"
   resolved "https://registry.yarnpkg.com/immer/-/immer-8.0.1.tgz#9c73db683e2b3975c424fb0572af5889877ae656"
