@@ -159,7 +159,7 @@ function initDataList(sourceList: Array<any> = [], slidesPerView: TSlidesPerView
             formatList[index] = {
                 actualIndex: index,
                 matchIndex: formatSlidesPerView + cloneStart + index,
-                inPage: 1,
+                inPage: lastPage,
                 isClone: true,
                 element: row.children,
             };
@@ -191,7 +191,7 @@ function initDataList(sourceList: Array<any> = [], slidesPerView: TSlidesPerView
             formatList[index] = {
                 actualIndex: index,
                 matchIndex: matchFirstIndex,
-                inPage: lastPage,
+                inPage: 1,
                 isClone: true,
                 element: row.children,
             };

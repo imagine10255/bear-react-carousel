@@ -245,7 +245,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
    * @param event
    */
   _onMobileTouchMove = (event: TouchEvent): void => {
-      if(this.props.isDebug) log.mobile('_onMobileTouchMove');
+      // if(this.props.isDebug) log.mobile('_onMobileTouchMove');
 
       event.preventDefault();
 
@@ -277,7 +277,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
    * @param event
    */
   _onMobileTouchEnd = (event: TouchEvent): void => {
-      if(this.props.isDebug) log.mobile('_onMobileTouchEnd');
+      // if(this.props.isDebug) log.mobile('_onMobileTouchEnd');
 
       event.preventDefault();
 
@@ -325,7 +325,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
    * @param event
    */
   _onWebMouseMove = (event: MouseEvent):void => {
-      if(this.props.isDebug) log.mobile('_onWebMouseMove');
+      // if(this.props.isDebug) log.mobile('_onWebMouseMove');
 
       event.preventDefault();
       const moveX = event.clientX;
@@ -338,7 +338,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
    * @param event
    */
   _onWebMouseEnd = (event: MouseEvent):void => {
-      if(this.props.isDebug) log.mobile('_onWebMouseEnd');
+      // if(this.props.isDebug) log.mobile('_onWebMouseEnd');
 
       event.preventDefault();
 
@@ -435,7 +435,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
    * 如果元素內是 isClone 則返回到他應該真實顯示的位置
    */
   _onTransitionend = (): void => {
-      if(this.props.isDebug) log.mobile('_onTransitionend');
+      // if(this.props.isDebug) log.mobile('_onTransitionend');
 
       const formatElement = this.info?.formatElement ? this.info.formatElement : [];
       if (formatElement.length > (this.activeActualIndex - 1) && formatElement[this.activeActualIndex].isClone) {
