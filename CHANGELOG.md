@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.7](https://github.com/imagine10255/react-carousel/compare/v1.1.6...v1.1.7) (2022-01-29)
+
+
+### Bug Fixes
+
+* 修正 log.printInText 參數錯誤 ([87875fd](https://github.com/imagine10255/react-carousel/commit/87875fd1339847d1032a6caaa8e3d150aadad2e8))
+
 ### [1.1.6](https://github.com/imagine10255/react-carousel/compare/v1.1.5...v1.1.6) (2022-01-29)
 
 
