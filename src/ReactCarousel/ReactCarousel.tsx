@@ -294,7 +294,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
    * @param event
    */
   _onWebMouseStart = (event: MouseEvent): void => {
-      if(this.props.isDebug) log.printInText('[_onWebMouseStart]');
+      // if(this.props.isDebug) log.printInText('[_onWebMouseStart]');
 
       event.preventDefault();
 

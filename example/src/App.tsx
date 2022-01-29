@@ -88,24 +88,24 @@ const App = () => {
                 isEnablePagination={true}
                 isEnableMouseMove={isEnableMouseMove}
                 isEnableNavButton={false}
-                isEnableLoop={true}
+                isEnableLoop={isEnableLoop}
                 data={data}
                 slidesPerView={1}
                 slidesPerGroup={1}
-                breakpoints={{
-                    768: {
-                        slidesPerView: 2,
-                        isEnableLoop: false,
-                        isEnablePagination: false,
-                        isEnableNavButton: false,
-                    },
-                    1200: {
-                        slidesPerView: 1,
-                        isEnableLoop: true,
-                        isEnablePagination: true,
-                        isEnableNavButton: true,
-                    }
-                }}
+                // breakpoints={{
+                //     768: {
+                //         slidesPerView: 2,
+                //         isEnableLoop: false,
+                //         isEnablePagination: false,
+                //         isEnableNavButton: false,
+                //     },
+                //     1200: {
+                //         slidesPerView: 1,
+                //         isEnableLoop: true,
+                //         isEnablePagination: true,
+                //         isEnableNavButton: true,
+                //     }
+                // }}
             />
 
 
