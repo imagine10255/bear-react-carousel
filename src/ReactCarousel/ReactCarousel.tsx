@@ -16,7 +16,7 @@ interface IState {
   windowSize: number,
 }
 
-
+const isMobile = checkIsMobile();
 
 
 class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
@@ -119,30 +119,24 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
 
   componentDidMount() {
 
-      if(this.carouselRef?.current){
-          const element = this.carouselRef.current;
-
+      const element = this.carouselRef?.current;
+      if(element){
           // 檢查並開啟自動輪播
           this._checkAndAutoPlay();
 
           // 首次移動到正確位置
           this.goToActualIndex(this.info.actual.firstIndex, false);
 
-          // 視窗大小變更時
+          // 視窗大小變更時(透過節流)
           window.addEventListener('resize', this._throttleHandleResize, false);
 
+          // 移動動畫結束(需要復歸位置, 以假亂真)
+          element.addEventListener('transitionend', this._onTransitionend, false);
 
-          // 移動動畫結束復歸
-          element.addEventListener('transitionend', this._resetPageByLoop);
-
-
-          if (checkIsMobile()) {
-          // Mobile 壓住拖動
-              element.addEventListener('touchstart', this._onMobileTouchStart, false);
-
-          } else {
-          // 電腦網頁滑鼠拖拉
-              element.onmousedown = (event) => this._onWebMouseStart(event);
+          if(isMobile){
+            element.addEventListener('touchstart', this._onMobileTouchStart, false);
+          }else{
+            element.addEventListener('mousedown', this._onWebMouseStart, false);
           }
       }
 
@@ -163,7 +157,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
       if(this.carouselRef?.current){
           const element = this.carouselRef.current;
           element.removeEventListener('touchstart', this._onMobileTouchStart);
-          element.removeEventListener('transitionend', this._resetPageByLoop);
+          element.removeEventListener('transitionend', this._onTransitionend);
       }
 
       window.removeEventListener('resize', this._throttleHandleResize);
@@ -464,7 +458,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
    * 重置頁面位置 (LoopMode)
    * 如果元素內是 isClone 則返回到他應該真實顯示的位置
    */
-  _resetPageByLoop = (): void =>  {
+  _onTransitionend = (): void =>  {
       const formatElement = this.info?.formatElement ? this.info.formatElement : [];
       if(formatElement.length > (this.activeActualIndex - 1) && formatElement[this.activeActualIndex].isClone){
           this.goToActualIndex(formatElement[this.activeActualIndex].matchIndex, false);
