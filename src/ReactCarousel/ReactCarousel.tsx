@@ -119,7 +119,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
 
 
   componentDidMount() {
-      if(this.props.isDebug) log.printInText('componentDidMount');
+      if(this.props.isDebug) log.printInText('[componentDidMount]');
 
       const carouselRef = this.carouselRef?.current;
       if (carouselRef) {
@@ -152,7 +152,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
   }
 
   componentWillUnmount() {
-      if(this.props.isDebug) log.printInText('componentWillUnmount');
+      if(this.props.isDebug) log.printInText('[componentWillUnmount]');
       if (this.timer) clearTimeout(this.timer);
 
       const carouselRef = this.carouselRef?.current;
@@ -172,7 +172,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
    * @param nextState
    */
   shouldComponentUpdate(nextProps: IReactCarouselProps, nextState: IState) {
-      if(this.props.isDebug) log.printInText('shouldComponentUpdate');
+      if(this.props.isDebug) log.printInText('[shouldComponentUpdate]');
 
       const {windowSize: nextWindowSize} = nextState;
       const {windowSize} = this.state;
@@ -215,7 +215,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
    * @param event
    */
   _onMobileTouchStart = (event: TouchEvent): void => {
-      if(this.props.isDebug) log.printInText('_onMobileTouchStart');
+      if(this.props.isDebug) log.printInText('[_onMobileTouchStart]');
 
       event.preventDefault();
 
@@ -245,7 +245,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
    * @param event
    */
   _onMobileTouchMove = (event: TouchEvent): void => {
-      // if(this.props.isDebug) log.printInText('_onMobileTouchMove');
+      // if(this.props.isDebug) log.printInText('[_onMobileTouchMove]');
 
       event.preventDefault();
 
@@ -277,7 +277,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
    * @param event
    */
   _onMobileTouchEnd = (event: TouchEvent): void => {
-      // if(this.props.isDebug) log.printInText('_onMobileTouchEnd');
+      // if(this.props.isDebug) log.printInText('[_onMobileTouchEnd]');
 
       event.preventDefault();
 
@@ -294,7 +294,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
    * @param event
    */
   _onWebMouseStart = (event: MouseEvent): void => {
-      if(this.props.isDebug) log.printInText('_onWebMouseStart');
+      if(this.props.isDebug) log.printInText('[_onWebMouseStart]');
 
       event.preventDefault();
 
@@ -325,7 +325,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
    * @param event
    */
   _onWebMouseMove = (event: MouseEvent):void => {
-      // if(this.props.isDebug) log.printInText('_onWebMouseMove');
+      // if(this.props.isDebug) log.printInText('[_onWebMouseMove]');
 
       event.preventDefault();
       const moveX = event.clientX;
@@ -338,7 +338,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
    * @param event
    */
   _onWebMouseEnd = (event: MouseEvent):void => {
-      // if(this.props.isDebug) log.printInText('_onWebMouseEnd');
+      // if(this.props.isDebug) log.printInText('[_onWebMouseEnd]');
 
       event.preventDefault();
 
@@ -413,9 +413,9 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
    * 檢查並自動播放功能
    */
   _checkAndAutoPlay = (): void => {
-      if(this.props.isDebug) log.printInText('_checkAndAutoPlay');
-
       const {autoPlayTime} = this.props;
+      // if(this.props.isDebug) log.printInText(`[_checkAndAutoPlay] autoPlayTime: ${autoPlayTime}`);
+
 
       // 清除上一次的計時器
       if (this.timer) {
@@ -435,7 +435,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
    * 如果元素內是 isClone 則返回到他應該真實顯示的位置
    */
   _onTransitionend = (): void => {
-      // if(this.props.isDebug) log.printInText('_onTransitionend');
+      // if(this.props.isDebug) log.printInText('[_onTransitionend]');
 
       const formatElement = this.info?.formatElement ? this.info.formatElement : [];
       if (formatElement.length > (this.activeActualIndex - 1) && formatElement[this.activeActualIndex].isClone) {
@@ -450,7 +450,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
       const {breakpoints} = this.props;
       const {windowSize} = this.state;
 
-      if(this.props.isDebug) log.printInText('_handleResize', `windowSize: ${windowSize}px`);
+      if(this.props.isDebug) log.printInText(`[_handleResize] windowSize: ${windowSize}px`);
 
       // 只在區間內有設定的值才會 setState
       const selectSize = getMediaRangeSize(Object.keys(breakpoints));
@@ -575,7 +575,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
   goToActualIndex = (slideIndex: number, isUseAnimation = true) => {
       const {moveTime, onChange} = this.props;
 
-      if(this.props.isDebug) log.printInText('goToActualIndex', `slideIndex: ${slideIndex}, isUseAnimation: ${isUseAnimation}`);
+      if(this.props.isDebug) log.printInText(`[goToActualIndex] slideIndex: ${slideIndex}, isUseAnimation: ${isUseAnimation}`);
 
 
       if (Math.ceil(slideIndex) !== slideIndex) {
