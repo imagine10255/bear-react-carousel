@@ -66,7 +66,6 @@ export interface IInfo {
   },
   // 總頁數
   pageTotal: number,
-  isDivisible: boolean,
   residue: number,
   isVisiblePagination: boolean,
   isVisibleNavButton: boolean,

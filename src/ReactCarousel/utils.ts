@@ -55,7 +55,7 @@ export function getMediaInfo(props: IReactCarouselProps): {rwdMedia: IBreakpoint
     const {data, breakpoints, slidesPerGroup, slidesPerView, spaceBetween, isEnableLoop, isEnableNavButton, isEnableMouseMove, isEnablePagination, isCenteredSlides} = props;
 
     const rwdMedia = getMediaSetting({
-        slidesPerView: slidesPerView,
+        slidesPerView: typeof slidesPerView === 'number' && slidesPerView <= 0 ? 1: slidesPerView,
         slidesPerGroup: slidesPerGroup,
         spaceBetween: spaceBetween,
         isCenteredSlides: isCenteredSlides,
@@ -66,8 +66,9 @@ export function getMediaInfo(props: IReactCarouselProps): {rwdMedia: IBreakpoint
     }, breakpoints);
 
 
-    const divisible = data.length % rwdMedia.slidesPerGroup; // 餘數
-    let sliceData = divisible > 0 ? data.slice(0, data.length - divisible) : data;
+    // const divisible = data.length % rwdMedia.slidesPerGroup; // 餘數
+    // let sliceData = divisible > 0 ? data.slice(0, data.length - divisible) : data;
+    let sliceData = data;
     let sourceTotal = sliceData.length;
     const formatElement = initDataList(
         sliceData,
@@ -115,9 +116,7 @@ export function getMediaInfo(props: IReactCarouselProps): {rwdMedia: IBreakpoint
             lastIndex: Math.ceil(sourceTotal + cloneAfterTotal - 1)
         },
         // 總頁數
-        // pageTotal: fakeTotalPage - (rwdMedia.slidesPerView - (elementTotal % rwdMedia.slidesPerView)),
         pageTotal: fakeTotalPage,
-        isDivisible: divisible === 0,
         residue: elementTotal % rwdMedia.slidesPerGroup,
         isVisiblePagination: rwdMedia.isEnablePagination && formatElement.length > 0,
         isVisibleNavButton: rwdMedia.isEnableNavButton && formatElement.length > 0
@@ -147,14 +146,12 @@ function initDataList(sourceList: Array<any> = [], slidesPerView: TSlidesPerView
     const formatList = [];
     const isClone = isLoop && typeof window !== 'undefined';
     let index = 0;
-    const formatSlidesPerView = slidesPerView === 'auto' ? 0: Math.ceil(slidesPerView);
+    const formatSlidesPerView = slidesPerView === 'auto' ? 0: Math.ceil(slidesPerView) + (sourceList.length % slidesPerGroup);
     const lastPage = (sourceList.length / slidesPerGroup) - (slidesPerGroup - formatSlidesPerView);
 
     if (isClone) {
-    // 複製最後面, 放在最前面
-
+        // 複製最後面, 放在最前面
         const cloneStart = (sourceList.length - formatSlidesPerView);
-        // eslint-disable-next-line no-restricted-syntax
         for (const row of sourceList.slice(-formatSlidesPerView)) {
             formatList[index] = {
                 actualIndex: index,
@@ -169,13 +166,11 @@ function initDataList(sourceList: Array<any> = [], slidesPerView: TSlidesPerView
 
     let matchFirstIndex = index;
     let pageFirstIndex = 0;
-    // eslint-disable-next-line no-restricted-syntax
     for (const row of sourceList) {
         formatList[index] = {
             actualIndex: index,
             matchIndex: index,
             inPage: Math.ceil((pageFirstIndex + 1) / slidesPerGroup),
-            // inPage: info.pageTotal - (rwdMedia.slidesPerView - (info.element.total % rwdMedia.slidesPerView)),
             isClone: false,
             element: row.children,
         };
@@ -186,7 +181,6 @@ function initDataList(sourceList: Array<any> = [], slidesPerView: TSlidesPerView
     if (isClone) {
     // 複製前面的(需顯示總數) 放在最後面
 
-        // eslint-disable-next-line no-restricted-syntax
         for (const row of sourceList.slice(0, formatSlidesPerView)) {
             formatList[index] = {
                 actualIndex: index,

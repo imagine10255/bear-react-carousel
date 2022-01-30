@@ -23,11 +23,11 @@ code {
 
 
 #console{
-  position: fixed;
-  bottom: 0;
+  /*position: fixed;*/
+  /*bottom: 0;*/
   z-index: 99;
   display: flex;
-  font-size: 10px;
+  font-size: 12px;
   border: none;
   background: #1f1f1f;
   color: #ccb444;

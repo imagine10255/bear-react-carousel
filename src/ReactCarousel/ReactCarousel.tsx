@@ -60,7 +60,6 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
       },
       // 總頁數
       pageTotal: 0,
-      isDivisible: false,
       residue: 1,
       isVisiblePagination: false,
       isVisibleNavButton: false
@@ -277,7 +276,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
    * @param event
    */
   _onMobileTouchEnd = (event: TouchEvent): void => {
-      // if(this.props.isDebug) log.printInText('[_onMobileTouchEnd]');
+      if(this.props.isDebug) log.printInText('[_onMobileTouchEnd]');
 
       event.preventDefault();
 
@@ -294,7 +293,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
    * @param event
    */
   _onWebMouseStart = (event: MouseEvent): void => {
-      // if(this.props.isDebug) log.printInText('[_onWebMouseStart]');
+      if(this.props.isDebug) log.printInText('[_onWebMouseStart]');
 
       event.preventDefault();
 
@@ -338,7 +337,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
    * @param event
    */
   _onWebMouseEnd = (event: MouseEvent):void => {
-      // if(this.props.isDebug) log.printInText('[_onWebMouseEnd]');
+      if(this.props.isDebug) log.printInText('[_onWebMouseEnd]');
 
       event.preventDefault();
 
