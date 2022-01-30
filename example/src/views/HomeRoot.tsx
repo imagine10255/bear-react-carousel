@@ -1,14 +1,14 @@
 import React from 'react'
 import styled, {css} from 'styled-components/macro'
 import { Col, Container, EDirection, Flex, GridThemeProvider, Row } from 'imagine-react-styled-grid'
+import {Link} from 'react-router-dom';
+import Router from './Router';
 
 import 'imagine-react-styled-grid/dist/index.css'
-import Sample from './Sample/Sample'
-
-const arrowIcon = "data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16px\" height=\"16px\" viewBox=\"0 0 24 24\"><path fill=\"rgba(0,0,0,0.5)\" d=\"M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z\"></path></svg>";
 
 
-function HomeRoot() {
+
+const HomeRoot = () => {
   /**
    * Nav
    */
@@ -109,10 +109,13 @@ function HomeRoot() {
         <Menu>
           <MenuList>
             <MenuItem>
-              <Link isActive>Welcome</Link>
+              <MenuLink to="/">Welcome</MenuLink>
             </MenuItem>
             <MenuItem>
-              <Link>Example</Link>
+              <MenuLink to="/props-try" isActive>Props Try</MenuLink>
+            </MenuItem>
+            <MenuItem>
+              <MenuLink to="#">Example</MenuLink>
             </MenuItem>
           </MenuList>
         </Menu>
@@ -141,8 +144,7 @@ function HomeRoot() {
 
           {renderSidebar()}
           <Content>
-
-            <Sample/>
+              <Router/>
           </Content>
 
         </MainWrapper>
@@ -163,7 +165,7 @@ const MainWrapper = styled.div`
     box-sizing: border-box;
 `;
 
-const Link = styled.a<{
+const MenuLink = styled(Link)<{
   isActive?: boolean;
 }>`
   color: #dadde1;

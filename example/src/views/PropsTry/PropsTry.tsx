@@ -58,7 +58,7 @@ export interface IFormData {
 
 
 
-const Sample = () => {
+const PropsTry = () => {
   // const [isMount, setIsMount] = useState<boolean>(true);
   // const [isDebug, setIsDebug] = useState<boolean>(true);
   // const [isEnableMouseMove, setIsEnableMouseMove] = useState<boolean>(true);
@@ -322,7 +322,7 @@ const Sample = () => {
 
 };
 
-export default Sample;
+export default PropsTry;
 
 
 const Desc = styled.p`
