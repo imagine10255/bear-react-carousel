@@ -3,19 +3,19 @@ import {AutoScrollTop} from 'library/react-router';
 import {GridThemeProvider, media} from 'imagine-react-styled-grid';
 import gridConfig from 'config/grid';
 
-import HomeRoot from '../views/HomeRoot'
-import { BrowserRouter, HashRouter } from 'react-router-dom'
+import HomeRoot from '../views/HomeRoot';
+import {BrowserRouter, HashRouter} from 'react-router-dom';
 
 const App = () => {
     return (
-      <GridThemeProvider gridTheme={gridConfig}>
-        <HashRouter>
-              <HomeRoot/>
+        <GridThemeProvider gridTheme={gridConfig}>
+            <HashRouter>
+                <HomeRoot/>
 
-              <AutoScrollTop/>
+                <AutoScrollTop/>
 
-        </HashRouter>
-      </GridThemeProvider>
+            </HashRouter>
+        </GridThemeProvider>
     );
 };
 

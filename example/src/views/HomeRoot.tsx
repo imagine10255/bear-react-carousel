@@ -1,161 +1,161 @@
-import React from 'react'
-import styled, {css} from 'styled-components/macro'
-import { Col, Container, EDirection, Flex, GridThemeProvider, Row } from 'imagine-react-styled-grid'
+import React from 'react';
+import styled, {css} from 'styled-components/macro';
+import {Col, Container, EDirection, Flex, GridThemeProvider, Row} from 'imagine-react-styled-grid';
 import {Link} from 'react-router-dom';
 import Router from './Router';
 
-import 'imagine-react-styled-grid/dist/index.css'
+import 'imagine-react-styled-grid/dist/index.css';
 
 
 
 const HomeRoot = () => {
-  /**
+    /**
    * Nav
    */
-  const renderNav = () => {
-    return <Nav>
-      <Container className=" d-flex" fluid>
-        <NavbarBrand>React Styled Carousel</NavbarBrand>
+    const renderNav = () => {
+        return <Nav>
+            <Container className=" d-flex" fluid>
+                <NavbarBrand>React Styled Carousel</NavbarBrand>
 
-        <NavbarNav className="ml-auto my-0 d-none d-md-flex">
-          <NavItem>
-            <NavLink href="#!" isActive>Docs</NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink href="#!">GitHub</NavLink>
-          </NavItem>
+                <NavbarNav className="ml-auto my-0 d-none d-md-flex">
+                    <NavItem>
+                        <NavLink href="#!" isActive>Docs</NavLink>
+                    </NavItem>
+                    <NavItem>
+                        <NavLink href="#!">GitHub</NavLink>
+                    </NavItem>
 
-        </NavbarNav>
-      </Container>
-    </Nav>;
-  };
+                </NavbarNav>
+            </Container>
+        </Nav>;
+    };
 
 
-  /**
+    /**
    * Header
    */
-  const renderHeader = () => {
-    return <Container>
-      <Row>
-        <Col lg={14}>
-          <img className="img-fluid mb-4 mb-lg-0 round" src="https://dummyimage.com/900x400/dee2e6/6c757d.jpg" alt="sample-img"/>
-        </Col>
-        <Col lg={10}>
-          <Title>Business Name or Tagline</Title>
-          <p>This is a template that is great for small businesses. It doesn't have too much fancy flare to it, but it makes a great use of the standard Bootstrap core components. Feel free to use this template for any project you want!</p>
-          <a href="#!">Call to Action!</a>
+    const renderHeader = () => {
+        return <Container>
+            <Row>
+                <Col lg={14}>
+                    <img className="img-fluid mb-4 mb-lg-0 round" src="https://dummyimage.com/900x400/dee2e6/6c757d.jpg" alt="sample-img"/>
+                </Col>
+                <Col lg={10}>
+                    <Title>Business Name or Tagline</Title>
+                    <p>This is a template that is great for small businesses. It doesn't have too much fancy flare to it, but it makes a great use of the standard Bootstrap core components. Feel free to use this template for any project you want!</p>
+                    <a href="#!">Call to Action!</a>
 
-          <StyledCol className="mt-3">Test Styled(Col)</StyledCol>
-        </Col>
-      </Row>
+                    <StyledCol className="mt-3">Test Styled(Col)</StyledCol>
+                </Col>
+            </Row>
 
-    </Container>;
-  };
+        </Container>;
+    };
 
-  /**
+    /**
    * News
    */
-  const renderNews = () => {
-    return <Container>
+    const renderNews = () => {
+        return <Container>
 
-      <NewCard className="my-5 py-4 text-center">
-        <CardBody>
-          <p>This call to action card is a great place to showcase some important information or display a clever tagline!
-          </p>
-          <p>https://startbootstrap.github.io/startbootstrap-small-business/
-          </p>
+            <NewCard className="my-5 py-4 text-center">
+                <CardBody>
+                    <p>This call to action card is a great place to showcase some important information or display a clever tagline!
+                    </p>
+                    <p>https://startbootstrap.github.io/startbootstrap-small-business/
+                    </p>
 
-        </CardBody>
-      </NewCard>
+                </CardBody>
+            </NewCard>
 
-    </Container>;
-  };
+        </Container>;
+    };
 
 
-  /**
+    /**
    * Card List
    */
-  const renderCardList = () => {
-    const texts = [
-      'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.',
-      'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod tenetur ex natus at dolorem enim! Nesciunt pariatur voluptatem sunt quam eaque, vel, non in id dolore voluptates quos eligendi labore.,',
-      'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.',
-    ];
+    const renderCardList = () => {
+        const texts = [
+            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.',
+            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod tenetur ex natus at dolorem enim! Nesciunt pariatur voluptatem sunt quam eaque, vel, non in id dolore voluptates quos eligendi labore.,',
+            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex numquam, maxime minus quam molestias corporis quod, ea minima accusamus.',
+        ];
 
-    return (<Container>
-      <Row>
-        {texts.map((text, index) => {
-          return <Col md={8} key={`card_${index}`} className="mb-5">
-            <Card className="h-100">
-              <CardBody>
-                <CardTitle>Card One</CardTitle>
-                <CardText>{text}</CardText>
-              </CardBody>
-              <CardFooter>
-                <a href="#!">More Info</a>
-              </CardFooter>
-            </Card>
-          </Col>;
-        })}
+        return (<Container>
+            <Row>
+                {texts.map((text, index) => {
+                    return <Col md={8} key={`card_${index}`} className="mb-5">
+                        <Card className="h-100">
+                            <CardBody>
+                                <CardTitle>Card One</CardTitle>
+                                <CardText>{text}</CardText>
+                            </CardBody>
+                            <CardFooter>
+                                <a href="#!">More Info</a>
+                            </CardFooter>
+                        </Card>
+                    </Col>;
+                })}
 
-      </Row>
-    </Container>);
+            </Row>
+        </Container>);
 
-  };
+    };
 
-  const renderSidebar = () => {
-    return <SidebarContainer>
-      <Sidebar>
-        <Menu>
-          <MenuList>
-            <MenuItem>
-              <MenuLink to="/">Welcome</MenuLink>
-            </MenuItem>
-            <MenuItem>
-              <MenuLink to="/props-try" isActive>Props Try</MenuLink>
-            </MenuItem>
-            <MenuItem>
-              <MenuLink to="#">Example</MenuLink>
-            </MenuItem>
-          </MenuList>
-        </Menu>
+    const renderSidebar = () => {
+        return <SidebarContainer>
+            <Sidebar>
+                <Menu>
+                    <MenuList>
+                        <MenuItem>
+                            <MenuLink to="/">Welcome</MenuLink>
+                        </MenuItem>
+                        <MenuItem>
+                            <MenuLink to="/props-try" isActive>Props Try</MenuLink>
+                        </MenuItem>
+                        <MenuItem>
+                            <MenuLink to="#">Example</MenuLink>
+                        </MenuItem>
+                    </MenuList>
+                </Menu>
 
-      </Sidebar>
-    </SidebarContainer>
-  };
+            </Sidebar>
+        </SidebarContainer>;
+    };
 
 
-  /**
+    /**
    * Footer
    */
-  const renderFooter = () => {
-    return <Footer className="py-3">
-      <Container className="px-4 px-lg-5"><p className="m-0 text-center">Copyright © 2022 imagine, Inc</p></Container>
-    </Footer>;
-  };
+    const renderFooter = () => {
+        return <Footer className="py-3">
+            <Container className="px-4 px-lg-5"><p className="m-0 text-center">Copyright © 2022 imagine, Inc</p></Container>
+        </Footer>;
+    };
 
 
-  return (
-    <GridThemeProvider gridTheme={{}}>
-        {renderNav()}
+    return (
+        <GridThemeProvider gridTheme={{}}>
+            {renderNav()}
 
-        <MainWrapper>
+            <MainWrapper>
 
 
-          {renderSidebar()}
-          <Content>
-              <Router/>
-          </Content>
+                {renderSidebar()}
+                <Content>
+                    <Router/>
+                </Content>
 
-        </MainWrapper>
+            </MainWrapper>
 
-        {/*{renderNews()}*/}
-        {/*{renderHeader()}*/}
-        {/*{renderCardList()}*/}
-        {renderFooter()}
-    </GridThemeProvider>
-  );
-}
+            {/*{renderNews()}*/}
+            {/*{renderHeader()}*/}
+            {/*{renderCardList()}*/}
+            {renderFooter()}
+        </GridThemeProvider>
+    );
+};
 
 export default HomeRoot;
 
@@ -197,19 +197,19 @@ const MenuItem = styled.li`
     background-color: hsl(0deg 0% 100% / 5%);
   }
 
-`
+`;
 const MenuList = styled.ul`
     list-style: none;
     margin: 0;
     padding-left: 0;
 
-`
+`;
 const Menu = styled.nav`
   font-weight: 500;
       flex-grow: 1;
     padding: 0.5rem;
         overflow-x: hidden;
-`
+`;
 
 const Content = styled.div`
   flex: 1;
