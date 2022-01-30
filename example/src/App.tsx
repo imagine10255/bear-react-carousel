@@ -1,11 +1,11 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import styled from 'styled-components/macro'
-import { Col, Container, EColType, GridThemeProvider, Row } from 'imagine-react-styled-grid'
-import ReactCarousel, { IReactCarouselObj } from 'imagine-react-carousel'
+import React, {useCallback, useEffect, useState} from 'react';
+import styled from 'styled-components/macro';
+import {Col, Container, EColType, GridThemeProvider, Row} from 'imagine-react-styled-grid';
+import ReactCarousel, {IReactCarouselObj} from 'imagine-react-carousel';
 import {anyToNumber} from 'imagine-js-utils/convert';
 
 
-import 'imagine-react-carousel/dist/index.css'
+import 'imagine-react-carousel/dist/index.css';
 
 
 const bgList = [
@@ -46,13 +46,13 @@ const App = () => {
     const [isEnableLoop, setIsEnableLoop] = useState<boolean>(true);
     const [slidesPerView, setSlidesPerView] = useState<number>(1);
     const [slidesPerGroup, setSlidesPerGroup] = useState<number>(1);
+    const [moveTime, setMoveTime] = useState<number>(400);
 
     const [data, setData] = useState<Array<{key: number, children: React.ReactElement}>>([]);
     const [control, setCarousel] = useState<IReactCarouselObj>();
 
     useEffect(() => {
         // mock api get data
-        console.log(carouselData.length);
         setTimeout(() => {
             setData(carouselData);
         }, 400);
@@ -80,19 +80,19 @@ const App = () => {
             {name: 'isEnableNavButton', state: isEnableNavButton, setState: setIsEnableNavButton},
             {name: 'isEnablePagination', state: isEnablePagination, setState: setIsEnablePagination},
             {name: 'isEnableLoop', state: isEnableLoop, setState: setIsEnableLoop},
-        ]
+        ];
 
         return data.map(row => {
 
-            return <ControlCheckbox>
+            return <ControlCheckbox key={row.name}>
                 <input type="checkbox"
-                       checked={row.state}
-                       onChange={() => row.setState(prev => !prev)}
+                    checked={row.state}
+                    onChange={() => row.setState(prev => !prev)}
                 />
                 {row.name}: {String(row.state)}
-            </ControlCheckbox>
+            </ControlCheckbox>;
         });
-    }
+    };
 
 
     /**
@@ -101,17 +101,17 @@ const App = () => {
     const renderPageControl = () => {
 
         const pages = new Array(getPageTotal()).fill('').map((row, index) => {
-                return <button key={`page_${index}`}
-                               type="button"
-                               onClick={() => handleGoPage(index + 1)}>
-                    {index + 1}
-                </button>;
-            });
+            return <button key={`page_${index}`}
+                type="button"
+                onClick={() => handleGoPage(index + 1)}>
+                {index + 1}
+            </button>;
+        });
 
         return <PageControlBox>
             {pages}
-        </PageControlBox>
-    }
+        </PageControlBox>;
+    };
 
     /**
      * render page control
@@ -121,54 +121,56 @@ const App = () => {
         const data = [
             {name: 'slidesPerView', state: slidesPerView, setState: setSlidesPerView},
             {name: 'slidesPerGroup', state: slidesPerGroup, setState: setSlidesPerGroup},
-        ]
+            {name: 'moveTime', state: moveTime, setState: setMoveTime},
+        ];
 
         return data.map(row => {
 
-            return <ControlCheckbox>
+            return <ControlCheckbox key={row.name}>
                 <TextTitle>{row.name}</TextTitle>
-                <input type="text"
-                       value={row.state}
-                       onChange={(event) => row.setState(anyToNumber(event.target.value))}
+                <input type="number"
+                    value={row.state}
+                    onChange={(event) => row.setState(anyToNumber(event.target.value))}
                 />
-            </ControlCheckbox>
+            </ControlCheckbox>;
         });
-    }
+    };
 
 
     return <GridThemeProvider gridTheme={{}}>
 
 
-            <ReactCarouselBox className="mb-4">
-                {isMount && (<>
+        <ReactCarouselBox className="mb-4">
+            {isMount && (<>
                 <ReactCarousel
-                  setCarousel={handleSetCarousel}
-                  isDebug={isDebug}
-                  isEnablePagination={isEnablePagination}
-                  isEnableMouseMove={isEnableMouseMove}
-                  isEnableNavButton={isEnableNavButton}
-                  isEnableLoop={isEnableLoop}
-                  data={data}
-                  slidesPerView={slidesPerView}
-                  slidesPerGroup={slidesPerGroup}
-                  // breakpoints={{
-                  //     768: {
-                  //         slidesPerView: 2,
-                  //         isEnableLoop: false,
-                  //         isEnablePagination: false,
-                  //         isEnableNavButton: false,
-                  //     },
-                  //     1200: {
-                  //         slidesPerView: 1,
-                  //         isEnableLoop: true,
-                  //         isEnablePagination: true,
-                  //         isEnableNavButton: true,
-                  //     }
-                  // }}
+                    setCarousel={handleSetCarousel}
+                    isDebug={isDebug}
+                    isEnablePagination={isEnablePagination}
+                    isEnableMouseMove={isEnableMouseMove}
+                    isEnableNavButton={isEnableNavButton}
+                    isEnableLoop={isEnableLoop}
+                    data={data}
+                    slidesPerView={slidesPerView}
+                    slidesPerGroup={slidesPerGroup}
+                    moveTime={moveTime}
+                    // breakpoints={{
+                    //     768: {
+                    //         slidesPerView: 2,
+                    //         isEnableLoop: false,
+                    //         isEnablePagination: false,
+                    //         isEnableNavButton: false,
+                    //     },
+                    //     1200: {
+                    //         slidesPerView: 1,
+                    //         isEnableLoop: true,
+                    //         isEnablePagination: true,
+                    //         isEnableNavButton: true,
+                    //     }
+                    // }}
                 />
-                </>)}
+            </>)}
 
-            </ReactCarouselBox>
+        </ReactCarouselBox>
 
 
 
@@ -194,7 +196,7 @@ const App = () => {
 
 
 
-    </GridThemeProvider>
+    </GridThemeProvider>;
 
 };
 
