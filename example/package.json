@@ -24,6 +24,7 @@
     "react-scripts": "link:../node_modules/react-scripts",
     "styled-components": "5.2.1",
     "react-hook-form": "7.25.3",
+    "classnames": "2.3.1",
     "typescript": "link:../node_modules/typescript"
   },
   "devDependencies": {
