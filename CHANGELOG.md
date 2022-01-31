@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.8](https://github.com/imagine10255/react-carousel/compare/v1.1.7...v1.1.8) (2022-01-31)
+
+
+### Features
+
+* 新增 控制元件 ([d4ad56f](https://github.com/imagine10255/react-carousel/commit/d4ad56fb98b22447183e4959be094b025ba82d72))
+* 新增 有樣式的展示頁面 ([7f86fdb](https://github.com/imagine10255/react-carousel/commit/7f86fdb05efbd76b6548a1d29cf86e9c313cbd71))
+* 新增 路由設定 ([7d52203](https://github.com/imagine10255/react-carousel/commit/7d52203d6f4a0c209ccb569bd19822dd60c97128))
+* 更改 package名稱為 baer-carousel ([e53c823](https://github.com/imagine10255/react-carousel/commit/e53c823de72b5bf49f45a77aeecfa6dd92517aa7))
+* 更改 sample 設定 ([a519b25](https://github.com/imagine10255/react-carousel/commit/a519b25cc32d37dd000c24a81ab0cb52cfb69048))
+
+
+### Bug Fixes
+
+* 修正 hook form default 顯示問題 ([c589601](https://github.com/imagine10255/react-carousel/commit/c5896012fe6cb0dbd0c6bad0f91a343396f88e79))
+* 修正 計算頁數因除以0導致變成 Infinity ([38934cd](https://github.com/imagine10255/react-carousel/commit/38934cd054a40bdbdcc332852218d681f90edc2d))
+
 ### [1.1.7](https://github.com/imagine10255/react-carousel/compare/v1.1.6...v1.1.7) (2022-01-29)
 
 
