@@ -1,5 +1,5 @@
 {
-  "name": "imagine-react-carousel",
+  "name": "bear-carousel",
   "version": "1.1.7",
   "description": "Most modern mobile touch slider with hardware accelerated transitions by react",
   "keywords": [
@@ -78,7 +78,7 @@
     "react-scripts": "4.0.3",
     "standard-version": "9.3.0",
     "typescript": "4.1.5",
-    "imagine-js-utils": "0.0.25"
+    "bear-jsutils": "0.0.26"
   },
   "eslintConfig": {
     "extends": [

@@ -1,5 +1,5 @@
 import {IBreakpointSetting, TSlidesPerView, IBreakpointSettingActual, IInfo, IPropsBreakpoints, IReactCarouselProps} from './types';
-import {anyToNumber} from 'imagine-js-utils/convert';
+import {anyToNumber} from 'bear-jsutils/convert';
 
 /**
  * 取得螢幕尺寸對應設定尺寸

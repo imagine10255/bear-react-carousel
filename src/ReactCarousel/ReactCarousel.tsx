@@ -1,10 +1,10 @@
 import * as React from 'react';
 import {throttle} from '@github/mini-throttle';
 import {getTranslateParams, getMediaInfo, getMediaRangeSize, getSlideDirection} from './utils';
-import {uuid} from 'imagine-js-utils/key';
-import {checkIsMobile} from 'imagine-js-utils/browser';
-import log  from 'imagine-js-utils/log';
-import {strictEqual} from 'imagine-js-utils/equal';
+import {uuid} from 'bear-jsutils/key';
+import {checkIsMobile} from 'bear-jsutils/browser';
+import log  from 'bear-jsutils/log';
+import {deepCompare} from 'bear-jsutils/equal';
 import {IInfo, ITouchStart, IBreakpointSettingActual, IReactCarouselProps} from './types';
 import elClassName from './el-class-name';
 
@@ -181,7 +181,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
       const oldKey = data.map((row) => row.key).join('_');
       const nextKey = nextData.map((row) => row.key).join('_');
       if (oldKey !== nextKey ||
-      !strictEqual(otherParams, nextOtherProps) ||
+      !deepCompare(otherParams, nextOtherProps) ||
       nextWindowSize !== windowSize
       ) {
           const {rwdMedia, info} = getMediaInfo(nextProps);

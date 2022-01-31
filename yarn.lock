@@ -3042,6 +3042,11 @@ batch@0.6.1:
   resolved "https://registry.yarnpkg.com/batch/-/batch-0.6.1.tgz#dc34314f4e679318093fc760272525f94bf25c16"
   integrity sha1-3DQxT05nkxgJP8dgJyUl+UvyXBY=
 
+bear-jsutils@0.0.26:
+  version "0.0.26"
+  resolved "https://registry.yarnpkg.com/bear-jsutils/-/bear-jsutils-0.0.26.tgz#655c24bceeeb53055eb88b2c6f54bd0476da3638"
+  integrity sha512-Kg8nXvkhuWxqPBm+EWiE/+zmOZpY40695Di4hcXuCu1UN3p/ISzyWYLkIzcxb0HwE3vNXKcpj3drCdLpScrS3A==
+
 bfj@^7.0.2:
   version "7.0.2"
   resolved "https://registry.yarnpkg.com/bfj/-/bfj-7.0.2.tgz#1988ce76f3add9ac2913fd8ba47aad9e651bfbb2"
@@ -6659,11 +6664,6 @@ ignore@^5.1.4, ignore@^5.1.8, ignore@^5.2.0:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.2.0.tgz#6d3bac8fa7fe0d45d9f9be7bac2fc279577e345a"
   integrity sha512-CmxgYGiEPCLhfLnpPp1MoRmifwEIOgjcHXxOBjv7mY96c+eWScsOP9c112ZyLdWHi0FxHjI+4uVhKYp/gcdRmQ==
-
-imagine-js-utils@0.0.25:
-  version "0.0.25"
-  resolved "https://registry.yarnpkg.com/imagine-js-utils/-/imagine-js-utils-0.0.25.tgz#e8cd57685d281b53308593555a37272e7fc1d985"
-  integrity sha512-HyMS/9O1zWfVTteUnwj6UwKBGNOiVD/v9fhE0EuWk1b2HlV+qQMSv7XVcOoA0bSbOqCN7yQwaUWjgVxKT+vY0w==
 
 immer@8.0.1:
   version "8.0.1"

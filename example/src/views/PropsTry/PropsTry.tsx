@@ -2,14 +2,11 @@ import React, {ReactNodeArray, useCallback, useState} from 'react';
 import styled from 'styled-components/macro';
 import {Col, Container, EColType, Row} from 'imagine-react-styled-grid';
 import ReactCarousel, {IReactCarouselObj} from 'imagine-react-carousel';
-import {anyToNumber} from 'imagine-js-utils/convert';
+import {anyToNumber} from 'bear-jsutils/convert';
 
 
-import FormHorizontalGroup from 'components/forms/FormHorizontalGroup';
 import {Controller, useForm} from 'react-hook-form';
-import TextField from 'components/forms/TextField';
-import SwitchControl from 'components/forms/SwitchControl';
-import TextAreaField from 'components/forms/TextAreaField';
+import {FormHorizontalGroup, TextAreaField, TextField, SwitchControl} from 'bear-components/forms';
 
 type ICarouselData = Array<{key: number, children: React.ReactElement}>;
 
@@ -237,7 +234,7 @@ const PropsTry = () => {
                         />
                     </FormHorizontalGroup>
 
-                    <FormHorizontalGroup label="isEnablePagination">
+                    <FormHorizontalGroup label="isEnablePagination" >
                         <Controller
                             control={control}
                             name="isEnablePagination"
