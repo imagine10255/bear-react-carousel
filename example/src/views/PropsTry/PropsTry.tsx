@@ -1,16 +1,15 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import styled from 'styled-components/macro';
-import {Col, Container, EColType, GridThemeProvider, Row} from 'imagine-react-styled-grid';
+import {Col, Container, EColType, Row} from 'imagine-react-styled-grid';
 import ReactCarousel, {IReactCarouselObj} from 'imagine-react-carousel';
 import {anyToNumber} from 'imagine-js-utils/convert';
 
 
-import 'imagine-react-carousel/dist/index.css';
-import FormHorizontalGroup from '../../components/forms/FormHorizontalGroup';
+import FormHorizontalGroup from 'components/forms/FormHorizontalGroup';
 import {Controller, useForm} from 'react-hook-form';
 import TextField from 'components/forms/TextField';
 import SwitchControl from 'components/forms/SwitchControl';
-import TextAreaField from '../../components/forms/TextAreaField';
+import TextAreaField from 'components/forms/TextAreaField';
 
 type ICarouselData = Array<{key: number, children: React.ReactElement}>;
 
@@ -58,8 +57,9 @@ export interface IFormData {
 }
 
 
-
-
+/**
+ * Props Try
+ */
 const PropsTry = () => {
     const [data, setData] = useState<ICarouselData>(carouselData);
     const [carousel, setCarousel] = useState<IReactCarouselObj>();
@@ -142,9 +142,9 @@ const PropsTry = () => {
                         isEnableNavButton={isEnableNavButton}
                         isEnableLoop={isEnableLoop}
                         data={data}
-                        slidesPerView={slidesPerView}
-                        slidesPerGroup={slidesPerGroup}
-                        moveTime={moveTime}
+                        slidesPerView={anyToNumber(slidesPerView)}
+                        slidesPerGroup={anyToNumber(slidesPerGroup)}
+                        moveTime={anyToNumber(moveTime)}
                         // breakpoints={{
                         //     768: {
                         //         slidesPerView: 2,

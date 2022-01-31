@@ -4,5 +4,6 @@ import App from './App';
 
 import './index.css';
 import 'imagine-react-styled-grid/dist/index.css';
+import 'imagine-react-carousel/dist/index.css';
 
 ReactDOM.render(<App />, document.getElementById('root'));

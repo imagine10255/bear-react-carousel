@@ -7,8 +7,6 @@
     "start": "node ../node_modules/react-scripts/bin/react-scripts.js start",
     "build": "node ../node_modules/react-scripts/bin/react-scripts.js build",
     "test": "node ../node_modules/react-scripts/bin/react-scripts.js test",
-    "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public",
     "lint:fix": "eslint ./src --fix"
   },
   "dependencies": {
@@ -34,13 +32,7 @@
     "@testing-library/react": "link:../node_modules/@testing-library/react",
     "@testing-library/user-event": "link:../node_modules/@testing-library/user-event",
     "@types/jest": "link:../node_modules/@types/jest",
-    "@babel/plugin-syntax-object-rest-spread": "^7.8.3",
-    "@storybook/addon-actions": "^6.3.12",
-    "@storybook/addon-essentials": "^6.3.12",
-    "@storybook/addon-links": "^6.3.12",
-    "@storybook/node-logger": "^6.3.12",
-    "@storybook/preset-create-react-app": "^3.2.0",
-    "@storybook/react": "^6.3.12"
+    "@babel/plugin-syntax-object-rest-spread": "^7.8.3"
   },
   "browserslist": {
     "production": [
