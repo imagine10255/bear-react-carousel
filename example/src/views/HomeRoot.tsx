@@ -3,9 +3,9 @@ import styled from 'styled-components/macro';
 import {Col} from 'imagine-react-styled-grid';
 import Router from './Router';
 
-import Navbar from './_components/Navbar'
-import Sidebar from './_components/Sidebar'
-import Footer from './_components/Footer'
+import Navbar from './_components/Navbar';
+import Sidebar from './_components/Sidebar';
+import Footer from './_components/Footer';
 
 
 

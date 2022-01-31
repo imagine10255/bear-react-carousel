@@ -1,28 +1,28 @@
-import { Container } from 'imagine-react-styled-grid'
-import React from 'react'
-import styled, { css } from 'styled-components/macro'
-import { Link } from 'react-router-dom'
+import {Container} from 'imagine-react-styled-grid';
+import React from 'react';
+import styled, {css} from 'styled-components/macro';
+import {Link} from 'react-router-dom';
 
 
 const Sidebar = () => {
-  return <SidebarContainer>
-    <SidebarContent>
-      <Menu>
-        <MenuList>
-          <MenuItem>
-            <MenuLink to="/">Welcome</MenuLink>
-          </MenuItem>
-          <MenuItem>
-            <MenuLink to="/props-try" isActive>Props Try</MenuLink>
-          </MenuItem>
-          <MenuItem>
-            <MenuLink to="#">Example</MenuLink>
-          </MenuItem>
-        </MenuList>
-      </Menu>
+    return <SidebarContainer>
+        <SidebarContent>
+            <Menu>
+                <MenuList>
+                    <MenuItem>
+                        <MenuLink to="/">Welcome</MenuLink>
+                    </MenuItem>
+                    <MenuItem>
+                        <MenuLink to="/props-try" isActive>Props Try</MenuLink>
+                    </MenuItem>
+                    <MenuItem>
+                        <MenuLink to="#">Example</MenuLink>
+                    </MenuItem>
+                </MenuList>
+            </Menu>
 
-    </SidebarContent>
-  </SidebarContainer>;
+        </SidebarContent>
+    </SidebarContainer>;
 };
 
 export default Sidebar;

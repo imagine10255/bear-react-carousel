@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {ReactNodeArray, useCallback, useState} from 'react';
 import styled from 'styled-components/macro';
 import {Col, Container, EColType, Row} from 'imagine-react-styled-grid';
 import ReactCarousel, {IReactCarouselObj} from 'imagine-react-carousel';
@@ -108,17 +108,22 @@ const PropsTry = () => {
    * render page control
    */
     const renderPageControl = () => {
+        const pageTotal = getPageTotal();
+        let pageEls: ReactNodeArray = [];
 
-        const pages = new Array(getPageTotal()).fill('').map((row, index) => {
-            return <button key={`page_${index}`}
-                type="button"
-                onClick={() => handleGoPage(index + 1)}>
-                {index + 1}
-            </button>;
-        });
+        if(pageTotal > 0){
+            pageEls = new Array(pageTotal).fill('').map((row, index) => {
+                return <button key={`page_${index}`}
+                    type="button"
+                    onClick={() => handleGoPage(index + 1)}>
+                    {index + 1}
+                </button>;
+            });
+        }
+
 
         return <PageControlBox>
-            {pages}
+            {pageEls}
         </PageControlBox>;
     };
 
@@ -142,8 +147,8 @@ const PropsTry = () => {
                         isEnableNavButton={isEnableNavButton}
                         isEnableLoop={isEnableLoop}
                         data={data}
-                        slidesPerView={anyToNumber(slidesPerView)}
-                        slidesPerGroup={anyToNumber(slidesPerGroup)}
+                        slidesPerView={anyToNumber(slidesPerView, 1)}
+                        slidesPerGroup={anyToNumber(slidesPerGroup, 1)}
                         moveTime={anyToNumber(moveTime)}
                         // breakpoints={{
                         //     768: {
@@ -358,6 +363,7 @@ const PageControlBox = styled.div`
   display: flex;
   margin-bottom: 20px;
   color: #fff;
+  height: 39px;
 
   button{
     margin: 0 5px;

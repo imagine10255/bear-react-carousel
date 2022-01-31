@@ -1,24 +1,24 @@
-import { Container } from 'imagine-react-styled-grid'
-import React from 'react'
-import styled from 'styled-components/macro'
+import {Container} from 'imagine-react-styled-grid';
+import React from 'react';
+import styled from 'styled-components/macro';
 
 
 const Navbar = () => {
-  return <Nav>
-    <Container className="d-flex" fluid>
-      <NavbarBrand>React Styled Carousel</NavbarBrand>
+    return <Nav>
+        <Container className="d-flex" fluid>
+            <NavbarBrand>React Styled Carousel</NavbarBrand>
 
-      <NavbarNav className="ml-auto my-0 d-none d-md-flex">
-        <NavItem>
-          <NavLink href="#!" isActive>Docs</NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink href="#!">GitHub</NavLink>
-        </NavItem>
+            <NavbarNav className="ml-auto my-0 d-none d-md-flex">
+                <NavItem>
+                    <NavLink href="#!" isActive>Docs</NavLink>
+                </NavItem>
+                <NavItem>
+                    <NavLink href="#!">GitHub</NavLink>
+                </NavItem>
 
-      </NavbarNav>
-    </Container>
-  </Nav>;
+            </NavbarNav>
+        </Container>
+    </Nav>;
 };
 
 export default Navbar;

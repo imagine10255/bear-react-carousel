@@ -5788,10 +5788,9 @@ ignore@^5.1.4, ignore@^5.1.8, ignore@^5.2.0:
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.2.0.tgz#6d3bac8fa7fe0d45d9f9be7bac2fc279577e345a"
   integrity sha512-CmxgYGiEPCLhfLnpPp1MoRmifwEIOgjcHXxOBjv7mY96c+eWScsOP9c112ZyLdWHi0FxHjI+4uVhKYp/gcdRmQ==
 
-imagine-js-utils@0.0.24:
-  version "0.0.24"
-  resolved "https://registry.yarnpkg.com/imagine-js-utils/-/imagine-js-utils-0.0.24.tgz#04b5134ab07f23c8442c318ae67a5a359bef8d0d"
-  integrity sha512-oJozjo6wKS0iidVlR2ox2oMBawKP0C1a+81gk+m8LiLxGeNU2GLF1uGEtj+7yVWk9g63VpTuoANwa1amIyfjew==
+"imagine-js-utils@link:../node_modules/imagine-js-utils":
+  version "0.0.0"
+  uid ""
 
 "imagine-react-carousel@link:..":
   version "0.0.0"

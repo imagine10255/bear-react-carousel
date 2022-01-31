@@ -17,7 +17,7 @@
     "@types/react-router-dom": "5.3.2",
     "imagine-react-carousel": "link:..",
     "imagine-react-styled-grid": "1.0.17",
-    "imagine-js-utils": "0.0.24",
+    "imagine-js-utils": "link:../node_modules/imagine-js-utils",
     "react": "link:../node_modules/react",
     "react-dom": "link:../node_modules/react-dom",
     "react-scripts": "link:../node_modules/react-scripts",

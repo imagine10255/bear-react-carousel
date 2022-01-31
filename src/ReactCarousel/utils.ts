@@ -1,4 +1,5 @@
 import {IBreakpointSetting, TSlidesPerView, IBreakpointSettingActual, IInfo, IPropsBreakpoints, IReactCarouselProps} from './types';
+import {anyToNumber} from 'imagine-js-utils/convert';
 
 /**
  * 取得螢幕尺寸對應設定尺寸
@@ -36,12 +37,12 @@ export function getMediaSetting(setting: IBreakpointSetting, breakpoints: IProps
     //     setting.isEnableLoop = false;
     // }
 
-    const slidesPerViewActual = setting.slidesPerView === 'auto' ? 1: setting.slidesPerView;
+    const slidesPerViewActual = setting.slidesPerView === 'auto' ? 1: anyToNumber(setting.slidesPerView , 1);
     return {
         ...setting,
         slidesPerViewActual: slidesPerViewActual,
         isEnableLoop: setting.slidesPerView === 'auto' ? false : setting.isEnableLoop,
-        slidesPerGroup: setting.slidesPerGroup > slidesPerViewActual ? slidesPerViewActual:setting.slidesPerGroup, // fix
+        slidesPerGroup: setting.slidesPerGroup > slidesPerViewActual ? slidesPerViewActual:anyToNumber(setting.slidesPerGroup, 1), // fix
     };
 }
 
@@ -95,8 +96,11 @@ export function getMediaInfo(props: IReactCarouselProps): {rwdMedia: IBreakpoint
     // }
 
     let fakeTotalPage = Math.ceil(sourceTotal / rwdMedia.slidesPerGroup);
+    console.log('fakeTotalPage', fakeTotalPage, sourceTotal, rwdMedia.slidesPerGroup);
     if(!rwdMedia.isEnableLoop && rwdMedia.slidesPerView !== 'auto' && !rwdMedia.isCenteredSlides){
         fakeTotalPage = fakeTotalPage - (rwdMedia.slidesPerView - rwdMedia.slidesPerGroup);
+
+        console.log('loop fakeTotalPage', fakeTotalPage);
     }
 
     const info: IInfo = {
