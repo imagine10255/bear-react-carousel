@@ -25,6 +25,7 @@ const About = () => {
             <Li>Simple to use</Li>
             <Li>Supports both Web, Mobile</Li>
             <Li>Responsive Control Setting</Li>
+            <Li>Navigation button placement to move directly outside the picture area</Li>
             <Li>easier to customize</Li>
             <Li>Using Flexbox, don't write width in inline style</Li>
             <Li>Conditional limit re-rendering</Li>

@@ -21,19 +21,19 @@ export const menu: IMenu[] = [
         href: '/props-try',
     },
     {
-        name: 'Special',
+        name: 'Feature',
         children: [
             {
-                name: 'Slider Per View Auto',
-                href: '/special/slider-per-view-auto'
+                name: 'Per View Auto',
+                href: '/feature/per-view-auto'
             },
             {
                 name: 'Centered',
-                href: '/special/centered'
+                href: '/feature/centered'
             },
             {
                 name: 'Breakpoints',
-                href: '/special/breakpoints'
+                href: '/feature/breakpoints'
             }
         ]
     },

@@ -142,5 +142,6 @@ const SidebarContainer = styled.aside`
     margin-top: -63.75px;
     transition: width 0.2s ease;
     width: 300px;
+    flex: 0 0 300px;
     will-change: width;
 `;

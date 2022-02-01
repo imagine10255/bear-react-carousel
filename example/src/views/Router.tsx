@@ -6,6 +6,7 @@ import NotFound from 'views/NotFound';
 import About from './About';
 import Installation from './Installation';
 import PropsTry from './PropsTry';
+import PerViewAuto from './Feature/PerViewAuto'
 
 
 const Router = () => {
@@ -15,6 +16,7 @@ const Router = () => {
             <Route path="/props-try" children={<PropsTry/>} />
             <Route path="/installation" children={<Installation/>} />
             <Route path="/about" children={<About/>} />
+            <Route path="/feature/per-view-auto" children={<PerViewAuto/>} />
 
             <Route path="*" children={<NotFound/>}/>
         </Switch>
