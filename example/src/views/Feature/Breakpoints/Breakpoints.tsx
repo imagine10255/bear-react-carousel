@@ -15,14 +15,13 @@ const bgList = [
     {id: 7, image: '/static/sample/07.jpg'},
     {id: 8, image: '/static/sample/08.jpg'},
     {id: 1, image: '/static/sample/01.jpg'}
-    // {id: 10, image: '/static/sample/10.jpg'},
 ];
 
 
 /**
- * Centered
+ * Breakpoints
  */
-const Centered = () => {
+const Breakpoints = () => {
 
     const carouselData: ICarouselData[] = bgList.map(row => {
         return {
@@ -40,17 +39,32 @@ const Centered = () => {
 
 
     return <Content
-        title="Centered"
-        desc="Moved items as to the central position"
+        title="Breakpoints"
+        desc="Display settings according to responsive size"
     >
         <CarouselBox className="mb-4">
             <BearCarousel
                 data={carouselData}
-                slidesPerView={4}
-                spaceBetween={10}
+                slidesPerView={1}
                 isEnableMouseMove
                 isEnablePagination
                 isCenteredSlides
+                isEnableLoop
+                breakpoints={{
+                    768: {
+                        slidesPerView: 2,
+                        isEnableLoop: false,
+                        isEnablePagination: false,
+                        isEnableNavButton: false,
+                    },
+                    1200: {
+                        slidesPerView: 4,
+                        isEnableLoop: true,
+                        isEnablePagination: true,
+                        isEnableNavButton: true,
+                    }
+                }}
+
             />
         </CarouselBox>
 
@@ -60,11 +74,27 @@ const Centered = () => {
 
  <BearCarousel
     data={carouselData}
-    slidesPerView={4}
-    spaceBetween={10}
+    slidesPerView={1}
     isEnableMouseMove
     isEnablePagination
     isCenteredSlides
+    isEnableLoop
+    breakpoints={{
+      768: {
+        slidesPerView: 2,
+        isEnableLoop: false,
+        isEnablePagination: false,
+        isEnableNavButton: false,
+        isEnableMouseMove: false
+      },
+      1200: {
+        slidesPerView: 4,
+        isEnableLoop: true,
+        isEnablePagination: true,
+        isEnableNavButton: true,
+        isEnableMouseMove: true
+      }
+    }}
   />
         `}
         </Code>
@@ -72,7 +102,7 @@ const Centered = () => {
     </Content>;
 };
 
-export default Centered;
+export default Breakpoints;
 
 
 const CarouselBox = styled.div`

@@ -8,6 +8,7 @@ import Installation from './Installation';
 import PropsTry from './PropsTry';
 import PerViewAuto from './Feature/PerViewAuto';
 import Centered from './Feature/Centered';
+import Breakpoints from './Feature/Breakpoints';
 
 
 const Router = () => {
@@ -19,6 +20,7 @@ const Router = () => {
             <Route path="/about" children={<About/>} />
             <Route path="/feature/per-view-auto" children={<PerViewAuto/>} />
             <Route path="/feature/centered" children={<Centered/>} />
+            <Route path="/feature/breakpoints" children={<Breakpoints/>} />
 
             <Route path="*" children={<NotFound/>}/>
         </Switch>
