@@ -97,7 +97,6 @@ export function getMediaInfo(props: ICarouselProps): {rwdMedia: IBreakpointSetti
     // }
 
     let fakeTotalPage = Math.ceil(sourceTotal / rwdMedia.slidesPerGroup);
-    console.log('fakeTotalPage', fakeTotalPage, sourceTotal, rwdMedia.slidesPerGroup);
     if(!rwdMedia.isEnableLoop && rwdMedia.slidesPerView !== 'auto' && !rwdMedia.isCenteredSlides){
         fakeTotalPage = fakeTotalPage - (rwdMedia.slidesPerView - rwdMedia.slidesPerGroup);
     }

@@ -15,7 +15,7 @@
  */
 
 export default {
-    gridGutterWidth: 10,
+    gridGutterWidth: 15,
     gridColumns: 24,
     gridBreakpoints: {
         xs: 0,
@@ -33,10 +33,10 @@ export default {
         xxl: 1540,
     },
     gridGutterWidthMedia: {
-        sm: 10,
-        md: 10,
-        lg: 10,
-        xl: 10,
-        xxl: 10,
+        sm: 15,
+        md: 15,
+        lg: 15,
+        xl: 15,
+        xxl: 15,
     }
 };

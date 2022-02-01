@@ -1,53 +1,42 @@
 import {Container} from 'bear-styled-grid';
 import React from 'react';
 import styled, {css} from 'styled-components/macro';
-import {Link} from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
+import {IMenu, menu} from 'config/menu';
 
 
+
+const renderMenu: any = (rows: IMenu[], lv = 1, pathname = '') => {
+    return rows.map(row => {
+        const isActive = row?.href ? pathname.startsWith(row?.href): false;
+
+        return <>
+            <MenuItem lv={lv} isActive={isActive}>
+                {row.href ?
+                    <MenuLink to={row.href}>{row.name}</MenuLink> :
+                    <MenuTitle>{row.name}</MenuTitle>
+                }
+            </MenuItem>
+            {row.children && renderMenu(row.children, lv + 1, pathname)}
+        </>;
+    });
+};
+
+
+/**
+ * 左側選單
+ * @constructor
+ */
 const Sidebar = () => {
+    const location = useLocation();
+
+    const menuEl = renderMenu(menu, 1, location.pathname);
+
     return <SidebarContainer>
         <SidebarContent>
             <Menu>
                 <MenuList>
-                    <MenuItem>
-                        <MenuLink to="/">Welcome</MenuLink>
-                    </MenuItem>
-                    <MenuItem>
-                        <MenuLink to="/props-try" isActive>Props Try</MenuLink>
-                    </MenuItem>
-                    <MenuItem>
-                        <MenuLink to="#">Special</MenuLink>
-
-                        <MenuList>
-                            <MenuItem>
-                                <MenuLink to="#">Slider Per View Auto</MenuLink>
-                            </MenuItem>
-                            <MenuItem>
-                                <MenuLink to="#">Centered</MenuLink>
-                            </MenuItem>
-                            <MenuItem>
-                                <MenuLink to="#">Breakpoints</MenuLink>
-                            </MenuItem>
-                        </MenuList>
-
-                    </MenuItem>
-
-                    <MenuItem>
-                        <MenuLink to="#">Example</MenuLink>
-
-                        <MenuList>
-                            <MenuItem>
-                                <MenuLink to="#">VIP List</MenuLink>
-                            </MenuItem>
-                            <MenuItem>
-                                <MenuLink to="#">Text Animations</MenuLink>
-                            </MenuItem>
-                            <MenuItem>
-                                <MenuLink to="#">AutoPlay Progress</MenuLink>
-                            </MenuItem>
-                        </MenuList>
-
-                    </MenuItem>
+                    {menuEl}
                 </MenuList>
             </Menu>
 
@@ -59,20 +48,14 @@ export default Sidebar;
 
 
 
-const MenuLink = styled(Link)<{
-  isActive?: boolean;
-}>`
-  color: #dadde1;
-  display:flex;
-      flex: 1;
-    justify-content: space-between;
-    line-height: 1.25;
-    border-radius: 0.25rem;
-    transition: background .2s 0s;
-    padding: 6.375px 17px;
-      text-decoration: none;
+const MenuTitle = styled.div`
+    color: #a3a4a8;
 
-    
+`;
+
+const MenuLink = styled(Link)`
+    color: #dadde1;
+
     :after{
         content: '';
         background:  50%/2rem 2rem;
@@ -80,25 +63,53 @@ const MenuLink = styled(Link)<{
         filter: invert(1) sepia(0.94) saturate(0.17) hue-rotate(223deg) brightness(1.04) contrast(0.98);
         transform: rotate(90deg);
     }
-  
-  ${props => props.isActive && css`
-      color: ${props.theme.primaryColor};
-  `}
+
 `;
 
-const MenuItem = styled.li`
+const MenuItem = styled.li<{
+    lv?: number
+    isActive?: boolean
+}>`
   cursor: pointer;
-  
+
+  ${props => props.lv && css`
+    padding-left: ${(props.lv - 1) * 2 * .5}rem;
+  `}
+
   :hover{
     background-color: hsl(0deg 0% 100% / 5%);
   }
+  
+  ${MenuLink}, ${MenuTitle}{
+      display:flex;
+      flex: 1;
+        justify-content: space-between;
+        line-height: 1.25;
+        border-radius: 0.25rem;
+        transition: background .2s 0s;
+        padding: 6.375px 17px;
+      text-decoration: none;
+
+
+  }
+
+   ${props => props.isActive && css`
+      background-color: hsl(0deg 0% 100% / 5%);
+      
+      ${MenuLink}{
+          color: ${props.theme.primaryColor};
+      }
+      
+  `}
 
 `;
+
+
 const MenuList = styled.ul`
     list-style: none;
     margin: 0;
     padding-left: 0;
-    
+
     ul{
       padding-left: 10px;
     }
