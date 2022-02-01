@@ -15,7 +15,7 @@ export interface ICarouselProps extends IBreakpointSetting{
   setCarousel?: (carouselObj: ICarouselObj) => void,
   style?: CSS.Properties
   className?: string
-  data: IData[];
+  data: ICarouselData[];
   moveTime: number
   autoPlayTime: number
   breakpoints: IPropsBreakpoints
@@ -70,7 +70,7 @@ export interface IInfo {
   isVisiblePagination: boolean,
   isVisibleNavButton: boolean,
 }
-export interface IData {
+export interface ICarouselData {
   key: string|number
   paginationContent?: ReactNode
   children: ReactNode

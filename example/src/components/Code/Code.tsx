@@ -1,7 +1,7 @@
-import React, {memo} from 'react'
+import React, {memo} from 'react';
 
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { a11yDark as style} from 'react-syntax-highlighter/dist/esm/styles/prism';
+import {Prism as SyntaxHighlighter} from 'react-syntax-highlighter';
+import {a11yDark as style} from 'react-syntax-highlighter/dist/esm/styles/prism';
 import styled from 'styled-components/macro';
 
 
@@ -19,22 +19,22 @@ interface IProps extends FCProps {
  * @param language
  */
 const Code = ({
-  className,
-  children= '',
-  language = 'typescript'
+    className,
+    children= '',
+    language = 'typescript'
 }: IProps) => {
 
-   return <CodeRoot className={className}
-   >
-     <SyntaxHighlighter
-       language={language}
-       style={style}
-     >
-       {children.replace(/^\s+|\s+$/g, '')}
-     </SyntaxHighlighter>
-   </CodeRoot>
+    return <CodeRoot className={className}
+    >
+        <SyntaxHighlighter
+            language={language}
+            style={style}
+        >
+            {children.replace(/^\s+|\s+$/g, '')}
+        </SyntaxHighlighter>
+    </CodeRoot>;
 
-}
+};
 
 
 export default memo(Code);
