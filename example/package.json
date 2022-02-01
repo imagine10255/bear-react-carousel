@@ -13,27 +13,31 @@
     "@types/node": "link:../node_modules/@types/node",
     "@types/react": "link:../node_modules/@types/react",
     "@types/react-dom": "link:../node_modules/@types/react-dom",
-    "@types/styled-components": "5.1.15",
+    "@types/react-highlight": "^0.12.5",
     "@types/react-router-dom": "5.3.2",
-    "bear-styled-grid": "1.0.19",
+    "@types/react-syntax-highlighter": "^13.5.2",
+    "@types/styled-components": "5.1.15",
     "bear-carousel": "link:..",
-    "bear-jsutils": "link:../node_modules/imagine-js-utils",
     "bear-components": "0.0.5",
+    "bear-jsutils": "link:../node_modules/imagine-js-utils",
+    "bear-styled-grid": "1.0.19",
+    "classnames": "2.3.1",
     "react": "link:../node_modules/react",
     "react-dom": "link:../node_modules/react-dom",
-    "react-scripts": "link:../node_modules/react-scripts",
-    "react-router-dom": "5.3.0",
-    "styled-components": "5.2.1",
+    "react-highlight": "^0.14.0",
     "react-hook-form": "7.25.3",
-    "classnames": "2.3.1",
+    "react-router-dom": "5.3.0",
+    "react-scripts": "link:../node_modules/react-scripts",
+    "react-syntax-highlighter": "^15.4.5",
+    "styled-components": "5.2.1",
     "typescript": "link:../node_modules/typescript"
   },
   "devDependencies": {
+    "@babel/plugin-syntax-object-rest-spread": "^7.8.3",
     "@testing-library/jest-dom": "link:../node_modules/@testing-library/jest-dom",
     "@testing-library/react": "link:../node_modules/@testing-library/react",
     "@testing-library/user-event": "link:../node_modules/@testing-library/user-event",
-    "@types/jest": "link:../node_modules/@types/jest",
-    "@babel/plugin-syntax-object-rest-spread": "^7.8.3"
+    "@types/jest": "link:../node_modules/@types/jest"
   },
   "browserslist": {
     "production": [
@@ -48,30 +52,30 @@
     ]
   },
   "eslintConfig": {
-  "extends": [
-    "react-app"
-  ],
-  "rules": {
-    "quotes": [
-      "warn",
-      "single"
+    "extends": [
+      "react-app"
     ],
-    "semi": [
-      "warn",
-      "always"
-    ],
-    "indent": [
-      "warn",
-      4
-    ],
-    "object-curly-spacing": [
-      "warn",
-      "never"
-    ],
-    "no-useless-escape": "off",
-    "import/no-anonymous-default-export": "off",
-    "react-hooks/exhaustive-deps": "off",
-    "@typescript-eslint/no-unused-vars": "off"
+    "rules": {
+      "quotes": [
+        "warn",
+        "single"
+      ],
+      "semi": [
+        "warn",
+        "always"
+      ],
+      "indent": [
+        "warn",
+        4
+      ],
+      "object-curly-spacing": [
+        "warn",
+        "never"
+      ],
+      "no-useless-escape": "off",
+      "import/no-anonymous-default-export": "off",
+      "react-hooks/exhaustive-deps": "off",
+      "@typescript-eslint/no-unused-vars": "off"
+    }
   }
-}
 }

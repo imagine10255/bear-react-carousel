@@ -31,11 +31,11 @@ font-size: 17px;
 
 
 export const SubTitle = styled.h2`
-  font-size: 40px;
+  font-size: 30px;
   color: rgb(245, 246, 247);
   margin-block-start: 0;
     margin-block-end: 0;
-    margin-bottom: 26.5625px
+    margin-bottom: 10px
 `;
 
 const Title = styled.h1`

@@ -1,4 +1,4 @@
-*, *::before, *::after {box-sizing: border-box;-webkit-box-sizing: border-box;line-height: normal; user-select: none;}
+*, *::before, *::after {box-sizing: border-box;-webkit-box-sizing: border-box;line-height: normal;}
 
 html{
   background-color: #18191a;
