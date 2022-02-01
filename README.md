@@ -2,15 +2,15 @@
 
 > Most modern mobile touch slider with hardware accelerated transitions by react
 
-[![NPM](https://img.shields.io/npm/v/imagine-react-carousel.svg)](https://www.npmjs.com/package/imagine-react-carousel)
-[![npm](https://img.shields.io/npm/dm/imagine-react-carousel.svg)](https://www.npmjs.com/package/imagine-react-carousel)
+[![NPM](https://img.shields.io/npm/v/bear-carousel.svg)](https://www.npmjs.com/package/bear-carousel)
+[![npm](https://img.shields.io/npm/dm/bear-carousel.svg)](https://www.npmjs.com/package/bear-carousel)
 
 This project [demo](https://imagine10255.github.io/react-carousel/)
 
 ## Install
 
 ```bash
-yarn add imagine-react-carousel
+yarn add bear-carousel
 ```
 
 ## Usage
@@ -18,8 +18,8 @@ yarn add imagine-react-carousel
 ```tsx
 import React from 'react'
 
-import ReactCarousel from 'imagine-react-carousel'
-import 'imagine-react-carousel/dist/index.css'
+import Carousel from 'bear-carousel'
+import 'bear-carousel/dist/index.css'
 
 
 const imageList = [
@@ -96,7 +96,7 @@ class ExampleComponent () => {
     };
 
 
-    return <ReactCarousel
+    return <Carousel
         {...setting}
         data={carouselData}
         
@@ -114,7 +114,7 @@ There is also a codesandbox template that you can fork and play with it:
 
 ```tsx
 const HomeBanner = ({
-    const [control, setCarousel] = useState<IReactCarouselObj>();
+    const [control, setCarousel] = useState<ICarouselObj>();
    
     const handleSetCarousel = useCallback(setCarousel, [])
 
@@ -126,7 +126,7 @@ const HomeBanner = ({
         return control?.info.pageTotal?? 0;
     }
 
-    <ReactCarousel
+    <Carousel
         setCarousel={handleSetCarousel}
         {...setting}
         data={carouselData}

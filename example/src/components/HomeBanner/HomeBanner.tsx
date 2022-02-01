@@ -1,7 +1,7 @@
 import React, {useCallback, useRef, useState} from 'react';
 import styled, {css} from 'styled-components/macro';
-import {Col, Container, EColType, media, Row} from 'imagine-react-styled-grid';
-import ReactCarousel, {elClassName, IReactCarouselObj} from 'imagine-react-carousel';
+import {Col, Container, EColType, media, Row} from 'bear-styled-grid';
+import Carousel, {elClassName, ICarouselObj} from 'bear-carousel';
 
 import CSS from 'csstype';
 
@@ -52,7 +52,7 @@ const HomeBanner = ({
     style,
     data = [],
 }: IProps) => {
-    const [control, setCarousel] = useState<IReactCarouselObj>();
+    const [control, setCarousel] = useState<ICarouselObj>();
 
     const handleGoPage = (index: number): void => {
         control?.goToPage(index);
@@ -66,7 +66,7 @@ const HomeBanner = ({
 
 
     return (<BannerRoot className={className} style={style}>
-        <ReactCarousel
+        <Carousel
             {...setting}
             setCarousel={handleSetCarousel}
             data={data.map(row => {

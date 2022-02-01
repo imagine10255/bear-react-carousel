@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import {Col} from 'imagine-react-styled-grid';
+import {Col} from 'bear-styled-grid';
 import Router from './Router';
 
 import Navbar from './_components/Navbar';

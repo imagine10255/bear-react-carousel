@@ -2852,10 +2852,25 @@ batch@0.6.1:
   resolved "https://registry.yarnpkg.com/batch/-/batch-0.6.1.tgz#dc34314f4e679318093fc760272525f94bf25c16"
   integrity sha1-3DQxT05nkxgJP8dgJyUl+UvyXBY=
 
-bear-components@0.0.4:
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/bear-components/-/bear-components-0.0.4.tgz#b2a4729796248e1a2342ccd9ac97e559a0f65e52"
-  integrity sha512-hCvZbL342CdaqUJ11jEQefEJ3nxTz9e+zIqCRgA9NnITE4ja6l2djOrAfZkIn2Z1EC0o0151avjYudDwbUJ8Lw==
+"bear-carousel@link:..":
+  version "0.0.0"
+  uid ""
+
+bear-components@0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/bear-components/-/bear-components-0.0.5.tgz#4c0495de2ea58ce101f3ac23be410302c21a2a8d"
+  integrity sha512-EjXgIknAUhE60QN3eDnD6M+IgW76efRxUZLKfY3B7ImSUVdzOXAfYHigXaln/jU73+dR1pE8gF5mOTMSvRuaEQ==
+
+"bear-jsutils@link:../node_modules/imagine-js-utils":
+  version "0.0.0"
+  uid ""
+
+bear-styled-grid@1.0.19:
+  version "1.0.19"
+  resolved "https://registry.yarnpkg.com/bear-styled-grid/-/bear-styled-grid-1.0.19.tgz#c462cfa347102117e0038fa91af6a0a39e564de9"
+  integrity sha512-LwMILNi1o1AtCrz+z5nSbFsvmBQFHXVaOaGLv0nfN+ZhhNxe7uruKgnyzFV5g3PmYYps7bpricpG+8OTHFWwPg==
+  dependencies:
+    styled-components "5.2.1"
 
 bfj@^7.0.2:
   version "7.0.2"
@@ -5792,21 +5807,6 @@ ignore@^5.1.4, ignore@^5.1.8, ignore@^5.2.0:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-5.2.0.tgz#6d3bac8fa7fe0d45d9f9be7bac2fc279577e345a"
   integrity sha512-CmxgYGiEPCLhfLnpPp1MoRmifwEIOgjcHXxOBjv7mY96c+eWScsOP9c112ZyLdWHi0FxHjI+4uVhKYp/gcdRmQ==
-
-"imagine-js-utils@link:../node_modules/imagine-js-utils":
-  version "0.0.0"
-  uid ""
-
-"imagine-react-carousel@link:..":
-  version "0.0.0"
-  uid ""
-
-imagine-react-styled-grid@1.0.17:
-  version "1.0.17"
-  resolved "https://registry.yarnpkg.com/imagine-react-styled-grid/-/imagine-react-styled-grid-1.0.17.tgz#875e50fbb60d87f0be07a1b2d51b5ee0c51297c6"
-  integrity sha512-+OiYFwcSUlgsXZge3XuDCeibYcuA8dxXu6hlu3NdRch0ODof0FHBszHA90x/NUplh3VyNFAQM0G6T71ea7GLzQ==
-  dependencies:
-    styled-components "5.2.1"
 
 immer@8.0.1:
   version "8.0.1"

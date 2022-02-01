@@ -1,12 +1,13 @@
 import React, {ReactNodeArray, useCallback, useState} from 'react';
 import styled from 'styled-components/macro';
-import {Col, Container, EColType, Row} from 'imagine-react-styled-grid';
-import ReactCarousel, {IReactCarouselObj} from 'imagine-react-carousel';
+import {Col, Container, EColType, Row} from 'bear-styled-grid';
+import Carousel, {ICarouselObj} from 'bear-carousel';
 import {anyToNumber} from 'bear-jsutils/convert';
 
 
 import {Controller, useForm} from 'react-hook-form';
-import {FormHorizontalGroup, TextAreaField, TextField, SwitchControl} from 'bear-components/forms';
+import {TextAreaField, TextField, SwitchControl} from 'bear-components/forms';
+import {FormHorizontalGroup} from 'bear-components/atoms';
 
 type ICarouselData = Array<{key: number, children: React.ReactElement}>;
 
@@ -43,11 +44,14 @@ const carouselData: ICarouselData = bgList.map(row => {
 export interface IFormData {
   slidesPerView: number,
   slidesPerGroup: number,
+  spaceBetween: number,
+  autoPlayTime: number,
   moveTime: number,
-  isEnableMouseMove: boolean,
+  isEnableLoop: boolean,
   isEnableNavButton: boolean,
   isEnablePagination: boolean,
-  isEnableLoop: boolean,
+  isEnableMouseMove: boolean,
+  isEnableAutoPlay: boolean,
   isDebug: boolean,
   isMount: boolean,
   isLoadData: boolean,
@@ -59,28 +63,30 @@ export interface IFormData {
  */
 const PropsTry = () => {
     const [data, setData] = useState<ICarouselData>(carouselData);
-    const [carousel, setCarousel] = useState<IReactCarouselObj>();
+    const [carousel, setCarousel] = useState<ICarouselObj>();
 
     const {control, watch} = useForm<IFormData>({
         defaultValues: {
             isMount: true,
+            autoPlayTime: 3000,
         }
     });
 
 
 
-    const [slidesPerView, slidesPerGroup, moveTime, isEnableMouseMove, isEnableNavButton, isEnablePagination, isEnableLoop, isDebug, isMount] = watch([
-        'slidesPerView',
-        'slidesPerGroup',
-        'moveTime',
-        'isEnableMouseMove',
-        'isEnableNavButton',
-        'isEnablePagination',
-        'isEnableLoop',
-        'isDebug',
-        'isMount',
-    ]
-    );
+    const isDebug = watch('isDebug');
+    const isMount = watch('isMount');
+    const isEnableLoop = watch('isEnableLoop');
+    const isEnablePagination = watch('isEnablePagination');
+    const isEnableNavButton = watch('isEnableNavButton');
+    const isEnableMouseMove = watch('isEnableMouseMove');
+    const isEnableAutoPlay = watch('isEnableAutoPlay');
+
+    const slidesPerGroup = watch('slidesPerGroup');
+    const slidesPerView = watch('slidesPerView');
+    const spaceBetween = watch('spaceBetween');
+    const autoPlayTime = watch('autoPlayTime');
+    const moveTime = watch('moveTime');
 
 
     const handleLoadData = (data: ICarouselData) => {
@@ -134,18 +140,21 @@ const PropsTry = () => {
         All available incoming parameters allow you to test and preview the results
             </Desc>
 
-            <ReactCarouselBox className="mb-4">
+            <CarouselBox className="mb-4">
                 {isMount && (<>
-                    <ReactCarousel
+                    <Carousel
                         setCarousel={handleSetCarousel}
                         isDebug={isDebug}
                         isEnablePagination={isEnablePagination}
                         isEnableMouseMove={isEnableMouseMove}
                         isEnableNavButton={isEnableNavButton}
                         isEnableLoop={isEnableLoop}
+                        isEnableAutoPlay={isEnableAutoPlay}
                         data={data}
                         slidesPerView={anyToNumber(slidesPerView, 1)}
                         slidesPerGroup={anyToNumber(slidesPerGroup, 1)}
+                        spaceBetween={anyToNumber(spaceBetween)}
+                        autoPlayTime={anyToNumber(autoPlayTime)}
                         moveTime={anyToNumber(moveTime)}
                         // breakpoints={{
                         //     768: {
@@ -164,162 +173,250 @@ const PropsTry = () => {
                     />
                 </>)}
 
-            </ReactCarouselBox>
+            </CarouselBox>
 
 
 
 
             <Row className="mb">
                 <Col lg={24} xl>
-                    {renderPageControl()}
+                    <FormHorizontalGroup label="ControlPage">
+                        {renderPageControl()}
+                    </FormHorizontalGroup>
 
-                    <FormHorizontalGroup label="isLoadData">
-                        <Controller
-                            control={control}
-                            name="isLoadData"
-                            defaultValue={true}
-                            render={({field}) => {
-                                return <SwitchControl
-                                    {...field}
-                                    onChange={(checked) => {
-                                        handleLoadData(checked ? carouselData: []);
-                                        field.onChange(checked);
-                                        return;
+                    <Row>
+                        <Col lg={12}>
+                            <FormHorizontalGroup label="isLoadData" labelCol={12} formCol={12}>
+                                <Controller
+                                    control={control}
+                                    name="isLoadData"
+                                    defaultValue={true}
+                                    render={({field}) => {
+                                        return <SwitchControl
+                                            {...field}
+                                            onChange={(checked) => {
+                                                handleLoadData(checked ? carouselData: []);
+                                                field.onChange(checked);
+                                                return;
+                                            }}
+                                            checked={field.value}
+                                        />;
                                     }}
-                                    checked={field.value}
-                                />;
-                            }}
-                        />
-                    </FormHorizontalGroup>
+                                />
+                            </FormHorizontalGroup>
 
-                    <FormHorizontalGroup label="isMount">
-                        <Controller
-                            control={control}
-                            name="isMount"
-                            defaultValue={true}
-                            render={({field}) => {
-                                return <SwitchControl
-                                    {...field}
-                                    checked={field.value}
-                                />;
-                            }}
-                        />
-                    </FormHorizontalGroup>
+                        </Col>
+                        <Col lg={12}>
+                            <FormHorizontalGroup label="isMount" labelCol={12} formCol={12}>
+                                <Controller
+                                    control={control}
+                                    name="isMount"
+                                    defaultValue={true}
+                                    render={({field}) => {
+                                        return <SwitchControl
+                                            {...field}
+                                            checked={field.value}
+                                        />;
+                                    }}
+                                />
+                            </FormHorizontalGroup>
 
-                    <FormHorizontalGroup label="isDebug">
-                        <Controller
-                            control={control}
-                            name="isDebug"
-                            defaultValue={true}
-                            render={({field}) => {
-                                return <SwitchControl
-                                    {...field}
-                                    checked={field.value}
-                                />;
-                            }}
-                        />
-                    </FormHorizontalGroup>
+                        </Col>
+                        <Col lg={12}>
+                            <FormHorizontalGroup label="isDebug" labelCol={12} formCol={12}>
+                                <Controller
+                                    control={control}
+                                    name="isDebug"
+                                    defaultValue={true}
+                                    render={({field}) => {
+                                        return <SwitchControl
+                                            {...field}
+                                            checked={field.value}
+                                        />;
+                                    }}
+                                />
+                            </FormHorizontalGroup>
 
-                    <FormHorizontalGroup label="isEnableLoop">
-                        <Controller
-                            control={control}
-                            name="isEnableLoop"
-                            defaultValue={true}
-                            render={({field}) => {
-                                return <SwitchControl
-                                    {...field}
-                                    checked={field.value}
-                                />;
-                            }}
-                        />
-                    </FormHorizontalGroup>
+                        </Col>
+                        <Col lg={12}>
+                            <FormHorizontalGroup label="isEnableLoop" labelCol={12} formCol={12}>
+                                <Controller
+                                    control={control}
+                                    name="isEnableLoop"
+                                    defaultValue={true}
+                                    render={({field}) => {
+                                        return <SwitchControl
+                                            {...field}
+                                            checked={field.value}
+                                        />;
+                                    }}
+                                />
+                            </FormHorizontalGroup>
 
-                    <FormHorizontalGroup label="isEnablePagination" >
-                        <Controller
-                            control={control}
-                            name="isEnablePagination"
-                            defaultValue={true}
-                            render={({field}) => {
-                                return <SwitchControl
-                                    {...field}
-                                    checked={field.value}
-                                />;
-                            }}
-                        />
-                    </FormHorizontalGroup>
+                        </Col>
+                        <Col lg={12}>
+                            <FormHorizontalGroup label="isEnablePagination"  labelCol={12} formCol={12}>
+                                <Controller
+                                    control={control}
+                                    name="isEnablePagination"
+                                    defaultValue={true}
+                                    render={({field}) => {
+                                        return <SwitchControl
+                                            {...field}
+                                            checked={field.value}
+                                        />;
+                                    }}
+                                />
+                            </FormHorizontalGroup>
 
-                    <FormHorizontalGroup label="isEnableNavButton">
-                        <Controller
-                            control={control}
-                            name="isEnableNavButton"
-                            defaultValue={true}
-                            render={({field}) => {
-                                return <SwitchControl
-                                    {...field}
-                                    checked={field.value}
-                                />;
-                            }}
-                        />
-                    </FormHorizontalGroup>
+                        </Col>
+                        <Col lg={12}>
+                            <FormHorizontalGroup label="isEnableNavButton" labelCol={12} formCol={12}>
+                                <Controller
+                                    control={control}
+                                    name="isEnableNavButton"
+                                    defaultValue={true}
+                                    render={({field}) => {
+                                        return <SwitchControl
+                                            {...field}
+                                            checked={field.value}
+                                        />;
+                                    }}
+                                />
+                            </FormHorizontalGroup>
 
-                    <FormHorizontalGroup label="isEnableMouseMove">
-                        <Controller
-                            control={control}
-                            name="isEnableMouseMove"
-                            defaultValue={true}
-                            render={({field}) => {
-                                return <SwitchControl
-                                    {...field}
-                                    checked={field.value}
-                                />;
-                            }}
-                        />
-                    </FormHorizontalGroup>
 
-                    <FormHorizontalGroup label="slidesPerView">
-                        <Controller
-                            control={control}
-                            name="slidesPerView"
-                            defaultValue={1}
-                            render={({field}) => {
-                                return (<TextField
-                                    type="number"
-                                    {...field}
-                                />);
-                            }}
-                        />
-                    </FormHorizontalGroup>
+                        </Col>
+                        <Col lg={12}>
+                            <FormHorizontalGroup label="isEnableMouseMove" labelCol={12} formCol={12}>
+                                <Controller
+                                    control={control}
+                                    name="isEnableMouseMove"
+                                    defaultValue={true}
+                                    render={({field}) => {
+                                        return <SwitchControl
+                                            {...field}
+                                            checked={field.value}
+                                        />;
+                                    }}
+                                />
+                            </FormHorizontalGroup>
 
-                    <FormHorizontalGroup label="slidesPerGroup">
-                        <Controller
-                            control={control}
-                            name="slidesPerGroup"
-                            defaultValue={1}
-                            render={({field}) => {
-                                return (<TextField
-                                    type="number"
-                                    {...field}
-                                />);
-                            }}
-                        />
-                    </FormHorizontalGroup>
+                        </Col>
+                        <Col lg={12}>
+                            <FormHorizontalGroup label="isEnableAutoPlay" labelCol={12} formCol={12}>
+                                <Controller
+                                    control={control}
+                                    name="isEnableAutoPlay"
+                                    defaultValue={true}
+                                    render={({field}) => {
+                                        return <SwitchControl
+                                            {...field}
+                                            checked={field.value}
+                                        />;
+                                    }}
+                                />
+                            </FormHorizontalGroup>
 
-                    <FormHorizontalGroup label="moveTime">
-                        <Controller
-                            control={control}
-                            name="moveTime"
-                            defaultValue={400}
-                            render={({field}) => {
-                                return (<TextField
-                                    type="number"
-                                    {...field}
-                                />);
-                            }}
-                        />
-                    </FormHorizontalGroup>
+                        </Col>
+                        <Col lg={12}>
+                            <FormHorizontalGroup label="slidesPerView" labelCol={12} formCol={12}>
+                                <Controller
+                                    control={control}
+                                    name="slidesPerView"
+                                    defaultValue={1}
+                                    render={({field}) => {
+                                        return (<TextField
+                                            type="number"
+                                            {...field}
+                                        />);
+                                    }}
+                                />
+                            </FormHorizontalGroup>
+
+                        </Col>
+                        <Col lg={12}>
+                            <FormHorizontalGroup label="slidesPerGroup" labelCol={12} formCol={12}>
+                                <Controller
+                                    control={control}
+                                    name="slidesPerGroup"
+                                    defaultValue={1}
+                                    render={({field}) => {
+                                        return (<TextField
+                                            type="number"
+                                            {...field}
+                                        />);
+                                    }}
+                                />
+                            </FormHorizontalGroup>
+
+                        </Col>
+                        <Col lg={12}>
+                            <FormHorizontalGroup label="spaceBetween" labelCol={12} formCol={12}>
+                                <Controller
+                                    control={control}
+                                    name="spaceBetween"
+                                    defaultValue={0}
+                                    render={({field}) => {
+                                        return (<TextField
+                                            type="number"
+                                            {...field}
+                                        />);
+                                    }}
+                                />
+                            </FormHorizontalGroup>
+
+                        </Col>
+                        <Col lg={12}>
+                            <FormHorizontalGroup label="autoPlayTime" labelCol={12} formCol={12}>
+                                <Controller
+                                    control={control}
+                                    name="autoPlayTime"
+                                    render={({field}) => {
+                                        return (<TextField
+                                            type="number"
+                                            {...field}
+                                        />);
+                                    }}
+                                />
+                            </FormHorizontalGroup>
+
+                        </Col>
+                        <Col lg={12}>
+                            <FormHorizontalGroup label="moveTime" labelCol={12} formCol={12}>
+                                <Controller
+                                    control={control}
+                                    name="moveTime"
+                                    defaultValue={400}
+                                    render={({field}) => {
+                                        return (<TextField
+                                            type="number"
+                                            {...field}
+                                        />);
+                                    }}
+                                />
+                            </FormHorizontalGroup>
+
+                        </Col>
+                    </Row>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                 </Col>
-                <Col lg={24}  xl={EColType.auto}>
+                <Col lg={24} xl={EColType.auto}>
                     <TextAreaField id="console"/>
 
                 </Col>
@@ -358,7 +455,6 @@ const PageControlBox = styled.div`
   border: 1px dotted #00a3e0;
   width: auto;
   display: flex;
-  margin-bottom: 20px;
   color: #fff;
   height: 39px;
 
@@ -374,7 +470,7 @@ const ControlCheckbox = styled.label`
   color: #fff;
 `;
 
-const ReactCarouselBox = styled.div`
+const CarouselBox = styled.div`
   height: 200px;
 `;
 

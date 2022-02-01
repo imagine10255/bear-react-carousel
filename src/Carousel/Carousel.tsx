@@ -5,7 +5,7 @@ import {uuid} from 'bear-jsutils/key';
 import {checkIsMobile} from 'bear-jsutils/browser';
 import log  from 'bear-jsutils/log';
 import {deepCompare} from 'bear-jsutils/equal';
-import {IInfo, ITouchStart, IBreakpointSettingActual, IReactCarouselProps} from './types';
+import {IInfo, ITouchStart, IBreakpointSettingActual, ICarouselProps} from './types';
 import elClassName from './el-class-name';
 
 import './styles.css';
@@ -20,21 +20,22 @@ interface IState {
 const isMobile = checkIsMobile();
 
 
-class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
+class Carousel extends React.Component<ICarouselProps, IState> {
   static defaultProps = {
       data: [],
       slidesPerView: 1,
       slidesPerGroup: 1, // 不可為小數
-      isEnableLoop: false,
       moveTime: 350,
       breakpoints: {},
-      isEnableMouseMove: true,
+      isCenteredSlides: false,
+      isEnableLoop: false,
       isEnablePagination: false,
       isEnableNavButton: false,
-      isCenteredSlides: false,
+      isEnableMouseMove: true,
+      isEnableAutoPlay: false,
       isDebug: false,
       spaceBetween: 0,
-      autoPlayTime: 0
+      autoPlayTime: 3000
   }
 
   _carouselId = uuid()
@@ -73,9 +74,10 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
       spaceBetween: 0,
       isCenteredSlides: false,
       isEnableLoop: false,
-      isEnableNavButton: true,
       isEnablePagination: true,
-      isEnableMouseMove: true
+      isEnableNavButton: true,
+      isEnableMouseMove: true,
+      isEnableAutoPlay: false,
   }
 
   touchStart: ITouchStart = {
@@ -97,7 +99,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
   pageRefs: React.RefObject<Array<HTMLDivElement>> = React.createRef()
   _throttleHandleResize = () => {}
 
-  constructor(props: IReactCarouselProps) {
+  constructor(props: ICarouselProps) {
       super(props);
 
       // @ts-ignore
@@ -170,7 +172,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
    * @param nextProps
    * @param nextState
    */
-  shouldComponentUpdate(nextProps: IReactCarouselProps, nextState: IState) {
+  shouldComponentUpdate(nextProps: ICarouselProps, nextState: IState) {
       if(this.props.isDebug) log.printInText('[shouldComponentUpdate]');
 
       const {windowSize: nextWindowSize} = nextState;
@@ -421,7 +423,7 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
           clearTimeout(this.timer);
       }
 
-      if (this.rwdMedia.isEnableLoop && autoPlayTime > 0) {
+      if (this.rwdMedia.isEnableLoop && this.rwdMedia.isEnableAutoPlay && autoPlayTime > 0) {
           this.timer = setTimeout(() => {
               this.toNext();
           }, autoPlayTime);
@@ -790,6 +792,6 @@ class ReactCarousel extends React.Component<IReactCarouselProps, IState> {
 }
 
 
-export default ReactCarousel;
+export default Carousel;
 
 

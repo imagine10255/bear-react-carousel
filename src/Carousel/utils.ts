@@ -1,4 +1,4 @@
-import {IBreakpointSetting, TSlidesPerView, IBreakpointSettingActual, IInfo, IPropsBreakpoints, IReactCarouselProps} from './types';
+import {IBreakpointSetting, TSlidesPerView, IBreakpointSettingActual, IInfo, IPropsBreakpoints, ICarouselProps} from './types';
 import {anyToNumber} from 'bear-jsutils/convert';
 
 /**
@@ -51,9 +51,9 @@ export function getMediaSetting(setting: IBreakpointSetting, breakpoints: IProps
  * 取得響應式設定
  * @param props
  */
-export function getMediaInfo(props: IReactCarouselProps): {rwdMedia: IBreakpointSettingActual, info: IInfo} {
+export function getMediaInfo(props: ICarouselProps): {rwdMedia: IBreakpointSettingActual, info: IInfo} {
 
-    const {data, breakpoints, slidesPerGroup, slidesPerView, spaceBetween, isEnableLoop, isEnableNavButton, isEnableMouseMove, isEnablePagination, isCenteredSlides} = props;
+    const {data, breakpoints, slidesPerGroup, slidesPerView, spaceBetween, isEnableLoop, isEnableNavButton, isEnableMouseMove, isEnablePagination, isEnableAutoPlay, isCenteredSlides} = props;
 
     const rwdMedia = getMediaSetting({
         slidesPerView: typeof slidesPerView === 'number' && slidesPerView <= 0 ? 1: slidesPerView,
@@ -64,6 +64,7 @@ export function getMediaInfo(props: IReactCarouselProps): {rwdMedia: IBreakpoint
         isEnableNavButton: isEnableNavButton,
         isEnablePagination: isEnablePagination,
         isEnableMouseMove: isEnableMouseMove,
+        isEnableAutoPlay: isEnableAutoPlay,
     }, breakpoints);
 
 
@@ -99,8 +100,6 @@ export function getMediaInfo(props: IReactCarouselProps): {rwdMedia: IBreakpoint
     console.log('fakeTotalPage', fakeTotalPage, sourceTotal, rwdMedia.slidesPerGroup);
     if(!rwdMedia.isEnableLoop && rwdMedia.slidesPerView !== 'auto' && !rwdMedia.isCenteredSlides){
         fakeTotalPage = fakeTotalPage - (rwdMedia.slidesPerView - rwdMedia.slidesPerGroup);
-
-        console.log('loop fakeTotalPage', fakeTotalPage);
     }
 
     const info: IInfo = {

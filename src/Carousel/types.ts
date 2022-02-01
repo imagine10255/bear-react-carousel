@@ -5,14 +5,14 @@ export type TSlidesPerView = number|'auto'
 export type TSlidesPerViewActual = number
 
 
-export interface IReactCarouselObj {
+export interface ICarouselObj {
   goToPage: (page: number) => void;
   info: IInfo,
 }
 
 
-export interface IReactCarouselProps extends IBreakpointSetting{
-  setCarousel?: (carouselObj: IReactCarouselObj) => void,
+export interface ICarouselProps extends IBreakpointSetting{
+  setCarousel?: (carouselObj: ICarouselObj) => void,
   style?: CSS.Properties
   className?: string
   data: IData[];
@@ -85,6 +85,7 @@ export interface IBreakpointSetting {
   isEnablePagination: boolean
   isEnableNavButton: boolean
   isEnableMouseMove: boolean
+  isEnableAutoPlay: boolean
 }
 export interface IBreakpointSettingActual extends IBreakpointSetting {
   slidesPerViewActual: TSlidesPerViewActual

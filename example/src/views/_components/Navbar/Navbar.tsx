@@ -1,4 +1,4 @@
-import {Container} from 'imagine-react-styled-grid';
+import {Container} from 'bear-styled-grid';
 import React from 'react';
 import styled from 'styled-components/macro';
 
@@ -6,7 +6,7 @@ import styled from 'styled-components/macro';
 const Navbar = () => {
     return <Nav>
         <Container className="d-flex" fluid>
-            <NavbarBrand>React Styled Carousel</NavbarBrand>
+            <NavbarBrand>Bear Carousel</NavbarBrand>
 
             <NavbarNav className="ml-auto my-0 d-none d-md-flex">
                 <NavItem>
@@ -32,7 +32,7 @@ const NavLink = styled.a<{
   padding: 0.5rem 1rem;
   text-decoration: none;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
-  color: ${props => props.isActive ? '#fff' : 'rgba(255, 255, 255, 0.55)'}; 
+  color: ${props => props.isActive ? '#fff' : 'rgba(255, 255, 255, 0.55)'};
   
 `;
 

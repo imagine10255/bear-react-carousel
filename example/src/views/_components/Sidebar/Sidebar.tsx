@@ -1,4 +1,4 @@
-import {Container} from 'imagine-react-styled-grid';
+import {Container} from 'bear-styled-grid';
 import React from 'react';
 import styled, {css} from 'styled-components/macro';
 import {Link} from 'react-router-dom';
@@ -16,7 +16,37 @@ const Sidebar = () => {
                         <MenuLink to="/props-try" isActive>Props Try</MenuLink>
                     </MenuItem>
                     <MenuItem>
+                        <MenuLink to="#">Special</MenuLink>
+
+                        <MenuList>
+                            <MenuItem>
+                                <MenuLink to="#">Slider Per View Auto</MenuLink>
+                            </MenuItem>
+                            <MenuItem>
+                                <MenuLink to="#">Centered</MenuLink>
+                            </MenuItem>
+                            <MenuItem>
+                                <MenuLink to="#">Breakpoints</MenuLink>
+                            </MenuItem>
+                        </MenuList>
+
+                    </MenuItem>
+
+                    <MenuItem>
                         <MenuLink to="#">Example</MenuLink>
+
+                        <MenuList>
+                            <MenuItem>
+                                <MenuLink to="#">VIP List</MenuLink>
+                            </MenuItem>
+                            <MenuItem>
+                                <MenuLink to="#">Text Animations</MenuLink>
+                            </MenuItem>
+                            <MenuItem>
+                                <MenuLink to="#">AutoPlay Progress</MenuLink>
+                            </MenuItem>
+                        </MenuList>
+
                     </MenuItem>
                 </MenuList>
             </Menu>
@@ -40,7 +70,8 @@ const MenuLink = styled(Link)<{
     border-radius: 0.25rem;
     transition: background .2s 0s;
     padding: 6.375px 17px;
-    
+      text-decoration: none;
+
     
     :after{
         content: '';
@@ -51,12 +82,13 @@ const MenuLink = styled(Link)<{
     }
   
   ${props => props.isActive && css`
-      color: #09d3ac;
+      color: ${props.theme.primaryColor};
   `}
 `;
 
 const MenuItem = styled.li`
   cursor: pointer;
+  
   :hover{
     background-color: hsl(0deg 0% 100% / 5%);
   }
@@ -66,6 +98,10 @@ const MenuList = styled.ul`
     list-style: none;
     margin: 0;
     padding-left: 0;
+    
+    ul{
+      padding-left: 10px;
+    }
 
 `;
 const Menu = styled.nav`

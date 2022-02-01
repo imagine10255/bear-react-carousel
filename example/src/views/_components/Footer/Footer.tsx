@@ -1,4 +1,4 @@
-import {Container} from 'imagine-react-styled-grid';
+import {Container} from 'bear-styled-grid';
 import React from 'react';
 import styled from 'styled-components/macro';
 

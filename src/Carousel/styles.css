@@ -59,7 +59,7 @@
 }
 
 .react-carousel__pagination-button[data-active]{
-    background-color: #00a3e0;
+    background-color: var(--primary-color, #00a3e0);
 }
 
 
