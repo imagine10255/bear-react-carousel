@@ -1,7 +1,7 @@
 import React, {ReactNodeArray, useCallback, useState} from 'react';
 import styled from 'styled-components/macro';
 import {Col, Container, EColType, Row} from 'bear-styled-grid';
-import Carousel, {ICarouselObj} from 'bear-carousel';
+import Carousel, {ICarouselObj, ICarouselData} from 'bear-carousel';
 import {anyToNumber} from 'bear-jsutils/convert';
 
 
@@ -10,7 +10,6 @@ import {TextAreaField, TextField, SwitchControl} from 'bear-components/forms';
 import {FormHorizontalGroup} from 'bear-components/atoms';
 import Content from 'views/_components/Content';
 
-type ICarouselData = Array<{key: number, children: React.ReactElement}>;
 
 const bgList = [
     {id: 9, image: '/static/sample/09.jpg'},
@@ -22,11 +21,10 @@ const bgList = [
     {id: 7, image: '/static/sample/07.jpg'},
     {id: 8, image: '/static/sample/08.jpg'},
     {id: 1, image: '/static/sample/01.jpg'},
-    // {id: 10, image: '/static/sample/10.jpg'},
 ];
 
 
-const carouselData: ICarouselData = bgList.map(row => {
+const carouselData: ICarouselData[] = bgList.map(row => {
     return {
         key: row.id,
         children: <div
@@ -63,7 +61,7 @@ export interface IFormData {
  * Props Try
  */
 const PropsTry = () => {
-    const [data, setData] = useState<ICarouselData>(carouselData);
+    const [data, setData] = useState<ICarouselData[]>(carouselData);
     const [carousel, setCarousel] = useState<ICarouselObj>();
 
     const {control, watch} = useForm<IFormData>({
@@ -90,7 +88,7 @@ const PropsTry = () => {
     const moveTime = watch('moveTime');
 
 
-    const handleLoadData = (data: ICarouselData) => {
+    const handleLoadData = (data: ICarouselData[]) => {
         setData(data);
     };
 

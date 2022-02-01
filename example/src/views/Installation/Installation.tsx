@@ -46,7 +46,7 @@ const bgList = [
 
 export const CustomBanner = () => {
     
-    const carouselData: ICarouselData = bgList.map(row => {
+    const carouselData: ICarouselData[] = bgList.map(row => {
         return {
             key: row.id,
             children: <div
