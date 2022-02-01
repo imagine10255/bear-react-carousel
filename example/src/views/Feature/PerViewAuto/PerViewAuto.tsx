@@ -50,12 +50,12 @@ const PerViewAuto = () => {
         <Code language="typescript">
             {`
 
- <BearCarousel
-   data={carouselData}
-   slidesPerView="auto"
-   isEnableNavButton
-   isEnablePagination
- />
+<BearCarousel
+    data={carouselData}
+    slidesPerView="auto"
+    isEnableNavButton
+    isEnablePagination
+/>
         `}
         </Code>
 

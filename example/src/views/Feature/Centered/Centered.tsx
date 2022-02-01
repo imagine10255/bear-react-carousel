@@ -58,15 +58,15 @@ const Centered = () => {
         <Code language="typescript">
             {`
 
- <BearCarousel
+<BearCarousel
     data={carouselData}
     slidesPerView={4}
     spaceBetween={10}
     isEnableMouseMove
     isEnablePagination
     isCenteredSlides
-  />
-        `}
+/>
+       `}
         </Code>
 
     </Content>;

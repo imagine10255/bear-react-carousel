@@ -72,7 +72,7 @@ const Breakpoints = () => {
         <Code language="typescript">
             {`
 
- <BearCarousel
+<BearCarousel
     data={carouselData}
     slidesPerView={1}
     isEnableMouseMove
@@ -95,7 +95,7 @@ const Breakpoints = () => {
         isEnableMouseMove: true
       }
     }}
-  />
+/>
         `}
         </Code>
 
