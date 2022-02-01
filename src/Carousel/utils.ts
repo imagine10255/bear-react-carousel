@@ -1,4 +1,4 @@
-import {IBreakpointSetting, TSlidesPerView, IBreakpointSettingActual, IInfo, IPropsBreakpoints, ICarouselProps} from './types';
+import { IBreakpointSetting, TSlidesPerView, IBreakpointSettingActual, IInfo, IPropsBreakpoints, ICarouselProps, InitData } from './types'
 import {anyToNumber} from 'bear-jsutils/convert';
 
 /**
@@ -138,13 +138,7 @@ export function getMediaInfo(props: ICarouselProps): {rwdMedia: IBreakpointSetti
  * @param slidesPerGroup
  * @param isLoop
  */
-function initDataList(sourceList: Array<any> = [], slidesPerView: TSlidesPerView = 1, slidesPerGroup = 1, isLoop= false): Array<{
-  actualIndex: number;
-  matchIndex: number;
-  inPage: number;
-  isClone: boolean;
-  element: React.ReactNode;
-}> {
+function initDataList(sourceList: Array<any> = [], slidesPerView: TSlidesPerView = 1, slidesPerGroup = 1, isLoop= false): InitData[] {
     const formatList = [];
     const isClone = isLoop && typeof window !== 'undefined';
     let index = 0;

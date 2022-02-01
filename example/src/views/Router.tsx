@@ -9,6 +9,7 @@ import PropsTry from './PropsTry';
 import PerViewAuto from './Feature/PerViewAuto';
 import Centered from './Feature/Centered';
 import Breakpoints from './Feature/Breakpoints';
+import AutoPlayProgress from './Example/AutoPlayProgress'
 
 
 const Router = () => {
@@ -18,9 +19,12 @@ const Router = () => {
             <Route path="/props-try" children={<PropsTry/>} />
             <Route path="/installation" children={<Installation/>} />
             <Route path="/about" children={<About/>} />
+
             <Route path="/feature/per-view-auto" children={<PerViewAuto/>} />
             <Route path="/feature/centered" children={<Centered/>} />
             <Route path="/feature/breakpoints" children={<Breakpoints/>} />
+
+            <Route path="/example/auto-play-progress" children={<AutoPlayProgress/>} />
 
             <Route path="*" children={<NotFound/>}/>
         </Switch>

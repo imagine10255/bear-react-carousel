@@ -27,6 +27,8 @@ export interface ICarouselProps extends IBreakpointSetting{
   isDebug: boolean
 }
 
+export type TCarouselSetting = Partial<ICarouselProps>;
+
 
 export interface ITouchStart {
   pageX: number,
@@ -37,19 +39,17 @@ export interface ITouchStart {
   movePositionY: number,
 }
 
-export interface IElement {
-  children: React.ReactNode,
-  key: String,
+
+export interface InitData {
+  actualIndex: number;
+  matchIndex: number;
+  inPage: number;
+  isClone: boolean;
+  element: React.ReactNode;
 }
 
 export interface IInfo {
-  formatElement: Array<{
-    actualIndex: number,
-    matchIndex: number,
-    inPage: number,
-    isClone: boolean,
-    element: React.ReactNode,
-  }>,
+  formatElement: InitData[],
   sourceTotal: number, // 來源總數
   // 從0開始
   element: {
@@ -73,6 +73,7 @@ export interface IInfo {
 export interface ICarouselData {
   key: string|number
   paginationContent?: ReactNode
+  onClick?: () => void,
   children: ReactNode
 }
 
