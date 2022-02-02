@@ -5,6 +5,7 @@ import {useSidebar} from 'App/SidebarProvider';
 import HamburgerMenu from 'components/atoms/HamburgerMenu';
 import Logo from 'components/atoms/Logo';
 import {Icon} from 'bear-components/atoms';
+import {githubUrl} from 'config/app';
 
 
 const Navbar = () => {
@@ -26,10 +27,13 @@ const Navbar = () => {
     return <Nav>
         <Container className="d-flex align-items-center" fluid>
 
-            <NavbarBrand>
+            <NavbarMenu className="d-lg-none flex-grow-1 d-flex ">
                 <HamburgerMenu
-                    className="d-lg-none"
                     isExpend={isExpend} toggleExpend={toggleExpend}/>
+            </NavbarMenu>
+
+
+            <NavbarBrand>
                 <Logo/>
                 <Name>Bear Carousel</Name>
             </NavbarBrand>
@@ -39,7 +43,7 @@ const Navbar = () => {
                     <NavLink href="#!" isActive>Docs</NavLink>
                 </NavItem>
                 <NavItem>
-                    <NavLink href="#!">
+                    <NavLink href={githubUrl}>
                         GitHub
                         <Icon code="open" color="inherit" size={20}/>
                     </NavLink>
@@ -62,7 +66,7 @@ const DebugSize = styled.div`
   position: absolute;
   bottom: -20px;
   right: 0;
-  padding-right: 30px;
+  padding-right: 1rem;
   color: ${props => props.theme.primaryColor};
   z-index: 1;
   font-size: 11px;
@@ -74,10 +78,20 @@ const NavLink = styled.a<{
 }>`
   display: block;
   padding: 0.5rem 1rem;
+  padding-right: 0;
   text-decoration: none;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
   color: ${props => props.isActive ? '#fff' : 'rgba(255, 255, 255, 0.55)'};
   
+  :hover{ 
+    color: #fff;
+  }
+`;
+
+
+const NavbarMenu = styled.div`
+  display: flex;
+  flex: 1;
 `;
 
 const NavItem = styled.li`

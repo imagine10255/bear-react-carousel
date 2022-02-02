@@ -16,14 +16,14 @@ export const menu: IMenu[] = [
         name: 'Installation',
         href: '/installation',
     },
-    {
-        name: 'Life Cycle',
-        href: '/life-cycle',
-    },
-    {
-        name: 'Class Name',
-        href: '/class-name',
-    },
+    // {
+    //     name: 'Life Cycle',
+    //     href: '/life-cycle',
+    // },
+    // {
+    //     name: 'Class Name',
+    //     href: '/class-name',
+    // },
     {
         name: 'Props Try',
         href: '/props-try',
