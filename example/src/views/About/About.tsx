@@ -40,6 +40,7 @@ const About = () => {
         <Ul>
             <Li>當你使用 auto 模式時, 你必須自訂外容器並指定高度, 因為position absolute overflow-x:hidden 無法只限制 x 軸, 若不使用 absolute, 則項目會將外容器100%擠開</Li>
             <Li>When you use auto mode, you must customize the outer container and specify the height, because position absolute overflow-x:hidden cannot limit only the x-axis, if you do not use absolute, the item will squeeze the outer container 100% away</Li>
+            <Li>如果你想在輪播圖上面加上點擊連結, 建議使用額外的按鈕, 因為滑動功能會觸發開啟, 導致體驗會很糟糕。</Li>
         </Ul>
     </Content>;
 };

@@ -41,7 +41,8 @@ const ImportantNoteRoot = styled.div`
     
     p{
       padding-bottom: 10px;
-      line-height: 0;
+      margin-block-start: 0;
+      margin-block-end: 0;
       
       &:last-child{
         padding-bottom: 0;

@@ -1,8 +1,9 @@
-import {Container} from 'bear-styled-grid';
-import React from 'react';
+import {Container, media} from 'bear-styled-grid';
+import React, {useContext} from 'react';
 import styled, {css} from 'styled-components/macro';
 import {Link, useLocation} from 'react-router-dom';
 import {IMenu, menu} from 'config/menu';
+import {useSidebar} from 'App/SidebarProvider';
 
 
 
@@ -28,11 +29,14 @@ const renderMenu: any = (rows: IMenu[], lv = 1, pathname = '') => {
  * @constructor
  */
 const Sidebar = () => {
+    const {isExpend, toggleExpend} = useSidebar();
+
+
     const location = useLocation();
 
     const menuEl = renderMenu(menu, 1, location.pathname);
 
-    return <SidebarContainer>
+    return <SidebarContainer isExpend={isExpend}>
         <SidebarContent>
             <Menu>
                 <MenuList>
@@ -135,13 +139,37 @@ const SidebarContent = styled.div`
     transition: opacity 50ms;
 `;
 
-const SidebarContainer = styled.aside`
-      border-right: 1px solid #606770;
-    clip-path: inset(0);
-    display: block;
+const SidebarContainer = styled.aside<{
+  isExpend: boolean,
+}>`
+
+    position: fixed;
+    z-index: ${props => props.theme.sliderZIndex};
+    background-color: #18191a;
     margin-top: -63.75px;
-    transition: width 0.2s ease;
+    display: block;
+    clip-path: inset(0);
+
+    top: 0;
+    left: 0;
+    bottom: 0;
+    border: 0;
+    will-change: transform, margin-right;
+    transition: transform .2s ease, margin-right .2s ease;
     width: 300px;
     flex: 0 0 300px;
-    will-change: width;
+    transform: translateX(0px) translateZ(0px);
+      
+    ${props => !props.isExpend && css`
+      transform: translateX(-300px) translateZ(0px);
+      margin-right: -300px;    
+    `}
+    
+    ${media.lg`
+      position: static;
+      transform: translateX(0) translateZ(0);
+      margin-right: 0;
+    `}
+    
+    
 `;

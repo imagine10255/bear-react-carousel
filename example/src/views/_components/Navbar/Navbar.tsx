@@ -1,9 +1,12 @@
 import {Container} from 'bear-styled-grid';
 import React, {useCallback, useEffect} from 'react';
 import styled from 'styled-components/macro';
+import {useSidebar} from 'App/SidebarProvider';
+import HamburgerMenu from '../../../components/atoms/HamburgerMenu';
 
 
 const Navbar = () => {
+    const {isExpend, toggleExpend} = useSidebar();
 
     useEffect(() => {
         window.addEventListener('resize', onResize, true);
@@ -20,6 +23,8 @@ const Navbar = () => {
 
     return <Nav>
         <Container className="d-flex" fluid>
+            <HamburgerMenu isExpend={isExpend} toggleExpend={toggleExpend}/>
+
             <NavbarBrand>Bear Carousel</NavbarBrand>
 
             <NavbarNav className="ml-auto my-0 d-none d-md-flex">
@@ -98,5 +103,5 @@ const Nav = styled.nav`
     
     position: sticky;
     top: 0;
-    z-index: 14;
+    z-index: ${props => props.theme.navbarZIndex};
 `;

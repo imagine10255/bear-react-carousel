@@ -1,21 +1,23 @@
-import styled, {createGlobalStyle, DefaultTheme, ThemeProvider} from 'styled-components/macro';
+import {createGlobalStyle, ThemeProvider} from 'styled-components/macro';
 import {AutoScrollTop} from 'library/react-router';
-import {GridThemeProvider, media} from 'bear-styled-grid';
+import {GridThemeProvider} from 'bear-styled-grid';
 import gridConfig from 'config/grid';
-import theme, {AppTheme} from 'config/theme';
+import theme from 'config/theme';
 
 import HomeRoot from '../views/HomeRoot';
-import {BrowserRouter, HashRouter} from 'react-router-dom';
+import {HashRouter} from 'react-router-dom';
+import {SidebarProvider} from './SidebarProvider';
 
 const App = () => {
     return (
         <GridThemeProvider gridTheme={gridConfig}>
             <ThemeProvider theme={theme}>
                 <HashRouter>
-                    <HomeRoot/>
+                    <SidebarProvider>
+                        <HomeRoot/>
 
-                    <AutoScrollTop/>
-
+                        <AutoScrollTop/>
+                    </SidebarProvider>
                 </HashRouter>
                 <GlobalStyle/>
             </ThemeProvider>
