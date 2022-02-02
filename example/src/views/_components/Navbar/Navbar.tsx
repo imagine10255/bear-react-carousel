@@ -28,8 +28,8 @@ const Navbar = () => {
 
             <NavbarBrand>
                 <HamburgerMenu
-                  className="d-lg-none"
-                  isExpend={isExpend} toggleExpend={toggleExpend}/>
+                    className="d-lg-none"
+                    isExpend={isExpend} toggleExpend={toggleExpend}/>
                 <Logo/>
                 <Name>Bear Carousel</Name>
             </NavbarBrand>

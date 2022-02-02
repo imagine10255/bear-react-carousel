@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro';
-import React from 'react'
+import React from 'react';
 import {Icon} from 'bear-components/atoms';
 
 
@@ -12,7 +12,7 @@ const Logo = () => {
 
     return (
         <LogoRoot>
-          <Icon code="carousel" size={36} color="primary"/>
+            <Icon code="carousel" size={36} color="primary"/>
         </LogoRoot>
     );
 };
