@@ -13,9 +13,9 @@ const Path = (props: any) => (
     />
 );
 
-interface IProps {
+interface IProps extends FCProps{
   toggleExpend?: () => void;
-  isExpend?: boolean
+  isExpend?: boolean,
 }
 
 
@@ -23,49 +23,54 @@ interface IProps {
  * HamburgerMenu
  */
 const HamburgerMenu = ({
+    className,
+    style,
     toggleExpend= () => {},
     isExpend = false,
 }: IProps) => {
 
 
     return (
-        <HamburgerMenuRoot type="button" onClick={toggleExpend}>
-            <motion.nav
-                initial={false}
-                animate={isExpend ? 'open' : 'closed'}
-            >
-                <svg width="23" height="23" viewBox="0 0 23 23">
-                    <Path
-                        variants={{
-                            closed: {d: 'M 2 2.5 L 20 2.5'},
-                            open: {d: 'M 3 16.5 L 17 2.5'}
-                        }}
-                    />
-                    <Path
-                        d="M 2 9.423 L 20 9.423"
-                        variants={{
-                            closed: {opacity: 1},
-                            open: {opacity: 0}
-                        }}
-                        transition={{duration: 0.1}}
-                    />
-                    <Path
-                        variants={{
-                            closed: {d: 'M 2 16.346 L 20 16.346'},
-                            open: {d: 'M 3 2.5 L 17 16.346'}
-                        }}
-                    />
-                </svg>
-            </motion.nav>
-        </HamburgerMenuRoot>
+      <HamburgerMenuRoot
+        className={className}
+        style={style}
+        onClick={toggleExpend}
+        initial={false}
+        animate={isExpend ? 'open' : 'closed'}
+      >
+        <svg width="30" height="25" viewBox="0 0 25 25">
+          <Path
+            variants={{
+              closed: {d: 'M 4 5.5 L 22 5.5'},
+              open: {d: 'M 5 19.5 L 19 5.5'}
+            }}
+          />
+          <Path
+            d="M 4 12.423 L 22 12.423"
+            variants={{
+              closed: {opacity: 1},
+              open: {opacity: 0}
+            }}
+            transition={{duration: 0.1}}
+          />
+          <Path
+            variants={{
+              closed: {d: 'M 4 19.346 L 22 19.346'},
+              open: {d: 'M 5 5.5 L 19 19.346'}
+            }}
+          />
+        </svg>
+      </HamburgerMenuRoot>
     );
 };
 
 export default HamburgerMenu;
 
-const HamburgerMenuRoot = styled.button`
+const HamburgerMenuRoot = styled(motion.button)`
    background: transparent;
    border: none;
    cursor: pointer;
    padding: 0;
+   line-height: 0;
+  
 `;

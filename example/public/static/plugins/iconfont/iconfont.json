@@ -1,0 +1,44 @@
+{
+  "id": "3168118",
+  "name": "bear-carousel",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "輪播套件",
+  "glyphs": [
+    {
+      "icon_id": "15313222",
+      "name": "carousel",
+      "font_class": "carousel-sold",
+      "unicode": "e61a",
+      "unicode_decimal": 58906
+    },
+    {
+      "icon_id": "17412505",
+      "name": "Open",
+      "font_class": "open",
+      "unicode": "e6b5",
+      "unicode_decimal": 59061
+    },
+    {
+      "icon_id": "8328078",
+      "name": "Next",
+      "font_class": "arrow-sold",
+      "unicode": "e662",
+      "unicode_decimal": 58978
+    },
+    {
+      "icon_id": "372107",
+      "name": "cc-arrow-right-circle",
+      "font_class": "arrow-right",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    },
+    {
+      "icon_id": "8017639",
+      "name": "carousel",
+      "font_class": "carousel",
+      "unicode": "e6d2",
+      "unicode_decimal": 59090
+    }
+  ]
+}

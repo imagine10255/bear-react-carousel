@@ -1,8 +1,10 @@
-import {Container} from 'bear-styled-grid';
 import React, {useCallback, useEffect} from 'react';
 import styled from 'styled-components/macro';
+import {Container} from 'bear-styled-grid';
 import {useSidebar} from 'App/SidebarProvider';
-import HamburgerMenu from '../../../components/atoms/HamburgerMenu';
+import HamburgerMenu from 'components/atoms/HamburgerMenu';
+import Logo from 'components/atoms/Logo';
+import {Icon} from 'bear-components/atoms';
 
 
 const Navbar = () => {
@@ -22,17 +24,25 @@ const Navbar = () => {
     }, []);
 
     return <Nav>
-        <Container className="d-flex" fluid>
-            <HamburgerMenu isExpend={isExpend} toggleExpend={toggleExpend}/>
+        <Container className="d-flex align-items-center" fluid>
 
-            <NavbarBrand>Bear Carousel</NavbarBrand>
+            <NavbarBrand>
+                <HamburgerMenu
+                  className="d-lg-none"
+                  isExpend={isExpend} toggleExpend={toggleExpend}/>
+                <Logo/>
+                <Name>Bear Carousel</Name>
+            </NavbarBrand>
 
-            <NavbarNav className="ml-auto my-0 d-none d-md-flex">
-                <NavItem>
+            <NavbarNav className="ml-auto my-0 d-md-flex">
+                <NavItem className="d-none d-md-flex">
                     <NavLink href="#!" isActive>Docs</NavLink>
                 </NavItem>
                 <NavItem>
-                    <NavLink href="#!">GitHub</NavLink>
+                    <NavLink href="#!">
+                        GitHub
+                        <Icon code="open" color="inherit" size={20}/>
+                    </NavLink>
                 </NavItem>
 
             </NavbarNav>
@@ -44,6 +54,9 @@ const Navbar = () => {
 
 export default Navbar;
 
+const Name = styled.div`
+  
+`;
 
 const DebugSize = styled.div`
   position: absolute;
@@ -87,6 +100,10 @@ const NavbarBrand = styled.div`
     
     font-weight: 700;
     color: #fff;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    
 `;
 
 
