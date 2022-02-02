@@ -1,7 +1,7 @@
-import React from 'react'
-import styled from 'styled-components/macro'
-import { Col, EColType, ERowAlign, Flex, Row } from 'bear-styled-grid'
-import { SwitchControl } from 'bear-components/forms'
+import React from 'react';
+import styled from 'styled-components/macro';
+import {Col, EColType, ERowAlign, Flex, Row} from 'bear-styled-grid';
+import {SwitchControl} from 'bear-components/forms';
 
 interface IProps extends FCChildrenProps{
     title: string
@@ -14,7 +14,7 @@ const Content = ({
     title,
     desc = '',
     isLoadData,
-     onLoadData,
+    onLoadData,
     children
 }: IProps) => {
     return <>
@@ -30,8 +30,8 @@ const Content = ({
                         <Label>
                             <LabelText>Load Data</LabelText>
                             <SwitchControl
-                              onChange={onLoadData}
-                              checked={isLoadData}
+                                onChange={onLoadData}
+                                checked={isLoadData}
                             />
                         </Label>
 

@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, {useState} from 'react';
 import styled from 'styled-components/macro';
 import BearCarousel from 'bear-carousel';
 import Code from 'components/atoms/Code';
 import Content, {SubTitle} from '../../_components/Content';
-import { diffRatioImages as images } from 'config/images';
+import {diffRatioImages as images} from 'config/images';
 
 
 // 輪播項目
@@ -11,10 +11,10 @@ const carouselData = images.map(row => {
     return {
         key: row.id,
         children: <img
-          src={row.image}
-          style={{
-              height: '200px'
-          }}
+            src={row.image}
+            style={{
+                height: '200px'
+            }}
         />
     };
 });
@@ -34,7 +34,7 @@ const AutoWidth = () => {
     >
         <CarouselBox className="mb-4">
             <BearCarousel
-              data={isLoadData ? carouselData: []}
+                data={isLoadData ? carouselData: []}
                 slidesPerView="auto"
                 isEnableNavButton
                 isEnablePagination

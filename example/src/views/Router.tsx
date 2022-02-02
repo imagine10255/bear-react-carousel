@@ -10,7 +10,7 @@ import PropsTry from './PropsTry';
 import Centered from './Feature/Centered';
 import Breakpoints from './Feature/Breakpoints';
 import AutoWidth from './Feature/AutoWidth';
-import AutoHeight from './Feature/AutoHeight'
+import AutoHeight from './Feature/AutoHeight';
 import UseBackground from './Feature/UseBackground';
 
 import AutoPlayProgress from './Example/AutoPlayProgress';

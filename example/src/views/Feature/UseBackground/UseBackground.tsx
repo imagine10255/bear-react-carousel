@@ -1,22 +1,22 @@
-import React, { useState } from 'react'
-import styled from 'styled-components/macro'
-import BearCarousel, {ICarouselData} from 'bear-carousel'
+import React, {useState} from 'react';
+import styled from 'styled-components/macro';
+import BearCarousel, {ICarouselData} from 'bear-carousel';
 import Code from 'components/atoms/Code';
-import Content, { SubTitle } from '../../_components/Content';
-import { gameImages as images } from 'config/images';
+import Content, {SubTitle} from '../../_components/Content';
+import {gameImages as images} from 'config/images';
 
 
 // 輪播項目
 const carouselData: ICarouselData[] = images.map(row => {
-  return {
-    key: row.id,
-    children: <div
-      style={{
-        backgroundImage: `url(${row.image})`,
-        backgroundSize: 'cover',
-        aspectRatio: '32 / 9',
-      }}/>
-  };
+    return {
+        key: row.id,
+        children: <div
+            style={{
+                backgroundImage: `url(${row.image})`,
+                backgroundSize: 'cover',
+                aspectRatio: '32 / 9',
+            }}/>
+    };
 });
 
 /**

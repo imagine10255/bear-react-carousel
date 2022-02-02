@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, {useState} from 'react';
 import styled from 'styled-components/macro';
 import BearCarousel from 'bear-carousel';
 import Code from 'components/atoms/Code';
@@ -10,11 +10,11 @@ const carouselData = images.map(row => {
     return {
         key: row.id,
         children: <div
-          style={{
-              backgroundImage: `url(${row.image})`,
-              backgroundSize: 'cover',
-              aspectRatio: '32 / 9',
-          }}/>
+            style={{
+                backgroundImage: `url(${row.image})`,
+                backgroundSize: 'cover',
+                aspectRatio: '32 / 9',
+            }}/>
     };
 });
 

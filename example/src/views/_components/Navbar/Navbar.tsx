@@ -1,5 +1,5 @@
 import {Container} from 'bear-styled-grid';
-import React, { useCallback, useEffect } from 'react'
+import React, {useCallback, useEffect} from 'react';
 import styled from 'styled-components/macro';
 
 
@@ -16,7 +16,7 @@ const Navbar = () => {
         if(dom){
             dom.innerHTML = `${window.innerWidth}px`;
         }
-    }, [])
+    }, []);
 
     return <Nav>
         <Container className="d-flex" fluid>

@@ -68,14 +68,14 @@ const VipLevelCarousel = ({
             <ControlAreaTitle>
                 VIP Level
                 <LevelSelect
-                  title="level"
-                  options={levelOption}
-                  value={carouselLevel}
-                  onChange={(value) => handleCarouselGoIndex(anyToNumber(value))}
+                    title="level"
+                    options={levelOption}
+                    value={carouselLevel}
+                    onChange={(value) => handleCarouselGoIndex(anyToNumber(value))}
                 />
             </ControlAreaTitle>
         </ListControlArea>;
-    }
+    };
 
 
     /**
@@ -83,19 +83,19 @@ const VipLevelCarousel = ({
      */
     const renderCarousel = () => {
         return <BearCarousel
-          isEnableLoop={false}
-          isEnableNavButton
-          setCarousel={setCarousel}
-          slidesPerView="auto"
-          spaceBetween={20}
-          // breakpoints={{
-          //     [gridConfig.gridBreakpoints.sm]: {
-          //         slidesPerView: 'auto',
-          //     },
-          // }}
-          data={carouselData}
-        />
-    }
+            isEnableLoop={false}
+            isEnableNavButton
+            setCarousel={setCarousel}
+            slidesPerView="auto"
+            spaceBetween={20}
+            // breakpoints={{
+            //     [gridConfig.gridBreakpoints.sm]: {
+            //         slidesPerView: 'auto',
+            //     },
+            // }}
+            data={carouselData}
+        />;
+    };
 
     return (
         <VipLevelCardListRoot style={style} className={className}>
