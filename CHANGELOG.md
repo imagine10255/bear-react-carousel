@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.9](https://github.com/imagine10255/react-carousel/compare/v1.1.8...v1.1.9) (2022-02-02)
+
+
+### Features
+
+* 新增 About 頁面 ([2b16d1f](https://github.com/imagine10255/react-carousel/commit/2b16d1f150a56d229387b2f1c819ae601e91c9f3))
+* 新增 AutoPlayProgress Sample ([1f3b722](https://github.com/imagine10255/react-carousel/commit/1f3b722e9e6641a1d2d5c65bf5680bbc5785032f))
+* 新增 Breakpoints sample ([9fbd91f](https://github.com/imagine10255/react-carousel/commit/9fbd91fb6b31a1853b56a13bda7ec46a8cb15d74))
+* 新增 Centered sample ([fc1bed1](https://github.com/imagine10255/react-carousel/commit/fc1bed11b2463e090c8c37e4f476e78575b7651d))
+* 新增 Example VipList ([85faf6b](https://github.com/imagine10255/react-carousel/commit/85faf6b72054dee0d38910048e64c7047d4cc760))
+* 新增 navbar logo ([a0f5388](https://github.com/imagine10255/react-carousel/commit/a0f5388f762f76743494d447ac0dfc162820eb1b))
+* 新增 navbar logo ([2239ae8](https://github.com/imagine10255/react-carousel/commit/2239ae81bf4865a72c35acf0ebef0a3ff518f1ef))
+* 新增 Per View Auto 頁面 ([eede336](https://github.com/imagine10255/react-carousel/commit/eede336e086156b21bec66951fe37e16d49631d0))
+* 新增 sidebar expend transition ([fae6abb](https://github.com/imagine10255/react-carousel/commit/fae6abbbabf91fe868a2eda5c639d146dfe0bdf6))
+* 新增 如何安裝頁面 ([6df9b81](https://github.com/imagine10255/react-carousel/commit/6df9b819196d6eb357f3f1c14f2f74228d0ba791))
+* 新增 當 sliderPerView = auto 時, container 設定為浮動 absolute, 避免擠開外容器破版 ([9f8675d](https://github.com/imagine10255/react-carousel/commit/9f8675d575082702250883292a44172d77187a76))
+* 更改 navbar 排版 ([92ad481](https://github.com/imagine10255/react-carousel/commit/92ad481260bae80663f66a49b2af614be34ea937))
+* 更改 styled-components DefaultTheme 設定方式直接使用設定檔, PerViewAuto 改為 AuthWidth, 新增強調註解元件 ([95c38da](https://github.com/imagine10255/react-carousel/commit/95c38dadefa58ed02867a916cad5c7bee189caee))
+* 更改 VIP 命名 ([f67ba2e](https://github.com/imagine10255/react-carousel/commit/f67ba2e1ad86df02d6cee45b451b0d745aa1def6))
+* 更改 命名方式 ReactCarousel -> Carousel, Example 排版 ([7ec48af](https://github.com/imagine10255/react-carousel/commit/7ec48afa1c8c0572b13bf6d87877f6005a5ff6fd))
+
 ### [1.1.8](https://github.com/imagine10255/react-carousel/compare/v1.1.7...v1.1.8) (2022-01-31)
 
 
