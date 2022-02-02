@@ -7,23 +7,24 @@ export type TSlidesPerViewActual = number
 
 export interface ICarouselObj {
   goToPage: (page: number) => void;
+  activeActualIndex: number;
+  activePage: number;
   info: IInfo,
 }
 
 
 export interface ICarouselProps extends IBreakpointSetting{
   setCarousel?: (carouselObj: ICarouselObj) => void,
+  renderNavButton?: (
+    toPrev: TToPrev,
+    toNext: TToNext,
+  ) => void
   style?: CSS.Properties
   className?: string
   data: ICarouselData[];
   moveTime: number
   autoPlayTime: number
   breakpoints: IPropsBreakpoints
-  renderNavButton?: (
-    toPrev: TToPrev,
-    toNext: TToNext,
-  ) => void
-  onChange?: (index: number, page: number) => void
   isDebug: boolean
 }
 

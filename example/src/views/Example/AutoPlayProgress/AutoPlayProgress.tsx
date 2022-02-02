@@ -1,11 +1,11 @@
-import React from 'react'
-import styled, { css, keyframes } from 'styled-components/macro'
-import BearCarousel, { elClassName, ICarouselData , TCarouselSetting} from 'bear-carousel'
-import Code from 'components/Code/Code'
-import { Icon } from 'bear-components/atoms'
-import { Col, Container, EColType, media, Row } from 'bear-styled-grid'
+import React from 'react';
+import styled, {css, keyframes} from 'styled-components/macro';
+import BearCarousel, {elClassName, ICarouselData , TCarouselSetting} from 'bear-carousel';
+import Code from 'components/Code/Code';
+import {Icon} from 'bear-components/atoms';
+import {Col, Container, EColType, media, Row} from 'bear-styled-grid';
 
-import Content, { SubTitle } from '../../_components/Content'
+import Content, {SubTitle} from '../../_components/Content';
 
 const bgList = [
     {id: 9, name: 'Rose', image: '/static/sample/09.jpg'},
@@ -27,22 +27,22 @@ const setting: TCarouselSetting = {
     autoPlayTime: 5000,
     isEnableAutoPlay: true,
     renderNavButton: (toPrev, toNext) => (
-      <PaginateGroup className={elClassName.navGroup}>
-          <Container>
-              <Row className="justify-content-center justify-content-lg-end">
-                  <Col col={EColType.auto}>
-                      <NavButton type="button" onClick={() => toPrev()}>
-                          <Icon code="arrow-right" rotate={180}/>
-                      </NavButton>
-                  </Col>
-                  <Col col={EColType.auto}>
-                      <NavButton type="button" onClick={() => toNext()}>
-                          <Icon code="arrow-right"/>
-                      </NavButton>
-                  </Col>
-              </Row>
-          </Container>
-      </PaginateGroup>
+        <PaginateGroup className={elClassName.navGroup}>
+            <Container>
+                <Row className="justify-content-center justify-content-lg-end">
+                    <Col col={EColType.auto}>
+                        <NavButton type="button" onClick={() => toPrev()}>
+                            <Icon code="arrow-right" rotate={180}/>
+                        </NavButton>
+                    </Col>
+                    <Col col={EColType.auto}>
+                        <NavButton type="button" onClick={() => toNext()}>
+                            <Icon code="arrow-right"/>
+                        </NavButton>
+                    </Col>
+                </Row>
+            </Container>
+        </PaginateGroup>
     ),
 };
 
@@ -62,13 +62,13 @@ const AutoPlayProgress = () => {
 
 
     return <Content
-      title="Auto Play Progress"
-      desc="Moved items as to the central position"
+        title="Auto Play Progress"
+        desc="Moved items as to the central position"
     >
         <CarouselBox className="mb-4 mb-lg-5">
             <BearCarousel
-              {...setting}
-              data={carouselData}
+                {...setting}
+                data={carouselData}
             />
         </CarouselBox>
 

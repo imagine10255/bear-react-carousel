@@ -1,4 +1,4 @@
-import { IBreakpointSetting, TSlidesPerView, IBreakpointSettingActual, IInfo, IPropsBreakpoints, ICarouselProps, InitData } from './types'
+import {IBreakpointSetting, TSlidesPerView, IBreakpointSettingActual, IInfo, IPropsBreakpoints, ICarouselProps, InitData} from './types';
 import {anyToNumber} from 'bear-jsutils/convert';
 
 /**

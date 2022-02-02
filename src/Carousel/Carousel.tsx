@@ -4,7 +4,7 @@ import {getTranslateParams, getMediaInfo, getMediaRangeSize, getSlideDirection} 
 import {uuid} from 'bear-jsutils/key';
 import {checkIsMobile} from 'bear-jsutils/browser';
 import log  from 'bear-jsutils/log';
-import {deepCompare} from 'bear-jsutils/equal';
+import {deepCompare, isNotEmpty} from 'bear-jsutils/equal';
 import {IInfo, ITouchStart, IBreakpointSettingActual, ICarouselProps} from './types';
 import elClassName from './el-class-name';
 
@@ -143,12 +143,7 @@ class Carousel extends React.Component<ICarouselProps, IState> {
           }
       }
 
-      if (this.props.setCarousel) {
-          this.props.setCarousel({
-              goToPage: this.goToPage,
-              info: this.info
-          });
-      }
+      this._handleSyncCarousel();
 
   }
 
@@ -177,8 +172,8 @@ class Carousel extends React.Component<ICarouselProps, IState> {
 
       const {windowSize: nextWindowSize} = nextState;
       const {windowSize} = this.state;
-      const {data, ...otherParams} = this.props;
-      const {data: nextData, ...nextOtherProps} = nextProps;
+      const {data, setCarousel, renderNavButton, ...otherParams} = this.props;
+      const {data: nextData, setCarousel: nextSetCarousel, renderNavButton: nextRenderNavButton, ...nextOtherProps} = nextProps;
 
       const oldKey = data.map((row) => row.key).join('_');
       const nextKey = nextData.map((row) => row.key).join('_');
@@ -196,13 +191,7 @@ class Carousel extends React.Component<ICarouselProps, IState> {
               $this.goToPage(1, false);
           }, 0);
 
-          // 設定給外部使用
-          if (otherParams.setCarousel) {
-              otherParams.setCarousel({
-                  goToPage: this.goToPage,
-                  info: this.info
-              });
-          }
+          this._handleSyncCarousel();
 
           return true;
       }
@@ -548,6 +537,20 @@ class Carousel extends React.Component<ICarouselProps, IState> {
       this.goToActualIndex(page * this.rwdMedia.slidesPerGroup + (this.info.actual.firstIndex - 1), isUseAnimation);
   }
 
+  /**
+   * 同步 Carousel 狀態
+   */
+  _handleSyncCarousel = () => {
+      if(this.props.setCarousel){
+          this.props.setCarousel({
+              goToPage: this.goToPage,
+              info: this.info,
+              activePage: this.activePage,
+              activeActualIndex: this.activeActualIndex,
+          });
+      }
+  }
+
 
   /**
    * 取得目標項目距離寬度(px)
@@ -574,7 +577,7 @@ class Carousel extends React.Component<ICarouselProps, IState> {
    * 前往實際位置
    */
   goToActualIndex = (slideIndex: number, isUseAnimation = true) => {
-      const {moveTime, onChange} = this.props;
+      const {moveTime} = this.props;
 
       if(this.props.isDebug) log.printInText(`[goToActualIndex] slideIndex: ${slideIndex}, isUseAnimation: ${isUseAnimation}`);
 
@@ -622,7 +625,7 @@ class Carousel extends React.Component<ICarouselProps, IState> {
           // 更改顯示在第幾個 (父元件使用可判定樣式設定)
           const slideItemRefs = this.slideItemRefs?.current;
           if(slideItemRefs){
-              slideItemRefs.forEach((row, index) => {
+              slideItemRefs.filter(row => isNotEmpty(row)).forEach((row, index) => {
                   if (index === this.activeActualIndex) {
                       row.setAttribute('data-active', 'true');
                   } else if (row) {
@@ -648,9 +651,7 @@ class Carousel extends React.Component<ICarouselProps, IState> {
           // 結束移動後再繼續自動模式
           this._checkAndAutoPlay();
 
-          if (onChange) {
-              onChange(this.activeActualIndex, this.activePage);
-          }
+          this._handleSyncCarousel();
       }
   }
 

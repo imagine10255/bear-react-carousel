@@ -9,7 +9,8 @@ import PropsTry from './PropsTry';
 import PerViewAuto from './Feature/PerViewAuto';
 import Centered from './Feature/Centered';
 import Breakpoints from './Feature/Breakpoints';
-import AutoPlayProgress from './Example/AutoPlayProgress'
+import AutoPlayProgress from './Example/AutoPlayProgress';
+import VipList from './Example/VipList';
 
 
 const Router = () => {
@@ -24,6 +25,7 @@ const Router = () => {
             <Route path="/feature/centered" children={<Centered/>} />
             <Route path="/feature/breakpoints" children={<Breakpoints/>} />
 
+            <Route path="/example/vip-list" children={<VipList/>} />
             <Route path="/example/auto-play-progress" children={<AutoPlayProgress/>} />
 
             <Route path="*" children={<NotFound/>}/>
