@@ -8,12 +8,12 @@ import {Col, Container, EColType, media, Row} from 'bear-styled-grid';
 import Content, {SubTitle} from '../../_components/Content';
 
 const bgList = [
-    {id: 9, name: 'Rose', image: '/static/sample/09.jpg'},
-    {id: 2, name: 'Violets', image: '/static/sample/02.jpg'},
-    {id: 3, name: 'Purple Poppies', image: '/static/sample/03.jpg'},
-    {id: 4, name: 'Red Poppies', image: '/static/sample/04.jpg'},
-    {id: 5, name: 'Lavender', image: '/static/sample/05.jpg'},
-    {id: 6, name: 'Meeting', image: '/static/sample/06.jpg'},
+    {id: 9, name: 'Rose', image: '/static/sample/flower/09.jpg'},
+    {id: 2, name: 'Violets', image: '/static/sample/flower/02.jpg'},
+    {id: 3, name: 'Purple Poppies', image: '/static/sample/flower/03.jpg'},
+    {id: 4, name: 'Red Poppies', image: '/static/sample/flower/04.jpg'},
+    {id: 5, name: 'Lavender', image: '/static/sample/flower/05.jpg'},
+    {id: 6, name: 'Meeting', image: '/static/sample/flower/06.jpg'},
 ];
 
 

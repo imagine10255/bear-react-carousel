@@ -1,11 +1,11 @@
-# react-carousel
+# bear-carousel
 
 > Most modern mobile touch slider with hardware accelerated transitions by react
 
 [![NPM](https://img.shields.io/npm/v/bear-carousel.svg)](https://www.npmjs.com/package/bear-carousel)
 [![npm](https://img.shields.io/npm/dm/bear-carousel.svg)](https://www.npmjs.com/package/bear-carousel)
 
-This project [demo](https://imagine10255.github.io/react-carousel/)
+This project [demo](https://imagine10255.github.io/bear-carousel/)
 
 ## Install
 
@@ -106,7 +106,7 @@ class ExampleComponent () => {
 
 There is also a codesandbox template that you can fork and play with it:
 
-[![Edit react-editext-template](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/react-carousel-9h6eu)
+[![Edit react-editext-template](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/bear-carousel-9h6eu)
 
 
 

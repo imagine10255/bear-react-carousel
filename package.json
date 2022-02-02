@@ -14,9 +14,9 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/imagine10255/react-carousel.git"
+    "url": "https://github.com/imagine10255/bear-carousel.git"
   },
-  "homepage": "https://imagine10255.github.io/react-carousel",
+  "homepage": "https://imagine10255.github.io/bear-carousel",
   "source": "src/index.ts",
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
@@ -38,8 +38,8 @@
     "test:lint": "eslint .",
     "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
     "test:watch": "react-scripts test --env=jsdom",
-    "predeploy": "cd example && yarn install && yarn run build-storybook",
-    "deploy": "gh-pages -d example/storybook-static",
+    "predeploy": "cd example && yarn install && yarn run build",
+    "deploy": "gh-pages -d example/build",
     "gitlog": "git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cblueby %an %Cgreen(%cr)%Creset'",
     "lint:fix": "eslint ./src --fix",
     "cz": "git cz",
@@ -47,8 +47,7 @@
     "release:major": "standard-version -r major",
     "release:minor": "standard-version -r minor",
     "release:patch": "standard-version -r patch",
-    "release:alpha": "standard-version --prerelease alpha",
-    "storybook": "cd example && yarn install && yarn run storybook"
+    "release:alpha": "standard-version --prerelease alpha"
   },
   "resolutions": {
     "react-error-overlay": "6.0.9"

@@ -9,30 +9,19 @@ import {Controller, useForm} from 'react-hook-form';
 import {TextAreaField, TextField, SwitchControl} from 'bear-components/forms';
 import {FormHorizontalGroup} from 'bear-components/atoms';
 import Content from 'views/_components/Content';
+import {racingImages as images} from 'config/images';
+// import {catImages as images} from 'config/images';
 
 
-const bgList = [
-    {id: 9, image: '/static/sample/09.jpg'},
-    {id: 2, image: '/static/sample/02.jpg'},
-    {id: 3, image: '/static/sample/03.jpg'},
-    {id: 4, image: '/static/sample/04.jpg'},
-    {id: 5, image: '/static/sample/05.jpg'},
-    {id: 6, image: '/static/sample/06.jpg'},
-    {id: 7, image: '/static/sample/07.jpg'},
-    {id: 8, image: '/static/sample/08.jpg'},
-    {id: 1, image: '/static/sample/01.jpg'},
-];
-
-
-const carouselData: ICarouselData[] = bgList.map(row => {
+const carouselData: ICarouselData[] = images.map(row => {
     return {
         key: row.id,
         children: <div
-            className="carousel_item"
             style={{
+                background: 'center',
                 backgroundImage: `url(${row.image})`,
-                backgroundSize: 'cover',
-                height: '200px'
+                backgroundSize: '100%',
+                aspectRatio: '32 / 9',
             }}
         />
     };
@@ -53,7 +42,6 @@ export interface IFormData {
   isEnableAutoPlay: boolean,
   isDebug: boolean,
   isMount: boolean,
-  isLoadData: boolean,
 }
 
 
@@ -61,7 +49,8 @@ export interface IFormData {
  * Props Try
  */
 const PropsTry = () => {
-    const [data, setData] = useState<ICarouselData[]>(carouselData);
+  const [isLoadData, setIsLoadData] = useState<boolean>(true);
+
     const [carousel, setCarousel] = useState<ICarouselObj>();
 
     const {control, watch} = useForm<IFormData>({
@@ -88,9 +77,6 @@ const PropsTry = () => {
     const moveTime = watch('moveTime');
 
 
-    const handleLoadData = (data: ICarouselData[]) => {
-        setData(data);
-    };
 
     const handleGoPage = (index: number): void => {
         carousel?.goToPage(index);
@@ -133,18 +119,20 @@ const PropsTry = () => {
     return <Content
         title="Props Try"
         desc="All available incoming parameters allow you to test and preview the results"
+        isLoadData={isLoadData}
+        onLoadData={setIsLoadData}
     >
         <CarouselBox className="mb-4">
             {isMount && (<>
                 <Carousel
                     setCarousel={handleSetCarousel}
+                    data={isLoadData ? carouselData: []}
                     isDebug={isDebug}
                     isEnablePagination={isEnablePagination}
                     isEnableMouseMove={isEnableMouseMove}
                     isEnableNavButton={isEnableNavButton}
                     isEnableLoop={isEnableLoop}
                     isEnableAutoPlay={isEnableAutoPlay}
-                    data={data}
                     slidesPerView={anyToNumber(slidesPerView, 1)}
                     slidesPerGroup={anyToNumber(slidesPerGroup, 1)}
                     spaceBetween={anyToNumber(spaceBetween)}
@@ -176,27 +164,7 @@ const PropsTry = () => {
                 </FormHorizontalGroup>
 
                 <Row>
-                    <Col lg={12}>
-                        <FormHorizontalGroup label="isLoadData" labelCol={12} formCol={12}>
-                            <Controller
-                                control={control}
-                                name="isLoadData"
-                                defaultValue={true}
-                                render={({field}) => {
-                                    return <SwitchControl
-                                        {...field}
-                                        onChange={(checked) => {
-                                            handleLoadData(checked ? carouselData: []);
-                                            field.onChange(checked);
-                                            return;
-                                        }}
-                                        checked={field.value}
-                                    />;
-                                }}
-                            />
-                        </FormHorizontalGroup>
 
-                    </Col>
                     <Col lg={12}>
                         <FormHorizontalGroup label="isMount" labelCol={12} formCol={12}>
                             <Controller
@@ -438,6 +406,6 @@ const PageControlBox = styled.div`
 
 
 const CarouselBox = styled.div`
-  height: 200px;
+  aspect-ratio: 32 / 9;
 `;
 
