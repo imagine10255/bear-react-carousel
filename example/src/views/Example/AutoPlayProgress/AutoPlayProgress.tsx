@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, {css, keyframes} from 'styled-components/macro';
 import BearCarousel, {elClassName, ICarouselData , TCarouselSetting} from 'bear-carousel';
-import Code from 'components/Code/Code';
+import Code from 'components/atoms/Code';
 import {Icon} from 'bear-components/atoms';
 import {Col, Container, EColType, media, Row} from 'bear-styled-grid';
 

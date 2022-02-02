@@ -1,50 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react'
 import styled from 'styled-components/macro';
 import BearCarousel, {ICarouselData} from 'bear-carousel';
-import Code from 'components/Code/Code';
+import Code from 'components/atoms/Code';
 import Content, {SubTitle} from '../../_components/Content';
+import { gameImages as images } from '../../../config/images'
 
 
-const bgList = [
-    {id: 9, image: '/static/sample/09.jpg'},
-    {id: 2, image: '/static/sample/02.jpg'},
-    {id: 3, image: '/static/sample/03.jpg'},
-    {id: 4, image: '/static/sample/04.jpg'},
-    {id: 5, image: '/static/sample/05.jpg'},
-    {id: 6, image: '/static/sample/06.jpg'},
-    {id: 7, image: '/static/sample/07.jpg'},
-    {id: 8, image: '/static/sample/08.jpg'},
-    {id: 1, image: '/static/sample/01.jpg'}
-];
+
+// 輪播項目
+const carouselData: ICarouselData[] = images.map(row => {
+    return {
+        key: row.id,
+        children: <div
+          style={{
+              backgroundImage: `url(${row.image})`,
+              backgroundSize: 'cover',
+              aspectRatio: '16 / 9',
+          }}/>
+    };
+});
 
 
 /**
  * Breakpoints
  */
 const Breakpoints = () => {
-
-    const carouselData: ICarouselData[] = bgList.map(row => {
-        return {
-            key: row.id,
-            children: <div
-                className="carousel_item"
-                style={{
-                    backgroundImage: `url(${row.image})`,
-                    backgroundSize: 'cover',
-                    height: '200px'
-                }}
-            />
-        };
-    });
+    const [isLoadData, setIsLoadData] = useState<boolean>(true);
 
 
     return <Content
         title="Breakpoints"
         desc="Display settings according to responsive size"
+        isLoadData={isLoadData}
+        onLoadData={setIsLoadData}
     >
         <CarouselBox className="mb-4">
             <BearCarousel
-                data={carouselData}
+                data={isLoadData ? carouselData: []}
                 slidesPerView={1}
                 isEnableMouseMove
                 isEnablePagination
