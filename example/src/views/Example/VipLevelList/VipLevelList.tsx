@@ -18,12 +18,12 @@ const vipData = new Array(12).fill('').map((row, index) => {
 
 
 /**
- * Vip List
+ * Vip Level List
  */
 const VipLevelList = () => {
 
     return <Content
-        title="Vip List"
+        title="Vip Level List"
         desc="Multi card and control page"
     >
         <CarouselBox className="mb-4 mb-lg-5">

@@ -717,7 +717,7 @@ class Carousel extends React.Component<ICarouselProps, IState> {
       const slideItemStyle: string = [
           `flex: ${this.rwdMedia.slidesPerView === 'auto' ? '0 0 auto' : `1 0 ${100 / this.rwdMedia.slidesPerViewActual}%`};`,
           `padding-left: ${this.rwdMedia.spaceBetween / 2}px;`,
-          `padding-right: ${this.rwdMedia.spaceBetween / 2}px;`
+          `padding-right: ${this.rwdMedia.spaceBetween / 2}px;`,
       ].join('');
 
 
@@ -739,6 +739,7 @@ class Carousel extends React.Component<ICarouselProps, IState> {
                   <div
                       ref={this.carouselRef}
                       className={elClassName.carouselContainer}
+                      data-is-per-view-auto={this.rwdMedia.slidesPerView === 'auto'}
                       data-is-enable-mouse-move={this.rwdMedia.isEnableMouseMove}
                       data-actual={`${this.info.actual.minIndex},${this.info.actual.firstIndex}-${this.info.actual.lastIndex},${this.info.actual.maxIndex}`}
                   >

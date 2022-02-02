@@ -72,20 +72,7 @@ const CarouselImage = styled.img`
 
 const CarouselBox = styled.div`
   height: 200px;
-  width: 400px;
-  display: block;
-  flex: 0 0 100%;
-  overflow: hidden;
   
-  ${media.lg`
-     width: 500px;
-  `}
-  ${media.xl`
-     width: 800px;
-  `}
-  ${media.xxl`
-     width: 1200px;
-  `}
 `;
 
 

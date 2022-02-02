@@ -31,6 +31,16 @@ const About = () => {
             <Li>Conditional limit re-rendering</Li>
             <Li>Make sure BearCarousel mounts, but the image data is showing problems due to slow loading of asynchronous data</Li>
         </Ul>
+        <SubTitle>some advices</SubTitle>
+        <Ul>
+            <Li>自定義外容器高度 來讓 項目跟著高度100%, 因為當圖片是由非同步取得時, 你的畫面會從0px 突然把畫面撐開, 對使用者體驗不佳, 那如果這樣, 不如直接使用這個策略</Li>
+            <Li>Customize the height of the outer container to make the item follow the height of 100%, because when the image is obtained asynchronously, your screen will suddenly stretch the screen from 0px, which is not good for the user experience. If so, it is better to use this directly Strategy</Li>
+        </Ul>
+        <SubTitle>Precautions</SubTitle>
+        <Ul>
+            <Li>當你使用 auto 模式時, 你必須自訂外容器並指定高度, 因為position absolute overflow-x:hidden 無法只限制 x 軸, 若不使用 absolute, 則項目會將外容器100%擠開</Li>
+            <Li>When you use auto mode, you must customize the outer container and specify the height, because position absolute overflow-x:hidden cannot limit only the x-axis, if you do not use absolute, the item will squeeze the outer container 100% away</Li>
+        </Ul>
     </Content>;
 };
 

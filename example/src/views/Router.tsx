@@ -11,6 +11,7 @@ import Centered from './Feature/Centered';
 import Breakpoints from './Feature/Breakpoints';
 import AutoPlayProgress from './Example/AutoPlayProgress';
 import VipLevelList from './Example/VipLevelList';
+import AutoHeight from './Feature/AutoHeight'
 
 
 const Router = () => {
@@ -23,6 +24,7 @@ const Router = () => {
 
             <Route path="/feature/per-view-auto" children={<PerViewAuto/>} />
             <Route path="/feature/centered" children={<Centered/>} />
+            <Route path="/feature/auto-height" children={<AutoHeight/>} />
             <Route path="/feature/breakpoints" children={<Breakpoints/>} />
 
             <Route path="/example/vip-level-list" children={<VipLevelList/>} />

@@ -40,6 +40,10 @@ export const menu: IMenu[] = [
                 href: '/feature/centered'
             },
             {
+                name: 'Auto Height',
+                href: '/feature/auto-height'
+            },
+            {
                 name: 'Breakpoints',
                 href: '/feature/breakpoints'
             }
