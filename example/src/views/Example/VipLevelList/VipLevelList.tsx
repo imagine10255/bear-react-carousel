@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, {css, keyframes} from 'styled-components/macro';
 import Content, {SubTitle} from '../../_components/Content';
-import VipLevelCardList from './_components/VipLevelCardList';
+import VipLevelCarousel from './_components/VipLevelCarousel';
 
 const vipData = new Array(12).fill('').map((row, index) => {
     return {
@@ -20,15 +20,15 @@ const vipData = new Array(12).fill('').map((row, index) => {
 /**
  * Vip List
  */
-const VipList = () => {
+const VipLevelList = () => {
 
     return <Content
         title="Vip List"
         desc="Multi card and control page"
     >
         <CarouselBox className="mb-4 mb-lg-5">
-            <VipLevelCardList
-                memberLevel={2}
+            <VipLevelCarousel
+                activeLevel={2}
                 data={vipData}
             />
         </CarouselBox>
@@ -37,7 +37,7 @@ const VipList = () => {
     </Content>;
 };
 
-export default VipList;
+export default VipLevelList;
 
 
 const CarouselBox = styled.div`

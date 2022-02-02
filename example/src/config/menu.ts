@@ -17,6 +17,14 @@ export const menu: IMenu[] = [
         href: '/installation',
     },
     {
+        name: 'Life Cycle',
+        href: '/life-cycle',
+    },
+    {
+        name: 'Class Name',
+        href: '/class-name',
+    },
+    {
         name: 'Props Try',
         href: '/props-try',
     },
@@ -41,8 +49,8 @@ export const menu: IMenu[] = [
         name: 'Example',
         children: [
             {
-                name: 'Vip List',
-                href: '/example/vip-list'
+                name: 'Vip Level List',
+                href: '/example/vip-level-list'
             },
             {
                 name: 'Text Animations',

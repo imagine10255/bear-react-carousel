@@ -4,22 +4,17 @@ import gridConfig from 'config/grid';
 import {media} from 'bear-styled-grid';
 
 import CSS from 'csstype';
-import BearCarousel, {elClassName, ICarouselObj} from 'bear-carousel';
+import BearCarousel, {elClassName, ICarouselObj, ICarouselData} from 'bear-carousel';
 import {anyToNumber} from 'bear-jsutils/convert';
 import {Icon} from 'bear-components/atoms';
 import {Select} from 'bear-components/forms';
 
-// Components;
-import VipLevelCard from '../VipLevelCard';
-import {IRules} from '../VipLevelCard/VipLevelCard';
-import {ICarouselData} from '../../../../../../../src/Carousel';
+// Components
+import VipLevelCard, {IRules} from './VipLevelCard';
 
 
 interface IProps extends FCProps{
-    style?: CSS.Properties,
-    className?: string,
-    memberLevel?: number,
-
+    activeLevel?: number,
     data: Array<
         {
             level: number,
@@ -27,17 +22,16 @@ interface IProps extends FCProps{
             rule: IRules[],
         }
     >,
-
 }
 
 
 /**
  * VipLevelCardList
  */
-const VipLevelCardList = ({
+const VipLevelCarousel = ({
     className,
     style,
-    memberLevel = 0,
+    activeLevel = 0,
     data,
 }: IProps) => {
     const [carousel, setCarousel] = useState<ICarouselObj>();
@@ -57,7 +51,7 @@ const VipLevelCardList = ({
                     rules={row.rule}
                     level={row.level}
                     depositAmount={row.depositAmount}
-                    isVipLevel={Number(memberLevel) === Number(row.level)}
+                    isVipLevel={Number(activeLevel) === Number(row.level)}
                 />
             </VipLevelCardArea>)
         };
@@ -69,53 +63,62 @@ const VipLevelCardList = ({
         carousel?.goToPage(index);
     };
 
+    const renderControlArea = () => {
+        return <ListControlArea>
+            <ControlAreaTitle>
+                VIP Level
+                <LevelSelect
+                  title="level"
+                  options={levelOption}
+                  value={carouselLevel}
+                  onChange={(value) => handleCarouselGoIndex(anyToNumber(value))}
+                />
+            </ControlAreaTitle>
+        </ListControlArea>;
+    }
+
+
+    /**
+     * 等級列表區塊
+     */
+    const renderCarousel = () => {
+        return <BearCarousel
+          isEnableLoop={false}
+          isEnableNavButton
+          setCarousel={setCarousel}
+          slidesPerView={1}
+          spaceBetween={20}
+          breakpoints={{
+              [gridConfig.gridBreakpoints.xxl]: {
+                  slidesPerView: 7,
+              },
+              [gridConfig.gridBreakpoints.xl]: {
+                  slidesPerView: 5,
+              },
+              [gridConfig.gridBreakpoints.lg]: {
+                  slidesPerView: 3,
+              },
+              [gridConfig.gridBreakpoints.sm]: {
+                  slidesPerView: 3,
+              },
+          }}
+          data={carouselData}
+        />
+    }
+
     return (
         <VipLevelCardListRoot style={style} className={className}>
             <CarouselContainer className="d-lg-block">
 
-                <ListControlArea>
-                    <ControlAreaTitle>
-                        Level
-                        <LevelSelect
-                            title="level"
-                            options={levelOption}
-                            value={carouselLevel}
-                            onChange={(value) => handleCarouselGoIndex(anyToNumber(value))}
-                        />
-                    </ControlAreaTitle>
+                {renderControlArea()}
+                {renderCarousel()}
 
-
-                </ListControlArea>
-
-                {/* 等級列表區塊 */}
-                <BearCarousel
-                    isEnableLoop={false}
-                    isEnableNavButton
-                    setCarousel={setCarousel}
-                    slidesPerView={1}
-                    spaceBetween={20}
-                    breakpoints={{
-                        [gridConfig.gridBreakpoints.xxl]: {
-                            slidesPerView: 7,
-                        },
-                        [gridConfig.gridBreakpoints.xl]: {
-                            slidesPerView: 5,
-                        },
-                        [gridConfig.gridBreakpoints.lg]: {
-                            slidesPerView: 3,
-                        },
-                        [gridConfig.gridBreakpoints.sm]: {
-                            slidesPerView: 3,
-                        },
-                    }}
-                    data={carouselData}
-                />
             </CarouselContainer>
         </VipLevelCardListRoot>
     );
 };
 
-export default VipLevelCardList;
+export default VipLevelCarousel;
 
 const PrevButton = styled.button`
     width: auto;
