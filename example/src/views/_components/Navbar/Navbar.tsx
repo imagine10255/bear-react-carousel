@@ -1,9 +1,23 @@
 import {Container} from 'bear-styled-grid';
-import React from 'react';
+import React, { useCallback, useEffect } from 'react'
 import styled from 'styled-components/macro';
 
 
 const Navbar = () => {
+
+    useEffect(() => {
+        window.addEventListener('resize', onResize, true);
+
+        onResize();
+    }, []);
+
+    const onResize = useCallback(() => {
+        const dom = document.getElementById('debug-resize');
+        if(dom){
+            dom.innerHTML = `${window.innerWidth}px`;
+        }
+    }, [])
+
     return <Nav>
         <Container className="d-flex" fluid>
             <NavbarBrand>Bear Carousel</NavbarBrand>
@@ -17,12 +31,24 @@ const Navbar = () => {
                 </NavItem>
 
             </NavbarNav>
+
+            <DebugSize id="debug-resize"/>
         </Container>
     </Nav>;
 };
 
 export default Navbar;
 
+
+const DebugSize = styled.div`
+  position: absolute;
+  bottom: -20px;
+  right: 0;
+  padding-right: 30px;
+  color: ${props => props.theme.primaryColor};
+  z-index: 1;
+  font-size: 11px;
+`;
 
 
 const NavLink = styled.a<{
