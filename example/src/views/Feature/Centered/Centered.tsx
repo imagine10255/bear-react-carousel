@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import styled from 'styled-components/macro';
-import BearCarousel, {ICarouselData, SliderItem} from 'bear-carousel';
+import BearCarousel, {TSlideItemDataList, SlideItem} from 'bear-carousel';
 import Code from 'components/atoms/Code';
 import Content, {SubTitle} from '../../_components/Content';
 import {racingImages as images} from 'config/images';
@@ -9,10 +9,10 @@ import {racingImages as images} from 'config/images';
 
 
 // 輪播項目
-const sliderItemData: ICarouselData[]  = images.map(row => {
+const SlideItemData: TSlideItemDataList  = images.map(row => {
     return {
         key: row.id,
-        children: <SliderItem imageUrl={row.image}/>
+        children: <SlideItem imageUrl={row.image}/>
     };
 });
 
@@ -32,7 +32,7 @@ const Centered = () => {
     >
         <div className="mb-4">
             <BearCarousel
-                data={isLoadData ? sliderItemData: []}
+                data={isLoadData ? SlideItemData: []}
                 slidesPerView={3}
                 spaceBetween={10}
                 isEnableMouseMove

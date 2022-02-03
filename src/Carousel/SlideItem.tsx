@@ -11,7 +11,7 @@ interface IProps {
   children?: ReactNode,
 }
 
-const SliderItem = ({
+const SlideItem = ({
     className,
     style,
     imageUrl,
@@ -43,4 +43,4 @@ const SliderItem = ({
 
 
 
-export default SliderItem;
+export default SlideItem;

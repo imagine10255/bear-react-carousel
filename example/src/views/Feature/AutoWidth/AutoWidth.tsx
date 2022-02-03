@@ -1,16 +1,15 @@
 import React, {useState} from 'react';
-import BearCarousel, {SliderItem} from 'bear-carousel';
+import BearCarousel, {SlideItem, TSlideItemDataList} from 'bear-carousel';
 import Code from 'components/atoms/Code';
 import Content, {SubTitle} from '../../_components/Content';
 import {diffRatioImages as images} from 'config/images';
-import {ICarouselData} from '../../../../../src/Carousel';
 
 
 // 輪播項目
-const sliderItemData: ICarouselData[]  = images.map(row => {
+const slideItemData: TSlideItemDataList  = images.map(row => {
     return {
         key: row.id,
-        children: <SliderItem imageUrl={row.image}/>
+        children: <SlideItem imageUrl={row.image}/>
     };
 });
 
@@ -29,9 +28,9 @@ const AutoWidth = () => {
     >
         <div className="mb-4">
             <BearCarousel
-                style={{height: '200px'}}
-                data={isLoadData ? sliderItemData: []}
+                data={isLoadData ? slideItemData: []}
                 slidesPerView="auto"
+                staticHeight="200px"
                 isEnableNavButton
                 isEnablePagination
             />

@@ -718,6 +718,7 @@ class Carousel extends React.Component<ICarouselProps, IState> {
       // 產生需要的樣式 (注意結尾符號 ;)
       const rootStyle: string = [
           `padding-top: ${isNotEmpty(this.rwdMedia.aspectRatio) ? `calc(100% * (${this.rwdMedia.aspectRatio?.heightRatio} / ${this.rwdMedia.aspectRatio?.widthRatio}));`: '0;'}`,
+          `height: ${isNotEmpty(this.rwdMedia.staticHeight) ? `${this.rwdMedia.staticHeight};`: 'auto;'}`,
       ].join('');
 
       // 產生需要的樣式 (注意結尾符號 ;)

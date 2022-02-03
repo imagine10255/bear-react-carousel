@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, {css, keyframes} from 'styled-components/macro';
-import BearCarousel, {elClassName, ICarouselData , TCarouselSetting} from 'bear-carousel';
+import BearCarousel, {elClassName, TSlideItemDataList , TCarouselSetting} from 'bear-carousel';
 import Code from 'components/atoms/Code';
 import {Icon} from 'bear-components/atoms';
 import {Col, Container, EColType, media, Row} from 'bear-styled-grid';
@@ -53,7 +53,7 @@ const setting: TCarouselSetting = {
  */
 const AutoPlayProgress = () => {
 
-    const carouselData: ICarouselData[] = bgList.map(row => {
+    const carouselData: TSlideItemDataList = bgList.map(row => {
         return {
             key: row.id,
             paginationContent: <>{row.name}</>,

@@ -1,23 +1,19 @@
 import React, {useState} from 'react';
 import styled from 'styled-components/macro';
-import BearCarousel from 'bear-carousel';
+import BearCarousel, {SlideItem, TSlideItemDataList} from 'bear-carousel';
 import Code from 'components/atoms/Code';
 import Content, {SubTitle} from '../../_components/Content';
 import ImportantNote from 'components/atoms/ImportantNote ';
 import {racingImages as images} from 'config/images';
 
-const carouselData = images.map(row => {
+// 輪播項目
+const slideItemData: TSlideItemDataList  = images.map(row => {
     return {
         key: row.id,
-        children: <div
-            style={{
-                background: 'center',
-                backgroundImage: `url(${row.image})`,
-                backgroundSize: '100%',
-                height: '100%',
-            }}/>
+        children: <SlideItem imageUrl={row.image}/>
     };
 });
+
 
 
 /**
@@ -36,11 +32,11 @@ const StaticHeight = () => {
     >
         <CarouselBox className="mb-4">
             <BearCarousel
-                data={isLoadData ? carouselData: []}
+                data={isLoadData ? slideItemData: []}
                 slidesPerView={1}
+                staticHeight="200px"
                 isEnableNavButton
                 isEnablePagination
-                aspectRatio={{widthRatio: 32, heightRatio: 9}}
             />
         </CarouselBox>
 

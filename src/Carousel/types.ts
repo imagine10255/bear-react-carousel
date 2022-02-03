@@ -21,7 +21,7 @@ export interface ICarouselProps extends IBreakpointSetting{
   ) => void
   style?: CSS.Properties
   className?: string
-  data: ICarouselData[];
+  data: TSlideItemDataList;
   moveTime: number
   autoPlayTime: number
   breakpoints: IPropsBreakpoints
@@ -71,12 +71,13 @@ export interface IInfo {
   isVisiblePagination: boolean,
   isVisibleNavButton: boolean,
 }
-export interface ICarouselData {
+export interface ISlideItemData {
   key: string|number
   paginationContent?: ReactNode
   onClick?: () => void,
   children: ReactNode
 }
+export type TSlideItemDataList = ISlideItemData[];
 
 export interface IAspectRatio {
   widthRatio: number,
@@ -87,6 +88,7 @@ export interface IBreakpointSetting {
   slidesPerView: TSlidesPerView
   slidesPerGroup: number
   aspectRatio?: IAspectRatio
+  staticHeight?: string,
   spaceBetween: number
   isCenteredSlides: boolean
   isEnableLoop: boolean

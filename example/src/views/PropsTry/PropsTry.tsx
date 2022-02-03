@@ -1,7 +1,7 @@
 import React, {ReactNodeArray, useCallback, useState} from 'react';
 import styled from 'styled-components/macro';
 import {Col, Container, EColType, Flex, Row} from 'bear-styled-grid';
-import Carousel, {ICarouselObj, ICarouselData, SliderItem} from 'bear-carousel';
+import Carousel, {ICarouselObj, TSlideItemDataList, SlideItem} from 'bear-carousel';
 import {anyToNumber} from 'bear-jsutils/convert';
 
 
@@ -18,7 +18,7 @@ const Bg = styled.div`
     height: 100%;
 `;
 
-// const carouselData: ICarouselData[] = images.map(row => {
+// const carouselData: TSlideItemDataList = images.map(row => {
 //     return {
 //         key: row.id,
 //         children: <Bg
@@ -30,10 +30,10 @@ const Bg = styled.div`
 // });
 //
 
-const sliderItemData: ICarouselData[] = images.map(row => {
+const SlideItemData: TSlideItemDataList = images.map(row => {
     return {
         key: row.id,
-        children: <SliderItem imageUrl={row.image}/>
+        children: <SlideItem imageUrl={row.image}/>
     };
 });
 
@@ -136,7 +136,7 @@ const PropsTry = () => {
             {isMount && (<>
                 <Carousel
                     setCarousel={handleSetCarousel}
-                    data={isLoadData ? sliderItemData: []}
+                    data={isLoadData ? SlideItemData: []}
                     isDebug={isDebug}
                     isEnablePagination={isEnablePagination}
                     isEnableMouseMove={isEnableMouseMove}

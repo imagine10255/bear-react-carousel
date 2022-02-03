@@ -4,7 +4,7 @@ import gridConfig from 'config/grid';
 import {media} from 'bear-styled-grid';
 
 import CSS from 'csstype';
-import BearCarousel, {elClassName, ICarouselObj, ICarouselData} from 'bear-carousel';
+import BearCarousel, {elClassName, ICarouselObj, TSlideItemDataList} from 'bear-carousel';
 import {anyToNumber} from 'bear-jsutils/convert';
 import {Icon} from 'bear-components/atoms';
 import {Select} from 'bear-components/forms';
@@ -43,7 +43,7 @@ const VipLevelCarousel = ({
         };
     });
 
-    const carouselData: ICarouselData[] = data.map(row => {
+    const carouselData: TSlideItemDataList = data.map(row => {
         return {
             key: row.level,
             children: (<VipLevelCardArea key={row.level}>

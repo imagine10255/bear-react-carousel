@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import styled from 'styled-components/macro';
-import BearCarousel, {ICarouselData} from 'bear-carousel';
+import BearCarousel, {TSlideItemDataList} from 'bear-carousel';
 import Code from 'components/atoms/Code';
 import Content, {SubTitle} from '../../_components/Content';
 import {racingImages as images} from 'config/images';
@@ -8,7 +8,7 @@ import {racingImages as images} from 'config/images';
 
 
 // 輪播項目
-const carouselData: ICarouselData[] = images.map(row => {
+const carouselData: TSlideItemDataList = images.map(row => {
     return {
         key: row.id,
         children: <div
