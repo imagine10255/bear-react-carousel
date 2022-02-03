@@ -23,7 +23,7 @@ const Router = () => {
         <Switch>
             <Route path="/installation" children={<Installation/>} />
             <Route path="/about" children={<About/>} />
-          <Route path="/props-try" children={<PropsTry/>} />
+            <Route path="/props-try" children={<PropsTry/>} />
 
             <Route path="/feature/centered" children={<Centered/>} />
             <Route path="/feature/auto-width" children={<AutoWidth/>} />

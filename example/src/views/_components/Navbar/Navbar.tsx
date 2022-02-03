@@ -1,15 +1,19 @@
 import React, {useCallback, useEffect} from 'react';
 import styled from 'styled-components/macro';
+import {useHistory} from 'react-router-dom';
 import {Container, media} from 'bear-styled-grid';
-import {useSidebar} from 'App/SidebarProvider';
+import {githubUrl} from 'config/app';
+import {Icon} from 'bear-components/atoms';
+
+// Components
 import HamburgerMenu from 'components/atoms/HamburgerMenu';
 import Logo from 'components/atoms/Logo';
-import {Icon} from 'bear-components/atoms';
-import {githubUrl} from 'config/app';
+import {useSidebar} from 'App/SidebarProvider';
 
 
 const Navbar = () => {
     const {isExpend, toggleExpend} = useSidebar();
+    const history = useHistory();
 
     useEffect(() => {
         window.addEventListener('resize', onResize, true);
@@ -33,7 +37,7 @@ const Navbar = () => {
             </NavbarMenu>
 
 
-            <NavbarBrand>
+            <NavbarBrand onClick={()=>history.push('/')}>
                 <Logo/>
                 <Name>Bear Carousel</Name>
             </NavbarBrand>
