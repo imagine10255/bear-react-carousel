@@ -29,28 +29,43 @@ const renderMenu = (rows: IMenu[], lv = 1, pathname = ''): ReactNodeArray => {
  * @constructor
  */
 const Sidebar = () => {
-    const {isExpend} = useSidebar();
+    const {isExpend, toggleExpend} = useSidebar();
 
 
     const location = useLocation();
 
     const menuEl = renderMenu(menu, 1, location.pathname);
 
-    return <SidebarContainer isExpend={isExpend}>
-        <SidebarContent>
-            <Menu>
-                <MenuList>
-                    {menuEl}
-                </MenuList>
-            </Menu>
+    return <>
+        <SidebarContainer isExpend={isExpend}>
+            <SidebarContent>
+                <Menu>
+                    <MenuList>
+                        {menuEl}
+                    </MenuList>
+                </Menu>
 
-        </SidebarContent>
-    </SidebarContainer>;
+            </SidebarContent>
+        </SidebarContainer>
+        <SidebarMask onClick={() => toggleExpend()}/>
+    </>;
 };
 
 export default Sidebar;
 
 
+const SidebarMask = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0, .4);
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity .4s;
+  z-index: ${props => props.theme.sliderZIndex - 1};
+`;
 
 const MenuTitle = styled.div`
     color: #a3a4a8;
@@ -132,24 +147,17 @@ const SidebarContent = styled.div`
     flex-direction: column;
     height: 100%;
     max-height: 100vh;
-    padding-top: 60px;
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
-    transition: opacity 50ms;
 `;
 
 const SidebarContainer = styled.aside<{
   isExpend: boolean,
 }>`
-
     position: fixed;
     z-index: ${props => props.theme.sliderZIndex};
     background-color: #18191a;
-    margin-top: -63.75px;
     display: block;
     clip-path: inset(0);
-
+    padding-top: 60px;
     top: 0;
     left: 0;
     bottom: 0;
@@ -162,13 +170,21 @@ const SidebarContainer = styled.aside<{
       
     ${props => !props.isExpend && css`
       transform: translateX(-300px) translateZ(0px);
-      margin-right: -300px;    
+      margin-right: -300px;
+      
+      
+      + ${SidebarMask}{
+          opacity: 0;
+          pointer-events: none;
+      }
     `}
+    
     
     ${media.lg`
       position: static;
       transform: translateX(0) translateZ(0);
       margin-right: 0;
+      padding-top: 0;
     `}
     
     

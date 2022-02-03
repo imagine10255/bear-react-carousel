@@ -47,7 +47,7 @@ const Navbar = () => {
                     <NavLink href="#!" isActive>Docs</NavLink>
                 </NavItem>
                 <NavItem>
-                    <NavLink href={githubUrl}>
+                    <NavLink href={githubUrl} target="_blank">
                         GitHub
                         <Icon code="open" color="inherit" size={20}/>
                     </NavLink>

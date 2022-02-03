@@ -20,19 +20,19 @@ const Router = () => {
 
     return (
         <Switch>
-            <Route path="/installation" children={<Installation/>} />
-            <Route path="/about" children={<About/>} />
-            <Route path="/props-try" children={<PropsTry/>} />
+            <Route path="/installation" children={<Installation/>} exact/>
+            <Route path="/about" children={<About/>} exact/>
+            <Route path="/props-try" children={<PropsTry/>} exact/>
 
-            <Route path="/feature/centered" children={<Centered/>} />
-            <Route path="/feature/auto-width" children={<AutoWidth/>} />
-            <Route path="/feature/static-height" children={<StaticHeight/>} />
-            <Route path="/feature/breakpoints" children={<Breakpoints/>} />
+            <Route path="/feature/centered" children={<Centered/>} exact/>
+            <Route path="/feature/auto-width" children={<AutoWidth/>} exact/>
+            <Route path="/feature/static-height" children={<StaticHeight/>} exact/>
+            <Route path="/feature/breakpoints" children={<Breakpoints/>} exact/>
 
-            <Route path="/example/vip-level-list" children={<VipLevelList/>} />
-            <Route path="/example/auto-play-progress" children={<AutoPlayProgress/>} />
+            <Route path="/example/vip-level-list" children={<VipLevelList/>} exact/>
+            <Route path="/example/auto-play-progress" children={<AutoPlayProgress/>} exact/>
 
-            <Route path="/" children={<Redirect to="/about"/>} />
+            <Route path="/" children={<Redirect to="/about"/>} exact/>
 
 
             <Route path="*" children={<NotFound/>}/>
