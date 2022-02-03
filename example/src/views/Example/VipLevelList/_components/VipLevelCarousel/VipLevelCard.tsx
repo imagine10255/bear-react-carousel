@@ -1,12 +1,10 @@
-import styled, {css} from 'styled-components/macro';
-import React, {ReactNode} from 'react';
+import React, {memo} from 'react';
+import styled from 'styled-components/macro';
 import {media} from 'bear-styled-grid';
 
-import {uuid} from 'bear-jsutils/key';
 import CSS from 'csstype';
 import {isEmpty} from 'bear-jsutils/equal';
 import {formatCurrency} from 'bear-jsutils/number';
-import cx from 'classnames';
 
 
 export interface IRules {
@@ -18,8 +16,8 @@ export interface IRules {
 interface IProps extends FCProps{
     style?: CSS.Properties,
     className?: string,
-    isVipLevel?: boolean,
-    level: number,
+    isActive?: boolean,
+    levelName: string,
     depositAmount: number,
     rules?: IRules[],
 }
@@ -28,54 +26,40 @@ interface IProps extends FCProps{
  * VipLevelCard
  */
 const VipLevelCard = ({
-    style,
-    className,
-    isVipLevel = false,
-    level,
+    isActive = false,
+    levelName,
     depositAmount,
     rules = [],
 }: IProps) => {
 
     return (
-        <VipLevelCardRoot
-            style={style}
-            className={cx('vip-level-card-root', {className: className})}
-            isVipLevel={isVipLevel}
-        >
-            <VipLevelContent className="vip-level-content">
+        <VipLevelCardRoot data-active={isActive}>
+            <VipLevelContent>
+                <VipLevelName>{levelName}</VipLevelName>
+                {rules.map(row => {
+                    const value = row.value;
 
-                <VipLevel className="vip-level">
-                    {level}
-                </VipLevel>
+                    return (
+                        <VipLevelItem key={`level_${levelName}`}>
+                            <ItemInner>
+                                <ItemTitle>{row.title}</ItemTitle>
 
-                {
-                    rules.map(row => {
-                        const value = row.value;
-
-                        return (
-                            <VipLevelItem key={`level_${uuid()}`} className={'vip-level-item d-flex'}>
-                                <ItemInner>
-                                    <ItemTitle className="item-title">{row.title}</ItemTitle>
-
-                                    <ItemValue className="item-value">
-
-                                        {/* 判定value type是否為Function */}
-                                        {typeof value === 'function' ? value() : value}
-
-                                    </ItemValue>
-                                </ItemInner>
-                            </VipLevelItem>
-                        );
-                    })
-                }
+                                <ItemValue>
+                                    {/* 判定value type是否為Function */}
+                                    {typeof value === 'function' ? value() : value}
+                                </ItemValue>
+                            </ItemInner>
+                        </VipLevelItem>
+                    );
+                })}
 
             </VipLevelContent>
 
-            <VipLevelFooter className="vip-level-footer">
-                <VipLevelItem className="vip-level-item">
+            <VipLevelFooter>
+                <VipLevelItem>
                     <ItemInner>
-                        <ItemTitle className="item-title">Amount</ItemTitle>
-                        <ItemValue className="item-value">{(isEmpty(depositAmount) || depositAmount === 0) ? 'Free' : `$${formatCurrency(depositAmount, false)}`}</ItemValue>
+                        <ItemTitle>Amount</ItemTitle>
+                        <ItemValue>{(isEmpty(depositAmount) || depositAmount === 0) ? 'Free' : `$${formatCurrency(depositAmount, false)}`}</ItemValue>
                     </ItemInner>
                 </VipLevelItem>
             </VipLevelFooter>
@@ -85,11 +69,10 @@ const VipLevelCard = ({
     );
 };
 
-export default VipLevelCard;
+export default memo(VipLevelCard);
 
 
 const VipLevelContent = styled.div`
-    width: 100%;
     flex: 1 1 auto;
     padding: 10px 12px 0;
     z-index: 2;
@@ -99,24 +82,23 @@ const VipLevelContent = styled.div`
     `}
 `;
 
-const VipLevel = styled.div`
-    width: 110px;
+const VipLevelName = styled.div`
+    width: 100%;
     font-size: 14px;
     height: 30px;
-    line-height: 30px;
     border-radius: 20px;
-    max-width: 100%;
     color: #fff;
-    text-align: center;
-    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: rgba(0, 0, 0, 0.2);
-    transition: all .2s ease-in;
+    transition: background-color .2s ease-in;
 
-    ${media.lg`
+    ${media.sm`
         width: 110px;
-        font-size: 24px;
-        height: 30px;
-        line-height: 30px;
+    `}
+    ${media.lg`
+        font-size: 18px;
     `}
 `;
 
@@ -129,18 +111,15 @@ const VipLevelItem = styled.div`
     position: relative;
     min-height: 44px;
 
-    
-
-    ${media.lg`
-        padding: 15px 0;
-        min-height: 60px;
-
-    
-    `}
-
     &:last-child {
         border-bottom: none;
     }
+    
+    ${media.lg`
+        padding: 15px 0;
+        min-height: 60px;
+    `}
+    
 `;
 
 const ItemInner = styled.div`
@@ -152,14 +131,7 @@ const ItemInner = styled.div`
 
 const ItemTitle = styled.div`
     font-size: 10px;
-    transition: all .2s ease-in;
-
-    span {
-        > span {
-            color: #004e6b;
-            font-weight: 700;
-        }
-    }
+    transition: color .2s ease-in;
 
     ${media.lg`
         font-size: 12px;
@@ -169,10 +141,8 @@ const ItemTitle = styled.div`
 const ItemValue = styled.div`
     font-size: 12px;
     font-weight: 700;
-    transition: all .2s ease-in;
+    transition: color .2s ease-in;
     color: #00a3e0;
-    display: flex;
-    align-items: center;
 
     ${media.lg`
         font-size: 12px;
@@ -184,13 +154,9 @@ const VipLevelFooter = styled.div`
     background-color: #36393f;
     width: 100%;
     padding: 0 12px;
-    transition: all .2s ease-in;
-    border-radius: 0 0 5px 5px;
+    transition: background-color .2s ease-in;
     z-index: 1;
-
-    ${media.lg`
-        padding: 0 15px;
-    `}
+    border-radius: 0 0 5px 5px;
 
     ${VipLevelItem} {
         color: #fff;
@@ -200,50 +166,23 @@ const VipLevelFooter = styled.div`
             color: #fff;
         }
     }
-`;
-
-const VipLevelCardBg = styled.div`
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 220px;
-    overflow: hidden;
-    opacity: 0;
-
-    > img {
-        position: absolute;
-        bottom: 0;
-        z-index: 0;
-        left: -47px;
-        width: 150px;
-        height: 150px;
-    }
-
+    
     ${media.lg`
-        height: 220px;
-
-        > img {
-            left: -47px;
-            width: 220px;
-            height: 220px;
-        }
+        padding: 0 15px;
     `}
 `;
 
+
+
 const VipLevelCardRoot = styled.div<{
-    isVipLevel: boolean,
+    'data-active': boolean,
 }>`
     border-radius: 5px;
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
     background-color: #fff;
-    position: relative;
-    width: 100%;
-    height: auto;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    transition: all .2s ease-in;
+    transition: transform .2s ease-in;
 
     &:before {
         content: '';
@@ -255,125 +194,44 @@ const VipLevelCardRoot = styled.div<{
         opacity: 0;
         z-index: -1;
         background-image: linear-gradient(to bottom, #00e0ff, #6ab8ff);
-        transition: all .2s ease-in;
+        transition: opacity .2s ease-in;
         border-radius: 5px;
     }
-
+    
+    
     ${media.lg`
         z-index: 1;
 
-        &:hover:before {
-            opacity: 1;
-        }
-
-        &:hover {
+        :hover, &[data-active="true"] {
             z-index: 2;
             transform: scale(1.1);
-
-            ${VipLevelItem} {
-                border-bottom: solid 1px rgba(232,232,232,.6);
-            }
-
-            ${VipLevel} {
-
-                background-color: rgba(255,255,255,.2);
-            }
-            ${VipLevelContent} {
-
-                ${ItemTitle} {
-                    color: #fff;
-
-                    span > span {
-                        color: #000;
-                    }
-                }
-
-                ${ItemValue} {
-                    color: #000;
-
-                    span{
-                        color: #fff;
-
-                        > span {
-                            color: #000;
-                        }
-                    }
-                }
-
-            }
-            ${VipLevelFooter} {
-                background-color: #fff;
-
-                ${ItemTitle} {
-                    color: #004e6b;
-                }
-                ${ItemValue} {
-                    color: #004e6b;
-                }
-            }
-
-            ${VipLevelCardBg} {
-                opacity: .1;
-            }
-        }
-
-        //  >screen.lg時 指定登入會員等級樣式
-        ${(props: any) => props.isVipLevel && css`
-            &:before {
+            
+            :before {
                 opacity: 1;
             }
 
-            z-index: 2;
-            transform: scale(1.1);
-
-            // 白線調淡
             ${VipLevelItem} {
-                border-bottom: solid 1px rgba(232,232,232,.6);
+                border-bottom-color: rgba(232,232,232,.6);
             }
 
-            ${VipLevel} {
-
+            ${VipLevelName} {
                 background-color: rgba(255,255,255,.2);
             }
-
+            
+          
             ${VipLevelContent} {
-
-                ${ItemTitle} {
-                    color: #fff;
-
-                    span > span {
-                        color: #000;
-                    }
-                }
-
-                ${ItemValue} {
-                    color: #000;
-
-                    span{
-                        color: #fff;
-
-                        > span {
-                             color: #000;
-                        }
-                    }
-                }
-
+               ${ItemTitle} {color: #fff;}
+               ${ItemValue} {color: #000;}
             }
-
+            
             ${VipLevelFooter} {
                 background-color: #fff;
-
-                ${ItemTitle} {
-                    color: #004e6b;
-                }
-                ${ItemValue} {
-                    color: #004e6b;
-                }
+                ${ItemTitle} {color: #004e6b;}
+                ${ItemValue} {color: #004e6b;}
             }
 
-            ${VipLevelCardBg} {
-                opacity: .1;
-            }
-        `}
+         
+        }
     `}
+    
 `;

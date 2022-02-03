@@ -32,20 +32,16 @@ export const menu: IMenu[] = [
         name: 'Feature',
         children: [
             {
+                name: 'Static Height',
+                href: '/feature/static-height'
+            },
+            {
                 name: 'Centered',
                 href: '/feature/centered'
             },
             {
                 name: 'Auto Width',
                 href: '/feature/auto-width'
-            },
-            {
-                name: 'Auto Height',
-                href: '/feature/auto-height'
-            },
-            {
-                name: 'Use Background',
-                href: '/feature/use-background'
             },
             {
                 name: 'Breakpoints',

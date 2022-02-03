@@ -9,6 +9,7 @@ import {IInfo, ITouchStart, IBreakpointSettingActual, ICarouselProps} from './ty
 import elClassName from './el-class-name';
 
 import './styles.css';
+import {CarouselProvider} from './CarouselProvider';
 
 // 滑動觸發移動距離
 const triggerTouchDistance = 60;
@@ -70,6 +71,7 @@ class Carousel extends React.Component<ICarouselProps, IState> {
   rwdMedia: IBreakpointSettingActual = {
       slidesPerView: 1,
       slidesPerViewActual: 1,
+      aspectRatio: undefined,
       slidesPerGroup: 1,
       spaceBetween: 0,
       isCenteredSlides: false,
@@ -714,6 +716,12 @@ class Carousel extends React.Component<ICarouselProps, IState> {
 
 
       // 產生需要的樣式 (注意結尾符號 ;)
+      const rootStyle: string = [
+          `padding-top: ${isNotEmpty(this.rwdMedia.aspectRatio) ? `calc(100% * (${this.rwdMedia.aspectRatio?.heightRatio} / ${this.rwdMedia.aspectRatio?.widthRatio}));`: '0;'}`,
+          `height: ${isNotEmpty(this.rwdMedia.staticHeight) ? `${this.rwdMedia.staticHeight};`: 'inherit;'}`,
+      ].join('');
+
+      // 產生需要的樣式 (注意結尾符號 ;)
       const slideItemStyle: string = [
           `flex: ${this.rwdMedia.slidesPerView === 'auto' ? '0 0 auto' : `1 0 ${100 / this.rwdMedia.slidesPerViewActual}%`};`,
           `padding-left: ${this.rwdMedia.spaceBetween / 2}px;`,
@@ -722,72 +730,78 @@ class Carousel extends React.Component<ICarouselProps, IState> {
 
 
       return (
-          <div
-              data-carousel-id={this._carouselId}
-              style={style}
-              className={[className, elClassName.root].join(' ')}
-              ref={this.rootRef}
-          >
+          <CarouselProvider slidesPerView={this.rwdMedia.slidesPerView}>
+              <div
+                  data-carousel-id={this._carouselId}
+                  style={style}
+                  className={[className, elClassName.root].join(' ').trim()}
+                  ref={this.rootRef}
+              >
 
-              {/* Item CSS 樣式 */}
-              <style scoped>{`.${elClassName.root}[data-carousel-id="${this._carouselId}"] .${elClassName.slideItem}{${slideItemStyle}}`}</style>
+                  {/* Item CSS 樣式 */}
+                  <style scoped>{`
+.${elClassName.root}[data-carousel-id="${this._carouselId}"]{${rootStyle}}
+.${elClassName.root}[data-carousel-id="${this._carouselId}"] .${elClassName.slideItem}{${slideItemStyle}}
+              `}</style>
 
-              {/* 左右導航按鈕 */}
-              {this.info.isVisibleNavButton && this._renderNavButton()}
+                  {/* 左右導航按鈕 */}
+                  {this.info.isVisibleNavButton && this._renderNavButton()}
 
-              <div className={elClassName.content}>
-                  <div
-                      ref={this.carouselRef}
-                      className={elClassName.carouselContainer}
-                      data-is-per-view-auto={this.rwdMedia.slidesPerView === 'auto'}
-                      data-is-enable-mouse-move={this.rwdMedia.isEnableMouseMove}
-                      data-actual={`${this.info.actual.minIndex},${this.info.actual.firstIndex}-${this.info.actual.lastIndex},${this.info.actual.maxIndex}`}
-                  >
-                      {this.info.formatElement.map((row, i) => (
-                          <div
-                              key={`carousel_${i}`}
-                              className={elClassName.slideItem}
-                              ref={(el: any) => {
-                                  // @ts-ignore
-                                  this.slideItemRefs.current[i] = el;
-                                  return false;
-                              }}
-                              data-active={
-                                  row.actualIndex === this.activeActualIndex ? true : undefined
-                              }
-                              data-actual={row.actualIndex}
-                              data-match={row.isClone ? row.matchIndex : undefined}
-                              data-is-clone={row.isClone ? true : undefined}
-                          >
-                              {row.element}
+                  <div className={elClassName.content}>
+                      <div
+                          ref={this.carouselRef}
+                          className={elClassName.carouselContainer}
+                          data-is-per-view-auto={this.rwdMedia.slidesPerView === 'auto'}
+                          data-is-enable-mouse-move={this.rwdMedia.isEnableMouseMove}
+                          data-actual={`${this.info.actual.minIndex},${this.info.actual.firstIndex}-${this.info.actual.lastIndex},${this.info.actual.maxIndex}`}
+                      >
+                          {this.info.formatElement.map((row, i) => (
+                              <div
+                                  key={`carousel_${i}`}
+                                  className={elClassName.slideItem}
+                                  ref={(el: any) => {
+                                      // @ts-ignore
+                                      this.slideItemRefs.current[i] = el;
+                                      return false;
+                                  }}
+                                  data-active={
+                                      row.actualIndex === this.activeActualIndex ? true : undefined
+                                  }
+                                  data-actual={row.actualIndex}
+                                  data-match={row.isClone ? row.matchIndex : undefined}
+                                  data-is-clone={row.isClone ? true : undefined}
+                              >
+                                  {row.element}
 
-                              {isDebug && (<div className={elClassName.testNumber}>
-                                  {row.matchIndex}
-                                  {row.isClone && (
-                                      <div className={elClassName.cloneIconGroup}>
-                                          <div className={elClassName.cloneIcon}/>
-                                          {i}
-                                      </div>
-                                  )}
-                              </div>)}
-                          </div>
-                      ))}
+                                  {isDebug && (<div className={elClassName.testNumber}>
+                                      {row.matchIndex}
+                                      {row.isClone && (
+                                          <div className={elClassName.cloneIconGroup}>
+                                              <div className={elClassName.cloneIcon}/>
+                                              {i}
+                                          </div>
+                                      )}
+                                  </div>)}
+                              </div>
+                          ))}
+                      </div>
                   </div>
+
+                  {/* 頁數導航按鈕 */}
+                  {this.info.isVisiblePagination && (
+                      <div className={elClassName.paginationGroup}>
+                          {this.info.pageTotal > 0 && this._renderPagination()}
+                      </div>
+                  )}
+
+                  {/* 顯示目前偵測尺寸(除錯) */}
+                  {isDebug && (<div className={elClassName.testWindowSize}>
+                      {windowSize}
+                  </div>)}
+
               </div>
+          </CarouselProvider>
 
-              {/* 頁數導航按鈕 */}
-              {this.info.isVisiblePagination && (
-                  <div className={elClassName.paginationGroup}>
-                      {this.info.pageTotal > 0 && this._renderPagination()}
-                  </div>
-              )}
-
-              {/* 顯示目前偵測尺寸(除錯) */}
-              {isDebug && (<div className={elClassName.testWindowSize}>
-                  {windowSize}
-              </div>)}
-
-          </div>
 
       );
   }

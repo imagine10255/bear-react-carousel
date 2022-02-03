@@ -1,12 +1,12 @@
 
 
 export const racingImages = [
-    {id: 1, image: './static/sample/racing/01.jpg'},
-    {id: 2, image: './static/sample/racing/02.jpg'},
-    {id: 3, image: './static/sample/racing/03.jpg'},
-    {id: 4, image: './static/sample/racing/04.jpg'},
-    {id: 5, image: './static/sample/racing/05.jpg'},
-    {id: 6, image: './static/sample/racing/06.jpg'},
+    {id: 1, name: '電擊 SCT', image: './static/sample/racing/01.jpg'},
+    {id: 2, name: 'Ferrari 828', image: './static/sample/racing/02.jpg'},
+    {id: 3, name: 'Aston 007', image: './static/sample/racing/03.jpg'},
+    {id: 4, name: 'Givenchy', image: './static/sample/racing/04.jpg'},
+    {id: 5, name: 'GT3 RSR', image: './static/sample/racing/05.jpg'},
+    {id: 6, name: 'BMW M4', image: './static/sample/racing/06.jpg'},
 ];
 
 
@@ -16,14 +16,6 @@ export const catImages = [
     {id: 3, image: './static/sample/cat/03.jpg'},
     {id: 4, image: './static/sample/cat/04.jpg'},
     {id: 5, image: './static/sample/cat/05.jpg'},
-];
-
-
-export const gameImages = [
-    {id: 1, image: './static/sample/game/01.jpg'},
-    {id: 2, image: './static/sample/game/02.jpg'},
-    {id: 3, image: './static/sample/game/03.jpg'},
-    {id: 4, image: './static/sample/game/04.jpg'},
 ];
 
 

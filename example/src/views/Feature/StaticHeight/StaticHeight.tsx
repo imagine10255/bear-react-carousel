@@ -1,43 +1,40 @@
 import React, {useState} from 'react';
 import styled from 'styled-components/macro';
-import BearCarousel from 'bear-carousel';
+import BearCarousel, {SlideItem, TSlideItemDataList} from 'bear-carousel';
 import Code from 'components/atoms/Code';
 import Content, {SubTitle} from '../../_components/Content';
 import ImportantNote from 'components/atoms/ImportantNote ';
 import {racingImages as images} from 'config/images';
 
-const carouselData = images.map(row => {
+// 輪播項目
+const slideItemData: TSlideItemDataList  = images.map(row => {
     return {
         key: row.id,
-        children: <div
-            style={{
-                background: 'center',
-                backgroundImage: `url(${row.image})`,
-                backgroundSize: '100%',
-                aspectRatio: '32 / 9',
-            }}/>
+        children: <SlideItem imageUrl={row.image}/>
     };
 });
 
 
+
 /**
- * AutoHeight
+ * StaticHeight
  */
-const AutoHeight = () => {
+const StaticHeight = () => {
     const [isLoadData, setIsLoadData] = useState<boolean>(true);
 
 
 
     return <Content
-        title="Auto Height"
+        title="Static Height"
         desc="Use the height of the image itself"
         isLoadData={isLoadData}
         onLoadData={setIsLoadData}
     >
         <CarouselBox className="mb-4">
             <BearCarousel
-                data={isLoadData ? carouselData: []}
+                data={isLoadData ? slideItemData: []}
                 slidesPerView={1}
+                staticHeight="200px"
                 isEnableNavButton
                 isEnablePagination
             />
@@ -75,7 +72,7 @@ const carouselData = images.map(row => {
     </Content>;
 };
 
-export default AutoHeight;
+export default StaticHeight;
 
 
 const CarouselBox = styled.div`

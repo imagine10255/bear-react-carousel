@@ -1,7 +1,7 @@
 import React, {ReactNodeArray, useCallback, useState} from 'react';
 import styled from 'styled-components/macro';
 import {Col, Container, EColType, Flex, Row} from 'bear-styled-grid';
-import Carousel, {ICarouselObj, ICarouselData} from 'bear-carousel';
+import Carousel, {ICarouselObj, TSlideItemDataList, SlideItem} from 'bear-carousel';
 import {anyToNumber} from 'bear-jsutils/convert';
 
 
@@ -12,18 +12,28 @@ import Content from 'views/_components/Content';
 import {racingImages as images} from 'config/images';
 // import {catImages as images} from 'config/images';
 
+const Bg = styled.div`
+    background: center no-repeat;
+    background-size: 100%;
+    height: 100%;
+`;
 
-const carouselData: ICarouselData[] = images.map(row => {
+// const carouselData: TSlideItemDataList = images.map(row => {
+//     return {
+//         key: row.id,
+//         children: <Bg
+//             style={{
+//                 backgroundImage: `url(${row.image})`,
+//             }}
+//         />
+//     };
+// });
+//
+
+const SlideItemData: TSlideItemDataList = images.map(row => {
     return {
         key: row.id,
-        children: <div
-            style={{
-                background: 'center',
-                backgroundImage: `url(${row.image})`,
-                backgroundSize: '100%',
-                aspectRatio: '32 / 9',
-            }}
-        />
+        children: <SlideItem imageUrl={row.image}/>
     };
 });
 
@@ -122,11 +132,11 @@ const PropsTry = () => {
         isLoadData={isLoadData}
         onLoadData={setIsLoadData}
     >
-        <CarouselBox className="mb-4">
+        <div className="mb-4">
             {isMount && (<>
                 <Carousel
                     setCarousel={handleSetCarousel}
-                    data={isLoadData ? carouselData: []}
+                    data={isLoadData ? SlideItemData: []}
                     isDebug={isDebug}
                     isEnablePagination={isEnablePagination}
                     isEnableMouseMove={isEnableMouseMove}
@@ -138,6 +148,7 @@ const PropsTry = () => {
                     spaceBetween={anyToNumber(spaceBetween)}
                     autoPlayTime={anyToNumber(autoPlayTime)}
                     moveTime={anyToNumber(moveTime)}
+                    aspectRatio={{widthRatio: 32, heightRatio: 9}}
                     // breakpoints={{
                     //     768: {
                     //         slidesPerView: 2,
@@ -155,7 +166,7 @@ const PropsTry = () => {
                 />
             </>)}
 
-        </CarouselBox>
+        </div>
 
         <Row className="mb">
             <Col lg={24} xl={12}>
@@ -396,14 +407,5 @@ const PageControlBox = styled.div`
   flex-wrap: wrap;
   color: #fff;
   margin-bottom: 20px;
-  //height: 39px;
-
-
-  
-`;
-
-
-const CarouselBox = styled.div`
-  aspect-ratio: 32 / 9;
 `;
 

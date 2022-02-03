@@ -36,7 +36,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
         <SubTitle>How to use</SubTitle>
         <Code language="typescript">
             {`
-import Carousel, {ICarouselData} from 'bear-carousel';
+import Carousel, {TSlideItemDataList} from 'bear-carousel';
 
 const bgList = [
     {id: 1, image: '/static/sample/01.jpg'},
@@ -46,7 +46,7 @@ const bgList = [
 
 export const CustomBanner = () => {
     
-    const carouselData: ICarouselData[] = bgList.map(row => {
+    const carouselData: TSlideItemDataList = bgList.map(row => {
         return {
             key: row.id,
             children: <div
