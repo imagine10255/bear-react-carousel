@@ -2887,7 +2887,7 @@ bear-components@0.0.5:
   resolved "https://registry.yarnpkg.com/bear-components/-/bear-components-0.0.5.tgz#4c0495de2ea58ce101f3ac23be410302c21a2a8d"
   integrity sha512-EjXgIknAUhE60QN3eDnD6M+IgW76efRxUZLKfY3B7ImSUVdzOXAfYHigXaln/jU73+dR1pE8gF5mOTMSvRuaEQ==
 
-"bear-jsutils@link:../node_modules/imagine-js-utils":
+"bear-jsutils@link:../node_modules/bear-jsutils":
   version "0.0.0"
   uid ""
 

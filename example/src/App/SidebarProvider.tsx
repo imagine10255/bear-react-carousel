@@ -1,4 +1,5 @@
-import React, {useCallback, useContext, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
+import {enableBodyScroll, disableBodyScroll} from 'bear-jsutils/bodyScroll';
 
 
 /**
@@ -41,6 +42,15 @@ export const SidebarProvider = ({
             return !prev;
         });
     }, []);
+
+    useEffect(() => {
+        if(isExpend){
+            disableBodyScroll();
+        }else {
+            enableBodyScroll();
+
+        }
+    }, [isExpend]);
 
     return (
         <StoreContext.Provider value={{isExpend, toggleExpend}}>

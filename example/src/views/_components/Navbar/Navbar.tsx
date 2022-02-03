@@ -29,7 +29,7 @@ const Navbar = () => {
 
             <NavbarMenu className="d-lg-none flex-grow-1 d-flex ">
                 <HamburgerMenu
-                    isExpend={isExpend} toggleExpend={toggleExpend}/>
+                    isExpend={isExpend} toggleExpend={() => toggleExpend()}/>
             </NavbarMenu>
 
 

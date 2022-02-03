@@ -21,7 +21,6 @@ const Router = () => {
 
     return (
         <Switch>
-            <Route path="/props-try" children={<PropsTry/>} />
             <Route path="/installation" children={<Installation/>} />
             <Route path="/about" children={<About/>} />
 
@@ -33,6 +32,9 @@ const Router = () => {
 
             <Route path="/example/vip-level-list" children={<VipLevelList/>} />
             <Route path="/example/auto-play-progress" children={<AutoPlayProgress/>} />
+
+            <Route path="/" children={<PropsTry/>} />
+
 
             <Route path="*" children={<NotFound/>}/>
         </Switch>

@@ -29,7 +29,7 @@ const renderMenu = (rows: IMenu[], lv = 1, pathname = ''): ReactNodeArray => {
  * @constructor
  */
 const Sidebar = () => {
-    const {isExpend, toggleExpend} = useSidebar();
+    const {isExpend} = useSidebar();
 
 
     const location = useLocation();
