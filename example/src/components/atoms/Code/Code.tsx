@@ -7,6 +7,7 @@ import styled from 'styled-components/macro';
 
 interface IProps extends FCProps {
   children: string,
+  wrapLongLines?: boolean,
   language?: 'typescript'|'javascript'|'bash',
 }
 
@@ -16,11 +17,13 @@ interface IProps extends FCProps {
  * ref: https://react-syntax-highlighter.github.io/react-syntax-highlighter/demo/
  * @param className
  * @param children
+ * @param wrapLongLines
  * @param language
  */
 const Code = ({
     className,
     children= '',
+    wrapLongLines = true,
     language = 'typescript'
 }: IProps) => {
 
@@ -28,6 +31,7 @@ const Code = ({
     >
         <SyntaxHighlighter
             language={language}
+            wrapLongLines={wrapLongLines}
             style={style}
         >
             {children.replace(/^\s+|\s+$/g, '')}
@@ -42,4 +46,6 @@ export default memo(Code);
 
 const CodeRoot = styled.div`
   margin-bottom: 20px;
+  font-size: 14px;
+  white-space: pre-wrap;
 `;

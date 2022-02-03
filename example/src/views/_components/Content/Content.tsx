@@ -70,7 +70,7 @@ font-size: 17px;
 
 
 export const SubTitle = styled.h2`
-  font-size: 2rem;
+  font-size: 1.8rem;
   color: rgb(245, 246, 247);
   margin-block-start: 0;
     margin-block-end: 0;
