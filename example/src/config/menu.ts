@@ -8,11 +8,6 @@ export interface IMenu {
 
 
 export const menu: IMenu[] = [
-
-    {
-        name: 'Props Try',
-        href: '/',
-    },
     {
         name: 'About',
         href: '/about',
@@ -29,6 +24,10 @@ export const menu: IMenu[] = [
     //     name: 'Class Name',
     //     href: '/class-name',
     // },
+    {
+        name: 'Props Try',
+        href: '/props-try',
+    },
     {
         name: 'Feature',
         children: [

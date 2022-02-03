@@ -1,5 +1,5 @@
 import React from 'react';
-import {Switch, Route} from 'react-router-dom';
+import {Switch, Route, Redirect} from 'react-router-dom';
 
 // Main
 import NotFound from 'views/NotFound';
@@ -23,6 +23,7 @@ const Router = () => {
         <Switch>
             <Route path="/installation" children={<Installation/>} />
             <Route path="/about" children={<About/>} />
+          <Route path="/props-try" children={<PropsTry/>} />
 
             <Route path="/feature/centered" children={<Centered/>} />
             <Route path="/feature/auto-width" children={<AutoWidth/>} />
@@ -33,7 +34,7 @@ const Router = () => {
             <Route path="/example/vip-level-list" children={<VipLevelList/>} />
             <Route path="/example/auto-play-progress" children={<AutoPlayProgress/>} />
 
-            <Route path="/" children={<PropsTry/>} />
+            <Route path="/" children={<Redirect to="/about"/>} />
 
 
             <Route path="*" children={<NotFound/>}/>

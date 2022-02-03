@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect} from 'react';
 import styled from 'styled-components/macro';
-import {Container} from 'bear-styled-grid';
+import {Container, media} from 'bear-styled-grid';
 import {useSidebar} from 'App/SidebarProvider';
 import HamburgerMenu from 'components/atoms/HamburgerMenu';
 import Logo from 'components/atoms/Logo';
@@ -38,8 +38,8 @@ const Navbar = () => {
                 <Name>Bear Carousel</Name>
             </NavbarBrand>
 
-            <NavbarNav className="ml-auto my-0 d-md-flex">
-                <NavItem className="d-none d-md-flex">
+            <NavbarNav className="ml-auto my-0 d-none d-sm-flex">
+                <NavItem className="d-none d-sm-flex">
                     <NavLink href="#!" isActive>Docs</NavLink>
                 </NavItem>
                 <NavItem>
@@ -108,7 +108,7 @@ const NavbarNav = styled.ul`
 const NavbarBrand = styled.div`
   padding-top: 0.3125rem;
     padding-bottom: 0.3125rem;
-    margin-right: 1rem;
+    margin-right: 0;
     text-decoration: none;
     white-space: nowrap;
     
@@ -117,6 +117,10 @@ const NavbarBrand = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
+    
+    ${media.sm`
+        margin-right: 1rem;
+    `}
     
 `;
 
