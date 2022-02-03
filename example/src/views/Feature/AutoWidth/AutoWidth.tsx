@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
 import BearCarousel, {SlideItem, TSlideItemDataList} from 'bear-carousel';
 import Code from 'components/atoms/Code';
-import Content, {SubTitle} from '../../_components/Content';
 import {diffRatioImages as images} from 'config/images';
+
+// Components
+import Content, {SubTitle} from '../../_components/Content';
 
 
 // 輪播項目

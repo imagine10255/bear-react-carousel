@@ -30,6 +30,7 @@ const About = () => {
             <Li>Using Flexbox, don't write width in inline style</Li>
             <Li>Conditional limit re-rendering</Li>
             <Li>Make sure BearCarousel mounts, but the image data is showing problems due to slow loading of asynchronous data</Li>
+            <Li>不需要管高度和定義項目樣式, 提供現成的項目元件, 只需要設定比例進去</Li>
         </Ul>
         <SubTitle>some advices</SubTitle>
         <Ul>
