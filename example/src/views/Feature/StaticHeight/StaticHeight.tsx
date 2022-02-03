@@ -21,15 +21,15 @@ const carouselData = images.map(row => {
 
 
 /**
- * AutoHeight
+ * StaticHeight
  */
-const AutoHeight = () => {
+const StaticHeight = () => {
     const [isLoadData, setIsLoadData] = useState<boolean>(true);
 
 
 
     return <Content
-        title="Auto Height"
+        title="Static Height"
         desc="Use the height of the image itself"
         isLoadData={isLoadData}
         onLoadData={setIsLoadData}
@@ -76,7 +76,7 @@ const carouselData = images.map(row => {
     </Content>;
 };
 
-export default AutoHeight;
+export default StaticHeight;
 
 
 const CarouselBox = styled.div`

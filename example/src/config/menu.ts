@@ -40,8 +40,8 @@ export const menu: IMenu[] = [
                 href: '/feature/auto-width'
             },
             {
-                name: 'Auto Height',
-                href: '/feature/auto-height'
+                name: 'Static Height',
+                href: '/feature/static-height'
             },
             {
                 name: 'Breakpoints',
