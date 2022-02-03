@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import styled from 'styled-components/macro';
-import BearCarousel, {ICarouselData} from 'bear-carousel';
+import BearCarousel, {ICarouselData, SliderItem} from 'bear-carousel';
 import Code from 'components/atoms/Code';
 import Content, {SubTitle} from '../../_components/Content';
 import {racingImages as images} from 'config/images';
@@ -9,16 +9,10 @@ import {racingImages as images} from 'config/images';
 
 
 // 輪播項目
-const carouselData: ICarouselData[] = images.map(row => {
+const sliderItemData: ICarouselData[]  = images.map(row => {
     return {
         key: row.id,
-        children: <div
-            style={{
-                background: 'center',
-                backgroundImage: `url(${row.image})`,
-                backgroundSize: '100%',
-                aspectRatio: '16 / 9',
-            }}/>
+        children: <SliderItem imageUrl={row.image}/>
     };
 });
 
@@ -36,16 +30,17 @@ const Centered = () => {
         isLoadData={isLoadData}
         onLoadData={setIsLoadData}
     >
-        <CarouselBox className="mb-4">
+        <div className="mb-4">
             <BearCarousel
-                data={isLoadData ? carouselData: []}
+                data={isLoadData ? sliderItemData: []}
                 slidesPerView={3}
                 spaceBetween={10}
                 isEnableMouseMove
                 isEnablePagination
                 isCenteredSlides
+                aspectRatio={{widthRatio: 32, heightRatio: 9}}
             />
-        </CarouselBox>
+        </div>
 
         <SubTitle>Source Code</SubTitle>
         <Code language="typescript">

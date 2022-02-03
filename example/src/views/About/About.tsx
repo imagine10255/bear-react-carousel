@@ -41,6 +41,10 @@ const About = () => {
             <Li>當你使用 auto 模式時, 你必須自訂外容器並指定高度, 因為position absolute overflow-x:hidden 無法只限制 x 軸, 若不使用 absolute, 則項目會將外容器100%擠開</Li>
             <Li>When you use auto mode, you must customize the outer container and specify the height, because position absolute overflow-x:hidden cannot limit only the x-axis, if you do not use absolute, the item will squeeze the outer container 100% away</Li>
             <Li>如果你想在輪播圖上面加上點擊連結, 建議使用額外的按鈕, 因為滑動功能會觸發開啟, 導致體驗會很糟糕。</Li>
+            <Li>由外容器決定內容器大小, 可避免非同步載入時 的瞬間有高度而產生的畫面跳動</Li>
+            <Li>img 標籤只有在自動寬度模式才使用, 因為是固定高度, 寬度auto</Li>
+            <Li>懶加載模式時, 判斷 SliderItem 是否在畫面中(如果可以, 提前一個項目預載入) </Li>
+            <Li>其他則使用 background 模式, 並且 可以在內容加上 文字 (or 文字動畫效果)</Li>
         </Ul>
     </Content>;
 };

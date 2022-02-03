@@ -26,6 +26,7 @@ const setting: TCarouselSetting = {
     isEnableLoop: true,
     autoPlayTime: 5000,
     isEnableAutoPlay: true,
+    aspectRatio: {widthRatio: 32, heightRatio: 9},
     renderNavButton: (toPrev, toNext) => (
         <PaginateGroup className={elClassName.navGroup}>
             <Container>

@@ -128,6 +128,16 @@
     position: relative;
 }
 
+.bear-carousel__slide-item-img{
+    max-width: 100%;
+    height: 100%;
+}
+
+.bear-carousel__slide-item-div{
+    width: 100%;
+    height: 100%;
+    background: no-repeat center;
+}
 
 
 

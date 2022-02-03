@@ -14,7 +14,7 @@ const carouselData = images.map(row => {
                 background: 'center',
                 backgroundImage: `url(${row.image})`,
                 backgroundSize: '100%',
-                aspectRatio: '32 / 9',
+                height: '100%',
             }}/>
     };
 });
@@ -40,6 +40,7 @@ const AutoHeight = () => {
                 slidesPerView={1}
                 isEnableNavButton
                 isEnablePagination
+                aspectRatio={{widthRatio: 32, heightRatio: 9}}
             />
         </CarouselBox>
 

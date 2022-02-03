@@ -44,10 +44,6 @@ export const menu: IMenu[] = [
                 href: '/feature/auto-height'
             },
             {
-                name: 'Use Background',
-                href: '/feature/use-background'
-            },
-            {
                 name: 'Breakpoints',
                 href: '/feature/breakpoints'
             }

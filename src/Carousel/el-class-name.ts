@@ -6,6 +6,8 @@ export default {
     content: 'bear-carousel__content',
     carouselContainer: 'bear-carousel__container',
     slideItem: 'bear-carousel__slide-item',
+    slideItemImg: 'bear-carousel__slide-item-img',
+    slideItemDiv: 'bear-carousel__slide-item-div',
     navGroup: 'bear-carousel__nav-group',
     navPrevButton: 'bear-carousel__nav-prev-button',
     navNextButton: 'bear-carousel__nav-next-button',

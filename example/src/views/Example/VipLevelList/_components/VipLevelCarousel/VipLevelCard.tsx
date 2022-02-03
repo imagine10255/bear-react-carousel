@@ -1,5 +1,5 @@
 import styled, {css} from 'styled-components/macro';
-import React, {ReactNode} from 'react';
+import React from 'react';
 import {media} from 'bear-styled-grid';
 
 import {uuid} from 'bear-jsutils/key';
