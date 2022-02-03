@@ -53,18 +53,33 @@ export function getMediaSetting(setting: IBreakpointSetting, breakpoints: IProps
  */
 export function getMediaInfo(props: ICarouselProps): {rwdMedia: IBreakpointSettingActual, info: IInfo} {
 
-    const {data, breakpoints, slidesPerGroup, slidesPerView, spaceBetween, isEnableLoop, isEnableNavButton, isEnableMouseMove, isEnablePagination, isEnableAutoPlay, isCenteredSlides} = props;
+    const {
+        data,
+        breakpoints,
+
+        slidesPerView,
+        slidesPerGroup,
+        aspectRatio,
+        spaceBetween,
+        isCenteredSlides,
+        isEnableNavButton,
+        isEnablePagination,
+        isEnableMouseMove,
+        isEnableAutoPlay,
+        isEnableLoop,
+    } = props;
 
     const rwdMedia = getMediaSetting({
         slidesPerView: typeof slidesPerView === 'number' && slidesPerView <= 0 ? 1: slidesPerView,
         slidesPerGroup: slidesPerGroup,
+        aspectRatio: aspectRatio,
         spaceBetween: spaceBetween,
         isCenteredSlides: isCenteredSlides,
-        isEnableLoop: isEnableLoop,
         isEnableNavButton: isEnableNavButton,
         isEnablePagination: isEnablePagination,
         isEnableMouseMove: isEnableMouseMove,
         isEnableAutoPlay: isEnableAutoPlay,
+        isEnableLoop: isEnableLoop,
     }, breakpoints);
 
 
@@ -86,15 +101,6 @@ export function getMediaInfo(props: ICarouselProps): {rwdMedia: IBreakpointSetti
     const actualMinIndex = 0;
     const actualMaxIndex = elementTotal - 1;
 
-    // if (rwdMedia.slidesPerGroup > rwdMedia.slidesPerViewActual) {
-    //     // throw Error(
-    //     //     `slidesPerGroup(${rwdMedia.slidesPerGroup}) can't > slidesPerView(${rwdMedia.slidesPerViewActual})`
-    //     // );
-    // } else if (Math.ceil(rwdMedia.slidesPerGroup) !== rwdMedia.slidesPerGroup) {
-    //     throw Error(
-    //         `slidesPerGroup(${rwdMedia.slidesPerGroup}) can't has floating .xx`
-    //     );
-    // }
 
     let fakeTotalPage = Math.ceil(sourceTotal / rwdMedia.slidesPerGroup);
     if(!rwdMedia.isEnableLoop && rwdMedia.slidesPerView !== 'auto' && !rwdMedia.isCenteredSlides){

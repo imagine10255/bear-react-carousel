@@ -78,9 +78,15 @@ export interface ICarouselData {
   children: ReactNode
 }
 
+export interface IAspectRatio {
+  widthRatio: number,
+  heightRatio: number,
+}
+
 export interface IBreakpointSetting {
   slidesPerView: TSlidesPerView
   slidesPerGroup: number
+  aspectRatio?: IAspectRatio
   spaceBetween: number
   isCenteredSlides: boolean
   isEnableLoop: boolean

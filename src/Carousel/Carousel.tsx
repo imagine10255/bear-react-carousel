@@ -70,6 +70,7 @@ class Carousel extends React.Component<ICarouselProps, IState> {
   rwdMedia: IBreakpointSettingActual = {
       slidesPerView: 1,
       slidesPerViewActual: 1,
+      aspectRatio: undefined,
       slidesPerGroup: 1,
       spaceBetween: 0,
       isCenteredSlides: false,
@@ -714,6 +715,11 @@ class Carousel extends React.Component<ICarouselProps, IState> {
 
 
       // 產生需要的樣式 (注意結尾符號 ;)
+      const rootStyle: string = [
+          `padding-top: ${isNotEmpty(this.rwdMedia.aspectRatio) ? `calc(100% * (${this.rwdMedia.aspectRatio?.heightRatio} / ${this.rwdMedia.aspectRatio?.widthRatio}));`: '0;'}`,
+      ].join('');
+
+      // 產生需要的樣式 (注意結尾符號 ;)
       const slideItemStyle: string = [
           `flex: ${this.rwdMedia.slidesPerView === 'auto' ? '0 0 auto' : `1 0 ${100 / this.rwdMedia.slidesPerViewActual}%`};`,
           `padding-left: ${this.rwdMedia.spaceBetween / 2}px;`,
@@ -725,12 +731,15 @@ class Carousel extends React.Component<ICarouselProps, IState> {
           <div
               data-carousel-id={this._carouselId}
               style={style}
-              className={[className, elClassName.root].join(' ')}
+              className={[className, elClassName.root].join(' ').trim()}
               ref={this.rootRef}
           >
 
               {/* Item CSS 樣式 */}
-              <style scoped>{`.${elClassName.root}[data-carousel-id="${this._carouselId}"] .${elClassName.slideItem}{${slideItemStyle}}`}</style>
+              <style scoped>{`
+.${elClassName.root}[data-carousel-id="${this._carouselId}"]{${rootStyle}}
+.${elClassName.root}[data-carousel-id="${this._carouselId}"] .${elClassName.slideItem}{${slideItemStyle}}
+              `}</style>
 
               {/* 左右導航按鈕 */}
               {this.info.isVisibleNavButton && this._renderNavButton()}
