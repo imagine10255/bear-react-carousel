@@ -49,7 +49,7 @@ export interface IFormData {
  * Props Try
  */
 const PropsTry = () => {
-  const [isLoadData, setIsLoadData] = useState<boolean>(true);
+    const [isLoadData, setIsLoadData] = useState<boolean>(true);
 
     const [carousel, setCarousel] = useState<ICarouselObj>();
 

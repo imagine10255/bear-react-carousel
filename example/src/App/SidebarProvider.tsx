@@ -1,8 +1,14 @@
 import React, {useCallback, useContext, useState} from 'react';
 
 
-interface IContext {isExpend: boolean, toggleExpend: () => void}
+/**
+ * Type
+ */
+interface IContext {isExpend: boolean, toggleExpend: (isExpend?: boolean) => void}
 
+/**
+ * State
+ */
 const isExpend = false;
 
 export const StoreContext = React.createContext<IContext>({
@@ -10,17 +16,30 @@ export const StoreContext = React.createContext<IContext>({
     toggleExpend: () => {}
 });
 
-export const useSidebar = () => useContext(StoreContext);
+/**
+ * Hook
+ * @param isExpend
+ */
+export const useSidebar = (isExpend?: boolean) => useContext(StoreContext);
 
 
+/**
+ * Provider
+ * @param children
+ * @constructor
+ */
 export const SidebarProvider = ({
     children
 }: FCChildrenProps) => {
     const [isExpend, setIsExpend] = useState<boolean>(false);
 
-    const toggleExpend = useCallback(() => {
-        setIsExpend(prev => !prev);
-
+    const toggleExpend = useCallback((targetIsExpend) => {
+        setIsExpend(prev => {
+            if(typeof targetIsExpend !== 'undefined'){
+                return targetIsExpend;
+            }
+            return !prev;
+        });
     }, []);
 
     return (

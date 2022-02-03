@@ -1,5 +1,6 @@
 import {useEffect} from 'react';
 import {useLocation} from 'react-router-dom';
+import {useSidebar} from '../../../App/SidebarProvider';
 
 
 /**
@@ -7,8 +8,11 @@ import {useLocation} from 'react-router-dom';
  */
 const AutoScrollTop = () => {
     const {pathname} = useLocation();
+    const {toggleExpend} = useSidebar();
+
     useEffect(() => {
         window.scrollTo(0, 0);
+        toggleExpend(false);
 
     }, [pathname]);
 
