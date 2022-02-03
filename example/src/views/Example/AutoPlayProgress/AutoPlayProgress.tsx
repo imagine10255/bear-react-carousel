@@ -45,7 +45,7 @@ const AutoPlayProgress = () => {
                 isEnableLoop
                 autoPlayTime={autoPlayTime}
                 isEnableAutoPlay
-                aspectRatio={{widthRatio: 32, heightRatio: 9}}
+                aspectRatio={{widthRatio: 16, heightRatio: 9}}
                 renderNavButton={(toPrev, toNext) => {
                     return (
                         <div className={elClassName.navGroup}>
@@ -57,6 +57,11 @@ const AutoPlayProgress = () => {
                             </button>
                         </div>
                     );
+                }}
+                breakpoints={{
+                    1200: {
+                        aspectRatio: {widthRatio: 32, heightRatio: 9}
+                    }
                 }}
             />
         </CarouselBox>

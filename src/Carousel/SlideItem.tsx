@@ -6,6 +6,7 @@ import {useCarousel} from './CarouselProvider';
 interface IProps {
   className?: string,
   style?: CSS.Properties,
+  as?: 'image'|'card',
   imageUrl?: string,
   imageSize?: '100%'|'cover',
   children?: ReactNode,
@@ -14,13 +15,14 @@ interface IProps {
 const SlideItem = ({
     className,
     style,
+    as = 'image',
     imageUrl,
     imageSize= 'cover',
     children,
 }: IProps) => {
     const {slidesPerView} = useCarousel();
 
-    if(slidesPerView === 'auto'){
+    if(as === 'image' && slidesPerView === 'auto'){
         return <img
             style={style}
             className={[className, elClassName.slideItemImg].join(' ').trim()}

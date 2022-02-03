@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled, {css, keyframes} from 'styled-components/macro';
 import Content, {SubTitle} from '../../_components/Content';
 import VipLevelCarousel from './_components/VipLevelCarousel';
+
 
 const vipData = new Array(12).fill('').map((row, index) => {
     return {
@@ -15,34 +16,29 @@ const vipData = new Array(12).fill('').map((row, index) => {
 });
 
 
-
-
 /**
  * Vip Level List
  */
 const VipLevelList = () => {
+    const [isLoadData, setIsLoadData] = useState<boolean>(true);
 
     return <Content
         title="Vip Level List"
         desc="Multi card and control page"
+        isLoadData={isLoadData}
+        onLoadData={setIsLoadData}
     >
-        <CarouselBox className="mb-4 mb-lg-5">
+        <div className="mb-4 mb-lg-5">
             <VipLevelCarousel
                 activeLevel={2}
-                data={vipData}
+                data={isLoadData ? vipData: []}
             />
-        </CarouselBox>
+        </div>
 
 
     </Content>;
 };
 
 export default VipLevelList;
-
-
-const CarouselBox = styled.div`
-    
-
-`;
 
 
