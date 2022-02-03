@@ -25,9 +25,9 @@ const Content = ({
             </Col>
 
             {onLoadData && (
-                <Col col={EColType.auto}>
-                    <Flex horizontal={ERowAlign.end}>
-                        <Label>
+                <Col col={24} lg={EColType.auto}>
+                    <Flex className="align-items-lg-end">
+                        <Label className="mb-2 mb-lg-0">
                             <LabelText>Load Data</LabelText>
                             <SwitchControl
                                 onChange={onLoadData}

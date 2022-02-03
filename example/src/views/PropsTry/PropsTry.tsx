@@ -1,13 +1,13 @@
 import React, {ReactNodeArray, useCallback, useState} from 'react';
 import styled from 'styled-components/macro';
-import {Col, Container, EColType, Row} from 'bear-styled-grid';
+import {Col, Container, EColType, Flex, Row} from 'bear-styled-grid';
 import Carousel, {ICarouselObj, ICarouselData} from 'bear-carousel';
 import {anyToNumber} from 'bear-jsutils/convert';
 
 
 import {Controller, useForm} from 'react-hook-form';
 import {TextAreaField, TextField, SwitchControl} from 'bear-components/forms';
-import {FormHorizontalGroup} from 'bear-components/atoms';
+import {FormHorizontalGroup, Button} from 'bear-components/atoms';
 import Content from 'views/_components/Content';
 import {racingImages as images} from 'config/images';
 // import {catImages as images} from 'config/images';
@@ -101,11 +101,11 @@ const PropsTry = () => {
 
         if(pageTotal > 0){
             pageEls = new Array(pageTotal).fill('').map((row, index) => {
-                return <button key={`page_${index}`}
-                    type="button"
+                return <Button color="primary" key={`page_${index}`}
+                    className="m-1"
                     onClick={() => handleGoPage(index + 1)}>
                     {index + 1}
-                </button>;
+                </Button>;
             });
         }
 
@@ -158,14 +158,12 @@ const PropsTry = () => {
         </CarouselBox>
 
         <Row className="mb">
-            <Col lg={24} xl>
-                <FormHorizontalGroup label="ControlPage">
-                    {renderPageControl()}
-                </FormHorizontalGroup>
+            <Col lg={24} xl={12}>
+                {renderPageControl()}
 
                 <Row>
 
-                    <Col lg={12}>
+                    <Col md={12}>
                         <FormHorizontalGroup label="isMount" labelCol={12} formCol={12}>
                             <Controller
                                 control={control}
@@ -181,7 +179,7 @@ const PropsTry = () => {
                         </FormHorizontalGroup>
 
                     </Col>
-                    <Col lg={12}>
+                    <Col md={12}>
                         <FormHorizontalGroup label="isDebug" labelCol={12} formCol={12}>
                             <Controller
                                 control={control}
@@ -197,7 +195,7 @@ const PropsTry = () => {
                         </FormHorizontalGroup>
 
                     </Col>
-                    <Col lg={12}>
+                    <Col md={12}>
                         <FormHorizontalGroup label="isEnableLoop" labelCol={12} formCol={12}>
                             <Controller
                                 control={control}
@@ -213,7 +211,7 @@ const PropsTry = () => {
                         </FormHorizontalGroup>
 
                     </Col>
-                    <Col lg={12}>
+                    <Col md={12}>
                         <FormHorizontalGroup label="isEnablePagination"  labelCol={12} formCol={12}>
                             <Controller
                                 control={control}
@@ -229,7 +227,7 @@ const PropsTry = () => {
                         </FormHorizontalGroup>
 
                     </Col>
-                    <Col lg={12}>
+                    <Col md={12}>
                         <FormHorizontalGroup label="isEnableNavButton" labelCol={12} formCol={12}>
                             <Controller
                                 control={control}
@@ -246,7 +244,7 @@ const PropsTry = () => {
 
 
                     </Col>
-                    <Col lg={12}>
+                    <Col md={12}>
                         <FormHorizontalGroup label="isEnableMouseMove" labelCol={12} formCol={12}>
                             <Controller
                                 control={control}
@@ -262,7 +260,7 @@ const PropsTry = () => {
                         </FormHorizontalGroup>
 
                     </Col>
-                    <Col lg={12}>
+                    <Col md={12}>
                         <FormHorizontalGroup label="isEnableAutoPlay" labelCol={12} formCol={12}>
                             <Controller
                                 control={control}
@@ -278,7 +276,7 @@ const PropsTry = () => {
                         </FormHorizontalGroup>
 
                     </Col>
-                    <Col lg={12}>
+                    <Col md={12}>
                         <FormHorizontalGroup label="slidesPerView" labelCol={12} formCol={12}>
                             <Controller
                                 control={control}
@@ -294,7 +292,7 @@ const PropsTry = () => {
                         </FormHorizontalGroup>
 
                     </Col>
-                    <Col lg={12}>
+                    <Col md={12}>
                         <FormHorizontalGroup label="slidesPerGroup" labelCol={12} formCol={12}>
                             <Controller
                                 control={control}
@@ -310,7 +308,7 @@ const PropsTry = () => {
                         </FormHorizontalGroup>
 
                     </Col>
-                    <Col lg={12}>
+                    <Col md={12}>
                         <FormHorizontalGroup label="spaceBetween" labelCol={12} formCol={12}>
                             <Controller
                                 control={control}
@@ -326,7 +324,7 @@ const PropsTry = () => {
                         </FormHorizontalGroup>
 
                     </Col>
-                    <Col lg={12}>
+                    <Col md={12}>
                         <FormHorizontalGroup label="autoPlayTime" labelCol={12} formCol={12}>
                             <Controller
                                 control={control}
@@ -341,7 +339,7 @@ const PropsTry = () => {
                         </FormHorizontalGroup>
 
                     </Col>
-                    <Col lg={12}>
+                    <Col md={12}>
                         <FormHorizontalGroup label="moveTime" labelCol={12} formCol={12}>
                             <Controller
                                 control={control}
@@ -375,7 +373,7 @@ const PropsTry = () => {
 
 
             </Col>
-            <Col lg={24} xl={EColType.auto}>
+            <Col lg={24} xl>
                 <TextAreaField id="console"/>
 
             </Col>
@@ -395,12 +393,12 @@ const PageControlBox = styled.div`
   border: 1px dotted #00a3e0;
   width: auto;
   display: flex;
+  flex-wrap: wrap;
   color: #fff;
-  height: 39px;
+  margin-bottom: 20px;
+  //height: 39px;
 
-  button{
-    margin: 0 5px;
-  }
+
   
 `;
 
