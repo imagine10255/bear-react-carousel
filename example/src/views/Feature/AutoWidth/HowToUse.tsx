@@ -14,19 +14,17 @@ const HowToUse = () => {
             {`
 import BearCarousel, {SlideItem, TSlideItemDataList} from 'bear-carousel';
 
-const carouselData = images.map(row => {
+const slideItemData: TSlideItemDataList = images.map(row => {
     return {
         key: row.id,
-        children: <img className="img-fluid" src={row.image}/>
+        children: <SlideItem imageUrl={row.image}/>
     };
 });
 
 <BearCarousel
-    data={carouselData}
-    slidesPerView={1}
+    data={slideItemData}
+    slidesPerView="auto"
     staticHeight="200px"
-    isEnableNavButton
-    isEnablePagination
 />
 
         `}

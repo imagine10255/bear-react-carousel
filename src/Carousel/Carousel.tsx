@@ -723,7 +723,7 @@ class Carousel extends React.Component<ICarouselProps, IState> {
 
       // 產生需要的樣式 (注意結尾符號 ;)
       const slideItemStyle: string = [
-          `flex: ${this.rwdMedia.slidesPerView === 'auto' ? '0 0 auto' : `1 0 ${100 / this.rwdMedia.slidesPerViewActual}%`};`,
+          `flex: ${this.rwdMedia.slidesPerView === 'auto' ? '0 0 auto;-webkit-flex: 0 0 auto;' : `1 0 ${100 / this.rwdMedia.slidesPerViewActual}%`};`,
           `padding-left: ${this.rwdMedia.spaceBetween / 2}px;`,
           `padding-right: ${this.rwdMedia.spaceBetween / 2}px;`,
       ].join('');

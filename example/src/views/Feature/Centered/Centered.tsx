@@ -4,6 +4,7 @@ import BearCarousel, {TSlideItemDataList, SlideItem} from 'bear-carousel';
 import Code from 'components/atoms/Code';
 import Content, {SubTitle} from '../../_components/Content';
 import {racingImages as images} from 'config/images';
+import HowToUse from './HowToUse';
 
 
 
@@ -35,41 +36,13 @@ const Centered = () => {
                 data={isLoadData ? SlideItemData: []}
                 slidesPerView={3}
                 spaceBetween={10}
-                isEnableMouseMove
-                isEnablePagination
                 isCenteredSlides
                 aspectRatio={{widthRatio: 32, heightRatio: 9}}
             />
         </div>
 
-        <SubTitle>Source Code</SubTitle>
-        <Code language="typescript">
-            {`
-
-<BearCarousel
-    data={carouselData}
-    slidesPerView={4}
-    spaceBetween={10}
-    isEnableMouseMove
-    isEnablePagination
-    isCenteredSlides
-/>
-       `}
-        </Code>
-
+        <HowToUse/>
     </Content>;
 };
 
 export default Centered;
-
-
-const CarouselBox = styled.div`
-  height: 200px;
-  display: block;
-  overflow: hidden;
- 
-`;
-
-
-
-
