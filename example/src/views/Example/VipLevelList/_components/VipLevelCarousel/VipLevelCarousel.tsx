@@ -14,7 +14,7 @@ interface IProps extends FCProps{
     data: Array<
         {
             level: number,
-            depositAmount: number,
+            totalAmount: number,
             rule: IRules[],
         }
     >,
@@ -48,7 +48,7 @@ const VipLevelCarousel = ({
                 <VipLevelCard
                     rules={row.rule}
                     levelName={`LV ${row.level}`}
-                    depositAmount={row.depositAmount}
+                    totalAmount={row.totalAmount}
                     isActive={Number(activeLevel) === Number(row.level)}
                 />
             </SlideItem>)

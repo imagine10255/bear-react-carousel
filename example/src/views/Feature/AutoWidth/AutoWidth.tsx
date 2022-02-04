@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import BearCarousel, {SlideItem, TSlideItemDataList} from 'bear-carousel';
-import {diffRatioImages as images} from 'config/images';
+import {diffImages as images} from 'config/images';
 
 // Components
 import Content from '../../_components/Content';

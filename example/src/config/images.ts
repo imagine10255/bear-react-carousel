@@ -19,16 +19,16 @@ export const catImages = [
 ];
 
 
-export const diffRatioImages = [
-    {id: 2, image: './static/sample/flower/auto-01.jpg'},
-    {id: 1, image: './static/sample/flower/01.jpg'},
-    {id: 4, image: './static/sample/flower/04.jpg'},
-    {id: 3, image: './static/sample/flower/auto-02.jpg'},
-    {id: 5, image: './static/sample/flower/05.jpg'},
-    {id: 6, image: './static/sample/flower/06.jpg'},
-    {id: 7, image: './static/sample/flower/07.jpg'},
-    {id: 8, image: './static/sample/flower/08.jpg'},
-    {id: 9, image: './static/sample/flower/09.jpg'},
+export const diffImages = [
+    {id: 2, image: './static/sample/cat/vertical-01.jpg'},
+    {id: 1, image: './static/sample/cat/01.jpg'},
+    {id: 4, image: './static/sample/cat/02.jpg'},
+    {id: 3, image: './static/sample/cat/vertical-02.jpg'},
+    {id: 5, image: './static/sample/cat/03.jpg'},
+    {id: 6, image: './static/sample/cat/vertical-03.jpg'},
+    {id: 7, image: './static/sample/cat/04.jpg'},
+    {id: 8, image: './static/sample/cat/vertical-04.jpg'},
+    {id: 9, image: './static/sample/cat/05.jpg'},
 ];
 
 

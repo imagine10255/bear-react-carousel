@@ -9,26 +9,8 @@ import {Controller, useForm} from 'react-hook-form';
 import {TextAreaField, TextField, SwitchControl} from 'bear-components/forms';
 import {FormHorizontalGroup, Button} from 'bear-components/atoms';
 import Content from 'views/_components/Content';
-import {racingImages as images} from 'config/images';
-// import {catImages as images} from 'config/images';
+import {catImages as images} from 'config/images';
 
-const Bg = styled.div`
-    background: center no-repeat;
-    background-size: 100%;
-    height: 100%;
-`;
-
-// const carouselData: TSlideItemDataList = images.map(row => {
-//     return {
-//         key: row.id,
-//         children: <Bg
-//             style={{
-//                 backgroundImage: `url(${row.image})`,
-//             }}
-//         />
-//     };
-// });
-//
 
 const SlideItemData: TSlideItemDataList = images.map(row => {
     return {

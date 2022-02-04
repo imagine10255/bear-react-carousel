@@ -8,10 +8,10 @@ import {useSidebar} from 'App/SidebarProvider';
 
 
 const renderMenu = (rows: IMenu[], lv = 1, pathname = ''): ReactNodeArray => {
-    return rows.map(row => {
+    return rows.map((row, index) => {
         const isActive = row?.href ? pathname.startsWith(row?.href): false;
 
-        return <Fragment key={row.href}>
+        return <Fragment key={`sidebar__menu-${index}`}>
             <MenuItem lv={lv} isActive={isActive}>
                 {row.href ?
                     <MenuLink to={row.href}>{row.name}</MenuLink> :

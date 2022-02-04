@@ -7,10 +7,10 @@ import VipLevelCarousel from './_components/VipLevelCarousel';
 const vipData = new Array(12).fill('').map((row, index) => {
     return {
         level: index,
-        depositAmount: 100 * index,
+        totalAmount: 100 * index,
         rule: [
-            {title: 'deposit', value: 200 * index, hasUpTo: true,},
-            {title: 'cash out', value: 120 * index, hasUpTo: true,}
+            {title: 'Rem', value: 200 * index, hasUpTo: true,},
+            {title: 'Cache', value: 120 * index, hasUpTo: true,}
         ],
     };
 });

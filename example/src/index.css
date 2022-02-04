@@ -47,6 +47,9 @@ code {
   display: flex;
 }
 
+.filter-blur{
+  filter: blur(4px);
+}
 
 #console{
   /*position: fixed;*/

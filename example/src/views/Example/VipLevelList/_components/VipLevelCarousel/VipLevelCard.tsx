@@ -18,7 +18,7 @@ interface IProps extends FCProps{
     className?: string,
     isActive?: boolean,
     levelName: string,
-    depositAmount: number,
+    totalAmount: number,
     rules?: IRules[],
 }
 
@@ -28,7 +28,7 @@ interface IProps extends FCProps{
 const VipLevelCard = ({
     isActive = false,
     levelName,
-    depositAmount,
+    totalAmount,
     rules = [],
 }: IProps) => {
 
@@ -36,11 +36,11 @@ const VipLevelCard = ({
         <VipLevelCardRoot data-active={isActive}>
             <VipLevelContent>
                 <VipLevelName>{levelName}</VipLevelName>
-                {rules.map(row => {
+                {rules.map((row, index) => {
                     const value = row.value;
 
                     return (
-                        <VipLevelItem key={`level_${levelName}`}>
+                        <VipLevelItem key={`vipLevelCard__level-${index}`}>
                             <ItemInner>
                                 <ItemTitle>{row.title}</ItemTitle>
 
@@ -59,7 +59,7 @@ const VipLevelCard = ({
                 <VipLevelItem>
                     <ItemInner>
                         <ItemTitle>Amount</ItemTitle>
-                        <ItemValue>{(isEmpty(depositAmount) || depositAmount === 0) ? 'Free' : `$${formatCurrency(depositAmount, false)}`}</ItemValue>
+                        <ItemValue>{(isEmpty(totalAmount) || totalAmount === 0) ? 'Free' : `$${formatCurrency(totalAmount, false)}`}</ItemValue>
                     </ItemInner>
                 </VipLevelItem>
             </VipLevelFooter>

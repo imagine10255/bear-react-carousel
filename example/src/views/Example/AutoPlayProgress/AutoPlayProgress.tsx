@@ -14,7 +14,7 @@ const slideItemData: TSlideItemDataList  = images.map(row => {
     return {
         key: row.id,
         paginationContent: <>{row.name}</>,
-        children: <SlideItem imageUrl={row.image}/>
+        children: <SlideItem imageUrl={row.image} className="filter-blur"/>
     };
 });
 const autoPlayTime = 5000;

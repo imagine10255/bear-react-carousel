@@ -3,7 +3,7 @@ import styled from 'styled-components/macro';
 import BearCarousel, {SlideItem, TSlideItemDataList} from 'bear-carousel';
 import Content, {SubTitle} from '../../_components/Content';
 import ImportantNote from 'components/atoms/ImportantNote ';
-import {racingImages as images} from 'config/images';
+import {catImages as images} from 'config/images';
 import HowToUse from './HowToUse';
 
 // 輪播項目

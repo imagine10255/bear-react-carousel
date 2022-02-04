@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import BearCarousel, {TSlideItemDataList, SlideItem} from 'bear-carousel';
-import {racingImages as images} from 'config/images';
+import {catImages as images} from 'config/images';
 
 // Components
 import Content from '../../_components/Content';

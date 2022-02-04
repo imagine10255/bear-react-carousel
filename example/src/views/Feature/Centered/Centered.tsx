@@ -1,11 +1,10 @@
 import React, {useState} from 'react';
-import styled from 'styled-components/macro';
 import BearCarousel, {TSlideItemDataList, SlideItem} from 'bear-carousel';
-import Code from 'components/atoms/Code';
-import Content, {SubTitle} from '../../_components/Content';
-import {racingImages as images} from 'config/images';
+import {catImages as images} from 'config/images';
 import HowToUse from './HowToUse';
 
+// Components
+import Content from '../../_components/Content';
 
 
 
