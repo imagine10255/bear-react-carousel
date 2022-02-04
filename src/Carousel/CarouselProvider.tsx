@@ -1,46 +1,50 @@
-import React, {ReactNode, useCallback, useContext, useEffect, useState} from 'react';
-import {enableBodyScroll, disableBodyScroll} from 'bear-jsutils/bodyScroll';
+import React, {ReactNode, useContext} from 'react';
 import {TSlidesPerView} from './types';
-import CSS from 'csstype';
 
 
 /**
  * Type
  */
-interface IContext {slidesPerView: TSlidesPerView}
+interface IState {
+    slidesPerView: TSlidesPerView,
+    staticHeight?: string,
+}
 
 /**
  * State
  */
-const slidesPerView = 1;
+const state: IState = {
+    slidesPerView: 1,
+    staticHeight: undefined,
+};
 
-export const StoreContext = React.createContext<IContext>({
-    slidesPerView,
-});
+export const StoreContext = React.createContext<IState>(state);
 
 /**
- * Hook
+ * useContext Hook
  */
 export const useCarousel = () => useContext(StoreContext);
 
-interface IProps {
-    slidesPerView: TSlidesPerView
+
+interface IProps extends IState{
     children: ReactNode,
 }
 
 /**
  * Provider
  * @param slidesPerView
+ * @param staticHeight
  * @param children
  * @constructor
  */
 export const CarouselProvider = ({
     slidesPerView,
+    staticHeight                                 ,
     children
 }: IProps) => {
 
     return (
-        <StoreContext.Provider value={{slidesPerView}}>
+        <StoreContext.Provider value={{slidesPerView, staticHeight}}>
             {children}
         </StoreContext.Provider>
     );

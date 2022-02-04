@@ -20,13 +20,15 @@ const SlideItem = ({
     imageSize= 'cover',
     children,
 }: IProps) => {
-    const {slidesPerView} = useCarousel();
+    const {slidesPerView, staticHeight} = useCarousel();
 
     if(as === 'image' && slidesPerView === 'auto'){
         return <img
             style={style}
             className={[className, elClassName.slideItemImg].join(' ').trim()}
             src={imageUrl}
+            alt=""
+            height={staticHeight}
         />;
     }
 

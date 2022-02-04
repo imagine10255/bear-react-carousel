@@ -1,5 +1,5 @@
+import React, {ReactNodeArray, Fragment} from 'react';
 import {media} from 'bear-styled-grid';
-import React, {ReactNodeArray} from 'react';
 import styled, {css} from 'styled-components/macro';
 import {Link, useLocation} from 'react-router-dom';
 import {IMenu, menu} from 'config/menu';
@@ -11,7 +11,7 @@ const renderMenu = (rows: IMenu[], lv = 1, pathname = ''): ReactNodeArray => {
     return rows.map(row => {
         const isActive = row?.href ? pathname.startsWith(row?.href): false;
 
-        return <>
+        return <Fragment key={row.href}>
             <MenuItem lv={lv} isActive={isActive}>
                 {row.href ?
                     <MenuLink to={row.href}>{row.name}</MenuLink> :
@@ -19,7 +19,7 @@ const renderMenu = (rows: IMenu[], lv = 1, pathname = ''): ReactNodeArray => {
                 }
             </MenuItem>
             {row.children && renderMenu(row.children, lv + 1, pathname)}
-        </>;
+        </Fragment>;
     });
 };
 

@@ -730,7 +730,10 @@ class Carousel extends React.Component<ICarouselProps, IState> {
 
 
       return (
-          <CarouselProvider slidesPerView={this.rwdMedia.slidesPerView}>
+          <CarouselProvider
+              slidesPerView={this.rwdMedia.slidesPerView}
+              staticHeight={this.rwdMedia.staticHeight}
+          >
               <div
                   data-carousel-id={this._carouselId}
                   style={style}
