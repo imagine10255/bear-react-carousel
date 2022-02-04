@@ -8,13 +8,13 @@ import HomeRoot from '../views/HomeRoot';
 import {HashRouter} from 'react-router-dom';
 import {SidebarProvider} from 'provider/SidebarProvider';
 import React from 'react';
-import { LanguageProvider, translationMessages } from 'library/intl'
+import { LocaleProvider, translationMessages } from 'library/intl'
 
 const App = () => {
     return (
         <GridThemeProvider gridTheme={gridConfig}>
             <ThemeProvider theme={theme}>
-                <LanguageProvider messages={translationMessages}>
+                <LocaleProvider messages={translationMessages}>
 
                     <HashRouter>
                         <SidebarProvider>
@@ -23,7 +23,7 @@ const App = () => {
                             <AutoScrollTop/>
                         </SidebarProvider>
                     </HashRouter>
-                </LanguageProvider>
+                </LocaleProvider>
                 <GlobalStyle/>
             </ThemeProvider>
         </GridThemeProvider>

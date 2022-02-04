@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import {ELocales} from 'library/intl/types';
-import { useI18n } from 'library/intl/hook';
+import { useLocale } from 'library/intl';
 
 const itemHeight = 30;
 
@@ -9,15 +9,14 @@ const itemHeight = 30;
  * 語系選擇
  */
 const LanguagePicker = () => {
-    const {locale: currentLocale} = useI18n();
-
+    const {locale: currentLocale, setLocale} = useLocale();
 
 
     /**
      * 設定選擇語系
      */
     const handleSetLocale = (locale: ELocales) => {
-        // dispatch(languageActions.setLocale({locale}));
+        setLocale(locale);
     };
 
 

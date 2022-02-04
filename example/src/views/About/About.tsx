@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import Content, {Desc, SubTitle} from 'views/_components/Content';
+import { useLocale } from '../../library/intl'
 
 
 
@@ -10,14 +11,11 @@ import Content, {Desc, SubTitle} from 'views/_components/Content';
  */
 const About = () => {
 
+    const {i18n} = useLocale();
+
     return <Content
-        title="About"
-        desc={`
-    This is a carousel developed directly using React + Flexbox,<br/>
-    Regarding Bear Carousel, it's a carousel that only contains the features you need,<br/> 
-    not too many cool effects, because those may make you useless and add other potential problems <br/> (complex usage, exceptions, file too large)
-    `
-        }
+        title={i18n('page.about.title')}
+        desc={i18n('page.about.desc')}
     >
         <SubTitle>what i want to achieve</SubTitle>
         <Ul>

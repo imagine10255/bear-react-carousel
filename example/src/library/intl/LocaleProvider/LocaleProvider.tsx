@@ -6,10 +6,10 @@
  */
 
 import React, { Children, useState } from 'react'
-import {IntlProvider, IntlContext} from 'react-intl';
+import {IntlProvider} from 'react-intl';
 import TranslationWrapper from './TranslationWrapper';
-import IntlGlobalProvider from '../global';
 import {ELocales, TMessage} from '../types';
+import { LocaleContextProvider } from './context'
 
 
 // Stores
@@ -26,18 +26,31 @@ const LanguageProvider = ({
 
     const activeMessage = messages[locale];
 
-    return <IntlProvider
-      locale={locale}
-      key={locale}
-      defaultLocale={ELocales.enUS}
-      messages={activeMessage}
-      // @ts-ignore
-      textComponent={TranslationWrapper}
+
+    return <LocaleContextProvider
+      value={{
+          locale,
+          setLocale,
+      }}
+
     >
-        <IntlGlobalProvider>
-            {Children.only(children)}
-        </IntlGlobalProvider>
-    </IntlProvider>
+
+        <IntlProvider
+              locale={locale}
+              key={locale}
+              defaultLocale={ELocales.enUS}
+              messages={activeMessage}
+              // @ts-ignore
+              textComponent={TranslationWrapper}
+            >
+                {Children.only(children)}
+
+                {/*<IntlGlobalProvider>*/}
+                {/*</IntlGlobalProvider>*/}
+            </IntlProvider>
+
+    </LocaleContextProvider>
+
 };
 
 export default LanguageProvider;

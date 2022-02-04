@@ -132,51 +132,8 @@ export default {
      |                    頁面                    |
      /** ---------------------------------------*/
 
-    // Page Login
-    'page.login.field.account': 'Account',
-    'page.login.field.password': 'Password',
-    'page.login.form.signIn': 'Sign In',
-    'page.login.desc': 'Sign in to continue to back desk.',
-
-
-    // Page Admin / User
-    'page.admin.user.field.name': 'Name',
-    'page.admin.user.field.account': 'Account',
-    'page.admin.user.field.password': 'Password',
-    'page.admin.user.field.newPassword': 'New Password',
-    'page.admin.user.field.confirmPassword': 'Confirm Password',
-    'page.admin.user.field.email': 'Email',
-    'page.admin.user.field.role': 'Role',
-    'page.admin.user.field.createdAt': 'Created',
-    'page.admin.user.field.status': 'Status',
-    'page.admin.user.field.avatar': 'Avatar',
-    'page.admin.user.field.feature': 'Feature',
-    'page.admin.user.field.allow': 'Allow',
-    'page.admin.user.createdAt': 'Created at {date}',
-    'page.admin.user.changePassword': 'Change Password',
-    'page.admin.user.searchAccount': 'Search Account',
-    'page.admin.user.rolePermissions': 'ROLE PERMISSIONS',
-    'page.admin.user.aboutMe': 'ABOUT ME',
-
-    // Page Admin / LoginHistory
-    'page.admin.loginHistory.field.name': 'Name',
-    'page.admin.loginHistory.field.account': 'Account',
-    'page.admin.loginHistory.field.email': 'Email',
-    'page.admin.loginHistory.field.createdAt': 'Created',
-    'page.admin.loginHistory.field.avatar': 'Avatar',
-
-    // Page Admin / Role
-    'page.admin.role.field.name': 'Name',
-    'page.admin.role.field.createdAt': 'Created',
-    'page.admin.role.field.status': 'Status',
-    'page.admin.role.field.allowFeature': 'Allow Feature',
-    'page.admin.role.field.featureName': 'Feature Name',
-
-    // Page SettingSite / SettingParams
-    'page.setting.site.field.group': 'Group',
-    'page.setting.site.field.code': 'Code',
-    'page.setting.site.field.name': 'Name',
-    'page.setting.site.field.value': 'Value',
-    'page.setting.site.field.updatedAt': 'UpdateAt',
-    'page.setting.site.field.action': 'Action',
+    // Page About
+    'page.about.title': 'About',
+    'page.about.desc': `This is a carousel developed directly using React + Flexbox,<br/>
+    and only include the features you need, not too many cool effects that might complicate your usage or create other weird issues.`
 };

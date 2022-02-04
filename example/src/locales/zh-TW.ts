@@ -133,53 +133,11 @@ export default {
     /** -----------------------------------------
      |                    頁面                    |
      /** ---------------------------------------*/
-    // Page Login
-    'page.login.field.account': '使用者帳號',
-    'page.login.field.password': '使用者密碼',
-    'page.login.signIn': '登入',
-    'page.login.desc': '登入到後台管理系統',
+    // Page About
+    'page.about.title': '關於',
+    'page.about.desc': `Bear Carousel 是一個直接使用React + Flexbox開發的輪播套件<br/>
+     並且只包含你需要的功能，沒有太多很酷的效果，因為那些可能會讓你變得使用很複雜 或是 產生其他奇怪問題`,
 
-    // Page Admin / AdminUser
-    'page.admin.user.field.name': '名稱',
-    'page.admin.user.field.account': '使用者帳號',
-    'page.admin.user.field.password': '使用者密碼',
-    'page.admin.user.field.newPassword': '新的使用者密碼',
-    'page.admin.user.field.confirmPassword': '確認新的使用者密碼',
-    'page.admin.user.field.email': '信箱',
-    'page.admin.user.field.role': '角色',
-    'page.admin.user.field.createdAt': '建立時間',
-    'page.admin.user.field.status': '狀態',
-    'page.admin.user.field.avatar': '頭像',
-    'page.admin.user.field.feature': '功能',
-    'page.admin.user.field.allow': '允許',
-    'page.admin.user.createdAt': '建立於 {date}',
-    'page.admin.user.changePassword': '更改密碼',
-    'page.admin.user.searchAccount': '搜尋帳號',
-    'page.admin.user.rolePermissions': '角色權限',
-    'page.admin.user.aboutMe': '關於我',
-
-    // Page Admin / LoginHistory
-    'page.admin.loginHistory.field.name': '名稱',
-    'page.admin.loginHistory.field.account': '使用者帳號',
-    'page.admin.loginHistory.field.email': '信箱',
-    'page.admin.loginHistory.field.createdAt': '建立時間',
-    'page.admin.loginHistory.field.avatar': '頭像',
-
-    // Page Admin / Role
-    'page.admin.role.field.name': '名稱',
-    'page.admin.role.field.createdAt': '建立時間',
-    'page.admin.role.field.status': '狀態',
-    'page.admin.role.field.allowFeature': '允許功能',
-    'page.admin.role.field.featureName': '功能名稱',
-
-
-    // Page SettingSite / SettingParams
-    'page.setting.site.title': '參數設定',
-    'page.setting.site.field.group': '群組',
-    'page.setting.site.field.code': '代號',
-    'page.setting.site.field.name': '名稱',
-    'page.setting.site.field.value': '內容',
-    'page.setting.site.field.updatedAt': '更新時間',
 
 
 };

@@ -1,3 +1,5 @@
+*, *::before, *::after {box-sizing: border-box;-webkit-box-sizing: border-box;line-height: normal;}
+
 /* a */
 a{
     text-shadow: none!important;

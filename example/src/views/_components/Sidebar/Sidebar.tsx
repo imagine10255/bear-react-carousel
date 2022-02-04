@@ -107,7 +107,6 @@ const MenuItem = styled.li<{
         border-radius: 0.25rem;
         transition: background .2s 0s;
         padding: 6.375px 17px;
-      text-decoration: none;
 
 
   }
