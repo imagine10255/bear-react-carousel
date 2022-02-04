@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.10](https://github.com/imagine10255/bear-carousel/compare/v1.1.9...v1.1.10) (2022-02-04)
+
+
+### Features
+
+* add ideal ([de5f3a7](https://github.com/imagine10255/bear-carousel/commit/de5f3a7759183a157c993529bcfc3b3ea2752666))
+* add navbar logo link to homepage ([8a686b4](https://github.com/imagine10255/bear-carousel/commit/8a686b41e10931979e89135777d8608b51e98707))
+* add sidebar mask click toggle close, navbar mobile top ([47fe75a](https://github.com/imagine10255/bear-carousel/commit/47fe75aacd8965a93b9f83e0290ca6b5446bf3de))
+* add SliderItem component, ignore create item component or style ([21c0938](https://github.com/imagine10255/bear-carousel/commit/21c0938e56c82b6b05bd6a5054cc4e2f4199b19c))
+* change image import path ([5de1a7a](https://github.com/imagine10255/bear-carousel/commit/5de1a7a8a1102644f6c1ff723fce262492f5361c))
+* change page name auto height -> static height ([9f791e8](https://github.com/imagine10255/bear-carousel/commit/9f791e81bd86027426a5f76743d9d6d1dbd4d066))
+* modify content grid ([950dfa5](https://github.com/imagine10255/bear-carousel/commit/950dfa587b8b0ecb1cf8bd9fe683620445feb857))
+* modify navbar logo position ([b966fca](https://github.com/imagine10255/bear-carousel/commit/b966fca963d2579c11e71b816870e2aa9164a585))
+* 新增 aspectRatio 參數, 省去設定高度的方式 ([f2e0327](https://github.com/imagine10255/bear-carousel/commit/f2e032754829d15630166acb57ad34d69c32d8b8))
+* 新增 點擊連結自動收起 sidebar ([bf29940](https://github.com/imagine10255/bear-carousel/commit/bf2994087578d31be1396f5cff837b74852cb3b6))
+* 新增 點擊連結自動收起 sidebar ([5541c1d](https://github.com/imagine10255/bear-carousel/commit/5541c1de2184cfdc16530c8d246c1197a5e6aeee))
+
+
+### Bug Fixes
+
+* code wraplongline 導致跑版問題 ([b0ce195](https://github.com/imagine10255/bear-carousel/commit/b0ce195f27bf1a18dd8a7301b982223f7b808e71))
+* fix root style height format error ([d53f779](https://github.com/imagine10255/bear-carousel/commit/d53f7790ecd42777621d2754ef2136aecbb460ec))
+* fix sidebar expend disableBodyScroll ([4c23147](https://github.com/imagine10255/bear-carousel/commit/4c23147757a10cc160234b7386749d4593d732eb))
+* root style height:auto -> inhert ([995fcd1](https://github.com/imagine10255/bear-carousel/commit/995fcd16a0dc23c43b4cc67d80608b7a743a21f6))
+* 修正 map key 問題 (sideber, vipLevelList) ([c6e6212](https://github.com/imagine10255/bear-carousel/commit/c6e6212057c4e4c4811561675b9f7a4b43d45221))
+* 修正 自動模式使用圖片標籤時, safari 無法支援100%高度來等比例寬度 ([648d698](https://github.com/imagine10255/bear-carousel/commit/648d698aa9d25fd003314e1ded69995a288be096))
+
 ### [1.1.9](https://github.com/imagine10255/bear-carousel/compare/v1.1.8...v1.1.9) (2022-02-02)
 
 
