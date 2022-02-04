@@ -4,7 +4,7 @@ import styled from 'styled-components/macro';
 
 
 interface IProps extends FCProps {
-  children: ReactNode,
+  text: string,
 }
 
 
@@ -15,13 +15,13 @@ interface IProps extends FCProps {
  */
 const ImportantNote = ({
     className,
-    children= '',
+    text= '',
 }: IProps) => {
 
-    return <ImportantNoteRoot className={className}
-    >
-        {children}
-    </ImportantNoteRoot>;
+    return <ImportantNoteRoot
+        className={className}
+        dangerouslySetInnerHTML={{__html: text}}
+    />;
 
 };
 

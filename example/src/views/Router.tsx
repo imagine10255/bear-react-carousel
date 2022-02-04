@@ -14,6 +14,7 @@ import StaticHeight from './Feature/StaticHeight';
 
 import AutoPlayProgress from './Example/AutoPlayProgress';
 import VipLevelList from './Example/VipLevelList';
+import Advices from './Advices';
 
 
 const Router = () => {
@@ -22,6 +23,7 @@ const Router = () => {
         <Switch>
             <Route path="/installation" children={<Installation/>} exact/>
             <Route path="/about" children={<About/>} exact/>
+            <Route path="/Advices" children={<Advices/>} exact/>
             <Route path="/props-try" children={<PropsTry/>} exact/>
 
             <Route path="/feature/centered" children={<Centered/>} exact/>

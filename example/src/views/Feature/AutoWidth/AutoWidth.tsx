@@ -41,9 +41,7 @@ const AutoWidth = () => {
 
         <HowToUse/>
 
-        <ImportantNote>
-            注意Safari無法使用 height100%, 需要設定直接得高度 否則會導致比例判定失效 圖片等比例但是占位撐開100%
-        </ImportantNote>
+        <ImportantNote text="注意Safari無法使用 height100%, 需要設定直接得高度 否則會導致比例判定失效 圖片等比例但是占位撐開100%"/>
 
     </Content>;
 };

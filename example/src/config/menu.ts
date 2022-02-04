@@ -13,6 +13,10 @@ export const menu: IMenu[] = [
         href: '/about',
     },
     {
+        name: 'Advices',
+        href: '/advices',
+    },
+    {
         name: 'Installation',
         href: '/installation',
     },

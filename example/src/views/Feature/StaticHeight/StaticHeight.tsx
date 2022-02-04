@@ -40,10 +40,12 @@ const StaticHeight = () => {
             />
         </CarouselBox>
 
-        <ImportantNote>
-            <p>當圖片是由非同步取得時, 你的畫面會從0px 突然把畫面撐開, 若在意這個問題, 建議可以使用 背景模式</p>
+        <ImportantNote text={
+            `
+            <p>當圖片是由非同步取得時, 你的畫面會從0px 突然把畫面撐開, 若在意這個問題, 建議可以使用 背景模式<br/></p>
             <p>不過, 優點是你不需要管項目的大小</p>
-        </ImportantNote>
+            `
+        }/>
 
         <HowToUse/>
 

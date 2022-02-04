@@ -10,27 +10,28 @@ import {useLocale} from '../../library/intl';
 /**
  * Props Try
  */
-const About = () => {
+const Advices = () => {
 
     const {i18n} = useLocale();
 
-    const featureDescList = new Array(11).fill('');
+    const featureDescList = new Array(3).fill('');
 
     return <Content
-        title={i18n('page.about.title')}
+        title={i18n('page.advices.title')}
     >
-        <ImportantNote text={i18n('page.about.desc')}/>
+        <ImportantNote text={i18n('page.advices.desc')}/>
 
-        <SubTitle>{i18n('page.about.feature.title')}</SubTitle>
         <Ul>
             {featureDescList.map((row, index) => {
-                return <Li>{i18n(`page.about.feature.desc${index+1}`)}</Li>;
+                return <Li>{i18n(`page.advices.item.desc${index+1}`)}</Li>;
             })}
         </Ul>
+
     </Content>;
 };
 
-export default About;
+export default Advices;
+
 
 
 

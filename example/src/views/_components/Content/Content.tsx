@@ -20,9 +20,11 @@ const Content = ({
     return <>
         <Title>{title}</Title>
         <Row>
+            {desc &&
             <Col col>
                 <Desc dangerouslySetInnerHTML={{__html: desc}}/>
             </Col>
+            }
 
             {onLoadData && (
                 <Col col={24} lg={EColType.auto}>
@@ -64,8 +66,8 @@ const Label = styled.label`
 export const Desc = styled.p`
   margin-top: 0;
   margin-bottom: 21.25px;
-      color: rgb(245, 246, 247);
-font-size: 17px;
+      color: #9ca3af;
+font-size: 1rem;
 `;
 
 

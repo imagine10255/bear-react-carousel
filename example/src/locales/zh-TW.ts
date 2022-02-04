@@ -2,144 +2,32 @@
 
 export default {
     /** -----------------------------------------
-     |                系統錯誤訊息                  |
-     /** ---------------------------------------*/
-    'errorHttp.400': '請求的參數錯誤',
-    'errorHttp.401': '請先登錄,然後繼續',
-    'errorHttp.404': '找不到請求/路由',
-    'errorHttp.413': '發送的請求/文件超出服務器限制大小',
-    'errorHttp.500': '內部服務器錯誤',
-    'errorHttp.503': '系統維護中',
-    'errorHttp.504': '請檢查您的網絡,然後重試',
-    'errorHttp.511': '地區無法提供服務',
-    'errorHttp.CLIENT_ERROR': '任何非特定的400系列錯誤',
-    'errorHttp.SERVER_ERROR': '任何500系列錯誤',
-    'errorHttp.TIMEOUT_ERROR': '服務器的響應時間超過{sec}秒。請確認您的網絡連接狀態或聯繫客戶服務',
-    'errorHttp.CONNECTION_ERROR': '服務器不可用,錯誤的dns',
-    'errorHttp.NETWORK_ERROR': '您的移動網絡連接不穩定。請檢查您的網絡連接狀態,然後重試。 ',
-    'errorHttp.CANCEL_ERROR': '請求已被取消。只有在配置中提供`cancelToken`時才有可能,請參見axios`Cancellation`',
-
-
-
-
-    /** -----------------------------------------
-     |                表單錯誤訊息                  |
-     /** ---------------------------------------*/
-    'errorForm.require': '{name}不在必填項之間',
-    'errorForm.tooShortString': '不小於{length}',
-    'errorForm.tooLongString': '不大於{length}',
-    'errorForm.tooShortNumber': '不小於{length}',
-    'errorForm.tooLongNumber': '不大於{length}',
-    'errorForm.tooRange': '{name}必須在{min}-{max}之間',
-    'errorForm.invalid': '請匹配{name}的正確格式',
-
-
-
-
-    /** -----------------------------------------
-     |                共用名詞                    |
-     /** ---------------------------------------*/
-    'common.status.enable': '啟用',
-    'common.status.disable': '停用',
-    'common.select.pleaseSelect': '請選擇',
-    'common.form.add': '新增',
-    'common.form.delete': '刪除',
-    'common.table.search': '搜尋',
-    'common.table.reset': '重設',
-
-
-    /** -----------------------------------------
-     |                    元件                    |
-     /** ---------------------------------------*/
-    // Calendar
-    'com.atom.calendar.month.1': '1月',
-    'com.atom.calendar.month.2': '2月',
-    'com.atom.calendar.month.3': '3月',
-    'com.atom.calendar.month.4': '4月',
-    'com.atom.calendar.month.5': '5月',
-    'com.atom.calendar.month.6': '6月',
-    'com.atom.calendar.month.7': '7月',
-    'com.atom.calendar.month.8': '8月',
-    'com.atom.calendar.month.9': '9月',
-    'com.atom.calendar.month.10': '10月',
-    'com.atom.calendar.month.11': '11月',
-    'com.atom.calendar.month.12': '12月',
-    'com.atom.calendar.weekDay.1': '一',
-    'com.atom.calendar.weekDay.2': '二',
-    'com.atom.calendar.weekDay.3': '三',
-    'com.atom.calendar.weekDay.4': '四',
-    'com.atom.calendar.weekDay.5': '五',
-    'com.atom.calendar.weekDay.6': '六',
-    'com.atom.calendar.weekDay.7': '日',
-    'com.atom.calendar.unit.year': '年',
-    'com.atom.calendar.pleaseInputYear': '請輸入西元年',
-    'com.atom.calendar.setToday': '設定為今天',
-
-
-    // uiBlock
-    'com.atom.uiBlock.loading': '正在加載...',
-
-    // uiDialog
-    'com.atom.uiDialog.success': '成功',
-    'com.atom.uiDialog.failed': '失敗',
-    'com.atom.uiDialog.confirm': '確認',
-    'com.atom.uiDialog.ok': '確定',
-    'com.atom.uiDialog.cancel': '取消',
-
-    // TimePicker
-    'com.atom.timePicker.now': '此刻',
-    'com.atom.timePicker.ok': '確認',
-
-
-    // Table
-    'com.atom.table.field.action': '操作',
-    'com.atom.table.showPage': '顯示 {start} - {end} 筆, 總共 {totalItem} 筆 / {totalPage} 頁',
-    'com.atom.table.page': '{item}筆/頁',
-    'com.atom.table.next': '下一頁',
-    'com.atom.table.prev': '上一頁',
-    'com.atom.table.notFound.title': '沒有符合的資料',
-    'com.atom.table.notFound.desc': '選擇不同的過濾條件以查看測試結果',
-
-    // PageHeader
-    'com.org.pageHeader.list': '列表',
-    'com.org.pageHeader.add': '新增',
-    'com.org.pageHeader.edit': '編輯',
-    'com.org.pageHeader.view': '檢視',
-
-    // PageSlider
-    'com.org.pageSlider.feature': '功能選單',
-    'com.org.pageSlider.admin': '管理員選單',
-
-    // FormButton
-    'com.form.button.create': '建立',
-    'com.form.button.save': '儲存',
-    'com.form.button.back': '返回',
-
-
-    /** -----------------------------------------
-     |                    目錄                   |
-     /** ---------------------------------------*/
-    // Menu
-    'menu.dashboard': '儀表板',
-    'menu.setting': '網站設定',
-    'menu.setting.site': '參數設定',
-    'menu.admin.user': '使用者管理',
-    'menu.admin.role': '角色管理',
-    'menu.admin.role.roleManage': '角色管理',
-    'menu.admin.loginHistory': '登入紀錄',
-    'menu.admin.profile': '個人',
-    'menu.admin.profile.profileManage': '個人管理',
-
-    /** -----------------------------------------
      |                    頁面                    |
      /** ---------------------------------------*/
     // Page About
     'page.about.title': '關於',
     'page.about.desc': `Bear Carousel 是一個直接使用React + Flexbox開發的輪播套件 (非js二次開發包成React)，<br/>
-     並且只包含你需要的功能，沒有太多很酷的效果，因為那些可能會讓你變得使用很複雜 或是 產生其他奇怪問題`,
-    'page.about.achieve.title': '我想達成的目標',
-    'page.about.achieve.desc1': '',
+     並且只包含你需要的功能，沒有太多很酷的效果，因為那些可能會讓你變得不容易使用並且產生其他奇怪的問題`,
+    'page.about.feature.title': '特性',
+    'page.about.feature.desc1': '直接由 React+Flexbox, 非JS二次開發在React中註冊',
+    'page.about.feature.desc2': '更簡單的使用方式',
+    'page.about.feature.desc3': '支援行動裝置與電腦版網頁',
+    'page.about.feature.desc4': '依響應式設定參數',
+    'page.about.feature.desc5': '導航按鈕 在簡單的使用情境下, 可直接移出輪播區域外, 不受 overflow 影響',
+    'page.about.feature.desc6': '使用Flexbox, 而不是在輪播項目中加上 inlineStyle',
+    'page.about.feature.desc7': '在輪播項目中透過 key 來避免重新渲染的次數',
+    'page.about.feature.desc8': '圖片資料為非同步加載時, 不會因為 Bear Carousel 已經 componentDidMount, 而圖片已加載完成卻不顯示, 需要額外處理',
+    'page.about.feature.desc9': '不需要額外設定項目的樣式, Bear Carousel 直接提供給你項目的元件, 只需要設定圖片網址並組成陣列, 放到 data 參數裡即可',
+    'page.about.feature.desc10': '輪播的大小, 以外容器高度為主, 項目容器跟隨外容器大小, 可避免非同步載入時 的瞬間有高度而產生的畫面跳動造成不好的視覺體驗',
+    'page.about.feature.desc11': '提供項目比例設定或是固定高度的設定',
+    // 'page.about.feature.desc12': '懶加載模式會在下一頁之前先載入, 避免讓使用者看到未載入前空白畫面, 造成不好的體驗',
 
+    // Page About
+    'page.advices.title': '建議',
+    'page.advices.desc': '使用前請先看完建議事項, 這樣能夠幫助你更容易使用 Bear Carousel',
+    'page.advices.item.desc1': '如果你想在輪播圖上面加上點擊連結, 建議使用額外的按鈕, 因為滑動功能會觸發開啟, 導致體驗會很糟糕',
+    'page.advices.item.desc2': '如果你想使用自動寬度模式, 你需要設定固定高度, Bear Carousel 的 SlideItem 會使用 img 標籤讓圖片寬度自動, 其他情況你可以根據需要自己選擇使用等比例或是固定高度',
+    'page.advices.item.desc3': 'Bear Carousel 沒有提供內容高度 自動撐開內容的模式(ex: 文字公告光箱), 因為並不好用, 你只需要固定高度與捲軸, 光箱鎖背景',
 
 
 };
