@@ -2,17 +2,18 @@ import React, {ReactNode, useContext} from 'react';
 import {TSlidesPerView} from './types';
 
 
-/**
- * Type
- */
+
+/** -----------------------------------------
+ |               Interface                   |
+ /** ---------------------------------------*/
 interface IState {
     slidesPerView: TSlidesPerView,
     staticHeight?: string,
 }
 
-/**
- * State
- */
+/** -----------------------------------------
+ |            Initial State                 |
+ /** ---------------------------------------*/
 const state: IState = {
     slidesPerView: 1,
     staticHeight: undefined,
@@ -20,10 +21,13 @@ const state: IState = {
 
 export const StoreContext = React.createContext<IState>(state);
 
-/**
- * useContext Hook
- */
+
+/** -----------------------------------------
+ |            useContext Hook               |
+ /** ---------------------------------------*/
 export const useCarousel = () => useContext(StoreContext);
+
+
 
 
 interface IProps extends IState{

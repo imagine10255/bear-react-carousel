@@ -8,7 +8,8 @@ import {Icon} from 'bear-components/atoms';
 // Components
 import HamburgerMenu from 'components/atoms/HamburgerMenu';
 import Logo from 'components/atoms/Logo';
-import {useSidebar} from 'App/SidebarProvider';
+import {useSidebar} from 'provider/SidebarProvider';
+import LanguagePicker from '../LanguagePicker';
 
 
 const Navbar = () => {
@@ -21,6 +22,10 @@ const Navbar = () => {
         onResize();
     }, []);
 
+
+    /**
+     * 顯示尺寸方便除錯
+     */
     const onResize = useCallback(() => {
         const dom = document.getElementById('debug-resize');
         if(dom){
@@ -43,16 +48,19 @@ const Navbar = () => {
             </NavbarBrand>
 
             <NavbarNav className="ml-auto my-0 d-none d-sm-flex">
+
                 <NavItem className="d-none d-sm-flex">
                     <NavLink href="#!" isActive>Docs</NavLink>
                 </NavItem>
                 <NavItem>
                     <NavLink href={githubUrl} target="_blank">
                         GitHub
-                        <Icon code="open" color="inherit" size={20}/>
+                        <Icon code="open" color="inherit" size={23} style={{float: 'right'}}/>
                     </NavLink>
                 </NavItem>
-
+                <NavItem className="d-none d-sm-flex">
+                    <LanguagePicker/>
+                </NavItem>
             </NavbarNav>
 
             <DebugSize id="debug-resize"/>
@@ -80,10 +88,10 @@ const DebugSize = styled.div`
 const NavLink = styled.a<{
   isActive?: boolean
 }>`
-  display: block;
-  padding: 0.5rem 1rem;
-  padding-right: 0;
-  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: center;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
   color: ${props => props.isActive ? '#fff' : 'rgba(255, 255, 255, 0.55)'};
   
@@ -99,7 +107,10 @@ const NavbarMenu = styled.div`
 `;
 
 const NavItem = styled.li`
+  display: flex;
   list-style: none;
+  align-items: center;
+  margin-left: 1rem;
 `;
 
 const NavbarNav = styled.ul`
@@ -110,10 +121,9 @@ const NavbarNav = styled.ul`
 `;
 
 const NavbarBrand = styled.div`
-  padding-top: 0.3125rem;
+    padding-top: 0.3125rem;
     padding-bottom: 0.3125rem;
     margin-right: 0;
-    text-decoration: none;
     white-space: nowrap;
     
     font-weight: 700;

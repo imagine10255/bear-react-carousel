@@ -70,16 +70,16 @@ font-size: 17px;
 
 
 export const SubTitle = styled.h2`
-  font-size: 1.8rem;
-  color: rgb(245, 246, 247);
+  font-size: 1.25rem;
+  color: rgb(229, 231, 235);
   margin-block-start: 0;
     margin-block-end: 0;
     margin-bottom: 10px
 `;
 
 const Title = styled.h1`
-  font-size: 3rem;
-  color: rgb(245, 246, 247);
+  font-size: 2.25rem;
+  color: rgb(229, 231, 235);
   margin-block-start: 0;
     margin-block-end: 0;
     margin-bottom: 26.5625px
