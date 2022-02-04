@@ -134,6 +134,8 @@ export default {
 
     // Page About
     'page.about.title': 'About',
-    'page.about.desc': `This is a carousel developed directly using React + Flexbox,<br/>
-    and only include the features you need, not too many cool effects that might complicate your usage or create other weird issues.`
+    'page.about.desc': `This is a carousel developed directly using React + Flexbox (non-js secondary development package into React),<br/>
+    and only include the features you need, not too many cool effects that might complicate your usage or create other weird issues.`,
+    'page.about.achieve.title': 'what i want to achieve',
+
 };

@@ -17,7 +17,7 @@ const About = () => {
         title={i18n('page.about.title')}
         desc={i18n('page.about.desc')}
     >
-        <SubTitle>what i want to achieve</SubTitle>
+        <SubTitle>{i18n('page.about.achieve.title')}</SubTitle>
         <Ul>
             <Li>Use React + Flexbox directly, not javascript in secondary development into React</Li>
             <Li>Simple to use</Li>
