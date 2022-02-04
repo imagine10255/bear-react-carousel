@@ -1,17 +1,16 @@
 import ImportantNote from 'components/atoms/ImportantNote ';
 import React from 'react';
 import styled from 'styled-components/macro';
+import {useLocale} from 'library/intl';
 import Content, {Desc, SubTitle} from 'views/_components/Content';
-import {useLocale} from '../../library/intl';
 
 
 
 
 /**
- * Props Try
+ * About
  */
 const About = () => {
-
     const {i18n} = useLocale();
 
     const featureDescList = new Array(11).fill('');

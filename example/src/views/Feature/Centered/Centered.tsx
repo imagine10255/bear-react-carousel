@@ -9,7 +9,7 @@ import Content from '../../_components/Content';
 
 
 // 輪播項目
-const SlideItemData: TSlideItemDataList  = images.map(row => {
+const slideItemData: TSlideItemDataList  = images.map(row => {
     return {
         key: row.id,
         children: <SlideItem imageUrl={row.image}/>
@@ -32,7 +32,7 @@ const Centered = () => {
     >
         <div className="mb-4">
             <BearCarousel
-                data={isLoadData ? SlideItemData: []}
+                data={isLoadData ? slideItemData: []}
                 slidesPerView={3}
                 spaceBetween={10}
                 isCenteredSlides

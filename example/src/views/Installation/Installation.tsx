@@ -1,17 +1,19 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import Content, {Desc, SubTitle} from 'views/_components/Content';
+import {useLocale} from 'library/intl';
 import Code from 'components/atoms/Code';
 
 
 /**
- * Props Try
+ * Installation
  */
 const Installation = () => {
+    const {i18n} = useLocale();
 
     return <Content
-        title="Installation"
-        desc="There are few options on how to include/import BearCarousel into your project:"
+        title={i18n('page.Installation.title')}
+        desc={i18n('page.Installation.desc')}
     >
         <Code language="bash">
             {`
@@ -19,7 +21,7 @@ const Installation = () => {
         `}
         </Code>
 
-        <Desc>in your index.ts (in initial)</Desc>
+        <Desc>{i18n('page.Installation.inYourIndex')}</Desc>
         <Code language="typescript">
             {`
 import React from 'react';
@@ -33,36 +35,26 @@ ReactDOM.render(<App />, document.getElementById('root'));
         </Code>
 
 
-        <SubTitle>How to use</SubTitle>
+        <SubTitle>{i18n('page.Installation.fastUse')}</SubTitle>
         <Code language="typescript">
             {`
-import Carousel, {TSlideItemDataList} from 'bear-carousel';
-
-const bgList = [
-    {id: 1, image: '/static/sample/01.jpg'},
-    {id: 2, image: '/static/sample/02.jpg'},
-    {id: 3, image: '/static/sample/03.jpg'},
-];
+import BearCarousel, {TSlideItemDataList, SlideItem} from 'bear-carousel';
 
 export const CustomBanner = () => {
+    const images = [
+        {id: 1, image: '/static/sample/01.jpg'},
+        {id: 2, image: '/static/sample/02.jpg'},
+        {id: 3, image: '/static/sample/03.jpg'},
+    ];
     
-    const carouselData: TSlideItemDataList = bgList.map(row => {
+    const slideItemData: TSlideItemDataList  = images.map(row => {
         return {
             key: row.id,
-            children: <div
-                style={{
-                    backgroundImage: url(\`$\{row.image}\`),
-                    backgroundSize: 'cover',
-                    height: '200px',
-                    width: '100%',
-                }}
-            />
+            children: <SlideItem imageUrl={row.image}/>
         };
     });
 
-    return <Carousel
-        data={data}
-    />
+    return <Carousel data={slideItemData} staticHeight="250px"/>
 }
 
         `}

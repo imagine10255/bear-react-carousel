@@ -12,21 +12,9 @@ const HowToUse = () => {
         <SubTitle>How to use</SubTitle>
         <Code language="typescript">
             {`
-import BearCarousel, {SlideItem, TSlideItemDataList} from 'bear-carousel';
-
-const carouselData = images.map(row => {
-    return {
-        key: row.id,
-        children: <img className="img-fluid" src={row.image}/>
-    };
-});
-
-<BearCarousel
-    data={carouselData}
-    slidesPerView={1}
-    staticHeight="200px"
-    isEnableNavButton
-    isEnablePagination
+<Carousel 
+    data={slideItemData} 
+    staticHeight="250px"
 />
 
         `}

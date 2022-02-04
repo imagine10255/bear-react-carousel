@@ -3,6 +3,12 @@
 
 export default {
     /** -----------------------------------------
+     |                    共用                   |
+     /** ---------------------------------------*/
+    'common.loadData': 'Load Data',
+
+
+    /** -----------------------------------------
      |                    頁面                    |
      /** ---------------------------------------*/
 
@@ -24,9 +30,24 @@ export default {
     'page.about.feature.desc11': 'Provide project scale setting or fixed height setting',
     // 'page.about.feature.desc12': 'The lazy loading mode will load before the next page, so as to prevent users from seeing a blank screen before loading, resulting in a bad experience',
 
+    // Page advices
     'page.advices.title': 'Advices',
     'page.advices.desc': 'Please read the recommendations before use, it will help you to use Bear Carousel more easily',
     'page.advices.item.desc1': 'If you want to add a click link on the carousel, it is recommended to use an extra button, because the sliding function will trigger the opening, which will lead to a bad experience',
     'page.advices.item.desc2': 'If you want to use the automatic width mode, you need to set a fixed height. Bear Carousel\'s SlideItem will use the img tag to make the image width automatic. In other cases, you can choose to use equal proportion or fixed height according to your needs.',
     'page.advices.item.desc3': 'Bear Carousel does not provide the content height mode (ex: text announcement light box), because it is not easy to use, you only need to fix the height and scroll, light box lock background',
+
+    // Page Installation
+    'page.Installation.title': 'Installation',
+    'page.Installation.desc': 'There are few options on how to include/import BearCarousel into your project:',
+    'page.Installation.inYourIndex': 'Add the required style files to your project entry point',
+    'page.Installation.fastUse': 'Fast use',
+
+    // Page Props Try
+    'page.propsTry.title': 'Props Try',
+    'page.propsTry.desc': 'All available incoming parameters allow you to test and preview the results', // Page Props Try
+
+    // Page Feature / Static Height
+    'page.feature.staticHeight.title': 'Static Height',
+    'page.feature.staticHeight.desc': 'Use fixed height mode to fix the height of the carousel block, and the child layer will be the same height as the parent layer',
 };

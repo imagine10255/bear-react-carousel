@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components/macro';
+import React, {useState} from 'react';
+import styled, {css} from 'styled-components/macro';
 import {ELocales} from 'library/intl/types';
 import {useLocale} from 'library/intl';
 
@@ -10,12 +10,14 @@ const itemHeight = 30;
  */
 const LanguagePicker = () => {
     const {locale: currentLocale, setLocale} = useLocale();
+    const [isVisible, setIsVisible] = useState<boolean>(false);
 
 
     /**
      * 設定選擇語系
      */
     const handleSetLocale = (locale: ELocales) => {
+        setIsVisible(prev => !prev);
         setLocale(locale);
     };
 
@@ -31,7 +33,9 @@ const LanguagePicker = () => {
     };
 
 
-    return (<LanguagePickerRoot length={Object.keys(ELocales).length}>
+    return (<LanguagePickerRoot
+        isVisible={isVisible}
+        length={Object.keys(ELocales).length}>
         <Absolute>
             {(Object.keys(ELocales) as Array<keyof typeof ELocales>)
                 .sort((locale) => currentLocale === ELocales[locale] ? -1: 1)
@@ -73,20 +77,22 @@ const Absolute = styled.div`
   z-index: 4;
   overflow: hidden;
   background-color: #fff;
+  transition: height .2s;
+
 `;
 
 const LanguagePickerRoot = styled.div<{
     length: number
+    isVisible: boolean
 }>`
   width: ${itemHeight}px;
   height: ${itemHeight}px;
   border-radius: 99em;
   position: relative;
-  
-  :hover{
+
+  ${props => props.isVisible && css`
     ${Absolute}{
-        height: ${props => (itemHeight * props.length)}px;
-        transition: .4s height;
+        height: ${(itemHeight * props.length)}px;
     }
-  }
+  `}
 `;

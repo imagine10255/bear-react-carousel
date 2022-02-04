@@ -10,6 +10,7 @@ import {TextAreaField, TextField, SwitchControl} from 'bear-components/forms';
 import {FormHorizontalGroup, Button} from 'bear-components/atoms';
 import Content from 'views/_components/Content';
 import {catImages as images} from 'config/images';
+import {useLocale} from '../../library/intl';
 
 
 const SlideItemData: TSlideItemDataList = images.map(row => {
@@ -41,10 +42,9 @@ export interface IFormData {
  * Props Try
  */
 const PropsTry = () => {
+    const {i18n} = useLocale();
     const [isLoadData, setIsLoadData] = useState<boolean>(true);
-
     const [carousel, setCarousel] = useState<ICarouselObj>();
-
     const {control, watch} = useForm<IFormData>({
         defaultValues: {
             isMount: true,
@@ -109,8 +109,8 @@ const PropsTry = () => {
 
 
     return <Content
-        title="Props Try"
-        desc="All available incoming parameters allow you to test and preview the results"
+        title={i18n('page.propsTry.title')}
+        desc={i18n('page.propsTry.desc')}
         isLoadData={isLoadData}
         onLoadData={setIsLoadData}
     >

@@ -22,12 +22,24 @@ export default {
     'page.about.feature.desc11': '提供項目比例設定或是固定高度的設定',
     // 'page.about.feature.desc12': '懶加載模式會在下一頁之前先載入, 避免讓使用者看到未載入前空白畫面, 造成不好的體驗',
 
-    // Page About
+    // Page advices
     'page.advices.title': '建議',
     'page.advices.desc': '使用前請先看完建議事項, 這樣能夠幫助你更容易使用 Bear Carousel',
     'page.advices.item.desc1': '如果你想在輪播圖上面加上點擊連結, 建議使用額外的按鈕, 因為滑動功能會觸發開啟, 導致體驗會很糟糕',
     'page.advices.item.desc2': '如果你想使用自動寬度模式, 你需要設定固定高度, Bear Carousel 的 SlideItem 會使用 img 標籤讓圖片寬度自動, 其他情況你可以根據需要自己選擇使用等比例或是固定高度',
     'page.advices.item.desc3': 'Bear Carousel 沒有提供內容高度 自動撐開內容的模式(ex: 文字公告光箱), 因為並不好用, 你只需要固定高度與捲軸, 光箱鎖背景',
 
+    // Page Installation
+    'page.Installation.title': '安裝',
+    'page.Installation.desc': '關於如何在項目中包含/導入 BearCarousel',
+    'page.Installation.inYourIndex': '在你的專案進入點加入需要的樣式檔',
+    'page.Installation.fastUse': '快速使用',
 
+    // Page Props Try
+    'page.propsTry.title': '可用參數測試',
+    'page.propsTry.desc': '讓你調整所有參數, 並進行快速測試與除錯',
+
+    // Page Feature / Static Height
+    'page.feature.staticHeight.title': '固定高度',
+    'page.feature.staticHeight.desc': '使用固定高度模式, 將輪播區塊高度固定, 子層會與父層同高',
 };

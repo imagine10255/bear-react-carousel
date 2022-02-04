@@ -121,6 +121,7 @@ const NavbarNav = styled.ul`
 `;
 
 const NavbarBrand = styled.div`
+    cursor: pointer;
     padding-top: 0.3125rem;
     padding-bottom: 0.3125rem;
     margin-right: 0;
