@@ -1,6 +1,6 @@
 import {useIntl} from 'react-intl';
-import { useContext } from 'react'
-import { LocaleContext } from './LocaleProvider/context'
+import {useContext} from 'react';
+import {LocaleContext} from './LocaleProvider/context';
 
 
 export const useLocale = () => {

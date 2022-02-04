@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import {ELocales} from 'library/intl/types';
-import { useLocale } from 'library/intl';
+import {useLocale} from 'library/intl';
 
 const itemHeight = 30;
 

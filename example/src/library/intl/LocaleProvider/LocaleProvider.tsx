@@ -5,11 +5,11 @@
  * IntlProvider component and i18n messages (loaded from `src/resources/lang`)
  */
 
-import React, { Children, useState } from 'react'
+import React, {Children, useState} from 'react';
 import {IntlProvider} from 'react-intl';
 import TranslationWrapper from './TranslationWrapper';
 import {ELocales, TMessage} from '../types';
-import { LocaleContextProvider } from './context'
+import {LocaleContextProvider} from './context';
 
 
 // Stores
@@ -28,28 +28,28 @@ const LanguageProvider = ({
 
 
     return <LocaleContextProvider
-      value={{
-          locale,
-          setLocale,
-      }}
+        value={{
+            locale,
+            setLocale,
+        }}
 
     >
 
         <IntlProvider
-              locale={locale}
-              key={locale}
-              defaultLocale={ELocales.enUS}
-              messages={activeMessage}
-              // @ts-ignore
-              textComponent={TranslationWrapper}
-            >
-                {Children.only(children)}
+            locale={locale}
+            key={locale}
+            defaultLocale={ELocales.enUS}
+            messages={activeMessage}
+            // @ts-ignore
+            textComponent={TranslationWrapper}
+        >
+            {Children.only(children)}
 
-                {/*<IntlGlobalProvider>*/}
-                {/*</IntlGlobalProvider>*/}
-            </IntlProvider>
+            {/*<IntlGlobalProvider>*/}
+            {/*</IntlGlobalProvider>*/}
+        </IntlProvider>
 
-    </LocaleContextProvider>
+    </LocaleContextProvider>;
 
 };
 

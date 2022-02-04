@@ -1,5 +1,5 @@
-import React, { useContext} from 'react'
-import { ELocales } from '../types'
+import React, {useContext} from 'react';
+import {ELocales} from '../types';
 
 
 /** -----------------------------------------
@@ -19,7 +19,7 @@ const state: IState = {
 };
 
 const LocaleContext = React.createContext<IState>(state);
-LocaleContext.displayName = 'LocaleProvider'
+LocaleContext.displayName = 'LocaleProvider';
 const LocaleContextConsumer = LocaleContext.Consumer;
 const LocaleContextProvider = LocaleContext.Provider;
 
@@ -28,4 +28,4 @@ export {
     LocaleContext,
     LocaleContextConsumer,
     LocaleContextProvider,
-}
+};

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import Content, {Desc, SubTitle} from 'views/_components/Content';
-import { useLocale } from '../../library/intl'
+import {useLocale} from '../../library/intl';
 
 
 
