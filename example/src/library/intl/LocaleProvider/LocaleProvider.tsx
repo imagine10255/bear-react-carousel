@@ -5,11 +5,13 @@
  * IntlProvider component and i18n messages (loaded from `src/resources/lang`)
  */
 
-import React, {Children, useState} from 'react';
+import React, {Children, useEffect, useState} from 'react';
 import {IntlProvider} from 'react-intl';
 import TranslationWrapper from './TranslationWrapper';
 import {ELocales, TMessage} from '../types';
 import {LocaleContextProvider} from './context';
+import {persistKey} from 'config/app';
+import {decodeToJson} from 'bear-jsutils/string';
 
 
 // Stores
@@ -18,13 +20,21 @@ interface IProps extends FCChildrenProps {
     messages: TMessage
 }
 
+const cacheData = decodeToJson<{locale: ELocales}>(window.localStorage.getItem(persistKey) ?? '');
+
 const LanguageProvider = ({
     messages,
     children
 }: IProps) => {
-    const [locale, setLocale] = useState<ELocales>(ELocales.enUS);
+    const [locale, setLocale] = useState<ELocales>(cacheData?.locale ?? ELocales.enUS);
 
     const activeMessage = messages[locale];
+
+    useEffect(() => {
+        // 同步語系到瀏覽器中
+        window.localStorage.setItem(persistKey, JSON.stringify({locale}));
+
+    }, [locale]);
 
 
     return <LocaleContextProvider
