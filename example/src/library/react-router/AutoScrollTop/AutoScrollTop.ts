@@ -1,6 +1,6 @@
 import {useEffect} from 'react';
 import {useLocation} from 'react-router-dom';
-import {useSidebar} from 'App/SidebarProvider';
+import {useSidebar} from 'provider/SidebarProvider';
 
 
 /**

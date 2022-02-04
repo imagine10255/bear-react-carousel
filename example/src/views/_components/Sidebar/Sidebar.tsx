@@ -3,7 +3,7 @@ import {media} from 'bear-styled-grid';
 import styled, {css} from 'styled-components/macro';
 import {Link, useLocation} from 'react-router-dom';
 import {IMenu, menu} from 'config/menu';
-import {useSidebar} from 'App/SidebarProvider';
+import {useSidebar} from 'provider/SidebarProvider';
 
 
 

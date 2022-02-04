@@ -8,7 +8,8 @@ import {Icon} from 'bear-components/atoms';
 // Components
 import HamburgerMenu from 'components/atoms/HamburgerMenu';
 import Logo from 'components/atoms/Logo';
-import {useSidebar} from 'App/SidebarProvider';
+import {useSidebar} from 'provider/SidebarProvider';
+import LanguagePicker from '../LanguagePicker';
 
 
 const Navbar = () => {
@@ -43,6 +44,9 @@ const Navbar = () => {
             </NavbarBrand>
 
             <NavbarNav className="ml-auto my-0 d-none d-sm-flex">
+                <NavItem className="d-none d-sm-flex">
+                    <LanguagePicker/>
+                </NavItem>
                 <NavItem className="d-none d-sm-flex">
                     <NavLink href="#!" isActive>Docs</NavLink>
                 </NavItem>
