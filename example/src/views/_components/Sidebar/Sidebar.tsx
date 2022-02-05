@@ -5,8 +5,10 @@ import {Link, useLocation} from 'react-router-dom';
 import {IMenu, menu} from 'config/menu';
 import {useSidebar} from 'provider/SidebarProvider';
 import LocaleButton from '../LanguagePicker/LocaleButton';
-import {ELocales} from '../../../library/intl/types';
-import {useLocale} from '../../../library/intl';
+import {ELocales} from 'library/intl/types';
+import {useLocale} from 'library/intl';
+import {githubUrl} from 'config/app';
+import {Icon} from 'bear-components/atoms';
 
 
 
@@ -57,7 +59,17 @@ const Sidebar = () => {
                         {menuEl}
                     </MenuList>
 
-                    <LocaleList>
+
+                    <LocaleList className="d-sm-none">
+                        <OutLink>
+                            <a href={githubUrl}
+                                target="_blank"
+                                className="d-flex align-items-center " rel="noreferrer">
+                                Github
+                                <Icon code="open" color="inherit" size={23}/>
+                            </a>
+                        </OutLink>
+
                         {(Object.keys(ELocales) as Array<keyof typeof ELocales>)
                             .map((locale) => {
                                 return <LocaleButton
@@ -79,6 +91,10 @@ const Sidebar = () => {
 
 export default Sidebar;
 
+const OutLink = styled.div`
+    margin-bottom: 1.2em;
+    color: #00a3e0;
+`;
 
 const LocaleList = styled.div`
   padding: 20px;
