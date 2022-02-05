@@ -58,13 +58,19 @@ const TextCarousel = ({
         <BearCarousel
             data={isLoadData ? slideItemData: []}
             slidesPerView={1}
-            staticHeight="800px"
+            staticHeight="calc(100vh - 300px)"
             isEnableAutoPlay
             isEnableLoop
-            isEnableNavButton
+            isEnableNavButton={false}
             isEnablePagination
             autoPlayTime={5000}
             moveTime={900}
+            breakpoints={{
+                576: {
+                    staticHeight: '800px',
+                    isEnableNavButton: true,
+                }
+            }}
         />
     </TextAnimationsRoot>;
 };
@@ -79,8 +85,8 @@ const Button = styled.button<{
   border: 2px solid #c4a265;
   color: #fff;
   font-weight: 400;
-  font-size: 21px;
-  padding: 19px 26px;
+  font-size: 14px;
+  padding: 14px 10px;
   border-radius: 4px;
   margin-right: 20px;
   font-family: Blatant, sans-serif;
@@ -96,17 +102,29 @@ const Button = styled.button<{
     border-color: #c4a265;
     background-color: #b89352;
   }
+  
+  
+    ${media.lg`
+        font-size: 21px;
+      padding: 19px 26px;
+
+    `}
 `;
 
 const Desc = styled.h4`
     color: #a9aaab;
-    font-size: 26px;
+    font-size: 13px;
     font-weight: 400;
     text-transform: uppercase;
-    line-height: 33px;
+    line-height: 15px;
     font-family: Blatant, sans-serif;
     margin-bottom: 1rem;
 
+    ${media.lg`
+        font-size: 26px;
+        line-height: 33px;
+
+    `}
 `;
 
 
@@ -187,7 +205,7 @@ const TextAnimationsRoot = styled.div`
       
       &:before{
         content: "";
-        background: url(/static/sample/food/blackt-will.png) center center repeat;
+        background: url(./static/sample/food/blackt-will.png) center center repeat;
         z-index: 0;
         position: absolute;
         top: 0;

@@ -26,7 +26,7 @@ const LocaleButton = ({
         onClick={() => onSetLocale(locale)}
         key={`navbar-localeButton-${locale}`}
     >
-        <LocaleIcon src={`/static/images/locales/${locale}.png`}/>
+        <LocaleIcon src={`./static/images/locales/${locale}.png`}/>
     </LocaleButtonRoot>;
 };
 
