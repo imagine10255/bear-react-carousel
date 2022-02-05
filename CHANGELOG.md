@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.12](https://github.com/imagine10255/bear-carousel/compare/v1.1.11...v1.1.12) (2022-02-05)
+
+
+### Features
+
+* 新增 Sidebar 加入 Github ([856524c](https://github.com/imagine10255/bear-carousel/commit/856524c9a1896f361931ec8cccd1014c6231a9bf))
+
 ### [1.1.11](https://github.com/imagine10255/bear-carousel/compare/v1.1.10...v1.1.11) (2022-02-05)
 
 
