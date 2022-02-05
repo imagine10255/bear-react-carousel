@@ -64,7 +64,7 @@ const SidebarMask = styled.div`
   opacity: 1;
   pointer-events: auto;
   transition: opacity .4s;
-  z-index: ${props => props.theme.sliderZIndex - 1};
+  z-index: ${props => props.theme.layout.sidebarZIndex - 1};
 `;
 
 const MenuTitle = styled.div`
@@ -152,7 +152,7 @@ const SidebarContainer = styled.aside<{
   isExpend: boolean,
 }>`
     position: fixed;
-    z-index: ${props => props.theme.sliderZIndex};
+    z-index: ${props => props.theme.layout.sidebarZIndex};
     background-color: #18191a;
     display: block;
     clip-path: inset(0);
@@ -163,13 +163,12 @@ const SidebarContainer = styled.aside<{
     border: 0;
     will-change: transform, margin-right;
     transition: transform .2s ease, margin-right .2s ease;
-    width: 300px;
-    flex: 0 0 300px;
+    width: ${props => props.theme.layout.sidebarWidth}px;
+    flex: 0 0 ${props => props.theme.layout.sidebarWidth}px;
     transform: translateX(0px) translateZ(0px);
       
     ${props => !props.isExpend && css`
-      transform: translateX(-300px) translateZ(0px);
-      margin-right: -300px;
+      transform: translateX(-${props.theme.layout.sidebarWidth}px) translateZ(0px);
       
       
       + ${SidebarMask}{
@@ -180,10 +179,7 @@ const SidebarContainer = styled.aside<{
     
     
     ${media.lg`
-      position: static;
       transform: translateX(0) translateZ(0);
-      margin-right: 0;
-      padding-top: 0;
     `}
     
     

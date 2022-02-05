@@ -141,6 +141,7 @@ const NavbarBrand = styled.div`
 
 
 const Nav = styled.nav`
+   flex: 0 0 auto;
    background-color: #242526;
    color: #fff;
    
@@ -153,5 +154,5 @@ const Nav = styled.nav`
     
     position: sticky;
     top: 0;
-    z-index: ${props => props.theme.navbarZIndex};
+    z-index: ${props => props.theme.layout.navbarZIndex};
 `;

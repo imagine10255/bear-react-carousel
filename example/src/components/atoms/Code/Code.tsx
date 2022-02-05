@@ -23,7 +23,7 @@ interface IProps extends FCProps {
 const Code = ({
     className,
     children= '',
-    wrapLongLines = true,
+    wrapLongLines = false,
     language = 'typescript'
 }: IProps) => {
 

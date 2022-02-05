@@ -1,15 +1,26 @@
 export interface AppTheme {
     primaryColor: string,
     dangerColor: string,
-    sliderZIndex: number,
-    navbarZIndex: number,
+    layout: {
+        navbarZIndex: number,
+        footerZIndex: number,
+
+        sidebarWidth: number,
+        sidebarZIndex: number,
+    }
 }
 
 const theme: AppTheme = {
-    navbarZIndex: 14,
-    sliderZIndex: 12,
+
     primaryColor: '#09d3ac',
     dangerColor: '#EF4444',
+    layout: {
+        navbarZIndex: 14,
+        footerZIndex: 14,
+
+        sidebarWidth: 300,
+        sidebarZIndex: 12,
+    }
 };
 
 export default theme;

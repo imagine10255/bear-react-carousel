@@ -14,6 +14,8 @@ export default Footer;
 
 
 const FooterRoot = styled.footer`
+  flex: 0 0 auto;
   background-color: #303846;
   color: #fff;
+  z-index: ${props => props.theme.layout.footerZIndex};
 `;
