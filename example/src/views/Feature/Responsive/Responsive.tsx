@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
 import BearCarousel, {TSlideItemDataList, SlideItem} from 'bear-carousel';
+import {useLocale} from 'library/intl';
 import {catImages as images} from 'config/images';
 
 // Components
 import Content from '../../_components/Content';
 import HowToUse from './HowToUse';
+import ImportantNote from '../../../components/atoms/ImportantNote /ImportantNote';
 
 
 
@@ -20,13 +22,14 @@ const slideItemData: TSlideItemDataList = images.map(row => {
 /**
  * Breakpoints
  */
-const Breakpoints = () => {
+const Responsive = () => {
+    const {i18n} = useLocale();
     const [isLoadData, setIsLoadData] = useState<boolean>(true);
 
 
     return <Content
-        title="Breakpoints"
-        desc="Display settings according to responsive size"
+        title={i18n('page.feature.responsive.title')}
+        desc={i18n('page.feature.responsive.desc')}
         isLoadData={isLoadData}
         onLoadData={setIsLoadData}
     >
@@ -57,10 +60,12 @@ const Breakpoints = () => {
             />
         </div>
 
+        <ImportantNote text={i18n('page.feature.responsive.importantNote')}/>
+
         <HowToUse/>
 
     </Content>;
 };
 
-export default Breakpoints;
+export default Responsive;
 

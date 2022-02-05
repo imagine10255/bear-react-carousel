@@ -40,6 +40,10 @@ export const menu: IMenu[] = [
                 href: '/feature/static-height'
             },
             {
+                name: 'Aspect Ratio Height',
+                href: '/feature/aspect-ratio-height'
+            },
+            {
                 name: 'Centered',
                 href: '/feature/centered'
             },
@@ -48,8 +52,8 @@ export const menu: IMenu[] = [
                 href: '/feature/auto-width'
             },
             {
-                name: 'Breakpoints',
-                href: '/feature/breakpoints'
+                name: 'Responsive',
+                href: '/feature/responsive'
             }
         ]
     },

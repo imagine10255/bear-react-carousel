@@ -16,7 +16,7 @@ const slideItemData: TSlideItemDataList = images.map(row => {
 
 
 /**
- * StaticHeight
+ * Static Height
  */
 const StaticHeight = () => {
     const {i18n} = useLocale();

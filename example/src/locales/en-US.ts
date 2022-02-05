@@ -6,6 +6,7 @@ export default {
      |                    共用                   |
      /** ---------------------------------------*/
     'common.loadData': 'Load Data',
+    'common.howToUse': 'How To Use',
 
 
     /** -----------------------------------------
@@ -50,4 +51,23 @@ export default {
     // Page Feature / Static Height
     'page.feature.staticHeight.title': 'Static Height',
     'page.feature.staticHeight.desc': 'Use fixed height mode to fix the height of the carousel block, and the child layer will be the same height as the parent layer',
+
+    // Page Feature / Aspect Ratio Height
+    'page.feature.aspectRatioHeight.title': 'Aspect Ratio Height',
+    'page.feature.aspectRatioHeight.desc': 'Use the proportional height mode to avoid the carousel content from being clipped, and when the width changes, the height will adapt, and the child layer will be the same height as the parent layer',
+
+    // Page Feature / Centered
+    'page.feature.centered.title': 'Centered',
+    'page.feature.centered.desc': 'Moved items as to the central position',
+    'page.feature.centered.importantNote': 'It should be noted that the number of slidesPerGroup must be singular. If you care about the display effect, you can calculate slideItemData and slice it and then pass it in',
+
+    // Page Feature / Auto Width
+    'page.feature.autoWidth.title': 'Auto Width',
+    'page.feature.autoWidth.desc': 'Display according to the width of the image itself',
+    'page.feature.autoWidth.importantNote': 'Auto width must be used with fixed height',
+
+    // Page Feature / Responsive
+    'page.feature.responsive.title': 'Responsive',
+    'page.feature.responsive.desc': 'Display settings according to responsive size',
+    'page.feature.responsive.importantNote': 'Settings not in breakpoints are default settings, breakpoints are override settings, but large size settings in breakpoints will not include small size settings',
 };

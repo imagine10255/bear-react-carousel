@@ -8,13 +8,14 @@ import Installation from './Installation';
 import PropsTry from './PropsTry';
 
 import Centered from './Feature/Centered';
-import Breakpoints from './Feature/Breakpoints';
+import Responsive from './Feature/Responsive';
 import AutoWidth from './Feature/AutoWidth';
 import StaticHeight from './Feature/StaticHeight';
 
 import AutoPlayProgress from './Example/AutoPlayProgress';
 import VipLevelList from './Example/VipLevelList';
 import Advices from './Advices';
+import AspectRatioHeight from './Feature/AspectRatioHeight';
 
 
 const Router = () => {
@@ -26,10 +27,11 @@ const Router = () => {
             <Route path="/Advices" children={<Advices/>} exact/>
             <Route path="/props-try" children={<PropsTry/>} exact/>
 
+            <Route path="/feature/static-height" children={<StaticHeight/>} exact/>
+            <Route path="/feature/aspect-ratio-height" children={<AspectRatioHeight/>} exact/>
             <Route path="/feature/centered" children={<Centered/>} exact/>
             <Route path="/feature/auto-width" children={<AutoWidth/>} exact/>
-            <Route path="/feature/static-height" children={<StaticHeight/>} exact/>
-            <Route path="/feature/breakpoints" children={<Breakpoints/>} exact/>
+            <Route path="/feature/responsive" children={<Responsive/>} exact/>
 
             <Route path="/example/vip-level-list" children={<VipLevelList/>} exact/>
             <Route path="/example/auto-play-progress" children={<AutoPlayProgress/>} exact/>

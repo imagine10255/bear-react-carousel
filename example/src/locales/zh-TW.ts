@@ -1,6 +1,13 @@
 /* eslint-disable no-template-curly-in-string */
 
 export default {
+
+    /** -----------------------------------------
+     |                    共用                   |
+     /** ---------------------------------------*/
+    'common.loadData': '載入資料',
+    'common.howToUse': '如何使用',
+
     /** -----------------------------------------
      |                    頁面                    |
      /** ---------------------------------------*/
@@ -42,4 +49,23 @@ export default {
     // Page Feature / Static Height
     'page.feature.staticHeight.title': '固定高度',
     'page.feature.staticHeight.desc': '使用固定高度模式, 將輪播區塊高度固定, 子層會與父層同高',
+
+    // Page Feature / Aspect Ratio Height
+    'page.feature.aspectRatioHeight.title': '等比例高度',
+    'page.feature.aspectRatioHeight.desc': '使用等比例的高度模式, 可避免輪播內容被裁截, 並且當寬度變化的時候, 高度會自適應, 子層會與父層同高',
+
+    // Page Feature / Centered
+    'page.feature.centered.title': '置中顯示',
+    'page.feature.centered.desc': '移動的項目黏在中央',
+    'page.feature.centered.importantNote': '需要注意 slidesPerGroup 數必須為單數, 如果介意顯示效果, 可自行將 slideItemData 計算 並 slice 再傳入',
+
+    // Page Feature / Auto Width
+    'page.feature.autoWidth.title': '自動寬度',
+    'page.feature.autoWidth.desc': '根據圖像本身的寬度顯示',
+    'page.feature.autoWidth.importantNote': '自動寬度必須搭配固定高度來使用',
+
+    // Page Feature / Responsive
+    'page.feature.responsive.title': '依響應式設定',
+    'page.feature.responsive.desc': '根據響應大小顯示設置',
+    'page.feature.responsive.importantNote': '不在 breakpoints 中的設定為預設設定, breakpoints 為覆蓋設定, 但 breakpoints 中的大尺寸設定不會包含小尺寸設定',
 };

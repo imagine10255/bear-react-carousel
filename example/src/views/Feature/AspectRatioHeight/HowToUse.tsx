@@ -25,7 +25,7 @@ const slideItemData: TSlideItemDataList = images.map(row => {
 
 <Carousel 
     data={slideItemData} 
-    staticHeight="250px"
+    aspectRatio={{widthRatio: 16, heightRatio: 9}}
 />
 
         `}
