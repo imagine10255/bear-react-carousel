@@ -34,13 +34,16 @@ const TextCard = ({
     </SlideItem>;
 };
 
-/**
- * Aspect Ratio
- */
-const TextAnimations = () => {
-    const {i18n} = useLocale();
-    const [isLoadData, setIsLoadData] = useState<boolean>(true);
+interface IProps {
+    isLoadData: boolean,
+}
 
+/**
+ * TextCarousel
+ */
+const TextCarousel = ({
+    isLoadData = true
+}: IProps) => {
 
     // 輪播項目
     const slideItemData: TSlideItemDataList = images.map(row => {
@@ -65,7 +68,7 @@ const TextAnimations = () => {
     </TextAnimationsRoot>;
 };
 
-export default TextAnimations;
+export default TextCarousel;
 
 
 const Button = styled.button<{

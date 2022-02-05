@@ -1,14 +1,13 @@
 import React, {useState} from 'react';
 import {useLocale} from 'library/intl';
 import Content from '../../_components/Content';
-import HowToUse from './HowToUse';
 import TextCarousel from './TextCarousel';
 
 
 
 
 /**
- * Aspect Ratio
+ * Text Animations
  */
 const TextAnimations = () => {
     const {i18n} = useLocale();
@@ -21,7 +20,7 @@ const TextAnimations = () => {
         onLoadData={setIsLoadData}
     >
         <div className="mb-4">
-            <TextCarousel/>
+            <TextCarousel isLoadData={isLoadData}/>
         </div>
 
 

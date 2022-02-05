@@ -37,13 +37,13 @@ class Carousel extends React.Component<ICarouselProps, IState> {
       isDebug: false,
       spaceBetween: 0,
       autoPlayTime: 3000
-  }
+  };
 
-  _carouselId = uuid()
+  _carouselId = uuid();
 
-  timer?: any
-  activePage = 0        // 真實頁面位置
-  activeActualIndex = 0 // 真實項目索引位置
+  timer?: any;
+  activePage = 0;        // 真實頁面位置
+  activeActualIndex = 0; // 真實項目索引位置
   info: IInfo = {
       formatElement: [],
       sourceTotal: 0, // 來源總數
@@ -65,7 +65,7 @@ class Carousel extends React.Component<ICarouselProps, IState> {
       residue: 1,
       isVisiblePagination: false,
       isVisibleNavButton: false
-  }
+  };
 
 
   rwdMedia: IBreakpointSettingActual = {
@@ -80,7 +80,7 @@ class Carousel extends React.Component<ICarouselProps, IState> {
       isEnableNavButton: true,
       isEnableMouseMove: true,
       isEnableAutoPlay: false,
-  }
+  };
 
   touchStart: ITouchStart = {
       pageX: 0,
@@ -89,17 +89,17 @@ class Carousel extends React.Component<ICarouselProps, IState> {
       y: 0,
       movePositionX: 0,
       movePositionY: 0
-  }
+  };
   state = {
       windowSize: 0
-  }
+  };
 
   // Ref
-  rootRef: React.RefObject<HTMLDivElement> = React.createRef()
-  carouselRef: React.RefObject<HTMLDivElement> = React.createRef()
-  slideItemRefs: React.RefObject<Array<HTMLDivElement>> = React.createRef()
-  pageRefs: React.RefObject<Array<HTMLDivElement>> = React.createRef()
-  _throttleHandleResize = () => {}
+  rootRef: React.RefObject<HTMLDivElement> = React.createRef();
+  carouselRef: React.RefObject<HTMLDivElement> = React.createRef();
+  slideItemRefs: React.RefObject<Array<HTMLDivElement>> = React.createRef();
+  pageRefs: React.RefObject<Array<HTMLDivElement>> = React.createRef();
+  _throttleHandleResize = () => {};
 
   constructor(props: ICarouselProps) {
       super(props);
@@ -230,7 +230,7 @@ class Carousel extends React.Component<ICarouselProps, IState> {
           carouselRef.addEventListener('touchmove', this._onMobileTouchMove, false);
           carouselRef.addEventListener('touchend', this._onMobileTouchEnd, false);
       }
-  }
+  };
 
   /**
    * 手機手指按住移動中
@@ -262,7 +262,7 @@ class Carousel extends React.Component<ICarouselProps, IState> {
 
       default:
       }
-  }
+  };
 
   /**
    * 手機手指按住結束
@@ -279,7 +279,7 @@ class Carousel extends React.Component<ICarouselProps, IState> {
           carouselRef.removeEventListener('touchend', this._onMobileTouchEnd, false);
       }
       this._elementMoveDone();
-  }
+  };
 
   /**
    * 網頁滑鼠按下
@@ -309,7 +309,7 @@ class Carousel extends React.Component<ICarouselProps, IState> {
           carouselRef.addEventListener('mouseup', this._onWebMouseEnd, false);
       }
 
-  }
+  };
 
 
   /**
@@ -323,7 +323,7 @@ class Carousel extends React.Component<ICarouselProps, IState> {
       const moveX = event.clientX;
 
       this._elementMove(moveX);
-  }
+  };
 
   /**
    * 網頁滑鼠放開
@@ -341,7 +341,7 @@ class Carousel extends React.Component<ICarouselProps, IState> {
       }
 
       this._elementMoveDone();
-  }
+  };
 
 
   /**
@@ -368,7 +368,7 @@ class Carousel extends React.Component<ICarouselProps, IState> {
       }
 
 
-  }
+  };
 
 
   /**
@@ -395,7 +395,7 @@ class Carousel extends React.Component<ICarouselProps, IState> {
           }
       }
 
-  }
+  };
 
 
 
@@ -419,7 +419,7 @@ class Carousel extends React.Component<ICarouselProps, IState> {
               this.toNext();
           }, autoPlayTime);
       }
-  }
+  };
 
 
   /**
@@ -427,13 +427,18 @@ class Carousel extends React.Component<ICarouselProps, IState> {
    * 如果元素內是 isClone 則返回到他應該真實顯示的位置
    */
   _onTransitionend = (): void => {
-      // if(this.props.isDebug) log.printInText('[_onTransitionend]');
+      if(this.props.isDebug) log.printInText('[_onTransitionend]');
 
       const formatElement = this.info?.formatElement ? this.info.formatElement : [];
+
+      const $this = this;
       if (formatElement.length > (this.activeActualIndex - 1) && formatElement[this.activeActualIndex].isClone) {
-          this.goToActualIndex(formatElement[this.activeActualIndex].matchIndex, false);
+          setTimeout(() => {
+              $this.goToActualIndex(formatElement[this.activeActualIndex].matchIndex, false);
+          }, this.props.moveTime / 2);
       }
-  }
+
+  };
 
   /**
    * 處理更改螢幕尺寸時
@@ -457,7 +462,7 @@ class Carousel extends React.Component<ICarouselProps, IState> {
           });
       }
 
-  }
+  };
 
 
   /**
@@ -465,7 +470,7 @@ class Carousel extends React.Component<ICarouselProps, IState> {
    */
   getNextPage = (): number => {
       return this.activePage + 1;
-  }
+  };
 
   /**
    * 取得下一頁的第一個項目
@@ -476,21 +481,21 @@ class Carousel extends React.Component<ICarouselProps, IState> {
       }
       // 避免結尾出現空白
       return this.activeActualIndex + this.rwdMedia.slidesPerViewActual;
-  }
+  };
 
   /**
    * 取得最大Index
    */
   getMaxIndex = (): number => {
       return this.info.formatElement.length - 1;
-  }
+  };
 
   /**
    * 取得虛擬Index
    */
   checkActualIndexInRange = (slideIndex: number): boolean => {
       return slideIndex <= this.info.actual.maxIndex && slideIndex >= this.info.actual.minIndex;
-  }
+  };
 
 
   /**
@@ -514,7 +519,7 @@ class Carousel extends React.Component<ICarouselProps, IState> {
       }
 
       this.goToActualIndex(index);
-  }
+  };
 
   /**
    * 前往上一個
@@ -529,7 +534,7 @@ class Carousel extends React.Component<ICarouselProps, IState> {
           index = this.activeActualIndex - this.rwdMedia.slidesPerGroup;
       }
       this.goToActualIndex(index);
-  }
+  };
 
 
   /**
@@ -537,7 +542,7 @@ class Carousel extends React.Component<ICarouselProps, IState> {
    */
   goToPage = (page: number, isUseAnimation = true): void => {
       this.goToActualIndex(page * this.rwdMedia.slidesPerGroup + (this.info.actual.firstIndex - 1), isUseAnimation);
-  }
+  };
 
   /**
    * 同步 Carousel 狀態
@@ -551,7 +556,7 @@ class Carousel extends React.Component<ICarouselProps, IState> {
               activeActualIndex: this.activeActualIndex,
           });
       }
-  }
+  };
 
 
   /**
@@ -573,7 +578,7 @@ class Carousel extends React.Component<ICarouselProps, IState> {
       }
 
       return 0;
-  }
+  };
 
   /**
    * 前往實際位置
@@ -655,7 +660,7 @@ class Carousel extends React.Component<ICarouselProps, IState> {
 
           this._handleSyncCarousel();
       }
-  }
+  };
 
   /**
    * 渲染左右導航區塊
@@ -676,7 +681,7 @@ class Carousel extends React.Component<ICarouselProps, IState> {
               <div className={elClassName.navIcon}/>
           </button>
       </div>);
-  }
+  };
 
   /**
    * 渲染按鈕區塊
@@ -707,7 +712,7 @@ class Carousel extends React.Component<ICarouselProps, IState> {
           );
       }
       return pageElement;
-  }
+  };
 
 
   render() {
