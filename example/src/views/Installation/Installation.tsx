@@ -17,7 +17,7 @@ const Installation = () => {
     >
         <Code language="bash">
             {`
-            $ npm install bear-carousel
+            $ yarn add bear-carousel
         `}
         </Code>
 
@@ -28,7 +28,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 
-import 'bear-carousel/dist/index.css';
+import 'bear-carousel/dist/index.css'; // <~ add this
 
 ReactDOM.render(<App />, document.getElementById('root'));
         `}
@@ -42,9 +42,9 @@ import BearCarousel, {TSlideItemDataList, SlideItem} from 'bear-carousel';
 
 export const CustomBanner = () => {
     const images = [
-        {id: 1, image: '/static/sample/01.jpg'},
-        {id: 2, image: '/static/sample/02.jpg'},
-        {id: 3, image: '/static/sample/03.jpg'},
+        {id: 1, image: "https://dummyimage.com/900x400/dee2e6/6c757d.jpg"},
+        {id: 2, image: "https://dummyimage.com/900x400/dee2e6/6c757d.jpg"},
+        {id: 3, image: "https://dummyimage.com/900x400/dee2e6/6c757d.jpg"},
     ];
     
     const slideItemData: TSlideItemDataList = images.map(row => {
@@ -54,7 +54,10 @@ export const CustomBanner = () => {
         };
     });
 
-    return <Carousel data={slideItemData} staticHeight="250px"/>
+    return <BearCarousel 
+        data={slideItemData} 
+        aspectRatio={{widthRatio: 16, heightRatio: 9}}
+    />
 }
 
         `}

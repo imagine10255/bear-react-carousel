@@ -19,23 +19,24 @@ yarn add bear-carousel
 import BearCarousel, {TSlideItemDataList, SlideItem} from 'bear-carousel';
 import 'bear-carousel/dist/index.css';
 
-export const CustomBanner = () => {
-    const images = [
-        {id: 1, image: '/static/sample/01.jpg'},
-        {id: 2, image: '/static/sample/02.jpg'},
-        {id: 3, image: '/static/sample/03.jpg'},
+const images = [
+        {id: 1, image: "https://dummyimage.com/900x400/dee2e6/6c757d.jpg"},
+        {id: 2, image: "https://dummyimage.com/900x400/dee2e6/6c757d.jpg"},
+        {id: 3, image: "https://dummyimage.com/900x400/dee2e6/6c757d.jpg"},
     ];
     
-    const slideItemData: TSlideItemDataList  = images.map(row => {
+const slideItemData: TSlideItemDataList  = images.map(row => {
         return {
             key: row.id,
             children: <SlideItem imageUrl={row.image}/>
         };
     });
 
-    return <Carousel 
+
+export const CustomBanner = () => {
+    return <BearCarousel 
         data={slideItemData} 
-        staticHeight="250px"
+        aspectRatio={{widthRatio: 16, heightRatio: 9}}
     />
 }
 ```
@@ -49,13 +50,13 @@ There is also a codesandbox template that you can fork and play with it:
 ## if your need control by out component
 
 ```tsx
-const HomeBanner = ({
+const CustomBanner = ({
     const [carousel, setCarousel] = useState<ICarouselObj>();
   
     const goToPage = (index: number): void => control?.goToPage(index);
     const getPageTotal = (): number => control?.info.pageTotal ?? 0;
 
-    <Carousel
+    <BearCarousel
         setCarousel={setCarousel}
         data={carouselData}
         staticHeight="250px"/
