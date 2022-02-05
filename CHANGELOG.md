@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.11](https://github.com/imagine10255/bear-carousel/compare/v1.1.10...v1.1.11) (2022-02-05)
+
+
+### Features
+
+* modify locale text ([de50606](https://github.com/imagine10255/bear-carousel/commit/de50606a308f77214c0ce97732fdcc983e7e3c0d))
+* 修正 Sidebar content 排版 ([d8448dc](https://github.com/imagine10255/bear-carousel/commit/d8448dcf316fe6c0ad98f4d95afd67d40a23ac03))
+* 新增 About, Advices 頁面加入多國語系 ([473a094](https://github.com/imagine10255/bear-carousel/commit/473a0943571e688bc5012b5bfa188d3e7ad6aaf9))
+* 新增 Example 翻譯 ([ee7f932](https://github.com/imagine10255/bear-carousel/commit/ee7f932766f0cee8c3f1cf32732347869dfe0b4c))
+* 新增 Feature 翻譯 ([f028247](https://github.com/imagine10255/bear-carousel/commit/f02824711873a5b9e86aced95a827f20eef969aa))
+* 新增 Menu 下方增加語系選擇(Mobile) ([791712a](https://github.com/imagine10255/bear-carousel/commit/791712a076d3f17e9d805218e5eb8b2829b167e0))
+* 新增 PropsType 固定高, 等比例設定 ([a84cbe7](https://github.com/imagine10255/bear-carousel/commit/a84cbe7d739ef1dbfba5af99d2e3d5b2cad10f57))
+* 新增 PropsType, StaticHieght 頁面翻譯 ([5de3528](https://github.com/imagine10255/bear-carousel/commit/5de35283ee0efb90392652bf7572a189c8581dc3))
+* 新增 多語系 ([119b654](https://github.com/imagine10255/bear-carousel/commit/119b654c7c1e5b4c2a187b0356ad898eb2937855))
+* 新增 多語系 ([2e79b83](https://github.com/imagine10255/bear-carousel/commit/2e79b8324883cbec40ce02e4f30f717580b75220))
+* 新增 多語系持久化 ([72fdad3](https://github.com/imagine10255/bear-carousel/commit/72fdad3153cb4399e7606e32a6baae05601c6843))
+* 新增 文字動畫的效果 ([1397a6a](https://github.com/imagine10255/bear-carousel/commit/1397a6acb666c54890903257918233dd7570b341))
+* 新增 日文語系 ([0e623d1](https://github.com/imagine10255/bear-carousel/commit/0e623d1cfd63683e9dc6d7dc0d96fc72dc89595e))
+* 更換 Text Animations 更換圖片與文字位置 ([acbc05b](https://github.com/imagine10255/bear-carousel/commit/acbc05b776cb2bd64edc8055b2507dd267224789))
+* 更改 目錄列翻譯 ([cbf9577](https://github.com/imagine10255/bear-carousel/commit/cbf9577aa401acb9a49b4d85b2ddc7648849e6e7))
+* 更改 說明文件 ([e030008](https://github.com/imagine10255/bear-carousel/commit/e030008070b3e86f1749634ea8e8f8d56d6a718d))
+* 更改 說明文件 ([93022e3](https://github.com/imagine10255/bear-carousel/commit/93022e3bd4205a11354cc6431d17a4ce4bc67ad7))
+
+
+### Bug Fixes
+
+* 修正 _onMobileTouchMove event.preventDefault() 開啟會導致全屏輪播無法將頁面往下滑 ([971828a](https://github.com/imagine10255/bear-carousel/commit/971828aa707f18e9aa442a91590091b6e2656ade))
+* 修正 onTransitionend 過早執行的問題 ([54f9142](https://github.com/imagine10255/bear-carousel/commit/54f91420a99866abd8e066fdae0ff41f7d8b5e7a))
+
 ### [1.1.10](https://github.com/imagine10255/bear-carousel/compare/v1.1.9...v1.1.10) (2022-02-04)
 
 
