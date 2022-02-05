@@ -1,6 +1,5 @@
-import React, {useState} from 'react';
+import React from 'react';
 import BearCarousel, {elClassName, SlideItem, TSlideItemDataList} from 'bear-carousel';
-import {useLocale} from 'library/intl';
 import {foodImages as images} from 'config/images';
 import styled, {css} from 'styled-components';
 import {EDirection, Flex, media} from 'bear-styled-grid';
@@ -11,6 +10,7 @@ interface ITextCardProps {
     title: string,
     subTitle: string,
     desc: string,
+    position: 'left'|'right',
 }
 
 const TextCard = ({
@@ -18,10 +18,11 @@ const TextCard = ({
     title,
     subTitle,
     desc,
+    position = 'left',
 }: ITextCardProps) => {
 
     return <SlideItem imageUrl={imageUrl}>
-        <AnimationsBox>
+        <AnimationsBox position={position}>
             <SubTitle>{subTitle}</SubTitle>
             <Title>{title}</Title>
             <Desc>{desc}</Desc>
@@ -58,7 +59,7 @@ const TextCarousel = ({
             data={isLoadData ? slideItemData: []}
             slidesPerView={1}
             staticHeight="800px"
-            isEnableAutoPlay
+            // isEnableAutoPlay
             isEnableLoop
             isEnableNavButton
             isEnablePagination
@@ -84,6 +85,7 @@ const Button = styled.button<{
   margin-right: 20px;
   font-family: Blatant, sans-serif;
   transition: background-color .4s, color .4s;
+  
 
   ${props => props.isOutline && css`
      border-color: #fff;
@@ -137,7 +139,9 @@ const SubTitle = styled.h3`
     `}
 `;
 
-const AnimationsBox = styled.div`
+const AnimationsBox = styled.div<{
+    position: string,
+}>`
     width: 500px;
     max-width: 100%;
     padding: 20px;
@@ -150,21 +154,48 @@ const AnimationsBox = styled.div`
     opacity: 0;
     transform: translateY(10px);
     
-    will-change: opacity, transform;
+    //will-change: opacity, transform;
     transition: opacity 2s ease .7s, transform 2s ease .7s;
     
-    ${media.md`
-      margin-left: 10%;
+    ${props => css`
+        ${media.md`
+            ${props.position === 'left' && css`
+                margin-left: 10%;
+                margin-right: auto;
+            `}
+            ${props.position === 'right' && css`
+                margin-left: auto;
+                margin-right: 10%;
+            `}
+        `}
     `}
+    
 `;
 
 const TextAnimationsRoot = styled.div`
   --primary-color: #c4a265;
 
-  .${elClassName.slideItem}[data-active=true]:not([data-is-clone]){
-      ${AnimationsBox}{
-           transform: translateY(-60px);
-           opacity: 1;
+  .${elClassName.slideItem}{
+  
+      &[data-active=true]:not([data-is-clone]){
+          ${AnimationsBox}{
+               transform: translateY(-60px);
+               opacity: 1;
+          }
+      }
+      
+      
+      &:before{
+        content: "";
+        background: url(/static/sample/food/blackt-will.png) center center repeat;
+        z-index: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.5;
       }
   }
+  
 `;
