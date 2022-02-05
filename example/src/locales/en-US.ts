@@ -70,4 +70,12 @@ export default {
     'page.feature.responsive.title': 'Responsive',
     'page.feature.responsive.desc': 'Display settings according to responsive size',
     'page.feature.responsive.importantNote': 'Settings not in breakpoints are default settings, breakpoints are override settings, but large size settings in breakpoints will not include small size settings',
+
+    // Page Example / Vip level list
+    'page.example.vipLevelList.title': 'Vip Level Card List',
+    'page.example.vipLevelList.desc': 'Multi card and control page',
+
+    // Page Example / Auto Play Progress
+    'page.example.autoPlayProgress.title': 'Auto Play Progress',
+    'page.example.autoPlayProgress.desc': 'Moved items as to the central position',
 };

@@ -68,4 +68,13 @@ export default {
     'page.feature.responsive.title': '依響應式設定',
     'page.feature.responsive.desc': '根據響應大小顯示設置',
     'page.feature.responsive.importantNote': '不在 breakpoints 中的設定為預設設定, breakpoints 為覆蓋設定, 但 breakpoints 中的大尺寸設定不會包含小尺寸設定',
+
+
+    // Page Example / Vip level list
+    'page.example.vipLevelList.title': 'VIP等級卡片列表',
+    'page.example.vipLevelList.desc': '多的卡片顯示方式與外部連動控制位置',
+
+    // Page Example / Auto Play Progress
+    'page.example.autoPlayProgress.title': '自動播放進度條',
+    'page.example.autoPlayProgress.desc': '客製化自動播放倒數的進度條',
 };

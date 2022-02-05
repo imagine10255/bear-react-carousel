@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import styled, {css, keyframes} from 'styled-components/macro';
-import Content, {SubTitle} from '../../_components/Content';
+import {useLocale} from 'library/intl';
+import Content from '../../_components/Content';
 import VipLevelCarousel from './_components/VipLevelCarousel';
 
 
@@ -20,11 +20,12 @@ const vipData = new Array(12).fill('').map((row, index) => {
  * Vip Level List
  */
 const VipLevelList = () => {
+    const {i18n} = useLocale();
     const [isLoadData, setIsLoadData] = useState<boolean>(true);
 
     return <Content
-        title="Vip Level List"
-        desc="Multi card and control page"
+        title={i18n('page.example.vipLevelList.title')}
+        desc={i18n('page.example.vipLevelList.desc')}
         isLoadData={isLoadData}
         onLoadData={setIsLoadData}
     >

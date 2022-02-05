@@ -95,7 +95,7 @@ const VipLevelCarousel = ({
                         slidesPerView: 'auto'
                     },
                 }}
-            />;
+            />
         </VipLevelCardListRoot>
     );
 };

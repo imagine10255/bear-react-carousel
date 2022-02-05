@@ -2,11 +2,13 @@ import React, {useState} from 'react';
 import styled, {css, keyframes} from 'styled-components/macro';
 import BearCarousel, {elClassName, TSlideItemDataList, SlideItem} from 'bear-carousel';
 import {Icon} from 'bear-components/atoms';
-import {Col, Container, EColType, media, Row} from 'bear-styled-grid';
+import {useLocale} from 'library/intl';
+import {media} from 'bear-styled-grid';
 import {racingImages as images} from 'config/images';
 
 // Components
 import Content from '../../_components/Content';
+import ImportantNote from '../../../components/atoms/ImportantNote /ImportantNote';
 
 
 // 輪播項目
@@ -25,13 +27,13 @@ const autoPlayTime = 5000;
  * AutoPlayProgress
  */
 const AutoPlayProgress = () => {
-
+    const {i18n} = useLocale();
     const [isLoadData, setIsLoadData] = useState<boolean>(true);
 
 
     return <Content
-        title="Auto Play Progress"
-        desc="Moved items as to the central position"
+        title={i18n('page.example.autoPlayProgress.title')}
+        desc={i18n('page.example.autoPlayProgress.desc')}
         isLoadData={isLoadData}
         onLoadData={setIsLoadData}
     >
