@@ -1,4 +1,4 @@
-import React, {ReactNodeArray, useCallback, useState} from 'react';
+import React, {ReactNodeArray, useCallback, useEffect, useState} from 'react';
 import styled from 'styled-components/macro';
 import {Col, Container, EColType, Flex, Row} from 'bear-styled-grid';
 import Carousel, {ICarouselObj, TSlideItemDataList, SlideItem} from 'bear-carousel';
@@ -9,14 +9,15 @@ import {Controller, useForm} from 'react-hook-form';
 import {TextAreaField, TextField, SwitchControl} from 'bear-components/forms';
 import {FormHorizontalGroup, Button} from 'bear-components/atoms';
 import Content from 'views/_components/Content';
-import {catImages as images} from 'config/images';
+import {diffImages as images} from 'config/images';
 import {useLocale} from '../../library/intl';
+import {isNotEmpty} from 'bear-jsutils/dist/equal';
 
 
 const SlideItemData: TSlideItemDataList = images.map(row => {
     return {
         key: row.id,
-        children: <SlideItem imageUrl={row.image}/>
+        children: <SlideItem imageUrl={row.image} imageSize="cover"/>
     };
 });
 
@@ -26,6 +27,11 @@ export interface IFormData {
   slidesPerView: number,
   slidesPerGroup: number,
   spaceBetween: number,
+  aspectRatioWidth: number,
+  aspectRatioHeight: number,
+  staticHeight: number,
+  isAutoMode: boolean,
+  isStaticHeightMode: boolean,
   autoPlayTime: number,
   moveTime: number,
   isEnableLoop: boolean,
@@ -45,10 +51,16 @@ const PropsTry = () => {
     const {i18n} = useLocale();
     const [isLoadData, setIsLoadData] = useState<boolean>(true);
     const [carousel, setCarousel] = useState<ICarouselObj>();
-    const {control, watch} = useForm<IFormData>({
+    const {control, watch, setValue} = useForm<IFormData>({
         defaultValues: {
             isMount: true,
+            isEnableAutoPlay: false,
             autoPlayTime: 3000,
+            aspectRatioWidth: 16,
+            aspectRatioHeight: 9,
+            staticHeight: 400,
+            isAutoMode: false,
+            isStaticHeightMode: false,
         }
     });
 
@@ -61,10 +73,15 @@ const PropsTry = () => {
     const isEnableNavButton = watch('isEnableNavButton');
     const isEnableMouseMove = watch('isEnableMouseMove');
     const isEnableAutoPlay = watch('isEnableAutoPlay');
+    const isAutoMode = watch('isAutoMode');
+    const isStaticHeightMode = watch('isStaticHeightMode');
 
     const slidesPerGroup = watch('slidesPerGroup');
     const slidesPerView = watch('slidesPerView');
     const spaceBetween = watch('spaceBetween');
+    const aspectRatioWidth = watch('aspectRatioWidth');
+    const aspectRatioHeight = watch('aspectRatioHeight');
+    const staticHeight = watch('staticHeight');
     const autoPlayTime = watch('autoPlayTime');
     const moveTime = watch('moveTime');
 
@@ -81,6 +98,11 @@ const PropsTry = () => {
     const handleSetCarousel = useCallback(setCarousel, []);
 
 
+    useEffect(() => {
+        if(isAutoMode === true){
+            setValue('isStaticHeightMode',true);
+        }
+    }, [isAutoMode]);
 
 
 
@@ -114,45 +136,108 @@ const PropsTry = () => {
         isLoadData={isLoadData}
         onLoadData={setIsLoadData}
     >
-        <div className="mb-4">
-            {isMount && (<>
-                <Carousel
-                    setCarousel={handleSetCarousel}
-                    data={isLoadData ? SlideItemData: []}
-                    isDebug={isDebug}
-                    isEnablePagination={isEnablePagination}
-                    isEnableMouseMove={isEnableMouseMove}
-                    isEnableNavButton={isEnableNavButton}
-                    isEnableLoop={isEnableLoop}
-                    isEnableAutoPlay={isEnableAutoPlay}
-                    slidesPerView={anyToNumber(slidesPerView, 1)}
-                    slidesPerGroup={anyToNumber(slidesPerGroup, 1)}
-                    spaceBetween={anyToNumber(spaceBetween)}
-                    autoPlayTime={anyToNumber(autoPlayTime)}
-                    moveTime={anyToNumber(moveTime)}
-                    aspectRatio={{widthRatio: 32, heightRatio: 9}}
-                    // breakpoints={{
-                    //     768: {
-                    //         slidesPerView: 2,
-                    //         isEnableLoop: false,
-                    //         isEnablePagination: false,
-                    //         isEnableNavButton: false,
-                    //     },
-                    //     1200: {
-                    //         slidesPerView: 1,
-                    //         isEnableLoop: true,
-                    //         isEnablePagination: true,
-                    //         isEnableNavButton: true,
-                    //     }
-                    // }}
-                />
-            </>)}
 
-        </div>
-
-        <Row className="mb">
-            <Col lg={24} xl={12}>
+        <Row className="mb-1">
+            <Col lg={24} xl={12} className="order-1 order-lg-0">
                 {renderPageControl()}
+
+                <PageControlBox>
+
+                    <Col md={12}>
+                        <FormHorizontalGroup label="isAutoMode" labelCol={12} formCol={12}>
+                            <Controller
+                                control={control}
+                                name="isAutoMode"
+                                render={({field}) => {
+                                    return <SwitchControl
+                                        {...field}
+                                        checked={field.value}
+                                    />;
+                                }}
+                            />
+                        </FormHorizontalGroup>
+                    </Col>
+
+                    <Col md={12}>
+                        <FormHorizontalGroup label="slidesPerView" labelCol={12} formCol={12}>
+                            <Controller
+                                control={control}
+                                name="slidesPerView"
+                                defaultValue={1}
+                                render={({field}) => {
+                                    return (<TextField
+                                        type="number"
+                                        disabled={isAutoMode}
+                                        {...field}
+                                    />);
+                                }}
+                            />
+                        </FormHorizontalGroup>
+
+                    </Col>
+
+                    <Col md={12}>
+                        <FormHorizontalGroup label="isStaticHeightMode" labelCol={12} formCol={12}>
+                            <Controller
+                                control={control}
+                                name="isStaticHeightMode"
+                                render={({field}) => {
+                                    return <SwitchControl
+                                        {...field}
+                                        disabled={isAutoMode}
+                                        checked={field.value}
+                                    />;
+                                }}
+                            />
+                        </FormHorizontalGroup>
+                    </Col>
+                    <Col md={12}>
+                        {isStaticHeightMode && (
+                            <FormHorizontalGroup label="staticHeight" labelCol={12} formCol={12}>
+                                <Controller
+                                    control={control}
+                                    name="staticHeight"
+                                    render={({field}) => {
+                                        return (<TextField
+                                            type="number"
+                                            {...field}
+                                        />);
+                                    }}
+                                />
+                            </FormHorizontalGroup>
+                        )}
+
+                        {!isStaticHeightMode && (
+                            <FormHorizontalGroup label="aspectRatio" labelCol={12} formCol={12}>
+                                <Controller
+                                    control={control}
+                                    name="aspectRatioWidth"
+                                    render={({field}) => {
+                                        return (<TextField
+                                            type="number"
+                                            {...field}
+                                        />);
+                                    }}
+                                />
+                                <Controller
+                                    control={control}
+                                    name="aspectRatioHeight"
+                                    render={({field}) => {
+                                        return (<TextField
+                                            type="number"
+                                            {...field}
+                                        />);
+                                    }}
+                                />
+                            </FormHorizontalGroup>
+                        )}
+
+                    </Col>
+
+
+
+
+                </PageControlBox>
 
                 <Row>
 
@@ -258,7 +343,6 @@ const PropsTry = () => {
                             <Controller
                                 control={control}
                                 name="isEnableAutoPlay"
-                                defaultValue={true}
                                 render={({field}) => {
                                     return <SwitchControl
                                         {...field}
@@ -269,22 +353,7 @@ const PropsTry = () => {
                         </FormHorizontalGroup>
 
                     </Col>
-                    <Col md={12}>
-                        <FormHorizontalGroup label="slidesPerView" labelCol={12} formCol={12}>
-                            <Controller
-                                control={control}
-                                name="slidesPerView"
-                                defaultValue={1}
-                                render={({field}) => {
-                                    return (<TextField
-                                        type="number"
-                                        {...field}
-                                    />);
-                                }}
-                            />
-                        </FormHorizontalGroup>
 
-                    </Col>
                     <Col md={12}>
                         <FormHorizontalGroup label="slidesPerGroup" labelCol={12} formCol={12}>
                             <Controller
@@ -317,6 +386,7 @@ const PropsTry = () => {
                         </FormHorizontalGroup>
 
                     </Col>
+
                     <Col md={12}>
                         <FormHorizontalGroup label="autoPlayTime" labelCol={12} formCol={12}>
                             <Controller
@@ -366,7 +436,43 @@ const PropsTry = () => {
 
 
             </Col>
-            <Col lg={24} xl>
+
+            <Col xl={12} className="order-0 order-lg-1">
+                {isMount && (<>
+                    <Carousel
+                        setCarousel={handleSetCarousel}
+                        data={isLoadData ? SlideItemData: []}
+                        isDebug={isDebug}
+                        isEnablePagination={isEnablePagination}
+                        isEnableMouseMove={isEnableMouseMove}
+                        isEnableNavButton={isEnableNavButton}
+                        isEnableLoop={isEnableLoop}
+                        isEnableAutoPlay={isEnableAutoPlay}
+                        slidesPerView={isAutoMode ? 'auto' : anyToNumber(slidesPerView, 1)}
+                        slidesPerGroup={anyToNumber(slidesPerGroup, 1)}
+                        spaceBetween={anyToNumber(spaceBetween)}
+                        autoPlayTime={anyToNumber(autoPlayTime)}
+                        moveTime={anyToNumber(moveTime)}
+                        aspectRatio={!isStaticHeightMode && aspectRatioWidth > 0 && aspectRatioHeight > 0 ? {widthRatio: aspectRatioWidth, heightRatio: aspectRatioHeight}: undefined}
+                        staticHeight={isStaticHeightMode && isNotEmpty(staticHeight) ? `${staticHeight}px` : undefined}
+                        // breakpoints={{
+                        //     768: {
+                        //         slidesPerView: 2,
+                        //         isEnableLoop: false,
+                        //         isEnablePagination: false,
+                        //         isEnableNavButton: false,
+                        //     },
+                        //     1200: {
+                        //         slidesPerView: 1,
+                        //         isEnableLoop: true,
+                        //         isEnablePagination: true,
+                        //         isEnableNavButton: true,
+                        //     }
+                        // }}
+                    />
+                </>)}
+            </Col>
+            <Col lg={24} xl className="order-5">
                 <TextAreaField id="console"/>
 
             </Col>
