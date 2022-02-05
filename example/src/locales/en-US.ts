@@ -88,6 +88,6 @@ export default {
     'page.example.autoPlayProgress.desc': 'Moved items as to the central position',
 
     // Page Example / Text Animation
-    'page.example.textAnimation.title': 'Text Animation',
-    'page.example.textAnimation.desc': 'Text display effect when swipe ends',
+    'page.example.textAnimations.title': 'Text Animations',
+    'page.example.textAnimations.desc': 'Text display effect when swipe ends',
 };

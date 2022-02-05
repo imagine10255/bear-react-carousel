@@ -28,7 +28,7 @@ export const menu = (): IMenu[] => {
             children: [
                 {name: i18n('page.example.vipLevelList.title'), href: '/example/vip-level-list'},
                 {name: i18n('page.example.autoPlayProgress.title'), href: '/example/auto-play-progress'},
-                // {name: i18n('page.example.textAnimation.title'), href: '/example/text-animations'},
+                {name: i18n('page.example.textAnimations.title'), href: '/example/text-animations'},
             ]
         },
     ];

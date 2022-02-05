@@ -17,7 +17,7 @@ import BearCarousel, {SlideItem, TSlideItemDataList} from 'bear-carousel';
 const slideItemData: TSlideItemDataList = images.map(row => {
     return {
         key: row.id,
-        children: <SlideItem imageUrl={row.image}/>
+        children: <SlideItem imageUrl={row.imageUrl}/>
     };
 });
 

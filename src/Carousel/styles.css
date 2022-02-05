@@ -173,7 +173,7 @@ div.bear-carousel__slide-item__div{
     height: 100%;
     z-index: 1;
 
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
 

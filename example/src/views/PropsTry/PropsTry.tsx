@@ -17,7 +17,7 @@ import {isNotEmpty} from 'bear-jsutils/dist/equal';
 const SlideItemData: TSlideItemDataList = images.map(row => {
     return {
         key: row.id,
-        children: <SlideItem imageUrl={row.image} imageSize="cover"/>
+        children: <SlideItem imageUrl={row.imageUrl} imageSize="cover"/>
     };
 });
 

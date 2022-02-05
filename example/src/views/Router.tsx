@@ -16,6 +16,7 @@ import AutoPlayProgress from './Example/AutoPlayProgress';
 import VipLevelList from './Example/VipLevelList';
 import Advices from './Advices';
 import AspectRatioHeight from './Feature/AspectRatioHeight';
+import TextAnimations from './Example/TextAnimations';
 
 
 const Router = () => {
@@ -35,6 +36,7 @@ const Router = () => {
 
             <Route path="/example/vip-level-list" children={<VipLevelList/>} exact/>
             <Route path="/example/auto-play-progress" children={<AutoPlayProgress/>} exact/>
+            <Route path="/example/text-animations" children={<TextAnimations/>} exact/>
 
             <Route path="/" children={<Redirect to="/about"/>} exact/>
 

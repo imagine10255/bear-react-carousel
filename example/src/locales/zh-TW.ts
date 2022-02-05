@@ -88,6 +88,6 @@ export default {
     'page.example.autoPlayProgress.desc': '客製化自動播放倒數的進度條',
 
     // Page Example / Text Animation
-    'page.example.textAnimation.title': '文字效果',
-    'page.example.textAnimation.desc': '當滑動結束時文字顯示效果',
+    'page.example.textAnimations.title': '文字動畫',
+    'page.example.textAnimations.desc': '當滑動結束時文字顯示效果',
 };
