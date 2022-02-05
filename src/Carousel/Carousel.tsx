@@ -209,7 +209,7 @@ class Carousel extends React.Component<ICarouselProps, IState> {
   _onMobileTouchStart = (event: TouchEvent): void => {
       if(this.props.isDebug) log.printInText('[_onMobileTouchStart]');
 
-      event.preventDefault();
+      // event.preventDefault(); <~  開啟會導致全屏輪播無法將頁面往下滑
 
       if (this.timer) clearTimeout(this.timer);
 
@@ -239,7 +239,7 @@ class Carousel extends React.Component<ICarouselProps, IState> {
   _onMobileTouchMove = (event: TouchEvent): void => {
       // if(this.props.isDebug) log.printInText('[_onMobileTouchMove]');
 
-      event.preventDefault();
+      // event.preventDefault(); <~  開啟會導致全屏輪播無法將頁面往下滑
 
       const endX = event.changedTouches[0].pageX;
       const endY = event.changedTouches[0].pageY;

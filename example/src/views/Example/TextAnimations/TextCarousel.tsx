@@ -59,7 +59,7 @@ const TextCarousel = ({
             data={isLoadData ? slideItemData: []}
             slidesPerView={1}
             staticHeight="800px"
-            // isEnableAutoPlay
+            isEnableAutoPlay
             isEnableLoop
             isEnableNavButton
             isEnablePagination
