@@ -8,6 +8,9 @@ export default {
     'common.loadData': '載入資料',
     'common.howToUse': '如何使用',
 
+    'menu.feature': '特性',
+    'menu.example': '客製化實例',
+
     /** -----------------------------------------
      |                    頁面                    |
      /** ---------------------------------------*/
@@ -37,10 +40,10 @@ export default {
     'page.advices.item.desc3': 'Bear Carousel 沒有提供內容高度 自動撐開內容的模式(ex: 文字公告光箱), 因為並不好用, 你只需要固定高度與捲軸, 光箱鎖背景',
 
     // Page Installation
-    'page.Installation.title': '安裝',
-    'page.Installation.desc': '關於如何在項目中包含/導入 BearCarousel',
-    'page.Installation.inYourIndex': '在你的專案進入點加入需要的樣式檔',
-    'page.Installation.fastUse': '快速使用',
+    'page.installation.title': '安裝',
+    'page.installation.desc': '關於如何在項目中包含/導入 BearCarousel',
+    'page.installation.inYourIndex': '在你的專案進入點加入需要的樣式檔',
+    'page.installation.fastUse': '快速使用',
 
     // Page Props Try
     'page.propsTry.title': '可用參數測試',
@@ -77,4 +80,8 @@ export default {
     // Page Example / Auto Play Progress
     'page.example.autoPlayProgress.title': '自動播放進度條',
     'page.example.autoPlayProgress.desc': '客製化自動播放倒數的進度條',
+
+    // Page Example / Text Animation
+    'page.example.textAnimation.title': '文字效果',
+    'page.example.textAnimation.desc': '當滑動結束時文字顯示效果',
 };

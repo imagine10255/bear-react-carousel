@@ -34,7 +34,7 @@ const Sidebar = () => {
 
     const location = useLocation();
 
-    const menuEl = renderMenu(menu, 1, location.pathname);
+    const menuEl = renderMenu(menu(), 1, location.pathname);
 
     return <>
         <SidebarContainer isExpend={isExpend}>

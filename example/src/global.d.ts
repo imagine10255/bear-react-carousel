@@ -7,6 +7,7 @@ declare global {
      */
     interface Window {
         ActiveXObject: string
+        i18n: TFormatMessage,
     }
     interface FCProps {
         style?: CSS.Properties,

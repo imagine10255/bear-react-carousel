@@ -6,12 +6,13 @@
  */
 
 import React, {Children, useEffect, useState} from 'react';
-import {IntlProvider} from 'react-intl';
+import {IntlProvider, useIntl, injectIntl} from 'react-intl';
 import TranslationWrapper from './TranslationWrapper';
 import {ELocales, TMessage} from '../types';
 import {LocaleContextProvider} from './context';
 import {persistKey} from 'config/app';
 import {decodeToJson} from 'bear-jsutils/string';
+import IntlGlobalProvider from '../global';
 
 
 // Stores
@@ -53,10 +54,10 @@ const LanguageProvider = ({
             // @ts-ignore
             textComponent={TranslationWrapper}
         >
-            {Children.only(children)}
 
-            {/*<IntlGlobalProvider>*/}
-            {/*</IntlGlobalProvider>*/}
+            <IntlGlobalProvider>
+                {Children.only(children)}
+            </IntlGlobalProvider>
         </IntlProvider>
 
     </LocaleContextProvider>;

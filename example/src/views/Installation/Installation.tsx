@@ -12,8 +12,8 @@ const Installation = () => {
     const {i18n} = useLocale();
 
     return <Content
-        title={i18n('page.Installation.title')}
-        desc={i18n('page.Installation.desc')}
+        title={i18n('page.installation.title')}
+        desc={i18n('page.installation.desc')}
     >
         <Code language="bash">
             {`
@@ -21,7 +21,7 @@ const Installation = () => {
         `}
         </Code>
 
-        <Desc>{i18n('page.Installation.inYourIndex')}</Desc>
+        <Desc>{i18n('page.installation.inYourIndex')}</Desc>
         <Code language="typescript">
             {`
 import React from 'react';
@@ -35,7 +35,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
         </Code>
 
 
-        <SubTitle>{i18n('page.Installation.fastUse')}</SubTitle>
+        <SubTitle>{i18n('page.installation.fastUse')}</SubTitle>
         <Code language="typescript">
             {`
 import BearCarousel, {TSlideItemDataList, SlideItem} from 'bear-carousel';

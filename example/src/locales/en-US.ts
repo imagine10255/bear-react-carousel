@@ -8,6 +8,8 @@ export default {
     'common.loadData': 'Load Data',
     'common.howToUse': 'How To Use',
 
+    'menu.feature': 'Feature',
+    'menu.example': 'Example',
 
     /** -----------------------------------------
      |                    頁面                    |
@@ -39,10 +41,10 @@ export default {
     'page.advices.item.desc3': 'Bear Carousel does not provide the content height mode (ex: text announcement light box), because it is not easy to use, you only need to fix the height and scroll, light box lock background',
 
     // Page Installation
-    'page.Installation.title': 'Installation',
-    'page.Installation.desc': 'There are few options on how to include/import BearCarousel into your project:',
-    'page.Installation.inYourIndex': 'Add the required style files to your project entry point',
-    'page.Installation.fastUse': 'Fast use',
+    'page.installation.title': 'Installation',
+    'page.installation.desc': 'There are few options on how to include/import BearCarousel into your project:',
+    'page.installation.inYourIndex': 'Add the required style files to your project entry point',
+    'page.installation.fastUse': 'Fast use',
 
     // Page Props Try
     'page.propsTry.title': 'Props Try',
@@ -78,4 +80,8 @@ export default {
     // Page Example / Auto Play Progress
     'page.example.autoPlayProgress.title': 'Auto Play Progress',
     'page.example.autoPlayProgress.desc': 'Moved items as to the central position',
+
+    // Page Example / Text Animation
+    'page.example.textAnimation.title': 'Text Animation',
+    'page.example.textAnimation.desc': 'Text display effect when swipe ends',
 };
