@@ -46,6 +46,12 @@ export default {
     'page.installation.inYourIndex': 'Add the required style files to your project entry point',
     'page.installation.fastUse': 'Fast use',
 
+    // Page lifeCycle
+    'page.lifeCycle.title': '生命週期',
+
+    // Page cssClassName
+    'page.cssClassName.title': 'CSS Class Name',
+
     // Page Props Try
     'page.propsTry.title': 'Props Try',
     'page.propsTry.desc': 'All available incoming parameters allow you to test and preview the results', // Page Props Try

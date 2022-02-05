@@ -45,6 +45,12 @@ export default {
     'page.installation.inYourIndex': '在你的專案進入點加入需要的樣式檔',
     'page.installation.fastUse': '快速使用',
 
+    // Page lifeCycle
+    'page.lifeCycle.title': '生命週期',
+
+    // Page cssClassName
+    'page.cssClassName.title': 'CSS Class Name',
+
     // Page Props Try
     'page.propsTry.title': '可用參數測試',
     'page.propsTry.desc': '讓你調整所有參數, 並進行快速測試與除錯',

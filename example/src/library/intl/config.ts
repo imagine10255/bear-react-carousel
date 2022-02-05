@@ -18,7 +18,7 @@ const localeConfig: TLocaleSetting = {
     // [ELocales.idID]: require('locales/id-ID').default,
 };
 
-export const DEFAULT_LOCALE = ELocales.enUS;
+const DEFAULT_LOCALE = ELocales.enUS;
 
 const formatTranslationMessages = (locale: ELocales, messages: II18nTexts): II18nTexts => {
     const defaultFormattedMessages = locale !== DEFAULT_LOCALE ? formatTranslationMessages(DEFAULT_LOCALE, localeConfig[DEFAULT_LOCALE]) : {};

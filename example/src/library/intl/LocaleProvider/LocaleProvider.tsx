@@ -4,20 +4,19 @@
  * this component connects the redux state language locale to the
  * IntlProvider component and i18n messages (loaded from `src/resources/lang`)
  */
-
 import React, {Children, useEffect, useState} from 'react';
-import {IntlProvider, useIntl, injectIntl} from 'react-intl';
+import {IntlProvider} from 'react-intl';
 import TranslationWrapper from './TranslationWrapper';
 import {ELocales, TMessage} from '../types';
 import {LocaleContextProvider} from './context';
 import {persistKey} from 'config/app';
 import {decodeToJson} from 'bear-jsutils/string';
-import IntlGlobalProvider from '../global';
+import RegisterGlobal from '../RegisterGlobal';
 
 
 // Stores
-
-interface IProps extends FCChildrenProps {
+interface IProps{
+    children: JSX.Element
     messages: TMessage
 }
 
@@ -28,6 +27,7 @@ const LanguageProvider = ({
     children
 }: IProps) => {
     const [locale, setLocale] = useState<ELocales>(cacheData?.locale ?? ELocales.enUS);
+
 
     const activeMessage = messages[locale];
 
@@ -45,7 +45,6 @@ const LanguageProvider = ({
         }}
 
     >
-
         <IntlProvider
             locale={locale}
             key={locale}
@@ -54,10 +53,9 @@ const LanguageProvider = ({
             // @ts-ignore
             textComponent={TranslationWrapper}
         >
-
-            <IntlGlobalProvider>
+            <RegisterGlobal>
                 {Children.only(children)}
-            </IntlGlobalProvider>
+            </RegisterGlobal>
         </IntlProvider>
 
     </LocaleContextProvider>;
