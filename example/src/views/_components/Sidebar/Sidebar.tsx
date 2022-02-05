@@ -1,9 +1,12 @@
-import React, {ReactNodeArray, Fragment} from 'react';
+import React, {ReactNodeArray, Fragment, useMemo} from 'react';
 import {media} from 'bear-styled-grid';
 import styled, {css} from 'styled-components/macro';
 import {Link, useLocation} from 'react-router-dom';
 import {IMenu, menu} from 'config/menu';
 import {useSidebar} from 'provider/SidebarProvider';
+import LocaleButton from '../LanguagePicker/LocaleButton';
+import {ELocales} from '../../../library/intl/types';
+import {useLocale} from '../../../library/intl';
 
 
 
@@ -29,12 +32,22 @@ const renderMenu = (rows: IMenu[], lv = 1, pathname = ''): ReactNodeArray => {
  * @constructor
  */
 const Sidebar = () => {
+    const {locale: currentLocale, setLocale} = useLocale();
     const {isExpend, toggleExpend} = useSidebar();
 
 
     const location = useLocation();
 
-    const menuEl = renderMenu(menu(), 1, location.pathname);
+    const sidebarMenu = useMemo(() => menu(), [currentLocale]);
+
+    const menuEl = renderMenu(sidebarMenu, 1, location.pathname);
+
+    /**
+     * 設定選擇語系
+     */
+    const handleSetLocale = (locale: ELocales) => {
+        setLocale(locale);
+    };
 
     return <>
         <SidebarContainer isExpend={isExpend}>
@@ -43,7 +56,20 @@ const Sidebar = () => {
                     <MenuList>
                         {menuEl}
                     </MenuList>
+
+                    <LocaleList>
+                        {(Object.keys(ELocales) as Array<keyof typeof ELocales>)
+                            .map((locale) => {
+                                return <LocaleButton
+                                    className="mr-3"
+                                    locale={ELocales[locale]}
+                                    onSetLocale={handleSetLocale}
+                                />;
+                            })}
+                    </LocaleList>
                 </Menu>
+
+
 
             </SidebarContent>
         </SidebarContainer>
@@ -52,6 +78,12 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
+
+
+const LocaleList = styled.div`
+  padding: 20px;
+
+`;
 
 
 const SidebarMask = styled.div`

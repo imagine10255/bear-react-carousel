@@ -3,7 +3,7 @@ import BearCarousel, {elClassName, SlideItem, TSlideItemDataList} from 'bear-car
 import {useLocale} from 'library/intl';
 import {foodImages as images} from 'config/images';
 import styled, {css} from 'styled-components';
-import {EDirection, Flex} from 'bear-styled-grid';
+import {EDirection, Flex, media} from 'bear-styled-grid';
 
 
 interface ITextCardProps {
@@ -103,54 +103,68 @@ const Desc = styled.h4`
     text-transform: uppercase;
     line-height: 33px;
     font-family: Blatant, sans-serif;
-    margin-bottom: 10px;
+    margin-bottom: 1rem;
+
 `;
 
 
 const Title = styled.h2`
     color: #b89352;
-    font-size: 90px;
+    font-size: 40px;
     font-weight: 700;
     text-transform: uppercase;
-    line-height: 80px;
     font-family: Blatant, sans-serif;
-    margin-bottom: 10px;
     font-style: normal;
+    margin-bottom: 1rem;
+    
+    ${media.lg`
+        font-size: 90px;
+    `}
 `;
 
 
 const SubTitle = styled.h3`
     color: #fff;
-    font-size: 50px;
+    font-size: 20px;
     font-weight: 700;
     text-transform: uppercase;
-    line-height: 80px;
-    font-family: Blatant, sans-serif
+    font-family: Blatant, sans-serif;
+    margin-bottom: 1rem;
+
+    
+    ${media.lg`
+        font-size: 50px;
+    `}
 `;
 
 const AnimationsBox = styled.div`
     width: 500px;
+    max-width: 100%;
+    padding: 20px;
     
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
     height: 100%;
-    margin-left: 10%;
     opacity: 0;
     transform: translateY(10px);
     
     will-change: opacity, transform;
     transition: opacity 2s ease .7s, transform 2s ease .7s;
+    
+    ${media.md`
+      margin-left: 10%;
+    `}
 `;
 
 const TextAnimationsRoot = styled.div`
   --primary-color: #c4a265;
-  
+
   .${elClassName.slideItem}[data-active=true]:not([data-is-clone]){
       ${AnimationsBox}{
            transform: translateY(-60px);
-           opacity: 1;  
+           opacity: 1;
       }
   }
 `;

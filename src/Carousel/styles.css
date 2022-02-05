@@ -125,6 +125,7 @@
 .bear-carousel__slide-item{
     transition-property: transform;
     position: relative;
+    overflow: hidden;
 }
 
 img.bear-carousel__slide-item__img{

@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import styled, {css} from 'styled-components/macro';
 import {ELocales} from 'library/intl/types';
 import {useLocale} from 'library/intl';
+import LocaleButton from './LocaleButton';
 
 const itemHeight = 30;
 
@@ -22,16 +23,6 @@ const LanguagePicker = () => {
     };
 
 
-    const renderLocaleButton = (locale: ELocales) => {
-        return <LocaleButton
-            type="button"
-            onClick={() => handleSetLocale(locale)}
-            key={`navbar-localeButton-${locale}`}
-        >
-            <LocaleIcon src={`/static/images/locales/${locale}.png`}/>
-        </LocaleButton>;
-    };
-
 
     return (<LanguagePickerRoot
         isVisible={isVisible}
@@ -40,7 +31,7 @@ const LanguagePicker = () => {
             {(Object.keys(ELocales) as Array<keyof typeof ELocales>)
                 .sort((locale) => currentLocale === ELocales[locale] ? -1: 1)
                 .map((locale) => {
-                    return renderLocaleButton(ELocales[locale]);
+                    return <LocaleButton locale={ELocales[locale]} onSetLocale={handleSetLocale} />;
                 })}
         </Absolute>
     </LanguagePickerRoot>
@@ -49,24 +40,6 @@ const LanguagePicker = () => {
 
 export default LanguagePicker;
 
-
-const LocaleButton = styled.button`
-  padding: 0;
-  height: ${itemHeight}px;
-  width: ${itemHeight}px;
-  border-radius: 99em;
-  overflow: hidden;
-
-`;
-
-const LocaleIcon = styled.img`
-  height: inherit;
-  width: inherit;
-  background-color: #fff;
-  padding: 2px;
-  border-radius: 99em;
-  overflow: hidden;
-`;
 
 const Absolute = styled.div`
   
