@@ -118,6 +118,7 @@ const NavbarNav = styled.ul`
    display: flex;
    flex-direction: row;
    justify-content: flex-end;
+   z-index: 2;
 `;
 
 const NavbarBrand = styled.div`

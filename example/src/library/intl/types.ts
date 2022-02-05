@@ -3,6 +3,7 @@ import {MessageFormatElement} from 'intl-messageformat-parser';
 export enum ELocales {
     enUS = 'en-US',
     zhTW= 'zh-TW',
+    jaJP= 'ja-JP',
     // zhCN = 'zh-CN',
     // thTH = 'th-TH',
     // idID = 'id-ID',

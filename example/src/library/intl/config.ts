@@ -12,6 +12,7 @@ import {ELocales, II18nTexts, TMessage, TLocaleSetting} from './types';
 const localeConfig: TLocaleSetting = {
     [ELocales.enUS]: require('locales/en-US').default,
     [ELocales.zhTW]: require('locales/zh-TW').default,
+    [ELocales.jaJP]: require('locales/ja-JP').default,
     // [ELocales.zhCN]: require('locales/zh-CN').default,
     // [ELocales.thTH]: require('locales/th-TH').default,
     // [ELocales.viVN]: require('locales/vi-VN').default,
@@ -32,6 +33,7 @@ const formatTranslationMessages = (locale: ELocales, messages: II18nTexts): II18
 export const translationMessages = {
     [ELocales.enUS]: formatTranslationMessages(ELocales.enUS, localeConfig[ELocales.enUS]),
     [ELocales.zhTW]: formatTranslationMessages(ELocales.zhTW, localeConfig[ELocales.zhTW]),
+    [ELocales.jaJP]: formatTranslationMessages(ELocales.jaJP, localeConfig[ELocales.jaJP]),
     // [ELocales.zhCN]: formatTranslationMessages(ELocales.zhCN, localeConfig[ELocales.zhCN]),
     // [ELocales.thTH]: formatTranslationMessages(ELocales.thTH, localeConfig[ELocales.thTH]),
     // [ELocales.viVN]: formatTranslationMessages(ELocales.viVN, localeConfig[ELocales.viVN]),
