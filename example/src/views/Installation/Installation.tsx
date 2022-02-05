@@ -47,7 +47,7 @@ export const CustomBanner = () => {
         {id: 3, image: '/static/sample/03.jpg'},
     ];
     
-    const slideItemData: TSlideItemDataList  = images.map(row => {
+    const slideItemData: TSlideItemDataList = images.map(row => {
         return {
             key: row.id,
             children: <SlideItem imageUrl={row.image}/>

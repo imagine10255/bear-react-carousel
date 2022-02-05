@@ -6,7 +6,7 @@ import HowToUse from './HowToUse';
 import {useLocale} from 'library/intl';
 
 // 輪播項目
-const slideItemData: TSlideItemDataList  = images.map(row => {
+const slideItemData: TSlideItemDataList = images.map(row => {
     return {
         key: row.id,
         children: <SlideItem imageUrl={row.image}/>

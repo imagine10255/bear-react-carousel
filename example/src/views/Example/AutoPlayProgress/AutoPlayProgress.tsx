@@ -10,7 +10,7 @@ import Content from '../../_components/Content';
 
 
 // 輪播項目
-const slideItemData: TSlideItemDataList  = images.map(row => {
+const slideItemData: TSlideItemDataList = images.map(row => {
     return {
         key: row.id,
         paginationContent: <>{row.name}</>,
