@@ -5,7 +5,7 @@
 [![NPM](https://img.shields.io/npm/v/bear-carousel.svg)](https://www.npmjs.com/package/bear-carousel)
 [![npm](https://img.shields.io/npm/dm/bear-carousel.svg)](https://www.npmjs.com/package/bear-carousel)
 
-This project [demo](https://imagine10255.github.io/bear-carousel/)
+This project [demo](https://bearests.com/bear-carousel)
 
 ## Install
 

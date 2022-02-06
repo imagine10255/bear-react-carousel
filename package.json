@@ -16,7 +16,7 @@
     "type": "git",
     "url": "https://github.com/imagine10255/bear-carousel.git"
   },
-  "homepage": "https://imagine10255.github.io/bear-carousel",
+  "homepage": "https://bearests.com/bear-carousel",
   "source": "src/index.ts",
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
