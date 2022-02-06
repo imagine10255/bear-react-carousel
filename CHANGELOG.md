@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.13](https://github.com/imagine10255/bear-carousel/compare/v1.1.12...v1.1.13) (2022-02-06)
+
+
+### Features
+
+* 調整 範例頁面 ([b6ee762](https://github.com/imagine10255/bear-carousel/commit/b6ee762f79e400b3733e4511b146573b275ae994))
+
+
+### Bug Fixes
+
+* 修正 字型路徑問題 ([1979063](https://github.com/imagine10255/bear-carousel/commit/19790634b48cc41c36a7d487f82a2d2f4140c8ea))
+
 ### [1.1.12](https://github.com/imagine10255/bear-carousel/compare/v1.1.11...v1.1.12) (2022-02-05)
 
 
