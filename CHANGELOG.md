@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.14](https://github.com/imagine10255/bear-carousel/compare/v1.1.13...v1.1.14) (2022-02-06)
+
+
+### Features
+
+* 更改 demo 頁面連結 ([1b28d48](https://github.com/imagine10255/bear-carousel/commit/1b28d48b0ebb01da41f42058d04e8c901c9baab9))
+* 更改 el-className container ([7b57ca4](https://github.com/imagine10255/bear-carousel/commit/7b57ca49b1047d3b7bbb3bf1ed63e0f72ecaf4d8))
+
 ### [1.1.13](https://github.com/imagine10255/bear-carousel/compare/v1.1.12...v1.1.13) (2022-02-06)
 
 
