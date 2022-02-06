@@ -758,7 +758,7 @@ class Carousel extends React.Component<ICarouselProps, IState> {
                   <div className={elClassName.content}>
                       <div
                           ref={this.carouselRef}
-                          className={elClassName.carouselContainer}
+                          className={elClassName.container}
                           data-is-per-view-auto={this.rwdMedia.slidesPerView === 'auto'}
                           data-is-enable-mouse-move={this.rwdMedia.isEnableMouseMove}
                           data-actual={`${this.info.actual.minIndex},${this.info.actual.firstIndex}-${this.info.actual.lastIndex},${this.info.actual.maxIndex}`}

@@ -4,7 +4,7 @@
 export default {
     root: 'bear-carousel__root',
     content: 'bear-carousel__content',
-    carouselContainer: 'bear-carousel__container',
+    container: 'bear-carousel__container',
     slideItem: 'bear-carousel__slide-item',
     slideItemImg: 'bear-carousel__slide-item__img',
     slideItemDiv: 'bear-carousel__slide-item__div',
