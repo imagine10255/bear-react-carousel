@@ -16,7 +16,7 @@ yarn add bear-carousel
 ## Usage
 
 ```tsx
-import BearCarousel, {TSlideItemDataList, SlideItem} from 'bear-carousel';
+import BearCarousel, {TBearSlideItemDataList, BearSlideItem} from 'bear-carousel';
 import 'bear-carousel/dist/index.css';
 
 const images = [
@@ -25,17 +25,17 @@ const images = [
         {id: 3, image: "https://dummyimage.com/900x400/dee2e6/6c757d.jpg"},
     ];
     
-const slideItemData: TSlideItemDataList  = images.map(row => {
+const bearSlideItemData: TBearSlideItemDataList  = images.map(row => {
         return {
             key: row.id,
-            children: <SlideItem imageUrl={row.image}/>
+            children: <BearSlideItem imageUrl={row.image}/>
         };
     });
 
 
 export const CustomBanner = () => {
     return <BearCarousel 
-        data={slideItemData} 
+        data={bearSlideItemData} 
         aspectRatio={{widthRatio: 16, heightRatio: 9}}
     />
 }
@@ -51,14 +51,14 @@ There is also a codesandbox template that you can fork and play with it:
 
 ```tsx
 const CustomBanner = ({
-    const [carousel, setCarousel] = useState<ICarouselObj>();
+    const [carousel, setCarousel] = useState<IBearCarouselObj>();
   
     const goToPage = (index: number): void => control?.goToPage(index);
     const getPageTotal = (): number => control?.info.pageTotal ?? 0;
 
     <BearCarousel
         setCarousel={setCarousel}
-        data={carouselData}
+        data={bearSlideItemData}
         staticHeight="250px"/
     />
 }
