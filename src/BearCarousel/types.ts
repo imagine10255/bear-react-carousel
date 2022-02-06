@@ -5,7 +5,7 @@ export type TSlidesPerView = number|'auto'
 export type TSlidesPerViewActual = number
 
 
-export interface ICarouselObj {
+export interface IBearCarouselObj {
   goToPage: (page: number) => void;
   activeActualIndex: number;
   activePage: number;
@@ -13,22 +13,22 @@ export interface ICarouselObj {
 }
 
 
-export interface ICarouselProps extends IBreakpointSetting{
-  setCarousel?: (carouselObj: ICarouselObj) => void,
+export interface IBearCarouselProps extends IBreakpointSetting{
+  setCarousel?: (carouselObj: IBearCarouselObj) => void,
   renderNavButton?: (
     toPrev: TToPrev,
     toNext: TToNext,
   ) => void
   style?: CSS.Properties
   className?: string
-  data: TSlideItemDataList;
+  data: TBearSlideItemDataList;
   moveTime: number
   autoPlayTime: number
   breakpoints: IPropsBreakpoints
   isDebug: boolean
 }
 
-export type TCarouselSetting = Partial<ICarouselProps>;
+export type TBearCarouselSetting = Partial<IBearCarouselProps>;
 
 
 export interface ITouchStart {
@@ -71,13 +71,13 @@ export interface IInfo {
   isVisiblePagination: boolean,
   isVisibleNavButton: boolean,
 }
-export interface ISlideItemData {
+export interface IBearSlideItemData {
   key: string|number
   paginationContent?: ReactNode
   onClick?: () => void,
   children: ReactNode
 }
-export type TSlideItemDataList = ISlideItemData[];
+export type TBearSlideItemDataList = IBearSlideItemData[];
 
 export interface IAspectRatio {
   widthRatio: number,

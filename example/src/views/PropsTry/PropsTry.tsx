@@ -1,7 +1,7 @@
 import React, {ReactNodeArray, useCallback, useEffect, useState} from 'react';
 import styled from 'styled-components/macro';
 import {Col, Row} from 'bear-styled-grid';
-import Carousel, {ICarouselObj, TSlideItemDataList, SlideItem} from 'bear-carousel';
+import Carousel, {IBearCarouselObj, TBearSlideItemDataList, BearSlideItem} from 'bear-carousel';
 import {anyToNumber} from 'bear-jsutils/convert';
 
 
@@ -13,10 +13,10 @@ import {catImages as images} from 'config/images';
 import {isNotEmpty} from 'bear-jsutils/dist/equal';
 
 
-const SlideItemData: TSlideItemDataList = images.map(row => {
+const SlideItemData: TBearSlideItemDataList = images.map(row => {
     return {
         key: row.id,
-        children: <SlideItem imageUrl={row.imageUrl} imageSize="cover"/>
+        children: <BearSlideItem imageUrl={row.imageUrl} imageSize="cover"/>
     };
 });
 
@@ -48,7 +48,7 @@ export interface IFormData {
  */
 const PropsTry = () => {
     const [isLoadData, setIsLoadData] = useState<boolean>(true);
-    const [carousel, setCarousel] = useState<ICarouselObj>();
+    const [carousel, setCarousel] = useState<IBearCarouselObj>();
     const {control, watch, setValue} = useForm<IFormData>({
         defaultValues: {
             isMount: true,

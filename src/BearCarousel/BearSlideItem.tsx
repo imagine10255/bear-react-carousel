@@ -1,7 +1,7 @@
 import React, {ReactNode} from 'react';
 import CSS from 'csstype';
 import elClassName from './el-class-name';
-import {useCarousel} from './CarouselProvider';
+import {useCarousel} from './BearCarouselProvider';
 
 interface IProps {
   className?: string,
@@ -12,7 +12,7 @@ interface IProps {
   children?: ReactNode,
 }
 
-const SlideItem = ({
+const BearSlideItem = ({
     className,
     style,
     as = 'image',
@@ -47,4 +47,4 @@ const SlideItem = ({
 
 
 
-export default SlideItem;
+export default BearSlideItem;

@@ -5,11 +5,11 @@ import {uuid} from 'bear-jsutils/key';
 import {checkIsMobile} from 'bear-jsutils/browser';
 import log  from 'bear-jsutils/log';
 import {deepCompare, isNotEmpty} from 'bear-jsutils/equal';
-import {IInfo, ITouchStart, IBreakpointSettingActual, ICarouselProps} from './types';
+import {IInfo, ITouchStart, IBreakpointSettingActual, IBearCarouselProps} from './types';
 import elClassName from './el-class-name';
 
 import './styles.css';
-import {CarouselProvider} from './CarouselProvider';
+import {BearCarouselProvider} from './BearCarouselProvider';
 
 // 滑動觸發移動距離
 const triggerTouchDistance = 60;
@@ -21,7 +21,7 @@ interface IState {
 const isMobile = checkIsMobile();
 
 
-class Carousel extends React.Component<ICarouselProps, IState> {
+class BearCarousel extends React.Component<IBearCarouselProps, IState> {
   static defaultProps = {
       data: [],
       slidesPerView: 1,
@@ -101,7 +101,7 @@ class Carousel extends React.Component<ICarouselProps, IState> {
   pageRefs: React.RefObject<Array<HTMLDivElement>> = React.createRef();
   _throttleHandleResize = () => {};
 
-  constructor(props: ICarouselProps) {
+  constructor(props: IBearCarouselProps) {
       super(props);
 
       // @ts-ignore
@@ -169,7 +169,7 @@ class Carousel extends React.Component<ICarouselProps, IState> {
    * @param nextProps
    * @param nextState
    */
-  shouldComponentUpdate(nextProps: ICarouselProps, nextState: IState) {
+  shouldComponentUpdate(nextProps: IBearCarouselProps, nextState: IState) {
       if(this.props.isDebug) log.printInText('[shouldComponentUpdate]');
 
       const {windowSize: nextWindowSize} = nextState;
@@ -735,7 +735,7 @@ class Carousel extends React.Component<ICarouselProps, IState> {
 
 
       return (
-          <CarouselProvider
+          <BearCarouselProvider
               slidesPerView={this.rwdMedia.slidesPerView}
               staticHeight={this.rwdMedia.staticHeight}
           >
@@ -808,7 +808,7 @@ class Carousel extends React.Component<ICarouselProps, IState> {
                   </div>)}
 
               </div>
-          </CarouselProvider>
+          </BearCarouselProvider>
 
 
       );
@@ -816,6 +816,6 @@ class Carousel extends React.Component<ICarouselProps, IState> {
 }
 
 
-export default Carousel;
+export default BearCarousel;
 
 

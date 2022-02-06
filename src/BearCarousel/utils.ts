@@ -1,4 +1,4 @@
-import {IBreakpointSetting, TSlidesPerView, IBreakpointSettingActual, IInfo, IPropsBreakpoints, ICarouselProps, InitData} from './types';
+import {IBreakpointSetting, TSlidesPerView, IBreakpointSettingActual, IInfo, IPropsBreakpoints, IBearCarouselProps, InitData} from './types';
 import {anyToNumber} from 'bear-jsutils/convert';
 
 /**
@@ -51,7 +51,7 @@ export function getMediaSetting(setting: IBreakpointSetting, breakpoints: IProps
  * 取得響應式設定
  * @param props
  */
-export function getMediaInfo(props: ICarouselProps): {rwdMedia: IBreakpointSettingActual, info: IInfo} {
+export function getMediaInfo(props: IBearCarouselProps): {rwdMedia: IBreakpointSettingActual, info: IInfo} {
 
     const {
         data,

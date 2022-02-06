@@ -41,7 +41,7 @@ interface IProps extends IState{
  * @param children
  * @constructor
  */
-export const CarouselProvider = ({
+export const BearCarouselProvider = ({
     slidesPerView,
     staticHeight                                 ,
     children
