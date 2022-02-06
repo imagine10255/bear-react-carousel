@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import {Col, EColType, ERowAlign, Flex, Row} from 'bear-styled-grid';
+import {Col, EColType, Flex, Row} from 'bear-styled-grid';
 import {SwitchControl} from 'bear-components/forms';
-import {useLocale} from '../../../library/intl';
 
 interface IProps extends FCChildrenProps{
     title: string
@@ -18,7 +17,6 @@ const Content = ({
     onLoadData,
     children
 }: IProps) => {
-    const {i18n} = useLocale();
 
     return <>
         <Title>{title}</Title>
@@ -33,7 +31,7 @@ const Content = ({
                 <Col col={24} lg={EColType.auto}>
                     <Flex className="align-items-lg-end">
                         <Label className="mb-2 mb-lg-0">
-                            <LabelText>{i18n('common.loadData')}</LabelText>
+                            <LabelText>Load Data</LabelText>
                             <SwitchControl
                                 onChange={onLoadData}
                                 checked={isLoadData}

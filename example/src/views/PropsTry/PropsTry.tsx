@@ -1,6 +1,6 @@
 import React, {ReactNodeArray, useCallback, useEffect, useState} from 'react';
 import styled from 'styled-components/macro';
-import {Col, Container, EColType, Flex, Row} from 'bear-styled-grid';
+import {Col, Row} from 'bear-styled-grid';
 import Carousel, {ICarouselObj, TSlideItemDataList, SlideItem} from 'bear-carousel';
 import {anyToNumber} from 'bear-jsutils/convert';
 
@@ -9,8 +9,7 @@ import {Controller, useForm} from 'react-hook-form';
 import {TextAreaField, TextField, SwitchControl} from 'bear-components/forms';
 import {FormHorizontalGroup, Button} from 'bear-components/atoms';
 import Content from 'views/_components/Content';
-import {diffImages as images} from 'config/images';
-import {useLocale} from '../../library/intl';
+import {catImages as images} from 'config/images';
 import {isNotEmpty} from 'bear-jsutils/dist/equal';
 
 
@@ -48,7 +47,6 @@ export interface IFormData {
  * Props Try
  */
 const PropsTry = () => {
-    const {i18n} = useLocale();
     const [isLoadData, setIsLoadData] = useState<boolean>(true);
     const [carousel, setCarousel] = useState<ICarouselObj>();
     const {control, watch, setValue} = useForm<IFormData>({
@@ -131,8 +129,7 @@ const PropsTry = () => {
 
 
     return <Content
-        title={i18n('page.propsTry.title')}
-        desc={i18n('page.propsTry.desc')}
+        title="PropsTry"
         isLoadData={isLoadData}
         onLoadData={setIsLoadData}
     >
