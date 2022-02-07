@@ -1,4 +1,4 @@
-import {IBreakpointSetting, TSlidesPerView, IBreakpointSettingActual, IInfo, IPropsBreakpoints, IBearCarouselProps, InitData} from './types';
+import {IBreakpointSetting, TSlidesPerView, IBreakpointSettingActual, IInfo, IPropsBreakpoints, IBearCarouselProps, InitData, EDirection} from './types';
 import {anyToNumber} from 'bear-jsutils/convert';
 
 /**
@@ -68,7 +68,6 @@ export function getMediaInfo(props: IBearCarouselProps): {rwdMedia: IBreakpointS
         isEnableMouseMove,
         isEnableAutoPlay,
         isEnableLoop,
-        isEnableSideVertical,
     } = props;
 
     const rwdMedia = getMediaSetting({
@@ -83,7 +82,6 @@ export function getMediaInfo(props: IBearCarouselProps): {rwdMedia: IBreakpointS
         isEnableMouseMove: isEnableMouseMove,
         isEnableAutoPlay: isEnableAutoPlay,
         isEnableLoop: isEnableLoop,
-        isEnableSideVertical: isEnableSideVertical,
     }, breakpoints);
 
 
@@ -234,6 +232,8 @@ export function getTranslateParams(el: HTMLDivElement): {x: number, y: number, z
 
 /**
  * 根據起點和終點的返回方向
+ *
+ * 不能用於鎖定, 因為不滑動的會有2的判定
  * @param startX
  * @param startY
  * @param endX
@@ -241,25 +241,29 @@ export function getTranslateParams(el: HTMLDivElement): {x: number, y: number, z
  *
  * @return 1:向上, 2:向下, 3:向左, 4:向右, 0:未移動
  */
-export function getSlideDirection(startX: number, startY: number, endX: number, endY: number): number{
+export function getSlideDirection(startX: number, startY: number, endX: number, endY: number): number|undefined{
     const dy = startY - endY;
     const dx = endX - startX;
-    let result = 0;
+
     //如果滑動距離太短
     if (Math.abs(dx) < 2 && Math.abs(dy) < 2) {
-        return result;
+        return undefined;
     }
     const angle = getSlideAngle(dx, dy);
     if (angle >= -45 && angle < 45) {
-        result = 4;
+        // 向右
+        return EDirection.horizontal;
     } else if (angle >= 45 && angle < 135) {
-        result = 1;
+        // 向上
+        return EDirection.vertical;
     } else if (angle >= -135 && angle < -45) {
-        result = 2;
+        // 向下
+        return EDirection.vertical;
     } else if ((angle >= 135 && angle <= 180) || (angle >= -180 && angle < -135)) {
-        result = 3;
+        // 向左
+        return EDirection.horizontal;
     }
-    return result;
+    return undefined;
 }
 
 

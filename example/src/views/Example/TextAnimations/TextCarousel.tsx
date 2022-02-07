@@ -61,7 +61,6 @@ const TextCarousel = ({
             isEnableAutoPlay
             isEnableLoop
             isEnableNavButton={false}
-            isEnableSideVertical
             isEnablePagination
             autoPlayTime={5000}
             moveTime={900}

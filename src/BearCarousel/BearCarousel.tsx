@@ -1,18 +1,37 @@
 import * as React from 'react';
 import {throttle} from '@github/mini-throttle';
-import {getTranslateParams, getMediaInfo, getMediaRangeSize, getSlideDirection} from './utils';
+import {getMediaInfo, getMediaRangeSize, getSlideDirection, getTranslateParams} from './utils';
 import {uuid} from 'bear-jsutils/key';
 import {checkIsMobile} from 'bear-jsutils/browser';
-import log  from 'bear-jsutils/log';
+import log from 'bear-jsutils/log';
 import {deepCompare, isNotEmpty} from 'bear-jsutils/equal';
-import {IInfo, ITouchStart, IBreakpointSettingActual, IBearCarouselProps} from './types';
+import {EDirection, IBearCarouselProps, IBreakpointSettingActual, IInfo, ITouchStart} from './types';
 import elClassName from './el-class-name';
+import {BearCarouselProvider} from './BearCarouselProvider';
 
 import './styles.css';
-import {BearCarouselProvider} from './BearCarouselProvider';
+
 
 // 滑動觸發移動距離
 const triggerTouchDistance = 60;
+const logEnable = {
+    componentDidMount: true,
+    componentWillUnmount: true,
+    shouldComponentUpdate: true,
+    onMobileTouchStart: true,
+    onMobileTouchMove: false,
+    onMobileTouchEnd: true,
+    onWebMouseStart: true,
+    onWebMouseMove: true,
+    onWebMouseEnd: true,
+    elementMove: true,
+    elementMoveDone: true,
+    checkAndAutoPlay: true,
+    onTransitionend: true,
+    handleResize: true,
+    handleResizeDiff: true,
+    goToActualIndex: true,
+};
 
 interface IState {
   windowSize: number,
@@ -34,7 +53,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
       isEnableNavButton: false,
       isEnableMouseMove: true,
       isEnableAutoPlay: false,
-      isEnableSideVertical: false,
       isDebug: false,
       spaceBetween: 0,
       autoPlayTime: 3000
@@ -81,7 +99,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
       isEnableNavButton: true,
       isEnableMouseMove: true,
       isEnableAutoPlay: false,
-      isEnableSideVertical: false,
   };
 
   touchStart: ITouchStart = {
@@ -124,7 +141,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
 
   componentDidMount() {
-      if(this.props.isDebug) log.printInText('[componentDidMount]');
+      if(this.props.isDebug && logEnable.componentDidMount) log.printInText('[componentDidMount]');
 
       const carouselRef = this.carouselRef?.current;
       if (carouselRef) {
@@ -152,16 +169,16 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
   }
 
   componentWillUnmount() {
-      if(this.props.isDebug) log.printInText('[componentWillUnmount]');
+      if(this.props.isDebug && logEnable.componentWillUnmount) log.printInText('[componentWillUnmount]');
       if (this.timer) clearTimeout(this.timer);
 
       const carouselRef = this.carouselRef?.current;
       if (carouselRef) {
-          carouselRef.removeEventListener('touchstart', this._onMobileTouchStart);
-          carouselRef.removeEventListener('transitionend', this._onTransitionend);
+          carouselRef.removeEventListener('touchstart', this._onMobileTouchStart, false);
+          carouselRef.removeEventListener('transitionend', this._onTransitionend, false);
       }
 
-      window.removeEventListener('resize', this._throttleHandleResize);
+      window.removeEventListener('resize', this._throttleHandleResize, false);
 
   }
 
@@ -184,7 +201,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
       !deepCompare(otherParams, nextOtherProps) ||
       nextWindowSize !== windowSize
       ) {
-          if(this.props.isDebug) log.printInText('[shouldComponentUpdate] true');
+          if(this.props.isDebug && logEnable.shouldComponentUpdate) log.printInText('[shouldComponentUpdate] true');
 
           const {rwdMedia, info} = getMediaInfo(nextProps);
           this.rwdMedia = rwdMedia;
@@ -210,11 +227,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
    * @param event
    */
   _onMobileTouchStart = (event: TouchEvent): void => {
-      if(this.props.isDebug) log.printInText('[_onMobileTouchStart]');
-
-      if(!this.rwdMedia.isEnableSideVertical){
-          event.preventDefault(); // <~  開啟會導致全屏輪播無法將頁面往下滑
-      }
+      if(this.props.isDebug && logEnable.onMobileTouchStart) log.printInText('[_onMobileTouchStart]');
 
       if (this.timer) clearTimeout(this.timer);
 
@@ -224,12 +237,13 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
           // 紀錄位置
           this.touchStart = {
-              pageX: event.touches[0].pageX,
-              pageY: event.touches[0].pageY,
-              x: event.touches[0].pageX - movePosition.x,
-              y: event.touches[0].pageY - carouselRef.offsetTop,
+              pageX: event.targetTouches[0].pageX,
+              pageY: event.targetTouches[0].pageY,
+              x: event.targetTouches[0].pageX - movePosition.x,
+              y: event.targetTouches[0].pageY - carouselRef.offsetTop,
               movePositionX: movePosition.x,
-              movePositionY: movePosition.y
+              movePositionY: movePosition.y,
+              moveDirection: undefined,
           };
 
           carouselRef.addEventListener('touchmove', this._onMobileTouchMove, false);
@@ -242,33 +256,38 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
    * @param event
    */
   _onMobileTouchMove = (event: TouchEvent): void => {
-      // if(this.props.isDebug) log.printInText('[_onMobileTouchMove]');
+      if(this.props.isDebug && logEnable.onMobileTouchMove) log.printInText('[_onMobileTouchMove]');
 
-      if(!this.rwdMedia.isEnableSideVertical) {
-          event.preventDefault(); // <~  開啟會導致全屏輪播無法將頁面往下滑
-      }
+      const endX = event.targetTouches[0].pageX;
+      const endY = event.targetTouches[0].pageY;
 
-      const endX = event.changedTouches[0].pageX;
-      const endY = event.changedTouches[0].pageY;
+
       const direction = getSlideDirection(this.touchStart.pageX, this.touchStart.pageY, endX, endY);
-      switch (direction) {
-      case 0:
-          // console.log('沒有滑動');
-          break;
-      case 1:
-      case 2:
-          // console.log('上下滑動');
-
-          break;
-      case 3:
-      case 4:
-          // console.log('左右滑動');
-          const moveX = event.touches[0].pageX;
-          this._elementMove(moveX);
-          break;
-
-      default:
+      if(typeof this.touchStart.moveDirection === 'undefined'){
+          this.touchStart.moveDirection = direction;
       }
+
+
+      if(this.touchStart.moveDirection === EDirection.vertical){
+          // 垂直移動
+          // event.preventDefault();
+
+      }else if(this.touchStart.moveDirection === EDirection.horizontal){
+          // 水平移動
+          event.preventDefault();
+
+          const carouselRef = this.carouselRef?.current;
+          if(carouselRef){
+
+              const moveX = carouselRef.offsetLeft + event.targetTouches[0].pageX;
+              this._elementMove(moveX);
+
+              // const moveX = carouselRef.offsetLeft + event.targetTouches[0].pageX - this.touchStart.x;
+              // carouselRef.style.transform = `translate3d(${moveX}px, 0px, 0px)`;
+              // carouselRef.style.transitionDuration = '0ms';
+          }
+      }
+
   };
 
   /**
@@ -276,7 +295,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
    * @param event
    */
   _onMobileTouchEnd = (event: TouchEvent): void => {
-      if(this.props.isDebug) log.printInText('[_onMobileTouchEnd]');
+      if(this.props.isDebug && logEnable.onMobileTouchEnd) log.printInText('[_onMobileTouchEnd]');
 
       event.preventDefault();
 
@@ -293,7 +312,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
    * @param event
    */
   _onWebMouseStart = (event: MouseEvent): void => {
-      // if(this.props.isDebug) log.printInText('[_onWebMouseStart]');
+      if(this.props.isDebug && logEnable.onWebMouseStart) log.printInText('[_onWebMouseStart]');
 
       event.preventDefault();
 
@@ -324,7 +343,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
    * @param event
    */
   _onWebMouseMove = (event: MouseEvent):void => {
-      // if(this.props.isDebug) log.printInText('[_onWebMouseMove]');
+      if(this.props.isDebug && logEnable.onWebMouseMove) log.printInText('[_onWebMouseMove]');
 
       event.preventDefault();
       const moveX = event.clientX;
@@ -337,7 +356,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
    * @param event
    */
   _onWebMouseEnd = (event: MouseEvent):void => {
-      // if(this.props.isDebug) log.printInText('[_onWebMouseEnd]');
+      if(this.props.isDebug && logEnable.onWebMouseEnd) log.printInText('[_onWebMouseEnd]');
 
       event.preventDefault();
 
@@ -356,21 +375,21 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
    * @param moveX 移動X軸
    */
   _elementMove = (moveX: number): void => {
-      const carouselRef = this.carouselRef?.current;
-      if (carouselRef) {
-          if (this.rwdMedia.isEnableMouseMove && this.slideItemRefs.current) {
-              // 取得移動限制
-              const distance = {
-                  min: this._getMoveDistance(this.info.actual.minIndex),
-                  max: this._getMoveDistance(this.info.actual.lastIndex)
-              };
+      if(this.props.isDebug && logEnable.elementMove) log.printInText('[_elementMove]');
 
-              const translateX = moveX - this.touchStart.x;
-              if ((distance.max < translateX && distance.min > translateX) || this.rwdMedia.isEnableLoop) {
-                  // 拖動
-                  carouselRef.style.transform = `translate3d(${translateX}px, 0px, 0px)`;
-                  carouselRef.style.transitionDuration = '0ms';
-              }
+      const carouselRef = this.carouselRef?.current;
+      if (carouselRef && this.rwdMedia.isEnableMouseMove && this.slideItemRefs.current) {
+          // 取得移動限制
+          const distance = {
+              min: this._getMoveDistance(this.info.actual.minIndex),
+              max: this._getMoveDistance(this.info.actual.lastIndex)
+          };
+
+          const translateX = moveX - this.touchStart.x;
+          if ((distance.max < translateX && distance.min > translateX) || this.rwdMedia.isEnableLoop) {
+              // 拖動
+              carouselRef.style.transform = `translate3d(${translateX}px, 0px, 0px)`;
+              carouselRef.style.transitionDuration = '0ms';
           }
       }
 
@@ -382,6 +401,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
    * 物件移動結束 (確認停下位置 應該吸在哪個Index位置)
    */
   _elementMoveDone = (): void => {
+      if(this.props.isDebug && logEnable.elementMoveDone) log.printInText('[_elementMoveDone]');
 
       const carouselRef = this.carouselRef?.current;
       if (carouselRef) {
@@ -413,7 +433,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
    */
   _checkAndAutoPlay = (): void => {
       const {autoPlayTime} = this.props;
-      // if(this.props.isDebug) log.printInText(`[_checkAndAutoPlay] autoPlayTime: ${autoPlayTime}`);
+      if(this.props.isDebug && logEnable.checkAndAutoPlay) log.printInText(`[_checkAndAutoPlay] autoPlayTime: ${autoPlayTime}`);
 
 
       // 清除上一次的計時器
@@ -434,7 +454,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
    * 如果元素內是 isClone 則返回到他應該真實顯示的位置
    */
   _onTransitionend = (): void => {
-      if(this.props.isDebug) log.printInText('[_onTransitionend]');
+      if(this.props.isDebug && logEnable.onTransitionend) log.printInText('[_onTransitionend]');
 
       const formatElement = this.info?.formatElement ? this.info.formatElement : [];
 
@@ -453,14 +473,13 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
   _handleResize = () => {
       const {breakpoints} = this.props;
       const {windowSize} = this.state;
+      if(this.props.isDebug && logEnable.handleResize) log.printInText(`[_handleResize] windowSize: ${windowSize}px`);
 
       const selectSize = getMediaRangeSize(Object.keys(breakpoints));
 
       // 只在區間內有設定的值才會 setState
-
-      // 自動導引到目前位置
       if (windowSize !== selectSize) {
-          if(this.props.isDebug) log.printInText(`[_handleResize] windowSize: ${windowSize} -> ${selectSize}px`);
+          if(this.props.isDebug && logEnable.handleResizeDiff) log.printInText(`[_handleResize] diff windowSize: ${windowSize} -> ${selectSize}px`);
           this.setState({
               windowSize: selectSize
           });
@@ -590,7 +609,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
   goToActualIndex = (slideIndex: number, isUseAnimation = true) => {
       const {moveTime} = this.props;
 
-      if(this.props.isDebug) log.printInText(`[goToActualIndex] slideIndex: ${slideIndex}, isUseAnimation: ${isUseAnimation}`);
+      if(this.props.isDebug && logEnable.goToActualIndex) log.printInText(`[goToActualIndex] slideIndex: ${slideIndex}, isUseAnimation: ${isUseAnimation}`);
 
 
       if (Math.ceil(slideIndex) !== slideIndex) {

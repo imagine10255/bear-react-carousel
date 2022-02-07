@@ -7,15 +7,19 @@ import React from 'react';
 import PropsTry from '../views/PropsTry';
 import VipLevelList from '../views/Example/VipLevelList';
 import TextAnimations from '../views/Example/TextAnimations';
+import BaseUsed from '../views/BaseUsed';
+
+const switchControl: string = 'propsType';
 
 const App = () => {
     return (
         <GridThemeProvider gridTheme={gridConfig}>
             <ThemeProvider theme={theme}>
                 <Container>
-                    <PropsTry/>
-                    {/*<VipLevelList/>*/}
-                    {/*<TextAnimations/>*/}
+                    {switchControl === 'baseUsed' && <BaseUsed/>}
+                    {switchControl === 'propsType' && <PropsTry/>}
+                    {switchControl === 'vipLevelList' && <VipLevelList/>}
+                    {switchControl === 'textAnimations' && <TextAnimations/>}
                 </Container>
 
                 <GlobalStyle/>
