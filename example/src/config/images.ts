@@ -1,12 +1,22 @@
+import {asset} from './utils';
 
-export const catImages = [
-    {id: 1, imageUrl: './static/sample/cat/01.jpg'},
-    {id: 2, imageUrl: './static/sample/cat/02.jpg'},
-    {id: 3, imageUrl: './static/sample/cat/03.jpg'},
-    {id: 4, imageUrl: './static/sample/cat/04.jpg'},
-    {id: 5, imageUrl: './static/sample/cat/05.jpg'},
+
+export const racingImages = [
+    {id: 1, name: 'Strawberry', imageUrl: asset('/sample/food/01.jpg')},
+    {id: 2, name: 'Honey Cranberry Pie', imageUrl: asset('/sample/food/02.jpg')},
+    {id: 3, name: 'Tomato noodles', imageUrl: asset('/sample/food/03.jpg')},
 ];
 
+
+
+
+export const catImages = [
+    {id: 1, imageUrl: asset('/sample/cat/01.jpg')},
+    {id: 2, imageUrl: asset('/sample/cat/02.jpg')},
+    {id: 3, imageUrl: asset('/sample/cat/03.jpg')},
+    {id: 4, imageUrl: asset('/sample/cat/04.jpg')},
+    {id: 5, imageUrl: asset('/sample/cat/05.jpg')},
+];
 
 
 export interface IFoodImage {
@@ -23,7 +33,7 @@ export const foodImages: IFoodImage[] = [
         subTitle: 'MEAT & SEAFOOD',
         title: 'FROM NORWAY',
         desc: 'We offer huge variety of execeptionally fresh meat farmed in our personal farm',
-        imageUrl: '/static/sample/food/01.jpg',
+        imageUrl: asset('/sample/food/01.jpg'),
         position: 'right',
     },
     {
@@ -31,7 +41,7 @@ export const foodImages: IFoodImage[] = [
         subTitle: 'WILD SALMON',
         title: 'CUTTING & DELIVERY',
         desc: 'We offer huge variety of execeptionally fresh meat farmed in our personal farm',
-        imageUrl: './static/sample/food/02.jpg',
+        imageUrl: asset('/sample/food/02.jpg'),
         position: 'right',
     },
     {
@@ -39,7 +49,22 @@ export const foodImages: IFoodImage[] = [
         subTitle: 'CUTTING & DELIVERY',
         title: 'QUALITY MONITORING',
         desc: 'We offer huge variety of execeptionally fresh meat farmed in our personal farm',
-        imageUrl: './static/sample/food/03.jpg',
+        imageUrl: asset('/sample/food/03.jpg'),
         position: 'left',
     },
 ];
+
+
+export const diffImages = [
+    {id: 2, imageUrl: asset('/sample/cat/vertical-01.jpg')},
+    {id: 1, imageUrl: asset('/sample/cat/01.jpg')},
+    {id: 4, imageUrl: asset('/sample/cat/02.jpg')},
+    {id: 3, imageUrl: asset('/sample/cat/vertical-02.jpg')},
+    {id: 5, imageUrl: asset('/sample/cat/03.jpg')},
+    {id: 6, imageUrl: asset('/sample/cat/vertical-03.jpg')},
+    {id: 7, imageUrl: asset('/sample/cat/04.jpg')},
+    {id: 8, imageUrl: asset('/sample/cat/vertical-04.jpg')},
+    {id: 9, imageUrl: asset('/sample/cat/05.jpg')},
+];
+
+

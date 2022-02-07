@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import styled from 'styled-components/macro';
-import {ERowAlign, Flex, media} from 'bear-styled-grid';
+import {ERowAlign, Flex} from 'bear-styled-grid';
 import BearCarousel, {elClassName, IBearCarouselObj, BearSlideItem, TBearSlideItemDataList} from 'bear-carousel';
 import {anyToNumber} from 'bear-jsutils/convert';
 import {Select} from 'bear-components/forms';
@@ -9,30 +9,38 @@ import {Select} from 'bear-components/forms';
 import VipLevelCard, {IRules} from './VipLevelCard';
 
 
-interface IProps extends FCProps{
-    activeLevel?: number,
-    data: Array<
-        {
-            level: number,
-            totalAmount: number,
-            rule: IRules[],
-        }
-    >,
+interface IVIPData {
+    level: number,
+    totalAmount: number,
+    rule: IRules[],
 }
+
+const vipData: IVIPData[] = new Array(12).fill('').map((row, index) => {
+    return {
+        level: index,
+        totalAmount: 100 * index,
+        rule: [
+            {title: 'Rem', value: 200 * index, hasUpTo: true,},
+            {title: 'Cache', value: 120 * index, hasUpTo: true,}
+        ],
+    };
+});
+
+interface IProps extends FCProps{
+    isLoadData: boolean,
+}
+const activeLevel = 2;
 
 
 /**
  * VipLevelCardList
  */
 const VipLevelCarousel = ({
-    className,
-    style,
-    activeLevel = 0,
-    data,
+    isLoadData,
 }: IProps) => {
     const [carousel, setCarousel] = useState<IBearCarouselObj>();
 
-    const levelOption = data.map((row, index) => {
+    const levelOption = vipData.map((row, index) => {
         return {
             text: `LV ${row.level}`,
             value: String(index + 1),
@@ -41,7 +49,7 @@ const VipLevelCarousel = ({
 
 
 
-    const carouselData: TBearSlideItemDataList = data.map(row => {
+    const carouselData: TBearSlideItemDataList = vipData.map(row => {
         return {
             key: row.level,
             children: (<BearSlideItem as="card" className="py-4">
@@ -79,7 +87,7 @@ const VipLevelCarousel = ({
 
 
     return (
-        <VipLevelCardListRoot style={style} className={className}>
+        <VipLevelCardListRoot>
             {renderControlArea()}
 
             <BearCarousel
@@ -89,7 +97,7 @@ const VipLevelCarousel = ({
                 slidesPerView={1}
                 spaceBetween={20}
                 staticHeight="270px"
-                data={carouselData}
+                data={isLoadData ? carouselData: []}
                 breakpoints={{
                     576: {
                         slidesPerView: 'auto'

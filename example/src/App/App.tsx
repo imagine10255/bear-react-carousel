@@ -8,8 +8,9 @@ import PropsTry from '../views/PropsTry';
 import VipLevelList from '../views/Example/VipLevelList';
 import TextAnimations from '../views/Example/TextAnimations';
 import BaseUsed from '../views/BaseUsed';
+import AutoPlayProgress from 'views/Example/AutoPlayProgress';
 
-const switchControl: string = 'propsType';
+const switchControl: string = 'autoPlayProgress';
 
 const App = () => {
     return (
@@ -19,6 +20,7 @@ const App = () => {
                     {switchControl === 'baseUsed' && <BaseUsed/>}
                     {switchControl === 'propsType' && <PropsTry/>}
                     {switchControl === 'vipLevelList' && <VipLevelList/>}
+                    {switchControl === 'autoPlayProgress' && <AutoPlayProgress/>}
                     {switchControl === 'textAnimations' && <TextAnimations/>}
                 </Container>
 

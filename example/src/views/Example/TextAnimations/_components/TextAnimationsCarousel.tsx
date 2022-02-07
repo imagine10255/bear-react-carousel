@@ -3,6 +3,7 @@ import BearCarousel, {elClassName, BearSlideItem, TBearSlideItemDataList} from '
 import {foodImages as images} from 'config/images';
 import styled, {css} from 'styled-components';
 import {EDirection, Flex, media} from 'bear-styled-grid';
+import {asset} from 'config/utils';
 
 interface ITextCardProps {
     imageUrl: string,
@@ -41,7 +42,7 @@ interface IProps {
 /**
  * TextCarousel
  */
-const TextCarousel = ({
+const TextAnimationsCarousel = ({
     isLoadData = true
 }: IProps) => {
 
@@ -66,11 +67,15 @@ const TextCarousel = ({
             moveTime={900}
             breakpoints={{
                 576: {
-                    staticHeight: '600px',
+                    staticHeight: '400px',
                     isEnableNavButton: false,
                 },
                 996: {
                     staticHeight: '500px',
+                    isEnableNavButton: true,
+                },
+                1200: {
+                    staticHeight: 'calc(100vh - 300px)',
                     isEnableNavButton: true,
                 }
             }}
@@ -78,7 +83,7 @@ const TextCarousel = ({
     </TextAnimationsRoot>;
 };
 
-export default TextCarousel;
+export default TextAnimationsCarousel;
 
 
 const Button = styled.button<{
@@ -129,7 +134,7 @@ const Desc = styled.h4`
 
     `}
 
-    ${media.xl`
+    ${media.xxl`
         font-size: 26px;
         line-height: 33px;
 
@@ -150,7 +155,7 @@ const Title = styled.h2`
         font-size: 60px;
     `}
     
-    ${media.xl`
+    ${media.xxl`
         font-size: 90px;
     `}
 `;
@@ -169,7 +174,7 @@ const SubTitle = styled.h3`
         font-size: 30px;
     `}
     
-    ${media.xl`
+    ${media.xxl`
         font-size: 50px;
     `}
 `;
@@ -222,7 +227,7 @@ const TextAnimationsRoot = styled.div`
       
       &:before{
         content: "";
-        background: url('./static/sample/food/blackt-will.png') center center repeat;
+        background: url(${asset('/sample/food/blackt-will.png')}) center center repeat;
         z-index: 0;
         position: absolute;
         top: 0;
