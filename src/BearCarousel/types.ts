@@ -96,7 +96,7 @@ export interface IBreakpointSetting {
   isEnableNavButton: boolean
   isEnableMouseMove: boolean
   isEnableAutoPlay: boolean
-  isEnableSideVertical: boolean
+  // isEnableSideVertical: boolean
 }
 export interface IBreakpointSettingActual extends IBreakpointSetting {
   slidesPerViewActual: TSlidesPerViewActual

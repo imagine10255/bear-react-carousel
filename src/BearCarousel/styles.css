@@ -180,5 +180,6 @@ div.bear-carousel__slide-item__div{
 .bear-carousel__root{
     position: relative;
     height: inherit;
+    user-select: none;
     /*padding-top: calc(100% * (9 / 16));*/
 }
