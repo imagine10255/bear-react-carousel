@@ -32,15 +32,15 @@
 
 .bear-carousel__pagination-group{
     position: absolute;
-    bottom: 10px;
+    bottom: 20px;
     text-align: center;
     width: 100%;
     z-index: 10;
 }
 
 .bear-carousel__pagination-button{
-    width: 10px;
-    height: 10px;
+    width: .5rem;
+    height: .5rem;
     border-radius: 7px;
     background-color: #bdbdbd;
     display: inline-block;
@@ -147,7 +147,6 @@ div.bear-carousel__slide-item__div{
     display: flex;
     flex-direction: row;
     visibility: hidden; /* 避免瞬間移動, 故移動完才改為顯示 */
-    min-height: 120px;
     height: inherit;
 }
 

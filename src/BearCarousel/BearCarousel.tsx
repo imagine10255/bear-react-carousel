@@ -34,6 +34,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
       isEnableNavButton: false,
       isEnableMouseMove: true,
       isEnableAutoPlay: false,
+      isEnableSideVertical: false,
       isDebug: false,
       spaceBetween: 0,
       autoPlayTime: 3000
@@ -80,6 +81,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
       isEnableNavButton: true,
       isEnableMouseMove: true,
       isEnableAutoPlay: false,
+      isEnableSideVertical: false,
   };
 
   touchStart: ITouchStart = {
@@ -170,7 +172,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
    * @param nextState
    */
   shouldComponentUpdate(nextProps: IBearCarouselProps, nextState: IState) {
-      if(this.props.isDebug) log.printInText('[shouldComponentUpdate]');
 
       const {windowSize: nextWindowSize} = nextState;
       const {windowSize} = this.state;
@@ -183,15 +184,17 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
       !deepCompare(otherParams, nextOtherProps) ||
       nextWindowSize !== windowSize
       ) {
+          if(this.props.isDebug) log.printInText('[shouldComponentUpdate] true');
+
           const {rwdMedia, info} = getMediaInfo(nextProps);
           this.rwdMedia = rwdMedia;
           this.info = info;
 
           // 重置頁面位置
           const $this = this;
-          setTimeout(() => {
-              $this.goToPage(1, false);
-          }, 0);
+          // setTimeout(() => {
+          //     $this.goToPage(1, false);
+          // }, 0);
 
           this._handleSyncCarousel();
 
@@ -209,7 +212,9 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
   _onMobileTouchStart = (event: TouchEvent): void => {
       if(this.props.isDebug) log.printInText('[_onMobileTouchStart]');
 
-      // event.preventDefault(); <~  開啟會導致全屏輪播無法將頁面往下滑
+      if(!this.rwdMedia.isEnableSideVertical){
+          event.preventDefault(); // <~  開啟會導致全屏輪播無法將頁面往下滑
+      }
 
       if (this.timer) clearTimeout(this.timer);
 
@@ -239,7 +244,9 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
   _onMobileTouchMove = (event: TouchEvent): void => {
       // if(this.props.isDebug) log.printInText('[_onMobileTouchMove]');
 
-      // event.preventDefault(); <~  開啟會導致全屏輪播無法將頁面往下滑
+      if(!this.rwdMedia.isEnableSideVertical) {
+          event.preventDefault(); // <~  開啟會導致全屏輪播無法將頁面往下滑
+      }
 
       const endX = event.changedTouches[0].pageX;
       const endY = event.changedTouches[0].pageY;
@@ -286,7 +293,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
    * @param event
    */
   _onWebMouseStart = (event: MouseEvent): void => {
-      if(this.props.isDebug) log.printInText('[_onWebMouseStart]');
+      // if(this.props.isDebug) log.printInText('[_onWebMouseStart]');
 
       event.preventDefault();
 
@@ -330,7 +337,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
    * @param event
    */
   _onWebMouseEnd = (event: MouseEvent):void => {
-      if(this.props.isDebug) log.printInText('[_onWebMouseEnd]');
+      // if(this.props.isDebug) log.printInText('[_onWebMouseEnd]');
 
       event.preventDefault();
 
@@ -433,9 +440,9 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
       const $this = this;
       if (formatElement.length > (this.activeActualIndex - 1) && formatElement[this.activeActualIndex].isClone) {
-          setTimeout(() => {
-              $this.goToActualIndex(formatElement[this.activeActualIndex].matchIndex, false);
-          }, this.props.moveTime / 2);
+          // setTimeout(() => {
+          this.goToActualIndex(formatElement[this.activeActualIndex].matchIndex, false);
+          // }, 0);
       }
 
   };
@@ -447,16 +454,13 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
       const {breakpoints} = this.props;
       const {windowSize} = this.state;
 
-      if(this.props.isDebug) log.printInText(`[_handleResize] windowSize: ${windowSize}px`);
-
-      // 只在區間內有設定的值才會 setState
       const selectSize = getMediaRangeSize(Object.keys(breakpoints));
 
-      // 自動導引到目前位置
-      // const goIndex = this.activeActualIndex > this.info.actual.lastIndex ? this.info.actual.lastIndex: this.activeActualIndex;
-      this.goToPage(1, false);
+      // 只在區間內有設定的值才會 setState
 
+      // 自動導引到目前位置
       if (windowSize !== selectSize) {
+          if(this.props.isDebug) log.printInText(`[_handleResize] windowSize: ${windowSize} -> ${selectSize}px`);
           this.setState({
               windowSize: selectSize
           });

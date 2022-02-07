@@ -68,6 +68,7 @@ export function getMediaInfo(props: IBearCarouselProps): {rwdMedia: IBreakpointS
         isEnableMouseMove,
         isEnableAutoPlay,
         isEnableLoop,
+        isEnableSideVertical,
     } = props;
 
     const rwdMedia = getMediaSetting({
@@ -82,6 +83,7 @@ export function getMediaInfo(props: IBearCarouselProps): {rwdMedia: IBreakpointS
         isEnableMouseMove: isEnableMouseMove,
         isEnableAutoPlay: isEnableAutoPlay,
         isEnableLoop: isEnableLoop,
+        isEnableSideVertical: isEnableSideVertical,
     }, breakpoints);
 
 
