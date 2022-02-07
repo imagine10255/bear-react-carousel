@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.16](https://github.com/imagine10255/bear-carousel/compare/v1.1.15...v1.1.16) (2022-02-07)
+
+
+### Features
+
+* 更改 說明 ([77f6e00](https://github.com/imagine10255/bear-carousel/commit/77f6e002022c7d68d6ce9c0c5748493689b96d31))
+
+
+### Bug Fixes
+
+* 修正 手機版滑動時會觸發 resize, 導致返回問題 ([3fe28b5](https://github.com/imagine10255/bear-carousel/commit/3fe28b599f55d9ebc2b924d636887313b496a0c1))
+
 ### [1.1.15](https://github.com/imagine10255/bear-carousel/compare/v1.1.14...v1.1.15) (2022-02-06)
 
 ### [1.1.14](https://github.com/imagine10255/bear-carousel/compare/v1.1.13...v1.1.14) (2022-02-06)
