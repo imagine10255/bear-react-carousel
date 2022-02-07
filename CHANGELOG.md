@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.18](https://github.com/imagine10255/bear-carousel/compare/v1.1.17...v1.1.18) (2022-02-07)
+
+
+### Bug Fixes
+
+* when the mobile phone slides, it will pause for a while due to the direction judgment. ([a32bda8](https://github.com/imagine10255/bear-carousel/commit/a32bda81432ba9801b5524cf2b115cce1c6c1c2f))
+
 ### [1.1.17](https://github.com/imagine10255/bear-carousel/compare/v1.1.16...v1.1.17) (2022-02-07)
 
 
