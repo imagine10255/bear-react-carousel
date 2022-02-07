@@ -192,9 +192,9 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
           // 重置頁面位置
           const $this = this;
-          // setTimeout(() => {
-          //     $this.goToPage(1, false);
-          // }, 0);
+          setTimeout(() => {
+              $this.goToPage(1, false);
+          }, 0);
 
           this._handleSyncCarousel();
 
