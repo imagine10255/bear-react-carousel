@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.17](https://github.com/imagine10255/bear-carousel/compare/v1.1.16...v1.1.17) (2022-02-07)
+
+
+### Bug Fixes
+
+* 修正 取消返回位置第一頁的問題 ([6be6a3c](https://github.com/imagine10255/bear-carousel/commit/6be6a3ce32ef3ce3a7e6ae7ba1b02d13371376c2))
+
 ### [1.1.16](https://github.com/imagine10255/bear-carousel/compare/v1.1.15...v1.1.16) (2022-02-07)
 
 
