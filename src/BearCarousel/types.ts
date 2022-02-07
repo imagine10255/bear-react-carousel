@@ -13,6 +13,11 @@ export interface IBearCarouselObj {
 }
 
 
+export enum EDirection {
+  vertical,
+  horizontal,
+}
+
 export interface IBearCarouselProps extends IBreakpointSetting{
   setCarousel?: (carouselObj: IBearCarouselObj) => void,
   renderNavButton?: (
@@ -38,6 +43,7 @@ export interface ITouchStart {
   y: number,
   movePositionX: number,
   movePositionY: number,
+  moveDirection?: EDirection,
 }
 
 
@@ -96,7 +102,6 @@ export interface IBreakpointSetting {
   isEnableNavButton: boolean
   isEnableMouseMove: boolean
   isEnableAutoPlay: boolean
-  isEnableSideVertical: boolean
 }
 export interface IBreakpointSettingActual extends IBreakpointSetting {
   slidesPerViewActual: TSlidesPerViewActual
