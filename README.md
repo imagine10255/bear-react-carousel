@@ -11,12 +11,12 @@
 </div>
 
 <p align="center">
-  <a href="https://bearests.com/bear-carousel">Get started</a> | 
-  <a href="https://bearests.com/bear-carousel/api">API</a> |
+  <a href="https://carousel.bearests.com">Get started</a> | 
+  <a href="https://carousel.bearests.com/api">API</a> |
   <a href="https://github.com/imagine10255/bear-carousel/tree/main/example/src/views/Example">Examples</a> |
-  <a href="https://bearests.com/bear-carousel/example/text-animations">Demo</a> |
-  <a href="https://bearests.com/bear-carousel/props-try">Prop Try</a> |
-  <a href="https://bearests.com/bear-carousel/advices">Advices</a>
+  <a href="https://carousel.bearests.com/example/text-animations">Demo</a> |
+  <a href="https://carousel.bearests.com/props-try">Prop Try</a> |
+  <a href="https://carousel.bearests.com/advices">Advices</a>
 </p>
 
 ### Features
