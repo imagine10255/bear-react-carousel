@@ -9,10 +9,11 @@ interface IProps {
   as?: 'image'|'card',
   imageUrl?: string,
   imageSize?: '100%'|'cover',
-  imageAlt?: string,
   children?: ReactNode,
   onClick?: () => void,
 }
+
+const onClickAllowTime = 150;
 
 const BearSlideItem = ({
     className,
@@ -20,12 +21,10 @@ const BearSlideItem = ({
     as = 'image',
     imageUrl,
     imageSize= 'cover',
-    imageAlt,
     children,
     onClick,
 }: IProps) => {
     const {slidesPerView, staticHeight} = useCarousel();
-    const itemRef = useRef<HTMLDivElement>(null);
     let lastTouchEnd = 0;
 
 
@@ -36,7 +35,7 @@ const BearSlideItem = ({
 
     const onMouseUp = (event: React.MouseEvent<HTMLElement>) => {
         const now = (new Date()).getTime();
-        if (now - lastTouchEnd <= 300) {
+        if (now - lastTouchEnd <= onClickAllowTime) {
             event.preventDefault();
             if(onClick) onClick();
         }
@@ -49,15 +48,14 @@ const BearSlideItem = ({
             style={style}
             className={[className, elClassName.slideItemImg].join(' ').trim()}
             src={imageUrl}
-            alt={imageAlt}
+            alt=""
             height={staticHeight}
-            onMouseDown={onMouseDown}
-            onMouseUp={onMouseUp}
+            onMouseDown={onClick ? (event) => onMouseDown(event): undefined}
+            onMouseUp={onClick ? (event) => onMouseUp(event): undefined}
         />;
     }
 
     return <div
-        ref={itemRef}
         className={[className, elClassName.slideItemDiv].join(' ').trim()}
         onMouseDown={onMouseDown}
         onMouseUp={onMouseUp}

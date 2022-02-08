@@ -34,6 +34,7 @@
 - There is no need to set the style of the project, Bear Carousel directly provides the components of your project, you only need to set the image URL and form an array, and put it in the data parameter.
 - The size of the carousel, the height of the outer container is based, and the item container follows the size of the outer container
 - Provide project scale setting or fixed height setting
+- Prevent onClick of carousel item from triggering on swipe
 
 
 ### Install
