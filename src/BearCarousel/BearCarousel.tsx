@@ -297,11 +297,11 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
   /**
    * 手機手指按住結束
    * @param event
+   *
+   * 加上 event.preventDefault(); 會影響手機點擊 onClick事件
    */
   _onMobileTouchEnd = (event: TouchEvent): void => {
       if(this.props.isDebug && logEnable.onMobileTouchEnd) log.printInText('[_onMobileTouchEnd]');
-
-      event.preventDefault();
 
       const carouselRef = this.carouselRef?.current;
       if (carouselRef) {
