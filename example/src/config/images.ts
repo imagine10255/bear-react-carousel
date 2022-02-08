@@ -56,10 +56,10 @@ export const foodImages: IFoodImage[] = [
 
 
 export const diffImages = [
-    {id: 2, imageUrl: asset('/sample/cat/vertical-01.jpg')},
-    {id: 1, imageUrl: asset('/sample/cat/01.jpg')},
-    {id: 4, imageUrl: asset('/sample/cat/02.jpg')},
-    {id: 3, imageUrl: asset('/sample/cat/vertical-02.jpg')},
+    {id: 1, imageUrl: asset('/sample/cat/vertical-01.jpg')},
+    {id: 2, imageUrl: asset('/sample/cat/01.jpg')},
+    {id: 3, imageUrl: asset('/sample/cat/02.jpg')},
+    {id: 4, imageUrl: asset('/sample/cat/vertical-02.jpg')},
     {id: 5, imageUrl: asset('/sample/cat/03.jpg')},
     {id: 6, imageUrl: asset('/sample/cat/vertical-03.jpg')},
     {id: 7, imageUrl: asset('/sample/cat/04.jpg')},

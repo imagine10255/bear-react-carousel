@@ -9,8 +9,9 @@ import cx from 'classnames';
 import {Controller, useForm} from 'react-hook-form';
 import {TextAreaField, TextField, SwitchControl} from 'bear-components/forms';
 import {FormHorizontalGroup, Button} from 'bear-components/atoms';
-import {catImages as images} from 'config/images';
-import {isNotEmpty} from 'bear-jsutils/equal';
+import {diffImages as images} from 'config/images';
+// import {catImages as images} from 'config/images';
+import {isNotEmpty} from 'bear-jsutils/dist/equal';
 import {decodeToJson} from 'bear-jsutils/string';
 
 
@@ -24,24 +25,26 @@ const SlideItemData: TBearSlideItemDataList = images.map(row => {
 
 
 export interface IFormData {
-  slidesPerView: number,
-  slidesPerGroup: number,
-  spaceBetween: number,
-  aspectRatioWidth: number,
-  aspectRatioHeight: number,
-  staticHeight: number,
-  isAutoMode: boolean,
-  isStaticHeightMode: boolean,
-  autoPlayTime: number,
-  moveTime: number,
-  isEnableLoop: boolean,
-  isEnableNavButton: boolean,
-  isEnablePagination: boolean,
-  isEnableMouseMove: boolean,
-  isEnableAutoPlay: boolean,
-  isDebug: boolean,
-  isMount: boolean,
+    slidesPerView: number,
+    slidesPerGroup: number,
+    spaceBetween: number,
+    aspectRatioWidth: number,
+    aspectRatioHeight: number,
+    staticHeight: number,
+    isAutoMode: boolean,
+    isStaticHeightMode: boolean,
+    autoPlayTime: number,
+    moveTime: number,
+    isEnableLoop: boolean,
+    isEnableNavButton: boolean,
+    isEnablePagination: boolean,
+    isEnableMouseMove: boolean,
+    isEnableAutoPlay: boolean,
+    isDebug: boolean,
+    isMount: boolean,
 }
+
+
 
 const STORAGE_KEY = 'bear-carousel-props';
 
@@ -51,33 +54,31 @@ function getStorage(){
     } & IFormData>(localStorage.getItem(STORAGE_KEY) ?? '');
 }
 
-
 interface IProps {
     isLoadData: boolean,
 }
 
 /**
- * Props Try
+ * Props Try Carousel
  */
-const PropsTry = ({
+const PropsTryCarousel = ({
     isLoadData
 }: IProps) => {
-
     const prefixStorage = getStorage();
 
     const [carousel, setCarousel] = useState<IBearCarouselObj>();
     const [isExpend, toggleExpend] = useState<boolean>(prefixStorage?.isExpend ?? true);
     const {control, watch, setValue, getValues} = useForm<IFormData>({
         defaultValues: {
+            autoPlayTime: 3000,
+            aspectRatioWidth: 40,
+            aspectRatioHeight: 9,
+            staticHeight: 200,
+            isAutoMode: false,
+            isStaticHeightMode: true,
+            isEnableAutoPlay: false,
             ...prefixStorage,
             isMount: true,
-            isEnableAutoPlay: false,
-            autoPlayTime: 3000,
-            aspectRatioWidth: 16,
-            aspectRatioHeight: 9,
-            staticHeight: 400,
-            isAutoMode: false,
-            isStaticHeightMode: false,
         }
     });
 
@@ -121,6 +122,9 @@ const PropsTry = ({
         }
     }, [isAutoMode]);
 
+    /**
+     * 同步設定持久化
+     */
     useEffect(() => {
         const formData = getValues();
         localStorage.setItem(STORAGE_KEY,JSON.stringify({
@@ -132,8 +136,8 @@ const PropsTry = ({
 
 
     /**
-   * render Pagination control
-   */
+     * render Pagination control
+     */
     const renderPaginationControl = () => {
         const pageTotal = getPageTotal();
         let pageEls: ReactNodeArray = [];
@@ -168,7 +172,7 @@ const PropsTry = ({
 
 
     const renderSettingControl = () => {
-        return  <Row className={cx({'d-none': !isExpend})}>
+        return  <Row>
 
             <Col md={12}>
                 <FormHorizontalGroup label="isMount" labelCol={12} formCol={12}>
@@ -484,7 +488,7 @@ const PropsTry = ({
     };
 
 
-    return <Row className="mb-1">
+    return  <Row className="mb-1">
         <Col xl={24} >
             <Row>
                 <Col col={24} className="mb-4">
@@ -517,10 +521,9 @@ const PropsTry = ({
 
     </Row>;
 
-
 };
 
-export default PropsTry;
+export default PropsTryCarousel;
 
 
 

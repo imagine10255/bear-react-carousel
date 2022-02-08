@@ -2,6 +2,7 @@ import {createGlobalStyle, ThemeProvider} from 'styled-components/macro';
 import {Container, GridThemeProvider} from 'bear-styled-grid';
 import gridConfig from 'config/grid';
 import theme from 'config/theme';
+import {HashRouter, Route, Switch} from 'react-router-dom';
 
 import React from 'react';
 import PropsTry from '../views/PropsTry';
@@ -10,19 +11,25 @@ import TextAnimations from '../views/Example/TextAnimations';
 import BaseUsed from '../views/BaseUsed';
 import AutoPlayProgress from 'views/Example/AutoPlayProgress';
 
-const switchControl: string = 'autoPlayProgress';
 
 const App = () => {
     return (
         <GridThemeProvider gridTheme={gridConfig}>
             <ThemeProvider theme={theme}>
                 <Container>
-                    {switchControl === 'baseUsed' && <BaseUsed/>}
-                    {switchControl === 'propsType' && <PropsTry/>}
-                    {switchControl === 'vipLevelList' && <VipLevelList/>}
-                    {switchControl === 'autoPlayProgress' && <AutoPlayProgress/>}
-                    {switchControl === 'textAnimations' && <TextAnimations/>}
+                    <HashRouter>
+                        <Switch>
+                            <Route path="/base-used" children={<BaseUsed/>} exact/>
+                            <Route path="/vip-level-list" children={<VipLevelList/>} exact/>
+                            <Route path="/auto-play-progress" children={<AutoPlayProgress/>} exact/>
+                            <Route path="/text-animations" children={<TextAnimations/>} exact/>
+                            <Route path="/" children={<PropsTry/>} exact/>
+                        </Switch>
+                    </HashRouter>
+
                 </Container>
+
+
 
                 <GlobalStyle/>
             </ThemeProvider>
