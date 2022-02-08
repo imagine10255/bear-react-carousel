@@ -273,8 +273,12 @@ export function getSlideDirection(startX: number, startY: number, endX: number, 
  * @param aspectRatio
  * @param slidesPerView
  */
-export function aspectRatio(aspectRatio: IAspectRatio, slidesPerView: number): string{
-    const calc = 100 * (aspectRatio.heightRatio / aspectRatio.widthRatio) / slidesPerView;
-    return `${calc.toFixed(2)}%`;
+export function calcSingleAspectRatio(aspectRatio: IAspectRatio, slidesPerView: number): string{
+    const calc = (100 * (aspectRatio.heightRatio / aspectRatio.widthRatio) / slidesPerView).toFixed(2);
+
+    if(aspectRatio.addStaticHeight){
+        return `calc(${calc}% + ${aspectRatio.addStaticHeight})`;
+    }
+    return `${calc}%`;
 }
 

@@ -89,6 +89,7 @@ export type TBearSlideItemDataList = IBearSlideItemData[];
 export interface IAspectRatio {
   widthRatio: number,
   heightRatio: number,
+  addStaticHeight?: string,
 }
 
 export interface IBreakpointSetting {

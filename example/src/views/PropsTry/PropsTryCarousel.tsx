@@ -30,6 +30,7 @@ export interface IFormData {
     spaceBetween: number,
     aspectRatioWidth: number,
     aspectRatioHeight: number,
+    addStaticHeight: string,
     staticHeight: number,
     isAutoMode: boolean,
     isStaticHeightMode: boolean,
@@ -76,7 +77,14 @@ const PropsTryCarousel = ({
             staticHeight: 200,
             isAutoMode: false,
             isStaticHeightMode: true,
+            slidesPerView: 1,
+            slidesPerGroup: 1,
+            spaceBetween: 0,
+            isEnableMouseMove: true,
             isEnableAutoPlay: false,
+            isEnableNavButton: true,
+            isEnablePagination: true,
+            isEnableLoop: true,
             ...prefixStorage,
             isMount: true,
         }
@@ -99,6 +107,7 @@ const PropsTryCarousel = ({
     const spaceBetween = watch('spaceBetween');
     const aspectRatioWidth = watch('aspectRatioWidth');
     const aspectRatioHeight = watch('aspectRatioHeight');
+    const addStaticHeight = watch('addStaticHeight');
     const staticHeight = watch('staticHeight');
     const autoPlayTime = watch('autoPlayTime');
     const moveTime = watch('moveTime');
@@ -179,7 +188,6 @@ const PropsTryCarousel = ({
                     <Controller
                         control={control}
                         name="isMount"
-                        defaultValue={true}
                         render={({field}) => {
                             return <SwitchControl
                                 {...field}
@@ -195,7 +203,6 @@ const PropsTryCarousel = ({
                     <Controller
                         control={control}
                         name="isDebug"
-                        defaultValue={true}
                         render={({field}) => {
                             return <SwitchControl
                                 {...field}
@@ -207,11 +214,10 @@ const PropsTryCarousel = ({
 
             </Col>
             <Col md={12}>
-                <FormHorizontalGroup label="isEnableLoop" labelCol={12} formCol={12}>
+                <FormHorizontalGroup label="enableLoop" labelCol={12} formCol={12}>
                     <Controller
                         control={control}
                         name="isEnableLoop"
-                        defaultValue={true}
                         render={({field}) => {
                             return <SwitchControl
                                 {...field}
@@ -223,11 +229,10 @@ const PropsTryCarousel = ({
 
             </Col>
             <Col md={12}>
-                <FormHorizontalGroup label="isEnablePagination"  labelCol={12} formCol={12}>
+                <FormHorizontalGroup label="enablePagination"  labelCol={12} formCol={12}>
                     <Controller
                         control={control}
                         name="isEnablePagination"
-                        defaultValue={true}
                         render={({field}) => {
                             return <SwitchControl
                                 {...field}
@@ -239,11 +244,10 @@ const PropsTryCarousel = ({
 
             </Col>
             <Col md={12}>
-                <FormHorizontalGroup label="isEnableNavButton" labelCol={12} formCol={12}>
+                <FormHorizontalGroup label="enableNavButton" labelCol={12} formCol={12}>
                     <Controller
                         control={control}
                         name="isEnableNavButton"
-                        defaultValue={true}
                         render={({field}) => {
                             return <SwitchControl
                                 {...field}
@@ -256,11 +260,10 @@ const PropsTryCarousel = ({
 
             </Col>
             <Col md={12}>
-                <FormHorizontalGroup label="isEnableMouseMove" labelCol={12} formCol={12}>
+                <FormHorizontalGroup label="enableMouseMove" labelCol={12} formCol={12}>
                     <Controller
                         control={control}
                         name="isEnableMouseMove"
-                        defaultValue={true}
                         render={({field}) => {
                             return <SwitchControl
                                 {...field}
@@ -272,7 +275,7 @@ const PropsTryCarousel = ({
 
             </Col>
             <Col md={12}>
-                <FormHorizontalGroup label="isEnableAutoPlay" labelCol={12} formCol={12}>
+                <FormHorizontalGroup label="enableAutoPlay" labelCol={12} formCol={12}>
                     <Controller
                         control={control}
                         name="isEnableAutoPlay"
@@ -293,7 +296,6 @@ const PropsTryCarousel = ({
                     <Controller
                         control={control}
                         name="slidesPerGroup"
-                        defaultValue={1}
                         render={({field}) => {
                             return (<TextField
                                 type="number"
@@ -309,7 +311,6 @@ const PropsTryCarousel = ({
                     <Controller
                         control={control}
                         name="spaceBetween"
-                        defaultValue={0}
                         render={({field}) => {
                             return (<TextField
                                 type="number"
@@ -341,7 +342,6 @@ const PropsTryCarousel = ({
                     <Controller
                         control={control}
                         name="moveTime"
-                        defaultValue={400}
                         render={({field}) => {
                             return (<TextField
                                 type="number"
@@ -371,7 +371,7 @@ const PropsTryCarousel = ({
             spaceBetween={anyToNumber(spaceBetween)}
             autoPlayTime={anyToNumber(autoPlayTime)}
             moveTime={anyToNumber(moveTime)}
-            aspectRatio={!isStaticHeightMode && aspectRatioWidth > 0 && aspectRatioHeight > 0 ? {widthRatio: aspectRatioWidth, heightRatio: aspectRatioHeight}: undefined}
+            aspectRatio={!isStaticHeightMode && aspectRatioWidth > 0 && aspectRatioHeight > 0 ? {widthRatio: aspectRatioWidth, heightRatio: aspectRatioHeight, addStaticHeight: addStaticHeight}: undefined}
             staticHeight={isStaticHeightMode && isNotEmpty(staticHeight) ? `${staticHeight}px` : undefined}
             // breakpoints={{
             //     768: {
@@ -414,10 +414,10 @@ const PropsTryCarousel = ({
                     <Controller
                         control={control}
                         name="slidesPerView"
-                        defaultValue={1}
                         render={({field}) => {
                             return (<TextField
                                 type="number"
+                                placeholder="1"
                                 disabled={isAutoMode}
                                 {...field}
                             />);
@@ -428,7 +428,7 @@ const PropsTryCarousel = ({
             </Col>
 
             <Col md={12}>
-                <FormHorizontalGroup label="isStaticHeightMode" labelCol={12} formCol={12}>
+                <FormHorizontalGroup label="staticHeightMode" labelCol={12} formCol={12}>
                     <Controller
                         control={control}
                         name="isStaticHeightMode"
@@ -458,7 +458,7 @@ const PropsTryCarousel = ({
                     </FormHorizontalGroup>
                 )}
 
-                {!isStaticHeightMode && (
+                {!isStaticHeightMode && (<>
                     <FormHorizontalGroup label="aspectRatio" labelCol={12} formCol={12}>
                         <Controller
                             control={control}
@@ -481,6 +481,22 @@ const PropsTryCarousel = ({
                             }}
                         />
                     </FormHorizontalGroup>
+                    <FormHorizontalGroup label="addStaticHeight" labelCol={12} formCol={12}>
+
+                        <Controller
+                            control={control}
+                            name="addStaticHeight"
+                            render={({field}) => {
+                                return (<TextField
+                                    type="text"
+                                    placeholder="1px"
+                                    {...field}
+                                />);
+                            }}
+                        />
+                    </FormHorizontalGroup>
+
+                </>
                 )}
 
             </Col>
