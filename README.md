@@ -4,6 +4,8 @@
 
 <div align="center">
 
+
+[![NPM](https://img.shields.io/npm/v/bear-carousel.svg?style=for-the-badge)](https://www.npmjs.com/package/bear-carousel)
 [![npm downloads](https://img.shields.io/npm/dm/bear-carousel.svg?style=for-the-badge)](https://www.npmjs.com/package/bear-carousel)
 [![npm](https://img.shields.io/npm/dt/bear-carousel.svg?style=for-the-badge)](https://www.npmjs.com/package/bear-carousel)
 [![npm](https://img.shields.io/npm/l/bear-carousel?style=for-the-badge)](https://github.com/bear-carousel/bear-carousel/blob/master/LICENSE)
