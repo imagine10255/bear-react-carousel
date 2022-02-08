@@ -1,11 +1,24 @@
-# bear-carousel
+# Bear Carousel
 
-> Most modern mobile touch slider with hardware accelerated transitions by react
+> Is React Carousel Most modern mobile touch slider with hardware accelerated transitions for ReactJS
 
-[![NPM](https://img.shields.io/npm/v/bear-carousel.svg)](https://www.npmjs.com/package/bear-carousel)
-[![npm](https://img.shields.io/npm/dm/bear-carousel.svg)](https://www.npmjs.com/package/bear-carousel)
+<div align="center">
 
-This project [demo](https://bearests.com/bear-carousel)
+[![npm downloads](https://img.shields.io/npm/dm/bear-carousel.svg?style=for-the-badge)](https://www.npmjs.com/package/bear-carousel)
+[![npm](https://img.shields.io/npm/dt/bear-carousel.svg?style=for-the-badge)](https://www.npmjs.com/package/bear-carousel)
+[![npm](https://img.shields.io/npm/l/bear-carousel?style=for-the-badge)](https://github.com/bear-carousel/bear-carousel/blob/master/LICENSE)
+
+</div>
+
+<p align="center">
+  <a href="https://bearests.com/bear-carousel">Get started</a> | 
+  <a href="https://bearests.com/bear-carousel/api">API</a> |
+  <a href="https://github.com/imagine10255/bear-carousel/tree/main/example/src/views/Example">Examples</a> |
+  <a href="https://bearests.com/bear-carousel/example/text-animations">Demo</a> |
+  <a href="https://bearests.com/bear-carousel/props-try">Prop Try</a> |
+  <a href="https://bearests.com/bear-carousel/advices">Advices</a>
+</p>
+
 
 ## Install
 
