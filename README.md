@@ -1,6 +1,6 @@
 # Bear Carousel
 
-> Is React Carousel Most modern mobile touch slider with hardware accelerated transitions for ReactJS
+> Most modern mobile touch slider with hardware accelerated transitions for ReactJS
 
 <div align="center">
 
