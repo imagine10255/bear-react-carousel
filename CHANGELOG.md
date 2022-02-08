@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.20](https://github.com/imagine10255/bear-carousel/compare/v1.1.19...v1.1.20) (2022-02-08)
+
+
+### Bug Fixes
+
+* miss commit ([74a01a0](https://github.com/imagine10255/bear-carousel/commit/74a01a0e3e4149c7e8c49c5db60253242ec8fc4b))
+* slideView > 0, slideGroup > 0 count, page count error, don't copy items much ([6f69ed0](https://github.com/imagine10255/bear-carousel/commit/6f69ed0d68d19a340ed69059993725af667597b5))
+
 ### [1.1.19](https://github.com/imagine10255/bear-carousel/compare/v1.1.18...v1.1.19) (2022-02-08)
 
 ### [1.1.18](https://github.com/imagine10255/bear-carousel/compare/v1.1.17...v1.1.18) (2022-02-07)
