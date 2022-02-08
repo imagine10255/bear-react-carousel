@@ -150,7 +150,7 @@ function initDataList(sourceList: Array<any> = [], slidesPerView: TSlidesPerView
     const formatList = [];
     const isClone = isLoop && typeof window !== 'undefined';
     let index = 0;
-    const formatSlidesPerView = slidesPerView === 'auto' ? 0: Math.ceil(slidesPerView) + (sourceList.length % slidesPerGroup);
+    const formatSlidesPerView = slidesPerView === 'auto' ? 0: Math.ceil(slidesPerView);
     const lastPage = (sourceList.length / slidesPerGroup) - (slidesPerGroup - formatSlidesPerView);
 
     if (isClone) {
@@ -170,10 +170,11 @@ function initDataList(sourceList: Array<any> = [], slidesPerView: TSlidesPerView
 
     let matchFirstIndex = index;
     let pageFirstIndex = 0;
-    for (const row of sourceList) {
+    for (const [sourceIndex, row] of sourceList.entries()) {
         formatList[index] = {
             actualIndex: index,
             matchIndex: index,
+            sourceIndex: sourceIndex,
             inPage: Math.ceil((pageFirstIndex + 1) / slidesPerGroup),
             isClone: false,
             element: row.children,

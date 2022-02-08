@@ -50,6 +50,7 @@ export interface ITouchStart {
 export interface InitData {
   actualIndex: number;
   matchIndex: number;
+  sourceIndex?: number;
   inPage: number;
   isClone: boolean;
   element: React.ReactNode;

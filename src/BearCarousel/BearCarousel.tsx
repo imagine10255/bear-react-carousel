@@ -149,7 +149,9 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
           this._checkAndAutoPlay();
 
           // 首次移動到正確位置
-          this.goToActualIndex(this.info.actual.firstIndex, false);
+          if(this.info.pageTotal > 0){
+              this.goToPage(1, false);
+          }
 
           // 視窗大小變更時(透過節流)
           window.addEventListener('resize', this._throttleHandleResize, false);
@@ -268,6 +270,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
       }
 
 
+      // 判斷一開始的移動方向
       if(this.touchStart.moveDirection === EDirection.vertical){
           // 垂直移動
           // event.preventDefault();
@@ -281,10 +284,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
               const moveX = carouselRef.offsetLeft + event.targetTouches[0].pageX;
               this._elementMove(moveX);
-
-              // const moveX = carouselRef.offsetLeft + event.targetTouches[0].pageX - this.touchStart.x;
-              // carouselRef.style.transform = `translate3d(${moveX}px, 0px, 0px)`;
-              // carouselRef.style.transitionDuration = '0ms';
           }
       }
 
@@ -460,9 +459,9 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
       const $this = this;
       if (formatElement.length > (this.activeActualIndex - 1) && formatElement[this.activeActualIndex].isClone) {
-          // setTimeout(() => {
-          this.goToActualIndex(formatElement[this.activeActualIndex].matchIndex, false);
-          // }, 0);
+          setTimeout(() => {
+              $this.goToActualIndex(formatElement[this.activeActualIndex].matchIndex, false);
+          }, 0);
       }
 
   };
@@ -562,9 +561,11 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
   /**
    * 前往頁面
+   * ex: slideView: 2, slideGroup: 2, total: 4
+   * page1 -> (1-1) * 2) + 1 + (firstIndex -1) = 1
    */
   goToPage = (page: number, isUseAnimation = true): void => {
-      this.goToActualIndex(page * this.rwdMedia.slidesPerGroup + (this.info.actual.firstIndex - 1), isUseAnimation);
+      this.goToActualIndex(((page-1) * this.rwdMedia.slidesPerGroup) + 1 + (this.info.actual.firstIndex - 1), isUseAnimation);
   };
 
   /**
@@ -800,12 +801,14 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                                   }
                                   data-actual={row.actualIndex}
                                   data-match={row.isClone ? row.matchIndex : undefined}
+                                  data-page={row.inPage}
+                                  data-source={row.sourceIndex}
                                   data-is-clone={row.isClone ? true : undefined}
                               >
                                   {row.element}
 
                                   {isDebug && (<div className={elClassName.testNumber}>
-                                      {row.matchIndex}
+                                      {row.sourceIndex}
                                       {row.isClone && (
                                           <div className={elClassName.cloneIconGroup}>
                                               <div className={elClassName.cloneIcon}/>
