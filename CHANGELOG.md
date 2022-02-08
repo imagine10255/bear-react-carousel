@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.21](https://github.com/imagine10255/bear-carousel/compare/v1.1.20...v1.1.21) (2022-02-08)
+
+
+### Features
+
+* added to prevent items with onClick, when the web is swiped, it will be directly triggered to open ([fb21c09](https://github.com/imagine10255/bear-carousel/commit/fb21c09e8779b01d80c5d5fb12bae2263384042a))
+
 ### [1.1.20](https://github.com/imagine10255/bear-carousel/compare/v1.1.19...v1.1.20) (2022-02-08)
 
 
