@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.23](https://github.com/imagine10255/bear-carousel/compare/v1.1.22...v1.1.23) (2022-02-08)
+
+
+### Features
+
+* added additional fixed height, required for image cards ([600096b](https://github.com/imagine10255/bear-carousel/commit/600096bf098bd7f8ab7a64dd01c526e0d97479df))
+
 ### [1.1.22](https://github.com/imagine10255/bear-carousel/compare/v1.1.21...v1.1.22) (2022-02-08)
 
 
