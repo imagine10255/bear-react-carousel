@@ -19,14 +19,28 @@
   <a href="https://bearests.com/bear-carousel/advices">Advices</a>
 </p>
 
+### Features
 
-## Install
+- Use React + Flexbox directly, not javascript in secondary development into React
+- Easier to use
+- Supports both Web, Mobile
+- Responsive setting parameters
+- Navigation buttons can be directly moved out of the carousel area without being affected by overflow in simple usage situations
+- Use Flexbox instead of adding inlineStyle to carousel items
+- Number of times to avoid re-renders by key in carousel items
+- When the image data is loaded asynchronously, it will not be displayed because BearCarousel has componentDidMount, and the image has been loaded but not displayed. Additional processing is required.
+- There is no need to set the style of the project, Bear Carousel directly provides the components of your project, you only need to set the image URL and form an array, and put it in the data parameter.
+- The size of the carousel, the height of the outer container is based, and the item container follows the size of the outer container
+- Provide project scale setting or fixed height setting
+
+
+### Install
 
 ```bash
 yarn add bear-carousel
 ```
 
-## Usage
+### Usage
 
 ```tsx
 import BearCarousel, {TBearSlideItemDataList, BearSlideItem} from 'bear-carousel';
@@ -60,7 +74,7 @@ There is also a codesandbox template that you can fork and play with it:
 
 
 
-## if your need control by out component
+### if your need control by out component
 
 ```tsx
 const CustomBanner = ({
@@ -77,6 +91,6 @@ const CustomBanner = ({
 }
 ```
 
-## License
+### License
 
 MIT © [imagine10255](https://github.com/imagine10255)
