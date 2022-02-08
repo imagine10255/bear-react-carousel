@@ -19,13 +19,13 @@ const logEnable = {
     componentWillUnmount: true,
     shouldComponentUpdate: true,
     onMobileTouchStart: true,
-    onMobileTouchMove: false,
+    onMobileTouchMove: true,
     onMobileTouchEnd: true,
     onWebMouseStart: true,
-    onWebMouseMove: true,
+    onWebMouseMove: false,
     onWebMouseEnd: true,
-    elementMove: true,
-    elementMoveDone: true,
+    elementMove: false,
+    elementMoveDone: false,
     checkAndAutoPlay: true,
     onTransitionend: true,
     handleResize: true,
@@ -154,15 +154,15 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
           }
 
           // 視窗大小變更時(透過節流)
-          window.addEventListener('resize', this._throttleHandleResize, false);
+          window.addEventListener('resize', this._throttleHandleResize, {passive: false});
 
           // 移動動畫結束(需要復歸位置, 以假亂真)
-          carouselRef.addEventListener('transitionend', this._onTransitionend, false);
+          carouselRef.addEventListener('transitionend', this._onTransitionend, {passive: false});
 
           if (isMobile) {
-              carouselRef.addEventListener('touchstart', this._onMobileTouchStart, false);
+              carouselRef.addEventListener('touchstart', this._onMobileTouchStart, {passive: false});
           } else {
-              carouselRef.addEventListener('mousedown', this._onWebMouseStart, false);
+              carouselRef.addEventListener('mousedown', this._onWebMouseStart, {passive: false});
           }
       }
 
@@ -176,7 +176,12 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
       const carouselRef = this.carouselRef?.current;
       if (carouselRef) {
-          carouselRef.removeEventListener('touchstart', this._onMobileTouchStart, false);
+          if (isMobile) {
+              carouselRef.removeEventListener('touchstart', this._onMobileTouchStart, false);
+          } else {
+              carouselRef.removeEventListener('mousedown', this._onWebMouseStart, false);
+          }
+
           carouselRef.removeEventListener('transitionend', this._onTransitionend, false);
       }
 
@@ -258,7 +263,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
    * @param event
    */
   _onMobileTouchMove = (event: TouchEvent): void => {
-      if(this.props.isDebug && logEnable.onMobileTouchMove) log.printInText('[_onMobileTouchMove]');
 
       const endX = event.targetTouches[0].pageX;
       const endY = event.targetTouches[0].pageY;
@@ -268,6 +272,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
       if(typeof this.touchStart.moveDirection === 'undefined'){
           this.touchStart.moveDirection = direction;
       }
+      if(this.props.isDebug && logEnable.onMobileTouchMove) log.printInText(`[_onMobileTouchMove] ${this.touchStart.moveDirection}`);
 
 
       // 判斷一開始的移動方向
@@ -313,7 +318,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
   _onWebMouseStart = (event: MouseEvent): void => {
       if(this.props.isDebug && logEnable.onWebMouseStart) log.printInText('[_onWebMouseStart]');
 
-      event.preventDefault();
 
       if (this.timer) clearTimeout(this.timer);
 

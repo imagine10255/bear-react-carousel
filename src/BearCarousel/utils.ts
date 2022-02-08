@@ -242,7 +242,7 @@ export function getTranslateParams(el: HTMLDivElement): {x: number, y: number, z
  *
  * @return 1:向上, 2:向下, 3:向左, 4:向右, 0:未移動
  */
-export function getSlideDirection(startX: number, startY: number, endX: number, endY: number): number|undefined{
+export function getSlideDirection(startX: number, startY: number, endX: number, endY: number): EDirection|undefined{
     const dy = startY - endY;
     const dx = endX - startX;
 

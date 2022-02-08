@@ -14,8 +14,8 @@ export interface IBearCarouselObj {
 
 
 export enum EDirection {
-  vertical,
-  horizontal,
+  vertical= 'vertical',
+  horizontal = 'horizontal',
 }
 
 export interface IBearCarouselProps extends IBreakpointSetting{
