@@ -9,8 +9,12 @@ const bearSlideItemData: TBearSlideItemDataList = images.map(row => {
     return {
         key: row.id,
         children: <BearSlideItem as="card">
-            <Flex horizontal={ERowAlign.center} vertical={ERowAlign.center} className="h-100" style={{fontSize: '40px'}}>
-                {row.id}
+            <Flex horizontal={ERowAlign.center}
+                vertical={ERowAlign.center}
+                className="h-100"
+                style={{fontSize: '40px'}}
+            >
+                <a href="https://carousel.bearests.com" rel="noreferrer" target="_blank">{row.id}</a>
             </Flex>
         </BearSlideItem>
     };

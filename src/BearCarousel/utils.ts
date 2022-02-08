@@ -1,4 +1,4 @@
-import {IBreakpointSetting, TSlidesPerView, IBreakpointSettingActual, IInfo, IPropsBreakpoints, IBearCarouselProps, InitData, EDirection} from './types';
+import {IBreakpointSetting, TSlidesPerView, IBreakpointSettingActual, IInfo, IPropsBreakpoints, IBearCarouselProps, InitData, EDirection, IAspectRatio} from './types';
 import {anyToNumber} from 'bear-jsutils/convert';
 
 /**
@@ -267,4 +267,14 @@ export function getSlideDirection(startX: number, startY: number, endX: number, 
     return undefined;
 }
 
+
+/**
+ * 計算等比例
+ * @param aspectRatio
+ * @param slidesPerView
+ */
+export function aspectRatio(aspectRatio: IAspectRatio, slidesPerView: number): string{
+    const calc = 100 * (aspectRatio.heightRatio / aspectRatio.widthRatio) / slidesPerView;
+    return `${calc.toFixed(2)}%`;
+}
 

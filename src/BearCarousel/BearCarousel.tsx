@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {throttle} from '@github/mini-throttle';
-import {getMediaInfo, getMediaRangeSize, getSlideDirection, getTranslateParams} from './utils';
+import {aspectRatio, getMediaInfo, getMediaRangeSize, getSlideDirection, getTranslateParams} from './utils';
 import {uuid} from 'bear-jsutils/key';
 import {checkIsMobile} from 'bear-jsutils/browser';
 import log from 'bear-jsutils/log';
@@ -750,8 +750,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
       // 產生需要的樣式 (注意結尾符號 ;)
       const rootStyle: string = [
-          `padding-top: ${isNotEmpty(this.rwdMedia.aspectRatio) ? `calc(100% * (${this.rwdMedia.aspectRatio?.heightRatio} / ${this.rwdMedia.aspectRatio?.widthRatio}));`: '0;'}`,
-          `height: ${isNotEmpty(this.rwdMedia.staticHeight) ? `${this.rwdMedia.staticHeight};`: 'inherit;'}`,
+          `padding-top: ${this.rwdMedia.aspectRatio && this.rwdMedia.slidesPerView !== 'auto' ? aspectRatio(this.rwdMedia.aspectRatio, this.rwdMedia.slidesPerView): '0'};`,
+          `height: ${isNotEmpty(this.rwdMedia.staticHeight) ? `${this.rwdMedia.staticHeight}`: 'inherit'};`,
       ].join('');
 
       // 產生需要的樣式 (注意結尾符號 ;)
