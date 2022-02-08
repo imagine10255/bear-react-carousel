@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.22](https://github.com/imagine10255/bear-carousel/compare/v1.1.21...v1.1.22) (2022-02-08)
+
+
+### Bug Fixes
+
+* fixed proportional calculation needs to include display items ([137aa15](https://github.com/imagine10255/bear-carousel/commit/137aa1521be762149e6e6c85a7d6cc36316eeb2d))
+
 ### [1.1.21](https://github.com/imagine10255/bear-carousel/compare/v1.1.20...v1.1.21) (2022-02-08)
 
 
