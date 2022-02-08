@@ -444,7 +444,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
           clearTimeout(this.timer);
       }
 
-      if (this.rwdMedia.isEnableLoop && this.rwdMedia.isEnableAutoPlay && autoPlayTime > 0) {
+      if (this.rwdMedia.isEnableLoop && this.rwdMedia.isEnableAutoPlay && autoPlayTime > 0 && this.info.pageTotal > 1) {
           this.timer = setTimeout(() => {
               this.toNext();
           }, autoPlayTime);
