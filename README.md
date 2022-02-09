@@ -1,9 +1,12 @@
-# Bear Carousel
-
-> Most modern mobile touch slider with hardware accelerated transitions for ReactJS
+<div align="center">
+        <a href="https://carousel.bearests.com/" title="Bear Carousel Logo - Most modern mobile touch slider with hardware accelerated transitions for ReactJS">
+            <img src="https://repository-images.githubusercontent.com/423021287/0cca9f48-436d-46cb-9bb3-74f6e33e724a" alt="Bear Carousel Logo - Most modern mobile touch slider with hardware accelerated transitions for ReactJS" />
+        </a>
+</div>
 
 <div align="center">
 
+    
 
 [![NPM](https://img.shields.io/npm/v/bear-carousel.svg?style=for-the-badge)](https://www.npmjs.com/package/bear-carousel)
 [![npm downloads](https://img.shields.io/npm/dm/bear-carousel.svg?style=for-the-badge)](https://www.npmjs.com/package/bear-carousel)
