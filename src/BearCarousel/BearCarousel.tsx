@@ -55,6 +55,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
       isEnableNavButton: false,
       isEnableMouseMove: true,
       isEnableAutoPlay: false,
+      isGPURender: true,
       isDebug: false,
       spaceBetween: 0,
       autoPlayTime: 3000
@@ -117,7 +118,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
   // Ref
   rootRef: React.RefObject<HTMLDivElement> = React.createRef();
-  carouselRef: React.RefObject<HTMLDivElement> = React.createRef();
+  containerRef: React.RefObject<HTMLDivElement> = React.createRef();
   slideItemRefs: React.RefObject<Array<HTMLDivElement>> = React.createRef();
   pageRefs: React.RefObject<Array<HTMLDivElement>> = React.createRef();
   _throttleHandleResize = () => {};
@@ -145,8 +146,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
   componentDidMount() {
       if(this.props.isDebug && logEnable.componentDidMount) log.printInText('[componentDidMount]');
 
-      const carouselRef = this.carouselRef?.current;
-      if (carouselRef) {
+      const containerRef = this.containerRef?.current;
+      if (containerRef) {
           // Check and turn on automatic rotation
           this._checkAndAutoPlay();
 
@@ -159,12 +160,12 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
           window.addEventListener('resize', this._throttleHandleResize, {passive: false});
 
           // End of moving animation (Need to return to the position, to be fake)
-          carouselRef.addEventListener('transitionend', this._onTransitionend, {passive: false});
+          containerRef.addEventListener('transitionend', this._onTransitionend, {passive: false});
 
           if (isMobile) {
-              carouselRef.addEventListener('touchstart', this._onMobileTouchStart, {passive: false});
+              containerRef.addEventListener('touchstart', this._onMobileTouchStart, {passive: false});
           } else {
-              carouselRef.addEventListener('mousedown', this._onWebMouseStart, {passive: false});
+              containerRef.addEventListener('mousedown', this._onWebMouseStart, {passive: false});
           }
       }
 
@@ -176,15 +177,15 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
       if(this.props.isDebug && logEnable.componentWillUnmount) log.printInText('[componentWillUnmount]');
       if (this.timer) clearTimeout(this.timer);
 
-      const carouselRef = this.carouselRef?.current;
-      if (carouselRef) {
+      const containerRef = this.containerRef?.current;
+      if (containerRef) {
           if (isMobile) {
-              carouselRef.removeEventListener('touchstart', this._onMobileTouchStart, false);
+              containerRef.removeEventListener('touchstart', this._onMobileTouchStart, false);
           } else {
-              carouselRef.removeEventListener('mousedown', this._onWebMouseStart, false);
+              containerRef.removeEventListener('mousedown', this._onWebMouseStart, false);
           }
 
-          carouselRef.removeEventListener('transitionend', this._onTransitionend, false);
+          containerRef.removeEventListener('transitionend', this._onTransitionend, false);
       }
 
       window.removeEventListener('resize', this._throttleHandleResize, false);
@@ -240,23 +241,23 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
       if (this.timer) clearTimeout(this.timer);
 
-      const carouselRef = this.carouselRef?.current;
-      if (carouselRef) {
-          const movePosition = getTranslateParams(carouselRef);
+      const containerRef = this.containerRef?.current;
+      if (containerRef) {
+          const movePosition = getTranslateParams(containerRef);
 
           // 紀錄位置
           this.touchStart = {
               pageX: event.targetTouches[0].pageX,
               pageY: event.targetTouches[0].pageY,
               x: event.targetTouches[0].pageX - movePosition.x,
-              y: event.targetTouches[0].pageY - carouselRef.offsetTop,
+              y: event.targetTouches[0].pageY - containerRef.offsetTop,
               movePositionX: movePosition.x,
               movePositionY: movePosition.y,
               moveDirection: undefined,
           };
 
-          carouselRef.addEventListener('touchmove', this._onMobileTouchMove, false);
-          carouselRef.addEventListener('touchend', this._onMobileTouchEnd, false);
+          containerRef.addEventListener('touchmove', this._onMobileTouchMove, false);
+          containerRef.addEventListener('touchend', this._onMobileTouchEnd, false);
       }
   };
 
@@ -286,10 +287,10 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
           // 水平移動
           event.preventDefault();
 
-          const carouselRef = this.carouselRef?.current;
-          if(carouselRef){
+          const containerRef = this.containerRef?.current;
+          if(containerRef){
 
-              const moveX = carouselRef.offsetLeft + event.targetTouches[0].pageX;
+              const moveX = containerRef.offsetLeft + event.targetTouches[0].pageX;
               this._elementMove(moveX);
           }
       }
@@ -305,10 +306,10 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
   _onMobileTouchEnd = (event: TouchEvent): void => {
       if(this.props.isDebug && logEnable.onMobileTouchEnd) log.printInText('[_onMobileTouchEnd]');
 
-      const carouselRef = this.carouselRef?.current;
-      if (carouselRef) {
-          carouselRef.removeEventListener('touchmove', this._onMobileTouchMove, false);
-          carouselRef.removeEventListener('touchend', this._onMobileTouchEnd, false);
+      const containerRef = this.containerRef?.current;
+      if (containerRef) {
+          containerRef.removeEventListener('touchmove', this._onMobileTouchMove, false);
+          containerRef.removeEventListener('touchend', this._onMobileTouchEnd, false);
       }
       this._elementMoveDone();
   };
@@ -323,21 +324,21 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
       if (this.timer) clearTimeout(this.timer);
 
-      const carouselRef = this.carouselRef?.current;
-      if (carouselRef) {
-          const movePosition = getTranslateParams(carouselRef);
+      const containerRef = this.containerRef?.current;
+      if (containerRef) {
+          const movePosition = getTranslateParams(containerRef);
 
           this.touchStart = {
               pageX: event.clientX,
               pageY: event.clientY,
               x: event.clientX - movePosition.x,
-              y: event.clientY - carouselRef.offsetTop,
+              y: event.clientY - containerRef.offsetTop,
               movePositionX: movePosition.x,
               movePositionY: movePosition.y
           };
 
-          carouselRef.addEventListener('mousemove', this._onWebMouseMove, false);
-          carouselRef.addEventListener('mouseup', this._onWebMouseEnd, false);
+          containerRef.addEventListener('mousemove', this._onWebMouseMove, false);
+          containerRef.addEventListener('mouseup', this._onWebMouseEnd, false);
       }
 
   };
@@ -365,10 +366,10 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
       event.preventDefault();
 
-      const carouselRef = this.carouselRef?.current;
-      if (carouselRef) {
-          carouselRef.removeEventListener('mousemove', this._onWebMouseMove, false);
-          carouselRef.removeEventListener('mouseup', this._onWebMouseEnd, false);
+      const containerRef = this.containerRef?.current;
+      if (containerRef) {
+          containerRef.removeEventListener('mousemove', this._onWebMouseMove, false);
+          containerRef.removeEventListener('mouseup', this._onWebMouseEnd, false);
       }
 
       this._elementMoveDone();
@@ -382,8 +383,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
   _elementMove = (moveX: number): void => {
       if(this.props.isDebug && logEnable.elementMove) log.printInText('[_elementMove]');
 
-      const carouselRef = this.carouselRef?.current;
-      if (carouselRef && this.rwdMedia.isEnableMouseMove && this.slideItemRefs.current) {
+      const containerRef = this.containerRef?.current;
+      if (containerRef && this.rwdMedia.isEnableMouseMove && this.slideItemRefs.current) {
           // 取得移動限制
           const distance = {
               min: this._getMoveDistance(this.info.actual.minIndex),
@@ -393,8 +394,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
           const translateX = moveX - this.touchStart.x;
           if ((distance.max < translateX && distance.min > translateX) || this.rwdMedia.isEnableLoop) {
               // 拖動
-              carouselRef.style.transform = `translate3d(${translateX}px, 0px, 0px)`;
-              carouselRef.style.transitionDuration = '0ms';
+              containerRef.style.transform = `translate(${translateX}px, 0px)`;
+              containerRef.style.transitionDuration = '0ms';
           }
       }
 
@@ -408,11 +409,11 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
   _elementMoveDone = (): void => {
       if(this.props.isDebug && logEnable.elementMoveDone) log.printInText('[_elementMoveDone]');
 
-      const carouselRef = this.carouselRef?.current;
-      if (carouselRef) {
+      const containerRef = this.containerRef?.current;
+      if (containerRef) {
 
           // get mobile location
-          const movePosition = getTranslateParams(carouselRef).x;
+          const movePosition = getTranslateParams(containerRef).x;
 
           // Confirmed travel distance
           const checkMove = movePosition - this.touchStart.movePositionX;
@@ -639,13 +640,13 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
           // 移動EL位置
           const position = this._getMoveDistance(this.activeActualIndex);
-          const carouselRef = this.carouselRef?.current;
-          if (carouselRef) {
-              carouselRef.style.visibility = 'visible';
-              carouselRef.style.transitionDuration = isUseAnimation
+          const containerRef = this.containerRef?.current;
+          if (containerRef) {
+              containerRef.style.visibility = 'visible';
+              containerRef.style.transitionDuration = isUseAnimation
                   ? `${moveTime}ms`
                   : '0ms';
-              carouselRef.style.transform = `translate3d(${position}px, 0px, 0px)`;
+              containerRef.style.transform = `translate(${position}px, 0px)`;
           }
 
 
@@ -747,7 +748,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
 
   render() {
-      const {style, className, isDebug} = this.props;
+      const {style, className, isDebug, isGPURender} = this.props;
       const {windowSize} = this.state;
 
 
@@ -772,6 +773,10 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                   data-carousel-id={this._carouselId}
                   style={style}
                   className={[className, elClassName.root].join(' ').trim()}
+                  data-gpu-render={isGPURender ? 'true':undefined}
+                  data-per-view-auto={this.rwdMedia.slidesPerView === 'auto'}
+                  data-mouse-move={this.rwdMedia.isEnableMouseMove}
+                  data-actual={`${this.info.actual.minIndex},${this.info.actual.firstIndex}-${this.info.actual.lastIndex},${this.info.actual.maxIndex}`}
                   ref={this.rootRef}
               >
 
@@ -786,11 +791,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
                   <div className={elClassName.content}>
                       <div
-                          ref={this.carouselRef}
+                          ref={this.containerRef}
                           className={elClassName.container}
-                          data-is-per-view-auto={this.rwdMedia.slidesPerView === 'auto'}
-                          data-is-enable-mouse-move={this.rwdMedia.isEnableMouseMove}
-                          data-actual={`${this.info.actual.minIndex},${this.info.actual.firstIndex}-${this.info.actual.lastIndex},${this.info.actual.maxIndex}`}
                       >
                           {this.info.formatElement.map((row, i) => (
                               <div

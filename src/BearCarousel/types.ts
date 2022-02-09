@@ -30,6 +30,7 @@ export interface IBearCarouselProps extends IBreakpointSetting{
   moveTime: number
   autoPlayTime: number
   breakpoints: IPropsBreakpoints
+  isGPURender: boolean
   isDebug: boolean
 }
 

@@ -151,18 +151,6 @@ div.bear-carousel__slide-item__div{
 }
 
 
-/* To prevent user selecting inside the drag source */
-.bear-carousel__container[draggable="true"] {
-    user-select: none;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-}
-
-.bear-carousel__container[data-is-enable-mouse-move="true"] {
-    cursor: pointer;
-}
-
 
 
 .bear-carousel__content{
@@ -181,5 +169,16 @@ div.bear-carousel__slide-item__div{
     position: relative;
     height: inherit;
     user-select: none;
-    /*padding-top: calc(100% * (9 / 16));*/
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
 }
+
+.bear-carousel__root[data-gpu-render=true] .bear-carousel__container{
+    will-change: transform;
+}
+
+.bear-carousel__root[data-mouse-move="true"] .bear-carousel__container{
+    cursor: pointer;
+}
+
