@@ -1,6 +1,6 @@
 <div align="center">
         <a href="https://carousel.bearests.com/" title="Bear Carousel Logo - Most modern mobile touch slider with hardware accelerated transitions for ReactJS">
-            <img src="https://repository-images.githubusercontent.com/423021287/0cca9f48-436d-46cb-9bb3-74f6e33e724a" alt="Bear Carousel Logo - Most modern mobile touch slider with hardware accelerated transitions for ReactJS" />
+            <img src="https://raw.githubusercontent.com/imagine10255/bear-carousel/tree/main/example/logo.png" alt="Bear Carousel Logo - Most modern mobile touch slider with hardware accelerated transitions for ReactJS" />
         </a>
 </div>
 
@@ -18,10 +18,8 @@
 <p align="center">
   <a href="https://carousel.bearests.com">Get started</a> | 
   <a href="https://carousel.bearests.com/api">API</a> |
-  <a href="https://github.com/imagine10255/bear-carousel/tree/main/example/src/views/Example">Examples</a> |
   <a href="https://carousel.bearests.com/example/text-animations">Demo</a> |
-  <a href="https://carousel.bearests.com/props-try">Prop Try</a> |
-  <a href="https://carousel.bearests.com/advices">Advices</a>
+  <a href="https://carousel.bearests.com/props-try">Prop Try</a>
 </p>
 
 ### Features
