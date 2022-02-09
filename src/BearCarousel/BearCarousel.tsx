@@ -12,8 +12,10 @@ import {BearCarouselProvider} from './BearCarouselProvider';
 import './styles.css';
 
 
-// 滑動觸發移動距離
+// Swipe trigger movement distance
 const triggerTouchDistance = 60;
+
+// debug log switch
 const logEnable = {
     componentDidMount: true,
     componentWillUnmount: true,
@@ -61,18 +63,18 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
   _carouselId = uuid();
 
   timer?: any;
-  activePage = 0;        // 真實頁面位置
-  activeActualIndex = 0; // 真實項目索引位置
+  activePage = 0;        // real page location
+  activeActualIndex = 0; // real item index location
   info: IInfo = {
       formatElement: [],
-      sourceTotal: 0, // 來源總數
+      sourceTotal: 0, // Total number of sources
       // 從0開始
       element: {
           total: 0,
           firstIndex: 0,
           lastIndex: 0
       },
-      // 0為實際一開始的位置(往前為負數), 結束值為最後結束位置
+      // 0 is the actual starting position (a negative number forward), and the ending value is the last ending position
       actual: {
           minIndex: 0,
           maxIndex: 0,
@@ -145,18 +147,18 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
       const carouselRef = this.carouselRef?.current;
       if (carouselRef) {
-      // 檢查並開啟自動輪播
+          // Check and turn on automatic rotation
           this._checkAndAutoPlay();
 
-          // 首次移動到正確位置
+          // Move to the correct position for the first time
           if(this.info.pageTotal > 0){
               this.goToPage(1, false);
           }
 
-          // 視窗大小變更時(透過節流)
+          // When the window size is changed (through throttling)
           window.addEventListener('resize', this._throttleHandleResize, {passive: false});
 
-          // 移動動畫結束(需要復歸位置, 以假亂真)
+          // End of moving animation (Need to return to the position, to be fake)
           carouselRef.addEventListener('transitionend', this._onTransitionend, {passive: false});
 
           if (isMobile) {
@@ -191,7 +193,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
 
   /***
-   * 優化渲染
+   * Optimized rendering
    * @param nextProps
    * @param nextState
    */
@@ -214,7 +216,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
           this.rwdMedia = rwdMedia;
           this.info = info;
 
-          // 重置頁面位置
+          // reset page position
           const $this = this;
           setTimeout(() => {
               $this.goToPage(1, false);
@@ -230,7 +232,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
 
   /**
-   * 手機手指按住開始
+   * mobile phone finger press start
    * @param event
    */
   _onMobileTouchStart = (event: TouchEvent): void => {
@@ -259,7 +261,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
   };
 
   /**
-   * 手機手指按住移動中
+   * Mobile phone finger press and move
    * @param event
    */
   _onMobileTouchMove = (event: TouchEvent): void => {
@@ -295,10 +297,10 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
   };
 
   /**
-   * 手機手指按住結束
+   * Mobile phone finger press to end
    * @param event
    *
-   * 加上 event.preventDefault(); 會影響手機點擊 onClick事件
+   * PS: Add event.preventDefault(); will affect the mobile phone click onClick event
    */
   _onMobileTouchEnd = (event: TouchEvent): void => {
       if(this.props.isDebug && logEnable.onMobileTouchEnd) log.printInText('[_onMobileTouchEnd]');
@@ -312,7 +314,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
   };
 
   /**
-   * 網頁滑鼠按下
+   * Web mouse click
    * @param event
    */
   _onWebMouseStart = (event: MouseEvent): void => {
@@ -342,7 +344,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
 
   /**
-   * 網頁滑鼠移動
+   * Web mouse movement
    * @param event
    */
   _onWebMouseMove = (event: MouseEvent):void => {
@@ -355,7 +357,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
   };
 
   /**
-   * 網頁滑鼠放開
+   * web mouse release
    * @param event
    */
   _onWebMouseEnd = (event: MouseEvent):void => {
@@ -374,8 +376,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
 
   /**
-   * 最後的移動執行
-   * @param moveX 移動X軸
+   * final move execution
+   * @param moveX Move the X-axis
    */
   _elementMove = (moveX: number): void => {
       if(this.props.isDebug && logEnable.elementMove) log.printInText('[_elementMove]');
@@ -401,7 +403,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
 
   /**
-   * 物件移動結束 (確認停下位置 應該吸在哪個Index位置)
+   * The object movement ends (confirm the stop position and which Index position should be sucked)
    */
   _elementMoveDone = (): void => {
       if(this.props.isDebug && logEnable.elementMoveDone) log.printInText('[_elementMoveDone]');
@@ -409,10 +411,10 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
       const carouselRef = this.carouselRef?.current;
       if (carouselRef) {
 
-          // 取得移動位置
+          // get mobile location
           const movePosition = getTranslateParams(carouselRef).x;
 
-          // 確認移動距離
+          // Confirmed travel distance
           const checkMove = movePosition - this.touchStart.movePositionX;
 
           if (checkMove <= triggerTouchDistance && checkMove >= -triggerTouchDistance) {
@@ -432,14 +434,14 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
 
   /**
-   * 檢查並自動播放功能
+   * Check and autoplay feature
    */
   _checkAndAutoPlay = (): void => {
       const {autoPlayTime} = this.props;
       if(this.props.isDebug && logEnable.checkAndAutoPlay) log.printInText(`[_checkAndAutoPlay] autoPlayTime: ${autoPlayTime}`);
 
 
-      // 清除上一次的計時器
+      // Clear the last timer
       if (this.timer) {
           clearTimeout(this.timer);
       }
@@ -453,8 +455,9 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
 
   /**
-   * 重置頁面位置 (LoopMode)
-   * 如果元素內是 isClone 則返回到他應該真實顯示的位置
+   * reset page position (LoopMode)
+   *
+   * PS: If the element is isClone then return to the position where it should actually be displayed
    */
   _onTransitionend = (): void => {
       if(this.props.isDebug && logEnable.onTransitionend) log.printInText('[_onTransitionend]');
@@ -471,7 +474,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
   };
 
   /**
-   * 處理更改螢幕尺寸時
+   * When dealing with changing screen size
    */
   _handleResize = () => {
       const {breakpoints} = this.props;
@@ -492,32 +495,32 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
 
   /**
-   * 取得下一頁
+   * get next page
    */
   getNextPage = (): number => {
       return this.activePage + 1;
   };
 
   /**
-   * 取得下一頁的第一個項目
+   * Get the first item on the next page
    */
   getNextPageFirstIndex = (): number => {
       if (this.rwdMedia.isCenteredSlides) {
           return this.activeActualIndex + this.rwdMedia.slidesPerGroup;
       }
-      // 避免結尾出現空白
+      // Avoid trailing whitespace
       return this.activeActualIndex + this.rwdMedia.slidesPerViewActual;
   };
 
   /**
-   * 取得最大Index
+   * Get the maximum Index
    */
   getMaxIndex = (): number => {
       return this.info.formatElement.length - 1;
   };
 
   /**
-   * 取得虛擬Index
+   * Get virtual index
    */
   checkActualIndexInRange = (slideIndex: number): boolean => {
       return slideIndex <= this.info.actual.maxIndex && slideIndex >= this.info.actual.minIndex;
@@ -525,12 +528,12 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
 
   /**
-   * 前往下一頁
+   * go to next page
    */
   toNext = (): void => {
 
       const nextPage = this.getNextPage();
-      let index = this.activeActualIndex; // 預設為回到原地 (對滑動移動有用)
+      let index = this.activeActualIndex; // The default is to return to the original position (useful for swipe movement)
 
 
       if (this.rwdMedia.isEnableLoop && nextPage > this.info.pageTotal && this.info.residue > 0) {
@@ -548,7 +551,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
   };
 
   /**
-   * 前往上一個
+   * go to previous
    */
   toPrev = (): void => {
       let index = this.activeActualIndex; // 預設為回到原地 (對滑動移動有用)
@@ -564,7 +567,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
 
   /**
-   * 前往頁面
+   * go to page
    * ex: slideView: 2, slideGroup: 2, total: 4
    * page1 -> (1-1) * 2) + 1 + (firstIndex -1) = 1
    */
@@ -573,7 +576,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
   };
 
   /**
-   * 同步 Carousel 狀態
+   * Sync Carousel state
    */
   _handleSyncCarousel = () => {
       if(this.props.setCarousel){
@@ -588,7 +591,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
 
   /**
-   * 取得目標項目距離寬度(px)
+   * Get the target item distance width(px)
    * @param slideIndex
    */
   _getMoveDistance = (slideIndex: number): number => {
@@ -609,7 +612,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
   };
 
   /**
-   * 前往實際位置
+   * Go to the actual location
    */
   goToActualIndex = (slideIndex: number, isUseAnimation = true) => {
       const {moveTime} = this.props;
@@ -691,7 +694,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
   };
 
   /**
-   * 渲染左右導航區塊
+   * Render left and right navigation blocks
    */
   _renderNavButton = () => {
 
@@ -712,7 +715,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
   };
 
   /**
-   * 渲染按鈕區塊
+   * render button block
    */
   _renderPagination = () => {
       const {data} = this.props;
@@ -748,13 +751,11 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
       const {windowSize} = this.state;
 
 
-      // 產生需要的樣式 (注意結尾符號 ;)
+      // Generate the desired style (note the trailing ;)
       const rootStyle: string = [
           `padding-top: ${this.rwdMedia.aspectRatio && this.rwdMedia.slidesPerView !== 'auto' ? calcSingleAspectRatio(this.rwdMedia.aspectRatio, this.rwdMedia.slidesPerView): '0'};`,
           `height: ${isNotEmpty(this.rwdMedia.staticHeight) ? `${this.rwdMedia.staticHeight}`: 'inherit'};`,
       ].join('');
-
-      // 產生需要的樣式 (注意結尾符號 ;)
       const slideItemStyle: string = [
           `flex: ${this.rwdMedia.slidesPerView === 'auto' ? '0 0 auto;-webkit-flex: 0 0 auto;' : `1 0 ${100 / this.rwdMedia.slidesPerViewActual}%`};`,
           `padding-left: ${this.rwdMedia.spaceBetween / 2}px;`,
@@ -774,13 +775,13 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                   ref={this.rootRef}
               >
 
-                  {/* Item CSS 樣式 */}
+                  {/* Item CSS style */}
                   <style scoped>{`
 .${elClassName.root}[data-carousel-id="${this._carouselId}"]{${rootStyle}}
 .${elClassName.root}[data-carousel-id="${this._carouselId}"] .${elClassName.slideItem}{${slideItemStyle}}
               `}</style>
 
-                  {/* 左右導航按鈕 */}
+                  {/* Left and right navigation buttons */}
                   {this.info.isVisibleNavButton && this._renderNavButton()}
 
                   <div className={elClassName.content}>
@@ -825,14 +826,14 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                       </div>
                   </div>
 
-                  {/* 頁數導航按鈕 */}
+                  {/* Page number navigation buttons */}
                   {this.info.isVisiblePagination && (
                       <div className={elClassName.paginationGroup}>
                           {this.info.pageTotal > 0 && this._renderPagination()}
                       </div>
                   )}
 
-                  {/* 顯示目前偵測尺寸(除錯) */}
+                  {/* Display current detection size (debug) */}
                   {isDebug && (<div className={elClassName.testWindowSize}>
                       {windowSize}
                   </div>)}
