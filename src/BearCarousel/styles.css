@@ -123,20 +123,30 @@
 
 
 .bear-carousel__slide-item{
-    transition-property: transform;
+    /*transition-property: transform;*/
     position: relative;
     overflow: hidden;
+}
+
+
+div.bear-carousel__slide-item__div{
+    width: 100%;
+    height: 100%;
+    background: no-repeat center;
 }
 
 img.bear-carousel__slide-item__img{
     max-width: 100%;
     width: auto;
 }
-
-div.bear-carousel__slide-item__div{
+div.bear-carousel__slide-item__bg{
     width: 100%;
     height: 100%;
     background: no-repeat center;
+}
+div.bear-carousel__slide-item__card{
+    width: 100%;
+    height: 100%;
 }
 
 
@@ -146,7 +156,7 @@ div.bear-carousel__slide-item__div{
     position: relative;
     display: flex;
     flex-direction: row;
-    visibility: hidden; /* 避免瞬間移動, 故移動完才改為顯示 */
+    visibility: hidden; /* Avoid instant movement, so it will be displayed after moving */
     height: inherit;
 }
 
@@ -154,12 +164,12 @@ div.bear-carousel__slide-item__div{
 
 
 .bear-carousel__content{
-    position: absolute; /* 防止子層container超出顯示 */
-    top: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
+    /*position: absolute; !* Prevent the sublayer container from exceeding the display *!*/
+    /*top: 0;*/
+    /*right: 0;*/
+    /*width: 100%;*/
+    /*height: 100%;*/
+    /*z-index: 1;*/
 
     overflow: hidden;
 }

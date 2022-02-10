@@ -3042,10 +3042,10 @@ batch@0.6.1:
   resolved "https://registry.yarnpkg.com/batch/-/batch-0.6.1.tgz#dc34314f4e679318093fc760272525f94bf25c16"
   integrity sha1-3DQxT05nkxgJP8dgJyUl+UvyXBY=
 
-bear-jsutils@0.0.28:
-  version "0.0.28"
-  resolved "https://registry.yarnpkg.com/bear-jsutils/-/bear-jsutils-0.0.28.tgz#d5aef7015992e9471a95fe800f5ea13c3601fd23"
-  integrity sha512-5FicZmqhKRzw2dGa1bG0wDBX173WRvJJAAXPlPk56EYqLQ5BvVRTaHPFvJVr92HM5U7GNQ9k1Htyj52ng1Eaqg==
+bear-jsutils@0.0.29:
+  version "0.0.29"
+  resolved "https://registry.yarnpkg.com/bear-jsutils/-/bear-jsutils-0.0.29.tgz#cedc34d0e26cf0e57a2c0f74ac7101fb26025452"
+  integrity sha512-UOrmuEIcNPdWgQjXxqXWceXCffjl4xOT6xZj4Uc7lWzxxFiTztao9dZRH3eoRz0x649aGD4D8U04PnE4WETI/g==
 
 bfj@^7.0.2:
   version "7.0.2"

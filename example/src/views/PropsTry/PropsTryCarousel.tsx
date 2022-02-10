@@ -1,38 +1,112 @@
 import React, {ReactNodeArray, useCallback, useEffect, useState} from 'react';
 import styled from 'styled-components/macro';
-import {Col, Row} from 'bear-styled-grid';
-import Carousel, {IBearCarouselObj, TBearSlideItemDataList, BearSlideItem} from 'bear-carousel';
+import {Col, EDirection, Flex, Row} from 'bear-styled-grid';
+import Carousel, {BearSlideBg, BearSlideCard, BearSlideImg, IBearCarouselObj, TBearSlideItemDataList} from 'bear-carousel';
 import {anyToNumber} from 'bear-jsutils/convert';
 import cx from 'classnames';
 
 
 import {Controller, useForm} from 'react-hook-form';
-import {TextAreaField, TextField, SwitchControl} from 'bear-components/forms';
-import {FormHorizontalGroup, Button} from 'bear-components/atoms';
-import {diffImages as images} from 'config/images';
-// import {catImages as images} from 'config/images';
-import {isNotEmpty} from 'bear-jsutils/dist/equal';
+import {Select, SwitchControl, TextAreaField, TextField} from 'bear-components/forms';
+import {Button, FormHorizontalGroup} from 'bear-components/atoms';
+import {catImages, productImages, diffImages} from 'config/images';
 import {decodeToJson} from 'bear-jsutils/string';
 
 
-const SlideItemData: TBearSlideItemDataList = images.map(row => {
+enum ESlideItemCase {
+    BearSlideImg= 'BearSlideImg',
+    BearSlideBg='BearSlideBg',
+    BearSlideCard='BearSlideCard'
+}
+const SlideItemImgData: TBearSlideItemDataList = diffImages.map(row => {
     return {
-        key: row.id,
-        children: <BearSlideItem onClick={() => window.alert('test click!')} imageUrl={row.imageUrl} imageSize="cover"/>
+        key: `SlideItemImgData-${row.id}`,
+        children: <BearSlideImg onClick={() => {}} imageUrl={row.imageUrl} imageAlt={row.name}/>
     };
 });
+const SlideItemBgData: TBearSlideItemDataList = diffImages.map(row => {
+    return {
+        key: `SlideItemBgData-${row.id}`,
+        children: <BearSlideBg onClick={() => {}} imageUrl={row.imageUrl} />
+    };
+});
+
+const ProductImage = styled.div<{
+    imageUrl: string
+}>`
+  padding-top: 55%;
+  width: 100%;
+  background: #bdbdbd no-repeat 100%;
+  background-image: url('${props => props.imageUrl}');
+  background-size: cover;
+  position: relative;
+  
+  :after{
+    content: 'Name';
+    background-color: #495057;
+    color: #fff;
+    height: 25px;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+`;
+
+const ProductContent = styled.div`
+    
+`;
+const ProductName = styled.div`
+    
+`;
+
+const ProductSize = styled.div`
+    
+`;
+const ProductColor = styled.div`
+    
+`;
+
+const SlideItemCardData: TBearSlideItemDataList = productImages.map(row => {
+    return {
+        key: `SlideItemCardData-${row.id}`,
+        children: <BearSlideCard onClick={() => {}} >
+            <Flex direction={EDirection.column} className="w-100">
+                <ProductImage imageUrl={row.imageUrl}/>
+                <ProductContent>
+                    <ProductName>2022 春季鞋子 BB343 로제플랫</ProductName>
+                    <ProductSize>Size: S-M-L</ProductSize>
+                    <ProductColor>Red</ProductColor>
+
+                </ProductContent>
+            </Flex>
+        </BearSlideCard>
+    };
+});
+
+const slideItemCase: {[key in ESlideItemCase]: TBearSlideItemDataList} = {
+    [ESlideItemCase.BearSlideImg]: SlideItemImgData,
+    [ESlideItemCase.BearSlideBg]: SlideItemBgData,
+    [ESlideItemCase.BearSlideCard]: SlideItemCardData,
+};
+
 
 
 
 export interface IFormData {
-    slidesPerView: number,
+    slidesComponent: 'BearSlideImg'|'BearSlideBg'|'BearSlideCard',
+    slidesPerView: number|'auto',
     slidesPerGroup: number,
     spaceBetween: number,
     aspectRatioWidth: number,
     aspectRatioHeight: number,
     addStaticHeight: string,
-    staticHeight: number,
-    isAutoMode: boolean,
+    staticHeight: string,
     isStaticHeightMode: boolean,
     autoPlayTime: number,
     moveTime: number,
@@ -71,11 +145,12 @@ const PropsTryCarousel = ({
     const [isExpend, toggleExpend] = useState<boolean>(prefixStorage?.isExpend ?? true);
     const {control, watch, setValue, getValues} = useForm<IFormData>({
         defaultValues: {
+            slidesComponent: 'BearSlideBg',
+            moveTime: 400,
             autoPlayTime: 3000,
             aspectRatioWidth: 40,
             aspectRatioHeight: 9,
-            staticHeight: 200,
-            isAutoMode: false,
+            staticHeight: '400px',
             isStaticHeightMode: true,
             slidesPerView: 1,
             slidesPerGroup: 1,
@@ -92,6 +167,7 @@ const PropsTryCarousel = ({
 
 
 
+    const slidesComponent = watch('slidesComponent');
     const isDebug = watch('isDebug');
     const isMount = watch('isMount');
     const isEnableLoop = watch('isEnableLoop');
@@ -99,7 +175,6 @@ const PropsTryCarousel = ({
     const isEnableNavButton = watch('isEnableNavButton');
     const isEnableMouseMove = watch('isEnableMouseMove');
     const isEnableAutoPlay = watch('isEnableAutoPlay');
-    const isAutoMode = watch('isAutoMode');
     const isStaticHeightMode = watch('isStaticHeightMode');
 
     const slidesPerGroup = watch('slidesPerGroup');
@@ -114,6 +189,14 @@ const PropsTryCarousel = ({
 
 
 
+
+    const slidesCountArray = new Array(slideItemCase[slidesComponent].length).fill('');
+    const slidesCountOption = slidesCountArray.map((row, index) => {
+        const value = (index * 0.5) + 1;
+        return {text: String(value), value: String(value)};
+    });
+
+
     const handleGoPage = (index: number): void => {
         carousel?.goToPage(index);
     };
@@ -126,10 +209,20 @@ const PropsTryCarousel = ({
 
 
     useEffect(() => {
-        if(isAutoMode === true){
+        if(slidesPerView === 'auto'){
             setValue('isStaticHeightMode',true);
         }
-    }, [isAutoMode]);
+    }, [slidesPerView]);
+
+    useEffect(() => {
+        if(slidesComponent === ESlideItemCase.BearSlideCard){
+            setValue('isStaticHeightMode',true);
+            setValue('staticHeight','auto');
+        }else if(slidesComponent === ESlideItemCase.BearSlideImg){
+            setValue('slidesPerView','auto');
+            setValue('staticHeight','400px');
+        }
+    }, [slidesComponent]);
 
     /**
      * 同步設定持久化
@@ -141,6 +234,166 @@ const PropsTryCarousel = ({
             isExpend,
         }));
     });
+
+
+    const renderCarousel = () => {
+        return <Carousel
+            setCarousel={handleSetCarousel}
+            data={isLoadData ? slideItemCase[slidesComponent]: []}
+            isDebug={isDebug}
+            isEnablePagination={isEnablePagination}
+            isEnableMouseMove={isEnableMouseMove}
+            isEnableNavButton={isEnableNavButton}
+            isEnableLoop={isEnableLoop}
+            isEnableAutoPlay={isEnableAutoPlay}
+            slidesPerView={slidesPerView}
+            slidesPerGroup={anyToNumber(slidesPerGroup, 1)}
+            spaceBetween={anyToNumber(spaceBetween)}
+            autoPlayTime={anyToNumber(autoPlayTime)}
+            moveTime={anyToNumber(moveTime)}
+            aspectRatio={!isStaticHeightMode && aspectRatioWidth > 0 && aspectRatioHeight > 0 ? {widthRatio: aspectRatioWidth, heightRatio: aspectRatioHeight, addStaticHeight: addStaticHeight}: undefined}
+            staticHeight={isStaticHeightMode ? staticHeight: undefined}
+            // breakpoints={{
+            //     768: {
+            //         slidesPerView: 2,
+            //         isEnableLoop: false,
+            //         isEnablePagination: false,
+            //         isEnableNavButton: false,
+            //     },
+            //     1200: {
+            //         slidesPerView: 1,
+            //         isEnableLoop: true,
+            //         isEnablePagination: true,
+            //         isEnableNavButton: true,
+            //     }
+            // }}
+        />;
+    };
+
+
+
+    const renderPageControl = () => {
+        return <PageControlBox className={cx({'d-none': !isExpend})}>
+
+            <Col col={24}>
+                <FormHorizontalGroup label="slidesComponent" labelCol={12} formCol={12}>
+                    <Controller
+                        control={control}
+                        name="slidesComponent"
+                        render={({field}) => {
+                            return (<Select
+                                {...field}
+                                options={[
+                                    {text: 'BearSlideImg', value: 'BearSlideImg'},
+                                    {text: 'BearSlideBg', value: 'BearSlideBg'},
+                                    {text: 'BearSlideCard', value: 'BearSlideCard'},
+                                ]}
+                            />);
+                        }}
+                    />
+                </FormHorizontalGroup>
+            </Col>
+
+            <Col md={24}>
+                <FormHorizontalGroup label="slidesPerView" labelCol={12} formCol={12}>
+                    <Controller
+                        control={control}
+                        name="slidesPerView"
+                        render={({field}) => {
+                            return (<Select
+                                {...field}
+                                disabled={slidesPerView === 'auto'}
+                                options={[
+                                    {text: 'auto(only Card, Img)', value: 'auto'},
+                                    ...slidesCountOption
+                                ]}
+                            />);
+                        }}
+                    />
+                </FormHorizontalGroup>
+
+            </Col>
+
+            <Col md={12}>
+                <FormHorizontalGroup label="staticHeightMode" labelCol={12} formCol={12}>
+                    <Controller
+                        control={control}
+                        name="isStaticHeightMode"
+                        render={({field}) => {
+                            return <SwitchControl
+                                {...field}
+                                disabled={slidesPerView === 'auto'}
+                                checked={field.value}
+                            />;
+                        }}
+                    />
+                </FormHorizontalGroup>
+            </Col>
+            <Col md={12}>
+                {isStaticHeightMode && (
+                    <FormHorizontalGroup label="staticHeight" labelCol={12} formCol={12}>
+                        <Controller
+                            control={control}
+                            name="staticHeight"
+                            render={({field}) => {
+                                return (<Select
+                                    {...field}
+                                    options={[
+                                        {text: 'auto(only Card, Img)', value: 'auto'},
+                                        {text: '200px', value: '200px'},
+                                        {text: '300px', value: '300px'},
+                                        {text: '400px', value: '400px'},
+                                    ]}
+                                />);
+                            }}
+                        />
+                    </FormHorizontalGroup>
+                )}
+
+                {!isStaticHeightMode && (<>
+                        <FormHorizontalGroup label="aspectRatio" labelCol={12} formCol={12}>
+                            <Controller
+                                control={control}
+                                name="aspectRatioWidth"
+                                render={({field}) => {
+                                    return (<TextField
+                                        type="number"
+                                        {...field}
+                                    />);
+                                }}
+                            />
+                            <Controller
+                                control={control}
+                                name="aspectRatioHeight"
+                                render={({field}) => {
+                                    return (<TextField
+                                        type="number"
+                                        {...field}
+                                    />);
+                                }}
+                            />
+                        </FormHorizontalGroup>
+                        <FormHorizontalGroup label="addStaticHeight" labelCol={12} formCol={12}>
+
+                            <Controller
+                                control={control}
+                                name="addStaticHeight"
+                                render={({field}) => {
+                                    return (<TextField
+                                        type="text"
+                                        placeholder="1px"
+                                        {...field}
+                                    />);
+                                }}
+                            />
+                        </FormHorizontalGroup>
+
+                    </>
+                )}
+
+            </Col>
+        </PageControlBox>;
+    };
 
 
 
@@ -297,9 +550,13 @@ const PropsTryCarousel = ({
                         control={control}
                         name="slidesPerGroup"
                         render={({field}) => {
-                            return (<TextField
-                                type="number"
+                            return (<Select
                                 {...field}
+                                disabled={slidesPerView === 'auto'}
+                                options={[
+                                    {text: 'auto(only Card, Img)', value: 'auto'},
+                                    ...slidesCountOption,
+                                ]}
                             />);
                         }}
                     />
@@ -312,9 +569,16 @@ const PropsTryCarousel = ({
                         control={control}
                         name="spaceBetween"
                         render={({field}) => {
-                            return (<TextField
-                                type="number"
+                            return (<Select
                                 {...field}
+                                options={[
+                                    {text: '0', value: '0'},
+                                    {text: '5', value: '5'},
+                                    {text: '10', value: '10'},
+                                    {text: '15', value: '15'},
+                                    {text: '20', value: '20'},
+                                    {text: '40', value: '40'},
+                                ]}
                             />);
                         }}
                     />
@@ -328,9 +592,14 @@ const PropsTryCarousel = ({
                         control={control}
                         name="autoPlayTime"
                         render={({field}) => {
-                            return (<TextField
-                                type="number"
+                            return (<Select
                                 {...field}
+                                options={[
+                                    {text: '2000', value: '2000'},
+                                    {text: '3000', value: '3000'},
+                                    {text: '4000', value: '4000'},
+                                    {text: '5000', value: '5000'},
+                                ]}
                             />);
                         }}
                     />
@@ -343,10 +612,16 @@ const PropsTryCarousel = ({
                         control={control}
                         name="moveTime"
                         render={({field}) => {
-                            return (<TextField
-                                type="number"
+                            return (<Select
                                 {...field}
+                                options={[
+                                    {text: '300', value: '300'},
+                                    {text: '400', value: '400'},
+                                    {text: '500', value: '500'},
+                                    {text: '600', value: '600'},
+                                ]}
                             />);
+
                         }}
                     />
                 </FormHorizontalGroup>
@@ -356,152 +631,7 @@ const PropsTryCarousel = ({
     };
 
 
-    const renderCarousel = () => {
-        return <Carousel
-            setCarousel={handleSetCarousel}
-            data={isLoadData ? SlideItemData: []}
-            isDebug={isDebug}
-            isEnablePagination={isEnablePagination}
-            isEnableMouseMove={isEnableMouseMove}
-            isEnableNavButton={isEnableNavButton}
-            isEnableLoop={isEnableLoop}
-            isEnableAutoPlay={isEnableAutoPlay}
-            slidesPerView={isAutoMode ? 'auto' : anyToNumber(slidesPerView, 1)}
-            slidesPerGroup={anyToNumber(slidesPerGroup, 1)}
-            spaceBetween={anyToNumber(spaceBetween)}
-            autoPlayTime={anyToNumber(autoPlayTime)}
-            moveTime={anyToNumber(moveTime)}
-            aspectRatio={!isStaticHeightMode && aspectRatioWidth > 0 && aspectRatioHeight > 0 ? {widthRatio: aspectRatioWidth, heightRatio: aspectRatioHeight, addStaticHeight: addStaticHeight}: undefined}
-            staticHeight={isStaticHeightMode && isNotEmpty(staticHeight) ? `${staticHeight}px` : undefined}
-            // breakpoints={{
-            //     768: {
-            //         slidesPerView: 2,
-            //         isEnableLoop: false,
-            //         isEnablePagination: false,
-            //         isEnableNavButton: false,
-            //     },
-            //     1200: {
-            //         slidesPerView: 1,
-            //         isEnableLoop: true,
-            //         isEnablePagination: true,
-            //         isEnableNavButton: true,
-            //     }
-            // }}
-        />;
-    };
 
-
-    const renderPageControl = () => {
-        return <PageControlBox className={cx({'d-none': !isExpend})}>
-
-            <Col md={12}>
-                <FormHorizontalGroup label="isAutoMode" labelCol={12} formCol={12}>
-                    <Controller
-                        control={control}
-                        name="isAutoMode"
-                        render={({field}) => {
-                            return <SwitchControl
-                                {...field}
-                                checked={field.value}
-                            />;
-                        }}
-                    />
-                </FormHorizontalGroup>
-            </Col>
-
-            <Col md={12}>
-                <FormHorizontalGroup label="slidesPerView" labelCol={12} formCol={12}>
-                    <Controller
-                        control={control}
-                        name="slidesPerView"
-                        render={({field}) => {
-                            return (<TextField
-                                type="number"
-                                placeholder="1"
-                                disabled={isAutoMode}
-                                {...field}
-                            />);
-                        }}
-                    />
-                </FormHorizontalGroup>
-
-            </Col>
-
-            <Col md={12}>
-                <FormHorizontalGroup label="staticHeightMode" labelCol={12} formCol={12}>
-                    <Controller
-                        control={control}
-                        name="isStaticHeightMode"
-                        render={({field}) => {
-                            return <SwitchControl
-                                {...field}
-                                disabled={isAutoMode}
-                                checked={field.value}
-                            />;
-                        }}
-                    />
-                </FormHorizontalGroup>
-            </Col>
-            <Col md={12}>
-                {isStaticHeightMode && (
-                    <FormHorizontalGroup label="staticHeight" labelCol={12} formCol={12}>
-                        <Controller
-                            control={control}
-                            name="staticHeight"
-                            render={({field}) => {
-                                return (<TextField
-                                    type="number"
-                                    {...field}
-                                />);
-                            }}
-                        />
-                    </FormHorizontalGroup>
-                )}
-
-                {!isStaticHeightMode && (<>
-                    <FormHorizontalGroup label="aspectRatio" labelCol={12} formCol={12}>
-                        <Controller
-                            control={control}
-                            name="aspectRatioWidth"
-                            render={({field}) => {
-                                return (<TextField
-                                    type="number"
-                                    {...field}
-                                />);
-                            }}
-                        />
-                        <Controller
-                            control={control}
-                            name="aspectRatioHeight"
-                            render={({field}) => {
-                                return (<TextField
-                                    type="number"
-                                    {...field}
-                                />);
-                            }}
-                        />
-                    </FormHorizontalGroup>
-                    <FormHorizontalGroup label="addStaticHeight" labelCol={12} formCol={12}>
-
-                        <Controller
-                            control={control}
-                            name="addStaticHeight"
-                            render={({field}) => {
-                                return (<TextField
-                                    type="text"
-                                    placeholder="1px"
-                                    {...field}
-                                />);
-                            }}
-                        />
-                    </FormHorizontalGroup>
-
-                </>
-                )}
-
-            </Col>
-        </PageControlBox>;
-    };
 
 
     return  <Row className="mb-1">

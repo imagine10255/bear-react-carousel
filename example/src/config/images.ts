@@ -10,12 +10,27 @@ export const racingImages = [
 
 
 
+export const productImages = [
+    {id: 1, name: 'product1', imageUrl: asset('/sample/product/01.jpg')},
+    {id: 2, name: 'product2', imageUrl: asset('/sample/product/02.jpg')},
+    {id: 3, name: 'product3', imageUrl: asset('/sample/product/01.jpg')},
+    {id: 4, name: 'product4', imageUrl: asset('/sample/product/02.jpg')},
+    {id: 5, name: 'product5', imageUrl: asset('/sample/product/01.jpg')},
+    {id: 6, name: 'product6', imageUrl: asset('/sample/product/02.jpg')},
+    {id: 7, name: 'product7', imageUrl: asset('/sample/product/01.jpg')},
+    {id: 8, name: 'product8', imageUrl: asset('/sample/product/02.jpg')},
+    {id: 9, name: 'product9', imageUrl: asset('/sample/product/01.jpg')},
+    {id: 10, name: 'product10', imageUrl: asset('/sample/product/02.jpg')},
+];
+
+
+
 export const catImages = [
-    {id: 1, imageUrl: asset('/sample/cat/01.jpg')},
-    {id: 2, imageUrl: asset('/sample/cat/02.jpg')},
-    {id: 3, imageUrl: asset('/sample/cat/03.jpg')},
-    {id: 4, imageUrl: asset('/sample/cat/04.jpg')},
-    {id: 5, imageUrl: asset('/sample/cat/05.jpg')},
+    {id: 1, name: 'cat1', imageUrl: asset('/sample/cat/01.jpg')},
+    {id: 2, name: 'cat2', imageUrl: asset('/sample/cat/02.jpg')},
+    {id: 3, name: 'cat3', imageUrl: asset('/sample/cat/03.jpg')},
+    {id: 4, name: 'cat4', imageUrl: asset('/sample/cat/04.jpg')},
+    {id: 5, name: 'cat5', imageUrl: asset('/sample/cat/05.jpg')},
 ];
 
 
@@ -56,15 +71,15 @@ export const foodImages: IFoodImage[] = [
 
 
 export const diffImages = [
-    {id: 1, imageUrl: asset('/sample/cat/vertical-01.jpg')},
-    {id: 2, imageUrl: asset('/sample/cat/01.jpg')},
-    {id: 3, imageUrl: asset('/sample/cat/02.jpg')},
-    {id: 4, imageUrl: asset('/sample/cat/vertical-02.jpg')},
-    {id: 5, imageUrl: asset('/sample/cat/03.jpg')},
-    {id: 6, imageUrl: asset('/sample/cat/vertical-03.jpg')},
-    {id: 7, imageUrl: asset('/sample/cat/04.jpg')},
-    {id: 8, imageUrl: asset('/sample/cat/vertical-04.jpg')},
-    {id: 9, imageUrl: asset('/sample/cat/05.jpg')},
+    {id: 1, name: 'cat1', imageUrl: asset('/sample/cat/vertical-01.jpg')},
+    {id: 2, name: 'cat2', imageUrl: asset('/sample/cat/01.jpg')},
+    {id: 3, name: 'cat3', imageUrl: asset('/sample/cat/02.jpg')},
+    {id: 4, name: 'cat4', imageUrl: asset('/sample/cat/vertical-02.jpg')},
+    {id: 5, name: 'cat5', imageUrl: asset('/sample/cat/03.jpg')},
+    {id: 6, name: 'cat6', imageUrl: asset('/sample/cat/vertical-03.jpg')},
+    {id: 7, name: 'cat7', imageUrl: asset('/sample/cat/04.jpg')},
+    {id: 8, name: 'cat8', imageUrl: asset('/sample/cat/vertical-04.jpg')},
+    {id: 9, name: 'cat9', imageUrl: asset('/sample/cat/05.jpg')},
 ];
 
 

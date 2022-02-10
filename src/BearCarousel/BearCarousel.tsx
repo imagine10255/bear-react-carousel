@@ -75,7 +75,10 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
           firstIndex: 0,
           lastIndex: 0
       },
-      // 0 is the actual starting position (a negative number forward), and the ending value is the last ending position
+      // 0 is the actual starting 
+      // 
+      // 
+      // tion (a negative number forward), and the ending value is the last ending position
       actual: {
           minIndex: 0,
           maxIndex: 0,

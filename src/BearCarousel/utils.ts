@@ -37,7 +37,8 @@ export function getMediaSetting(setting: IBreakpointSetting, breakpoints: IProps
     //     setting.isEnableLoop = false;
     // }
 
-    const slidesPerViewActual = setting.slidesPerView === 'auto' ? 1: anyToNumber(setting.slidesPerView , 1);
+    const calcSlidesPerView = anyToNumber(setting.slidesPerView , 1);
+    const slidesPerViewActual = setting.slidesPerView === 'auto' || calcSlidesPerView < 1 ? 1: calcSlidesPerView;
     return {
         ...setting,
         slidesPerViewActual: slidesPerViewActual,
