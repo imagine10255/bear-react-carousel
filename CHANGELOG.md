@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.25](https://github.com/imagine10255/bear-carousel/compare/v1.1.24...v1.1.25) (2022-02-10)
+
 ### [1.1.24](https://github.com/imagine10255/bear-carousel/compare/v1.1.23...v1.1.24) (2022-02-08)
 
 
