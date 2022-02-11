@@ -156,15 +156,16 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
               this.goToPage(1, false);
           }
 
-          // When the window size is changed (through throttling)
-          window.addEventListener('resize', this._throttleHandleResize, {passive: false});
-
           // End of moving animation (Need to return to the position, to be fake)
           containerRef.addEventListener('transitionend', this._onTransitionend, {passive: false});
 
           if (isMobile) {
+              // When the window size is changed
+              window.addEventListener('orientationchange', this._onOrientationchange, {passive: false});
               containerRef.addEventListener('touchstart', this._onMobileTouchStart, {passive: false});
           } else {
+              // When the window size is changed (through throttling)
+              window.addEventListener('resize', this._throttleHandleResize, {passive: false});
               containerRef.addEventListener('mousedown', this._onWebMouseStart, {passive: false});
           }
       }
@@ -188,6 +189,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
           containerRef.removeEventListener('transitionend', this._onTransitionend, false);
       }
 
+      window.removeEventListener('orientationchange', this._onOrientationchange, false);
       window.removeEventListener('resize', this._throttleHandleResize, false);
 
   }
@@ -490,7 +492,36 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
           this.setState({
               windowSize: selectSize
           });
+      }else{
+          this.goToPage(1);
       }
+  };
+
+  /**
+   * When dealing with changing screen size
+   */
+  _onOrientationchange = () => {
+      const {breakpoints} = this.props;
+      const {windowSize} = this.state;
+
+      // @ts-ignore
+      if(this.props.isDebug && logEnable.handleResize) log.printInText('[_onOrientationchange] ');
+
+      const selectSize = getMediaRangeSize(Object.keys(breakpoints));
+      if (windowSize !== selectSize) {
+          this.setState({
+              windowSize: selectSize
+          });
+          if(this.props.isDebug && logEnable.handleResize) log.printInText('[_onOrientationchange] set windowSize');
+
+      }else{
+          if(this.props.isDebug && logEnable.handleResize) log.printInText('[_onOrientationchange] goToPage 1');
+          setTimeout(() => {
+              this.goToPage(1);
+          }, 400);
+
+      }
+
 
   };
 

@@ -30,6 +30,7 @@
     "react-router-dom": "5.3.0",
     "react-scripts": "link:../node_modules/react-scripts",
     "styled-components": "5.2.1",
+    "framer-motion": "4.1.17",
     "typescript": "link:../node_modules/typescript"
   },
   "devDependencies": {

@@ -13,6 +13,7 @@
     align-items: center;
     color: #fff;
     background-color: rgba(0, 0, 0, .5);
+    pointer-events: none;
 }
 
 .bear-carousel__window-size{
