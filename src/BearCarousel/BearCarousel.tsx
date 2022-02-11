@@ -341,6 +341,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
           containerRef.addEventListener('mousemove', this._onWebMouseMove, false);
           containerRef.addEventListener('mouseup', this._onWebMouseEnd, false);
+          containerRef.addEventListener('mouseout', this._onWebMouseEnd, false);
       }
 
   };
@@ -372,6 +373,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
       if (containerRef) {
           containerRef.removeEventListener('mousemove', this._onWebMouseMove, false);
           containerRef.removeEventListener('mouseup', this._onWebMouseEnd, false);
+          containerRef.removeEventListener('mouseout', this._onWebMouseEnd, false);
       }
 
       this._elementMoveDone();
