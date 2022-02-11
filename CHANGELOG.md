@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.2](https://github.com/imagine10255/bear-carousel/compare/v1.2.1...v1.2.2) (2022-02-11)
+
+
+### Features
+
+* slidePerView support decimals (ex: 2.5, 3.5) ([0ca7b94](https://github.com/imagine10255/bear-carousel/commit/0ca7b94b450b207d2ef4f779671e224dd70d1166))
+* the sliding area of the web page exceeds the container, plus triggering mouseend to end the round ([f181c97](https://github.com/imagine10255/bear-carousel/commit/f181c97108a6bf8cd021a6c389b72968bec5693d))
+* turning the phone makes the carousel look weird, so add a reset ([1e48cc2](https://github.com/imagine10255/bear-carousel/commit/1e48cc2fd940550792eacba7d55fecd01235b512))
+
 ### [1.2.1](https://github.com/imagine10255/bear-carousel/compare/v1.1.25...v1.2.1) (2022-02-10)
 
 ### [1.1.25](https://github.com/imagine10255/bear-carousel/compare/v1.1.24...v1.1.25) (2022-02-10)
