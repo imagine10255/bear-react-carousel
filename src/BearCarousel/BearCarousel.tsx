@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {throttle} from '@github/mini-throttle';
 import {calcSingleAspectRatio, getMediaInfo, getMediaRangeSize, getSlideDirection, getTranslateParams} from './utils';
 import {uuid} from 'bear-jsutils/key';
 import {checkIsMobile} from 'bear-jsutils/browser';
@@ -121,7 +120,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
   containerRef: React.RefObject<HTMLDivElement> = React.createRef();
   slideItemRefs: React.RefObject<Array<HTMLDivElement>> = React.createRef();
   pageRefs: React.RefObject<Array<HTMLDivElement>> = React.createRef();
-  _throttleHandleResize = () => {};
 
   constructor(props: IBearCarouselProps) {
       super(props);
@@ -130,8 +128,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
       this.slideItemRefs['current'] = [];
       // @ts-ignore
       this.pageRefs['current'] = [];
-
-      this._throttleHandleResize = throttle(this._handleResize, 400);
 
       const {rwdMedia, info} = getMediaInfo(props);
       this.rwdMedia = rwdMedia;
@@ -165,7 +161,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
               containerRef.addEventListener('touchstart', this._onMobileTouchStart, {passive: false});
           } else {
               // When the window size is changed (through throttling)
-              window.addEventListener('resize', this._throttleHandleResize, {passive: false});
+              window.addEventListener('resize', this._onResize, {passive: false});
               containerRef.addEventListener('mousedown', this._onWebMouseStart, {passive: false});
           }
       }
@@ -190,7 +186,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
       }
 
       window.removeEventListener('orientationchange', this._onOrientationchange, false);
-      window.removeEventListener('resize', this._throttleHandleResize, false);
+      window.removeEventListener('resize', this._onResize, false);
 
   }
 
@@ -481,7 +477,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
   /**
    * When dealing with changing screen size
    */
-  _handleResize = () => {
+  _onResize = () => {
       const {breakpoints} = this.props;
       const {windowSize} = this.state;
       if(this.props.isDebug && logEnable.handleResize) log.printInText(`[_handleResize] windowSize: ${windowSize}px`);
