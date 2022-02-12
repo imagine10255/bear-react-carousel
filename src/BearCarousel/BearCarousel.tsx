@@ -46,7 +46,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
       data: [],
       slidesPerView: 1,
       slidesPerGroup: 1, // 不可為小數
-      moveTime: 350,
+      moveTime: 500,
       breakpoints: {},
       isCenteredSlides: false,
       isEnableLoop: false,
@@ -57,7 +57,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
       isGPURender: true,
       isDebug: false,
       spaceBetween: 0,
-      autoPlayTime: 3000
+      autoPlayTime: 5000
   };
 
   _carouselId = uuid();
@@ -155,6 +155,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
           // End of moving animation (Need to return to the position, to be fake)
           containerRef.addEventListener('transitionend', this._onTransitionend, {passive: false});
 
+
           if (isMobile) {
               // When the window size is changed
               window.addEventListener('orientationchange', this._onOrientationchange, {passive: false});
@@ -177,16 +178,16 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
       const containerRef = this.containerRef?.current;
       if (containerRef) {
           if (isMobile) {
+              window.removeEventListener('orientationchange', this._onOrientationchange, false);
               containerRef.removeEventListener('touchstart', this._onMobileTouchStart, false);
           } else {
+              window.removeEventListener('resize', this._onResize, false);
               containerRef.removeEventListener('mousedown', this._onWebMouseStart, false);
           }
 
           containerRef.removeEventListener('transitionend', this._onTransitionend, false);
       }
 
-      window.removeEventListener('orientationchange', this._onOrientationchange, false);
-      window.removeEventListener('resize', this._onResize, false);
 
   }
 
@@ -491,7 +492,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
               windowSize: selectSize
           });
       }else{
-          this.goToPage(1);
+          this.goToPage(1, false);
       }
   };
 
@@ -515,7 +516,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
       }else{
           if(this.props.isDebug && logEnable.handleResize) log.printInText('[_onOrientationchange] goToPage 1');
           setTimeout(() => {
-              this.goToPage(1);
+              this.goToPage(1, false);
           }, 400);
 
       }

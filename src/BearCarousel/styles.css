@@ -149,6 +149,7 @@ div.bear-carousel__slide-item__div{
     flex-direction: row;
     visibility: hidden; /* 避免瞬間移動, 故移動完才改為顯示 */
     height: inherit;
+    transition-timing-function: ease;
 }
 
 
