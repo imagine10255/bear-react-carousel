@@ -18,12 +18,11 @@ export enum EDirection {
   horizontal = 'horizontal',
 }
 
+export type IRenderNavButton = (toPrev: TToPrev, toNext: TToNext) => void
+
 export interface IBearCarouselProps extends IBreakpointSetting{
   setCarousel?: (carouselObj: IBearCarouselObj) => void,
-  renderNavButton?: (
-    toPrev: TToPrev,
-    toNext: TToNext,
-  ) => void
+  renderNavButton?: IRenderNavButton
   style?: CSS.Properties
   className?: string
   data: TBearSlideItemDataList;
