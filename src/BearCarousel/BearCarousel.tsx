@@ -805,6 +805,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                   data-per-view-auto={this.rwdMedia.slidesPerView === 'auto'}
                   data-mouse-move={this.rwdMedia.isEnableMouseMove}
                   data-actual={`${this.info.actual.minIndex},${this.info.actual.firstIndex}-${this.info.actual.lastIndex},${this.info.actual.maxIndex}`}
+                  data-debug={isDebug ? 'true':undefined}
                   ref={this.rootRef}
               >
 
@@ -842,15 +843,15 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                               >
                                   {row.element}
 
-                                  {isDebug && (<div className={elClassName.testNumber}>
-                                      {row.sourceIndex}
-                                      {row.isClone && (
+                                  <div className={elClassName.testNumber}>
+                                      {isDebug && row.sourceIndex}
+                                      {isDebug && row.isClone && (
                                           <div className={elClassName.cloneIconGroup}>
                                               <div className={elClassName.cloneIcon}/>
                                               {i}
                                           </div>
                                       )}
-                                  </div>)}
+                                  </div>
                               </div>
                           ))}
                       </div>

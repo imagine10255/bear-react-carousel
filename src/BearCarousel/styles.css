@@ -12,9 +12,10 @@
     justify-content: center;
     align-items: center;
     color: #fff;
-    background-color: rgba(0, 0, 0, .5);
     pointer-events: none;
+    overflow: auto;
 }
+
 
 .bear-carousel__window-size{
     position: absolute;
@@ -182,5 +183,9 @@ div.bear-carousel__slide-item__div{
 
 .bear-carousel__root[data-mouse-move="true"] .bear-carousel__container{
     cursor: pointer;
+}
+
+.bear-carousel__root[data-debug="true"] .bear-carousel__test-number{
+    background-color: rgba(0, 0, 0, .5);
 }
 

@@ -6,15 +6,18 @@ import {HashRouter, Route, Switch} from 'react-router-dom';
 
 import React from 'react';
 import HomeRoot from '../views/HomeRoot';
+import { SidebarProvider } from 'provider/SidebarProvider';
 
 
 const App = () => {
     return (
         <GridThemeProvider gridTheme={gridConfig}>
             <ThemeProvider theme={theme}>
-                <HashRouter>
-                    <HomeRoot/>
-                </HashRouter>
+                <SidebarProvider>
+                    <HashRouter>
+                        <HomeRoot/>
+                    </HashRouter>
+                </SidebarProvider>
                 <GlobalStyle/>
             </ThemeProvider>
         </GridThemeProvider>
