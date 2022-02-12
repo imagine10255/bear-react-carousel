@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.4](https://github.com/imagine10255/bear-carousel/compare/v1.2.3...v1.2.4) (2022-02-12)
+
+
+### Bug Fixes
+
+* remove mouseout, because when there are multiple items, the sliding will be abnormal ([1d82e34](https://github.com/imagine10255/bear-carousel/commit/1d82e34380d8c34d9aa97492345f1e6c08f18d38))
+
 ### [1.2.3](https://github.com/imagine10255/bear-carousel/compare/v1.2.2...v1.2.3) (2022-02-11)
 
 ### [1.2.2](https://github.com/imagine10255/bear-carousel/compare/v1.2.1...v1.2.2) (2022-02-11)
