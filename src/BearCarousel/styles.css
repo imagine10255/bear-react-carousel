@@ -129,6 +129,9 @@
     position: relative;
     overflow: hidden;
 }
+.bear-carousel__slide-item[data-is-clone=true]{
+    pointer-events: none;
+}
 
 img.bear-carousel__slide-item__img{
     max-width: 100%;

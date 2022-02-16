@@ -10,6 +10,13 @@ export const racingImages = [
 
 
 
+export const baseImage = [
+    {id: 1, imageUrl: asset('/sample/cat/01.jpg')},
+    {id: 2, imageUrl: asset('/sample/cat/02.jpg')},
+    {id: 3, imageUrl: asset('/sample/cat/03.jpg')},
+];
+
+
 export const catImages = [
     {id: 1, imageUrl: asset('/sample/cat/01.jpg')},
     {id: 2, imageUrl: asset('/sample/cat/02.jpg')},

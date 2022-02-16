@@ -1,5 +1,5 @@
 import BearCarousel, {BearSlideItem, TBearSlideItemDataList} from 'bear-carousel';
-import {catImages as images} from 'config/images';
+import {baseImage as images} from 'config/images';
 import React from 'react';
 import {ERowAlign, Flex} from 'bear-styled-grid';
 
@@ -14,7 +14,7 @@ const bearSlideItemData: TBearSlideItemDataList = images.map(row => {
                 className="h-100"
                 style={{fontSize: '40px'}}
             >
-                <a href="https://carousel.bearests.com" rel="noreferrer" target="_blank">{row.id}</a>
+                {/*<a href="https://carousel.bearests.com" rel="noreferrer" target="_blank">{row.id}</a>*/}
             </Flex>
         </BearSlideItem>
     };
@@ -29,8 +29,11 @@ const BaseUsed = () => {
             data={bearSlideItemData}
             slidesPerView={1}
             staticHeight="300px"
+            isEnableLoop
             isEnableNavButton
             isEnablePagination
+            moveTime={350}
+            isDebug
         />
     );
 

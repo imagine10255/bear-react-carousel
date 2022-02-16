@@ -28,7 +28,7 @@ const TextCard = ({
             <Desc>{desc}</Desc>
             <Flex direction={EDirection.row}>
                 <Button>Shop Now</Button>
-                <Button isOutline>About Store</Button>
+                <Button isOutline>Home Store</Button>
             </Flex>
         </AnimationsBox>
 
@@ -58,9 +58,9 @@ const TextAnimationsCarousel = ({
         <BearCarousel
             data={isLoadData ? slideItemData: []}
             slidesPerView={1}
-            staticHeight="calc(100vh - 300px)"
-            isEnableAutoPlay
-            isEnableLoop
+            staticHeight="400px"
+            isEnableAutoPlay={false}
+            isEnableLoop={true}
             isEnableNavButton={false}
             isEnablePagination
             autoPlayTime={5000}
@@ -75,7 +75,7 @@ const TextAnimationsCarousel = ({
                     isEnableNavButton: true,
                 },
                 1200: {
-                    staticHeight: 'calc(100vh - 300px)',
+                    staticHeight: '600px',
                     isEnableNavButton: true,
                 }
             }}
@@ -192,9 +192,8 @@ const AnimationsBox = styled.div<{
     justify-content: center;
     height: 100%;
     opacity: 0;
-    transform: translateY(10px);
     
-    //will-change: opacity, transform;
+    will-change: opacity, transform;
     transition: opacity 2s ease .7s, transform 2s ease .7s;
     
     ${props => css`
@@ -216,10 +215,13 @@ const TextAnimationsRoot = styled.div`
   --primary-color: #c4a265;
 
   .${elClassName.slideItem}{
-  
+      ${AnimationsBox}{
+        transform: translateY(80px);
+      }
+
       &[data-active=true]:not([data-is-clone]){
           ${AnimationsBox}{
-               transform: translateY(-60px);
+               transform: translateY(0);
                opacity: 1;
           }
       }

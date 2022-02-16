@@ -6,13 +6,14 @@ export interface IMenu {
 
 export const menu = (): IMenu[] => {
     return [
-        {name: 'propsTry', href: '/'},
+        {name: 'BaseUsed', href: '/'},
+        {name: 'Props Try', href: '/props-try'},
         {
-            name: 'example',
+            name: 'Example',
             children: [
-                {name: 'textAnimations', href: '/example/text-animations'},
-                {name: 'vipLevelList', href: '/example/vip-level-list'},
-                {name: 'autoPlayProgress', href: '/example/auto-play-progress'},
+                {name: 'Text Animations', href: '/example/text-animations'},
+                {name: 'Vip Level List', href: '/example/vip-level-list'},
+                {name: 'Auto Play Progress', href: '/example/auto-play-progress'},
             ]
         },
     ];

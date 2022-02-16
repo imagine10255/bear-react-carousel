@@ -156,10 +156,11 @@ function initDataList(sourceList: Array<any> = [], slidesPerView: TSlidesPerView
     if (isClone) {
         // 複製最後面, 放在最前面
         const cloneStart = (sourceList.length - formatSlidesPerView);
-        for (const row of sourceList.slice(-formatSlidesPerView)) {
+        for (const [cloneIndex, row] of sourceList.slice(-formatSlidesPerView).entries()) {
             formatList[index] = {
                 actualIndex: index,
                 matchIndex: formatSlidesPerView + cloneStart + index,
+                sourceIndex: (sourceList.length - 1) - cloneIndex,
                 inPage: lastPage,
                 isClone: true,
                 element: row.children,
@@ -186,10 +187,11 @@ function initDataList(sourceList: Array<any> = [], slidesPerView: TSlidesPerView
     if (isClone) {
     // 複製前面的(需顯示總數) 放在最後面
 
-        for (const row of sourceList.slice(0, formatSlidesPerView)) {
+        for (const [cloneIndex, row] of sourceList.slice(0, formatSlidesPerView).entries()) {
             formatList[index] = {
                 actualIndex: index,
                 matchIndex: matchFirstIndex,
+                sourceIndex: cloneIndex,
                 inPage: 1,
                 isClone: true,
                 element: row.children,

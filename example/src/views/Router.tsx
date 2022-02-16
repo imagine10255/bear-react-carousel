@@ -7,6 +7,7 @@ import PropsTry from './PropsTry';
 import AutoPlayProgress from './Example/AutoPlayProgress';
 import VipLevelList from './Example/VipLevelList';
 import TextAnimations from './Example/TextAnimations';
+import BaseUsed from './BaseUsed';
 
 
 const Router = () => {
@@ -21,12 +22,13 @@ const Router = () => {
             {/*<Route path="/feature/auto-width" children={<AutoWidth/>} exact/>*/}
             {/*<Route path="/feature/responsive" children={<Responsive/>} exact/>*/}
 
+            <Route path="/props-try" children={<PropsTry/>} exact/>
             <Route path="/example/vip-level-list" children={<VipLevelList/>} exact/>
             <Route path="/example/auto-play-progress" children={<AutoPlayProgress/>} exact/>
             <Route path="/example/text-animations" children={<TextAnimations/>} exact/>
 
+            <Route path="/" children={<BaseUsed/>} exact/>
 
-            <Route path="/" children={<PropsTry/>} exact/>
 
         </Switch>
     );
