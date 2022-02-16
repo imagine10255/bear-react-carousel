@@ -468,7 +468,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
       if (formatElement.length > (this.activeActualIndex - 1) && formatElement[this.activeActualIndex].isClone) {
           setTimeout(() => {
             $this.goToActualIndex(formatElement[this.activeActualIndex].matchIndex, false);
-          }, $this.props.moveTime / 1.2);
+          }, $this.props.moveTime);
       }
 
   };
