@@ -6,7 +6,7 @@ import {HashRouter, Route, Switch} from 'react-router-dom';
 
 import React from 'react';
 import HomeRoot from '../views/HomeRoot';
-import { SidebarProvider } from 'provider/SidebarProvider';
+import {SidebarProvider} from 'provider/SidebarProvider';
 
 
 const App = () => {

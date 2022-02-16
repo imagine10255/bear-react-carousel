@@ -60,7 +60,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
       autoPlayTime: 5000
   };
 
-  _carouselId = uuid();
+  _carouselId = `bear-carousel_${uuid()}`;
 
   timer?: any;
   activePage = 0;        // real page location
@@ -798,7 +798,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
               staticHeight={this.rwdMedia.staticHeight}
           >
               <div
-                  data-carousel-id={this._carouselId}
+                  id={this._carouselId}
                   style={style}
                   className={[className, elClassName.root].join(' ').trim()}
                   data-gpu-render={isGPURender ? 'true':undefined}
@@ -811,8 +811,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
                   {/* Item CSS style */}
                   <style scoped>{`
-.${elClassName.root}[data-carousel-id="${this._carouselId}"]{${rootStyle}}
-.${elClassName.root}[data-carousel-id="${this._carouselId}"] .${elClassName.slideItem}{${slideItemStyle}}
+#${this._carouselId}{${rootStyle}}
+#${this._carouselId} .${elClassName.slideItem}{${slideItemStyle}}
               `}</style>
 
                   {/* Left and right navigation buttons */}
