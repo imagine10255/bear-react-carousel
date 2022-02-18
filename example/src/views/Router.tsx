@@ -8,6 +8,7 @@ import AutoPlayProgress from './Example/AutoPlayProgress';
 import VipLevelList from './Example/VipLevelList';
 import TextAnimations from './Example/TextAnimations';
 import BaseUsed from './BaseUsed';
+import Loop from './Try/Loop';
 
 
 const Router = () => {
@@ -23,6 +24,7 @@ const Router = () => {
             {/*<Route path="/feature/responsive" children={<Responsive/>} exact/>*/}
 
             <Route path="/props-try" children={<PropsTry/>} exact/>
+            <Route path="/try/loop" children={<Loop/>} exact/>
             <Route path="/example/vip-level-list" children={<VipLevelList/>} exact/>
             <Route path="/example/auto-play-progress" children={<AutoPlayProgress/>} exact/>
             <Route path="/example/text-animations" children={<TextAnimations/>} exact/>

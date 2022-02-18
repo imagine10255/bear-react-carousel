@@ -9,6 +9,12 @@ export const menu = (): IMenu[] => {
         {name: 'BaseUsed', href: '/'},
         {name: 'Props Try', href: '/props-try'},
         {
+            name: 'Try',
+            children: [
+                {name: 'Loop', href: '/try/loop'},
+            ]
+        },
+        {
             name: 'Example',
             children: [
                 {name: 'Text Animations', href: '/example/text-animations'},

@@ -153,7 +153,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
           }
 
           // End of moving animation (Need to return to the position, to be fake)
-          containerRef.addEventListener('transitionend', this._onTransitionend, {passive: false});
 
 
           if (isMobile) {
@@ -185,7 +184,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
               containerRef.removeEventListener('mousedown', this._onWebMouseStart, false);
           }
 
-          containerRef.removeEventListener('transitionend', this._onTransitionend, false);
       }
 
 
@@ -322,6 +320,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
 
       if (this.timer) clearTimeout(this.timer);
+      this._onTransitionend();
 
       const containerRef = this.containerRef?.current;
       if (containerRef) {
@@ -464,14 +463,11 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
       const formatElement = this.info?.formatElement ? this.info.formatElement : [];
 
-      const $this = this;
-      if (formatElement.length > (this.activeActualIndex - 1) && formatElement[this.activeActualIndex].isClone) {
-          setTimeout(() => {
-            $this.goToActualIndex(formatElement[this.activeActualIndex].matchIndex, false);
-          }, $this.props.moveTime);
+      if (formatElement[this.activeActualIndex].isClone) {
+          this.goToActualIndex(formatElement[this.activeActualIndex].matchIndex, false);
       }
-
   };
+
 
   /**
    * When dealing with changing screen size
@@ -565,18 +561,27 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
       let index = this.activeActualIndex; // The default is to return to the original position (useful for swipe movement)
 
 
-      if (this.rwdMedia.isEnableLoop && nextPage > this.info.pageTotal && this.info.residue > 0) {
+
+      const formatElement = this.info?.formatElement ? this.info.formatElement : [];
+
+      if (formatElement[this.activeActualIndex].isClone) {
+          this.goToActualIndex(formatElement[this.activeActualIndex].matchIndex, false);
+          this.goToActualIndex(this.activeActualIndex + this.rwdMedia.slidesPerGroup);
+
+      }else if (this.rwdMedia.isEnableLoop && nextPage > this.info.pageTotal && this.info.residue > 0) {
       // 若為Loop(最後一頁移動在不整除的時候, 移動位置需要復歸到第一個)
-          index = this.activeActualIndex + this.info.residue;
+          this.goToActualIndex(this.activeActualIndex + this.info.residue);
+
       } else if (
           this.rwdMedia.slidesPerViewActual < this.info.formatElement.length &&
       this.getNextPageFirstIndex() <= this.getMaxIndex()
       ) {
       // 正常移動到下一頁
-          index = this.activeActualIndex + this.rwdMedia.slidesPerGroup;
+          this.goToActualIndex(this.activeActualIndex + this.rwdMedia.slidesPerGroup);
+
       }
 
-      this.goToActualIndex(index);
+
   };
 
   /**

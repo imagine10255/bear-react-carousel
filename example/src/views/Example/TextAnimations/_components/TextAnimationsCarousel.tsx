@@ -59,7 +59,7 @@ const TextAnimationsCarousel = ({
             data={isLoadData ? slideItemData: []}
             slidesPerView={1}
             staticHeight="400px"
-            isEnableAutoPlay={false}
+            isEnableAutoPlay={true}
             isEnableLoop={true}
             isEnableNavButton={false}
             isEnablePagination
@@ -219,7 +219,7 @@ const TextAnimationsRoot = styled.div`
         transform: translateY(80px);
       }
 
-      &[data-active=true]:not([data-is-clone]){
+      &[data-active=true]{
           ${AnimationsBox}{
                transform: translateY(0);
                opacity: 1;
