@@ -59,8 +59,8 @@ const TextAnimationsCarousel = ({
             data={isLoadData ? slideItemData: []}
             slidesPerView={1}
             staticHeight="400px"
-            isEnableAutoPlay={true}
-            isEnableLoop={true}
+            isEnableAutoPlay
+            isEnableLoop
             isEnableNavButton={false}
             isEnablePagination
             autoPlayTime={5000}
@@ -193,7 +193,6 @@ const AnimationsBox = styled.div<{
     height: 100%;
     opacity: 0;
     
-    will-change: opacity, transform;
     transition: opacity 2s ease .7s, transform 2s ease .7s;
     
     ${props => css`

@@ -28,7 +28,7 @@ const logEnable = {
     elementMove: false,
     elementMoveDone: false,
     checkAndAutoPlay: true,
-    onTransitionend: true,
+    resetPosition: true,
     handleResize: true,
     handleResizeDiff: true,
     goToActualIndex: true,
@@ -237,6 +237,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
       if(this.props.isDebug && logEnable.onMobileTouchStart) log.printInText('[_onMobileTouchStart]');
 
       if (this.timer) clearTimeout(this.timer);
+      this._resetPosition();
 
       const containerRef = this.containerRef?.current;
       if (containerRef) {
@@ -320,7 +321,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
 
       if (this.timer) clearTimeout(this.timer);
-      this._onTransitionend();
+      this._resetPosition();
 
       const containerRef = this.containerRef?.current;
       if (containerRef) {
@@ -392,8 +393,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
           const translateX = moveX - this.touchStart.x;
           if ((distance.max < translateX && distance.min > translateX) || this.rwdMedia.isEnableLoop) {
               // 拖動
-              containerRef.style.transform = `translate(${translateX}px, 0px)`;
               containerRef.style.transitionDuration = '0ms';
+              containerRef.style.transform = `translate(${translateX}px, 0px)`;
           }
       }
 
@@ -458,8 +459,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
    *
    * PS: If the element is isClone then return to the position where it should actually be displayed
    */
-  _onTransitionend = (): void => {
-      if(this.props.isDebug && logEnable.onTransitionend) log.printInText('[_onTransitionend]');
+  _resetPosition = (): void => {
+      if(this.props.isDebug && logEnable.resetPosition) log.printInText('[_resetPosition]');
 
       const formatElement = this.info?.formatElement ? this.info.formatElement : [];
 
@@ -589,7 +590,14 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
    */
   toPrev = (): void => {
       let index = this.activeActualIndex; // 預設為回到原地 (對滑動移動有用)
-      if (this.rwdMedia.isEnableLoop && this.activePage === 1 && this.info.residue > 0) {
+
+      const formatElement = this.info?.formatElement ? this.info.formatElement : [];
+
+      if (formatElement[this.activeActualIndex].isClone) {
+          this.goToActualIndex(formatElement[this.activeActualIndex].matchIndex, false);
+          this.goToActualIndex(this.activeActualIndex + this.rwdMedia.slidesPerGroup);
+
+      } else if (this.rwdMedia.isEnableLoop && this.activePage === 1 && this.info.residue > 0) {
       // 檢查若為Loop(第一頁移動不整除的時候, 移動位置需要復歸到第一個)
           index = this.activeActualIndex - this.info.residue;
       } else if (this.rwdMedia.slidesPerViewActual < this.info.formatElement.length) {
