@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.7](https://github.com/imagine10255/bear-carousel/compare/v1.2.6...v1.2.7) (2022-02-19)
+
+
+### Features
+
+* in non-Loop mode, add a rebound effect and return to the minimum/maximum position ([c4efbad](https://github.com/imagine10255/bear-carousel/commit/c4efbad84b563f2032ec21e44ee1b0a571eb01ff))
+
 ### [1.2.6](https://github.com/imagine10255/bear-carousel/compare/v1.2.5...v1.2.6) (2022-02-18)
 
 ### [1.2.5](https://github.com/imagine10255/bear-carousel/compare/v1.2.4...v1.2.5) (2022-02-16)
