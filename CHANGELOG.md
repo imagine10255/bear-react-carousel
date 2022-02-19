@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.8](https://github.com/imagine10255/bear-carousel/compare/v1.2.7...v1.2.8) (2022-02-19)
+
+
+### Features
+
+* when multiple items, move is positioned on close items instead of just one position ([1d70318](https://github.com/imagine10255/bear-carousel/commit/1d70318f5a49418a0e9dbbfa2e0789be4d6ae6cd))
+
 ### [1.2.7](https://github.com/imagine10255/bear-carousel/compare/v1.2.6...v1.2.7) (2022-02-19)
 
 
