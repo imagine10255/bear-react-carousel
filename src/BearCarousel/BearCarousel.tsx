@@ -391,11 +391,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
           };
 
           const translateX = moveX - this.touchStart.x;
-          if ((distance.max < translateX && distance.min > translateX) || this.rwdMedia.isEnableLoop) {
-              // 拖動
-              containerRef.style.transitionDuration = '0ms';
-              containerRef.style.transform = `translate(${translateX}px, 0px)`;
-          }
+          containerRef.style.transitionDuration = '0ms';
+          containerRef.style.transform = `translate(${translateX}px, 0px)`;
       }
 
 
@@ -417,7 +414,19 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
           // Confirmed travel distance
           const checkMove = movePosition - this.touchStart.movePositionX;
 
-          if (checkMove <= triggerTouchDistance && checkMove >= -triggerTouchDistance) {
+          // 取得移動限制
+          const distance = {
+              min: this._getMoveDistance(this.info.actual.minIndex),
+              max: this._getMoveDistance(this.info.actual.lastIndex)
+          };
+
+          if (distance.min < movePosition && !this.rwdMedia.isEnableLoop) {
+              this.goToPage(1);
+
+          } else if (distance.max > movePosition && !this.rwdMedia.isEnableLoop) {
+              this.goToPage(this.info.pageTotal);
+
+          } else if (checkMove <= triggerTouchDistance && checkMove >= -triggerTouchDistance) {
               this.goToActualIndex(this.activeActualIndex);
 
           } else if (checkMove >= -triggerTouchDistance) {

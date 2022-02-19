@@ -11,9 +11,9 @@ export const racingImages = [
 
 
 export const baseImage = [
-    {id: 1, imageUrl: asset('/sample/cat/01.jpg')},
-    {id: 2, imageUrl: asset('/sample/cat/02.jpg')},
-    {id: 3, imageUrl: asset('/sample/cat/03.jpg')},
+    {id: 1, color: 'red', imageUrl: asset('/sample/cat/01.jpg')},
+    {id: 2, color: 'green',imageUrl: asset('/sample/cat/02.jpg')},
+    {id: 3, color: 'blue',imageUrl: asset('/sample/cat/03.jpg')},
 ];
 
 

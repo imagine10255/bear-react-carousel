@@ -41,7 +41,7 @@
     "predeploy": "cd example && yarn install && yarn run build",
     "deploy": "gh-pages -d example/build",
     "gitlog": "git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cblueby %an %Cgreen(%cr)%Creset'",
-    "lint:fix": "eslint ./src --fix",
+    "lint:fix": "eslint ./src --fix && cd example && yarn lint:fix",
     "cz": "git cz",
     "release": "standard-version --release-as",
     "release:major": "standard-version -r major",

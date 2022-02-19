@@ -9,9 +9,9 @@ export const menu = (): IMenu[] => {
         {name: 'BaseUsed', href: '/'},
         {name: 'Props Try', href: '/props-try'},
         {
-            name: 'Try',
+            name: 'Feature',
             children: [
-                {name: 'Loop', href: '/try/loop'},
+                {name: 'Loop', href: '/feature/loop'},
             ]
         },
         {
