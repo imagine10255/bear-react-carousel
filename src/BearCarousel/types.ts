@@ -13,6 +13,10 @@ export interface IBearCarouselObj {
 }
 
 
+export enum EHorizontal {
+  right= 'right',
+  left = 'left',
+}
 export enum EDirection {
   vertical= 'vertical',
   horizontal = 'horizontal',

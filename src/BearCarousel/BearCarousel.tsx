@@ -4,7 +4,7 @@ import {uuid} from 'bear-jsutils/key';
 import {checkIsMobile} from 'bear-jsutils/browser';
 import log from 'bear-jsutils/log';
 import {deepCompare, isNotEmpty} from 'bear-jsutils/equal';
-import {EDirection, IBearCarouselProps, IBreakpointSettingActual, IInfo, ITouchStart} from './types';
+import {EDirection, EHorizontal, IBearCarouselProps, IBreakpointSettingActual, IInfo, ITouchStart} from './types';
 import elClassName from './el-class-name';
 import {BearCarouselProvider} from './BearCarouselProvider';
 
@@ -430,10 +430,22 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
               this.goToActualIndex(this.activeActualIndex);
 
           } else if (checkMove >= -triggerTouchDistance) {
-              this.toPrev();
+              if(this.rwdMedia.slidesPerView === 'auto'){
+                  this.toPrev();
+              }else{
+                  this.goToActualIndex(this._getPageByPosition(movePosition, EHorizontal.left));
+              }
+
           } else if (checkMove <= triggerTouchDistance) {
-              this.toNext();
+
+              if(this.rwdMedia.slidesPerView === 'auto'){
+                  this.toNext();
+              }else{
+                  this.goToActualIndex(this._getPageByPosition(movePosition, EHorizontal.right));
+              }
+
           }
+
       }
 
   };
@@ -528,6 +540,23 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
   };
 
+  /**
+     * get Page By Position
+     * not support auto width
+     */
+  _getPageByPosition = (position: number, horizontal: EHorizontal):number => {
+      const oneSlideItemMoveX = this._getMoveDistance(1);
+      let defaultPage = 1;
+
+      if(horizontal === EHorizontal.left){
+          defaultPage = Math.floor(position / oneSlideItemMoveX);
+
+      }else{
+          defaultPage = Math.ceil(position / oneSlideItemMoveX);
+      }
+
+      return defaultPage;
+  };
 
   /**
    * get next page

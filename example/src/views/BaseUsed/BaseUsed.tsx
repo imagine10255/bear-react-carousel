@@ -29,7 +29,6 @@ const BaseUsed = () => {
             data={bearSlideItemData}
             slidesPerView={1}
             staticHeight="300px"
-            isEnableLoop
             isEnableNavButton
             isEnablePagination
             moveTime={350}
