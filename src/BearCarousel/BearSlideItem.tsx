@@ -20,7 +20,7 @@ const BearSlideItem = ({
     style,
     as = 'image',
     imageUrl,
-    imageSize= 'cover',
+    imageSize,
     children,
     onClick,
 }: IProps) => {
@@ -62,7 +62,7 @@ const BearSlideItem = ({
         style={{
             ...style,
             backgroundImage: imageUrl ? `url(${imageUrl})`: undefined,
-            backgroundSize: imageUrl ? imageSize: 'cover',
+            backgroundSize: imageSize,
         }}
     >
         {children}

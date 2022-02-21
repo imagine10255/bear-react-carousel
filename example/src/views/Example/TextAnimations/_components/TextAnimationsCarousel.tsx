@@ -1,5 +1,5 @@
 import React from 'react';
-import BearCarousel, {elClassName, BearSlideItem, TBearSlideItemDataList} from 'bear-carousel';
+import BearCarousel, {elClassName, BearSlideItem, TBearSlideItemDataList} from 'bear-react-carousel';
 import {foodImages as images} from 'config/images';
 import styled, {css} from 'styled-components';
 import {EDirection, Flex, media} from 'bear-styled-grid';

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import styled, {css, keyframes} from 'styled-components/macro';
-import BearCarousel, {elClassName, TBearSlideItemDataList, BearSlideItem} from 'bear-carousel';
+import BearCarousel, {elClassName, TBearSlideItemDataList, BearSlideItem} from 'bear-react-carousel';
 import {Icon} from 'bear-components/atoms';
 import {media} from 'bear-styled-grid';
 import {foodImages as images} from 'config/images';

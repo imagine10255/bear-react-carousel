@@ -1,6 +1,6 @@
 {
-  "short_name": "bear-carousel",
-  "name": "bear-carousel",
+  "short_name": "bear-react-carousel",
+  "name": "bear-react-carousel",
   "icons": [
     {
       "src": "favicon.ico",

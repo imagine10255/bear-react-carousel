@@ -1,5 +1,5 @@
 {
-  "name": "bear-carousel",
+  "name": "bear-react-carousel",
   "version": "1.2.8",
   "description": "Most modern mobile touch slider with hardware accelerated transitions for ReactJS",
   "keywords": [
@@ -14,7 +14,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/imagine10255/bear-carousel.git"
+    "url": "https://github.com/imagine10255/bear-react-carousel.git"
   },
   "homepage": "https://carousel.bearests.com",
   "source": "src/index.ts",

@@ -1,6 +1,6 @@
 <div align="center">
         <a href="https://carousel.bearests.com/" title="Bear Carousel Logo - Most modern mobile touch slider with hardware accelerated transitions for ReactJS">
-            <img src="https://raw.githubusercontent.com/imagine10255/bear-carousel/main/example/public/logo.png" alt="Bear Carousel Logo - Most modern mobile touch slider with hardware accelerated transitions for ReactJS" />
+            <img src="https://raw.githubusercontent.com/imagine10255/bear-react-carousel/main/example/public/logo.png" alt="Bear Carousel Logo - Most modern mobile touch slider with hardware accelerated transitions for ReactJS" />
         </a>
 </div>
 
@@ -8,10 +8,10 @@
 
     
 
-[![NPM](https://img.shields.io/npm/v/bear-carousel.svg?style=for-the-badge)](https://www.npmjs.com/package/bear-carousel)
-[![npm downloads](https://img.shields.io/npm/dm/bear-carousel.svg?style=for-the-badge)](https://www.npmjs.com/package/bear-carousel)
-[![npm](https://img.shields.io/npm/dt/bear-carousel.svg?style=for-the-badge)](https://www.npmjs.com/package/bear-carousel)
-[![npm](https://img.shields.io/npm/l/bear-carousel?style=for-the-badge)](https://github.com/bear-carousel/bear-carousel/blob/master/LICENSE)
+[![NPM](https://img.shields.io/npm/v/bear-react-carousel.svg?style=for-the-badge)](https://www.npmjs.com/package/bear-react-carousel)
+[![npm downloads](https://img.shields.io/npm/dm/bear-react-carousel.svg?style=for-the-badge)](https://www.npmjs.com/package/bear-react-carousel)
+[![npm](https://img.shields.io/npm/dt/bear-react-carousel.svg?style=for-the-badge)](https://www.npmjs.com/package/bear-react-carousel)
+[![npm](https://img.shields.io/npm/l/bear-react-carousel?style=for-the-badge)](https://github.com/bear-react-carousel/bear-react-carousel/blob/master/LICENSE)
 
 </div>
 
@@ -41,14 +41,14 @@
 ### Install
 
 ```bash
-yarn add bear-carousel
+yarn add bear-react-carousel
 ```
 
 ### Usage
 
 ```tsx
-import BearCarousel, {TBearSlideItemDataList, BearSlideItem} from 'bear-carousel';
-import 'bear-carousel/dist/index.css';
+import BearCarousel, {TBearSlideItemDataList, BearSlideItem} from 'bear-react-carousel';
+import 'bear-react-carousel/dist/index.css';
 
 const images = [
         {id: 1, image: "https://dummyimage.com/900x400/dee2e6/6c757d.jpg"},
@@ -74,7 +74,7 @@ export const CustomBanner = () => {
 
 There is also a codesandbox template that you can fork and play with it:
 
-[![Edit react-editext-template](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/bear-carousel-9h6eu)
+[![Edit react-editext-template](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/bear-react-carousel-9h6eu)
 
 
 

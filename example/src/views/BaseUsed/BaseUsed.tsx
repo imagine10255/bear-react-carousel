@@ -1,4 +1,4 @@
-import BearCarousel, {BearSlideItem, TBearSlideItemDataList} from 'bear-carousel';
+import BearCarousel, {BearSlideItem, TBearSlideItemDataList} from 'bear-react-carousel';
 import {baseImage as images} from 'config/images';
 import React from 'react';
 import {ERowAlign, Flex} from 'bear-styled-grid';

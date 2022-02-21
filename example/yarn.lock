@@ -2943,7 +2943,7 @@ batch@0.6.1:
   resolved "https://registry.yarnpkg.com/batch/-/batch-0.6.1.tgz#dc34314f4e679318093fc760272525f94bf25c16"
   integrity sha1-3DQxT05nkxgJP8dgJyUl+UvyXBY=
 
-"bear-carousel@link:..":
+"bear-react-carousel@link:..":
   version "0.0.0"
   uid ""
 

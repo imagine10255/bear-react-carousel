@@ -1,7 +1,7 @@
 import React, {ReactNodeArray, useCallback, useEffect, useState} from 'react';
 import styled from 'styled-components/macro';
 import {Col, Row} from 'bear-styled-grid';
-import Carousel, {IBearCarouselObj, TBearSlideItemDataList, BearSlideItem} from 'bear-carousel';
+import Carousel, {IBearCarouselObj, TBearSlideItemDataList, BearSlideItem} from 'bear-react-carousel';
 import {anyToNumber} from 'bear-jsutils/convert';
 import cx from 'classnames';
 
@@ -47,7 +47,7 @@ export interface IFormData {
 
 
 
-const STORAGE_KEY = 'bear-carousel-props';
+const STORAGE_KEY = 'bear-react-carousel-props';
 
 function getStorage(){
     return decodeToJson<{

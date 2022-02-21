@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import styled from 'styled-components/macro';
 import {ERowAlign, Flex} from 'bear-styled-grid';
-import BearCarousel, {elClassName, IBearCarouselObj, BearSlideItem, TBearSlideItemDataList} from 'bear-carousel';
+import BearCarousel, {elClassName, IBearCarouselObj, BearSlideItem, TBearSlideItemDataList} from 'bear-react-carousel';
 import {anyToNumber} from 'bear-jsutils/convert';
 import {Select} from 'bear-components/forms';
 

@@ -60,7 +60,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
       autoPlayTime: 5000
   };
 
-  _carouselId = `bear-carousel_${uuid()}`;
+  _carouselId = `bear-react-carousel_${uuid()}`;
 
   timer?: any;
   activePage = 0;        // real page location
