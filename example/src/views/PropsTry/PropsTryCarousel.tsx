@@ -4,6 +4,7 @@ import {Col, Row} from 'bear-styled-grid';
 import Carousel, {IBearCarouselObj, TBearSlideItemDataList, BearSlideItem} from 'bear-react-carousel';
 import {anyToNumber} from 'bear-jsutils/convert';
 import cx from 'classnames';
+import {toast} from 'bear-react-toaster';
 
 
 import {Controller, useForm} from 'react-hook-form';
@@ -18,7 +19,7 @@ import {decodeToJson} from 'bear-jsutils/string';
 const SlideItemData: TBearSlideItemDataList = images.map(row => {
     return {
         key: row.id,
-        children: <BearSlideItem onClick={() => window.alert('test click!')} imageUrl={row.imageUrl} imageSize="cover"/>
+        children: <BearSlideItem onClick={() => toast.success({message: 'test click!'})} imageUrl={row.imageUrl} imageSize="cover"/>
     };
 });
 

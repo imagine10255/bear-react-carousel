@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import styled from 'styled-components/macro';
 
-
 import Content from 'views/_components/Content';
 import PropsTryCarousel from './PropsTryCarousel';
 

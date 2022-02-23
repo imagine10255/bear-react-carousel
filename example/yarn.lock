@@ -2943,10 +2943,6 @@ batch@0.6.1:
   resolved "https://registry.yarnpkg.com/batch/-/batch-0.6.1.tgz#dc34314f4e679318093fc760272525f94bf25c16"
   integrity sha1-3DQxT05nkxgJP8dgJyUl+UvyXBY=
 
-"bear-react-carousel@link:..":
-  version "0.0.0"
-  uid ""
-
 bear-components@0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/bear-components/-/bear-components-0.0.6.tgz#30d8fe79e03fcf4f99b9ab65c9f3ca3a93e6015b"
@@ -2955,6 +2951,15 @@ bear-components@0.0.6:
 "bear-jsutils@link:../node_modules/bear-jsutils":
   version "0.0.0"
   uid ""
+
+"bear-react-carousel@link:..":
+  version "0.0.0"
+  uid ""
+
+bear-react-toaster@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/bear-react-toaster/-/bear-react-toaster-1.0.2.tgz#57624a4dafdd688d11ede8463560c01802bc5807"
+  integrity sha512-xijuijpOGt7jeT0p0A1BOOtEyznhF3nJ+rsW7f5JOcE37slJr4oYXFLXHuzp7q5VYH5wl3tUnmHrFQ/on6EiTw==
 
 bear-styled-grid@1.0.20:
   version "1.0.20"

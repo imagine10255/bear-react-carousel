@@ -31,6 +31,7 @@
     "react-scripts": "link:../node_modules/react-scripts",
     "styled-components": "5.2.1",
     "framer-motion": "4.1.17",
+    "bear-react-toaster": "1.0.2",
     "typescript": "link:../node_modules/typescript"
   },
   "devDependencies": {
