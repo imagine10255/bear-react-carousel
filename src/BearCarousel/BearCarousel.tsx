@@ -336,6 +336,10 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
               movePositionY: movePosition.y
           };
 
+          const rootRef = this.rootRef.current;
+          if(rootRef){
+            rootRef.addEventListener('mouseleave', this._onWebMouseEnd, false);
+          }
           containerRef.addEventListener('mousemove', this._onWebMouseMove, false);
           containerRef.addEventListener('mouseup', this._onWebMouseEnd, false);
       }
@@ -367,6 +371,11 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
       const containerRef = this.containerRef?.current;
       if (containerRef) {
+          const rootRef = this.rootRef.current;
+          if(rootRef){
+              rootRef.removeEventListener('mouseleave', this._onWebMouseEnd, false);
+          }
+
           containerRef.removeEventListener('mousemove', this._onWebMouseMove, false);
           containerRef.removeEventListener('mouseup', this._onWebMouseEnd, false);
       }

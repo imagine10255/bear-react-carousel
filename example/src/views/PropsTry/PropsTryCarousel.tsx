@@ -19,7 +19,7 @@ import {decodeToJson} from 'bear-jsutils/string';
 const SlideItemData: TBearSlideItemDataList = images.map(row => {
     return {
         key: row.id,
-        children: <BearSlideItem onClick={() => toast.success({message: 'test click!'})} imageUrl={row.imageUrl} imageSize="cover"/>
+        children: <BearSlideItem onClick={() => toast.success({message: 'click slide item!'})} imageUrl={row.imageUrl} imageSize="cover"/>
     };
 });
 
