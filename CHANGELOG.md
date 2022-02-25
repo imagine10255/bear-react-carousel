@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.11](https://github.com/imagine10255/bear-react-carousel/compare/v1.2.10...v1.2.11) (2022-02-25)
+
+
+### Features
+
+* add auto play not in browser blur ([c76cb8c](https://github.com/imagine10255/bear-react-carousel/commit/c76cb8c5ebac3cf52844d61a8d569ed9dd66de43))
+
 ### [1.2.10](https://github.com/imagine10255/bear-react-carousel/compare/v1.2.9...v1.2.10) (2022-02-23)
 
 ### [1.2.9](https://github.com/imagine10255/bear-react-carousel/compare/v1.2.8...v1.2.9) (2022-02-21)
