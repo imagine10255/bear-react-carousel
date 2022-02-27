@@ -88,7 +88,7 @@ const PropsTryCarousel = ({
             isEnableLoop: true,
             ...prefixStorage,
             isMount: true,
-            moveTime: 400,
+            moveTime: 700,
         }
     });
 

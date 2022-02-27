@@ -29,6 +29,7 @@ const BearSlideItem = ({
 
 
     const onMouseDown = (event: React.MouseEvent<HTMLElement>) => {
+        event.preventDefault();
         lastTouchEnd = (new Date()).getTime();
     };
 
@@ -58,7 +59,7 @@ const BearSlideItem = ({
     return <div
         className={[className, elClassName.slideItemDiv].join(' ').trim()}
         onMouseDown={onMouseDown}
-        onMouseUp={onMouseUp}
+        onClick={onMouseUp}
         style={{
             ...style,
             backgroundImage: imageUrl ? `url(${imageUrl})`: undefined,

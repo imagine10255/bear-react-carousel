@@ -283,6 +283,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
    */
   _onMobileTouchMove = (event: TouchEvent): void => {
 
+      event.preventDefault();
+
       const endX = event.targetTouches[0].pageX;
       const endY = event.targetTouches[0].pageY;
 
@@ -297,12 +299,9 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
       // 判斷一開始的移動方向
       if(this.touchStart.moveDirection === EDirection.vertical){
           // 垂直移動
-          // event.preventDefault();
 
       }else if(this.touchStart.moveDirection === EDirection.horizontal){
           // 水平移動
-          event.preventDefault();
-
           const containerRef = this.containerRef?.current;
           if(containerRef){
 
