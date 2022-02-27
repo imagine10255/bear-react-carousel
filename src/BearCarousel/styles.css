@@ -179,9 +179,6 @@ div.bear-react-carousel__slide-item__div{
     -ms-user-select: none;
 }
 
-.bear-react-carousel__root[data-gpu-render=true] .bear-react-carousel__container{
-    will-change: transform;
-}
 
 .bear-react-carousel__root[data-mouse-move="true"] .bear-react-carousel__container{
     cursor: pointer;

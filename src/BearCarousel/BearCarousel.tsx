@@ -54,7 +54,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
       isEnableNavButton: false,
       isEnableMouseMove: true,
       isEnableAutoPlay: false,
-      isGPURender: true,
       isDebug: false,
       spaceBetween: 0,
       autoPlayTime: 5000
@@ -357,7 +356,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
           const rootRef = this.rootRef.current;
           if(rootRef){
-            rootRef.addEventListener('mouseleave', this._onWebMouseEnd, false);
+              rootRef.addEventListener('mouseleave', this._onWebMouseEnd, false);
           }
           containerRef.addEventListener('mousemove', this._onWebMouseMove, false);
           containerRef.addEventListener('mouseup', this._onWebMouseEnd, false);
@@ -412,15 +411,9 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
       const containerRef = this.containerRef?.current;
       if (containerRef && this.rwdMedia.isEnableMouseMove && this.slideItemRefs.current) {
-          // 取得移動限制
-          const distance = {
-              min: this._getMoveDistance(this.info.actual.minIndex),
-              max: this._getMoveDistance(this.info.actual.lastIndex)
-          };
-
           const translateX = moveX - this.touchStart.x;
           containerRef.style.transitionDuration = '0ms';
-          containerRef.style.transform = `translate(${translateX}px, 0px)`;
+          containerRef.style.transform = `translate3d(${translateX}px, 0px, 0px)`;
       }
 
 
@@ -753,7 +746,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
               containerRef.style.transitionDuration = isUseAnimation
                   ? `${moveTime}ms`
                   : '0ms';
-              containerRef.style.transform = `translate(${position}px, 0px)`;
+              containerRef.style.transform = `translate3d(${position}px, 0px, 0px)`;
           }
 
 
@@ -855,7 +848,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
 
   render() {
-      const {style, className, isDebug, isGPURender} = this.props;
+      const {style, className, isDebug} = this.props;
       const {windowSize} = this.state;
 
 
@@ -880,7 +873,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                   id={this._carouselId}
                   style={style}
                   className={[className, elClassName.root].join(' ').trim()}
-                  data-gpu-render={isGPURender ? 'true':undefined}
                   data-per-view-auto={this.rwdMedia.slidesPerView === 'auto'}
                   data-mouse-move={this.rwdMedia.isEnableMouseMove}
                   data-actual={`${this.info.actual.minIndex},${this.info.actual.firstIndex}-${this.info.actual.lastIndex},${this.info.actual.maxIndex}`}

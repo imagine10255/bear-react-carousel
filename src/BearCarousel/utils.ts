@@ -218,18 +218,20 @@ export function getSlideAngle(dx: number, dy: number): number {
  * 取得 transform x 移動參數
  * @param el
  */
-export function getTranslateParams(el: HTMLDivElement): {x: number, y: number}{
+export function getTranslateParams(el: HTMLDivElement): {x: number, y: number, z: number}{
     const values = el.style.transform.split(/\w+\(|\);?/);
     if (!values[1] || !values[1].length) {
-        return {x: 0, y: 0};
+        return {x: 0, y: 0, z: 0};
     }
 
     const result = values[1].split(',');
     return {
         x: Number(result[0].replace('px', '')),
         y: Number(result[1].replace('px', '')),
+        z: Number(result[2].replace('px', '')),
     };
 }
+
 
 
 /**
