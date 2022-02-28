@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.12](https://github.com/imagine10255/bear-react-carousel/compare/v1.2.11...v1.2.12) (2022-02-28)
+
+
+### Bug Fixes
+
+* fix toPrev bug, default index not reset index ([9009096](https://github.com/imagine10255/bear-react-carousel/commit/9009096576beb9d7278fac9d43be2d9b8bc690ac))
+
 ### [1.2.11](https://github.com/imagine10255/bear-react-carousel/compare/v1.2.10...v1.2.11) (2022-02-25)
 
 
