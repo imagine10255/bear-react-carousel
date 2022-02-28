@@ -617,10 +617,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
   toNext = (): void => {
 
       const nextPage = this.getNextPage();
-      let index = this.activeActualIndex; // The default is to return to the original position (useful for swipe movement)
-
-
-
       const formatElement = this.info?.formatElement ? this.info.formatElement : [];
 
       if (formatElement[this.activeActualIndex].isClone) {
@@ -647,22 +643,21 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
    * go to previous
    */
   toPrev = (): void => {
-      let index = this.activeActualIndex; // 預設為回到原地 (對滑動移動有用)
-
       const formatElement = this.info?.formatElement ? this.info.formatElement : [];
 
       if (formatElement[this.activeActualIndex].isClone) {
+
           this.goToActualIndex(formatElement[this.activeActualIndex].matchIndex, false);
-          this.goToActualIndex(this.activeActualIndex + this.rwdMedia.slidesPerGroup);
+          this.goToPage(this.info.pageTotal - 1);
 
       } else if (this.rwdMedia.isEnableLoop && this.activePage === 1 && this.info.residue > 0) {
-      // 檢查若為Loop(第一頁移動不整除的時候, 移動位置需要復歸到第一個)
-          index = this.activeActualIndex - this.info.residue;
+          // 檢查若為Loop(第一頁移動不整除的時候, 移動位置需要復歸到第一個)
+          this.goToActualIndex(this.activeActualIndex - this.info.residue);
+
       } else if (this.rwdMedia.slidesPerViewActual < this.info.formatElement.length) {
-      // 正常移動到上一個
-          index = this.activeActualIndex - this.rwdMedia.slidesPerGroup;
+          // Normal move to prev
+          this.goToActualIndex(this.activeActualIndex - this.rwdMedia.slidesPerGroup);
       }
-      this.goToActualIndex(index);
   };
 
 
@@ -778,11 +773,14 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
           const pageRefs = this.pageRefs?.current;
           if (pageRefs && this.info.isVisiblePagination && this.activePage > 0) {
               pageRefs.forEach((row, index) => {
-                  if (this.activePage === index + 1) {
-                      row.setAttribute('data-active', 'true');
-                  } else if (row) {
-                      row.removeAttribute('data-active');
+                  if(row && row.setAttribute !== null) {
+                      if (this.activePage === index + 1) {
+                          row.setAttribute('data-active', 'true');
+                      } else {
+                          row.removeAttribute('data-active');
+                      }
                   }
+
               });
           }
 
