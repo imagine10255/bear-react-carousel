@@ -178,6 +178,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
       if (containerRef) {
           if (isMobile) {
               window.removeEventListener('orientationchange', this._onOrientationchange, false);
+              containerRef.removeEventListener('transitionend', this._onTransitionend, false);
               containerRef.removeEventListener('touchstart', this._onMobileTouchStart, false);
           } else {
               window.removeEventListener('resize', this._onResize, false);
