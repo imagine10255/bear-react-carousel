@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.14](https://github.com/imagine10255/bear-react-carousel/compare/v1.2.13...v1.2.14) (2022-03-01)
+
+
+### Bug Fixes
+
+* add orientationchange event remove in componentWillUnmount by mobile ([cf587b1](https://github.com/imagine10255/bear-react-carousel/commit/cf587b1f91152a477ce059c4b2329a22f930791d))
+
 ### [1.2.13](https://github.com/imagine10255/bear-react-carousel/compare/v1.2.12...v1.2.13) (2022-03-01)
 
 ### [1.2.12](https://github.com/imagine10255/bear-react-carousel/compare/v1.2.11...v1.2.12) (2022-02-28)
