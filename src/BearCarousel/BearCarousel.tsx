@@ -157,6 +157,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
           if (isMobile) {
               // When the window size is changed
               window.addEventListener('orientationchange', this._onOrientationchange, {passive: false});
+              containerRef.addEventListener('transitionend', this._onTransitionend, {passive: false});
               containerRef.addEventListener('touchstart', this._onMobileTouchStart, {passive: false});
           } else {
               // When the window size is changed (through throttling)
@@ -247,6 +248,16 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     };
 
 
+    /**
+     * on transitionend
+     */
+    _onTransitionend = (): void => {
+        const containerRef = this.containerRef?.current;
+        if (containerRef) {
+            containerRef.style.pointerEvents = 'auto';
+        }
+    };
+
   /**
    * mobile phone finger press start
    * @param event
@@ -263,9 +274,9 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
           // 紀錄位置
           this.touchStart = {
-              pageX: event.targetTouches[0].pageX,
+              pageX: event.targetTouches[0].clientX,
               pageY: event.targetTouches[0].pageY,
-              x: event.targetTouches[0].pageX - movePosition.x,
+              x: event.targetTouches[0].clientX - movePosition.x,
               y: event.targetTouches[0].pageY - containerRef.offsetTop,
               movePositionX: movePosition.x,
               movePositionY: movePosition.y,
@@ -277,6 +288,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
       }
   };
 
+
   /**
    * Mobile phone finger press and move
    * @param event
@@ -285,7 +297,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
       event.preventDefault();
 
-      const endX = event.targetTouches[0].pageX;
+      const endX = event.targetTouches[0].clientX;
       const endY = event.targetTouches[0].pageY;
 
 
@@ -353,6 +365,9 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
               movePositionY: movePosition.y
           };
 
+
+          this._elementMove(this.touchStart.pageX);
+
           const rootRef = this.rootRef.current;
           if(rootRef){
               rootRef.addEventListener('mouseleave', this._onWebMouseEnd, false);
@@ -411,8 +426,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
       const containerRef = this.containerRef?.current;
       if (containerRef && this.rwdMedia.isEnableMouseMove && this.slideItemRefs.current) {
           const translateX = moveX - this.touchStart.x;
-          containerRef.style.transitionDuration = '0ms';
           containerRef.style.transform = `translate3d(${translateX}px, 0px, 0px)`;
+          containerRef.style.transitionDuration = '0ms';
       }
 
 
@@ -736,11 +751,18 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
           const position = this._getMoveDistance(this.activeActualIndex);
           const containerRef = this.containerRef?.current;
           if (containerRef) {
-              containerRef.style.visibility = 'visible';
+              const className = containerRef.classList;
+              if(!className.contains(elClassName.containerInit)){
+                  className.add(elClassName.containerInit);
+              }
+
+              containerRef.style.transform = `translate3d(${position}px, 0px, 0px)`;
+              if(isMobile && isUseAnimation){
+                  containerRef.style.pointerEvents = 'none';
+              }
               containerRef.style.transitionDuration = isUseAnimation
                   ? `${moveTime}ms`
                   : '0ms';
-              containerRef.style.transform = `translate3d(${position}px, 0px, 0px)`;
           }
 
 

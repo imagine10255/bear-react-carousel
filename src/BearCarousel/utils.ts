@@ -219,18 +219,56 @@ export function getSlideAngle(dx: number, dy: number): number {
  * @param el
  */
 export function getTranslateParams(el: HTMLDivElement): {x: number, y: number, z: number}{
-    const values = el.style.transform.split(/\w+\(|\);?/);
-    if (!values[1] || !values[1].length) {
-        return {x: 0, y: 0, z: 0};
+    const style = window.getComputedStyle(el);
+    const matrix = style.transform;
+
+    // // No transform property. Simply return 0 values.
+    // if (matrix === 'none' || typeof matrix === 'undefined') {
+    //     return {
+    //         x: 0,
+    //         y: 0,
+    //         z: 0
+    //     }
+    // }
+
+    // Can either be 2d or 3d transform
+    const matrixType = matrix.includes('3d') ? '3d' : '2d';
+    let matrixValues = matrix.match(/matrix.*\((.+)\)/);
+    if(matrixValues === null){
+        matrixValues = [];
+    }
+    const matrixArray = matrixValues[0]?.split(', ');
+
+    // 2d matrices have 6 values
+    // Last 2 values are X and Y.
+    // 2d matrices does not have Z value.
+    if (matrixType === '2d') {
+        return {
+            x: Number(matrixArray[4]),
+            y: Number(matrixArray[5]),
+            z: 0
+        };
     }
 
-    const result = values[1].split(',');
+    // 3d matrices have 16 values
+    // The 13th, 14th, and 15th values are X, Y, and Z
+    if (matrixType === '3d') {
+        return {
+            x: Number(matrixArray[12]),
+            y: Number(matrixArray[13]),
+            z: Number(matrixArray[14])
+        };
+    }
+
     return {
-        x: Number(result[0].replace('px', '')),
-        y: Number(result[1].replace('px', '')),
-        z: Number(result[2].replace('px', '')),
+        x: 0,
+        y: 0,
+        z: 0,
     };
 }
+
+
+
 
 
 

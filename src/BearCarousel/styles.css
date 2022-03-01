@@ -154,6 +154,9 @@ div.bear-react-carousel__slide-item__div{
     height: inherit;
     transition-timing-function: ease;
 }
+.bear-react-carousel__container.bear-react-carousel__container-init{
+    visibility: initial;
+}
 
 
 

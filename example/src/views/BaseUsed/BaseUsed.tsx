@@ -31,7 +31,7 @@ const BaseUsed = () => {
             staticHeight="300px"
             isEnableNavButton
             isEnablePagination
-            moveTime={350}
+            moveTime={400}
             isDebug
         />
     );

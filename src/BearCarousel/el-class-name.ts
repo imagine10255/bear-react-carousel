@@ -5,6 +5,7 @@ export default {
     root: 'bear-react-carousel__root',
     content: 'bear-react-carousel__content',
     container: 'bear-react-carousel__container',
+    containerInit: 'bear-react-carousel__container-init',
     slideItem: 'bear-react-carousel__slide-item',
     slideItemImg: 'bear-react-carousel__slide-item__img',
     slideItemDiv: 'bear-react-carousel__slide-item__div',
