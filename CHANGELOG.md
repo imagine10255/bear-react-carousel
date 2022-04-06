@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.16-alpha.1](https://github.com/imagine10255/bear-react-carousel/compare/v1.2.16-alpha.0...v1.2.16-alpha.1) (2022-04-06)
+
+
+### Bug Fixes
+
+* fix nextjs import test v2 ([57fe383](https://github.com/imagine10255/bear-react-carousel/commit/57fe3839099afe746894741eb4abe6d8992f0cfa))
+
 ### [1.2.16-alpha.0](https://github.com/imagine10255/bear-react-carousel/compare/v1.2.15...v1.2.16-alpha.0) (2022-04-06)
 
 
