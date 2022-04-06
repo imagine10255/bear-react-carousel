@@ -1,4 +1,6 @@
-
+.bear-react-carousel__root{
+    width: 100%;
+}
 
 .bear-react-carousel__test-number{
     position: absolute;
