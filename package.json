@@ -1,6 +1,6 @@
 {
   "name": "bear-react-carousel",
-  "version": "1.2.15",
+  "version": "1.2.16-alpha.0",
   "description": "Most modern mobile touch slider with hardware accelerated transitions for ReactJS",
   "keywords": [
     "react",
