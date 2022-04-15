@@ -9,6 +9,7 @@ import elClassName from './el-class-name';
 import {BearCarouselProvider} from './BearCarouselProvider';
 
 import './styles.css';
+import {ArrowIcon, CloneIcon} from './Icon';
 
 
 // Swipe trigger movement distance
@@ -827,10 +828,14 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
       return (<div className={elClassName.navGroup}>
           <button type="button" className={elClassName.navPrevButton} onClick={() => this.toPrev()}>
-              <div className={elClassName.navIcon}/>
+              <div className={elClassName.navIcon}>
+                  <ArrowIcon/>
+              </div>
           </button>
           <button type="button" className={elClassName.navNextButton} onClick={() => this.toNext()}>
-              <div className={elClassName.navIcon}/>
+              <div className={elClassName.navIcon}>
+                  <ArrowIcon/>
+              </div>
           </button>
       </div>);
   };
@@ -939,7 +944,9 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                                       {isDebug && row.sourceIndex}
                                       {isDebug && row.isClone && (
                                           <div className={elClassName.cloneIconGroup}>
-                                              <div className={elClassName.cloneIcon}/>
+                                              <div className={elClassName.cloneIcon}>
+                                                  <CloneIcon/>
+                                              </div>
                                               {i}
                                           </div>
                                       )}
