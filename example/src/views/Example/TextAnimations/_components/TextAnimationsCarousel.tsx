@@ -2,7 +2,7 @@ import React from 'react';
 import BearCarousel, {elClassName, BearSlideItem, TBearSlideItemDataList} from 'bear-react-carousel';
 import {foodImages as images} from 'config/images';
 import styled, {css} from 'styled-components';
-import {EDirection, Flex, media} from 'bear-styled-grid';
+import {EDirection, Flex, media} from 'bear-react-grid';
 import {asset} from 'config/utils';
 
 interface ITextCardProps {
@@ -99,19 +99,19 @@ const Button = styled.button<{
   margin-right: 20px;
   font-family: Blatant, sans-serif;
   transition: background-color .4s, color .4s;
-  
+
 
   ${props => props.isOutline && css`
      border-color: #fff;
      background-color: transparent;
   `}
-  
+
   :hover{
     border-color: #c4a265;
     background-color: #b89352;
   }
-  
-  
+
+
     ${media.lg`
         font-size: 21px;
       padding: 19px 26px;
@@ -150,11 +150,11 @@ const Title = styled.h2`
     font-family: Blatant, sans-serif;
     font-style: normal;
     margin-bottom: 1rem;
-    
+
     ${media.lg`
         font-size: 60px;
     `}
-    
+
     ${media.xxl`
         font-size: 90px;
     `}
@@ -169,11 +169,11 @@ const SubTitle = styled.h3`
     font-family: Blatant, sans-serif;
     margin-bottom: 1rem;
 
-    
+
     ${media.lg`
         font-size: 30px;
     `}
-    
+
     ${media.xxl`
         font-size: 50px;
     `}
@@ -185,16 +185,16 @@ const AnimationsBox = styled.div<{
     width: 500px;
     max-width: 100%;
     padding: 20px;
-    
+
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
     height: 100%;
     opacity: 0;
-    
+
     transition: opacity 2s ease .7s, transform 2s ease .7s;
-    
+
     ${props => css`
         ${media.md`
             ${props.position === 'left' && css`
@@ -207,7 +207,7 @@ const AnimationsBox = styled.div<{
             `}
         `}
     `}
-    
+
 `;
 
 const TextAnimationsRoot = styled.div`
@@ -224,8 +224,8 @@ const TextAnimationsRoot = styled.div`
                opacity: 1;
           }
       }
-      
-      
+
+
       &:before{
         content: "";
         background: url(${asset('/sample/food/blackt-will.png')}) center center repeat;
@@ -238,5 +238,5 @@ const TextAnimationsRoot = styled.div`
         opacity: 0.5;
       }
   }
-  
+
 `;

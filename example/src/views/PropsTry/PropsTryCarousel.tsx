@@ -1,6 +1,6 @@
 import React, {ReactNodeArray, useCallback, useEffect, useState} from 'react';
 import styled from 'styled-components/macro';
-import {Col, Row} from 'bear-styled-grid';
+import {Col, Row} from 'bear-react-grid';
 import Carousel, {IBearCarouselObj, TBearSlideItemDataList, BearSlideItem} from 'bear-react-carousel';
 import {anyToNumber} from 'bear-jsutils/convert';
 import cx from 'classnames';

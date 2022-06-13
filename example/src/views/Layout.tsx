@@ -1,15 +1,15 @@
 import React from 'react';
 import styled, {css} from 'styled-components/macro';
-import Router from './Router';
+import {Outlet} from 'react-router-dom';
 
 import Navbar from './_components/Navbar';
 import Sidebar from './_components/Sidebar';
-import {Container, media} from 'bear-styled-grid';
+import {Container, media} from 'bear-react-grid';
 import {useSidebar} from '../provider/SidebarProvider';
 
 
 
-const HomeRoot = () => {
+const Layout = () => {
     const {isExpend, toggleExpend} = useSidebar();
 
     return (
@@ -21,7 +21,7 @@ const HomeRoot = () => {
 
                 <Content isSidebarExpend={isExpend}>
                     <Container fluid>
-                        <Router/>
+                        <Outlet/>
                     </Container>
                 </Content>
 
@@ -31,7 +31,7 @@ const HomeRoot = () => {
     );
 };
 
-export default HomeRoot;
+export default Layout;
 
 const MainWrapper = styled.div`
   flex: 1;
@@ -42,7 +42,7 @@ const Content = styled.div<{
 }>`
   padding-bottom: 2rem;
   padding-top: 1rem;
-  
+
   ${props => props.isSidebarExpend && css`
     margin-left: 0;
   `}
@@ -53,9 +53,9 @@ const Content = styled.div<{
         transition: margin-right .2s ease;
         margin-left: ${props.theme.layout.sidebarWidth}px;
       `}
-      
+
   `}
- 
+
 `;
 
 

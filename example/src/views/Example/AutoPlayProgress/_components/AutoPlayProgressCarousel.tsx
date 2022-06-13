@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import styled, {css, keyframes} from 'styled-components/macro';
 import BearCarousel, {elClassName, TBearSlideItemDataList, BearSlideItem} from 'bear-react-carousel';
 import {Icon} from 'bear-components/atoms';
-import {media} from 'bear-styled-grid';
+import {media} from 'bear-react-grid';
 import {foodImages as images} from 'config/images';
 
 
@@ -77,7 +77,7 @@ const progress = keyframes`
 
 
 const CarouselBox = styled.div`
-    
+
     .${elClassName.paginationContent}{
         display: none;
     }
@@ -102,8 +102,8 @@ const CarouselBox = styled.div`
         }
     }
 
-    
-    
+
+
 
     ${props => css`
        ${media.xl`
@@ -118,7 +118,7 @@ const CarouselBox = styled.div`
                 display: flex;
                 box-shadow: none;
             }
-    
+
              .${elClassName.paginationButton}{
                 display: flex;
                 justify-content: center;
@@ -135,14 +135,14 @@ const CarouselBox = styled.div`
                 margin: 0;
                 padding: 0;
                 box-shadow: none;
-    
+
             }
-    
+
             .${elClassName.paginationContent}{
                 display: flex;
             }
         `}
-    `}   
-    
+    `}
+
 `;
 

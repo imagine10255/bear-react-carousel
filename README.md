@@ -38,6 +38,14 @@
 - Prevent onClick of carousel item from triggering on swipe
 
 
+## Support Version Map
+
+React | Styled-component | React Scripts | Bear React Grid | 
+------|:-----------------|---------------|----------------:|
+18    | 5.3.5            | 5.0.1         |           2.0.0 |
+17    | 5.2.1            | 4.0.3         |          1.0.23 |
+
+
 ### Install
 
 ```bash

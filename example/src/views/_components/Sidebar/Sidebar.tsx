@@ -1,10 +1,9 @@
 import React, {ReactNodeArray, Fragment, useMemo} from 'react';
-import {media} from 'bear-styled-grid';
+import {media} from 'bear-react-grid';
 import styled, {css} from 'styled-components/macro';
 import {Link, useLocation} from 'react-router-dom';
 import {IMenu, menu} from 'config/menu';
 import {useSidebar} from 'provider/SidebarProvider';
-import {Icon} from 'bear-components/atoms';
 
 
 
@@ -117,7 +116,7 @@ const MenuItem = styled.li<{
   :hover{
     background-color: hsl(0deg 0% 100% / 5%);
   }
-  
+
   ${MenuLink}, ${MenuTitle}{
       display:flex;
       flex: 1;
@@ -132,11 +131,11 @@ const MenuItem = styled.li<{
 
    ${props => props.isActive && css`
       background-color: hsl(0deg 0% 100% / 5%);
-      
+
       ${MenuLink}{
           color: ${props.theme.primaryColor};
       }
-      
+
   `}
 
 `;
@@ -185,21 +184,21 @@ const SidebarContainer = styled.aside<{
     width: ${props => props.theme.layout.sidebarWidth}px;
     flex: 0 0 ${props => props.theme.layout.sidebarWidth}px;
     transform: translateX(0px) translateZ(0px);
-      
+
     ${props => !props.isExpend && css`
       transform: translateX(-${props.theme.layout.sidebarWidth}px) translateZ(0px);
-      
-      
+
+
       + ${SidebarMask}{
           opacity: 0;
           pointer-events: none;
       }
     `}
-    
-    
+
+
     ${media.lg`
       transform: translateX(0) translateZ(0);
     `}
-    
-    
+
+
 `;

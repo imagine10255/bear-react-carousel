@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import styled from 'styled-components/macro';
-import {ERowAlign, Flex} from 'bear-styled-grid';
+import {ERowAlign, Flex} from 'bear-react-grid';
 import BearCarousel, {elClassName, IBearCarouselObj, BearSlideItem, TBearSlideItemDataList} from 'bear-react-carousel';
 import {anyToNumber} from 'bear-jsutils/convert';
 import {Select} from 'bear-components/forms';
@@ -121,5 +121,5 @@ const VipLevelCardListRoot = styled.div`
     top: -50px;
     bottom: unset;
   }
-  
+
 `;

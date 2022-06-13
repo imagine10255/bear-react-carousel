@@ -1,6 +1,6 @@
 import React, {memo} from 'react';
 import styled from 'styled-components/macro';
-import {media} from 'bear-styled-grid';
+import {media} from 'bear-react-grid';
 
 import CSS from 'csstype';
 import {isEmpty} from 'bear-jsutils/equal';
@@ -114,12 +114,12 @@ const VipLevelItem = styled.div`
     &:last-child {
         border-bottom: none;
     }
-    
+
     ${media.lg`
         padding: 15px 0;
         min-height: 60px;
     `}
-    
+
 `;
 
 const ItemInner = styled.div`
@@ -166,7 +166,7 @@ const VipLevelFooter = styled.div`
             color: #fff;
         }
     }
-    
+
     ${media.lg`
         padding: 0 15px;
     `}
@@ -197,15 +197,15 @@ const VipLevelCardRoot = styled.div<{
         transition: opacity .2s ease-in;
         border-radius: 5px;
     }
-    
-    
+
+
     ${media.lg`
         z-index: 1;
 
         :hover, &[data-active="true"] {
             z-index: 2;
             transform: scale(1.1);
-            
+
             :before {
                 opacity: 1;
             }
@@ -217,21 +217,21 @@ const VipLevelCardRoot = styled.div<{
             ${VipLevelName} {
                 background-color: rgba(255,255,255,.2);
             }
-            
-          
+
+
             ${VipLevelContent} {
                ${ItemTitle} {color: #fff;}
                ${ItemValue} {color: #000;}
             }
-            
+
             ${VipLevelFooter} {
                 background-color: #fff;
                 ${ItemTitle} {color: #004e6b;}
                 ${ItemValue} {color: #004e6b;}
             }
 
-         
+
         }
     `}
-    
+
 `;

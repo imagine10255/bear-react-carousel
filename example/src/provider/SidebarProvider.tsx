@@ -34,7 +34,7 @@ export const SidebarProvider = ({
 }: FCChildrenProps) => {
     const [isExpend, setIsExpend] = useState<boolean>(false);
 
-    const toggleExpend = useCallback((targetIsExpend) => {
+    const toggleExpend = useCallback((targetIsExpend?: boolean) => {
         setIsExpend(prev => {
             if(typeof targetIsExpend !== 'undefined'){
                 return targetIsExpend;

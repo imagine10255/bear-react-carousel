@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect} from 'react';
 import styled from 'styled-components/macro';
-import {useHistory} from 'react-router-dom';
-import {Container, media} from 'bear-styled-grid';
+import {useNavigate} from 'react-router-dom';
+import {Container, media} from 'bear-react-grid';
 
 // Components
 import HamburgerMenu from './HamburgerMenu';
@@ -11,7 +11,7 @@ import Logo from './Logo';
 
 const Navbar = () => {
     const {isExpend, toggleExpend} = useSidebar();
-    const history = useHistory();
+    const navigate = useNavigate();
 
     useEffect(() => {
         window.addEventListener('resize', onResize, true);
@@ -38,7 +38,7 @@ const Navbar = () => {
                     isExpend={isExpend} toggleExpend={() => toggleExpend()}/>
             </NavbarMenu>
 
-            <NavbarBrand onClick={()=>history.push('/')}>
+            <NavbarBrand onClick={()=> navigate('/')}>
                 <Logo/>
                 <Name>Bear Carousel</Name>
             </NavbarBrand>
@@ -51,7 +51,7 @@ const Navbar = () => {
 export default Navbar;
 
 const Name = styled.div`
-  
+
 `;
 
 const DebugSize = styled.div`
@@ -74,8 +74,8 @@ const NavLink = styled.a<{
   vertical-align: center;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
   color: ${props => props.isActive ? '#fff' : 'rgba(255, 255, 255, 0.55)'};
-  
-  :hover{ 
+
+  :hover{
     color: #fff;
   }
 `;
@@ -107,17 +107,17 @@ const NavbarBrand = styled.div`
     padding-bottom: 0.3125rem;
     margin-right: 0;
     white-space: nowrap;
-    
+
     font-weight: 700;
     color: #fff;
     display: flex;
     flex-direction: row;
     align-items: center;
-    
+
     ${media.sm`
         margin-right: 1rem;
     `}
-    
+
 `;
 
 
@@ -125,14 +125,14 @@ const Nav = styled.nav`
    flex: 0 0 auto;
    background-color: #242526;
    color: #fff;
-   
+
      flex-wrap: nowrap;
     justify-content: flex-start;
-    
+
     display: flex;
     align-items: center;
     height: 63.75px;
-    
+
     position: sticky;
     top: 0;
     z-index: ${props => props.theme.layout.navbarZIndex};

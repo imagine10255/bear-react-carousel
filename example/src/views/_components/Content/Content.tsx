@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import {Col, EColType, Flex, Row} from 'bear-styled-grid';
+import {Col, EColType, Flex, Row} from 'bear-react-grid';
 import {SwitchControl} from 'bear-components/forms';
 
 interface IProps extends FCChildrenProps{
@@ -53,10 +53,10 @@ export default Content;
 
 
 const LabelText = styled.div`
-    color: rgb(245, 246, 247);  
+    color: rgb(245, 246, 247);
     font-size: 13px;
     padding-right: 10px;
-    
+
 `;
 
 const Label = styled.label`
