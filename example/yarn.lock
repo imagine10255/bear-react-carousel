@@ -2963,10 +2963,10 @@ batch@0.6.1:
   resolved "https://registry.yarnpkg.com/batch/-/batch-0.6.1.tgz#dc34314f4e679318093fc760272525f94bf25c16"
   integrity sha512-x+VAiMRL6UPkx+kudNvxTl6hB2XNNCG2r+7wixVfIYwu/2HKRXimwQyaumLjMveWvT2Hkd/cAJw+QBMfJ/EKVw==
 
-bear-components@0.0.6:
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/bear-components/-/bear-components-0.0.6.tgz#30d8fe79e03fcf4f99b9ab65c9f3ca3a93e6015b"
-  integrity sha512-nOFtXA5wJlYml6OWFIcztYAOOYG1P1DN+6ThKPB8Tv/1AIMONsEjf34w0gLYEe+jX/9YOUK/b0tG/JWHBIdw5A==
+bear-components@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/bear-components/-/bear-components-2.0.0.tgz#5b82ce576e428d98e867ab34ce24dcc6e737484d"
+  integrity sha512-U5TQqOP3ez7wzBzeuYHLRjibycJMuyZkkyWb1bEd6o5ldZimHoGY3wZ3RnkguvJ6gbB/DxEd1IKqpevc4CK+uQ==
 
 "bear-jsutils@link:../node_modules/bear-jsutils":
   version "0.0.0"
@@ -2987,11 +2987,6 @@ bear-react-toaster@2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/bear-react-toaster/-/bear-react-toaster-2.0.1.tgz#cd75a56950d696f7f8f400df08fcc16ec0fa74ae"
   integrity sha512-kFcKZVzRtnbhtBOUB4cM1qkoNZ45GQDWLvI1ms5DJDX5A2SxReBONatXdNk3JbWPuiMgZUalthvB1kkpM+2llw==
-
-bear-react@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/bear-react/-/bear-react-1.0.0.tgz#df7ae9ca9cfaedfc1fdcef25a52ff9bce0d2b7f4"
-  integrity sha512-OKEj9IMI6q4YWADZRquEJNEBR+O6SthqAivz8ur4db+s+FSoohLlPiDTj8+2jyhk9+eOdduz+cZdzZFKe6sVhQ==
 
 bfj@^7.0.2:
   version "7.0.2"
