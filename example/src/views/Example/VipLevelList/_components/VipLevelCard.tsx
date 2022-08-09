@@ -9,6 +9,7 @@ import {formatCurrency} from 'bear-jsutils/number';
 
 export interface IRules {
     title: string,
+    total: number,
     value: any,
 }
 
@@ -16,6 +17,7 @@ export interface IRules {
 interface IProps extends FCProps{
     style?: CSS.Properties,
     className?: string,
+    isTotal?: boolean,
     isActive?: boolean,
     levelName: string,
     totalAmount: number,
@@ -26,6 +28,7 @@ interface IProps extends FCProps{
  * VipLevelCard
  */
 const VipLevelCard = ({
+    isTotal = false,
     isActive = false,
     levelName,
     totalAmount,
@@ -47,6 +50,7 @@ const VipLevelCard = ({
                                 <ItemValue>
                                     {/* 判定value type是否為Function */}
                                     {typeof value === 'function' ? value() : value}
+                                    <Total>{isTotal && row.total}</Total>
                                 </ItemValue>
                             </ItemInner>
                         </VipLevelItem>
@@ -69,8 +73,13 @@ const VipLevelCard = ({
     );
 };
 
-export default memo(VipLevelCard);
+export default VipLevelCard;
 
+
+
+const Total = styled.div`
+    color: #e83e8c;
+`;
 
 const VipLevelContent = styled.div`
     flex: 1 1 auto;
