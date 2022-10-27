@@ -7,6 +7,8 @@ export type TSlidesPerViewActual = number
 
 export interface IBearCarouselObj {
   goToPage: (page: number) => void;
+  toNext: () => void;
+  toPrev: () => void;
   activeActualIndex: number;
   activePage: number;
   info: IInfo,
@@ -33,6 +35,7 @@ export interface IBearCarouselProps extends IBreakpointSetting{
   moveTime: number
   autoPlayTime: number
   breakpoints: IPropsBreakpoints
+  defaultActivePage?: number,
   isDebug: boolean
 }
 

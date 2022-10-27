@@ -20,6 +20,7 @@ export const menu = (): IMenu[] => {
                 {name: 'Text Animations', href: '/example/text-animations'},
                 {name: 'Vip Level List', href: '/example/vip-level-list'},
                 {name: 'Auto Play Progress', href: '/example/auto-play-progress'},
+                {name: 'Preview Image', href: '/example/preview-image'},
             ]
         },
     ];

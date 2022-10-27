@@ -26,6 +26,15 @@ export const catImages = [
 ];
 
 
+export const preViewImage = [
+    {id: 1, name: 'CleanShot 2022-10-20 at 12.02.47@2x.png', size: '256.21KB', createdAt: '2022-10-20 12:00:00', imageUrl: 'https://image.kr8851.com/uploads/product-goods/2022/10/26/3910809/8.jpg?v=1026215633'},
+    {id: 2, name: 'CleanShot 2022-10-22 at 12.22.47@2x.png', size: '10.21KB', createdAt: '2022-10-22 23:00:10', imageUrl: asset('/sample/cat/02.jpg')},
+    {id: 3, name: 'CleanShot 2022-10-23 at 12.23.47@2x.png', size: '26.01KB', createdAt: '2022-10-23 11:00:30', imageUrl: asset('/sample/cat/03.jpg')},
+    {id: 4, name: 'CleanShot 2022-10-24 at 12.11.47@2x.png', size: '226.21KB', createdAt: '2022-10-24 22:33:00', imageUrl: asset('/sample/cat/04.jpg')},
+    {id: 5, name: 'CleanShot 2022-10-26 at 12.22.47@2x.png', size: '2MB', createdAt: '2022-10-26 08:12:20', imageUrl: asset('/sample/cat/05.jpg')},
+];
+
+
 export interface IFoodImage {
     id: number,
     subTitle: string,
