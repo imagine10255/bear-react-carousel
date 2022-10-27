@@ -67,7 +67,7 @@ const images = [
 const bearSlideItemData: TBearSlideItemDataList  = images.map(row => {
         return {
             key: row.id,
-            children: <BearSlideItem imageUrl={row.image}/>
+            children: <BearSlideItem imageUrl={row.imageUrl}/>
         };
     });
 
