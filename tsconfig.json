@@ -1,18 +1,18 @@
 {
   "compilerOptions": {
-    "outDir": "dist",
-    "sourceMap": true,
-    "target": "es5",
+    "target": "es2020",
     "lib": [
       "dom",
       "dom.iterable",
       "esnext"
     ],
+    "noImplicitAny": false,
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
+    "strictNullChecks": false,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
     "module": "esnext",
@@ -21,9 +21,17 @@
     "isolatedModules": true,
     "noEmit": true,
     "downlevelIteration": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "baseUrl": "src"
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "dist", "example"]
+  "include": [
+    "src",
+  ],
+  "exclude": [
+    "example",
+    "node_modules",
+    "**/*.spec.ts"
+  ],
+  "files": [],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

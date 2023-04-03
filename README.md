@@ -6,7 +6,7 @@
 
 <div align="center">
 
-    
+
 
 [![NPM](https://img.shields.io/npm/v/bear-react-carousel.svg?style=for-the-badge)](https://www.npmjs.com/package/bear-react-carousel)
 [![npm downloads](https://img.shields.io/npm/dm/bear-react-carousel.svg?style=for-the-badge)](https://www.npmjs.com/package/bear-react-carousel)
@@ -37,13 +37,6 @@
 - Provide project scale setting or fixed height setting
 - Prevent onClick of carousel item from triggering on swipe
 
-
-## Support Version Map
-
-React | React Scripts | Bear React Grid | 
-------|---------------|----------------:|
-18    | 5.0.1         |           2.0.0 |
-17    | 4.0.3         |          1.0.23 |
 
 
 ### Install

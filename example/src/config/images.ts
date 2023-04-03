@@ -1,4 +1,4 @@
-import {asset} from './utils';
+import {asset} from '../utils';
 
 
 export const racingImages = [

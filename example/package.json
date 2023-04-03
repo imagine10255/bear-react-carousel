@@ -1,86 +1,23 @@
 {
-  "name": "bear-react-carousel-example",
-  "homepage": ".",
-  "version": "0.0.0",
+  "name": "example",
   "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "start": "node ../node_modules/react-scripts/bin/react-scripts.js start",
-    "build": "node ../node_modules/react-scripts/bin/react-scripts.js build",
-    "test": "node ../node_modules/react-scripts/bin/react-scripts.js test",
-    "lint:fix": "eslint \"./src/**/*.{ts,tsc}\" --fix"
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
-    "@formatjs/intl-pluralrules": "4.0.0",
-    "@formatjs/intl-relativetimeformat": "7.3.6",
-    "@types/node": "link:../node_modules/@types/node",
-    "@types/react": "link:../node_modules/@types/react",
-    "@types/react-dom": "link:../node_modules/@types/react-dom",
-    "@types/react-router-dom": "5.3.3",
-    "@types/react-syntax-highlighter": "^13.5.2",
-    "@types/styled-components": "5.1.25",
-    "bear-components": "2.0.0",
-    "bear-jsutils": "link:../node_modules/bear-jsutils",
-    "bear-react-carousel": "link:..",
-    "bear-react-grid": "2.0.0",
-    "bear-react-toaster": "2.0.1",
-    "classnames": "2.3.1",
-    "framer-motion": "6.3.11",
-    "react": "link:../node_modules/react",
-    "react-dom": "link:../node_modules/react-dom",
-    "react-hook-form": "7.31.3",
-    "react-hotkeys-hook": "^3.4.7",
-    "react-intl": "5.10.4",
-    "react-router-dom": "6.3.0",
-    "react-scripts": "link:../node_modules/react-scripts",
-    "styled-components": "5.3.5",
-    "typescript": "link:../node_modules/typescript"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "bear-react-carousel": "link:.."
   },
   "devDependencies": {
-    "@babel/plugin-syntax-object-rest-spread": "^7.8.3",
-    "@testing-library/jest-dom": "link:../node_modules/@testing-library/jest-dom",
-    "@testing-library/react": "link:../node_modules/@testing-library/react",
-    "@testing-library/user-event": "link:../node_modules/@testing-library/user-event",
-    "@types/jest": "link:../node_modules/@types/jest",
-    "eslint-config-react-app": "link:../node_modules/eslint-config-react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app"
-    ],
-    "rules": {
-      "quotes": [
-        "warn",
-        "single"
-      ],
-      "semi": [
-        "warn",
-        "always"
-      ],
-      "indent": [
-        "warn",
-        4
-      ],
-      "object-curly-spacing": [
-        "warn",
-        "never"
-      ],
-      "no-useless-escape": "off",
-      "import/no-anonymous-default-export": "off",
-      "react-hooks/exhaustive-deps": "off",
-      "@typescript-eslint/no-unused-vars": "off",
-      "jsx-a11y/alt-text": "off"
-    }
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "@vitejs/plugin-react-swc": "^3.0.0",
+    "typescript": "^4.9.3",
+    "vite": "^4.2.0"
   }
 }
