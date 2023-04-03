@@ -110,7 +110,7 @@ export function getMediaInfo(props: IBearCarouselProps): {rwdMedia: IBreakpointS
 
     // const divisible = data.length % rwdMedia.slidesPerGroup; // 餘數
     // let sliceData = divisible > 0 ? data.slice(0, data.length - divisible) : data;
-    let sliceData = data;
+    let sliceData = data ?? [];
     let sourceTotal = sliceData.length;
     const formatElement = initDataList(
         sliceData,

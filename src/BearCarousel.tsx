@@ -42,7 +42,7 @@ interface IState {
 
 class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     static defaultProps = {
-        data: [],
+        data: undefined,
         slidesPerView: 1,
         slidesPerGroup: 1, // 不可為小數
         moveTime: 500,
@@ -202,8 +202,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         const {data, setCarousel, renderNavButton, ...otherParams} = this.props;
         const {data: nextData, setCarousel: nextSetCarousel, renderNavButton: nextRenderNavButton, ...nextOtherProps} = nextProps;
 
-        const oldKey = data.map((row) => row.key).join('_');
-        const nextKey = nextData.map((row) => row.key).join('_');
+        const oldKey = data?.map((row) => row.key).join('_');
+        const nextKey = nextData?.map((row) => row.key).join('_');
         if (oldKey !== nextKey ||
       !deepCompare(otherParams, nextOtherProps) ||
       nextWindowSize !== windowSize
