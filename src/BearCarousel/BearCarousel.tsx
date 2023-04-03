@@ -57,7 +57,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         isEnableAutoPlay: false,
         isDebug: false,
         spaceBetween: 0,
-        autoPlayTime: 5000
+        autoPlayTime: 5000,
+        defaultActivePage: 1,
     };
 
     _carouselId = `bear-react-carousel_${uuid()}`;
@@ -147,7 +148,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         if (containerRef) {
             // Move to the correct position for the first time
             if(this.info.pageTotal > 0){
-                this.goToPage(1, false);
+                this.goToPage(this.props.defaultActivePage ?? 1, false);
             }
 
             // End of moving animation (Need to return to the position, to be fake)
@@ -688,6 +689,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         if(this.props.setCarousel){
             this.props.setCarousel({
                 goToPage: this.goToPage,
+                toNext: this.toNext,
+                toPrev: this.toPrev,
                 info: this.info,
                 activePage: this.activePage,
                 activeActualIndex: this.activeActualIndex,

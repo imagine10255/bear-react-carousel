@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0-alpha.0](https://github.com/imagine10255/bear-react-carousel/compare/v2.0.1...v2.1.0-alpha.0) (2022-10-27)
+
+
+### Features
+
+* add preview image modal carousel ([db2652f](https://github.com/imagine10255/bear-react-carousel/commit/db2652fe7d402f390198718e778fa3798e188566))
+
+
+### Bug Fixes
+
+* modify reademe use sample row.image => row.imageUrl ([9d4faf5](https://github.com/imagine10255/bear-react-carousel/commit/9d4faf5090fbc290ef306048d61987afa8e24dfd))
+
 ### [2.0.1](https://github.com/imagine10255/bear-react-carousel/compare/v2.0.0...v2.0.1) (2022-06-13)
 
 ## [2.0.0](https://github.com/imagine10255/bear-react-carousel/compare/v1.2.17...v2.0.0) (2022-06-13)

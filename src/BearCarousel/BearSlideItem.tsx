@@ -18,7 +18,7 @@ const onClickAllowTime = 150;
 const BearSlideItem = ({
     className,
     style,
-    as = 'image',
+    as = 'card',
     imageUrl,
     imageSize,
     children,
@@ -44,7 +44,7 @@ const BearSlideItem = ({
 
 
 
-    if(as === 'image' && slidesPerView === 'auto'){
+    if(as === 'image' || slidesPerView === 'auto'){
         return <img
             style={style}
             className={[className, elClassName.slideItemImg].join(' ').trim()}
