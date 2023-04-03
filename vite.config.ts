@@ -16,7 +16,7 @@ export default defineConfig({
     }),
     ],
     build: {
-        sourcemap: process.env.NODE_ENV === 'production' ? false : 'inline',
+        sourcemap: process.env.NODE_ENV !== 'production',
         lib: {
             entry: path.resolve(__dirname, 'src/index.ts'),
             formats: ['es'],
