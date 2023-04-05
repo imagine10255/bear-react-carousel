@@ -8,12 +8,12 @@ import eslint from 'vite-plugin-eslint';
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [
+        eslint(),
         react(),
-    visualizer() as Plugin,
-    eslint(),
-    dts({
-        insertTypesEntry: true,
-    }),
+        dts({
+            insertTypesEntry: true,
+        }),
+        visualizer() as Plugin,
     ],
     build: {
         sourcemap: process.env.NODE_ENV !== 'production',
