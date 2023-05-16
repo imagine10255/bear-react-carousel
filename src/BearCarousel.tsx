@@ -709,7 +709,12 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                 // const movePx = -dom.clientWidth * slideIndex;
                 const movePx = -slideItemRef.offsetLeft;
                 if (this.rwdMedia.isCenteredSlides) {
-                    return movePx + (slideItemRef.clientWidth * ((this.rwdMedia.slidesPerViewActual - 1) / 2));
+                    let firstStartPx = 0;
+                    if(this.rwdMedia.slidesPerView === 'auto'){
+                        firstStartPx = (this.rootRef.current.clientWidth / 2) - (slideItemRef.clientWidth / 2) ;
+                    }
+
+                    return movePx + firstStartPx + (slideItemRef.clientWidth * ((this.rwdMedia.slidesPerViewActual - 1) / 2));
                 }
                 return movePx;
             }

@@ -10,13 +10,27 @@ import 'bear-react-carousel/dist/index.css';
 
 
 
-// 輪播項目
-const bearSlideItemData: TBearSlideItemDataList = images.map(row => {
+// 輪播項目1
+const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
     return {
         key: row.id,
         children: <BearSlideItem as="card">
-            <div className="h-100 d-flex al"
+            <div className="h-100 d-flex"
                 style={{fontSize: '40px', backgroundColor: row.color}}
+            >
+                {/*<a href="https://carousel.bearests.com" rel="noreferrer" target="_blank">{row.id}</a>*/}
+            </div>
+        </BearSlideItem>
+    };
+});
+
+// 輪播項目2
+const bearSlideItemData2: TBearSlideItemDataList = images.map(row => {
+    return {
+        key: row.id,
+        children: <BearSlideItem as="card">
+            <div className="h-100 d-flex"
+                style={{fontSize: '40px', width: '200px', height: '200px', backgroundColor: row.color}}
             >
                 {/*<a href="https://carousel.bearests.com" rel="noreferrer" target="_blank">{row.id}</a>*/}
             </div>
@@ -27,37 +41,50 @@ const bearSlideItemData: TBearSlideItemDataList = images.map(row => {
 
 function App() {
 
-    return (
-        <div className="App">
-            <div>
-                <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-                    <img src={viteLogo} className="logo" alt="Vite logo" />
-                </a>
-                <a href="https://reactjs.org" target="_blank" rel="noreferrer">
-                    <img src={reactLogo} className="logo react" alt="React logo" />
-                </a>
-            </div>
-            <h1>Vite + React</h1>
-            <div className="card">
-                <BearCarousel
-                    data={bearSlideItemData}
-                    slidesPerView={1}
-                    staticHeight="300px"
-                    isEnableNavButton
-                    isEnablePagination
-                    moveTime={400}
-                    isDebug
-                />
+    return <div>
+        <BearCarousel
+            data={bearSlideItemData1}
+            slidesPerView={1.5}
+            isCenteredSlides={true}
+            staticHeight="300px"
+            spaceBetween={20}
+            isEnableNavButton
+            isEnablePagination
+            moveTime={400}
+            isDebug
+        />
 
-                <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-                </p>
-            </div>
-            <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-            </p>
-        </div>
-    );
+        <BearCarousel
+            data={bearSlideItemData2}
+            slidesPerView="auto"
+            isCenteredSlides={true}
+            staticHeight="300px"
+            spaceBetween={20}
+            isEnableNavButton
+            isEnablePagination
+            moveTime={400}
+            isDebug
+        />
+    </div>
+
+
+    // return (
+    //     <div className="App">
+    //         <div>
+    //             <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
+    //                 <img src={viteLogo} className="logo" alt="Vite logo" />
+    //             </a>
+    //             <a href="https://reactjs.org" target="_blank" rel="noreferrer">
+    //                 <img src={reactLogo} className="logo react" alt="React logo" />
+    //             </a>
+    //         </div>
+    //         <h1>Vite + React</h1>
+    //
+    //         <p className="read-the-docs">
+    //     Click on the Vite and React logos to learn more
+    //         </p>
+    //     </div>
+    // );
 }
 
 export default App;
