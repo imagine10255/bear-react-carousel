@@ -197,3 +197,13 @@ div.bear-react-carousel__slide-item__div{
     background-color: rgba(0, 0, 0, .5);
 }
 
+
+.bear-react-carousel__root[data-debug="true"] .bear-react-carousel__content:before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    background-color: #fff;
+    height: 100%;
+    width: 1px;
+    z-index: 50;
+}

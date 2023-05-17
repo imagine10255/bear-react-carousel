@@ -41,12 +41,24 @@ const bearSlideItemData2: TBearSlideItemDataList = images.map(row => {
 
 function App() {
 
-    return <div>
+    return <div style={{padding: '10px', backgroundColor: '#00ff00'}}>
+        <BearCarousel
+            data={bearSlideItemData1}
+            slidesPerView={1}
+            staticHeight="200px"
+            spaceBetween={20}
+            isEnableNavButton
+            isEnablePagination
+            moveTime={400}
+            // isEnableLoop
+            isDebug
+        />
+
         <BearCarousel
             data={bearSlideItemData1}
             slidesPerView={1.5}
             isCenteredSlides={true}
-            staticHeight="300px"
+            staticHeight="200px"
             spaceBetween={20}
             isEnableNavButton
             isEnablePagination
@@ -58,7 +70,7 @@ function App() {
             data={bearSlideItemData2}
             slidesPerView="auto"
             isCenteredSlides={true}
-            staticHeight="300px"
+            staticHeight="200px"
             spaceBetween={20}
             isEnableNavButton
             isEnablePagination

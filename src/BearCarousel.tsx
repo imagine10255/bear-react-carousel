@@ -11,8 +11,6 @@ import './styles.css';
 import {ArrowIcon, CloneIcon} from './Icon';
 
 
-// Swipe trigger movement distance
-const triggerTouchDistance = 60;
 
 // debug log switch
 const logEnable = {
@@ -444,11 +442,20 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             // Confirmed travel distance
             const checkMove = movePosition - this.touchStart.movePositionX;
 
-            // 取得移動限制
             const distance = {
                 min: this._getMoveDistance(this.info.actual.minIndex),
                 max: this._getMoveDistance(this.info.actual.lastIndex)
             };
+
+            // Range
+            // 計算距離 -> 取得停留點 ->
+            // 移動距離 + 
+            const slideItemRef = this.slideItemRefs.current[this.activeActualIndex];
+
+            console.log('checkMove', checkMove, slideItemRef.clientWidth);
+
+            // 超過移動距離 觸發移動
+            const indexTriggerTouchDistance = slideItemRef.clientWidth / 5;
 
             if (distance.min < movePosition && !this.rwdMedia.isEnableLoop) {
                 this.goToPage(1);
@@ -456,24 +463,39 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             } else if (distance.max > movePosition && !this.rwdMedia.isEnableLoop) {
                 this.goToPage(this.info.pageTotal);
 
-            } else if (checkMove <= triggerTouchDistance && checkMove >= -triggerTouchDistance) {
+            } else if (checkMove <= indexTriggerTouchDistance && checkMove >= -indexTriggerTouchDistance) {
                 this.goToActualIndex(this.activeActualIndex);
 
-            } else if (checkMove >= -triggerTouchDistance) {
-                if(this.rwdMedia.slidesPerView === 'auto'){
-                    this.toPrev();
-                }else{
-                    this.goToActualIndex(this._getPageByPosition(movePosition, EHorizontal.left));
+            } else if (checkMove >= -indexTriggerTouchDistance) {
+                const count = this.slideItemRefs.current.length;
+                let targetIndex = this.activeActualIndex - 1;
+                let total = 0;
+                for(let i = this.activeActualIndex; i > count; i--){
+                    const slideWidth = this.slideItemRefs.current[i].clientWidth;
+                    const checkTarget = total += (slideWidth / 5);
+                    if(checkMove >= checkTarget){
+                        targetIndex = i - 1;
+                    }
+                    total += slideWidth;
+                }
+                this.goToActualIndex(targetIndex);
+
+            } else if (checkMove <= indexTriggerTouchDistance) {
+
+                const count = this.slideItemRefs.current.length;
+                // 設定區間
+                let targetIndex = this.activeActualIndex + 1;
+                let total = 0;
+                for(let i = this.activeActualIndex; i < count; i++){
+                    const slideWidth = this.slideItemRefs.current[i].clientWidth;
+                    const checkTarget = total += (slideWidth / 5);
+                    if(-checkMove >= checkTarget){
+                        targetIndex = i + 1;
+                    }
+                    total += slideWidth;
                 }
 
-            } else if (checkMove <= triggerTouchDistance) {
-
-                if(this.rwdMedia.slidesPerView === 'auto'){
-                    this.toNext();
-                }else{
-                    this.goToActualIndex(this._getPageByPosition(movePosition, EHorizontal.right));
-                }
-
+                this.goToActualIndex(targetIndex);
             }
 
         }
@@ -570,23 +592,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
     };
 
-    /**
-     * get Page By Position
-     * not support auto width
-     */
-    _getPageByPosition = (position: number, horizontal: EHorizontal):number => {
-        const oneSlideItemMoveX = this._getMoveDistance(1);
-        let defaultPage = 1;
 
-        if(horizontal === EHorizontal.left){
-            defaultPage = Math.floor(position / oneSlideItemMoveX);
-
-        }else{
-            defaultPage = Math.ceil(position / oneSlideItemMoveX);
-        }
-
-        return defaultPage;
-    };
 
     /**
    * get next page
