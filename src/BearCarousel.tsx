@@ -466,12 +466,11 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                 this.goToActualIndex(this.activeActualIndex);
 
             } else if (checkMove >= -indexTriggerTouchDistance) {
-                const count = this.slideItemRefs.current.length;
                 let targetIndex = this.activeActualIndex - 1;
                 let total = 0;
-                for(let i = this.activeActualIndex; i > count; i--){
+                for(let i = this.activeActualIndex; i >= 0; i--){
                     const slideWidth = this.slideItemRefs.current[i].clientWidth;
-                    const checkTarget = total += (slideWidth / 5);
+                    const checkTarget = total + (slideWidth / 5);
                     if(checkMove >= checkTarget){
                         targetIndex = i - 1;
                     }
@@ -487,7 +486,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                 let total = 0;
                 for(let i = this.activeActualIndex; i < count; i++){
                     const slideWidth = this.slideItemRefs.current[i].clientWidth;
-                    const checkTarget = total += (slideWidth / 5);
+                    const checkTarget = total + (slideWidth / 5);
                     if(-checkMove >= checkTarget){
                         targetIndex = i + 1;
                     }

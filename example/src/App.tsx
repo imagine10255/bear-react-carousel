@@ -72,7 +72,7 @@ function App() {
             slidesPerView="auto"
             isCenteredSlides={true}
             staticHeight="200px"
-            spaceBetween={20}
+            // spaceBetween={20}
             isEnableNavButton
             isEnablePagination
             moveTime={400}
