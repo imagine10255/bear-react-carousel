@@ -347,3 +347,8 @@ export function calcSingleAspectRatio(aspectRatio: IAspectRatio, slidesPerView: 
     return `${calc}%`;
 }
 
+
+export function truncateToTwoDecimalPlaces(num) {
+    return Math.floor(num * 100) / 100;
+}
+

@@ -1,13 +1,13 @@
-import {useState} from 'react';
+import {useRef, useState} from 'react';
 import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
+import styled from 'styled-components';
 import BearCarousel, {BearSlideItem, TBearSlideItemDataList} from 'bear-react-carousel';
 import {baseImage as images} from './config/images';
 
 import './App.css';
 import './bootstrap-base.min.css';
 import 'bear-react-carousel/dist/index.css';
-import styled from 'styled-components';
 
 
 
@@ -40,7 +40,31 @@ const bearSlideItemData2: TBearSlideItemDataList = images.map(row => {
 });
 
 
+
 function App() {
+    const textareaRef = useRef<HTMLTextAreaElement>(null);
+    const slideRef = useRef<HTMLDivElement>(null);
+
+
+    const handleMove = (activeActualIndex: number, percentage: number) => {
+        if(textareaRef.current){
+            textareaRef.current.innerHTML = `activeActualIndex: ${activeActualIndex}, percentage: ${percentage}\r\n` + textareaRef.current.innerHTML;
+        }
+        if(slideRef.current){
+            slideRef.current.style.width = `${percentage * 100 / 7}%`;
+            slideRef.current.style.transition = 'none';
+        }
+    };
+
+    const handleDone = (activeActualIndex: number) => {
+        if(textareaRef.current){
+            textareaRef.current.innerHTML = `activeActualIndex: ${activeActualIndex}, percentage: ${activeActualIndex}\r\n` + textareaRef.current.innerHTML;
+        }
+        if(slideRef.current){
+            slideRef.current.style.width = `${activeActualIndex * 100 / 7}%`;
+            slideRef.current.style.transition = 'width .3s';
+        }
+    };
 
     return <div style={{padding: '10px', backgroundColor: '#00ff00'}}>
         <BearCarousel
@@ -51,7 +75,7 @@ function App() {
             isEnableNavButton
             isEnablePagination
             moveTime={400}
-            // isEnableLoop
+            isEnableLoop
             isDebug
         />
 
@@ -64,6 +88,9 @@ function App() {
             isEnableNavButton
             isEnablePagination
             moveTime={400}
+            // isEnableLoop
+            // onElementMove={handleMove}
+            // onElementDone={handleDone}
             isDebug
         />
 
@@ -76,15 +103,16 @@ function App() {
             isEnableNavButton
             isEnablePagination
             moveTime={400}
+            onElementMove={handleMove}
+            onElementDone={handleDone}
             isDebug
         />
 
 
+        <textarea cols={30} rows={10} ref={textareaRef} style={{width: '100%'}}/>
 
         <Flex>
-            <FlexItem>
-                <FlexChild>tet</FlexChild>
-            </FlexItem>
+            <FlexItem ref={slideRef}/>
         </Flex>
     </div>
 
@@ -119,10 +147,8 @@ const Flex = styled.div`
 `;
 
 const FlexItem = styled.div`
-    width: 100%;
-  padding-left: 10px;
-  padding-right: 10px;
-  background-color: #00a3e0;
+  background-color: red;
+  height: 20px;
 `;
 
 const FlexChild = styled.div`

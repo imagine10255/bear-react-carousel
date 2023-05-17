@@ -36,6 +36,8 @@ export interface IBearCarouselProps extends IBreakpointSetting{
   autoPlayTime: number
   breakpoints: IPropsBreakpoints
   defaultActivePage?: number,
+  onElementMove?: (activeActualIndex: number, percentage: number) => void,
+  onElementDone?: (activeActualIndex: number) => void,
   isDebug: boolean
 }
 

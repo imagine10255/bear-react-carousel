@@ -1,5 +1,13 @@
 import * as React from 'react';
-import {checkIsMobile, calcSingleAspectRatio, getMediaInfo, getMediaRangeSize, getSlideDirection, getTranslateParams} from './utils';
+import {
+    checkIsMobile,
+    calcSingleAspectRatio,
+    getMediaInfo,
+    getMediaRangeSize,
+    getSlideDirection,
+    getTranslateParams,
+    truncateToTwoDecimalPlaces
+} from './utils';
 import {ulid} from 'ulid';
 import log from './log';
 import deepCompare from './deepCompare';
@@ -421,10 +429,13 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             const translateX = moveX - this.touchStart.x;
             containerRef.style.transform = `translate(${translateX}px, 0px)`;
             containerRef.style.transitionDuration = '0ms';
+
+            if(this.props.onElementMove){
+                this.props.onElementMove(this.activeActualIndex, this._getMovePercentage(translateX));
+            }
         }
-
-
     };
+
 
 
     /**
@@ -447,9 +458,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                 max: this._getMoveDistance(this.info.actual.lastIndex)
             };
 
-            // Range
-            // 計算距離 -> 取得停留點 ->
-            // 移動距離 + 
             const slideItemRef = this.slideItemRefs.current[this.activeActualIndex];
 
 
@@ -496,12 +504,23 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                 this.goToActualIndex(targetIndex);
             }
 
+
         }
 
     };
 
 
+    /**
+     * Move Percentage
+     * @param translateX
+     */
+    _getMovePercentage = (movePx: number) => {
+        const slideCurrWidth = this.slideItemRefs.current[this.activeActualIndex].clientWidth;
 
+        const initStart = this.getInitStartPosition(slideCurrWidth);
+        const newMoveX = movePx - initStart;
+        return truncateToTwoDecimalPlaces(-newMoveX / slideCurrWidth);
+    };
 
 
     /**
@@ -712,18 +731,27 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             if (slideItemRef) {
                 // const movePx = -dom.clientWidth * slideIndex;
                 const movePx = -slideItemRef.offsetLeft;
-                if (this.rwdMedia.isCenteredSlides) {
-                    let firstStartPx = 0;
-                    if(this.rwdMedia.slidesPerView === 'auto'){
-                        firstStartPx = (this.rootRef.current.clientWidth / 2) - (slideItemRef.clientWidth / 2) ;
-                    }
-
-                    return movePx + firstStartPx + (slideItemRef.clientWidth * ((this.rwdMedia.slidesPerViewActual - 1) / 2));
-                }
-                return movePx;
+                return movePx + this.getInitStartPosition(slideItemRef.clientWidth);
             }
         }
 
+        return 0;
+    };
+
+
+    /**
+     * 取得初始距離
+     * @param slideItemWidth
+     */
+    getInitStartPosition = (slideItemWidth: number) => {
+        if (this.rwdMedia.isCenteredSlides) {
+            let firstStartPx = 0;
+            if(this.rwdMedia.slidesPerView === 'auto'){
+                firstStartPx = (this.rootRef.current.clientWidth / 2) - (slideItemWidth / 2) ;
+            }
+
+            return firstStartPx + (slideItemWidth * (this.rwdMedia.slidesPerViewActual - 1) / 2);
+        }
         return 0;
     };
 
@@ -824,6 +852,10 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             this._checkAndAutoPlay();
 
             this._handleSyncCarousel();
+
+            if(this.props.onElementDone){
+                this.props.onElementDone(slideIndex);
+            }
         }
     };
 
