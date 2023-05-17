@@ -452,7 +452,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             // 移動距離 + 
             const slideItemRef = this.slideItemRefs.current[this.activeActualIndex];
 
-            console.log('checkMove', checkMove, slideItemRef.clientWidth);
 
             // 超過移動距離 觸發移動
             const indexTriggerTouchDistance = slideItemRef.clientWidth / 5;

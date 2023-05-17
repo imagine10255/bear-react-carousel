@@ -127,6 +127,7 @@
 
 
 .bear-react-carousel__slide-item{
+    box-sizing: border-box;
     transition-property: transform;
     position: relative;
     overflow: hidden;

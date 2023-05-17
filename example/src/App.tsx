@@ -7,6 +7,7 @@ import {baseImage as images} from './config/images';
 import './App.css';
 import './bootstrap-base.min.css';
 import 'bear-react-carousel/dist/index.css';
+import styled from 'styled-components';
 
 
 
@@ -77,6 +78,14 @@ function App() {
             moveTime={400}
             isDebug
         />
+
+
+
+        <Flex>
+            <FlexItem>
+                <FlexChild>tet</FlexChild>
+            </FlexItem>
+        </Flex>
     </div>
 
 
@@ -100,3 +109,23 @@ function App() {
 }
 
 export default App;
+
+
+
+const Flex = styled.div`
+    display: flex;
+    width: 100%;
+  background-color: #646cff;
+`;
+
+const FlexItem = styled.div`
+    width: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
+  background-color: #00a3e0;
+`;
+
+const FlexChild = styled.div`
+  width: 100%;
+  background-color: #c77f37;
+`;
