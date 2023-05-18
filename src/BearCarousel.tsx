@@ -205,8 +205,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
         const {windowSize: nextWindowSize} = nextState;
         const {windowSize} = this.state;
-        const {data, setCarousel, renderNavButton, ...otherParams} = this.props;
-        const {data: nextData, setCarousel: nextSetCarousel, renderNavButton: nextRenderNavButton, ...nextOtherProps} = nextProps;
+        const {data, setCarousel, renderNavButton, onElementDone, onElementMove, ...otherParams} = this.props;
+        const {data: nextData, setCarousel: nextSetCarousel, renderNavButton: nextRenderNavButton, onElementDone: nextOnElementDone, onElementMove: nextOnElementMove, ...nextOtherProps} = nextProps;
 
         const oldKey = data?.map((row) => row.key).join('_');
         const nextKey = nextData?.map((row) => row.key).join('_');

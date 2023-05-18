@@ -82,7 +82,7 @@ function danger(title: string, watchData?: any) {
 }
 
 
-function printInText(log: any, elseInfo = false){
+function printInText(log: any, elseInfo = true){
     const dom = document.getElementById('console') as HTMLTextAreaElement;
     if(dom){
         const day = new Date();
