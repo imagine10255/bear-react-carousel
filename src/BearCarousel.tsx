@@ -432,26 +432,22 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     _elementMove = (moveX: number): void => {
         if(this.props.isDebug && logEnable.elementMove) log.printInText('[_elementMove]');
 
-
-        let targetIndex = this.activeActualIndex;
         const containerRef = this.containerRef?.current;
-
-        const checkMove = moveX;
-        const slideItemRef = this.slideItemRefs.current[this.activeActualIndex];
-
-        const indexTriggerTouchDistance = slideItemRef.clientWidth / 5;
 
         if (containerRef && this.rwdMedia.isEnableMouseMove && this.slideItemRefs.current) {
             const translateX = moveX - this.touchStart.x;
 
-            console.log('translateX', moveX);
             containerRef.style.transform = `translate(${translateX}px, 0px)`;
             containerRef.style.transitionDuration = '0ms';
 
+            // 取得移動進度
             const percentage = this._getMovePercentage(translateX);
             if(this.props.onElementMove){
                 this.props.onElementMove(this.activeActualIndex, percentage);
             }
+
+            // 同步控制
+            this._syncControlMove(percentage);
 
 
             // 更改顯示在第幾個 (父元件使用可判定樣式設定)
@@ -459,11 +455,14 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             if(slideItemRefs){
                 const activeActualIndex = Math.round(percentage);
                 slideItemRefs
-                    // .filter(row => isNotEmpty(row))
                     .forEach((row, index) => {
-                        if (index === activeActualIndex) {
+                        if(
+                            (activeActualIndex <= 0 && index === 0) ||
+                            (activeActualIndex >= slideItemRefs.length && index === (slideItemRefs.length - 1)) ||
+                            activeActualIndex === index
+                        ){
                             row.setAttribute('data-active', 'true');
-                        } else if (row) {
+                        } else if (row.dataset.active) {
                             row.removeAttribute('data-active');
                         }
                     });
@@ -471,13 +470,12 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
 
 
-            this._syncMove(percentage);
         }
 
     };
 
 
-    _syncMove = (percentage: number) => {
+    _syncControlMove = (percentage: number) => {
         if(this.props.syncControlRefs?.current){
             const syncControl = this.props.syncControlRefs.current;
             // 將進度比例換算成 movePx
@@ -485,10 +483,10 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             syncControl._elementMove(moveX);
         }
     };
-    _syncDone = (targetIndex: number) => {
+
+    _syncControlDone = (targetIndex: number) => {
         if(this.props.syncControlRefs?.current){
             const syncControl = this.props.syncControlRefs.current;
-            console.log('done!');
             syncControl.goToActualIndex(targetIndex);
         }
     };
@@ -500,86 +498,15 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     _elementMoveDone = (): void => {
         if(this.props.isDebug && logEnable.elementMoveDone) log.printInText('[_elementMoveDone]');
 
-        const containerRef = this.containerRef?.current;
-        if (containerRef) {
-
-            // get mobile location
-            const movePosition = getTranslateParams(containerRef).x;
-
-            // Confirmed travel distance
-            const checkMove = movePosition - this.touchStart.movePositionX;
-
-            const distance = {
-                min: this._getMoveDistance(this.info.actual.minIndex),
-                max: this._getMoveDistance(this.info.actual.lastIndex)
-            };
-
-            const slideItemRef = this.slideItemRefs.current[this.activeActualIndex];
-
-
-            // 超過移動距離 觸發移動
-            const indexTriggerTouchDistance = slideItemRef.clientWidth / 5;
-
-            if (distance.min < movePosition && !this.rwdMedia.isEnableLoop) {
-
-                this._syncDone(1);
-
-                this.goToPage(1);
-
-            } else if (distance.max > movePosition && !this.rwdMedia.isEnableLoop) {
-
-                this._syncDone(this.info.pageTotal);
-
-                this.goToPage(this.info.pageTotal);
-
-
-            } else if (checkMove <= indexTriggerTouchDistance && checkMove >= -indexTriggerTouchDistance) {
-
-                this._syncDone(this.activeActualIndex);
-
-                this.goToActualIndex(this.activeActualIndex);
-
-
-            } else if (checkMove >= -indexTriggerTouchDistance) {
-                let targetIndex = this.activeActualIndex - 1;
-                let total = 0;
-                for(let i = this.activeActualIndex; i >= 0; i--){
-                    const slideWidth = this.slideItemRefs.current[i].clientWidth;
-                    const checkTarget = total + (slideWidth / 5);
-                    if(checkMove >= checkTarget){
-                        targetIndex = i - 1;
-                    }
-                    total += slideWidth;
-                }
-
-                this._syncDone(targetIndex);
-
-                this.goToActualIndex(targetIndex);
-
-
-            } else if (checkMove <= indexTriggerTouchDistance) {
-
-                const count = this.slideItemRefs.current.length;
-                // 設定區間
-                let targetIndex = this.activeActualIndex + 1;
-                let total = 0;
-                for(let i = this.activeActualIndex; i < count; i++){
-                    const slideWidth = this.slideItemRefs.current[i].clientWidth;
-                    const checkTarget = total + (slideWidth / 5);
-                    if(-checkMove >= checkTarget){
-                        targetIndex = i + 1;
-                    }
-                    total += slideWidth;
-                }
-
-
-                this._syncDone(targetIndex);
-                this.goToActualIndex(targetIndex);
+        const slideItemRefs = this.slideItemRefs?.current;
+        if(slideItemRefs){
+            const active = slideItemRefs.find(row => row.dataset.active === 'true');
+            if(active){
+                const activeActualIndex = Number(active.dataset.actual);
+                this.goToActualIndex(activeActualIndex);
+                this._syncControlDone(activeActualIndex);
             }
-
-
         }
-
     };
 
 
@@ -604,11 +531,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         const slideCurrWidth = this.slideItemRefs.current[this.activeActualIndex].clientWidth;
 
         const initStart = this.getInitStartPosition(slideCurrWidth);
-        const res = initStart - (slideCurrWidth * percentage);
-        console.log(this._carouselId, '_getPercentageToMovePx', initStart, slideCurrWidth, percentage ,res);
-        return res;
-        // const newMoveX = movePx - initStart;
-        // return truncateToTwoDecimalPlaces(-newMoveX / slideCurrWidth);
+        return initStart - (slideCurrWidth * percentage);
     };
 
 
@@ -820,7 +743,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         if (this.slideItemRefs.current) {
             const slideItemRef = this.slideItemRefs.current[slideIndex];
             if (slideItemRef) {
-                // const movePx = -dom.clientWidth * slideIndex;
                 const movePx = -slideItemRef.offsetLeft;
                 return movePx + this.getInitStartPosition(slideItemRef.clientWidth);
             }
@@ -916,7 +838,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                     .forEach((row, index) => {
                         if (index === this.activeActualIndex) {
                             row.setAttribute('data-active', 'true');
-                        } else if (row) {
+                        } else if (row.dataset.active) {
                             row.removeAttribute('data-active');
                         }
                     });
@@ -931,7 +853,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                     if(row && row.setAttribute !== null) {
                         if (this.activePage === index + 1) {
                             row.setAttribute('data-active', 'true');
-                        } else {
+                        } else if(row.dataset.active) {
                             row.removeAttribute('data-active');
                         }
                     }
