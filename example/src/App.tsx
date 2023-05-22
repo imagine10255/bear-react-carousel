@@ -160,6 +160,8 @@ function App() {
             />
         </Box>
 
+
+        <Box2>
         <BearCarousel
             syncControlRefs={syncControlRefs}
             data={bearSlideItemData2}
@@ -174,19 +176,20 @@ function App() {
             // onElementDone={handleDone}
             isDebug
         />
+        </Box2>
 
 
-        <textarea cols={30} rows={10} ref={textareaRef} style={{width: '100%'}}/>
+        {/*<textarea cols={30} rows={10} ref={textareaRef} style={{width: '100%'}}/>*/}
 
-        <Flex>
-            <FlexItem ref={flexItemRef}/>
-            <SlideControlInput
-                type="range"
-                min="1"
-                max="100"
-                ref={slideRef}
-            />
-        </Flex>
+        {/*<Flex>*/}
+        {/*    <FlexItem ref={flexItemRef}/>*/}
+        {/*    <SlideControlInput*/}
+        {/*        type="range"*/}
+        {/*        min="1"*/}
+        {/*        max="100"*/}
+        {/*        ref={slideRef}*/}
+        {/*    />*/}
+        {/*</Flex>*/}
 
         <button type="button" onClick={() => setCount(curr => curr += 1)}> count: {count}</button>
     </div>;
@@ -218,6 +221,21 @@ export default App;
 
 const Box = styled.div`
     width: 375px;
+  display: flex;
+  margin: 0 auto;
+
+  .${elClassName.slideItem}:not([data-active="true"]){
+    opacity: .1;
+    -webkit-transform: scale3d(0.8, 0.8, 1);
+    transform: scale3d(0.8, 0.8, 1);
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+  }
+`;
+
+
+const Box2 = styled.div`
   display: flex;
   margin: 0 auto;
 

@@ -433,7 +433,14 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         if(this.props.isDebug && logEnable.elementMove) log.printInText('[_elementMove]');
 
 
+        let targetIndex = this.activeActualIndex;
         const containerRef = this.containerRef?.current;
+
+        const checkMove = moveX;
+        const slideItemRef = this.slideItemRefs.current[this.activeActualIndex];
+
+        const indexTriggerTouchDistance = slideItemRef.clientWidth / 5;
+
         if (containerRef && this.rwdMedia.isEnableMouseMove && this.slideItemRefs.current) {
             const translateX = moveX - this.touchStart.x;
 
@@ -445,8 +452,28 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             if(this.props.onElementMove){
                 this.props.onElementMove(this.activeActualIndex, percentage);
             }
+
+
+            // 更改顯示在第幾個 (父元件使用可判定樣式設定)
+            const slideItemRefs = this.slideItemRefs?.current;
+            if(slideItemRefs){
+                const activeActualIndex = Math.round(percentage);
+                slideItemRefs
+                    // .filter(row => isNotEmpty(row))
+                    .forEach((row, index) => {
+                        if (index === activeActualIndex) {
+                            row.setAttribute('data-active', 'true');
+                        } else if (row) {
+                            row.removeAttribute('data-active');
+                        }
+                    });
+            }
+
+
+
             this._syncMove(percentage);
         }
+
     };
 
 
@@ -457,14 +484,14 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             const moveX = syncControl._getPercentageToMovePx(percentage);
             syncControl._elementMove(moveX);
         }
-    }
+    };
     _syncDone = (targetIndex: number) => {
         if(this.props.syncControlRefs?.current){
             const syncControl = this.props.syncControlRefs.current;
             console.log('done!');
             syncControl.goToActualIndex(targetIndex);
         }
-    }
+    };
 
 
     /**
