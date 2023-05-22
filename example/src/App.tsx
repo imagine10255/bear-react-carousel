@@ -72,6 +72,7 @@ function App() {
     const [count, setCount] = useState<number>(0);
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const flexItemRef = useRef<HTMLDivElement>(null);
+    const syncControlRefs = useRef<BearCarousel>(null);
 
     const slideRef = useRef<HTMLInputElement>(null);
 
@@ -143,8 +144,8 @@ function App() {
 
         <Box>
             <BearCarousel
-                setCarousel={setCarousel}
-
+                ref={syncControlRefs}
+                // setCarousel={setCarousel}
                 data={bearSlideItemData3}
                 slidesPerView={3}
                 isCenteredSlides={true}
@@ -155,11 +156,12 @@ function App() {
                 moveTime={400}
                 // onElementMove={handleMove}
                 // onElementDone={handleDone}
-                // isDebug
+                isDebug
             />
         </Box>
 
         <BearCarousel
+            syncControlRefs={syncControlRefs}
             data={bearSlideItemData2}
             slidesPerView="auto"
             isCenteredSlides={true}
@@ -168,8 +170,8 @@ function App() {
             isEnableNavButton
             isEnablePagination
             moveTime={400}
-            onElementMove={handleMove}
-            onElementDone={handleDone}
+            // onElementMove={handleMove}
+            // onElementDone={handleDone}
             isDebug
         />
 

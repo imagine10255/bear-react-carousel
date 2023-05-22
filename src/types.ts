@@ -1,5 +1,6 @@
 import {ReactNode} from 'react';
 import * as CSS from 'csstype';
+import BearCarousel from './BearCarousel';
 
 export type TSlidesPerView = number|'auto'
 export type TSlidesPerViewActual = number
@@ -28,6 +29,7 @@ export type IRenderNavButton = (toPrev: TToPrev, toNext: TToNext) => void
 
 export interface IBearCarouselProps extends IBreakpointSetting{
   setCarousel?: (carouselObj: IBearCarouselObj) => void,
+  // control?: (carouselObj: IBearCarouselObj) => void,
   renderNavButton?: IRenderNavButton
   style?: CSS.Properties
   className?: string
@@ -39,6 +41,7 @@ export interface IBearCarouselProps extends IBreakpointSetting{
   onElementMove?: (activeActualIndex: number, percentage: number) => void,
   onElementDone?: (activeActualIndex: number) => void,
   isDebug: boolean
+  syncControlRefs: React.RefObject<BearCarousel>,
 }
 
 export type TBearCarouselSetting = Partial<IBearCarouselProps>;

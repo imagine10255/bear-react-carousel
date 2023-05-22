@@ -126,6 +126,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     containerRef: React.RefObject<HTMLDivElement> = React.createRef();
     slideItemRefs: React.RefObject<Array<HTMLDivElement>> = React.createRef();
     pageRefs: React.RefObject<Array<HTMLDivElement>> = React.createRef();
+    // syncControlRefs: React.RefObject<BearCarousel> = React.createRef();
 
     constructor(props: IBearCarouselProps) {
         super(props);
@@ -205,8 +206,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
         const {windowSize: nextWindowSize} = nextState;
         const {windowSize} = this.state;
-        const {data, setCarousel, renderNavButton, onElementDone, onElementMove, ...otherParams} = this.props;
-        const {data: nextData, setCarousel: nextSetCarousel, renderNavButton: nextRenderNavButton, onElementDone: nextOnElementDone, onElementMove: nextOnElementMove, ...nextOtherProps} = nextProps;
+        const {data, setCarousel, renderNavButton, onElementDone, syncControlRefs, onElementMove, ...otherParams} = this.props;
+        const {data: nextData, setCarousel: nextSetCarousel, renderNavButton: nextRenderNavButton, syncControlRefs: nextSyncControlRefs, onElementDone: nextOnElementDone, onElementMove: nextOnElementMove, ...nextOtherProps} = nextProps;
 
         const oldKey = data?.map((row) => row.key).join('_');
         const nextKey = nextData?.map((row) => row.key).join('_');
@@ -234,6 +235,12 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         return false;
     }
 
+
+    _isSyncControl = () => {
+        return !!this.props.syncControlRefs;
+    };
+
+
     /**
      * browser focus check auto play
      * @private
@@ -252,6 +259,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             clearTimeout(this.timer);
         }
     };
+
 
 
     /**
@@ -424,18 +432,39 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     _elementMove = (moveX: number): void => {
         if(this.props.isDebug && logEnable.elementMove) log.printInText('[_elementMove]');
 
+
         const containerRef = this.containerRef?.current;
         if (containerRef && this.rwdMedia.isEnableMouseMove && this.slideItemRefs.current) {
             const translateX = moveX - this.touchStart.x;
+
+            console.log('translateX', moveX);
             containerRef.style.transform = `translate(${translateX}px, 0px)`;
             containerRef.style.transitionDuration = '0ms';
 
+            const percentage = this._getMovePercentage(translateX);
             if(this.props.onElementMove){
-                this.props.onElementMove(this.activeActualIndex, this._getMovePercentage(translateX));
+                this.props.onElementMove(this.activeActualIndex, percentage);
             }
+            this._syncMove(percentage);
         }
     };
 
+
+    _syncMove = (percentage: number) => {
+        if(this.props.syncControlRefs?.current){
+            const syncControl = this.props.syncControlRefs.current;
+            // 將進度比例換算成 movePx
+            const moveX = syncControl._getPercentageToMovePx(percentage);
+            syncControl._elementMove(moveX);
+        }
+    }
+    _syncDone = (targetIndex: number) => {
+        if(this.props.syncControlRefs?.current){
+            const syncControl = this.props.syncControlRefs.current;
+            console.log('done!');
+            syncControl.goToActualIndex(targetIndex);
+        }
+    }
 
 
     /**
@@ -465,13 +494,24 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             const indexTriggerTouchDistance = slideItemRef.clientWidth / 5;
 
             if (distance.min < movePosition && !this.rwdMedia.isEnableLoop) {
+
+                this._syncDone(1);
+
                 this.goToPage(1);
 
             } else if (distance.max > movePosition && !this.rwdMedia.isEnableLoop) {
+
+                this._syncDone(this.info.pageTotal);
+
                 this.goToPage(this.info.pageTotal);
 
+
             } else if (checkMove <= indexTriggerTouchDistance && checkMove >= -indexTriggerTouchDistance) {
+
+                this._syncDone(this.activeActualIndex);
+
                 this.goToActualIndex(this.activeActualIndex);
+
 
             } else if (checkMove >= -indexTriggerTouchDistance) {
                 let targetIndex = this.activeActualIndex - 1;
@@ -484,7 +524,11 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                     }
                     total += slideWidth;
                 }
+
+                this._syncDone(targetIndex);
+
                 this.goToActualIndex(targetIndex);
+
 
             } else if (checkMove <= indexTriggerTouchDistance) {
 
@@ -501,6 +545,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                     total += slideWidth;
                 }
 
+
+                this._syncDone(targetIndex);
                 this.goToActualIndex(targetIndex);
             }
 
@@ -520,6 +566,22 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         const initStart = this.getInitStartPosition(slideCurrWidth);
         const newMoveX = movePx - initStart;
         return truncateToTwoDecimalPlaces(-newMoveX / slideCurrWidth);
+    };
+
+
+    /**
+     * Percentage Move Percentage
+     * @param translateX
+     */
+    _getPercentageToMovePx = (percentage: number) => {
+        const slideCurrWidth = this.slideItemRefs.current[this.activeActualIndex].clientWidth;
+
+        const initStart = this.getInitStartPosition(slideCurrWidth);
+        const res = initStart - (slideCurrWidth * percentage);
+        console.log(this._carouselId, '_getPercentageToMovePx', initStart, slideCurrWidth, percentage ,res);
+        return res;
+        // const newMoveX = movePx - initStart;
+        // return truncateToTwoDecimalPlaces(-newMoveX / slideCurrWidth);
     };
 
 
@@ -707,16 +769,18 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
    * Sync Carousel state
    */
     _handleSyncCarousel = () => {
-        if(this.props.setCarousel){
-            this.props.setCarousel({
-                goToPage: this.goToPage,
-                toNext: this.toNext,
-                toPrev: this.toPrev,
-                info: this.info,
-                activePage: this.activePage,
-                activeActualIndex: this.activeActualIndex,
-            });
-        }
+
+
+        // if(this.props.setCarousel){
+        //     this.props.setCarousel({
+        //         goToPage: this.goToPage,
+        //         toNext: this.toNext,
+        //         toPrev: this.toPrev,
+        //         info: this.info,
+        //         activePage: this.activePage,
+        //         activeActualIndex: this.activeActualIndex,
+        //     });
+        // }
     };
 
 
