@@ -36,10 +36,16 @@
 
 .bear-react-carousel__pagination-group{
     position: absolute;
+    left: 50%;
     bottom: 20px;
+    transform: translateX(-50%);
     text-align: center;
-    width: 100%;
+    width: auto;
     z-index: 10;
+}
+
+.bear-react-carousel__pagination-group[data-touch="false"]{
+    pointer-events: none;
 }
 
 .bear-react-carousel__pagination-button{
@@ -105,6 +111,10 @@
     align-content: center;
     justify-content: center;
 
+}
+
+.bear-react-carousel__nav-group[data-touch="false"]{
+    pointer-events: none;
 }
 
 .bear-react-carousel__nav-group > .bear-react-carousel__nav-prev-button{

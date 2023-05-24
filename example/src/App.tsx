@@ -142,6 +142,7 @@ function App() {
 
 
 
+        {/*測試同步*/}
         <Box>
             <BearCarousel
                 ref={syncControlRefs}
@@ -177,6 +178,30 @@ function App() {
             isDebug
         />
         </Box2>
+
+
+
+        {/*測試依照比例設定容器高度*/}
+        <BearCarousel
+            syncControlRefs={syncControlRefs}
+            data={bearSlideItemData1}
+            // slidesPerView="auto"
+            isCenteredSlides={true}
+            staticHeight="200px"
+            // aspectRatio={{
+            //     widthRatio: 32,
+            //     heightRatio: 9,
+            //     addStaticHeight: '200px'
+            // }}
+            // spaceBetween={20}
+            isEnableNavButton
+            isEnablePagination
+            isEnableLoop
+            moveTime={400}
+            // onElementMove={handleMove}
+            // onElementDone={handleDone}
+            isDebug
+        />
 
 
         {/*<textarea cols={30} rows={10} ref={textareaRef} style={{width: '100%'}}/>*/}

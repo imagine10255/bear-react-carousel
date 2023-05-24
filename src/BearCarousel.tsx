@@ -1,12 +1,21 @@
 import * as React from 'react';
 import {
     checkIsMobile,
-    calcSingleAspectRatio,
+    getPaddingBySize,
     getMediaInfo,
-    getMediaRangeSize,
+    getSizeByRange,
     getSlideDirection,
     getTranslateParams,
-    truncateToTwoDecimalPlaces
+    decimal2Rounding,
+    getSlideIndex,
+    getStartPosition,
+    getNextPageFirstIndex,
+    getNextPage,
+    getLastIndex,
+    checkActualIndexInRange,
+    getLoopResetIndex,
+    getNextIndex,
+    getMoveDistance, getMovePercentage, getMoveTranslatePx, checkInRange
 } from './utils';
 import {ulid} from 'ulid';
 import log from './log';
@@ -126,6 +135,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     containerRef: React.RefObject<HTMLDivElement> = React.createRef();
     slideItemRefs: React.RefObject<Array<HTMLDivElement>> = React.createRef();
     pageRefs: React.RefObject<Array<HTMLDivElement>> = React.createRef();
+    pageGroupRef: React.RefObject<HTMLDivElement> = React.createRef();
+    navGroupRef: React.RefObject<HTMLDivElement> = React.createRef();
     // syncControlRefs: React.RefObject<BearCarousel> = React.createRef();
 
     constructor(props: IBearCarouselProps) {
@@ -140,7 +151,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         this.rwdMedia = rwdMedia;
         this.info = info;
         this.state = {
-            windowSize: getMediaRangeSize(Object.keys(props.breakpoints))
+            windowSize: getSizeByRange(window.innerWidth, Object.keys(props.breakpoints).map(Number))
         };
 
     }
@@ -236,9 +247,16 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     }
 
 
-    _isSyncControl = () => {
-        return !!this.props.syncControlRefs;
-    };
+    _isSyncControl = () => !!this.props.syncControlRefs;
+    checkActualIndexInRange = (slideIndex: number) => checkActualIndexInRange(slideIndex, {minIndex: this.info.actual.minIndex, maxIndex: this.info.actual.maxIndex});
+
+    getNextPage = () => getNextPage(this.activePage);
+    getNextPageFirstIndex = () => getNextPageFirstIndex(this.rwdMedia.isCenteredSlides, this.activeActualIndex, this.rwdMedia.slidesPerGroup, this.rwdMedia.slidesPerViewActual);
+    getMaxIndex = () => getLastIndex(this.info.formatElement.length);
+    _getLoopResetIndex = () => getLoopResetIndex(this.activeActualIndex, this.info.residue);
+
+
+
 
 
     /**
@@ -426,16 +444,33 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
 
     /**
+     * 加上狀態讓其他元素不會影響滑動
+     * @param isEnable
+     */
+    _setOtherTouch = (isEnable: boolean) => {
+        if(this.pageGroupRef.current){
+            this.pageGroupRef.current.setAttribute('data-touch', isEnable ? 'true': 'false');
+        }
+        if(this.navGroupRef.current){
+            this.navGroupRef.current.setAttribute('data-touch', isEnable ? 'true': 'false');
+        }
+    };
+
+    /**
    * final move execution
    * @param moveX Move the X-axis
    */
     _elementMove = (moveX: number): void => {
         if(this.props.isDebug && logEnable.elementMove) log.printInText('[_elementMove]');
 
+        this._setOtherTouch(false);
+
+
+
         const containerRef = this.containerRef?.current;
 
         if (containerRef && this.rwdMedia.isEnableMouseMove && this.slideItemRefs.current) {
-            const translateX = moveX - this.touchStart.x;
+            const translateX = getMoveTranslatePx(moveX, this.touchStart.x);
 
             containerRef.style.transform = `translate(${translateX}px, 0px)`;
             containerRef.style.transitionDuration = '0ms';
@@ -456,17 +491,30 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                 const activeActualIndex = Math.round(percentage);
                 slideItemRefs
                     .forEach((row, index) => {
-                        if(
-                            (activeActualIndex <= 0 && index === 0) ||
-                            (activeActualIndex >= slideItemRefs.length && index === (slideItemRefs.length - 1)) ||
-                            activeActualIndex === index
-                        ){
+                        if(checkInRange(index, activeActualIndex, slideItemRefs.length)){
                             row.setAttribute('data-active', 'true');
                         } else if (row.dataset.active) {
                             row.removeAttribute('data-active');
                         }
                     });
             }
+
+
+            // 更改顯示在第幾頁的樣式 (父元件使用可判定樣式設定)
+            // const pageRefs = this.pageRefs?.current;
+            // if (pageRefs && this.info.isVisiblePagination && this.activePage > 0) {
+            //     const activeActualIndex = Math.round(percentage);
+            //     pageRefs.forEach((row, index) => {
+            //         if(row && row.setAttribute !== null) {
+            //             if (checkInRange(index, activeActualIndex, slideItemRefs.length)) {
+            //                 row.setAttribute('data-active', 'true');
+            //             } else if(row.dataset.active) {
+            //                 row.removeAttribute('data-active');
+            //             }
+            //         }
+            //
+            //     });
+            // }
 
 
 
@@ -507,19 +555,19 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                 this._syncControlDone(activeActualIndex);
             }
         }
+
+        this._setOtherTouch(true);
     };
 
 
     /**
      * Move Percentage
-     * @param translateX
+     * @param movePx
      */
     _getMovePercentage = (movePx: number) => {
         const slideCurrWidth = this.slideItemRefs.current[this.activeActualIndex].clientWidth;
-
-        const initStart = this.getInitStartPosition(slideCurrWidth);
-        const newMoveX = movePx - initStart;
-        return truncateToTwoDecimalPlaces(-newMoveX / slideCurrWidth);
+        const startPosition = this._getStartPosition(slideCurrWidth);
+        return getMovePercentage(movePx, startPosition, slideCurrWidth);
     };
 
 
@@ -530,7 +578,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     _getPercentageToMovePx = (percentage: number) => {
         const slideCurrWidth = this.slideItemRefs.current[this.activeActualIndex].clientWidth;
 
-        const initStart = this.getInitStartPosition(slideCurrWidth);
+        const initStart = this._getStartPosition(slideCurrWidth);
         return initStart - (slideCurrWidth * percentage);
     };
 
@@ -580,7 +628,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         const {windowSize} = this.state;
         if(this.props.isDebug && logEnable.handleResize) log.printInText(`[_handleResize] windowSize: ${windowSize}px`);
 
-        const selectSize = getMediaRangeSize(Object.keys(breakpoints));
+        const selectSize = getSizeByRange(window.innerWidth, Object.keys(breakpoints).map(Number));
 
         // 只在區間內有設定的值才會 setState
         if (windowSize !== selectSize) {
@@ -603,12 +651,10 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         // @ts-ignore
         if(this.props.isDebug && logEnable.handleResize) log.printInText('[_onOrientationchange] ');
 
-        const selectSize = getMediaRangeSize(Object.keys(breakpoints));
+        const selectSize = getSizeByRange(window.innerWidth, Object.keys(breakpoints).map(Number));
         if (windowSize !== selectSize) {
-            this.setState({
-                windowSize: selectSize
-            });
             if(this.props.isDebug && logEnable.handleResize) log.printInText('[_onOrientationchange] set windowSize');
+            this.setState({windowSize: selectSize});
 
         }else{
             if(this.props.isDebug && logEnable.handleResize) log.printInText('[_onOrientationchange] goToPage 1');
@@ -622,67 +668,35 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     };
 
 
-
-    /**
-   * get next page
-   */
-    getNextPage = (): number => {
-        return this.activePage + 1;
-    };
-
-    /**
-   * Get the first item on the next page
-   */
-    getNextPageFirstIndex = (): number => {
-        if (this.rwdMedia.isCenteredSlides) {
-            return this.activeActualIndex + this.rwdMedia.slidesPerGroup;
-        }
-        // Avoid trailing whitespace
-        return this.activeActualIndex + this.rwdMedia.slidesPerViewActual;
-    };
-
-    /**
-   * Get the maximum Index
-   */
-    getMaxIndex = (): number => {
-        return this.info.formatElement.length - 1;
-    };
-
-    /**
-   * Get virtual index
-   */
-    checkActualIndexInRange = (slideIndex: number): boolean => {
-        return slideIndex <= this.info.actual.maxIndex && slideIndex >= this.info.actual.minIndex;
-    };
-
-
     /**
    * go to next page
    */
     toNext = (): void => {
 
         const nextPage = this.getNextPage();
-        const formatElement = this.info?.formatElement ? this.info.formatElement : [];
+        const formatElement = this.info?.formatElement ?? [];
+        const activeActual = formatElement[this.activeActualIndex];
 
-        if (formatElement[this.activeActualIndex].isClone) {
-            this.goToActualIndex(formatElement[this.activeActualIndex].matchIndex, false);
-            this.goToActualIndex(this.activeActualIndex + this.rwdMedia.slidesPerGroup);
-
-        }else if (this.rwdMedia.isEnableLoop && nextPage > this.info.pageTotal && this.info.residue > 0) {
-            // 若為Loop(最後一頁移動在不整除的時候, 移動位置需要復歸到第一個)
-            this.goToActualIndex(this.activeActualIndex + this.info.residue);
-
-        } else if (
-            this.rwdMedia.slidesPerViewActual < this.info.formatElement.length &&
-      this.getNextPageFirstIndex() <= this.getMaxIndex()
-        ) {
-            // 正常移動到下一頁
-            this.goToActualIndex(this.activeActualIndex + this.rwdMedia.slidesPerGroup);
-
-        }
-
+        getNextIndex(
+            activeActual,
+            {
+                nextPage: nextPage,
+                residue: this.info.residue,
+                pageTotal: this.info.pageTotal,
+                slideTotal: this.info.formatElement.length,
+                isOverflowPage: nextPage > this.info.pageTotal,
+                isOverflowIndex: this.getNextPageFirstIndex() > this.getMaxIndex(),
+            },
+            {
+                slidesPerGroup: this.rwdMedia.slidesPerGroup,
+                slidesPerViewActual: this.rwdMedia.slidesPerViewActual,
+                isLoopMode: this.rwdMedia.isEnableLoop,
+            }
+        )
+            .forEach(action => this.goToActualIndex(action.index, action.isUseAnimation));
 
     };
+
 
     /**
    * go to previous
@@ -712,7 +726,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
    * page1 -> (1-1) * 2) + 1 + (firstIndex -1) = 1
    */
     goToPage = (page: number, isUseAnimation = true): void => {
-        this.goToActualIndex(((page-1) * this.rwdMedia.slidesPerGroup) + 1 + (this.info.actual.firstIndex - 1), isUseAnimation);
+        const slideIndex = getSlideIndex(page, this.rwdMedia.slidesPerGroup, this.info.actual.firstIndex);
+        this.goToActualIndex(slideIndex, isUseAnimation);
     };
 
     /**
@@ -739,12 +754,10 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
    * @param slideIndex
    */
     _getMoveDistance = (slideIndex: number): number => {
-
         if (this.slideItemRefs.current) {
             const slideItemRef = this.slideItemRefs.current[slideIndex];
             if (slideItemRef) {
-                const movePx = -slideItemRef.offsetLeft;
-                return movePx + this.getInitStartPosition(slideItemRef.clientWidth);
+                return getMoveDistance(slideItemRef.offsetLeft, this._getStartPosition(slideItemRef.clientWidth));
             }
         }
 
@@ -756,16 +769,17 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
      * 取得初始距離
      * @param slideItemWidth
      */
-    getInitStartPosition = (slideItemWidth: number) => {
-        if (this.rwdMedia.isCenteredSlides) {
-            let firstStartPx = 0;
-            if(this.rwdMedia.slidesPerView === 'auto'){
-                firstStartPx = (this.rootRef.current.clientWidth / 2) - (slideItemWidth / 2) ;
+    _getStartPosition = (slideItemWidth: number) => {
+        return getStartPosition(this.rwdMedia.isCenteredSlides,
+            {
+                slidesPerView: this.rwdMedia.slidesPerView,
+                slidesPerViewActual: this.rwdMedia.slidesPerViewActual,
+            },
+            {
+                containerWidth: this.rootRef.current.clientWidth,
+                currItemWidth: slideItemWidth,
             }
-
-            return firstStartPx + (slideItemWidth * (this.rwdMedia.slidesPerViewActual - 1) / 2);
-        }
-        return 0;
+        );
     };
 
     /**
@@ -883,7 +897,10 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             return renderNavButton(() => this.toPrev(), () => this.toNext());
         }
 
-        return (<div className={elClassName.navGroup}>
+        return (<div
+            ref={this.navGroupRef}
+            className={elClassName.navGroup}
+        >
             <button type="button" className={elClassName.navPrevButton} onClick={() => this.toPrev()}>
                 <div className={elClassName.navIcon}>
                     <ArrowIcon/>
@@ -936,7 +953,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
         // Generate the desired style (note the trailing ;)
         const rootStyle: string = [
-            `padding-top: ${this.rwdMedia.aspectRatio && this.rwdMedia.slidesPerView !== 'auto' ? calcSingleAspectRatio(this.rwdMedia.aspectRatio, this.rwdMedia.slidesPerView): '0'};`,
+            `padding-top: ${this.rwdMedia.aspectRatio && this.rwdMedia.slidesPerView !== 'auto' ? getPaddingBySize(this.rwdMedia.aspectRatio, this.rwdMedia.slidesPerView): '0'};`,
             `height: ${this.rwdMedia.staticHeight ? `${this.rwdMedia.staticHeight}`: 'inherit'};`,
         ].join('');
         const slideItemStyle: string = [
@@ -1017,7 +1034,10 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
                     {/* Page number navigation buttons */}
                     {this.info.isVisiblePagination && (
-                        <div className={elClassName.paginationGroup}>
+                        <div
+                            ref={this.pageGroupRef}
+                            className={elClassName.paginationGroup}
+                        >
                             {this.info.pageTotal > 0 && this._renderPagination()}
                         </div>
                     )}

@@ -26,20 +26,15 @@ export function anyToNumber(value: any, defaultValue = 0): number {
 
 /**
  * 取得螢幕尺寸對應設定尺寸
+ * @param innerWidth
  * @param breakpointSizes
  */
-export function getMediaRangeSize(breakpointSizes: string[]): number{
-    const windowSize = typeof document !== 'undefined' ? window.innerWidth : 0;
+export function getSizeByRange(innerWidth: number, breakpointSizes: number[]): number{
+    const filterArray = breakpointSizes
+        .filter(size => size <= innerWidth)
+        .sort((a, b) => Number(b) - Number(a));
 
-    // @ts-ignore
-    const filterArray: number[] = breakpointSizes.filter(
-        (size) => Number(size) <= windowSize
-    ) as number[];
-    filterArray.sort((a, b) => Number(b) - Number(a));
-
-    if (filterArray.length > 0) {
-        return filterArray[0];
-    }
+    if (filterArray.length > 0) return filterArray[0];
     return 0;
 }
 
@@ -50,7 +45,7 @@ export function getMediaRangeSize(breakpointSizes: string[]): number{
  * @param breakpoints
  */
 export function getMediaSetting(setting: IBreakpointSetting, breakpoints: IPropsBreakpoints): IBreakpointSettingActual {
-    const selectSize = getMediaRangeSize(Object.keys(breakpoints));
+    const selectSize = getSizeByRange(window.innerWidth, Object.keys(breakpoints).map(Number));
     if(selectSize > 0){
         setting = Object.assign(setting, breakpoints[selectSize]);
     }
@@ -238,6 +233,17 @@ export function getSlideAngle(dx: number, dy: number): number {
 
 
 /**
+ * 取得 Matrix value
+ * @param matrix
+ */
+export function getMatrixValue(matrix: string): number[] {
+    const matrixValues = matrix.match(/matrix.*\((.+?)\)/);
+    if(matrixValues === null) return [];
+    return matrixValues[1]?.split(', ').map(Number);
+
+}
+
+/**
  * 取得 transform x 移動參數
  * @param el
  */
@@ -245,50 +251,20 @@ export function getTranslateParams(el: HTMLDivElement): {x: number, y: number, z
     const style = window.getComputedStyle(el);
     const matrix = style.transform;
 
-    // // No transform property. Simply return 0 values.
-    // if (matrix === 'none' || typeof matrix === 'undefined') {
-    //     return {
-    //         x: 0,
-    //         y: 0,
-    //         z: 0
-    //     }
-    // }
-
-    // Can either be 2d or 3d transform
     const matrixType = matrix.includes('3d') ? '3d' : '2d';
-    let matrixValues = matrix.match(/matrix.*\((.+)\)/);
-    if(matrixValues === null){
-        // @ts-ignore
-        matrixValues = [];
-    }
-    const matrixArray = matrixValues[0]?.split(', ');
+    let matrixArray = getMatrixValue(matrix);
 
-    // 2d matrices have 6 values
-    // Last 2 values are X and Y.
-    // 2d matrices does not have Z value.
-    if (matrixType === '2d') {
-        return {
-            x: Number(matrixArray[4]),
-            y: Number(matrixArray[5]),
-            z: 0
-        };
+    switch (matrixType){
+    case '2d':
+        // 2d matrices have 6 values, Last 2 values are X and Y, 2d matrices does not have Z value.
+        return {x: matrixArray[4], y: matrixArray[5], z: 0};
+        
+    case '3d':
+        // 3d matrices have 16 values, The 13th, 14th, and 15th values are X, Y, and Z
+        return {x: matrixArray[12], y: matrixArray[13], z: matrixArray[14]};
+    default:
+        return {x: 0, y: 0, z: 0,};
     }
-
-    // 3d matrices have 16 values
-    // The 13th, 14th, and 15th values are X, Y, and Z
-    if (matrixType === '3d') {
-        return {
-            x: Number(matrixArray[12]),
-            y: Number(matrixArray[13]),
-            z: Number(matrixArray[14])
-        };
-    }
-
-    return {
-        x: 0,
-        y: 0,
-        z: 0,
-    };
 }
 
 
@@ -311,34 +287,31 @@ export function getSlideDirection(startX: number, startY: number, endX: number, 
     const dy = startY - endY;
     const dx = endX - startX;
 
-    //如果滑動距離太短
-    if (Math.abs(dx) < 2 && Math.abs(dy) < 2) {
-        return undefined;
-    }
-    const angle = getSlideAngle(dx, dy);
-    if (angle >= -45 && angle < 45) {
-        // 向右
-        return EDirection.horizontal;
-    } else if (angle >= 45 && angle < 135) {
+    // 滑動距離最小範圍
+    if (Math.abs(dx) >= 2 || Math.abs(dy) >= 2) {
+        const angle = getSlideAngle(dx, dy);
         // 向上
-        return EDirection.vertical;
-    } else if (angle >= -135 && angle < -45) {
+        if (angle >= 45 && angle < 135) return EDirection.vertical;
+
+        // 向右
+        if (angle >= -45 && angle < 45) return EDirection.horizontal;
+
         // 向下
-        return EDirection.vertical;
-    } else if ((angle >= 135 && angle <= 180) || (angle >= -180 && angle < -135)) {
+        if (angle >= -135 && angle < -45) return EDirection.vertical;
+
         // 向左
-        return EDirection.horizontal;
+        if ((angle >= 135 && angle <= 180) || (angle >= -180 && angle < -135)) return EDirection.horizontal;
     }
     return undefined;
 }
 
 
 /**
- * 計算等比例
+ * 依照尺寸取得比例
  * @param aspectRatio
  * @param slidesPerView
  */
-export function calcSingleAspectRatio(aspectRatio: IAspectRatio, slidesPerView: number): string{
+export function getPaddingBySize(aspectRatio: IAspectRatio, slidesPerView: number): string {
     const calc = (100 * (aspectRatio.heightRatio / aspectRatio.widthRatio) / slidesPerView).toFixed(2);
 
     if(aspectRatio.addStaticHeight){
@@ -348,7 +321,178 @@ export function calcSingleAspectRatio(aspectRatio: IAspectRatio, slidesPerView: 
 }
 
 
-export function truncateToTwoDecimalPlaces(num) {
+/**
+ * 保留小數點兩位並四捨五入
+ * @param num
+ */
+export function decimal2Rounding(num: number): number {
     return Math.floor(num * 100) / 100;
+}
+
+
+/**
+ * 取得目標Index 使用 Page 計算
+ * @param page
+ * @param slidesPerGroup
+ * @param actualFirstIndex
+ */
+export function getSlideIndex(page: number, slidesPerGroup: number, actualFirstIndex: number): number {
+    return ((page - 1) * slidesPerGroup) + 1 + (actualFirstIndex - 1);
+}
+
+
+/**
+ * 取得最起始的位置
+ * @param isCenterMode
+ * @param view
+ * @param size
+ */
+export function getStartPosition(
+    isCenterMode: boolean,
+    view: {slidesPerView: number|'auto', slidesPerViewActual: number},
+    size: {containerWidth: number, currItemWidth: number},
+) {
+    if (isCenterMode) {
+        let firstStartPx = 0;
+        if(view.slidesPerView === 'auto'){
+            // containerWidth 計算中間位置
+            firstStartPx = (size.containerWidth / 2) - (size.currItemWidth / 2) ;
+        }
+
+        return firstStartPx + (size.currItemWidth * (view.slidesPerViewActual - 1) / 2);
+    }
+    return 0;
+}
+
+
+/**
+ * 取得下一頁的 Index
+ * @param isCenterMode
+ * @param activeActualIndex
+ * @param slidesPerGroup
+ * @param slidesPerViewActual
+ */
+export function getNextPageFirstIndex(isCenterMode: boolean, activeActualIndex: number, slidesPerGroup: number, slidesPerViewActual: number){
+    if (isCenterMode) {
+        return activeActualIndex + slidesPerGroup;
+    }
+    // Avoid trailing whitespace
+    return activeActualIndex + slidesPerViewActual;
+
+}
+
+/**
+ * 取得下一頁的 Page
+ * @param activePage
+ */
+export function getNextPage(activePage: number){
+    return activePage + 1;
+}
+
+export function getLastIndex(elementTotal: number){
+    return elementTotal - 1;
+}
+
+
+/**
+ * 檢查是否在範圍內
+ * @param slideIndex
+ * @param range
+ */
+export function checkActualIndexInRange(slideIndex: number, range: {minIndex: number, maxIndex: number}): boolean {
+    return slideIndex <= range.maxIndex && slideIndex >= range.minIndex;
+}
+
+/**
+ * 取得Loop模式下移動重設
+ * @param slideIndex
+ * @param range
+ */
+export function getLoopResetIndex(activeActualIndex: number, residue: number): number {
+    return activeActualIndex + residue;
+}
+
+
+/**
+ * 取得移動位置
+ * @param slideOffsetLeft
+ * @param startPosition
+ */
+export function getMoveDistance(slideOffsetLeft: number, startPosition: number): number{
+    return -slideOffsetLeft + startPosition;
+}
+
+
+/**
+ * 取得移動進度佔比
+ * @param movePx
+ * @param startPosition
+ * @param slideCurrWidth
+ */
+export function getMovePercentage(movePx: number, startPosition: number, slideCurrWidth: number): number{
+    const newMoveX = movePx - startPosition;
+    return decimal2Rounding(-newMoveX / slideCurrWidth);
+}
+
+
+/**
+ * 取得移動進度佔比
+ * @param movePx
+ * @param startPosition
+ */
+export function getMoveTranslatePx(movePx: number, startPosition: number): number{
+    return movePx - startPosition;
+}
+
+export function checkInRange(index, activeActualIndex: number, slideItemTotal: number): boolean{
+    return (activeActualIndex <= 0 && index === 0) ||
+        (activeActualIndex >= slideItemTotal && index === (slideItemTotal - 1)) ||
+        activeActualIndex === index;
+}
+
+/**
+ * 取得下一個 Index
+ * @param activeActual
+ * @param info
+ * @param setting
+ */
+export function getNextIndex(
+    activeActual: { isClone: boolean, matchIndex: number, actualIndex: number },
+    info: {
+        nextPage: number,
+        pageTotal: number,
+        slideTotal: number,
+        residue: number,
+        isOverflowPage: boolean,
+        isOverflowIndex: boolean,
+    },
+    setting: {
+        slidesPerGroup: number,
+        slidesPerViewActual: number,
+        isLoopMode: boolean,
+    },
+): Array<{index: number, isUseAnimation: boolean}> {
+
+    if(activeActual.isClone){
+        // 當移動到的位置 已經是 clone item
+        return [
+            {index: activeActual.matchIndex, isUseAnimation: false},
+            {index: activeActual.matchIndex + setting.slidesPerGroup, isUseAnimation: true},
+        ];
+
+    }else if (setting.isLoopMode && info.isOverflowPage && info.residue > 0) {
+        // 若為Loop(最後一頁移動在不整除的時候, 移動位置需要復歸到第一個)
+        return [
+            {index: activeActual.actualIndex, isUseAnimation: true},
+        ];
+
+    }else if (setting.slidesPerViewActual < info.slideTotal && info.isOverflowIndex === false) {
+        // 若在範圍內，正常移動到下一頁
+        return [
+            {index: activeActual.actualIndex + setting.slidesPerGroup, isUseAnimation: true}
+        ];
+    }
+
+    return [];
 }
 
