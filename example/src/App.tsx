@@ -146,14 +146,13 @@ function App() {
         <Box>
             <BearCarousel
                 ref={syncControlRefs}
-                // setCarousel={setCarousel}
-                data={bearSlideItemData3}
-                slidesPerView={3}
+                data={bearSlideItemData2}
+                slidesPerView="auto"
                 isCenteredSlides={true}
                 staticHeight="200px"
                 // spaceBetween={20}
-                isEnableNavButton={false}
-                isEnablePagination={false}
+                isEnableNavButton
+                isEnablePagination
                 moveTime={400}
                 // onElementMove={handleMove}
                 // onElementDone={handleDone}

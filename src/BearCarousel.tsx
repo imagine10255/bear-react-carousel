@@ -15,7 +15,7 @@ import {
     checkActualIndexInRange,
     getLoopResetIndex,
     getNextIndex,
-    getMoveDistance, getMovePercentage, getMoveTranslatePx, checkInRange
+    getMoveDistance, getMovePercentage, calcMoveTranslatePx, checkInRange
 } from './utils';
 import {ulid} from 'ulid';
 import log from './log';
@@ -247,7 +247,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     }
 
 
-    _isSyncControl = () => !!this.props.syncControlRefs;
+    _isSyncControl = () => !!this.props.syncControlRefs === false;
     checkActualIndexInRange = (slideIndex: number) => checkActualIndexInRange(slideIndex, {minIndex: this.info.actual.minIndex, maxIndex: this.info.actual.maxIndex});
 
     getNextPage = () => getNextPage(this.activePage);
@@ -312,6 +312,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
         }
     };
+
 
 
     /**
@@ -470,16 +471,18 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         const containerRef = this.containerRef?.current;
 
         if (containerRef && this.rwdMedia.isEnableMouseMove && this.slideItemRefs.current) {
-            const translateX = getMoveTranslatePx(moveX, this.touchStart.x);
+            // console.log('this.touchStart.x', this._isSyncControl(), moveX);
+            const translateX = calcMoveTranslatePx(this.touchStart.x, moveX);
+            const percentage = this._getMovePercentage(translateX);
+
 
             containerRef.style.transform = `translate(${translateX}px, 0px)`;
             containerRef.style.transitionDuration = '0ms';
 
             // 取得移動進度
-            const percentage = this._getMovePercentage(translateX);
-            if(this.props.onElementMove){
-                this.props.onElementMove(this.activeActualIndex, percentage);
-            }
+            // if(this.props.onElementMove){
+            //     this.props.onElementMove(this.activeActualIndex, percentage);
+            // }
 
             // 同步控制
             this._syncControlMove(percentage);
@@ -523,11 +526,24 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     };
 
 
+
+
     _syncControlMove = (percentage: number) => {
         if(this.props.syncControlRefs?.current){
             const syncControl = this.props.syncControlRefs.current;
             // 將進度比例換算成 movePx
             const moveX = syncControl._getPercentageToMovePx(percentage);
+            // console.log('percentage', percentage, moveX);
+            syncControl.touchStart = {
+                pageX: 0,
+                pageY: 0,
+                x: 0,
+                y: 0,
+                movePositionX: 0,
+                movePositionY: 0,
+                moveDirection: undefined,
+            };
+
             syncControl._elementMove(moveX);
         }
     };

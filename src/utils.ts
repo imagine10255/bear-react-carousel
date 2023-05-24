@@ -436,12 +436,12 @@ export function getMovePercentage(movePx: number, startPosition: number, slideCu
 
 
 /**
- * 取得移動進度佔比
- * @param movePx
- * @param startPosition
+ * 計算 Container 偏移位置
+ * @param startPositionInContent 開始的位置 (overflow content)
+ * @param movePositionInContainer 移動位置 (container)
  */
-export function getMoveTranslatePx(movePx: number, startPosition: number): number{
-    return movePx - startPosition;
+export function calcMoveTranslatePx(startPositionInContent: number, movePositionInContainer: number): number{
+    return movePositionInContainer - startPositionInContent;
 }
 
 export function checkInRange(index, activeActualIndex: number, slideItemTotal: number): boolean{
