@@ -533,11 +533,13 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             const syncControl = this.props.syncControlRefs.current;
             // 將進度比例換算成 movePx
             const moveX = syncControl._getPercentageToMovePx(percentage);
-            // console.log('percentage', percentage, moveX);
+            const x = syncControl.slideItemRefs.current[0].clientWidth;
+            
             syncControl.touchStart = {
                 pageX: 0,
                 pageY: 0,
-                x: 0,
+                x: this.rwdMedia.isEnableLoop ? -x : 0,
+                // x: this.rwdMedia.isEnableLoop ? 0 : 0,
                 y: 0,
                 movePositionX: 0,
                 movePositionY: 0,
@@ -568,7 +570,9 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             if(active){
                 const activeActualIndex = Number(active.dataset.actual);
                 this.goToActualIndex(activeActualIndex);
-                this._syncControlDone(activeActualIndex);
+
+                const activeSourceIndex = Number(active.dataset.source);
+                this._syncControlDone(activeSourceIndex);
             }
         }
 
