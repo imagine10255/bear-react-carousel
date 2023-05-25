@@ -27,6 +27,9 @@ const bearSlideItemData2: TBearSlideItemDataList = images.map(row => {
 
 function App() {
     const [value, setValue] = useState(0);
+    const [isEnable, setEnable] = useState<boolean>(false);
+
+
 
 
 
@@ -34,7 +37,7 @@ function App() {
     const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
         const active = value === row.id;
         return {
-            key: `${row.id}_${value === row.id}`,
+            key: `${row.id}_${active}`,
             children: <div className="h-100 d-flex"
                 onClick={() => setValue(row.id)} data-my={active}
                 style={{fontSize: '40px', width: '100%', height: '100%', backgroundColor: row.color, border: active ?'5px solid red': 'none'}}
@@ -50,8 +53,12 @@ function App() {
 
         value: {value}
 
+        <button type="button" onClick={() => setEnable(curr => !curr)}>
+            set data
+        </button>
+
         <BearCarousel
-            data={bearSlideItemData1}
+            data={isEnable ? bearSlideItemData1 : undefined}
             slidesPerView={3}
             // isCenteredSlides={true}
             staticHeight="300px"

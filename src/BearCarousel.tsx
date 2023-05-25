@@ -231,8 +231,10 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             this.info = info;
 
             // reset page position
-            const $this = this;
-            if(oldKey.length !== nextKey.length){
+            const nextLength = nextData?.length ?? 0;
+            const oldLength = data?.length ?? 0;
+            if(oldLength !== nextLength){
+                const $this = this;
                 setTimeout(() => {
                     $this.goToPage(1, false);
                 }, 0);
