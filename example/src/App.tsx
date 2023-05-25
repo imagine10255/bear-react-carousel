@@ -10,20 +10,6 @@ import 'bear-react-carousel/dist/index.css';
 
 
 
-// 輪播項目1
-const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
-    return {
-        key: row.id,
-        children: <BearSlideItem as="card">
-            <div className="h-100 d-flex"
-                style={{fontSize: '40px', backgroundColor: row.color}}
-            >
-                {/*<a href="https://carousel.bearests.com" rel="noreferrer" target="_blank">{row.id}</a>*/}
-            </div>
-        </BearSlideItem>
-    };
-});
-
 // 輪播項目2
 const bearSlideItemData2: TBearSlideItemDataList = images.map(row => {
     return {
@@ -40,12 +26,33 @@ const bearSlideItemData2: TBearSlideItemDataList = images.map(row => {
 
 
 function App() {
+    const [value, setValue] = useState(0);
+
+
+
+    // 輪播項目1
+    const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
+        return {
+            key: `${row.id}_${value === row.id}`,
+            children: <div className="h-100 d-flex"
+                    onClick={() => setValue(row.id)} data-my={value === row.id}
+                     style={{fontSize: '40px', width: '100%', height: '100%', backgroundColor: row.color}}
+                >
+                    {/*<a href="https://carousel.bearests.com" rel="noreferrer" target="_blank">{row.id}</a>*/}
+                </div>
+        };
+    });
+
+
 
     return <div>
+
+        value: {value}
+
         <BearCarousel
             data={bearSlideItemData1}
-            slidesPerView={1.5}
-            isCenteredSlides={true}
+            slidesPerView={3}
+            // isCenteredSlides={true}
             staticHeight="300px"
             spaceBetween={20}
             isEnableNavButton
@@ -54,17 +61,17 @@ function App() {
             isDebug
         />
 
-        <BearCarousel
-            data={bearSlideItemData2}
-            slidesPerView="auto"
-            isCenteredSlides={true}
-            staticHeight="300px"
-            spaceBetween={20}
-            isEnableNavButton
-            isEnablePagination
-            moveTime={400}
-            isDebug
-        />
+        {/*<BearCarousel*/}
+        {/*    data={bearSlideItemData2}*/}
+        {/*    slidesPerView="auto"*/}
+        {/*    isCenteredSlides={true}*/}
+        {/*    staticHeight="300px"*/}
+        {/*    spaceBetween={20}*/}
+        {/*    isEnableNavButton*/}
+        {/*    isEnablePagination*/}
+        {/*    moveTime={400}*/}
+        {/*    isDebug*/}
+        {/*/>*/}
     </div>
 
 
