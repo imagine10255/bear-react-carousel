@@ -73,16 +73,20 @@ export interface IInfo {
     total: number,
     firstIndex: number,
     lastIndex: number,
+    activeIndex: number,
   },
   // 0為實際一開始的位置(往前為負數), 結束值為最後結束位置
   actual: {
+    activeIndex: number,
     minIndex: number,
     maxIndex: number,
     firstIndex: number,
     lastIndex: number,
   },
-  // 總頁數
-  pageTotal: number,
+  page: {
+    activePage: number
+    pageTotal: number,
+  },
   residue: number,
   isVisiblePagination: boolean,
   isVisibleNavButton: boolean,

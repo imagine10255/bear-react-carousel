@@ -43,30 +43,62 @@ class SlideItemManager {
             sourceTotal, // 來源總數
             // 從0開始
             element: {
-                total: elementTotal,
+                activeIndex: 0,
                 firstIndex: 0,
-                lastIndex: elementTotal - 1
+                lastIndex: elementTotal - 1,
+                total: elementTotal,
             },
             // 0為實際一開始的位置(往前為負數), 結束值為最後結束位置
             actual: {
+                activeIndex: 0,
                 minIndex: actualIndex.min,
                 maxIndex: actualIndex.max,
                 firstIndex: Math.ceil(cloneBeforeTotal),
                 lastIndex: Math.ceil(sourceTotal + cloneAfterTotal - 1)
             },
+            page: {
+                activePage: 0,
+                pageTotal: fakeTotalPage,
+            },
             // 總頁數
-            pageTotal: fakeTotalPage,
             residue: elementTotal % slidesPerGroup,
             isVisiblePagination: isEnablePagination && formatElement.length > 0,
             isVisibleNavButton: isEnableNavButton && formatElement.length > 0
         };
     }
 
+    setActiveActual(index: number, page: number){
+        this.info.actual.activeIndex = index;
+        this.info.page.activePage = page;
+    }
 
     get info(): IInfo {
         return this._info;
     }
 
+
+    get nextPage(): number{
+        return this._info.page.activePage + 1;
+    }
+    get prevPage(): number{
+        return this._info.page.activePage - 1;
+    }
+
+    get actual() {
+        return this._info.actual;
+    }
+
+    get page() {
+        return this._info.page;
+    }
+
+    get formatElement() {
+        return this._info.formatElement;
+    }
+
+    get residue() {
+        return this._info.residue;
+    }
 
     //
     // setSetting(setting: IBreakpointSettingActual) {

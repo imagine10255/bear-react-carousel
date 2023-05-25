@@ -98,8 +98,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
     timer?: any;
     resetDurationTimer?: any;
-    activePage = 0;        // real page location
-    activeActualIndex = 0; // real item index location
+    // activePage = 0;        // real page location
+    // activeActualIndex = 0; // real item index location
 
     slideItem: SlideItemManager;
 
@@ -166,10 +166,12 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     componentDidMount() {
         if(this.props.isDebug && logEnable.componentDidMount) log.printInText('[componentDidMount]');
 
+        const {page} = this.slideItem.info;
+
         const containerRef = this.containerRef?.current;
         if (containerRef) {
             // Move to the correct position for the first time
-            if(this.slideItem.info.pageTotal > 0){
+            if(page.pageTotal > 0){
                 this.goToPage(this.props.defaultActivePage ?? 1, false);
             }
 
@@ -275,10 +277,10 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     _isSyncControl = () => !!this.props.syncControlRefs === false;
     checkActualIndexInRange = (slideIndex: number) => checkActualIndexInRange(slideIndex, {minIndex: this.slideItem.info.actual.minIndex, maxIndex: this.slideItem.info.actual.maxIndex});
 
-    getNextPage = () => getNextPage(this.activePage);
-    getNextPageFirstIndex = () => getNextPageFirstIndex(this.settingManager.setting.isCenteredSlides, this.activeActualIndex, this.settingManager.setting.slidesPerGroup, this.settingManager.setting.slidesPerViewActual);
+    // getNextPage = () => getNextPage(this.activePage);
+    getNextPageFirstIndex = () => getNextPageFirstIndex(this.settingManager.setting.isCenteredSlides, this.slideItem.actual.activeIndex, this.settingManager.setting.slidesPerGroup, this.settingManager.setting.slidesPerViewActual);
     getMaxIndex = () => getLastIndex(this.slideItem.info.formatElement.length);
-    _getLoopResetIndex = () => getLoopResetIndex(this.activeActualIndex, this.slideItem.info.residue);
+    _getLoopResetIndex = () => getLoopResetIndex(this.slideItem.actual.activeIndex, this.slideItem.info.residue);
 
 
 
@@ -557,12 +559,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             const x = syncControl.slideItemRefs.current[0].clientWidth;
             
             syncControl.position.touchStart({
-                pageX: 0,
-                pageY: 0,
                 x: this.settingManager.setting.isEnableLoop ? -x : 0,
-                // x: this.settingManager.setting.isEnableLoop ? 0 : 0,
-                y: 0,
-                moveDirection: undefined,
             });
 
             syncControl._elementMove(moveX);
@@ -604,7 +601,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
      * @param movePx
      */
     _getMovePercentage = (movePx: number) => {
-        const slideCurrWidth = this.slideItemRefs.current[this.activeActualIndex].clientWidth;
+        const {actual} = this.slideItem;
+        const slideCurrWidth = this.slideItemRefs.current[actual.activeIndex].clientWidth;
         const startPosition = this._getStartPosition(slideCurrWidth);
         return getMovePercentage(movePx, startPosition, slideCurrWidth);
     };
@@ -615,7 +613,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
      * @param translateX
      */
     _getPercentageToMovePx = (percentage: number) => {
-        const slideCurrWidth = this.slideItemRefs.current[this.activeActualIndex].clientWidth;
+        const {actual} = this.slideItem;
+        const slideCurrWidth = this.slideItemRefs.current[actual.activeIndex].clientWidth;
 
         const initStart = this._getStartPosition(slideCurrWidth);
         return initStart - (slideCurrWidth * percentage);
@@ -629,13 +628,14 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         const {autoPlayTime} = this.props;
         if(this.props.isDebug && logEnable.checkAndAutoPlay) log.printInText(`[_checkAndAutoPlay] autoPlayTime: ${autoPlayTime}`);
 
+        const {page} = this.slideItem;
 
         // Clear the last timer
         if (this.timer) {
             clearTimeout(this.timer);
         }
 
-        if (this.settingManager.setting.isEnableLoop && this.settingManager.setting.isEnableAutoPlay && autoPlayTime > 0 && this.slideItem.info.pageTotal > 1) {
+        if (this.settingManager.setting.isEnableLoop && this.settingManager.setting.isEnableAutoPlay && autoPlayTime > 0 && page.pageTotal > 1) {
             this.timer = setTimeout(() => {
                 this.toNext();
             }, autoPlayTime);
@@ -650,11 +650,12 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
    */
     _resetPosition = (): void => {
         if(this.props.isDebug && logEnable.resetPosition) log.printInText('[_resetPosition]');
+        const {actual} = this.slideItem;
 
         const formatElement = this.slideItem.info?.formatElement ? this.slideItem.info.formatElement : [];
 
-        if (formatElement[this.activeActualIndex].isClone) {
-            this.goToActualIndex(formatElement[this.activeActualIndex].matchIndex, false);
+        if (formatElement[actual.activeIndex].isClone) {
+            this.goToActualIndex(formatElement[actual.activeIndex].matchIndex, false);
         }
     };
 
@@ -720,18 +721,17 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
    */
     toNext = (): void => {
 
-        const nextPage = this.getNextPage();
-        const formatElement = this.slideItem.info?.formatElement ?? [];
-        const activeActual = formatElement[this.activeActualIndex];
+        const {nextPage, formatElement, page, actual, residue} = this.slideItem;
+        const activeActual = formatElement[actual.activeIndex];
 
         getNextIndex(
             activeActual,
             {
                 nextPage: nextPage,
-                residue: this.slideItem.info.residue,
-                pageTotal: this.slideItem.info.pageTotal,
+                residue: residue,
+                pageTotal: page.pageTotal,
                 slideTotal: this.slideItem.info.formatElement.length,
-                isOverflowPage: nextPage > this.slideItem.info.pageTotal,
+                isOverflowPage: nextPage > page.pageTotal,
                 isOverflowIndex: this.getNextPageFirstIndex() > this.getMaxIndex(),
             },
             {
@@ -749,20 +749,21 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
    * go to previous
    */
     toPrev = (): void => {
-        const formatElement = this.slideItem.info?.formatElement ? this.slideItem.info.formatElement : [];
+        const {nextPage, formatElement, page, actual, residue} = this.slideItem;
 
-        if (formatElement[this.activeActualIndex].isClone) {
+        const activeSlideItem = formatElement[actual.activeIndex];
+        if (activeSlideItem && activeSlideItem.isClone) {
 
-            this.goToActualIndex(formatElement[this.activeActualIndex].matchIndex, false);
-            this.goToPage(this.slideItem.info.pageTotal - 1);
+            this.goToActualIndex(activeSlideItem.matchIndex, false);
+            this.goToPage(page.pageTotal - 1);
 
-        } else if (this.settingManager.setting.isEnableLoop && this.activePage === 1 && this.slideItem.info.residue > 0) {
+        } else if (this.settingManager.setting.isEnableLoop && page.activePage === 1 && residue > 0) {
             // 檢查若為Loop(第一頁移動不整除的時候, 移動位置需要復歸到第一個)
-            this.goToActualIndex(this.activeActualIndex - this.slideItem.info.residue);
+            this.goToActualIndex(actual.activeIndex - this.slideItem.info.residue);
 
         } else if (this.settingManager.setting.slidesPerViewActual < this.slideItem.info.formatElement.length) {
             // Normal move to prev
-            this.goToActualIndex(this.activeActualIndex - this.settingManager.setting.slidesPerGroup);
+            this.goToActualIndex(actual.activeIndex - this.settingManager.setting.slidesPerGroup);
         }
     };
 
@@ -846,17 +847,17 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         // 1. 移動是否在範圍內
         if (this.checkActualIndexInRange(slideIndex)) {
             // 套用目前位置
-            this.activeActualIndex = slideIndex;
 
             // 計算目前正在第幾頁頁數
-            this.activePage = 1;
-            if (typeof this.slideItem.info.formatElement[this.activeActualIndex] !== 'undefined') {
-                this.activePage = this.slideItem.info.formatElement[this.activeActualIndex].inPage;
+            let activePage = 1;
+            if (typeof this.slideItem.info.formatElement[slideIndex] !== 'undefined') {
+                activePage = this.slideItem.info.formatElement[slideIndex].inPage;
             }
+            this.slideItem.setActiveActual(slideIndex, activePage);
 
 
             // 移動EL位置
-            const position = this._getMoveDistance(this.activeActualIndex);
+            const position = this._getMoveDistance(slideIndex);
             const containerRef = this.containerRef?.current;
             if (containerRef) {
                 const className = containerRef.classList;
@@ -882,12 +883,13 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
             // 提供是否為第一頁/最後一頁的判斷屬性
             const rootRef = this.rootRef?.current;
+            const {page} = this.slideItem;
             if (rootRef) {
-                if (this.activePage === 1) {
-                    rootRef.setAttribute('data-position', this.activePage === this.slideItem.info.pageTotal ? 'hidden' : 'first');
+                if (page.activePage === 1) {
+                    rootRef.setAttribute('data-position', page.activePage === page.pageTotal ? 'hidden' : 'first');
 
                 }else{
-                    rootRef.setAttribute('data-position', this.activePage === this.slideItem.info.pageTotal ? 'last': '');
+                    rootRef.setAttribute('data-position', page.activePage === page.pageTotal ? 'last': '');
                 }
             }
 
@@ -897,7 +899,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                 slideItemRefs
                     // .filter(row => isNotEmpty(row))
                     .forEach((row, index) => {
-                        if (index === this.activeActualIndex) {
+                        if (index === slideIndex) {
                             row.setAttribute('data-active', 'true');
                         } else if (row?.dataset.active) {
                             row.removeAttribute('data-active');
@@ -909,10 +911,10 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
             // 更改顯示在第幾頁的樣式 (父元件使用可判定樣式設定)
             const pageRefs = this.pageRefs?.current;
-            if (pageRefs && this.slideItem.info.isVisiblePagination && this.activePage > 0) {
+            if (pageRefs && this.slideItem.info.isVisiblePagination && page.activePage > 0) {
                 pageRefs.forEach((row, index) => {
                     if(row && row.setAttribute !== null) {
-                        if (this.activePage === index + 1) {
+                        if (page.activePage === index + 1) {
                             row.setAttribute('data-active', 'true');
                         } else if(row?.dataset.active) {
                             row.removeAttribute('data-active');
@@ -968,9 +970,10 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
    */
     _renderPagination = () => {
         const {data} = this.props;
+        const {page} = this.slideItem;
         const pageElement = [];
 
-        for (let i = 0; i < this.slideItem.info.pageTotal; i++) {
+        for (let i = 0; i < page.pageTotal; i++) {
             pageElement.push(
                 <div
                     ref={(el: any) => {
@@ -982,7 +985,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                     role='button'
                     onClick={() => this.goToPage(i + 1)}
                     className={elClassName.paginationButton}
-                    data-active={this.activePage === i + 1 ? true : undefined}
+                    data-active={page.activePage === i + 1 ? true : undefined}
                     data-page={i + 1}
                 >
                     <div className={elClassName.paginationContent}>
@@ -999,8 +1002,9 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
      */
     renderSlideItems(){
         const {isDebug} = this.props;
+        const {actual} = this.slideItem;
         return this.slideItem.info.formatElement.map((row, i) => {
-            const isActive = row.actualIndex === this.activeActualIndex;
+            const isActive = row.actualIndex === actual.activeIndex;
 
             return <SlideItem
                 key={`carousel_${i}`}
@@ -1025,11 +1029,13 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
      * Page number navigation buttons
      */
     renderPagination() {
+        const {page} = this.slideItem;
+
         return <div
             ref={this.pageGroupRef}
             className={elClassName.paginationGroup}
         >
-            {this.slideItem.info.pageTotal > 0 && this._renderPagination()}
+            {page.pageTotal > 0 && this._renderPagination()}
         </div>;
     }
 
