@@ -994,7 +994,9 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         return pageElement;
     };
 
-
+    /**
+     * render slide item
+     */
     renderSlideItems(){
         const {isDebug} = this.props;
         return this.slideItem.info.formatElement.map((row, i) => {
@@ -1019,7 +1021,17 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         });
     }
 
-
+    /**
+     * Page number navigation buttons
+     */
+    renderPagination() {
+        return <div
+            ref={this.pageGroupRef}
+            className={elClassName.paginationGroup}
+        >
+            {this.slideItem.info.pageTotal > 0 && this._renderPagination()}
+        </div>;
+    }
 
     /**
      * Item CSS style
@@ -1043,7 +1055,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
               `}</style>;
     }
 
-
     /**
      * Display current detection size (debug)
      */
@@ -1053,20 +1064,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             {windowSize}
         </div>
     }
-
-
-    /**
-     * Page number navigation buttons
-     */
-    renderPagination() {
-        return <div
-            ref={this.pageGroupRef}
-            className={elClassName.paginationGroup}
-        >
-            {this.slideItem.info.pageTotal > 0 && this._renderPagination()}
-        </div>;
-    }
-
 
 
     render() {
