@@ -44,10 +44,11 @@ export function getSizeByRange(innerWidth: number, breakpointSizes: number[]): n
  * @param setting
  * @param breakpoints
  */
-export function getMediaSetting(setting: IBreakpointSetting, breakpoints: IPropsBreakpoints): IBreakpointSettingActual {
+export function getMediaSetting(defaultBreakpoint: IBreakpointSetting, breakpoints: IPropsBreakpoints): IBreakpointSettingActual {
     const selectSize = getSizeByRange(window.innerWidth, Object.keys(breakpoints).map(Number));
+    let setting = defaultBreakpoint;
     if(selectSize > 0){
-        setting = Object.assign(setting, breakpoints[selectSize]);
+        setting = Object.assign(defaultBreakpoint, breakpoints[selectSize]);
     }
 
     // 若顯示項目大於來源項目, 則關閉Loop
@@ -90,16 +91,16 @@ export function getMediaInfo(props: IBearCarouselProps): {rwdMedia: IBreakpointS
 
     const rwdMedia = getMediaSetting({
         slidesPerView: typeof slidesPerView === 'number' && slidesPerView <= 0 ? 1: slidesPerView,
-        slidesPerGroup: slidesPerGroup,
-        aspectRatio: aspectRatio,
-        staticHeight: staticHeight,
-        spaceBetween: spaceBetween,
-        isCenteredSlides: isCenteredSlides,
-        isEnableNavButton: isEnableNavButton,
-        isEnablePagination: isEnablePagination,
-        isEnableMouseMove: isEnableMouseMove,
-        isEnableAutoPlay: isEnableAutoPlay,
-        isEnableLoop: isEnableLoop,
+        slidesPerGroup,
+        aspectRatio,
+        staticHeight,
+        spaceBetween,
+        isCenteredSlides,
+        isEnableNavButton,
+        isEnablePagination,
+        isEnableMouseMove,
+        isEnableAutoPlay,
+        isEnableLoop,
     }, breakpoints);
 
 
@@ -164,7 +165,7 @@ export function getMediaInfo(props: IBearCarouselProps): {rwdMedia: IBreakpointS
  * @param slidesPerGroup
  * @param isLoop
  */
-function initDataList(sourceList: Array<any> = [], slidesPerView: TSlidesPerView = 1, slidesPerGroup = 1, isLoop= false): InitData[] {
+export function initDataList(sourceList: Array<any> = [], slidesPerView: TSlidesPerView = 1, slidesPerGroup = 1, isLoop= false): InitData[] {
     const formatList = [];
     const isClone = isLoop && typeof window !== 'undefined';
     let index = 0;

@@ -200,7 +200,7 @@ function App() {
             // onElementMove={handleMove}
             // onElementDone={handleDone}
             breakpoints={{
-                576: {
+                992: {
                     slidesPerView: 2,
                     isCenteredSlides: false,
                 }

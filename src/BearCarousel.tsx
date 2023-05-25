@@ -28,8 +28,10 @@ import './styles.css';
 import {ArrowIcon, CloneIcon} from './Icon';
 import Position from './Position';
 import RWDMedia from './RWDMedia';
-import SlideSettingManager from './SlideSettingManager';
-import WindowSizeCalculator from './WindowSizeCalculator';
+import SlideSettingManager from './manager/SlideSettingManager';
+import WindowSizeCalculator from './manager/WindowSizeCalculator';
+import SlideItemManager from './manager/SlideItemManager';
+import SlideItem from './components/SlideItem';
 
 
 
@@ -98,39 +100,9 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     resetDurationTimer?: any;
     activePage = 0;        // real page location
     activeActualIndex = 0; // real item index location
-    info: IInfo = {
-        formatElement: [],
-        sourceTotal: 0, // Total number of sources
-        // 從0開始
-        element: {
-            total: 0,
-            firstIndex: 0,
-            lastIndex: 0
-        },
-        // 0 is the actual starting position (a negative number forward), and the ending value is the last ending position
-        actual: {
-            minIndex: 0,
-            maxIndex: 0,
-            firstIndex: 1,
-            lastIndex: 1
-        },
-        // 總頁數
-        pageTotal: 0,
-        residue: 1,
-        isVisiblePagination: false,
-        isVisibleNavButton: false
-    };
 
+    slideItem: SlideItemManager;
 
-
-    // touchStart: ITouchStart = {
-    //     pageX: 0,
-    //     pageY: 0,
-    //     x: 0,
-    //     y: 0,
-    //     movePositionX: 0,
-    //     movePositionY: 0
-    // };
     state = {
         windowSize: 0
     };
@@ -158,13 +130,32 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         this.pageRefs['current'] = [];
 
         this._device = checkIsMobile() ? EDevice.mobile : EDevice.desktop;
-        const {rwdMedia, info} = getMediaInfo(props);
+        // const {rwdMedia, info} = getMediaInfo(props);
 
-        this.sizeManager = new WindowSizeCalculator(props.breakpoints);
-        this.settingManager = new SlideSettingManager(rwdMedia);
+        const {
+            data,
+            slidesPerGroup,
+            aspectRatio,
+            staticHeight,
+            spaceBetween,
+            isCenteredSlides,
+            isEnableNavButton,
+            isEnablePagination,
+            isEnableMouseMove,
+            isEnableAutoPlay,
+            isEnableLoop,
+
+            breakpoints,
+        } = props;
+        const slidesPerView = typeof props.slidesPerView === 'number' && props.slidesPerView <= 0 ? 1: props.slidesPerView;
+        const defaultBreakpoint = {slidesPerView, slidesPerGroup, aspectRatio, staticHeight, spaceBetween, isCenteredSlides, isEnableNavButton, isEnablePagination, isEnableMouseMove, isEnableAutoPlay, isEnableLoop}
+
+        this.sizeManager = new WindowSizeCalculator(breakpoints);
+        this.settingManager = new SlideSettingManager(breakpoints, defaultBreakpoint);
+        this.slideItem = new SlideItemManager(this.settingManager, data);
         this.position = new Position();
 
-        this.info = info;
+        // this.info = info;
         this.state = {
             windowSize: getSizeByRange(window.innerWidth, Object.keys(props.breakpoints).map(Number))
         };
@@ -178,7 +169,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         const containerRef = this.containerRef?.current;
         if (containerRef) {
             // Move to the correct position for the first time
-            if(this.info.pageTotal > 0){
+            if(this.slideItem.info.pageTotal > 0){
                 this.goToPage(this.props.defaultActivePage ?? 1, false);
             }
 
@@ -243,9 +234,28 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         ) {
             if(this.props.isDebug && logEnable.shouldComponentUpdate) log.printInText('[shouldComponentUpdate] true');
 
-            const {rwdMedia, info} = getMediaInfo(nextProps);
-            this.settingManager.setSetting(rwdMedia);
-            this.info = info;
+            const {
+                data,
+                slidesPerGroup,
+                aspectRatio,
+                staticHeight,
+                spaceBetween,
+                isCenteredSlides,
+                isEnableNavButton,
+                isEnablePagination,
+                isEnableMouseMove,
+                isEnableAutoPlay,
+                isEnableLoop,
+
+                breakpoints,
+            } = nextProps;
+
+            // const {rwdMedia, info} = getMediaInfo(nextProps);
+            const slidesPerView = typeof nextProps.slidesPerView === 'number' && nextProps.slidesPerView <= 0 ? 1: nextProps.slidesPerView;
+            const defaultBreakpoint = {slidesPerView, slidesPerGroup, aspectRatio, staticHeight, spaceBetween, isCenteredSlides, isEnableNavButton, isEnablePagination, isEnableMouseMove, isEnableAutoPlay, isEnableLoop}
+
+            this.settingManager.init(breakpoints, defaultBreakpoint);
+            this.slideItem.init(data);
 
             // reset page position
             const $this = this;
@@ -263,12 +273,12 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
 
     _isSyncControl = () => !!this.props.syncControlRefs === false;
-    checkActualIndexInRange = (slideIndex: number) => checkActualIndexInRange(slideIndex, {minIndex: this.info.actual.minIndex, maxIndex: this.info.actual.maxIndex});
+    checkActualIndexInRange = (slideIndex: number) => checkActualIndexInRange(slideIndex, {minIndex: this.slideItem.info.actual.minIndex, maxIndex: this.slideItem.info.actual.maxIndex});
 
     getNextPage = () => getNextPage(this.activePage);
     getNextPageFirstIndex = () => getNextPageFirstIndex(this.settingManager.setting.isCenteredSlides, this.activeActualIndex, this.settingManager.setting.slidesPerGroup, this.settingManager.setting.slidesPerViewActual);
-    getMaxIndex = () => getLastIndex(this.info.formatElement.length);
-    _getLoopResetIndex = () => getLoopResetIndex(this.activeActualIndex, this.info.residue);
+    getMaxIndex = () => getLastIndex(this.slideItem.info.formatElement.length);
+    _getLoopResetIndex = () => getLoopResetIndex(this.activeActualIndex, this.slideItem.info.residue);
 
 
 
@@ -516,7 +526,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
             // 更改顯示在第幾頁的樣式 (父元件使用可判定樣式設定)
             // const pageRefs = this.pageRefs?.current;
-            // if (pageRefs && this.info.isVisiblePagination && this.activePage > 0) {
+            // if (pageRefs && this.slideItem.info.isVisiblePagination && this.activePage > 0) {
             //     const activeActualIndex = Math.round(percentage);
             //     pageRefs.forEach((row, index) => {
             //         if(row && row.setAttribute !== null) {
@@ -625,7 +635,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             clearTimeout(this.timer);
         }
 
-        if (this.settingManager.setting.isEnableLoop && this.settingManager.setting.isEnableAutoPlay && autoPlayTime > 0 && this.info.pageTotal > 1) {
+        if (this.settingManager.setting.isEnableLoop && this.settingManager.setting.isEnableAutoPlay && autoPlayTime > 0 && this.slideItem.info.pageTotal > 1) {
             this.timer = setTimeout(() => {
                 this.toNext();
             }, autoPlayTime);
@@ -641,7 +651,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     _resetPosition = (): void => {
         if(this.props.isDebug && logEnable.resetPosition) log.printInText('[_resetPosition]');
 
-        const formatElement = this.info?.formatElement ? this.info.formatElement : [];
+        const formatElement = this.slideItem.info?.formatElement ? this.slideItem.info.formatElement : [];
 
         if (formatElement[this.activeActualIndex].isClone) {
             this.goToActualIndex(formatElement[this.activeActualIndex].matchIndex, false);
@@ -711,17 +721,17 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     toNext = (): void => {
 
         const nextPage = this.getNextPage();
-        const formatElement = this.info?.formatElement ?? [];
+        const formatElement = this.slideItem.info?.formatElement ?? [];
         const activeActual = formatElement[this.activeActualIndex];
 
         getNextIndex(
             activeActual,
             {
                 nextPage: nextPage,
-                residue: this.info.residue,
-                pageTotal: this.info.pageTotal,
-                slideTotal: this.info.formatElement.length,
-                isOverflowPage: nextPage > this.info.pageTotal,
+                residue: this.slideItem.info.residue,
+                pageTotal: this.slideItem.info.pageTotal,
+                slideTotal: this.slideItem.info.formatElement.length,
+                isOverflowPage: nextPage > this.slideItem.info.pageTotal,
                 isOverflowIndex: this.getNextPageFirstIndex() > this.getMaxIndex(),
             },
             {
@@ -739,18 +749,18 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
    * go to previous
    */
     toPrev = (): void => {
-        const formatElement = this.info?.formatElement ? this.info.formatElement : [];
+        const formatElement = this.slideItem.info?.formatElement ? this.slideItem.info.formatElement : [];
 
         if (formatElement[this.activeActualIndex].isClone) {
 
             this.goToActualIndex(formatElement[this.activeActualIndex].matchIndex, false);
-            this.goToPage(this.info.pageTotal - 1);
+            this.goToPage(this.slideItem.info.pageTotal - 1);
 
-        } else if (this.settingManager.setting.isEnableLoop && this.activePage === 1 && this.info.residue > 0) {
+        } else if (this.settingManager.setting.isEnableLoop && this.activePage === 1 && this.slideItem.info.residue > 0) {
             // 檢查若為Loop(第一頁移動不整除的時候, 移動位置需要復歸到第一個)
-            this.goToActualIndex(this.activeActualIndex - this.info.residue);
+            this.goToActualIndex(this.activeActualIndex - this.slideItem.info.residue);
 
-        } else if (this.settingManager.setting.slidesPerViewActual < this.info.formatElement.length) {
+        } else if (this.settingManager.setting.slidesPerViewActual < this.slideItem.info.formatElement.length) {
             // Normal move to prev
             this.goToActualIndex(this.activeActualIndex - this.settingManager.setting.slidesPerGroup);
         }
@@ -763,7 +773,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
    * page1 -> (1-1) * 2) + 1 + (firstIndex -1) = 1
    */
     goToPage = (page: number, isUseAnimation = true): void => {
-        const slideIndex = getSlideIndex(page, this.settingManager.setting.slidesPerGroup, this.info.actual.firstIndex);
+        const slideIndex = getSlideIndex(page, this.settingManager.setting.slidesPerGroup, this.slideItem.info.actual.firstIndex);
         this.goToActualIndex(slideIndex, isUseAnimation);
     };
 
@@ -840,8 +850,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
             // 計算目前正在第幾頁頁數
             this.activePage = 1;
-            if (typeof this.info.formatElement[this.activeActualIndex] !== 'undefined') {
-                this.activePage = this.info.formatElement[this.activeActualIndex].inPage;
+            if (typeof this.slideItem.info.formatElement[this.activeActualIndex] !== 'undefined') {
+                this.activePage = this.slideItem.info.formatElement[this.activeActualIndex].inPage;
             }
 
 
@@ -874,10 +884,10 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             const rootRef = this.rootRef?.current;
             if (rootRef) {
                 if (this.activePage === 1) {
-                    rootRef.setAttribute('data-position', this.activePage === this.info.pageTotal ? 'hidden' : 'first');
+                    rootRef.setAttribute('data-position', this.activePage === this.slideItem.info.pageTotal ? 'hidden' : 'first');
 
                 }else{
-                    rootRef.setAttribute('data-position', this.activePage === this.info.pageTotal ? 'last': '');
+                    rootRef.setAttribute('data-position', this.activePage === this.slideItem.info.pageTotal ? 'last': '');
                 }
             }
 
@@ -899,7 +909,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
             // 更改顯示在第幾頁的樣式 (父元件使用可判定樣式設定)
             const pageRefs = this.pageRefs?.current;
-            if (pageRefs && this.info.isVisiblePagination && this.activePage > 0) {
+            if (pageRefs && this.slideItem.info.isVisiblePagination && this.activePage > 0) {
                 pageRefs.forEach((row, index) => {
                     if(row && row.setAttribute !== null) {
                         if (this.activePage === index + 1) {
@@ -931,7 +941,9 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         const {renderNavButton} = this.props;
 
         if (typeof renderNavButton !== 'undefined') {
-            return renderNavButton(() => this.toPrev(), () => this.toNext());
+            return <>
+                {renderNavButton(() => this.toPrev(), () => this.toNext())}
+            </>;
         }
 
         return (<div
@@ -958,7 +970,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         const {data} = this.props;
         const pageElement = [];
 
-        for (let i = 0; i < this.info.pageTotal; i++) {
+        for (let i = 0; i < this.slideItem.info.pageTotal; i++) {
             pageElement.push(
                 <div
                     ref={(el: any) => {
@@ -983,11 +995,36 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     };
 
 
-    render() {
-        const {style, className, isDebug} = this.props;
-        const {windowSize} = this.state;
+    renderSlideItems(){
+        const {isDebug} = this.props;
+        return this.slideItem.info.formatElement.map((row, i) => {
+            const isActive = row.actualIndex === this.activeActualIndex;
+
+            return <SlideItem
+                key={`carousel_${i}`}
+                ref={(el: HTMLDivElement) => {
+                    this.slideItemRefs.current[i] = el;
+                    return false;
+                }}
+                element={row.element}
+                actualIndex={row.actualIndex}
+                matchIndex={row.matchIndex}
+                inPage={row.inPage}
+                sourceIndex={row.sourceIndex}
+                isActive={isActive}
+                isClone={row.isClone}
+                isDebug={isDebug}
+                index={i}
+            />;
+        });
+    }
 
 
+
+    /**
+     * Item CSS style
+     */
+    renderStyle() {
         // Generate the desired style (note the trailing ;)
         const rootStyle: string = [
             `padding-top: ${this.settingManager.setting.aspectRatio && this.settingManager.setting.slidesPerView !== 'auto' ? getPaddingBySize(this.settingManager.setting.aspectRatio, this.settingManager.setting.slidesPerView): '0'};`,
@@ -999,7 +1036,41 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             `padding-right: ${this.settingManager.setting.spaceBetween / 2}px;`,
         ].join('');
 
+        {/*  */}
+        return <style scoped>{`
+#${this._carouselId}{${rootStyle}}
+#${this._carouselId} .${elClassName.slideItem}{${slideItemStyle}}
+              `}</style>;
+    }
 
+
+    /**
+     * Display current detection size (debug)
+     */
+    renderWindowSize() {
+        const {windowSize} = this.state;
+        return <div className={elClassName.testWindowSize}>
+            {windowSize}
+        </div>
+    }
+
+
+    /**
+     * Page number navigation buttons
+     */
+    renderPagination() {
+        return <div
+            ref={this.pageGroupRef}
+            className={elClassName.paginationGroup}
+        >
+            {this.slideItem.info.pageTotal > 0 && this._renderPagination()}
+        </div>;
+    }
+
+
+
+    render() {
+        const {style, className, isDebug} = this.props;
         return (
             <BearCarouselProvider
                 slidesPerView={this.settingManager.setting.slidesPerView}
@@ -1012,81 +1083,25 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                     data-gpu-render={this._device === EDevice.desktop ? 'true': undefined}
                     data-per-view-auto={this.settingManager.setting.slidesPerView === 'auto'}
                     data-mouse-move={this.settingManager.setting.isEnableMouseMove}
-                    data-actual={`${this.info.actual.minIndex},${this.info.actual.firstIndex}-${this.info.actual.lastIndex},${this.info.actual.maxIndex}`}
+                    data-actual={`${this.slideItem.info.actual.minIndex},${this.slideItem.info.actual.firstIndex}-${this.slideItem.info.actual.lastIndex},${this.slideItem.info.actual.maxIndex}`}
                     data-debug={isDebug ? 'true':undefined}
                     ref={this.rootRef}
                 >
+                    {this.renderStyle()}
 
-                    {/* Item CSS style */}
-                    <style scoped>{`
-#${this._carouselId}{${rootStyle}}
-#${this._carouselId} .${elClassName.slideItem}{${slideItemStyle}}
-              `}</style>
-
-                    {/* Left and right navigation buttons */}
-                    <>
-                        {this.info.isVisibleNavButton && this._renderNavButton()}
-                    </>
+                    {this.slideItem.info.isVisibleNavButton && this._renderNavButton()}
 
                     <div className={elClassName.content}>
-                        <div
-                            ref={this.containerRef}
-                            className={elClassName.container}
-                        >
-                            {this.info.formatElement.map((row, i) => (
-                                <div
-                                    key={`carousel_${i}`}
-                                    className={elClassName.slideItem}
-                                    ref={(el: any) => {
-                                        // @ts-ignore
-                                        this.slideItemRefs.current[i] = el;
-                                        return false;
-                                    }}
-                                    data-active={
-                                        row.actualIndex === this.activeActualIndex ? true : undefined
-                                    }
-                                    data-actual={row.actualIndex}
-                                    data-match={row.isClone ? row.matchIndex : undefined}
-                                    data-page={row.inPage}
-                                    data-source={row.sourceIndex}
-                                    data-is-clone={row.isClone ? true : undefined}
-                                >
-                                    {row.element}
-
-                                    <div className={elClassName.testNumber}>
-                                        {isDebug && row.sourceIndex}
-                                        {isDebug && row.isClone && (
-                                            <div className={elClassName.cloneIconGroup}>
-                                                <div className={elClassName.cloneIcon}>
-                                                    <CloneIcon/>
-                                                </div>
-                                                {i}
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
-                            ))}
+                        <div ref={this.containerRef} className={elClassName.container}>
+                            {this.renderSlideItems()}
                         </div>
                     </div>
 
-                    {/* Page number navigation buttons */}
-                    {this.info.isVisiblePagination && (
-                        <div
-                            ref={this.pageGroupRef}
-                            className={elClassName.paginationGroup}
-                        >
-                            {this.info.pageTotal > 0 && this._renderPagination()}
-                        </div>
-                    )}
+                    {this.slideItem.info.isVisiblePagination && this.renderPagination()}
 
-                    {/* Display current detection size (debug) */}
-                    {isDebug && (<div className={elClassName.testWindowSize}>
-                        {windowSize}
-                    </div>)}
-
+                    {isDebug && this.renderWindowSize()}
                 </div>
             </BearCarouselProvider>
-
 
         );
     }
