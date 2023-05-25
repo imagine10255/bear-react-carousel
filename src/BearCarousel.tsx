@@ -33,6 +33,7 @@ import WindowSizeCalculator from './manager/WindowSizeCalculator';
 import SlideItemManager from './manager/SlideItemManager';
 import SlideItem from './components/SlideItem';
 import ElManager from './manager/ElManager';
+import PositionManager from './Position';
 
 
 
@@ -111,7 +112,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
     settingManager: SlideSettingManager;
     sizeManager: WindowSizeCalculator;
-    position: Position;
+    positionManager: PositionManager;
 
     // Ref
     // rootRef: React.RefObject<HTMLDivElement> = React.createRef();
@@ -156,7 +157,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         this.sizeManager = new WindowSizeCalculator(breakpoints);
         this.settingManager = new SlideSettingManager(breakpoints, defaultBreakpoint);
         this.slideItem = new SlideItemManager(this.settingManager, data);
-        this.position = new Position();
+        this.positionManager = new PositionManager();
         this.elManager = new ElManager();
 
         // this.info = info;
@@ -327,12 +328,11 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                 const movePosition = getTranslateParams(containerEl);
 
                 // 紀錄位置
-                this.position.touchStart({
+                this.positionManager.touchStart({
                     pageX: event.targetTouches[0].pageX,
                     pageY: event.targetTouches[0].pageY,
                     x: event.targetTouches[0].pageX - movePosition.x,
                     y: event.targetTouches[0].pageY - containerEl.offsetTop,
-                    moveDirection: undefined,
                 });
 
                 containerEl.addEventListener('touchmove', this._onMobileTouchMove, false);
@@ -355,19 +355,20 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         const endX = event.targetTouches[0].clientX;
         const endY = event.targetTouches[0].pageY;
 
+        const {startPosition} = this.positionManager;
 
-        const direction = getSlideDirection(this.position.startPosition.pageX, this.position.startPosition.pageY, endX, endY);
-        if(typeof this.position.startPosition.moveDirection === 'undefined'){
-            this.position.startPosition.moveDirection = direction;
+        const direction = getSlideDirection(startPosition.pageX, startPosition.pageY, endX, endY);
+        if(typeof startPosition.moveDirection === 'undefined'){
+            startPosition.moveDirection = direction;
         }
-        if(this.props.isDebug && logEnable.onMobileTouchMove) log.printInText(`[_onMobileTouchMove] ${this.position.startPosition.moveDirection}`);
+        if(this.props.isDebug && logEnable.onMobileTouchMove) log.printInText(`[_onMobileTouchMove] ${startPosition.moveDirection}`);
 
 
         // 判斷一開始的移動方向
-        if(this.position.startPosition.moveDirection === EDirection.vertical){
+        if(this.positionManager.startPosition.moveDirection === EDirection.vertical){
             // 垂直移動
 
-        }else if(this.position.startPosition.moveDirection === EDirection.horizontal){
+        }else if(startPosition.moveDirection === EDirection.horizontal){
             // 水平移動
             const {containerEl} = this.elManager;
             if(containerEl){
@@ -408,10 +409,11 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         this._resetPosition();
 
         const {containerEl} = this.elManager;
+        const {startPosition} = this.positionManager;
         if (containerEl) {
             const movePosition = getTranslateParams(containerEl);
 
-            this.position.touchStart({
+            this.positionManager.touchStart({
                 pageX: event.clientX,
                 pageY: event.clientY,
                 x: event.clientX - movePosition.x,
@@ -421,7 +423,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
             if(this.resetDurationTimer) clearTimeout(this.resetDurationTimer);
 
-            this._elementMove(this.position.startPosition.pageX);
+            this._elementMove(startPosition.pageX);
 
             const {rootEl} = this.elManager;
             if(rootEl){
@@ -496,10 +498,11 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
 
         const {containerEl, slideItemEls} = this.elManager;
+        const {startPosition} = this.positionManager;
 
         if (containerEl && this.settingManager.setting.isEnableMouseMove && slideItemEls) {
             // console.log('this.position.startPosition.x', this._isSyncControl(), moveX);
-            const translateX = calcMoveTranslatePx(this.position.startPosition.x, moveX);
+            const translateX = calcMoveTranslatePx(startPosition.x, moveX);
             const percentage = this._getMovePercentage(translateX);
 
 
@@ -563,7 +566,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             const {slideItemEls} = syncControl.elManager;
             const x = slideItemEls[0].clientWidth;
             
-            syncControl.position.touchStart({
+            syncControl.positionManager.touchStart({
                 x: this.settingManager.setting.isEnableLoop ? -x : 0,
             });
 

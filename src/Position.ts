@@ -8,7 +8,7 @@ const defaultPosition: ITouchStart = {
     y: 0,
 };
 
-class Position {
+class PositionManager {
     _startPosition = defaultPosition;
     translateX: 0;
     percentage: 0;
@@ -23,4 +23,4 @@ class Position {
 }
 
 
-export default Position;
+export default PositionManager;

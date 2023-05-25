@@ -127,11 +127,8 @@ class SlideItemManager {
      */
     slideToPage(page: number, isUseAnimation = true){
         const slideIndex = getSlideIndex(page, this._slideSettingManager.setting.slidesPerGroup, this.actual.firstIndex);
-        console.log('slideIndex', slideIndex);
         this.slideToActualIndex(slideIndex, isUseAnimation);
     }
-
-
 
     //
     // setSetting(setting: IBreakpointSettingActual) {
