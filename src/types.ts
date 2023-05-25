@@ -52,8 +52,6 @@ export interface ITouchStart {
   pageY: number,
   x: number,
   y: number,
-  movePositionX: number,
-  movePositionY: number,
   moveDirection?: EDirection,
 }
 
