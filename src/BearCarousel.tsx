@@ -2,7 +2,7 @@ import * as React from 'react';
 import {
     checkIsMobile,
     getPaddingBySize,
-    getMediaInfo,
+    // getMediaInfo,
     getSizeByRange,
     getSlideDirection,
     getTranslateParams,
@@ -172,7 +172,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         if (containerRef) {
             // Move to the correct position for the first time
             if(page.pageTotal > 0){
-                this.goToPage(this.props.defaultActivePage ?? 1, false);
+                this.slideItem.slideToPage(this.props.defaultActivePage ?? 1, false);
             }
 
             // End of moving animation (Need to return to the position, to be fake)
@@ -262,7 +262,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             // reset page position
             const $this = this;
             setTimeout(() => {
-                $this.goToPage(1, false);
+                $this.slideItem.slideToPage(1, false);
             }, 0);
 
             this._handleSyncCarousel();
@@ -665,7 +665,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             if(this.props.isDebug && logEnable.handleResizeDiff) log.printInText(`[_handleResize] diff windowSize: ${windowSize} -> ${this.sizeManager.size}px`);
             this.setState({windowSize: this.sizeManager.size});
         }else{
-            this.goToPage(1, false);
+            this.slideItem.slideToPage(1, false);
         }
     }
 
@@ -687,7 +687,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                 windowSize: selectSize
             });
         }else{
-            this.goToPage(1, false);
+            this.slideItem.slideToPage(1, false);
         }
     };
 
@@ -708,8 +708,9 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
         }else{
             if(this.props.isDebug && logEnable.handleResize) log.printInText('[_onOrientationchange] goToPage 1');
+            const $slideItem = this.slideItem;
             setTimeout(() => {
-                this.goToPage(1, false);
+                $slideItem.slideToPage(1, false);
             }, 400);
 
         }
@@ -755,7 +756,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         if (activeSlideItem && activeSlideItem.isClone) {
 
             this.goToActualIndex(activeSlideItem.matchIndex, false);
-            this.goToPage(page.pageTotal - 1);
+            this.slideItem.slideToPage(page.pageTotal - 1);
 
         } else if (this.settingManager.setting.isEnableLoop && page.activePage === 1 && residue > 0) {
             // 檢查若為Loop(第一頁移動不整除的時候, 移動位置需要復歸到第一個)
@@ -773,17 +774,17 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
    * ex: slideView: 2, slideGroup: 2, total: 4
    * page1 -> (1-1) * 2) + 1 + (firstIndex -1) = 1
    */
-    goToPage = (page: number, isUseAnimation = true): void => {
-        const slideIndex = getSlideIndex(page, this.settingManager.setting.slidesPerGroup, this.slideItem.info.actual.firstIndex);
-        this.goToActualIndex(slideIndex, isUseAnimation);
-    };
+    // goToPage = (page: number, isUseAnimation = true): void => {
+    //     const slideIndex = getSlideIndex(page, this.settingManager.setting.slidesPerGroup, this.slideItem.info.actual.firstIndex);
+    //     this.goToActualIndex(slideIndex, isUseAnimation);
+    // };
+
+
 
     /**
    * Sync Carousel state
    */
     _handleSyncCarousel = () => {
-
-
         // if(this.props.setCarousel){
         //     this.props.setCarousel({
         //         goToPage: this.goToPage,
@@ -983,7 +984,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                     }}
                     key={`page_${i}`}
                     role='button'
-                    onClick={() => this.goToPage(i + 1)}
+                    onClick={() => this.slideItem.slideToPage(i + 1)}
                     className={elClassName.paginationButton}
                     data-active={page.activePage === i + 1 ? true : undefined}
                     data-page={i + 1}

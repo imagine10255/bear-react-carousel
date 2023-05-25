@@ -1,5 +1,5 @@
 import {IBreakpointSetting, IBreakpointSettingActual, IPropsBreakpoints} from '../types';
-import {getMediaInfo, getMediaSetting} from '../utils';
+import {getMediaSetting} from '../utils';
 
 const defaultSetting: IBreakpointSetting = {
     slidesPerView: 1,

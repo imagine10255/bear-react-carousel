@@ -142,41 +142,41 @@ function App() {
 
 
 
-        {/*測試同步*/}
-        <Box>
-            <BearCarousel
-                ref={syncControlRefs}
-                data={bearSlideItemData2}
-                slidesPerView="auto"
-                isCenteredSlides={true}
-                staticHeight="200px"
-                // spaceBetween={20}
-                isEnableNavButton
-                isEnablePagination
-                moveTime={400}
-                // onElementMove={handleMove}
-                // onElementDone={handleDone}
-                isDebug
-            />
-        </Box>
+        {/*/!*測試同步*!/*/}
+        {/*<Box>*/}
+        {/*    <BearCarousel*/}
+        {/*        ref={syncControlRefs}*/}
+        {/*        data={bearSlideItemData2}*/}
+        {/*        slidesPerView="auto"*/}
+        {/*        isCenteredSlides={true}*/}
+        {/*        staticHeight="200px"*/}
+        {/*        // spaceBetween={20}*/}
+        {/*        isEnableNavButton*/}
+        {/*        isEnablePagination*/}
+        {/*        moveTime={400}*/}
+        {/*        // onElementMove={handleMove}*/}
+        {/*        // onElementDone={handleDone}*/}
+        {/*        isDebug*/}
+        {/*    />*/}
+        {/*</Box>*/}
 
 
-        <Box2>
-        <BearCarousel
-            syncControlRefs={syncControlRefs}
-            data={bearSlideItemData2}
-            slidesPerView="auto"
-            isCenteredSlides={true}
-            staticHeight="200px"
-            // spaceBetween={20}
-            isEnableNavButton
-            isEnablePagination
-            moveTime={400}
-            // onElementMove={handleMove}
-            // onElementDone={handleDone}
-            isDebug
-        />
-        </Box2>
+        {/*<Box2>*/}
+        {/*<BearCarousel*/}
+        {/*    syncControlRefs={syncControlRefs}*/}
+        {/*    data={bearSlideItemData2}*/}
+        {/*    slidesPerView="auto"*/}
+        {/*    isCenteredSlides={true}*/}
+        {/*    staticHeight="200px"*/}
+        {/*    // spaceBetween={20}*/}
+        {/*    isEnableNavButton*/}
+        {/*    isEnablePagination*/}
+        {/*    moveTime={400}*/}
+        {/*    // onElementMove={handleMove}*/}
+        {/*    // onElementDone={handleDone}*/}
+        {/*    isDebug*/}
+        {/*/>*/}
+        {/*</Box2>*/}
 
 
 
@@ -199,12 +199,12 @@ function App() {
             moveTime={400}
             // onElementMove={handleMove}
             // onElementDone={handleDone}
-            breakpoints={{
-                992: {
-                    slidesPerView: 2,
-                    isCenteredSlides: false,
-                }
-            }}
+            // breakpoints={{
+            //     992: {
+            //         slidesPerView: 2,
+            //         isCenteredSlides: false,
+            //     }
+            // }}
 
             isDebug
         />

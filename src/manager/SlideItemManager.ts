@@ -1,5 +1,5 @@
-import {IBreakpointSettingActual, IInfo, TBearSlideItemDataList} from '../types';
-import {getMediaInfo, initDataList} from '../utils';
+import {IInfo, TBearSlideItemDataList} from '../types';
+import {checkActualIndexInRange, getSlideIndex, initDataList} from '../utils';
 import SlideSettingManager from './SlideSettingManager';
 
 class SlideItemManager {
@@ -10,6 +10,45 @@ class SlideItemManager {
         this._slideSettingManager = slideSettingManager;
         this.init(data);
     }
+
+    get info(): IInfo {
+        return this._info;
+    }
+
+    get nextPage(): number{
+        return this._info.page.activePage + 1;
+    }
+
+    get prevPage(): number{
+        return this._info.page.activePage - 1;
+    }
+
+    get actual() {
+        return this._info.actual;
+    }
+
+    get page() {
+        return this._info.page;
+    }
+
+    get formatElement() {
+        return this._info.formatElement;
+    }
+
+    get residue() {
+        return this._info.residue;
+    }
+
+    /**
+     * 確認是否超出範圍
+     * @param index
+     */
+    checkActualIndexInRange(index: number) {
+        const {minIndex, maxIndex} = this.actual;
+        console.log('index', index);
+        return checkActualIndexInRange(index, {minIndex, maxIndex});
+    }
+
 
     init(slideData: TBearSlideItemDataList = []) {
         const {slidesPerView, slidesPerViewActual, slidesPerGroup, isCenteredSlides, isEnablePagination, isEnableNavButton, isEnableLoop} = this._slideSettingManager.setting;
@@ -72,33 +111,27 @@ class SlideItemManager {
         this.info.page.activePage = page;
     }
 
-    get info(): IInfo {
-        return this._info;
+
+    slideToActualIndex(index: number, isUseAnimation = true){
+        if (this.checkActualIndexInRange(index)) {
+            this.setActiveActual(index, this.formatElement[index]?.inPage ?? 1);
+
+
+        }
+    }
+
+    /**
+     * 移動到指定頁面
+     * @param page
+     * @param isUseAnimation 是否開啟動畫
+     */
+    slideToPage(page: number, isUseAnimation = true){
+        const slideIndex = getSlideIndex(page, this._slideSettingManager.setting.slidesPerGroup, this.actual.firstIndex);
+        console.log('slideIndex', slideIndex);
+        this.slideToActualIndex(slideIndex, isUseAnimation);
     }
 
 
-    get nextPage(): number{
-        return this._info.page.activePage + 1;
-    }
-    get prevPage(): number{
-        return this._info.page.activePage - 1;
-    }
-
-    get actual() {
-        return this._info.actual;
-    }
-
-    get page() {
-        return this._info.page;
-    }
-
-    get formatElement() {
-        return this._info.formatElement;
-    }
-
-    get residue() {
-        return this._info.residue;
-    }
 
     //
     // setSetting(setting: IBreakpointSettingActual) {

@@ -133,19 +133,24 @@ export function getMediaInfo(props: IBearCarouselProps): {rwdMedia: IBreakpointS
         sourceTotal, // 來源總數
         // 從0開始
         element: {
+            activeIndex: 1,
             total: elementTotal,
             firstIndex: 0,
             lastIndex: elementTotal - 1
         },
         // 0為實際一開始的位置(往前為負數), 結束值為最後結束位置
         actual: {
+            activeIndex: 1,
             minIndex: actualMinIndex,
             maxIndex: actualMaxIndex,
             firstIndex: Math.ceil(cloneBeforeTotal),
             lastIndex: Math.ceil(sourceTotal + cloneAfterTotal - 1)
         },
         // 總頁數
-        pageTotal: fakeTotalPage,
+        page: {
+            pageTotal: fakeTotalPage,
+            activePage: 1,
+        },
         residue: elementTotal % rwdMedia.slidesPerGroup,
         isVisiblePagination: rwdMedia.isEnablePagination && formatElement.length > 0,
         isVisibleNavButton: rwdMedia.isEnableNavButton && formatElement.length > 0
