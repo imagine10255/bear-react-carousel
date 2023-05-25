@@ -27,6 +27,7 @@ import {BearCarouselProvider} from './BearCarouselProvider';
 import './styles.css';
 import {ArrowIcon, CloneIcon} from './Icon';
 import Position from './Position';
+import RWDMedia from './RWDMedia';
 
 
 
@@ -55,6 +56,16 @@ interface IState {
 }
 
 
+enum EDevice {
+    mobile,
+    desktop,
+}
+
+const resizeEvent: Record<EDevice, string> = {
+    [EDevice.mobile]: 'orientationchange',
+    [EDevice.desktop]:  'resize'
+};
+
 
 class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     static defaultProps = {
@@ -74,7 +85,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         autoPlayTime: 5000,
         defaultActivePage: 1,
     };
-    _isMobile = checkIsMobile();
+    _device = EDevice.desktop;
     _carouselId = `bear-react-carousel_${ulid().toLowerCase()}`;
 
     timer?: any;
@@ -105,19 +116,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     };
 
 
-    rwdMedia: IBreakpointSettingActual = {
-        slidesPerView: 1,
-        slidesPerViewActual: 1,
-        aspectRatio: undefined,
-        slidesPerGroup: 1,
-        spaceBetween: 0,
-        isCenteredSlides: false,
-        isEnableLoop: false,
-        isEnablePagination: true,
-        isEnableNavButton: true,
-        isEnableMouseMove: true,
-        isEnableAutoPlay: false,
-    };
 
     // touchStart: ITouchStart = {
     //     pageX: 0,
@@ -132,6 +130,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     };
 
 
+    rwdMedia: RWDMedia;
     position: Position;
 
     // Ref
@@ -151,14 +150,16 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         // @ts-ignore
         this.pageRefs['current'] = [];
 
+        this._device = checkIsMobile() ? EDevice.mobile : EDevice.desktop;
         const {rwdMedia, info} = getMediaInfo(props);
-        this.rwdMedia = rwdMedia;
+        this.rwdMedia = new RWDMedia(rwdMedia, props.breakpoints);
+        this.position = new Position();
+
         this.info = info;
         this.state = {
             windowSize: getSizeByRange(window.innerWidth, Object.keys(props.breakpoints).map(Number))
         };
 
-        this.position = new Position();
     }
 
 
@@ -178,13 +179,14 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             window.addEventListener('focus', this._onWindowFocus, false);
             window.addEventListener('blur', this._onWindowBlur, false);
 
-            if (this._isMobile) {
+            window.addEventListener(resizeEvent[this._device], this._onResize2, {passive: false});
+
+            if (this._device === EDevice.mobile) {
                 // When the window size is changed
-                window.addEventListener('orientationchange', this._onOrientationchange, {passive: false});
                 containerRef.addEventListener('touchstart', this._onMobileTouchStart, {passive: false});
             } else {
                 // When the window size is changed (through throttling)
-                window.addEventListener('resize', this._onResize, {passive: false});
+                // window.addEventListener('resize', this._onResize, {passive: false});
                 containerRef.addEventListener('mousedown', this._onWebMouseStart, {passive: false});
             }
         }
@@ -197,13 +199,15 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         if(this.props.isDebug && logEnable.componentWillUnmount) log.printInText('[componentWillUnmount]');
         if (this.timer) clearTimeout(this.timer);
 
+
+
         const containerRef = this.containerRef?.current;
+        window.removeEventListener(resizeEvent[this._device], this._onResize2, false);
+
         if (containerRef) {
-            if (this._isMobile) {
-                window.removeEventListener('orientationchange', this._onOrientationchange, false);
+            if (this._device === EDevice.mobile) {
                 containerRef.removeEventListener('touchstart', this._onMobileTouchStart, false);
             } else {
-                window.removeEventListener('resize', this._onResize, false);
                 containerRef.removeEventListener('mousedown', this._onWebMouseStart, false);
             }
 
@@ -234,7 +238,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             if(this.props.isDebug && logEnable.shouldComponentUpdate) log.printInText('[shouldComponentUpdate] true');
 
             const {rwdMedia, info} = getMediaInfo(nextProps);
-            this.rwdMedia = rwdMedia;
+            this.rwdMedia.setSetting(rwdMedia);
             this.info = info;
 
             // reset page position
@@ -256,7 +260,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     checkActualIndexInRange = (slideIndex: number) => checkActualIndexInRange(slideIndex, {minIndex: this.info.actual.minIndex, maxIndex: this.info.actual.maxIndex});
 
     getNextPage = () => getNextPage(this.activePage);
-    getNextPageFirstIndex = () => getNextPageFirstIndex(this.rwdMedia.isCenteredSlides, this.activeActualIndex, this.rwdMedia.slidesPerGroup, this.rwdMedia.slidesPerViewActual);
+    getNextPageFirstIndex = () => getNextPageFirstIndex(this.rwdMedia.setting.isCenteredSlides, this.activeActualIndex, this.rwdMedia.setting.slidesPerGroup, this.rwdMedia.setting.slidesPerViewActual);
     getMaxIndex = () => getLastIndex(this.info.formatElement.length);
     _getLoopResetIndex = () => getLoopResetIndex(this.activeActualIndex, this.info.residue);
 
@@ -471,7 +475,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
         const containerRef = this.containerRef?.current;
 
-        if (containerRef && this.rwdMedia.isEnableMouseMove && this.slideItemRefs.current) {
+        if (containerRef && this.rwdMedia.setting.isEnableMouseMove && this.slideItemRefs.current) {
             // console.log('this.position.startPosition.x', this._isSyncControl(), moveX);
             const translateX = calcMoveTranslatePx(this.position.startPosition.x, moveX);
             const percentage = this._getMovePercentage(translateX);
@@ -497,7 +501,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                     .forEach((row, index) => {
                         if(checkInRange(index, activeActualIndex, slideItemRefs.length)){
                             row.setAttribute('data-active', 'true');
-                        } else if (row.dataset.active) {
+                        } else if (row?.dataset.active) {
                             row.removeAttribute('data-active');
                         }
                     });
@@ -539,8 +543,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             syncControl.position.touchStart({
                 pageX: 0,
                 pageY: 0,
-                x: this.rwdMedia.isEnableLoop ? -x : 0,
-                // x: this.rwdMedia.isEnableLoop ? 0 : 0,
+                x: this.rwdMedia.setting.isEnableLoop ? -x : 0,
+                // x: this.rwdMedia.setting.isEnableLoop ? 0 : 0,
                 y: 0,
                 moveDirection: undefined,
             });
@@ -615,7 +619,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             clearTimeout(this.timer);
         }
 
-        if (this.rwdMedia.isEnableLoop && this.rwdMedia.isEnableAutoPlay && autoPlayTime > 0 && this.info.pageTotal > 1) {
+        if (this.rwdMedia.setting.isEnableLoop && this.rwdMedia.setting.isEnableAutoPlay && autoPlayTime > 0 && this.info.pageTotal > 1) {
             this.timer = setTimeout(() => {
                 this.toNext();
             }, autoPlayTime);
@@ -637,6 +641,16 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             this.goToActualIndex(formatElement[this.activeActualIndex].matchIndex, false);
         }
     };
+
+    private _onResize2 = () => {
+        const {windowSize} = this.state;
+        if (windowSize !== this.rwdMedia.size) {
+            if(this.props.isDebug && logEnable.handleResizeDiff) log.printInText(`[_handleResize] diff windowSize: ${windowSize} -> ${this.rwdMedia.size}px`);
+            this.setState({windowSize: this.rwdMedia.size});
+        }else{
+            this.goToPage(1, false);
+        }
+    }
 
 
     /**
@@ -682,8 +696,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             }, 400);
 
         }
-
-
     };
 
 
@@ -707,9 +719,9 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                 isOverflowIndex: this.getNextPageFirstIndex() > this.getMaxIndex(),
             },
             {
-                slidesPerGroup: this.rwdMedia.slidesPerGroup,
-                slidesPerViewActual: this.rwdMedia.slidesPerViewActual,
-                isLoopMode: this.rwdMedia.isEnableLoop,
+                slidesPerGroup: this.rwdMedia.setting.slidesPerGroup,
+                slidesPerViewActual: this.rwdMedia.setting.slidesPerViewActual,
+                isLoopMode: this.rwdMedia.setting.isEnableLoop,
             }
         )
             .forEach(action => this.goToActualIndex(action.index, action.isUseAnimation));
@@ -728,13 +740,13 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             this.goToActualIndex(formatElement[this.activeActualIndex].matchIndex, false);
             this.goToPage(this.info.pageTotal - 1);
 
-        } else if (this.rwdMedia.isEnableLoop && this.activePage === 1 && this.info.residue > 0) {
+        } else if (this.rwdMedia.setting.isEnableLoop && this.activePage === 1 && this.info.residue > 0) {
             // 檢查若為Loop(第一頁移動不整除的時候, 移動位置需要復歸到第一個)
             this.goToActualIndex(this.activeActualIndex - this.info.residue);
 
-        } else if (this.rwdMedia.slidesPerViewActual < this.info.formatElement.length) {
+        } else if (this.rwdMedia.setting.slidesPerViewActual < this.info.formatElement.length) {
             // Normal move to prev
-            this.goToActualIndex(this.activeActualIndex - this.rwdMedia.slidesPerGroup);
+            this.goToActualIndex(this.activeActualIndex - this.rwdMedia.setting.slidesPerGroup);
         }
     };
 
@@ -745,7 +757,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
    * page1 -> (1-1) * 2) + 1 + (firstIndex -1) = 1
    */
     goToPage = (page: number, isUseAnimation = true): void => {
-        const slideIndex = getSlideIndex(page, this.rwdMedia.slidesPerGroup, this.info.actual.firstIndex);
+        const slideIndex = getSlideIndex(page, this.rwdMedia.setting.slidesPerGroup, this.info.actual.firstIndex);
         this.goToActualIndex(slideIndex, isUseAnimation);
     };
 
@@ -789,10 +801,10 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
      * @param slideItemWidth
      */
     _getStartPosition = (slideItemWidth: number) => {
-        return getStartPosition(this.rwdMedia.isCenteredSlides,
+        return getStartPosition(this.rwdMedia.setting.isCenteredSlides,
             {
-                slidesPerView: this.rwdMedia.slidesPerView,
-                slidesPerViewActual: this.rwdMedia.slidesPerViewActual,
+                slidesPerView: this.rwdMedia.setting.slidesPerView,
+                slidesPerViewActual: this.rwdMedia.setting.slidesPerViewActual,
             },
             {
                 containerWidth: this.rootRef.current.clientWidth,
@@ -871,7 +883,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                     .forEach((row, index) => {
                         if (index === this.activeActualIndex) {
                             row.setAttribute('data-active', 'true');
-                        } else if (row.dataset.active) {
+                        } else if (row?.dataset.active) {
                             row.removeAttribute('data-active');
                         }
                     });
@@ -886,7 +898,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                     if(row && row.setAttribute !== null) {
                         if (this.activePage === index + 1) {
                             row.setAttribute('data-active', 'true');
-                        } else if(row.dataset.active) {
+                        } else if(row?.dataset.active) {
                             row.removeAttribute('data-active');
                         }
                     }
@@ -972,28 +984,28 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
         // Generate the desired style (note the trailing ;)
         const rootStyle: string = [
-            `padding-top: ${this.rwdMedia.aspectRatio && this.rwdMedia.slidesPerView !== 'auto' ? getPaddingBySize(this.rwdMedia.aspectRatio, this.rwdMedia.slidesPerView): '0'};`,
-            `height: ${this.rwdMedia.staticHeight ? `${this.rwdMedia.staticHeight}`: 'inherit'};`,
+            `padding-top: ${this.rwdMedia.setting.aspectRatio && this.rwdMedia.setting.slidesPerView !== 'auto' ? getPaddingBySize(this.rwdMedia.setting.aspectRatio, this.rwdMedia.setting.slidesPerView): '0'};`,
+            `height: ${this.rwdMedia.setting.staticHeight ? `${this.rwdMedia.setting.staticHeight}`: 'inherit'};`,
         ].join('');
         const slideItemStyle: string = [
-            `flex: ${this.rwdMedia.slidesPerView === 'auto' ? '0 0 auto;-webkit-flex: 0 0 auto;' : `1 0 ${100 / this.rwdMedia.slidesPerViewActual}%`};`,
-            `padding-left: ${this.rwdMedia.spaceBetween / 2}px;`,
-            `padding-right: ${this.rwdMedia.spaceBetween / 2}px;`,
+            `flex: ${this.rwdMedia.setting.slidesPerView === 'auto' ? '0 0 auto;-webkit-flex: 0 0 auto;' : `1 0 ${100 / this.rwdMedia.setting.slidesPerViewActual}%`};`,
+            `padding-left: ${this.rwdMedia.setting.spaceBetween / 2}px;`,
+            `padding-right: ${this.rwdMedia.setting.spaceBetween / 2}px;`,
         ].join('');
 
 
         return (
             <BearCarouselProvider
-                slidesPerView={this.rwdMedia.slidesPerView}
-                staticHeight={this.rwdMedia.staticHeight}
+                slidesPerView={this.rwdMedia.setting.slidesPerView}
+                staticHeight={this.rwdMedia.setting.staticHeight}
             >
                 <div
                     id={this._carouselId}
                     style={style}
                     className={[className, elClassName.root].join(' ').trim()}
-                    data-gpu-render={!this._isMobile ? 'true': undefined}
-                    data-per-view-auto={this.rwdMedia.slidesPerView === 'auto'}
-                    data-mouse-move={this.rwdMedia.isEnableMouseMove}
+                    data-gpu-render={this._device === EDevice.desktop ? 'true': undefined}
+                    data-per-view-auto={this.rwdMedia.setting.slidesPerView === 'auto'}
+                    data-mouse-move={this.rwdMedia.setting.isEnableMouseMove}
                     data-actual={`${this.info.actual.minIndex},${this.info.actual.firstIndex}-${this.info.actual.lastIndex},${this.info.actual.maxIndex}`}
                     data-debug={isDebug ? 'true':undefined}
                     ref={this.rootRef}
