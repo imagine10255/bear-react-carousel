@@ -32,6 +32,7 @@ import SlideSettingManager from './manager/SlideSettingManager';
 import WindowSizeCalculator from './manager/WindowSizeCalculator';
 import SlideItemManager from './manager/SlideItemManager';
 import SlideItem from './components/SlideItem';
+import ElManager from './manager/ElManager';
 
 
 
@@ -120,6 +121,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     pageGroupRef: React.RefObject<HTMLDivElement> = React.createRef();
     navGroupRef: React.RefObject<HTMLDivElement> = React.createRef();
     // syncControlRefs: React.RefObject<BearCarousel> = React.createRef();
+    elManager: ElManager;
+
 
     constructor(props: IBearCarouselProps) {
         super(props);
@@ -154,6 +157,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         this.settingManager = new SlideSettingManager(breakpoints, defaultBreakpoint);
         this.slideItem = new SlideItemManager(this.settingManager, data);
         this.position = new Position();
+        this.elManager = new ElManager();
 
         // this.info = info;
         this.state = {
@@ -419,7 +423,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
             this._elementMove(this.position.startPosition.pageX);
 
-            const rootRef = this.rootRef.current;
+            const rootRef = this.elManager.root;
             if(rootRef){
                 rootRef.addEventListener('mouseleave', this._onWebMouseEnd, false);
             }
@@ -1089,7 +1093,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                     data-mouse-move={this.settingManager.setting.isEnableMouseMove}
                     data-actual={`${this.slideItem.info.actual.minIndex},${this.slideItem.info.actual.firstIndex}-${this.slideItem.info.actual.lastIndex},${this.slideItem.info.actual.maxIndex}`}
                     data-debug={isDebug ? 'true':undefined}
-                    ref={this.rootRef}
+                    ref={this.elManager.rootRef}
                 >
                     {this.renderStyle()}
 
