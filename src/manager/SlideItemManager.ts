@@ -112,23 +112,6 @@ class SlideItemManager {
     }
 
 
-    slideToActualIndex(index: number, isUseAnimation = true){
-        if (this.checkActualIndexInRange(index)) {
-            this.setActiveActual(index, this.formatElement[index]?.inPage ?? 1);
-
-
-        }
-    }
-
-    /**
-     * 移動到指定頁面
-     * @param page
-     * @param isUseAnimation 是否開啟動畫
-     */
-    slideToPage(page: number, isUseAnimation = true){
-        const slideIndex = getSlideIndex(page, this._slideSettingManager.setting.slidesPerGroup, this.actual.firstIndex);
-        this.slideToActualIndex(slideIndex, isUseAnimation);
-    }
 
     //
     // setSetting(setting: IBreakpointSettingActual) {

@@ -1,4 +1,4 @@
-import {ITouchStart} from './types';
+import {ITouchStart} from '../types';
 
 
 const defaultPosition: ITouchStart = {

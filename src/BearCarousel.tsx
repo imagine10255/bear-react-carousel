@@ -26,14 +26,12 @@ import {BearCarouselProvider} from './BearCarouselProvider';
 
 import './styles.css';
 import {ArrowIcon, CloneIcon} from './Icon';
-import Position from './Position';
-import RWDMedia from './RWDMedia';
 import SlideSettingManager from './manager/SlideSettingManager';
 import WindowSizeCalculator from './manager/WindowSizeCalculator';
 import SlideItemManager from './manager/SlideItemManager';
 import SlideItem from './components/SlideItem';
 import ElManager from './manager/ElManager';
-import PositionManager from './Position';
+import PositionManager from './manager/PositionManager';
 
 
 
@@ -158,7 +156,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         this.settingManager = new SlideSettingManager(breakpoints, defaultBreakpoint);
         this.slideItem = new SlideItemManager(this.settingManager, data);
         this.positionManager = new PositionManager();
-        this.elManager = new ElManager();
+        this.elManager = new ElManager(this.settingManager, this.slideItem);
 
         // this.info = info;
         this.state = {
@@ -177,7 +175,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         if (containerEl) {
             // Move to the correct position for the first time
             if(page.pageTotal > 0){
-                this.slideItem.slideToPage(this.props.defaultActivePage ?? 1, false);
+                this.elManager.slideToPage(this.props.defaultActivePage ?? 1, false);
             }
 
             // End of moving animation (Need to return to the position, to be fake)
@@ -267,7 +265,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             // reset page position
             const $this = this;
             setTimeout(() => {
-                $this.slideItem.slideToPage(1, false);
+                $this.elManager.slideToPage(1, false);
             }, 0);
 
             this._handleSyncCarousel();
@@ -420,10 +418,11 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                 y: event.clientY - containerEl.offsetTop,
             });
 
+            console.log('xxx');
 
             if(this.resetDurationTimer) clearTimeout(this.resetDurationTimer);
 
-            this._elementMove(startPosition.pageX);
+            // this._elementMove(startPosition.pageX);
 
             const {rootEl} = this.elManager;
             if(rootEl){
@@ -565,7 +564,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             const moveX = syncControl._getPercentageToMovePx(percentage);
             const {slideItemEls} = syncControl.elManager;
             const x = slideItemEls[0].clientWidth;
-            
+
             syncControl.positionManager.touchStart({
                 x: this.settingManager.setting.isEnableLoop ? -x : 0,
             });
@@ -675,7 +674,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             if(this.props.isDebug && logEnable.handleResizeDiff) log.printInText(`[_handleResize] diff windowSize: ${windowSize} -> ${this.sizeManager.size}px`);
             this.setState({windowSize: this.sizeManager.size});
         }else{
-            this.slideItem.slideToPage(1, false);
+            this.elManager.slideToPage(1, false);
         }
     }
 
@@ -697,7 +696,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                 windowSize: selectSize
             });
         }else{
-            this.slideItem.slideToPage(1, false);
+            this.elManager.slideToPage(1, false);
         }
     };
 
@@ -718,9 +717,9 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
         }else{
             if(this.props.isDebug && logEnable.handleResize) log.printInText('[_onOrientationchange] goToPage 1');
-            const $slideItem = this.slideItem;
+            const $elManager = this.elManager;
             setTimeout(() => {
-                $slideItem.slideToPage(1, false);
+                $elManager.slideToPage(1, false);
             }, 400);
 
         }
@@ -766,7 +765,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         if (activeSlideItem && activeSlideItem.isClone) {
 
             this.goToActualIndex(activeSlideItem.matchIndex, false);
-            this.slideItem.slideToPage(page.pageTotal - 1);
+            this.elManager.slideToPage(page.pageTotal - 1);
 
         } else if (this.settingManager.setting.isEnableLoop && page.activePage === 1 && residue > 0) {
             // 檢查若為Loop(第一頁移動不整除的時候, 移動位置需要復歸到第一個)
@@ -990,7 +989,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                     ref={(el) => this.elManager.setPageRefs(el, i)}
                     key={`page_${i}`}
                     role='button'
-                    onClick={() => this.slideItem.slideToPage(i + 1)}
+                    onClick={() => this.elManager.slideToPage(i + 1)}
                     className={elClassName.paginationButton}
                     data-active={page.activePage === i + 1 ? true : undefined}
                     data-page={i + 1}
