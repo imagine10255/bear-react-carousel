@@ -204,10 +204,26 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
         const oldKey = data?.map((row) => row.key).join('_');
         const nextKey = nextData?.map((row) => row.key).join('_');
-        if (oldKey !== nextKey ||
-      !deepCompare(otherParams, nextOtherProps) ||
-      nextWindowSize !== windowSize
-        ) {
+
+        if(nextWindowSize !== windowSize ||
+            !deepCompare(otherParams, nextOtherProps)
+        ){
+            if(this.props.isDebug && logEnable.shouldComponentUpdate) log.printInText('[shouldComponentUpdate] true');
+
+            const {rwdMedia, info} = getMediaInfo(nextProps);
+            this.rwdMedia = rwdMedia;
+            this.info = info;
+
+            const $this = this;
+            setTimeout(() => {
+                $this.goToPage(1, false);
+            }, 0);
+
+            return true;
+        }
+
+
+        if (oldKey !== nextKey) {
             if(this.props.isDebug && logEnable.shouldComponentUpdate) log.printInText('[shouldComponentUpdate] true');
 
             const {rwdMedia, info} = getMediaInfo(nextProps);
@@ -216,9 +232,11 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
             // reset page position
             const $this = this;
-            setTimeout(() => {
-                $this.goToPage(1, false);
-            }, 0);
+            if(oldKey.length !== nextKey.length){
+                setTimeout(() => {
+                    $this.goToPage(1, false);
+                }, 0);
+            }
 
             this._handleSyncCarousel();
 

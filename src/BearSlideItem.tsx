@@ -29,17 +29,17 @@ const BearSlideItem = ({
 
 
     const onMouseDown = (event: React.MouseEvent<HTMLElement>) => {
-        // event.preventDefault();
-        // lastTouchEnd = (new Date()).getTime();
+        event.preventDefault();
+        lastTouchEnd = (new Date()).getTime();
     };
 
 
     const onMouseUp = (event: React.MouseEvent<HTMLElement>) => {
-        // const now = (new Date()).getTime();
-        // if (now - lastTouchEnd <= onClickAllowTime) {
-        //     event.preventDefault();
-        //     if(onClick) onClick();
-        // }
+        const now = (new Date()).getTime();
+        if (now - lastTouchEnd <= onClickAllowTime) {
+            event.preventDefault();
+            if(onClick) onClick();
+        }
     };
 
 

@@ -32,14 +32,15 @@ function App() {
 
     // 輪播項目1
     const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
+        const active = value === row.id;
         return {
             key: `${row.id}_${value === row.id}`,
             children: <div className="h-100 d-flex"
-                    onClick={() => setValue(row.id)} data-my={value === row.id}
-                     style={{fontSize: '40px', width: '100%', height: '100%', backgroundColor: row.color}}
-                >
-                    {/*<a href="https://carousel.bearests.com" rel="noreferrer" target="_blank">{row.id}</a>*/}
-                </div>
+                onClick={() => setValue(row.id)} data-my={active}
+                style={{fontSize: '40px', width: '100%', height: '100%', backgroundColor: row.color, border: active ?'5px solid red': 'none'}}
+            >
+                {/*<a href="https://carousel.bearests.com" rel="noreferrer" target="_blank">{row.id}</a>*/}
+            </div>
         };
     });
 
@@ -72,7 +73,7 @@ function App() {
         {/*    moveTime={400}*/}
         {/*    isDebug*/}
         {/*/>*/}
-    </div>
+    </div>;
 
 
     // return (
