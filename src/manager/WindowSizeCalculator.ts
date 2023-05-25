@@ -1,5 +1,5 @@
-import {IPropsBreakpoints} from './types';
-import {getSizeByRange} from './utils';
+import {IPropsBreakpoints} from '../types';
+import {getSizeByRange} from '../utils';
 
 class WindowSizeCalculator {
     private _breakpoints: IPropsBreakpoints;

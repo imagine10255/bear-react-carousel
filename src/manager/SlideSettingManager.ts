@@ -1,4 +1,5 @@
-import {IBreakpointSettingActual} from './types';
+import {IBreakpointSettingActual} from '../types';
+import {getMediaInfo} from '../utils';
 
 class SlideSettingManager {
     private _setting: IBreakpointSettingActual;

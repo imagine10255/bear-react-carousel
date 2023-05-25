@@ -28,6 +28,8 @@ import './styles.css';
 import {ArrowIcon, CloneIcon} from './Icon';
 import Position from './Position';
 import RWDMedia from './RWDMedia';
+import SlideSettingManager from './SlideSettingManager';
+import WindowSizeCalculator from './WindowSizeCalculator';
 
 
 
@@ -64,6 +66,10 @@ enum EDevice {
 const resizeEvent: Record<EDevice, string> = {
     [EDevice.mobile]: 'orientationchange',
     [EDevice.desktop]:  'resize'
+};
+const touchEvent: Record<EDevice, string> = {
+    [EDevice.mobile]: 'touchmove',
+    [EDevice.desktop]:  'mousedown'
 };
 
 
@@ -130,7 +136,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     };
 
 
-    rwdMedia: RWDMedia;
+    settingManager: SlideSettingManager;
+    sizeManager: WindowSizeCalculator;
     position: Position;
 
     // Ref
@@ -152,7 +159,9 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
         this._device = checkIsMobile() ? EDevice.mobile : EDevice.desktop;
         const {rwdMedia, info} = getMediaInfo(props);
-        this.rwdMedia = new RWDMedia(rwdMedia, props.breakpoints);
+
+        this.sizeManager = new WindowSizeCalculator(props.breakpoints);
+        this.settingManager = new SlideSettingManager(rwdMedia);
         this.position = new Position();
 
         this.info = info;
@@ -182,11 +191,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             window.addEventListener(resizeEvent[this._device], this._onResize2, {passive: false});
 
             if (this._device === EDevice.mobile) {
-                // When the window size is changed
                 containerRef.addEventListener('touchstart', this._onMobileTouchStart, {passive: false});
             } else {
-                // When the window size is changed (through throttling)
-                // window.addEventListener('resize', this._onResize, {passive: false});
                 containerRef.addEventListener('mousedown', this._onWebMouseStart, {passive: false});
             }
         }
@@ -238,7 +244,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             if(this.props.isDebug && logEnable.shouldComponentUpdate) log.printInText('[shouldComponentUpdate] true');
 
             const {rwdMedia, info} = getMediaInfo(nextProps);
-            this.rwdMedia.setSetting(rwdMedia);
+            this.settingManager.setSetting(rwdMedia);
             this.info = info;
 
             // reset page position
@@ -260,7 +266,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     checkActualIndexInRange = (slideIndex: number) => checkActualIndexInRange(slideIndex, {minIndex: this.info.actual.minIndex, maxIndex: this.info.actual.maxIndex});
 
     getNextPage = () => getNextPage(this.activePage);
-    getNextPageFirstIndex = () => getNextPageFirstIndex(this.rwdMedia.setting.isCenteredSlides, this.activeActualIndex, this.rwdMedia.setting.slidesPerGroup, this.rwdMedia.setting.slidesPerViewActual);
+    getNextPageFirstIndex = () => getNextPageFirstIndex(this.settingManager.setting.isCenteredSlides, this.activeActualIndex, this.settingManager.setting.slidesPerGroup, this.settingManager.setting.slidesPerViewActual);
     getMaxIndex = () => getLastIndex(this.info.formatElement.length);
     _getLoopResetIndex = () => getLoopResetIndex(this.activeActualIndex, this.info.residue);
 
@@ -475,7 +481,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
         const containerRef = this.containerRef?.current;
 
-        if (containerRef && this.rwdMedia.setting.isEnableMouseMove && this.slideItemRefs.current) {
+        if (containerRef && this.settingManager.setting.isEnableMouseMove && this.slideItemRefs.current) {
             // console.log('this.position.startPosition.x', this._isSyncControl(), moveX);
             const translateX = calcMoveTranslatePx(this.position.startPosition.x, moveX);
             const percentage = this._getMovePercentage(translateX);
@@ -543,8 +549,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             syncControl.position.touchStart({
                 pageX: 0,
                 pageY: 0,
-                x: this.rwdMedia.setting.isEnableLoop ? -x : 0,
-                // x: this.rwdMedia.setting.isEnableLoop ? 0 : 0,
+                x: this.settingManager.setting.isEnableLoop ? -x : 0,
+                // x: this.settingManager.setting.isEnableLoop ? 0 : 0,
                 y: 0,
                 moveDirection: undefined,
             });
@@ -619,7 +625,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             clearTimeout(this.timer);
         }
 
-        if (this.rwdMedia.setting.isEnableLoop && this.rwdMedia.setting.isEnableAutoPlay && autoPlayTime > 0 && this.info.pageTotal > 1) {
+        if (this.settingManager.setting.isEnableLoop && this.settingManager.setting.isEnableAutoPlay && autoPlayTime > 0 && this.info.pageTotal > 1) {
             this.timer = setTimeout(() => {
                 this.toNext();
             }, autoPlayTime);
@@ -644,9 +650,9 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
     private _onResize2 = () => {
         const {windowSize} = this.state;
-        if (windowSize !== this.rwdMedia.size) {
-            if(this.props.isDebug && logEnable.handleResizeDiff) log.printInText(`[_handleResize] diff windowSize: ${windowSize} -> ${this.rwdMedia.size}px`);
-            this.setState({windowSize: this.rwdMedia.size});
+        if (windowSize !== this.sizeManager.size) {
+            if(this.props.isDebug && logEnable.handleResizeDiff) log.printInText(`[_handleResize] diff windowSize: ${windowSize} -> ${this.sizeManager.size}px`);
+            this.setState({windowSize: this.sizeManager.size});
         }else{
             this.goToPage(1, false);
         }
@@ -719,9 +725,9 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                 isOverflowIndex: this.getNextPageFirstIndex() > this.getMaxIndex(),
             },
             {
-                slidesPerGroup: this.rwdMedia.setting.slidesPerGroup,
-                slidesPerViewActual: this.rwdMedia.setting.slidesPerViewActual,
-                isLoopMode: this.rwdMedia.setting.isEnableLoop,
+                slidesPerGroup: this.settingManager.setting.slidesPerGroup,
+                slidesPerViewActual: this.settingManager.setting.slidesPerViewActual,
+                isLoopMode: this.settingManager.setting.isEnableLoop,
             }
         )
             .forEach(action => this.goToActualIndex(action.index, action.isUseAnimation));
@@ -740,13 +746,13 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             this.goToActualIndex(formatElement[this.activeActualIndex].matchIndex, false);
             this.goToPage(this.info.pageTotal - 1);
 
-        } else if (this.rwdMedia.setting.isEnableLoop && this.activePage === 1 && this.info.residue > 0) {
+        } else if (this.settingManager.setting.isEnableLoop && this.activePage === 1 && this.info.residue > 0) {
             // 檢查若為Loop(第一頁移動不整除的時候, 移動位置需要復歸到第一個)
             this.goToActualIndex(this.activeActualIndex - this.info.residue);
 
-        } else if (this.rwdMedia.setting.slidesPerViewActual < this.info.formatElement.length) {
+        } else if (this.settingManager.setting.slidesPerViewActual < this.info.formatElement.length) {
             // Normal move to prev
-            this.goToActualIndex(this.activeActualIndex - this.rwdMedia.setting.slidesPerGroup);
+            this.goToActualIndex(this.activeActualIndex - this.settingManager.setting.slidesPerGroup);
         }
     };
 
@@ -757,7 +763,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
    * page1 -> (1-1) * 2) + 1 + (firstIndex -1) = 1
    */
     goToPage = (page: number, isUseAnimation = true): void => {
-        const slideIndex = getSlideIndex(page, this.rwdMedia.setting.slidesPerGroup, this.info.actual.firstIndex);
+        const slideIndex = getSlideIndex(page, this.settingManager.setting.slidesPerGroup, this.info.actual.firstIndex);
         this.goToActualIndex(slideIndex, isUseAnimation);
     };
 
@@ -801,10 +807,10 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
      * @param slideItemWidth
      */
     _getStartPosition = (slideItemWidth: number) => {
-        return getStartPosition(this.rwdMedia.setting.isCenteredSlides,
+        return getStartPosition(this.settingManager.setting.isCenteredSlides,
             {
-                slidesPerView: this.rwdMedia.setting.slidesPerView,
-                slidesPerViewActual: this.rwdMedia.setting.slidesPerViewActual,
+                slidesPerView: this.settingManager.setting.slidesPerView,
+                slidesPerViewActual: this.settingManager.setting.slidesPerViewActual,
             },
             {
                 containerWidth: this.rootRef.current.clientWidth,
@@ -984,28 +990,28 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
         // Generate the desired style (note the trailing ;)
         const rootStyle: string = [
-            `padding-top: ${this.rwdMedia.setting.aspectRatio && this.rwdMedia.setting.slidesPerView !== 'auto' ? getPaddingBySize(this.rwdMedia.setting.aspectRatio, this.rwdMedia.setting.slidesPerView): '0'};`,
-            `height: ${this.rwdMedia.setting.staticHeight ? `${this.rwdMedia.setting.staticHeight}`: 'inherit'};`,
+            `padding-top: ${this.settingManager.setting.aspectRatio && this.settingManager.setting.slidesPerView !== 'auto' ? getPaddingBySize(this.settingManager.setting.aspectRatio, this.settingManager.setting.slidesPerView): '0'};`,
+            `height: ${this.settingManager.setting.staticHeight ? `${this.settingManager.setting.staticHeight}`: 'inherit'};`,
         ].join('');
         const slideItemStyle: string = [
-            `flex: ${this.rwdMedia.setting.slidesPerView === 'auto' ? '0 0 auto;-webkit-flex: 0 0 auto;' : `1 0 ${100 / this.rwdMedia.setting.slidesPerViewActual}%`};`,
-            `padding-left: ${this.rwdMedia.setting.spaceBetween / 2}px;`,
-            `padding-right: ${this.rwdMedia.setting.spaceBetween / 2}px;`,
+            `flex: ${this.settingManager.setting.slidesPerView === 'auto' ? '0 0 auto;-webkit-flex: 0 0 auto;' : `1 0 ${100 / this.settingManager.setting.slidesPerViewActual}%`};`,
+            `padding-left: ${this.settingManager.setting.spaceBetween / 2}px;`,
+            `padding-right: ${this.settingManager.setting.spaceBetween / 2}px;`,
         ].join('');
 
 
         return (
             <BearCarouselProvider
-                slidesPerView={this.rwdMedia.setting.slidesPerView}
-                staticHeight={this.rwdMedia.setting.staticHeight}
+                slidesPerView={this.settingManager.setting.slidesPerView}
+                staticHeight={this.settingManager.setting.staticHeight}
             >
                 <div
                     id={this._carouselId}
                     style={style}
                     className={[className, elClassName.root].join(' ').trim()}
                     data-gpu-render={this._device === EDevice.desktop ? 'true': undefined}
-                    data-per-view-auto={this.rwdMedia.setting.slidesPerView === 'auto'}
-                    data-mouse-move={this.rwdMedia.setting.isEnableMouseMove}
+                    data-per-view-auto={this.settingManager.setting.slidesPerView === 'auto'}
+                    data-mouse-move={this.settingManager.setting.isEnableMouseMove}
                     data-actual={`${this.info.actual.minIndex},${this.info.actual.firstIndex}-${this.info.actual.lastIndex},${this.info.actual.maxIndex}`}
                     data-debug={isDebug ? 'true':undefined}
                     ref={this.rootRef}
