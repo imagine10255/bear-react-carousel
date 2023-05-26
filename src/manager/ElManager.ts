@@ -79,6 +79,18 @@ class ElManager {
 
 
     /**
+     * Percentage Move Percentage
+     * @param movePx
+     */
+    getPercentageToMovePx = (movePx: number) => {
+        const {actual} = this._slideItemManager;
+        const slideCurrWidth = this.slideItemEls[actual.activeIndex].clientWidth;
+        const startPosition = this._getStartPosition(slideCurrWidth);
+        return getMovePercentage(movePx, startPosition, slideCurrWidth);
+    };
+
+
+    /**
      * 取得初始距離
      * @param slideItemWidth
      */

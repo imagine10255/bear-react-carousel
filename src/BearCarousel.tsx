@@ -204,7 +204,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
             window.addEventListener('focus', this._autoPlayer.play.bind(this._autoPlayer), false);
             window.addEventListener('blur', this._autoPlayer.pause.bind(this._autoPlayer), false);
-            window.addEventListener(resizeEvent[this._device], this._onResize2, {passive: false});
+            window.addEventListener(resizeEvent[this._device], this._onResize, {passive: false});
 
 
             switch (this._device){
@@ -230,7 +230,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         window.removeEventListener('blur', this._autoPlayer.pause.bind(this._autoPlayer), false);
 
         const {containerEl} = this.elManager;
-        window.removeEventListener(resizeEvent[this._device], this._onResize2, false);
+        window.removeEventListener(resizeEvent[this._device], this._onResize, false);
 
         if (containerEl) {
             if (this._device === EDevice.mobile) {
@@ -304,9 +304,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
 
     _isSyncControl = () => !!this.props.syncControlRefs === false;
-    checkActualIndexInRange = (slideIndex: number) => checkActualIndexInRange(slideIndex, {minIndex: this._stater.info.actual.minIndex, maxIndex: this._stater.info.actual.maxIndex});
-
-
 
 
     /**
@@ -351,15 +348,10 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         if(this.props.isDebug && logEnable.onMobileTouchMove) log.printInText(`[_onMobileTouchMove] ${startPosition.moveDirection}`);
 
 
-        // 判斷一開始的移動方向
-        if(this.positionManager.startPosition.moveDirection === EDirection.vertical){
-            // 垂直移動
-
-        }else if(startPosition.moveDirection === EDirection.horizontal){
-            // 水平移動
+        // 水平移動
+        if(startPosition.moveDirection === EDirection.horizontal){
             const {containerEl} = this.elManager;
             if(containerEl){
-
                 const moveX = containerEl.offsetLeft + event.targetTouches[0].pageX;
                 this._controller.dragMove(moveX);
             }
@@ -434,79 +426,10 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
 
 
-
-    // _syncControlMove = (percentage: number) => {
-    //     if(this.props.syncControlRefs?.current){
-    //         const syncControl = this.props.syncControlRefs.current;
-    //         // 將進度比例換算成 movePx
-    //         const moveX = syncControl._getPercentageToMovePx(percentage);
-    //         const {slideItemEls} = syncControl.elManager;
-    //         const x = slideItemEls[0].clientWidth;
-    //
-    //         syncControl.positionManager.touchStart({
-    //             x: this._configurator.setting.isEnableLoop ? -x : 0,
-    //         });
-    //
-    //         syncControl._elementMove(moveX);
-    //     }
-    // };
-    //
-    // _syncControlDone = (targetIndex: number) => {
-    //     if(this.props.syncControlRefs?.current){
-    //         const syncControl = this.props.syncControlRefs.current;
-    //         syncControl.goToActualIndex(targetIndex);
-    //     }
-    // };
-
-
-
     /**
-     * Move Percentage
-     * @param movePx
+     * When dealing with changing screen size
      */
-    _getMovePercentage = (movePx: number) => {
-        const {actual} = this._stater;
-        const {slideItemEls} = this.elManager;
-        const slideCurrWidth = slideItemEls[actual.activeIndex].clientWidth;
-        const startPosition = this._getStartPosition(slideCurrWidth);
-        return getMovePercentage(movePx, startPosition, slideCurrWidth);
-    };
-
-
-    /**
-     * Percentage Move Percentage
-     * @param translateX
-     */
-    _getPercentageToMovePx = (percentage: number) => {
-        const {actual} = this._stater;
-        const {slideItemEls} = this.elManager;
-        const slideCurrWidth = slideItemEls[actual.activeIndex].clientWidth;
-
-        const initStart = this._getStartPosition(slideCurrWidth);
-        return initStart - (slideCurrWidth * percentage);
-    };
-
-
-
-
-
-    /**
-   * reset page position (LoopMode)
-   *
-   * PS: If the element is isClone then return to the position where it should actually be displayed
-   */
-    // _resetPosition = (): void => {
-    //     if(this.props.isDebug && logEnable.resetPosition) log.printInText('[_resetPosition]');
-    //     const {actual} = this._stater;
-    //
-    //     const formatElement = this._stater.info?.formatElement ? this._stater.info.formatElement : [];
-    //
-    //     if (formatElement[actual.activeIndex].isClone) {
-    //         this.elManager.slideToActualIndex(formatElement[actual.activeIndex].matchIndex, false);
-    //     }
-    // };
-
-    private _onResize2 = () => {
+    private _onResize = () => {
         const {windowSize} = this.state;
         if (windowSize !== this.sizeManager.size) {
             if(this.props.isDebug && logEnable.handleResizeDiff) log.printInText(`[_handleResize] diff windowSize: ${windowSize} -> ${this.sizeManager.size}px`);
@@ -516,27 +439,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         }
     };
 
-
-    /**
-   * When dealing with changing screen size
-   */
-    _onResize = () => {
-        const {breakpoints} = this.props;
-        const {windowSize} = this.state;
-        if(this.props.isDebug && logEnable.handleResize) log.printInText(`[_handleResize] windowSize: ${windowSize}px`);
-
-        const selectSize = getSizeByRange(window.innerWidth, Object.keys(breakpoints).map(Number));
-
-        // 只在區間內有設定的值才會 setState
-        if (windowSize !== selectSize) {
-            if(this.props.isDebug && logEnable.handleResizeDiff) log.printInText(`[_handleResize] diff windowSize: ${windowSize} -> ${selectSize}px`);
-            this.setState({
-                windowSize: selectSize
-            });
-        }else{
-            this._controller.slideToPage(1, false);
-        }
-    };
 
     /**
    * When dealing with changing screen size
@@ -565,16 +467,30 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
 
 
-    /**
-   * go to page
-   * ex: slideView: 2, slideGroup: 2, total: 4
-   * page1 -> (1-1) * 2) + 1 + (firstIndex -1) = 1
-   */
-    // goToPage = (page: number, isUseAnimation = true): void => {
-    //     const slideIndex = getSlideIndex(page, this._configurator.setting.slidesPerGroup, this._stater.info.actual.firstIndex);
-    //     this.goToActualIndex(slideIndex, isUseAnimation);
-    // };
 
+
+    // _syncControlMove = (percentage: number) => {
+    //     if(this.props.syncControlRefs?.current){
+    //         const syncControl = this.props.syncControlRefs.current;
+    //         // 將進度比例換算成 movePx
+    //         const moveX = syncControl._getPercentageToMovePx(percentage);
+    //         const {slideItemEls} = syncControl.elManager;
+    //         const x = slideItemEls[0].clientWidth;
+    //
+    //         syncControl.positionManager.touchStart({
+    //             x: this._configurator.setting.isEnableLoop ? -x : 0,
+    //         });
+    //
+    //         syncControl._elementMove(moveX);
+    //     }
+    // };
+    //
+    // _syncControlDone = (targetIndex: number) => {
+    //     if(this.props.syncControlRefs?.current){
+    //         const syncControl = this.props.syncControlRefs.current;
+    //         syncControl.goToActualIndex(targetIndex);
+    //     }
+    // };
 
 
     /**
@@ -594,39 +510,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     };
 
 
-    /**
-   * Get the target item distance width(px)
-   * @param slideIndex
-   */
-    _getMoveDistance = (slideIndex: number): number => {
-        const {slideItemEls} = this.elManager;
-        if (slideItemEls) {
-            const slideItemRef = slideItemEls[slideIndex];
-            if (slideItemRef) {
-                return getMoveDistance(slideItemRef.offsetLeft, this._getStartPosition(slideItemRef.clientWidth));
-            }
-        }
-
-        return 0;
-    };
 
 
-    /**
-     * 取得初始距離
-     * @param slideItemWidth
-     */
-    _getStartPosition = (slideItemWidth: number) => {
-        return getStartPosition(this._configurator.setting.isCenteredSlides,
-            {
-                slidesPerView: this._configurator.setting.slidesPerView,
-                slidesPerViewActual: this._configurator.setting.slidesPerViewActual,
-            },
-            {
-                containerWidth: this.elManager.rootEl.clientWidth,
-                currItemWidth: slideItemWidth,
-            }
-        );
-    };
 
 
     /**

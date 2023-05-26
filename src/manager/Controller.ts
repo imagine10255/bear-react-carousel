@@ -223,6 +223,8 @@ class Controller {
      * 移動到指定頁面
      * @param page
      * @param isUseAnimation 是否開啟動畫
+     * ex: slideView: 2, slideGroup: 2, total: 4
+     * page1 -> (1-1) * 2) + 1 + (firstIndex -1) = 1
      */
     slideToPage(page: number, isUseAnimation = true){
         const {setting} = this._configurator;
