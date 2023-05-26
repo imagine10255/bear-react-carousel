@@ -24,9 +24,9 @@ class ElManager {
     pageGroupRef: React.RefObject<HTMLDivElement> = React.createRef();
     navGroupRef: React.RefObject<HTMLDivElement> = React.createRef();
 
-    slideSettingManager: SlideSettingManager;
-    slideItemManager: SlideItemManager;
-    positionManager: PositionManager;
+    private readonly _slideSettingManager: SlideSettingManager;
+    private readonly _slideItemManager: SlideItemManager;
+    private readonly _positionManager: PositionManager;
 
     moveTime = 500;
 
@@ -40,9 +40,9 @@ class ElManager {
         // @ts-ignore
         this.pageRefs.current = [];
 
-        this.slideSettingManager = manager.slideSettingManager;
-        this.slideItemManager = manager.slideItemManager;
-        this.positionManager = manager.positionManager;
+        this._slideSettingManager = manager.slideSettingManager;
+        this._slideItemManager = manager.slideItemManager;
+        this._positionManager = manager.positionManager;
 
     }
 
@@ -71,7 +71,7 @@ class ElManager {
      * @param movePx
      */
     private _getMovePercentage = (movePx: number) => {
-        const {actual} = this.slideItemManager;
+        const {actual} = this._slideItemManager;
         const slideCurrWidth = this.slideItemEls[actual.activeIndex].clientWidth;
         const startPosition = this._getStartPosition(slideCurrWidth);
         return getMovePercentage(movePx, startPosition, slideCurrWidth);
@@ -83,10 +83,10 @@ class ElManager {
      * @param slideItemWidth
      */
     private _getStartPosition = (slideItemWidth: number) => {
-        return getStartPosition(this.slideSettingManager.setting.isCenteredSlides,
+        return getStartPosition(this._slideSettingManager.setting.isCenteredSlides,
             {
-                slidesPerView: this.slideSettingManager.setting.slidesPerView,
-                slidesPerViewActual: this.slideSettingManager.setting.slidesPerViewActual,
+                slidesPerView: this._slideSettingManager.setting.slidesPerView,
+                slidesPerViewActual: this._slideSettingManager.setting.slidesPerViewActual,
             },
             {
                 containerWidth: this.rootEl.clientWidth,
@@ -141,8 +141,8 @@ class ElManager {
 
 
 
-        const {startPosition} = this.positionManager;
-        const {setting} = this.slideSettingManager;
+        const {startPosition} = this._positionManager;
+        const {setting} = this._slideSettingManager;
 
         if (this.containerEl && setting.isEnableMouseMove && this.slideItemEls) {
             // console.log('this.position.startPosition.x', this._isSyncControl(), moveX);
@@ -220,9 +220,9 @@ class ElManager {
 
 
     slideToActualIndex(slideIndex: number, isUseAnimation = true){
-        if (this.slideItemManager.checkActualIndexInRange(slideIndex)) {
-            const {formatElement} = this.slideItemManager;
-            this.slideItemManager.setActiveActual(slideIndex, formatElement[slideIndex]?.inPage ?? 1);
+        if (this._slideItemManager.checkActualIndexInRange(slideIndex)) {
+            const {formatElement} = this._slideItemManager;
+            this._slideItemManager.setActiveActual(slideIndex, formatElement[slideIndex]?.inPage ?? 1);
 
             // 移動EL位置
             const position = this._getMoveDistance(slideIndex);
@@ -274,6 +274,30 @@ class ElManager {
                     });
             }
 
+
+            //         // 更改顯示在第幾頁的樣式 (父元件使用可判定樣式設定)
+            //         if (pageEls && this.slideItem.info.isVisiblePagination && page.activePage > 0) {
+            //             pageEls.forEach((row, index) => {
+            //                 if(row && row.setAttribute !== null) {
+            //                     if (page.activePage === index + 1) {
+            //                         row.setAttribute('data-active', 'true');
+            //                     } else if(row?.dataset.active) {
+            //                         row.removeAttribute('data-active');
+            //                     }
+            //                 }
+            //
+            //             });
+            //         }
+            //
+            //         // 結束移動後再繼續自動模式
+            //         this._checkAndAutoPlay();
+            //
+            //         this._handleSyncCarousel();
+            //
+            //         if(this.props.onElementDone){
+            //             this.props.onElementDone(slideIndex);
+            //         }
+
         }
     }
 
@@ -283,8 +307,8 @@ class ElManager {
      * @param isUseAnimation 是否開啟動畫
      */
     slideToPage(page: number, isUseAnimation = true){
-        const {setting} = this.slideSettingManager;
-        const {actual} = this.slideItemManager;
+        const {setting} = this._slideSettingManager;
+        const {actual} = this._slideItemManager;
 
         const slideIndex = getSlideIndex(page, setting.slidesPerGroup, actual.firstIndex);
         this.slideToActualIndex(slideIndex, isUseAnimation);
@@ -293,8 +317,8 @@ class ElManager {
 
     slideToNextPage = (): void => {
 
-        const {nextPage, formatElement, page, actual, residue, element, nextPageFirstIndex} = this.slideItemManager;
-        const {setting} = this.slideSettingManager;
+        const {nextPage, formatElement, page, actual, residue, element, nextPageFirstIndex} = this._slideItemManager;
+        const {setting} = this._slideSettingManager;
         const activeActual = formatElement[actual.activeIndex];
 
         getNextIndex(
@@ -303,7 +327,7 @@ class ElManager {
                 nextPage: nextPage,
                 residue: residue,
                 pageTotal: page.pageTotal,
-                slideTotal: this.slideItemManager.info.formatElement.length,
+                slideTotal: this._slideItemManager.info.formatElement.length,
                 isOverflowPage: nextPage > page.pageTotal,
                 isOverflowIndex: nextPageFirstIndex > element.lastIndex,
             },
@@ -327,17 +351,17 @@ class ElManager {
      */
     slideToPrevPage = (): void => {
 
-        const {nextPage, formatElement, page, actual, residue, element, nextPageFirstIndex} = this.slideItemManager;
-        const {setting} = this.slideSettingManager;
+        const {nextPage, formatElement, page, actual, residue, element, nextPageFirstIndex} = this._slideItemManager;
+        const {setting} = this._slideSettingManager;
         const activeActual = formatElement[actual.activeIndex];
 
         getPrevIndex(
             activeActual,
             {
-                activePage: this.slideItemManager.page.activePage,
+                activePage: this._slideItemManager.page.activePage,
                 residue: residue,
                 pageTotal: page.pageTotal,
-                slideTotal: this.slideItemManager.info.formatElement.length,
+                slideTotal: this._slideItemManager.info.formatElement.length,
                 isOverflowPage: nextPage > page.pageTotal,
                 isOverflowIndex: nextPageFirstIndex > element.lastIndex,
             },

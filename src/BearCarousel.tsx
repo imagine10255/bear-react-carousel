@@ -539,7 +539,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         const formatElement = this.slideItem.info?.formatElement ? this.slideItem.info.formatElement : [];
 
         if (formatElement[actual.activeIndex].isClone) {
-            this.goToActualIndex(formatElement[actual.activeIndex].matchIndex, false);
+            this.elManager.slideToActualIndex(formatElement[actual.activeIndex].matchIndex, false);
         }
     };
 
@@ -665,109 +665,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         );
     };
 
-    /**
-   * Go to the actual location
-   */
-    goToActualIndex = (slideIndex: number, isUseAnimation = true) => {
-        const {moveTime} = this.props;
-
-        if(this.props.isDebug && logEnable.goToActualIndex) log.printInText(`[goToActualIndex] slideIndex: ${slideIndex}, isUseAnimation: ${isUseAnimation}`);
-
-
-        if (Math.ceil(slideIndex) !== slideIndex) {
-            throw Error(`slideIndex(${slideIndex}) can't has floating .xx`);
-        }
-
-        // 檢查:
-        // 1. 移動是否在範圍內
-        if (this.checkActualIndexInRange(slideIndex)) {
-            // 套用目前位置
-
-            // 計算目前正在第幾頁頁數
-            let activePage = 1;
-            if (typeof this.slideItem.info.formatElement[slideIndex] !== 'undefined') {
-                activePage = this.slideItem.info.formatElement[slideIndex].inPage;
-            }
-            this.slideItem.setActiveActual(slideIndex, activePage);
-
-
-            // 移動EL位置
-            const position = this._getMoveDistance(slideIndex);
-            const {containerEl} = this.elManager;
-            if (containerEl) {
-                const className = containerEl.classList;
-                if(!className.contains(elClassName.containerInit)){
-                    className.add(elClassName.containerInit);
-                }
-
-                containerEl.style.transform = `translate(${position}px, 0px)`;
-                containerEl.style.transitionDuration = isUseAnimation
-                    ? `${moveTime}ms`
-                    : '0ms';
-
-
-                if(isUseAnimation){
-                    if(this.resetDurationTimer) clearTimeout(this.resetDurationTimer);
-                    this.resetDurationTimer = setTimeout(() => {
-                        containerEl.style.transitionDuration = '0ms';
-                    }, moveTime / 1.5);
-                }
-
-            }
-
-
-            // 提供是否為第一頁/最後一頁的判斷屬性
-            const {page} = this.slideItem;
-            const {rootEl} = this.elManager;
-            if (rootEl) {
-                if (page.activePage === 1) {
-                    rootEl.setAttribute('data-position', page.activePage === page.pageTotal ? 'hidden' : 'first');
-
-                }else{
-                    rootEl.setAttribute('data-position', page.activePage === page.pageTotal ? 'last': '');
-                }
-            }
-
-            // 更改顯示在第幾個 (父元件使用可判定樣式設定)
-            const {slideItemEls, pageEls} = this.elManager;
-            if(slideItemEls){
-                slideItemEls
-                    // .filter(row => isNotEmpty(row))
-                    .forEach((row, index) => {
-                        if (index === slideIndex) {
-                            row.setAttribute('data-active', 'true');
-                        } else if (row?.dataset.active) {
-                            row.removeAttribute('data-active');
-                        }
-                    });
-            }
-
-
-
-            // 更改顯示在第幾頁的樣式 (父元件使用可判定樣式設定)
-            if (pageEls && this.slideItem.info.isVisiblePagination && page.activePage > 0) {
-                pageEls.forEach((row, index) => {
-                    if(row && row.setAttribute !== null) {
-                        if (page.activePage === index + 1) {
-                            row.setAttribute('data-active', 'true');
-                        } else if(row?.dataset.active) {
-                            row.removeAttribute('data-active');
-                        }
-                    }
-
-                });
-            }
-
-            // 結束移動後再繼續自動模式
-            this._checkAndAutoPlay();
-
-            this._handleSyncCarousel();
-
-            if(this.props.onElementDone){
-                this.props.onElementDone(slideIndex);
-            }
-        }
-    };
 
     /**
    * Render left and right navigation blocks
@@ -830,7 +727,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     /**
      * render slide item
      */
-    renderSlideItems(){
+    _renderSlideItems(){
         const {isDebug} = this.props;
         const {actual, formatElement} = this.slideItem;
         return formatElement.map((row, i) => {
@@ -869,7 +766,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     /**
      * Item CSS style
      */
-    renderStyle() {
+    private _renderStyle() {
         // Generate the desired style (note the trailing ;)
         const rootStyle: string = [
             `padding-top: ${this.settingManager.setting.aspectRatio && this.settingManager.setting.slidesPerView !== 'auto' ? getPaddingBySize(this.settingManager.setting.aspectRatio, this.settingManager.setting.slidesPerView): '0'};`,
@@ -891,13 +788,12 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     /**
      * Display current detection size (debug)
      */
-    renderWindowSize() {
+    private _renderWindowSize() {
         const {windowSize} = this.state;
         return <div className={elClassName.testWindowSize}>
             {windowSize}
         </div>;
     }
-
 
     render() {
         const {style, className, isDebug} = this.props;
@@ -917,19 +813,19 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                     data-debug={isDebug ? 'true':undefined}
                     ref={this.elManager.rootRef}
                 >
-                    {this.renderStyle()}
+                    {this._renderStyle()}
 
                     {this.slideItem.info.isVisibleNavButton && this._renderNavButton()}
 
                     <div className={elClassName.content}>
                         <div ref={this.elManager.containerRef} className={elClassName.container}>
-                            {this.renderSlideItems()}
+                            {this._renderSlideItems()}
                         </div>
                     </div>
 
                     {this.slideItem.info.isVisiblePagination && this.renderPagination()}
 
-                    {isDebug && this.renderWindowSize()}
+                    {isDebug && this._renderWindowSize()}
                 </div>
             </BearCarouselProvider>
 
