@@ -253,7 +253,7 @@ export function getMatrixValue(matrix: string): number[] {
  * 取得 transform x 移動參數
  * @param el
  */
-export function getTranslateParams(el: HTMLDivElement): {x: number, y: number, z: number}{
+export function getTranslateParams(el: HTMLElement): {x: number, y: number, z: number}{
     const style = window.getComputedStyle(el);
     const matrix = style.transform;
 

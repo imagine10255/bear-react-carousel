@@ -32,6 +32,7 @@ import SlideItemManager from './manager/SlideItemManager';
 import SlideItem from './components/SlideItem';
 import ElManager from './manager/ElManager';
 import PositionManager from './manager/PositionManager';
+import {DesktopTouchEvent, MobileTouchEvent} from './manager/DragEvent';
 
 
 
@@ -315,24 +316,14 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         if (this.timer) clearTimeout(this.timer);
 
         const {containerEl} = this.elManager;
-        if (containerEl) {
-            if(containerEl.style.transitionDuration === '0ms'){
-                this._resetPosition();
-                const movePosition = getTranslateParams(containerEl);
+        if(containerEl?.style.transitionDuration === '0ms'){
+            this.elManager.slideResetToMatchIndex();
+            this.positionManager.touchStart2(new MobileTouchEvent(event, containerEl));
 
-                // 紀錄位置
-                this.positionManager.touchStart({
-                    pageX: event.targetTouches[0].pageX,
-                    pageY: event.targetTouches[0].pageY,
-                    x: event.targetTouches[0].pageX - movePosition.x,
-                    y: event.targetTouches[0].pageY - containerEl.offsetTop,
-                });
-
-                containerEl.addEventListener('touchmove', this._onMobileTouchMove, false);
-                containerEl.addEventListener('touchend', this._onMobileTouchEnd, false);
-            }
-
+            containerEl.addEventListener('touchmove', this._onMobileTouchMove, false);
+            containerEl.addEventListener('touchend', this._onMobileTouchEnd, false);
         }
+
     };
 
 
@@ -394,26 +385,14 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     _onWebMouseStart = (event: MouseEvent): void => {
         if(this.props.isDebug && logEnable.onWebMouseStart) log.printInText('[_onWebMouseStart]');
 
-
         if (this.timer) clearTimeout(this.timer);
-        this._resetPosition();
 
+        this.elManager.slideResetToMatchIndex();
         const {containerEl} = this.elManager;
-        const {startPosition} = this.positionManager;
         if (containerEl) {
-            const movePosition = getTranslateParams(containerEl);
-
-            this.positionManager.touchStart({
-                pageX: event.clientX,
-                pageY: event.clientY,
-                x: event.clientX - movePosition.x,
-                y: event.clientY - containerEl.offsetTop,
-            });
-
+            this.positionManager.touchStart2(new DesktopTouchEvent(event, containerEl));
 
             if(this.resetDurationTimer) clearTimeout(this.resetDurationTimer);
-
-            // this._elementMove(startPosition.pageX);
 
             this.elManager.rootEl?.addEventListener('mouseleave', this._onWebMouseEnd, false);
             containerEl.addEventListener('mousemove', this._onWebMouseMove, false);
@@ -532,16 +511,16 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
    *
    * PS: If the element is isClone then return to the position where it should actually be displayed
    */
-    _resetPosition = (): void => {
-        if(this.props.isDebug && logEnable.resetPosition) log.printInText('[_resetPosition]');
-        const {actual} = this.slideItem;
-
-        const formatElement = this.slideItem.info?.formatElement ? this.slideItem.info.formatElement : [];
-
-        if (formatElement[actual.activeIndex].isClone) {
-            this.elManager.slideToActualIndex(formatElement[actual.activeIndex].matchIndex, false);
-        }
-    };
+    // _resetPosition = (): void => {
+    //     if(this.props.isDebug && logEnable.resetPosition) log.printInText('[_resetPosition]');
+    //     const {actual} = this.slideItem;
+    //
+    //     const formatElement = this.slideItem.info?.formatElement ? this.slideItem.info.formatElement : [];
+    //
+    //     if (formatElement[actual.activeIndex].isClone) {
+    //         this.elManager.slideToActualIndex(formatElement[actual.activeIndex].matchIndex, false);
+    //     }
+    // };
 
     private _onResize2 = () => {
         const {windowSize} = this.state;

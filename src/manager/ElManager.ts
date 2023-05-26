@@ -134,6 +134,21 @@ class ElManager {
     }
 
 
+
+    /**
+     * reset page position (Only LoopMode)
+     * PS: If the element is isClone then return to the position where it should actually be displayed
+     */
+    slideResetToMatchIndex = (): void => {
+        // if(this.props.isDebug && logEnable.resetPosition) log.printInText('[_resetPosition]');
+        const {actual, formatElement} = this._slideItemManager;
+
+        if (formatElement[actual.activeIndex].isClone) {
+            this.slideToActualIndex(formatElement[actual.activeIndex].matchIndex, false);
+        }
+    };
+
+
     dragMove(moveX: number) {
         //     if(this.props.isDebug && logEnable.elementMove) log.printInText('[_elementMove]');
 
