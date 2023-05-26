@@ -201,6 +201,8 @@ class ElManager {
      */
     dragDone = (): void => {
         // if(this.props.isDebug && logEnable.elementMoveDone) log.printInText('[_elementMoveDone]');
+        this._setOtherTouch(true);
+
 
         if(this.slideItemEls){
             const active = this.slideItemEls.find(row => row.dataset.active === 'true');
