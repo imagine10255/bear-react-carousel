@@ -156,7 +156,11 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         this.settingManager = new SlideSettingManager(breakpoints, defaultBreakpoint);
         this.slideItem = new SlideItemManager(this.settingManager, data);
         this.positionManager = new PositionManager();
-        this.elManager = new ElManager(this.settingManager, this.slideItem);
+        this.elManager = new ElManager({
+            positionManager: this.positionManager,
+            slideSettingManager: this.settingManager,
+            slideItemManager: this.slideItem
+        });
 
         // this.info = info;
         this.state = {
@@ -372,7 +376,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             if(containerEl){
 
                 const moveX = containerEl.offsetLeft + event.targetTouches[0].pageX;
-                this._elementMove(moveX);
+                this.elManager.dragMove(moveX);
             }
         }
 
@@ -387,12 +391,9 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     _onMobileTouchEnd = (event: TouchEvent): void => {
         if(this.props.isDebug && logEnable.onMobileTouchEnd) log.printInText('[_onMobileTouchEnd]');
 
-        const {containerEl} = this.elManager;
-        if (containerEl) {
-            containerEl.removeEventListener('touchmove', this._onMobileTouchMove, false);
-            containerEl.removeEventListener('touchend', this._onMobileTouchEnd, false);
-        }
-        this._elementMoveDone();
+        this.elManager.containerEl?.removeEventListener('touchmove', this._onMobileTouchMove, false);
+        this.elManager.containerEl?.removeEventListener('touchend', this._onMobileTouchEnd, false);
+        this.elManager.dragDone();
     };
 
     /**
@@ -418,16 +419,12 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                 y: event.clientY - containerEl.offsetTop,
             });
 
-            console.log('xxx');
 
             if(this.resetDurationTimer) clearTimeout(this.resetDurationTimer);
 
             // this._elementMove(startPosition.pageX);
 
-            const {rootEl} = this.elManager;
-            if(rootEl){
-                rootEl.addEventListener('mouseleave', this._onWebMouseEnd, false);
-            }
+            this.elManager.rootEl?.addEventListener('mouseleave', this._onWebMouseEnd, false);
             containerEl.addEventListener('mousemove', this._onWebMouseMove, false);
             containerEl.addEventListener('mouseup', this._onWebMouseEnd, false);
         }
@@ -445,7 +442,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         event.preventDefault();
         const moveX = event.clientX;
 
-        this._elementMove(moveX);
+        this.elManager.dragMove(moveX);
     };
 
     /**
@@ -456,151 +453,38 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         if(this.props.isDebug && logEnable.onWebMouseEnd) log.printInText('[_onWebMouseEnd]');
 
         event.preventDefault();
-
-        const {containerEl} = this.elManager;
-        if (containerEl) {
-            if(this.elManager.rootEl){
-                this.elManager.rootEl.removeEventListener('mouseleave', this._onWebMouseEnd, false);
-            }
-
-            containerEl.removeEventListener('mousemove', this._onWebMouseMove, false);
-            containerEl.removeEventListener('mouseup', this._onWebMouseEnd, false);
-        }
-
-        this._elementMoveDone();
-    };
-
-
-    /**
-     * 加上狀態讓其他元素不會影響滑動
-     * @param isEnable
-     */
-    _setOtherTouch = (isEnable: boolean) => {
-        const {pageGroupEl, navGroupEl} = this.elManager;
-        if(pageGroupEl){
-            pageGroupEl.setAttribute('data-touch', isEnable ? 'true': 'false');
-        }
-        if(navGroupEl){
-            navGroupEl.setAttribute('data-touch', isEnable ? 'true': 'false');
-        }
-    };
-
-    /**
-   * final move execution
-   * @param moveX Move the X-axis
-   */
-    _elementMove = (moveX: number): void => {
-        if(this.props.isDebug && logEnable.elementMove) log.printInText('[_elementMove]');
-
-        this._setOtherTouch(false);
-
-
-
-        const {containerEl, slideItemEls} = this.elManager;
-        const {startPosition} = this.positionManager;
-
-        if (containerEl && this.settingManager.setting.isEnableMouseMove && slideItemEls) {
-            // console.log('this.position.startPosition.x', this._isSyncControl(), moveX);
-            const translateX = calcMoveTranslatePx(startPosition.x, moveX);
-            const percentage = this._getMovePercentage(translateX);
-
-
-            containerEl.style.transform = `translate(${translateX}px, 0px)`;
-            containerEl.style.transitionDuration = '0ms';
-
-            // 取得移動進度
-            // if(this.props.onElementMove){
-            //     this.props.onElementMove(this.activeActualIndex, percentage);
-            // }
-
-            // 同步控制
-            this._syncControlMove(percentage);
-
-
-            // 更改顯示在第幾個 (父元件使用可判定樣式設定)
-            const {slideItemEls} = this.elManager;
-            if(slideItemEls){
-                const activeActualIndex = Math.round(percentage);
-                slideItemEls
-                    .forEach((row, index) => {
-                        if(checkInRange(index, activeActualIndex, slideItemEls.length)){
-                            row.setAttribute('data-active', 'true');
-                        } else if (row?.dataset.active) {
-                            row.removeAttribute('data-active');
-                        }
-                    });
-            }
-
-
-            // 更改顯示在第幾頁的樣式 (父元件使用可判定樣式設定)
-            // const pageRefs = this.pageRefs?.current;
-            // if (pageRefs && this.slideItem.info.isVisiblePagination && this.activePage > 0) {
-            //     const activeActualIndex = Math.round(percentage);
-            //     pageRefs.forEach((row, index) => {
-            //         if(row && row.setAttribute !== null) {
-            //             if (checkInRange(index, activeActualIndex, slideItemRefs.length)) {
-            //                 row.setAttribute('data-active', 'true');
-            //             } else if(row.dataset.active) {
-            //                 row.removeAttribute('data-active');
-            //             }
-            //         }
-            //
-            //     });
-            // }
-
-
-
-        }
-
+        this.elManager.rootEl?.removeEventListener('mouseleave', this._onWebMouseEnd, false);
+        this.elManager.containerEl?.removeEventListener('mousemove', this._onWebMouseMove, false);
+        this.elManager.containerEl?.removeEventListener('mouseup', this._onWebMouseEnd, false);
+        this.elManager.dragDone();
     };
 
 
 
 
-    _syncControlMove = (percentage: number) => {
-        if(this.props.syncControlRefs?.current){
-            const syncControl = this.props.syncControlRefs.current;
-            // 將進度比例換算成 movePx
-            const moveX = syncControl._getPercentageToMovePx(percentage);
-            const {slideItemEls} = syncControl.elManager;
-            const x = slideItemEls[0].clientWidth;
+    // _syncControlMove = (percentage: number) => {
+    //     if(this.props.syncControlRefs?.current){
+    //         const syncControl = this.props.syncControlRefs.current;
+    //         // 將進度比例換算成 movePx
+    //         const moveX = syncControl._getPercentageToMovePx(percentage);
+    //         const {slideItemEls} = syncControl.elManager;
+    //         const x = slideItemEls[0].clientWidth;
+    //
+    //         syncControl.positionManager.touchStart({
+    //             x: this.settingManager.setting.isEnableLoop ? -x : 0,
+    //         });
+    //
+    //         syncControl._elementMove(moveX);
+    //     }
+    // };
+    //
+    // _syncControlDone = (targetIndex: number) => {
+    //     if(this.props.syncControlRefs?.current){
+    //         const syncControl = this.props.syncControlRefs.current;
+    //         syncControl.goToActualIndex(targetIndex);
+    //     }
+    // };
 
-            syncControl.positionManager.touchStart({
-                x: this.settingManager.setting.isEnableLoop ? -x : 0,
-            });
-
-            syncControl._elementMove(moveX);
-        }
-    };
-
-    _syncControlDone = (targetIndex: number) => {
-        if(this.props.syncControlRefs?.current){
-            const syncControl = this.props.syncControlRefs.current;
-            syncControl.goToActualIndex(targetIndex);
-        }
-    };
-
-
-    /**
-   * The object movement ends (confirm the stop position and which Index position should be sucked)
-   */
-    _elementMoveDone = (): void => {
-        if(this.props.isDebug && logEnable.elementMoveDone) log.printInText('[_elementMoveDone]');
-
-        const {slideItemEls} = this.elManager;
-        if(slideItemEls){
-            const active = slideItemEls.find(row => row.dataset.active === 'true');
-            if(active){
-                const activeActualIndex = Number(active.dataset.actual);
-                this.goToActualIndex(activeActualIndex);
-
-                const activeSourceIndex = Number(active.dataset.source);
-                this._syncControlDone(activeSourceIndex);
-            }
-        }
-
-        this._setOtherTouch(true);
-    };
 
 
     /**
