@@ -33,6 +33,7 @@ import SlideItem from './components/SlideItem';
 import ElManager from './manager/ElManager';
 import PositionManager from './manager/PositionManager';
 import {DesktopTouchEvent, MobileTouchEvent} from './manager/DragEvent';
+import Controller from './manager/Controller';
 
 
 
@@ -113,6 +114,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     sizeManager: WindowSizeCalculator;
     positionManager: PositionManager;
     elManager: ElManager;
+    _controller: Controller;
 
 
     constructor(props: IBearCarouselProps) {
@@ -153,6 +155,12 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             slideSettingManager: this.settingManager,
             slideItemManager: this.slideItem
         });
+        this._controller = new Controller({
+            positionManager: this.positionManager,
+            slideSettingManager: this.settingManager,
+            slideItemManager: this.slideItem,
+            elementor: this.elManager
+        });
 
         // this.info = info;
         this.state = {
@@ -171,7 +179,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         if (containerEl) {
             // Move to the correct position for the first time
             if(page.pageTotal > 0){
-                this.elManager.slideToPage(this.props.defaultActivePage ?? 1, false);
+                this._controller.slideToPage(this.props.defaultActivePage ?? 1, false);
             }
 
             // End of moving animation (Need to return to the position, to be fake)
@@ -265,7 +273,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             // reset page position
             const $this = this;
             setTimeout(() => {
-                $this.elManager.slideToPage(1, false);
+                $this._controller.slideToPage(1, false);
             }, 0);
 
             this._handleSyncCarousel();
@@ -317,7 +325,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
         const {containerEl} = this.elManager;
         if(containerEl?.style.transitionDuration === '0ms'){
-            this.elManager.slideResetToMatchIndex();
+            this._controller.slideResetToMatchIndex();
             this.positionManager.touchStart2(new MobileTouchEvent(event, containerEl));
 
             containerEl.addEventListener('touchmove', this._onMobileTouchMove, false);
@@ -358,7 +366,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             if(containerEl){
 
                 const moveX = containerEl.offsetLeft + event.targetTouches[0].pageX;
-                this.elManager.dragMove(moveX);
+                this._controller.dragMove(moveX);
             }
         }
 
@@ -375,7 +383,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
         this.elManager.containerEl?.removeEventListener('touchmove', this._onMobileTouchMove, false);
         this.elManager.containerEl?.removeEventListener('touchend', this._onMobileTouchEnd, false);
-        this.elManager.dragDone();
+        this._controller.dragDone();
     };
 
     /**
@@ -387,7 +395,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
         if (this.timer) clearTimeout(this.timer);
 
-        this.elManager.slideResetToMatchIndex();
+        this._controller.slideResetToMatchIndex();
         const {containerEl} = this.elManager;
         if (containerEl) {
             this.positionManager.touchStart2(new DesktopTouchEvent(event, containerEl));
@@ -412,7 +420,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         event.preventDefault();
         const moveX = event.clientX;
 
-        this.elManager.dragMove(moveX);
+        this._controller.dragMove(moveX);
     };
 
     /**
@@ -426,7 +434,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         this.elManager.rootEl?.removeEventListener('mouseleave', this._onWebMouseEnd, false);
         this.elManager.containerEl?.removeEventListener('mousemove', this._onWebMouseMove, false);
         this.elManager.containerEl?.removeEventListener('mouseup', this._onWebMouseEnd, false);
-        this.elManager.dragDone();
+        this._controller.dragDone();
     };
 
 
@@ -500,7 +508,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
         if (this.settingManager.setting.isEnableLoop && this.settingManager.setting.isEnableAutoPlay && autoPlayTime > 0 && page.pageTotal > 1) {
             this.timer = setTimeout(() => {
-                this.elManager.slideToNextPage();
+                this._controller.slideToNextPage();
             }, autoPlayTime);
         }
     };
@@ -528,7 +536,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             if(this.props.isDebug && logEnable.handleResizeDiff) log.printInText(`[_handleResize] diff windowSize: ${windowSize} -> ${this.sizeManager.size}px`);
             this.setState({windowSize: this.sizeManager.size});
         }else{
-            this.elManager.slideToPage(1, false);
+            this._controller.slideToPage(1, false);
         }
     };
 
@@ -550,7 +558,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                 windowSize: selectSize
             });
         }else{
-            this.elManager.slideToPage(1, false);
+            this._controller.slideToPage(1, false);
         }
     };
 
@@ -571,9 +579,9 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
         }else{
             if(this.props.isDebug && logEnable.handleResize) log.printInText('[_onOrientationchange] goToPage 1');
-            const $elManager = this.elManager;
+            const $controller = this._controller;
             setTimeout(() => {
-                $elManager.slideToPage(1, false);
+                $controller.slideToPage(1, false);
             }, 400);
 
         }
@@ -654,20 +662,20 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
         if (typeof renderNavButton !== 'undefined') {
             return <>
-                {renderNavButton(this.elManager.slideToPrevPage, this.elManager.slideToNextPage)}
+                {renderNavButton(this._controller.slideToPrevPage, this._controller.slideToNextPage)}
             </>;
         }
 
         return (<div
-            ref={this.elManager.navGroupRef}
+            ref={this.elManager._navGroupRef}
             className={elClassName.navGroup}
         >
-            <button type="button" className={elClassName.navPrevButton} onClick={this.elManager.slideToPrevPage}>
+            <button type="button" className={elClassName.navPrevButton} onClick={this._controller.slideToPrevPage}>
                 <div className={elClassName.navIcon}>
                     <ArrowIcon/>
                 </div>
             </button>
-            <button type="button" className={elClassName.navNextButton} onClick={this.elManager.slideToNextPage}>
+            <button type="button" className={elClassName.navNextButton} onClick={this._controller.slideToNextPage}>
                 <div className={elClassName.navIcon}>
                     <ArrowIcon/>
                 </div>
@@ -689,7 +697,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                     ref={(el) => this.elManager.setPageRefs(el, i)}
                     key={`page_${i}`}
                     role='button'
-                    onClick={() => this.elManager.slideToPage(i + 1)}
+                    onClick={() => this._controller.slideToPage(i + 1)}
                     className={elClassName.paginationButton}
                     data-active={page.activePage === i + 1 ? true : undefined}
                     data-page={i + 1}
@@ -735,7 +743,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         const {page} = this.slideItem;
 
         return <div
-            ref={this.elManager.pageGroupRef}
+            ref={this.elManager._pageGroupRef}
             className={elClassName.paginationGroup}
         >
             {page.pageTotal > 0 && this._renderPagination()}
@@ -790,14 +798,14 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                     data-mouse-move={this.settingManager.setting.isEnableMouseMove}
                     data-actual={`${this.slideItem.info.actual.minIndex},${this.slideItem.info.actual.firstIndex}-${this.slideItem.info.actual.lastIndex},${this.slideItem.info.actual.maxIndex}`}
                     data-debug={isDebug ? 'true':undefined}
-                    ref={this.elManager.rootRef}
+                    ref={this.elManager._rootRef}
                 >
                     {this._renderStyle()}
 
                     {this.slideItem.info.isVisibleNavButton && this._renderNavButton()}
 
                     <div className={elClassName.content}>
-                        <div ref={this.elManager.containerRef} className={elClassName.container}>
+                        <div ref={this.elManager._containerRef} className={elClassName.container}>
                             {this._renderSlideItems()}
                         </div>
                     </div>
