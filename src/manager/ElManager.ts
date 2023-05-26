@@ -4,7 +4,7 @@ import {
     checkActualIndexInRange,
     checkInRange,
     getMoveDistance,
-    getMovePercentage,
+    getMovePercentage, getNextIndex, getPrevIndex,
     getSlideIndex,
     getStartPosition,
     initDataList
@@ -287,6 +287,67 @@ class ElManager {
         const slideIndex = getSlideIndex(page, setting.slidesPerGroup, actual.firstIndex);
         this.slideToActualIndex(slideIndex, isUseAnimation);
     }
+
+
+    slideToNextPage = (): void => {
+
+        const {nextPage, formatElement, page, actual, residue, element, nextPageFirstIndex} = this.slideItemManager;
+        const {setting} = this.slideSettingManager;
+        const activeActual = formatElement[actual.activeIndex];
+
+        getNextIndex(
+            activeActual,
+            {
+                nextPage: nextPage,
+                residue: residue,
+                pageTotal: page.pageTotal,
+                slideTotal: this.slideItemManager.info.formatElement.length,
+                isOverflowPage: nextPage > page.pageTotal,
+                isOverflowIndex: nextPageFirstIndex > element.lastIndex,
+            },
+            {
+                slidesPerGroup: setting.slidesPerGroup,
+                slidesPerViewActual: setting.slidesPerViewActual,
+                isLoopMode: setting.isEnableLoop,
+            }
+        )
+            .forEach(action => this.slideToActualIndex(action.index, action.isUseAnimation));
+
+    };
+
+
+
+
+
+
+    /**
+     * go to previous
+     */
+    slideToPrevPage = (): void => {
+
+        const {nextPage, formatElement, page, actual, residue, element, nextPageFirstIndex} = this.slideItemManager;
+        const {setting} = this.slideSettingManager;
+        const activeActual = formatElement[actual.activeIndex];
+
+        getPrevIndex(
+            activeActual,
+            {
+                activePage: this.slideItemManager.page.activePage,
+                residue: residue,
+                pageTotal: page.pageTotal,
+                slideTotal: this.slideItemManager.info.formatElement.length,
+                isOverflowPage: nextPage > page.pageTotal,
+                isOverflowIndex: nextPageFirstIndex > element.lastIndex,
+            },
+            {
+                slidesPerGroup: setting.slidesPerGroup,
+                slidesPerViewActual: setting.slidesPerViewActual,
+                isLoopMode: setting.isEnableLoop,
+            }
+        )
+            .forEach(action => this.slideToActualIndex(action.index, action.isUseAnimation));
+
+    };
 
 
 }

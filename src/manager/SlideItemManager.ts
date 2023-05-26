@@ -1,5 +1,5 @@
 import {IInfo, TBearSlideItemDataList} from '../types';
-import {checkActualIndexInRange, getSlideIndex, initDataList} from '../utils';
+import {checkActualIndexInRange, getNextPageFirstIndex, getSlideIndex, initDataList} from '../utils';
 import SlideSettingManager from './SlideSettingManager';
 
 class SlideItemManager {
@@ -11,12 +11,19 @@ class SlideItemManager {
         this.init(data);
     }
 
+
+    // @TODO: 禁止刪除
     get info(): IInfo {
         return this._info;
     }
 
     get nextPage(): number{
         return this._info.page.activePage + 1;
+    }
+
+    get nextPageFirstIndex(): number{
+        const {setting} = this._slideSettingManager;
+        return getNextPageFirstIndex(setting.isCenteredSlides, this.actual.activeIndex, setting.slidesPerGroup, setting.slidesPerViewActual);
     }
 
     get prevPage(): number{
@@ -33,6 +40,10 @@ class SlideItemManager {
 
     get formatElement() {
         return this._info.formatElement;
+    }
+
+    get element() {
+        return this._info.element;
     }
 
     get residue() {

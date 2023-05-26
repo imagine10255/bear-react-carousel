@@ -111,15 +111,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     settingManager: SlideSettingManager;
     sizeManager: WindowSizeCalculator;
     positionManager: PositionManager;
-
-    // Ref
-    // rootRef: React.RefObject<HTMLDivElement> = React.createRef();
-    // containerRef: React.RefObject<HTMLDivElement> = React.createRef();
-    // slideItemRefs: React.RefObject<Array<HTMLDivElement>> = React.createRef();
-    // pageRefs: React.RefObject<Array<HTMLDivElement>> = React.createRef();
-    // pageGroupRef: React.RefObject<HTMLDivElement> = React.createRef();
-    // navGroupRef: React.RefObject<HTMLDivElement> = React.createRef();
-    // syncControlRefs: React.RefObject<BearCarousel> = React.createRef();
     elManager: ElManager;
 
 
@@ -150,7 +141,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             breakpoints,
         } = props;
         const slidesPerView = typeof props.slidesPerView === 'number' && props.slidesPerView <= 0 ? 1: props.slidesPerView;
-        const defaultBreakpoint = {slidesPerView, slidesPerGroup, aspectRatio, staticHeight, spaceBetween, isCenteredSlides, isEnableNavButton, isEnablePagination, isEnableMouseMove, isEnableAutoPlay, isEnableLoop}
+        const defaultBreakpoint = {slidesPerView, slidesPerGroup, aspectRatio, staticHeight, spaceBetween, isCenteredSlides, isEnableNavButton, isEnablePagination, isEnableMouseMove, isEnableAutoPlay, isEnableLoop};
 
         this.sizeManager = new WindowSizeCalculator(breakpoints);
         this.settingManager = new SlideSettingManager(breakpoints, defaultBreakpoint);
@@ -187,13 +178,17 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
             window.addEventListener('focus', this._onWindowFocus, false);
             window.addEventListener('blur', this._onWindowBlur, false);
-
             window.addEventListener(resizeEvent[this._device], this._onResize2, {passive: false});
 
-            if (this._device === EDevice.mobile) {
+
+            switch (this._device){
+            case EDevice.mobile:
                 containerEl.addEventListener('touchstart', this._onMobileTouchStart, {passive: false});
-            } else {
+                break;
+            case EDevice.desktop:
                 containerEl.addEventListener('mousedown', this._onWebMouseStart, {passive: false});
+                break;
+
             }
         }
 
@@ -261,7 +256,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
             // const {rwdMedia, info} = getMediaInfo(nextProps);
             const slidesPerView = typeof nextProps.slidesPerView === 'number' && nextProps.slidesPerView <= 0 ? 1: nextProps.slidesPerView;
-            const defaultBreakpoint = {slidesPerView, slidesPerGroup, aspectRatio, staticHeight, spaceBetween, isCenteredSlides, isEnableNavButton, isEnablePagination, isEnableMouseMove, isEnableAutoPlay, isEnableLoop}
+            const defaultBreakpoint = {slidesPerView, slidesPerGroup, aspectRatio, staticHeight, spaceBetween, isCenteredSlides, isEnableNavButton, isEnablePagination, isEnableMouseMove, isEnableAutoPlay, isEnableLoop};
 
             this.settingManager.init(breakpoints, defaultBreakpoint);
             this.slideItem.init(data);
@@ -284,10 +279,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     _isSyncControl = () => !!this.props.syncControlRefs === false;
     checkActualIndexInRange = (slideIndex: number) => checkActualIndexInRange(slideIndex, {minIndex: this.slideItem.info.actual.minIndex, maxIndex: this.slideItem.info.actual.maxIndex});
 
-    // getNextPage = () => getNextPage(this.activePage);
-    getNextPageFirstIndex = () => getNextPageFirstIndex(this.settingManager.setting.isCenteredSlides, this.slideItem.actual.activeIndex, this.settingManager.setting.slidesPerGroup, this.settingManager.setting.slidesPerViewActual);
-    getMaxIndex = () => getLastIndex(this.slideItem.info.formatElement.length);
-    _getLoopResetIndex = () => getLoopResetIndex(this.slideItem.actual.activeIndex, this.slideItem.info.residue);
 
 
 
@@ -530,7 +521,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
         if (this.settingManager.setting.isEnableLoop && this.settingManager.setting.isEnableAutoPlay && autoPlayTime > 0 && page.pageTotal > 1) {
             this.timer = setTimeout(() => {
-                this.toNext();
+                this.elManager.slideToNextPage();
             }, autoPlayTime);
         }
     };
@@ -560,7 +551,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         }else{
             this.elManager.slideToPage(1, false);
         }
-    }
+    };
 
 
     /**
@@ -609,57 +600,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         }
     };
 
-
-    /**
-   * go to next page
-   */
-    toNext = (): void => {
-
-        const {nextPage, formatElement, page, actual, residue} = this.slideItem;
-        const activeActual = formatElement[actual.activeIndex];
-
-        getNextIndex(
-            activeActual,
-            {
-                nextPage: nextPage,
-                residue: residue,
-                pageTotal: page.pageTotal,
-                slideTotal: this.slideItem.info.formatElement.length,
-                isOverflowPage: nextPage > page.pageTotal,
-                isOverflowIndex: this.getNextPageFirstIndex() > this.getMaxIndex(),
-            },
-            {
-                slidesPerGroup: this.settingManager.setting.slidesPerGroup,
-                slidesPerViewActual: this.settingManager.setting.slidesPerViewActual,
-                isLoopMode: this.settingManager.setting.isEnableLoop,
-            }
-        )
-            .forEach(action => this.goToActualIndex(action.index, action.isUseAnimation));
-
-    };
-
-
-    /**
-   * go to previous
-   */
-    toPrev = (): void => {
-        const {nextPage, formatElement, page, actual, residue} = this.slideItem;
-
-        const activeSlideItem = formatElement[actual.activeIndex];
-        if (activeSlideItem && activeSlideItem.isClone) {
-
-            this.goToActualIndex(activeSlideItem.matchIndex, false);
-            this.elManager.slideToPage(page.pageTotal - 1);
-
-        } else if (this.settingManager.setting.isEnableLoop && page.activePage === 1 && residue > 0) {
-            // 檢查若為Loop(第一頁移動不整除的時候, 移動位置需要復歸到第一個)
-            this.goToActualIndex(actual.activeIndex - this.slideItem.info.residue);
-
-        } else if (this.settingManager.setting.slidesPerViewActual < this.slideItem.info.formatElement.length) {
-            // Normal move to prev
-            this.goToActualIndex(actual.activeIndex - this.settingManager.setting.slidesPerGroup);
-        }
-    };
 
 
     /**
@@ -838,7 +778,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
         if (typeof renderNavButton !== 'undefined') {
             return <>
-                {renderNavButton(() => this.toPrev(), () => this.toNext())}
+                {renderNavButton(this.elManager.slideToPrevPage, this.elManager.slideToNextPage)}
             </>;
         }
 
@@ -846,12 +786,12 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             ref={this.elManager.navGroupRef}
             className={elClassName.navGroup}
         >
-            <button type="button" className={elClassName.navPrevButton} onClick={() => this.toPrev()}>
+            <button type="button" className={elClassName.navPrevButton} onClick={this.elManager.slideToPrevPage}>
                 <div className={elClassName.navIcon}>
                     <ArrowIcon/>
                 </div>
             </button>
-            <button type="button" className={elClassName.navNextButton} onClick={() => this.toNext()}>
+            <button type="button" className={elClassName.navNextButton} onClick={this.elManager.slideToNextPage}>
                 <div className={elClassName.navIcon}>
                     <ArrowIcon/>
                 </div>
@@ -955,7 +895,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         const {windowSize} = this.state;
         return <div className={elClassName.testWindowSize}>
             {windowSize}
-        </div>
+        </div>;
     }
 
 
