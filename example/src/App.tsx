@@ -197,7 +197,7 @@ function App() {
             isEnablePagination
             isEnableLoop
             isEnableAutoPlay
-            autoPlayTime={2000}
+            autoPlayTime={3000}
             moveTime={400}
             // onElementMove={handleMove}
             // onElementDone={handleDone}

@@ -9,9 +9,9 @@ import {
     getStartPosition,
     initDataList
 } from '../utils';
-import SlideSettingManager from './SlideSettingManager';
+import Configurator from './Configurator';
 import * as React from 'react';
-import SlideItemManager from './SlideItemManager';
+import Stater from './Stater';
 import elClassName from '../el-class-name';
 import PositionManager from './PositionManager';
 import log from '../log';
@@ -19,21 +19,21 @@ import ElManager from './ElManager';
 
 class Controller {
 
-    private readonly _slideSettingManager: SlideSettingManager;
-    private readonly _slideItemManager: SlideItemManager;
+    private readonly _configurator: Configurator;
+    private readonly _stater: Stater;
     private readonly _positionManager: PositionManager;
     private readonly _elementor: ElManager;
 
     moveTime = 500;
 
     constructor(manager: {
-        slideSettingManager: SlideSettingManager,
-        slideItemManager: SlideItemManager,
+        configurator: Configurator,
+        stater: Stater,
         positionManager: PositionManager,
         elementor: ElManager,
     }) {
-        this._slideSettingManager = manager.slideSettingManager;
-        this._slideItemManager = manager.slideItemManager;
+        this._configurator = manager.configurator;
+        this._stater = manager.stater;
         this._positionManager = manager.positionManager;
         this._elementor = manager.elementor;
     }
@@ -45,7 +45,7 @@ class Controller {
      */
     slideResetToMatchIndex = (): void => {
         // if(this.props.isDebug && logEnable.resetPosition) log.printInText('[_resetPosition]');
-        const {actual, formatElement} = this._slideItemManager;
+        const {actual, formatElement} = this._stater;
 
         if (formatElement[actual.activeIndex].isClone) {
             this.slideToActualIndex(formatElement[actual.activeIndex].matchIndex, false);
@@ -61,7 +61,7 @@ class Controller {
 
 
         const {startPosition} = this._positionManager;
-        const {setting} = this._slideSettingManager;
+        const {setting} = this._configurator;
 
         if (this._elementor.containerEl && setting.isEnableMouseMove && this._elementor.slideItemEls) {
             // console.log('this.position.startPosition.x', this._isSyncControl(), moveX);
@@ -138,9 +138,9 @@ class Controller {
 
 
     slideToActualIndex(slideIndex: number, isUseAnimation = true){
-        if (this._slideItemManager.checkActualIndexInRange(slideIndex)) {
-            const {formatElement} = this._slideItemManager;
-            this._slideItemManager.setActiveActual(slideIndex, formatElement[slideIndex]?.inPage ?? 1);
+        if (this._stater.checkActualIndexInRange(slideIndex)) {
+            const {formatElement} = this._stater;
+            this._stater.setActiveActual(slideIndex, formatElement[slideIndex]?.inPage ?? 1);
 
             // 移動EL位置
             const position = this._elementor.getMoveDistance(slideIndex);
@@ -225,8 +225,8 @@ class Controller {
      * @param isUseAnimation 是否開啟動畫
      */
     slideToPage(page: number, isUseAnimation = true){
-        const {setting} = this._slideSettingManager;
-        const {actual} = this._slideItemManager;
+        const {setting} = this._configurator;
+        const {actual} = this._stater;
 
         const slideIndex = getSlideIndex(page, setting.slidesPerGroup, actual.firstIndex);
         this.slideToActualIndex(slideIndex, isUseAnimation);
@@ -238,8 +238,8 @@ class Controller {
      */
     slideToNextPage = (): void => {
 
-        const {nextPage, formatElement, page, actual, residue, element, nextPageFirstIndex} = this._slideItemManager;
-        const {setting} = this._slideSettingManager;
+        const {nextPage, formatElement, page, actual, residue, element, nextPageFirstIndex} = this._stater;
+        const {setting} = this._configurator;
         const activeActual = formatElement[actual.activeIndex];
 
         getNextIndex(
@@ -248,7 +248,7 @@ class Controller {
                 nextPage: nextPage,
                 residue: residue,
                 pageTotal: page.pageTotal,
-                slideTotal: this._slideItemManager.info.formatElement.length,
+                slideTotal: this._stater.info.formatElement.length,
                 isOverflowPage: nextPage > page.pageTotal,
                 isOverflowIndex: nextPageFirstIndex > element.lastIndex,
             },
@@ -272,17 +272,17 @@ class Controller {
      */
     slideToPrevPage = (): void => {
 
-        const {nextPage, formatElement, page, actual, residue, element, nextPageFirstIndex} = this._slideItemManager;
-        const {setting} = this._slideSettingManager;
+        const {nextPage, formatElement, page, actual, residue, element, nextPageFirstIndex} = this._stater;
+        const {setting} = this._configurator;
         const activeActual = formatElement[actual.activeIndex];
 
         getPrevIndex(
             activeActual,
             {
-                activePage: this._slideItemManager.page.activePage,
+                activePage: this._stater.page.activePage,
                 residue: residue,
                 pageTotal: page.pageTotal,
-                slideTotal: this._slideItemManager.info.formatElement.length,
+                slideTotal: this._stater.info.formatElement.length,
                 isOverflowPage: nextPage > page.pageTotal,
                 isOverflowIndex: nextPageFirstIndex > element.lastIndex,
             },

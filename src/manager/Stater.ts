@@ -1,13 +1,13 @@
 import {IInfo, TBearSlideItemDataList} from '../types';
 import {checkActualIndexInRange, getNextPageFirstIndex, getSlideIndex, initDataList} from '../utils';
-import SlideSettingManager from './SlideSettingManager';
+import Configurator from './Configurator';
 
-class SlideItemManager {
-    private _slideSettingManager: SlideSettingManager;
+class Stater {
+    private _configurator: Configurator;
     private _info: IInfo;
 
-    constructor(slideSettingManager: SlideSettingManager, data: TBearSlideItemDataList) {
-        this._slideSettingManager = slideSettingManager;
+    constructor(setter: Configurator, data: TBearSlideItemDataList) {
+        this._configurator = setter;
         this.init(data);
     }
 
@@ -22,7 +22,7 @@ class SlideItemManager {
     }
 
     get nextPageFirstIndex(): number{
-        const {setting} = this._slideSettingManager;
+        const {setting} = this._configurator;
         return getNextPageFirstIndex(setting.isCenteredSlides, this.actual.activeIndex, setting.slidesPerGroup, setting.slidesPerViewActual);
     }
 
@@ -62,7 +62,7 @@ class SlideItemManager {
 
 
     init(slideData: TBearSlideItemDataList = []) {
-        const {slidesPerView, slidesPerViewActual, slidesPerGroup, isCenteredSlides, isEnablePagination, isEnableNavButton, isEnableLoop} = this._slideSettingManager.setting;
+        const {slidesPerView, slidesPerViewActual, slidesPerGroup, isCenteredSlides, isEnablePagination, isEnableNavButton, isEnableLoop} = this._configurator.setting;
 
         let sourceTotal = slideData.length;
         const formatElement = initDataList(
@@ -133,4 +133,4 @@ class SlideItemManager {
 }
 
 
-export default SlideItemManager;
+export default Stater;

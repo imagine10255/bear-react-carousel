@@ -128,3 +128,14 @@ export interface IPropsBreakpoints {
 
 export type TToPrev = () => void
 export type TToNext = () => void
+
+
+
+
+export interface ISetting extends IBreakpointSetting {
+  slidesPerViewActual: TSlidesPerViewActual
+  moveTime: number,
+  defaultActivePage: number,
+  autoPlayTime: number,
+  isDebug: boolean,
+}

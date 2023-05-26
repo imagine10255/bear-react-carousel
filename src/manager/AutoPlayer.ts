@@ -1,26 +1,35 @@
-import SlideSettingManager from './SlideSettingManager';
+import Configurator from './Configurator';
 import Controller from './Controller';
 
 class AutoPlayer {
-
-    _setter: SlideSettingManager;
+    _configurator: Configurator;
     _controller: Controller;
     _timer: NodeJS.Timeout;
 
-    autoPlayTime = 300;
 
-    constructor(setter: SlideSettingManager, controller: Controller) {
-        this._setter = setter;
+    constructor(configurator: Configurator, controller: Controller) {
+        this._configurator = configurator;
         this._controller = controller;
     }
 
-
-
     play(){
-        this._timer = setTimeout(() => {
+        const {setting} = this._configurator;
+
+        if(this._timer || setting.autoPlayTime <= 0){
+            return;
+        }
+
+        this._timer = setInterval(() => {
             this._controller.slideToNextPage();
-        }, this.autoPlayTime);
+        }, setting.autoPlayTime);
     }
+
+    pause(){
+        console.log('pause');
+        clearInterval(this._timer);
+        this._timer = null;
+    }
+
 }
 
 

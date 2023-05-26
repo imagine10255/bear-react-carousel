@@ -9,9 +9,9 @@ import {
     getStartPosition,
     initDataList
 } from '../utils';
-import SlideSettingManager from './SlideSettingManager';
+import Configurator from './Configurator';
 import * as React from 'react';
-import SlideItemManager from './SlideItemManager';
+import Stater from './Stater';
 import elClassName from '../el-class-name';
 import PositionManager from './PositionManager';
 import log from '../log';
@@ -24,15 +24,15 @@ class ElManager {
     _pageGroupRef: React.RefObject<HTMLDivElement> = React.createRef();
     _navGroupRef: React.RefObject<HTMLDivElement> = React.createRef();
 
-    private _slideSettingManager: SlideSettingManager;
-    private _slideItemManager: SlideItemManager;
+    private _setter: Configurator;
+    private _slideItemManager: Stater;
     private _positionManager: PositionManager;
 
     moveTime = 500;
 
     constructor(manager: {
-        slideSettingManager: SlideSettingManager,
-        slideItemManager: SlideItemManager,
+        slideSettingManager: Configurator,
+        slideItemManager: Stater,
         positionManager: PositionManager,
     }) {
         // @ts-ignore
@@ -40,7 +40,7 @@ class ElManager {
         // @ts-ignore
         this._pageRefs.current = [];
 
-        this._slideSettingManager = manager.slideSettingManager;
+        this._setter = manager.slideSettingManager;
         this._slideItemManager = manager.slideItemManager;
         this._positionManager = manager.positionManager;
 
@@ -83,10 +83,10 @@ class ElManager {
      * @param slideItemWidth
      */
     private _getStartPosition = (slideItemWidth: number) => {
-        return getStartPosition(this._slideSettingManager.setting.isCenteredSlides,
+        return getStartPosition(this._setter.setting.isCenteredSlides,
             {
-                slidesPerView: this._slideSettingManager.setting.slidesPerView,
-                slidesPerViewActual: this._slideSettingManager.setting.slidesPerViewActual,
+                slidesPerView: this._setter.setting.slidesPerView,
+                slidesPerViewActual: this._setter.setting.slidesPerViewActual,
             },
             {
                 containerWidth: this.rootEl.clientWidth,
