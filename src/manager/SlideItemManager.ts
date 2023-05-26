@@ -12,7 +12,7 @@ class SlideItemManager {
     }
 
 
-    // @TODO: 禁止刪除
+    // @TODO: 禁止使用，所以需要刪除
     get info(): IInfo {
         return this._info;
     }
