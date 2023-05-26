@@ -196,6 +196,8 @@ function App() {
             isEnableNavButton
             isEnablePagination
             isEnableLoop
+            isEnableAutoPlay
+            autoPlayTime={2000}
             moveTime={400}
             // onElementMove={handleMove}
             // onElementDone={handleDone}

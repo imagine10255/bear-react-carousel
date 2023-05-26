@@ -34,6 +34,7 @@ import ElManager from './manager/ElManager';
 import PositionManager from './manager/PositionManager';
 import {DesktopTouchEvent, MobileTouchEvent} from './manager/DragEvent';
 import Controller from './manager/Controller';
+import AutoPlayer from './manager/AutoPlay';
 
 
 
@@ -115,6 +116,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     positionManager: PositionManager;
     elManager: ElManager;
     _controller: Controller;
+    _autoPlayer: AutoPlayer;
 
 
     constructor(props: IBearCarouselProps) {
@@ -155,12 +157,15 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             slideSettingManager: this.settingManager,
             slideItemManager: this.slideItem
         });
+
         this._controller = new Controller({
             positionManager: this.positionManager,
             slideSettingManager: this.settingManager,
             slideItemManager: this.slideItem,
             elementor: this.elManager
         });
+
+        this._autoPlayer = new AutoPlayer(this.settingManager, this._controller);
 
         // this.info = info;
         this.state = {
