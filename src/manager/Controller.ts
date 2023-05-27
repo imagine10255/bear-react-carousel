@@ -1,28 +1,16 @@
-import {IInfo, TBearSlideItemDataList} from '../types';
-import {
-    calcMoveTranslatePx,
-    checkActualIndexInRange,
-    checkInRange,
-    getMoveDistance,
-    getMovePercentage, getNextIndex, getPrevIndex,
-    getSlideIndex,
-    getStartPosition,
-    initDataList
-} from '../utils';
+import {calcMoveTranslatePx, checkInRange, getNextIndex, getPrevIndex, getSlideIndex} from '../utils';
 import Configurator from './Configurator';
-import * as React from 'react';
 import Stater from './Stater';
 import elClassName from '../el-class-name';
 import Locator from './Locator';
-import log from '../log';
-import ElManager from './ElManager';
+import Elementor from './Elementor';
 
 class Controller {
 
     private readonly _configurator: Configurator;
     private readonly _stater: Stater;
     private readonly _locator: Locator;
-    private readonly _elementor: ElManager;
+    private readonly _elementor: Elementor;
 
     moveTime = 500;
 
@@ -30,7 +18,7 @@ class Controller {
         configurator: Configurator,
         stater: Stater,
         locator: Locator,
-        elementor: ElManager,
+        elementor: Elementor,
     }) {
         this._configurator = manager.configurator;
         this._stater = manager.stater;

@@ -1,41 +1,24 @@
 import * as React from 'react';
-import {
-    checkIsMobile,
-    getPaddingBySize,
-    // getMediaInfo,
-    getSizeByRange,
-    getSlideDirection,
-    getTranslateParams,
-    decimal2Rounding,
-    getSlideIndex,
-    getStartPosition,
-    getNextPageFirstIndex,
-    getNextPage,
-    getLastIndex,
-    checkActualIndexInRange,
-    getLoopResetIndex,
-    getNextIndex,
-    getMoveDistance, getMovePercentage, calcMoveTranslatePx, checkInRange
-} from './utils';
+import {checkIsMobile, getPaddingBySize, getSizeByRange} from './utils';
 import {ulid} from 'ulid';
 import log from './log';
 import deepCompare from './deepCompare';
-import {EDirection, EHorizontal, IBearCarouselProps, IBreakpointSettingActual, IInfo, ITouchStart} from './types';
+import {IBearCarouselProps} from './types';
 import elClassName from './el-class-name';
 import {BearCarouselProvider} from './BearCarouselProvider';
 
-import './styles.css';
-import {ArrowIcon, CloneIcon} from './Icon';
+import {ArrowIcon} from './Icon';
 import Configurator from './manager/Configurator';
 import WindowSizeCalculator from './manager/WindowSizeCalculator';
 import Stater from './manager/Stater';
 import SlideItem from './components/SlideItem';
-import ElManager from './manager/ElManager';
+import Elementor from './manager/Elementor';
 import Locator from './manager/Locator';
 import {DesktopTouchEvent, MobileTouchEvent} from './manager/DragEvent';
 import Controller from './manager/Controller';
 import AutoPlayer from './manager/AutoPlayer';
 
+import './styles.css';
 
 
 // debug log switch
@@ -112,7 +95,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     _configurator: Configurator;
     sizeManager: WindowSizeCalculator;
     _locator: Locator;
-    elManager: ElManager;
+    _elementor: Elementor;
     _controller: Controller;
     _autoPlayer: AutoPlayer;
 
@@ -162,7 +145,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         this._configurator = new Configurator(breakpoints, setting);
         this._stater = new Stater(this._configurator, data);
         this._locator = new Locator();
-        this.elManager = new ElManager({
+        this._elementor = new Elementor({
             locator: this._locator,
             slideSettingManager: this._configurator,
             slideItemManager: this._stater
@@ -172,7 +155,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             locator: this._locator,
             configurator: this._configurator,
             stater: this._stater,
-            elementor: this.elManager
+            elementor: this._elementor
         });
 
         console.log('this._configurator', this._configurator);
@@ -193,7 +176,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
         this._autoPlayer.play();
 
-        const {containerEl} = this.elManager;
+        const {containerEl} = this._elementor;
         if (containerEl) {
             // Move to the correct position for the first time
             if(page.pageTotal > 0){
@@ -229,7 +212,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         window.removeEventListener('focus', this._autoPlayer.play.bind(this._autoPlayer), false);
         window.removeEventListener('blur', this._autoPlayer.pause.bind(this._autoPlayer), false);
 
-        const {containerEl} = this.elManager;
+        const {containerEl} = this._elementor;
         window.removeEventListener(resizeEvent[this._device], this._onResize, false);
 
         if (containerEl) {
@@ -315,7 +298,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
         this._autoPlayer.pause();
 
-        const {containerEl} = this.elManager;
+        const {containerEl} = this._elementor;
         if(containerEl?.style.transitionDuration === '0ms'){
             this._controller.slideResetToMatchIndex();
             this._locator.touchStart2(new MobileTouchEvent(event), containerEl);
@@ -335,7 +318,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     _onMobileTouchMove = (event: TouchEvent): void => {
         event.preventDefault();
 
-        const movePx = this._locator.touchMove(new MobileTouchEvent(event), this.elManager.containerEl);
+        const movePx = this._locator.touchMove(new MobileTouchEvent(event), this._elementor.containerEl);
         this._controller.dragMove(movePx);
     };
 
@@ -348,8 +331,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     _onMobileTouchEnd = (event: TouchEvent): void => {
         if(this.props.isDebug && logEnable.onMobileTouchEnd) log.printInText('[_onMobileTouchEnd]');
 
-        this.elManager.containerEl?.removeEventListener('touchmove', this._onMobileTouchMove, false);
-        this.elManager.containerEl?.removeEventListener('touchend', this._onMobileTouchEnd, false);
+        this._elementor.containerEl?.removeEventListener('touchmove', this._onMobileTouchMove, false);
+        this._elementor.containerEl?.removeEventListener('touchend', this._onMobileTouchEnd, false);
         this._controller.dragDone();
     };
 
@@ -363,13 +346,13 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         this._autoPlayer.pause();
 
         this._controller.slideResetToMatchIndex();
-        const {containerEl} = this.elManager;
+        const {containerEl} = this._elementor;
         if (containerEl) {
             this._locator.touchStart2(new DesktopTouchEvent(event), containerEl);
 
             if(this.resetDurationTimer) clearTimeout(this.resetDurationTimer);
 
-            this.elManager.rootEl?.addEventListener('mouseleave', this._onWebMouseEnd, false);
+            this._elementor.rootEl?.addEventListener('mouseleave', this._onWebMouseEnd, false);
             containerEl.addEventListener('mousemove', this._onWebMouseMove, false);
             containerEl.addEventListener('mouseup', this._onWebMouseEnd, false);
         }
@@ -385,7 +368,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         event.preventDefault();
         if(this.props.isDebug && logEnable.onWebMouseMove) log.printInText('[_onWebMouseMove]');
 
-        const movePx = this._locator.touchMove(new DesktopTouchEvent(event), this.elManager.containerEl);
+        const movePx = this._locator.touchMove(new DesktopTouchEvent(event), this._elementor.containerEl);
         this._controller.dragMove(movePx);
     };
 
@@ -397,9 +380,9 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         event.preventDefault();
         if(this.props.isDebug && logEnable.onWebMouseEnd) log.printInText('[_onWebMouseEnd]');
 
-        this.elManager.rootEl?.removeEventListener('mouseleave', this._onWebMouseEnd, false);
-        this.elManager.containerEl?.removeEventListener('mousemove', this._onWebMouseMove, false);
-        this.elManager.containerEl?.removeEventListener('mouseup', this._onWebMouseEnd, false);
+        this._elementor.rootEl?.removeEventListener('mouseleave', this._onWebMouseEnd, false);
+        this._elementor.containerEl?.removeEventListener('mousemove', this._onWebMouseMove, false);
+        this._elementor.containerEl?.removeEventListener('mouseup', this._onWebMouseEnd, false);
         this._controller.dragDone();
     };
 
@@ -453,7 +436,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     //         const syncControl = this.props.syncControlRefs.current;
     //         // 將進度比例換算成 movePx
     //         const moveX = syncControl._getPercentageToMovePx(percentage);
-    //         const {slideItemEls} = syncControl.elManager;
+    //         const {slideItemEls} = syncControl._elementor;
     //         const x = slideItemEls[0].clientWidth;
     //
     //         syncControl.positionManager.touchStart({
@@ -507,7 +490,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         }
 
         return (<div
-            ref={this.elManager._navGroupRef}
+            ref={this._elementor._navGroupRef}
             className={elClassName.navGroup}
         >
             <button type="button" className={elClassName.navPrevButton} onClick={this._controller.slideToPrevPage}>
@@ -534,7 +517,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         for (let i = 0; i < page.pageTotal; i++) {
             pageElement.push(
                 <div
-                    ref={(el) => this.elManager.setPageRefs(el, i)}
+                    ref={(el) => this._elementor.setPageRefs(el, i)}
                     key={`page_${i}`}
                     role='button'
                     onClick={() => this._controller.slideToPage(i + 1)}
@@ -562,7 +545,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
             return <SlideItem
                 key={`carousel_${i}`}
-                ref={(el) => this.elManager.setSlideItemRefs(el, i)}
+                ref={(el) => this._elementor.setSlideItemRefs(el, i)}
                 element={row.element}
                 actualIndex={row.actualIndex}
                 matchIndex={row.matchIndex}
@@ -583,7 +566,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         const {page} = this._stater;
 
         return <div
-            ref={this.elManager._pageGroupRef}
+            ref={this._elementor._pageGroupRef}
             className={elClassName.paginationGroup}
         >
             {page.pageTotal > 0 && this._renderPagination()}
@@ -638,14 +621,14 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                     data-mouse-move={this._configurator.setting.isEnableMouseMove}
                     data-actual={`${this._stater.info.actual.minIndex},${this._stater.info.actual.firstIndex}-${this._stater.info.actual.lastIndex},${this._stater.info.actual.maxIndex}`}
                     data-debug={isDebug ? 'true':undefined}
-                    ref={this.elManager._rootRef}
+                    ref={this._elementor._rootRef}
                 >
                     {this._renderStyle()}
 
                     {this._stater.info.isVisibleNavButton && this._renderNavButton()}
 
                     <div className={elClassName.content}>
-                        <div ref={this.elManager._containerRef} className={elClassName.container}>
+                        <div ref={this._elementor._containerRef} className={elClassName.container}>
                             {this._renderSlideItems()}
                         </div>
                     </div>

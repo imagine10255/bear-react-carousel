@@ -1,14 +1,10 @@
-import {IInfo, TBearSlideItemDataList} from '../types';
-import {
-    getMoveDistance,
-    getMovePercentage, getStartPosition
-} from '../utils';
+import {getMoveDistance, getMovePercentage, getStartPosition} from '../utils';
 import Configurator from './Configurator';
 import * as React from 'react';
 import Stater from './Stater';
 import Locator from './Locator';
 
-class ElManager {
+class Elementor {
     _rootRef: React.RefObject<HTMLDivElement> = React.createRef();
     _containerRef: React.RefObject<HTMLDivElement> = React.createRef();
     _slideItemRefs: React.RefObject<Array<HTMLDivElement>> = React.createRef();
@@ -142,4 +138,4 @@ class ElManager {
 }
 
 
-export default ElManager;
+export default Elementor;
