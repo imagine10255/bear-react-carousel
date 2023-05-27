@@ -147,7 +147,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
         // this.info = info;
         this.state = {
-            windowSize: getSizeByRange(window.innerWidth, Object.keys(props.breakpoints).map(Number))
+            windowSize: this._windowSizer.size
         };
 
     }
@@ -524,7 +524,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                     style={style}
                     className={[className, elClassName.root].join(' ').trim()}
                     data-gpu-render={booleanToDataAttr(this._device === EDevice.desktop)}
-                    data-per-view-auto={this._configurator.setting.slidesPerView === 'auto'}
+                    data-per-view-auto={booleanToDataAttr(this._configurator.setting.slidesPerView === 'auto')}
                     data-mouse-move={this._configurator.setting.isEnableMouseMove}
                     data-actual={`${this._stater.info.actual.minIndex},${this._stater.info.actual.firstIndex}-${this._stater.info.actual.lastIndex},${this._stater.info.actual.maxIndex}`}
                     data-debug={booleanToDataAttr(isDebug)}

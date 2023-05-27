@@ -17,6 +17,7 @@ class WindowSizer {
     constructor(breakpoints: IPropsBreakpoints, device: EDevice) {
         this._breakpoints = breakpoints;
         this._device = device;
+        this._size = this._calculateSize();
 
         this._onResize = this._onResize.bind(this);
     }
