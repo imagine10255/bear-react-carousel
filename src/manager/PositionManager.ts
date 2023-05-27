@@ -1,6 +1,6 @@
-import {ITouchStart} from '../types';
-import DragEvent from './DragEvent';
-import {getMoveDistance, getStartPosition} from '../utils';
+import {EDirection, ITouchStart} from '../types';
+import {DragEvent} from './DragEvent';
+import {getSlideDirection, getTranslateParams} from '../utils';
 
 
 const defaultPosition: ITouchStart = {
@@ -18,6 +18,7 @@ class PositionManager {
     _startPosition = defaultPosition;
     translateX: 0;
     percentage: 0;
+    moveDirection: EDirection|undefined;
 
     get startPosition(){
         return this._startPosition;
@@ -27,8 +28,22 @@ class PositionManager {
         this._startPosition = {...defaultPosition, ...startPosition};
     }
 
-    public touchStart2(dropEvent: DragEvent){
-        this._startPosition.x = dropEvent.x;
+    public touchStart2(dropEvent: DragEvent, containerEl: HTMLDivElement){
+        const {x} = getTranslateParams(containerEl);
+        this._startPosition.x = dropEvent.x - x;
+    }
+
+    public touchMove(dropEvent: DragEvent, containerEl: HTMLDivElement){
+        const {endX, endY} = dropEvent;
+
+        this.moveDirection = getSlideDirection(this.startPosition.x, this.startPosition.y, endX, endY);
+        // if(this.props.isDebug && logEnable.onMobileTouchMove) log.printInText(`[_onMobileTouchMove] ${startPosition.moveDirection}`);
+
+        // 水平移動
+        if(this.moveDirection === EDirection.horizontal){
+            return containerEl.offsetLeft + dropEvent.x;
+        }
+        return 0;
     }
 
 

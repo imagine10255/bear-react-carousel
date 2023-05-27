@@ -1,71 +1,59 @@
-import {getTranslateParams} from '../utils';
-
-
-interface DragEvent {
+export interface DragEvent {
     x: number,
+    endX: number, // 從文檔（即整個網頁）的左上角開始，到觸摸點的水平（x軸）距離。這個值包括了當前頁面已滾動的距離。即使頁面滾動，這個值也會隨著變化。
+    endY: number,
 }
 
+
+/**
+ * 手機瀏覽器觸控事件
+ */
 export class MobileTouchEvent implements DragEvent{
-    _containerEl: HTMLElement;
     _event: TouchEvent;
 
-    constructor(event: TouchEvent, containerEl: HTMLElement) {
-        this._containerEl = containerEl;
+    get x(){
+        // const {x} = getTranslateParams(this._containerEl);
+        // return this._event.targetTouches[0].pageX - x;
+        return this._event.targetTouches[0].pageX;
+    }
+
+    get endX(){
+        return this._event.targetTouches[0].clientX;
+    }
+    get endY(){
+        return this._event.targetTouches[0].pageY;
+    }
+
+    constructor(event: TouchEvent) {
         this._event = event;
     }
-
-    get x(){
-        const {x} = getTranslateParams(this._containerEl);
-        return this._event.targetTouches[0].pageX - x;
-    }
-
-
-    // init(event){
-    //     this.positionManager.touchStart({
-    //         pageX: event.targetTouches[0].pageX,
-    //         pageY: event.targetTouches[0].pageY,
-    //         x: event.targetTouches[0].pageX - movePosition.x,
-    //         y: event.targetTouches[0].pageY - containerEl.offsetTop,
-    //     });
-    //
-    //     const endX = event.targetTouches[0].clientX;
-    //     const endY = event.targetTouches[0].pageY;
-    //     const pageX = event.targetTouches[0].pageX;
-    // }
-
 }
 
-
-export class DesktopTouchEvent {
-    _containerEl: HTMLElement;
+/**
+ * 桌面瀏覽器觸控事件
+ */
+export class DesktopTouchEvent implements DragEvent{
+    // _containerEl: HTMLElement;
     _event: MouseEvent;
 
     get x(){
-        const {x} = getTranslateParams(this._containerEl);
-        return this._event.clientX - x;
+        // const {x} = getTranslateParams(this._containerEl);
+        // return this._event.clientX - x;
+        return this._event.clientX;
     }
 
-    constructor(event: MouseEvent, containerEl: HTMLElement) {
-        this._containerEl = containerEl;
+    get endX(){
+        return this._event.clientX;
+    }
+    get endY(){
+        return this._event.pageY;
+    }
+
+    constructor(event: MouseEvent) {
         this._event = event;
     }
-
-
-    // init(event: MouseEvent){
-    //     this.positionManager.touchStart({
-    //         pageX: event.clientX,
-    //         pageY: event.clientY,
-    //         x: event.clientX - movePosition.x,
-    //         y: event.clientY - containerEl.offsetTop,
-    //     });
-    //
-    //     const moveX = event.clientX;
-    // }
-
-
 }
 
 
 
 
-export default DragEvent;

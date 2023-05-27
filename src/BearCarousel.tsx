@@ -318,7 +318,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         const {containerEl} = this.elManager;
         if(containerEl?.style.transitionDuration === '0ms'){
             this._controller.slideResetToMatchIndex();
-            this.positionManager.touchStart2(new MobileTouchEvent(event, containerEl));
+            this.positionManager.touchStart2(new MobileTouchEvent(event), containerEl);
 
             containerEl.addEventListener('touchmove', this._onMobileTouchMove, false);
             containerEl.addEventListener('touchend', this._onMobileTouchEnd, false);
@@ -333,30 +333,10 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
    * @param event
    */
     _onMobileTouchMove = (event: TouchEvent): void => {
-
         event.preventDefault();
 
-        const endX = event.targetTouches[0].clientX;
-        const endY = event.targetTouches[0].pageY;
-
-        const {startPosition} = this.positionManager;
-
-        const direction = getSlideDirection(startPosition.pageX, startPosition.pageY, endX, endY);
-        if(typeof startPosition.moveDirection === 'undefined'){
-            startPosition.moveDirection = direction;
-        }
-        if(this.props.isDebug && logEnable.onMobileTouchMove) log.printInText(`[_onMobileTouchMove] ${startPosition.moveDirection}`);
-
-
-        // 水平移動
-        if(startPosition.moveDirection === EDirection.horizontal){
-            const {containerEl} = this.elManager;
-            if(containerEl){
-                const moveX = containerEl.offsetLeft + event.targetTouches[0].pageX;
-                this._controller.dragMove(moveX);
-            }
-        }
-
+        const movePx = this.positionManager.touchMove(new MobileTouchEvent(event), this.elManager.containerEl);
+        this._controller.dragMove(movePx);
     };
 
     /**
@@ -385,7 +365,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         this._controller.slideResetToMatchIndex();
         const {containerEl} = this.elManager;
         if (containerEl) {
-            this.positionManager.touchStart2(new DesktopTouchEvent(event, containerEl));
+            this.positionManager.touchStart2(new DesktopTouchEvent(event), containerEl);
 
             if(this.resetDurationTimer) clearTimeout(this.resetDurationTimer);
 
@@ -402,12 +382,11 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
    * @param event
    */
     _onWebMouseMove = (event: MouseEvent):void => {
+        event.preventDefault();
         if(this.props.isDebug && logEnable.onWebMouseMove) log.printInText('[_onWebMouseMove]');
 
-        event.preventDefault();
-        const moveX = event.clientX;
-
-        this._controller.dragMove(moveX);
+        const movePx = this.positionManager.touchMove(new DesktopTouchEvent(event), this.elManager.containerEl);
+        this._controller.dragMove(movePx);
     };
 
     /**
@@ -415,9 +394,9 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
    * @param event
    */
     _onWebMouseEnd = (event: MouseEvent):void => {
+        event.preventDefault();
         if(this.props.isDebug && logEnable.onWebMouseEnd) log.printInText('[_onWebMouseEnd]');
 
-        event.preventDefault();
         this.elManager.rootEl?.removeEventListener('mouseleave', this._onWebMouseEnd, false);
         this.elManager.containerEl?.removeEventListener('mousemove', this._onWebMouseMove, false);
         this.elManager.containerEl?.removeEventListener('mouseup', this._onWebMouseEnd, false);
