@@ -31,7 +31,7 @@ import WindowSizeCalculator from './manager/WindowSizeCalculator';
 import Stater from './manager/Stater';
 import SlideItem from './components/SlideItem';
 import ElManager from './manager/ElManager';
-import PositionManager from './manager/PositionManager';
+import Locator from './manager/Locator';
 import {DesktopTouchEvent, MobileTouchEvent} from './manager/DragEvent';
 import Controller from './manager/Controller';
 import AutoPlayer from './manager/AutoPlayer';
@@ -111,7 +111,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     _stater: Stater;
     _configurator: Configurator;
     sizeManager: WindowSizeCalculator;
-    positionManager: PositionManager;
+    _locator: Locator;
     elManager: ElManager;
     _controller: Controller;
     _autoPlayer: AutoPlayer;
@@ -161,15 +161,15 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         this.sizeManager = new WindowSizeCalculator(breakpoints);
         this._configurator = new Configurator(breakpoints, setting);
         this._stater = new Stater(this._configurator, data);
-        this.positionManager = new PositionManager();
+        this._locator = new Locator();
         this.elManager = new ElManager({
-            positionManager: this.positionManager,
+            locator: this._locator,
             slideSettingManager: this._configurator,
             slideItemManager: this._stater
         });
 
         this._controller = new Controller({
-            positionManager: this.positionManager,
+            locator: this._locator,
             configurator: this._configurator,
             stater: this._stater,
             elementor: this.elManager
@@ -318,7 +318,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         const {containerEl} = this.elManager;
         if(containerEl?.style.transitionDuration === '0ms'){
             this._controller.slideResetToMatchIndex();
-            this.positionManager.touchStart2(new MobileTouchEvent(event), containerEl);
+            this._locator.touchStart2(new MobileTouchEvent(event), containerEl);
 
             containerEl.addEventListener('touchmove', this._onMobileTouchMove, false);
             containerEl.addEventListener('touchend', this._onMobileTouchEnd, false);
@@ -335,7 +335,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     _onMobileTouchMove = (event: TouchEvent): void => {
         event.preventDefault();
 
-        const movePx = this.positionManager.touchMove(new MobileTouchEvent(event), this.elManager.containerEl);
+        const movePx = this._locator.touchMove(new MobileTouchEvent(event), this.elManager.containerEl);
         this._controller.dragMove(movePx);
     };
 
@@ -365,7 +365,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         this._controller.slideResetToMatchIndex();
         const {containerEl} = this.elManager;
         if (containerEl) {
-            this.positionManager.touchStart2(new DesktopTouchEvent(event), containerEl);
+            this._locator.touchStart2(new DesktopTouchEvent(event), containerEl);
 
             if(this.resetDurationTimer) clearTimeout(this.resetDurationTimer);
 
@@ -385,7 +385,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         event.preventDefault();
         if(this.props.isDebug && logEnable.onWebMouseMove) log.printInText('[_onWebMouseMove]');
 
-        const movePx = this.positionManager.touchMove(new DesktopTouchEvent(event), this.elManager.containerEl);
+        const movePx = this._locator.touchMove(new DesktopTouchEvent(event), this.elManager.containerEl);
         this._controller.dragMove(movePx);
     };
 

@@ -14,7 +14,7 @@ const defaultPosition: ITouchStart = {
 /**
  * 計算距離位置管理器
  */
-class PositionManager {
+class Locator {
     _startPosition = defaultPosition;
     translateX: 0;
     percentage: 0;
@@ -51,4 +51,4 @@ class PositionManager {
 }
 
 
-export default PositionManager;
+export default Locator;

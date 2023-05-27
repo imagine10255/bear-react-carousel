@@ -1,8 +1,5 @@
-import {IBreakpointSetting, IBreakpointSettingActual, IPropsBreakpoints, TSlidesPerViewActual} from '../types';
+import {IBreakpointSetting, IPropsBreakpoints, TSlidesPerViewActual} from '../types';
 import {getMediaSetting} from '../utils';
-import Stater from './Stater';
-import PositionManager from './PositionManager';
-import ElManager from './ElManager';
 
 const defaultSetting: IBreakpointSetting = {
     slidesPerView: 1,

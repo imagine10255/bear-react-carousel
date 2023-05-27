@@ -13,7 +13,7 @@ import Configurator from './Configurator';
 import * as React from 'react';
 import Stater from './Stater';
 import elClassName from '../el-class-name';
-import PositionManager from './PositionManager';
+import Locator from './Locator';
 import log from '../log';
 import ElManager from './ElManager';
 
@@ -21,7 +21,7 @@ class Controller {
 
     private readonly _configurator: Configurator;
     private readonly _stater: Stater;
-    private readonly _positionManager: PositionManager;
+    private readonly _locator: Locator;
     private readonly _elementor: ElManager;
 
     moveTime = 500;
@@ -29,12 +29,12 @@ class Controller {
     constructor(manager: {
         configurator: Configurator,
         stater: Stater,
-        positionManager: PositionManager,
+        locator: Locator,
         elementor: ElManager,
     }) {
         this._configurator = manager.configurator;
         this._stater = manager.stater;
-        this._positionManager = manager.positionManager;
+        this._locator = manager.locator;
         this._elementor = manager.elementor;
     }
 
@@ -60,7 +60,7 @@ class Controller {
 
 
 
-        const {startPosition} = this._positionManager;
+        const {startPosition} = this._locator;
         const {setting} = this._configurator;
 
         if (this._elementor.containerEl && setting.isEnableMouseMove && this._elementor.slideItemEls) {

@@ -1,20 +1,12 @@
 import {IInfo, TBearSlideItemDataList} from '../types';
 import {
-    calcMoveTranslatePx,
-    checkActualIndexInRange,
-    checkInRange,
     getMoveDistance,
-    getMovePercentage, getNextIndex, getPrevIndex,
-    getSlideIndex,
-    getStartPosition,
-    initDataList
+    getMovePercentage, getStartPosition
 } from '../utils';
 import Configurator from './Configurator';
 import * as React from 'react';
 import Stater from './Stater';
-import elClassName from '../el-class-name';
-import PositionManager from './PositionManager';
-import log from '../log';
+import Locator from './Locator';
 
 class ElManager {
     _rootRef: React.RefObject<HTMLDivElement> = React.createRef();
@@ -26,14 +18,14 @@ class ElManager {
 
     private _setter: Configurator;
     private _slideItemManager: Stater;
-    private _positionManager: PositionManager;
+    private _locator: Locator;
 
     moveTime = 500;
 
     constructor(manager: {
         slideSettingManager: Configurator,
         slideItemManager: Stater,
-        positionManager: PositionManager,
+        locator: Locator,
     }) {
         // @ts-ignore
         this._slideItemRefs.current = [];
@@ -42,7 +34,7 @@ class ElManager {
 
         this._setter = manager.slideSettingManager;
         this._slideItemManager = manager.slideItemManager;
-        this._positionManager = manager.positionManager;
+        this._locator = manager.locator;
 
     }
 
