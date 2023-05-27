@@ -5,6 +5,10 @@ import BearCarousel from './BearCarousel';
 export type TSlidesPerView = number|'auto'
 export type TSlidesPerViewActual = number
 
+export enum EDevice {
+  mobile,
+  desktop,
+}
 
 export interface IBearCarouselObj {
   goToPage: (page: number) => void;

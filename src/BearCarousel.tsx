@@ -1,15 +1,14 @@
 import * as React from 'react';
 import {booleanToDataAttr, checkIsMobile, getPaddingBySize, getSizeByRange} from './utils';
-import {ulid} from 'ulid';
 import log from './log';
 import deepCompare from './deepCompare';
-import {IBearCarouselProps} from './types';
+import {EDevice, IBearCarouselProps} from './types';
 import elClassName from './el-class-name';
 import {BearCarouselProvider} from './BearCarouselProvider';
 
 import {ArrowIcon} from './Icon';
 import Configurator from './manager/Configurator';
-import WindowSizeCalculator from './manager/WindowSizeCalculator';
+import WindowSizer from './manager/WindowSizer';
 import Stater from './manager/Stater';
 import SlideItem from './components/SlideItem';
 import Elementor from './manager/Elementor';
@@ -48,19 +47,8 @@ interface IState {
 }
 
 
-enum EDevice {
-    mobile,
-    desktop,
-}
 
-const resizeEvent: Record<EDevice, string> = {
-    [EDevice.mobile]: 'orientationchange',
-    [EDevice.desktop]:  'resize'
-};
-const touchEvent: Record<EDevice, string> = {
-    [EDevice.mobile]: 'touchmove',
-    [EDevice.desktop]:  'mousedown'
-};
+
 
 
 class BearCarousel extends React.Component<IBearCarouselProps, IState> {
@@ -94,7 +82,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
     _stater: Stater;
     _configurator: Configurator;
-    _windowSizeCalculator: WindowSizeCalculator;
+    _windowSizer: WindowSizer;
     _locator: Locator;
     _elementor: Elementor;
     _controller: Controller;
@@ -103,14 +91,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
     constructor(props: IBearCarouselProps) {
         super(props);
-
-        // @ts-ignore
-        // this._staterRefs['current'] = [];
-        // @ts-ignore
-        // this.pageRefs['current'] = [];
-
         this._device = checkIsMobile() ? EDevice.mobile : EDevice.desktop;
-        // const {rwdMedia, info} = getMediaInfo(props);
 
         const {
             data,
@@ -142,7 +123,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         };
 
 
-        this._windowSizeCalculator = new WindowSizeCalculator(breakpoints);
+        this._windowSizer = new WindowSizer(breakpoints, this._device);
         this._configurator = new Configurator(breakpoints, setting);
         this._stater = new Stater(this._configurator, data);
         this._locator = new Locator();
@@ -159,8 +140,10 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             elementor: this._elementor
         });
 
-        console.log('this._configurator', this._configurator);
-        this._autoPlayer = new AutoPlayer(this._configurator, this._controller);
+        this._autoPlayer = new AutoPlayer({
+            configurator: this._configurator,
+            controller: this._controller,
+        });
 
         // this.info = info;
         this.state = {
@@ -186,10 +169,13 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             // End of moving animation (Need to return to the position, to be fake)
 
             this._autoPlayer.mount();
-
-            // window.addEventListener('focus', this._autoPlayer.play.bind(this._autoPlayer), false);
-            // window.addEventListener('blur', this._autoPlayer.pause.bind(this._autoPlayer), false);
-            window.addEventListener(resizeEvent[this._device], this._onResize, {passive: false});
+            this._windowSizer.mount((windowSize) => {
+                if(windowSize !== this.state.windowSize){
+                    this.setState({windowSize});
+                }else{
+                    this._controller.slideToPage(1, false);
+                }
+            });
 
 
             switch (this._device){
@@ -209,11 +195,10 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
     componentWillUnmount() {
         if(this.props.isDebug && logEnable.componentWillUnmount) log.printInText('[componentWillUnmount]');
+        const {containerEl} = this._elementor;
 
         this._autoPlayer.unmount();
-
-        const {containerEl} = this._elementor;
-        window.removeEventListener(resizeEvent[this._device], this._onResize, false);
+        this._windowSizer.unmount();
 
         if (containerEl) {
             if (this._device === EDevice.mobile) {
@@ -223,8 +208,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             }
 
         }
-
-
     }
 
 
@@ -262,13 +245,23 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                 isEnableLoop,
 
                 breakpoints,
+
+                moveTime,
+                defaultActivePage,
+                autoPlayTime,
+                isDebug
             } = nextProps;
 
-            // const {rwdMedia, info} = getMediaInfo(nextProps);
             const slidesPerView = typeof nextProps.slidesPerView === 'number' && nextProps.slidesPerView <= 0 ? 1: nextProps.slidesPerView;
-            const defaultBreakpoint = {slidesPerView, slidesPerGroup, aspectRatio, staticHeight, spaceBetween, isCenteredSlides, isEnableNavButton, isEnablePagination, isEnableMouseMove, isEnableAutoPlay, isEnableLoop};
+            const setting = {
+                slidesPerView, slidesPerGroup, aspectRatio, staticHeight, spaceBetween, isCenteredSlides, isEnableNavButton, isEnablePagination, isEnableMouseMove, isEnableAutoPlay, isEnableLoop,
+                moveTime,
+                defaultActivePage,
+                autoPlayTime,
+                isDebug
+            };
 
-            this._configurator.init(breakpoints, defaultBreakpoint);
+            this._configurator.init(breakpoints, setting);
             this._stater.init(data);
 
             // reset page position
@@ -387,50 +380,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         this._controller.dragDone();
         this._autoPlayer.play();
     };
-
-
-
-    /**
-     * When dealing with changing screen size
-     */
-    private _onResize = () => {
-        const {windowSize} = this.state;
-        if (windowSize !== this._windowSizeCalculator.size) {
-            if(this.props.isDebug && logEnable.handleResizeDiff) log.printInText(`[_handleResize] diff windowSize: ${windowSize} -> ${this._windowSizeCalculator.size}px`);
-            this.setState({windowSize: this._windowSizeCalculator.size});
-        }else{
-            this._controller.slideToPage(1, false);
-        }
-    };
-
-
-    /**
-   * When dealing with changing screen size
-   */
-    _onOrientationchange = () => {
-        const {breakpoints} = this.props;
-        const {windowSize} = this.state;
-
-        // @ts-ignore
-        if(this.props.isDebug && logEnable.handleResize) log.printInText('[_onOrientationchange] ');
-
-        const selectSize = getSizeByRange(window.innerWidth, Object.keys(breakpoints).map(Number));
-        if (windowSize !== selectSize) {
-            if(this.props.isDebug && logEnable.handleResize) log.printInText('[_onOrientationchange] set windowSize');
-            this.setState({windowSize: selectSize});
-
-        }else{
-            if(this.props.isDebug && logEnable.handleResize) log.printInText('[_onOrientationchange] goToPage 1');
-            const $controller = this._controller;
-            setTimeout(() => {
-                $controller.slideToPage(1, false);
-            }, 400);
-
-        }
-    };
-
-
-
 
 
     // _syncControlMove = (percentage: number) => {
@@ -593,7 +542,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
                     {this._stater.info.isVisiblePagination && this._renderPagination()}
 
-                    {isDebug && <WindowSize size={this.state.windowSize}/>}
+                    {isDebug && <WindowSize size={this._windowSizer.size}/>}
                 </div>
             </BearCarouselProvider>
 

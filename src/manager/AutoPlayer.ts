@@ -16,11 +16,15 @@ class AutoPlayer {
         return this._timer;
     }
 
-    constructor(configurator: Configurator, controller: Controller) {
-        this._configurator = configurator;
-        this._controller = controller;
-        this.boundPlay = this.play.bind(this);
-        this.boundPause = this.pause.bind(this);
+    constructor(manager: {
+        configurator: Configurator,
+        controller: Controller,
+    }) {
+        this._configurator = manager.configurator;
+        this._controller = manager.controller;
+
+        this.boundPlay = this.play.bind(this, this._configurator);
+        this.boundPause = this.pause.bind(this, this._configurator);
     }
 
     mount(){
@@ -43,7 +47,7 @@ class AutoPlayer {
     play(){
         const {setting} = this._configurator;
 
-        if(this.isPlaying || setting.autoPlayTime <= 0){
+        if(this.isPlaying || setting.isEnableAutoPlay || setting.autoPlayTime <= 0){
             return;
         }
 

@@ -69,7 +69,7 @@ const bearSlideItemData3: TBearSlideItemDataList = images.map(row => {
 
 function App() {
     const [carousel, setCarousel] = useState<IBearCarouselObj>();
-    const [enable, setEnable] = useState<boolean>(false);
+    const [enable, setEnable] = useState<boolean>(true);
     const [count, setCount] = useState<number>(0);
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const flexItemRef = useRef<HTMLDivElement>(null);
@@ -199,16 +199,16 @@ function App() {
             isEnablePagination
             isEnableLoop
             isEnableAutoPlay
-            autoPlayTime={1500}
+            autoPlayTime={0}
             moveTime={400}
             // onElementMove={handleMove}
             // onElementDone={handleDone}
-            // breakpoints={{
-            //     992: {
-            //         slidesPerView: 2,
-            //         isCenteredSlides: false,
-            //     }
-            // }}
+            breakpoints={{
+                992: {
+                    slidesPerView: 2,
+                    isCenteredSlides: false,
+                }
+            }}
 
             isDebug
         />)}
