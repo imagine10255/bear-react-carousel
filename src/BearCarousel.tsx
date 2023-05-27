@@ -14,7 +14,7 @@ import Stater from './manager/Stater';
 import SlideItem from './components/SlideItem';
 import Elementor from './manager/Elementor';
 import Locator from './manager/Locator';
-import {DesktopTouchEvent, MobileTouchEvent} from './manager/DragEvent';
+import {DesktopTouchEvent, MobileTouchEvent} from './interface/DragEvent';
 import Controller from './manager/Controller';
 import AutoPlayer from './manager/AutoPlayer';
 
@@ -93,7 +93,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
     _stater: Stater;
     _configurator: Configurator;
-    sizeManager: WindowSizeCalculator;
+    _windowSizeCalculator: WindowSizeCalculator;
     _locator: Locator;
     _elementor: Elementor;
     _controller: Controller;
@@ -141,7 +141,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         };
 
 
-        this.sizeManager = new WindowSizeCalculator(breakpoints);
+        this._windowSizeCalculator = new WindowSizeCalculator(breakpoints);
         this._configurator = new Configurator(breakpoints, setting);
         this._stater = new Stater(this._configurator, data);
         this._locator = new Locator();
@@ -393,9 +393,9 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
      */
     private _onResize = () => {
         const {windowSize} = this.state;
-        if (windowSize !== this.sizeManager.size) {
-            if(this.props.isDebug && logEnable.handleResizeDiff) log.printInText(`[_handleResize] diff windowSize: ${windowSize} -> ${this.sizeManager.size}px`);
-            this.setState({windowSize: this.sizeManager.size});
+        if (windowSize !== this._windowSizeCalculator.size) {
+            if(this.props.isDebug && logEnable.handleResizeDiff) log.printInText(`[_handleResize] diff windowSize: ${windowSize} -> ${this._windowSizeCalculator.size}px`);
+            this.setState({windowSize: this._windowSizeCalculator.size});
         }else{
             this._controller.slideToPage(1, false);
         }
