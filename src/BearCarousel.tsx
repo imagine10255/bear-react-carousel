@@ -174,7 +174,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
         const {page} = this._stater.info;
 
-        this._autoPlayer.play();
 
         const {containerEl} = this._elementor;
         if (containerEl) {
@@ -185,8 +184,10 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
             // End of moving animation (Need to return to the position, to be fake)
 
-            window.addEventListener('focus', this._autoPlayer.play.bind(this._autoPlayer), false);
-            window.addEventListener('blur', this._autoPlayer.pause.bind(this._autoPlayer), false);
+            this._autoPlayer.mount();
+
+            // window.addEventListener('focus', this._autoPlayer.play.bind(this._autoPlayer), false);
+            // window.addEventListener('blur', this._autoPlayer.pause.bind(this._autoPlayer), false);
             window.addEventListener(resizeEvent[this._device], this._onResize, {passive: false});
 
 
@@ -208,9 +209,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     componentWillUnmount() {
         if(this.props.isDebug && logEnable.componentWillUnmount) log.printInText('[componentWillUnmount]');
 
-        this._autoPlayer.pause();
-        window.removeEventListener('focus', this._autoPlayer.play.bind(this._autoPlayer), false);
-        window.removeEventListener('blur', this._autoPlayer.pause.bind(this._autoPlayer), false);
+        this._autoPlayer.unmount();
 
         const {containerEl} = this._elementor;
         window.removeEventListener(resizeEvent[this._device], this._onResize, false);
@@ -334,6 +333,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         this._elementor.containerEl?.removeEventListener('touchmove', this._onMobileTouchMove, false);
         this._elementor.containerEl?.removeEventListener('touchend', this._onMobileTouchEnd, false);
         this._controller.dragDone();
+        this._autoPlayer.play();
     };
 
     /**
@@ -384,6 +384,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         this._elementor.containerEl?.removeEventListener('mousemove', this._onWebMouseMove, false);
         this._elementor.containerEl?.removeEventListener('mouseup', this._onWebMouseEnd, false);
         this._controller.dragDone();
+        this._autoPlayer.play();
     };
 
 

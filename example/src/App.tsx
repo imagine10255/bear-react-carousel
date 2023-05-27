@@ -69,6 +69,7 @@ const bearSlideItemData3: TBearSlideItemDataList = images.map(row => {
 
 function App() {
     const [carousel, setCarousel] = useState<IBearCarouselObj>();
+    const [enable, setEnable] = useState<boolean>(false);
     const [count, setCount] = useState<number>(0);
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const flexItemRef = useRef<HTMLDivElement>(null);
@@ -181,6 +182,7 @@ function App() {
 
 
         {/*測試依照比例設定容器高度*/}
+        {enable && (
         <BearCarousel
             syncControlRefs={syncControlRefs}
             data={bearSlideItemData1}
@@ -197,7 +199,7 @@ function App() {
             isEnablePagination
             isEnableLoop
             isEnableAutoPlay
-            autoPlayTime={3000}
+            autoPlayTime={1500}
             moveTime={400}
             // onElementMove={handleMove}
             // onElementDone={handleDone}
@@ -209,7 +211,7 @@ function App() {
             // }}
 
             isDebug
-        />
+        />)}
 
 
         {/*<textarea cols={30} rows={10} ref={textareaRef} style={{width: '100%'}}/>*/}
@@ -225,6 +227,7 @@ function App() {
         {/*</Flex>*/}
 
         <button type="button" onClick={() => setCount(curr => curr += 1)}> count: {count}</button>
+        <button type="button" onClick={() => setEnable(curr => !curr)}> enable: {String(enable)}</button>
     </div>;
 
 
