@@ -147,8 +147,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         this._locator = new Locator();
         this._elementor = new Elementor({
             locator: this._locator,
-            slideSettingManager: this._configurator,
-            slideItemManager: this._stater
+            configurator: this._configurator,
+            stater: this._stater
         });
 
         this._controller = new Controller({

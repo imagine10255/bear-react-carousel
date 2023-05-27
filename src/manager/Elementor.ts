@@ -13,14 +13,14 @@ class Elementor {
     _navGroupRef: React.RefObject<HTMLDivElement> = React.createRef();
 
     private _setter: Configurator;
-    private _slideItemManager: Stater;
+    private _stater: Stater;
     private _locator: Locator;
 
     moveTime = 500;
 
     constructor(manager: {
-        slideSettingManager: Configurator,
-        slideItemManager: Stater,
+        configurator: Configurator,
+        stater: Stater,
         locator: Locator,
     }) {
         // @ts-ignore
@@ -28,8 +28,8 @@ class Elementor {
         // @ts-ignore
         this._pageRefs.current = [];
 
-        this._setter = manager.slideSettingManager;
-        this._slideItemManager = manager.slideItemManager;
+        this._setter = manager.configurator;
+        this._stater = manager.stater;
         this._locator = manager.locator;
 
     }
@@ -59,7 +59,7 @@ class Elementor {
      * @param movePx
      */
     getMovePercentage = (movePx: number) => {
-        const {actual} = this._slideItemManager;
+        const {actual} = this._stater;
         const slideCurrWidth = this.slideItemEls[actual.activeIndex].clientWidth;
         const startPosition = this._getStartPosition(slideCurrWidth);
         return getMovePercentage(movePx, startPosition, slideCurrWidth);
@@ -71,7 +71,7 @@ class Elementor {
      * @param movePx
      */
     getPercentageToMovePx = (movePx: number) => {
-        const {actual} = this._slideItemManager;
+        const {actual} = this._stater;
         const slideCurrWidth = this.slideItemEls[actual.activeIndex].clientWidth;
         const startPosition = this._getStartPosition(slideCurrWidth);
         return getMovePercentage(movePx, startPosition, slideCurrWidth);

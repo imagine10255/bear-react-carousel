@@ -1,5 +1,5 @@
 import {EDirection, ITouchStart} from '../types';
-import {DragEvent} from './DragEvent';
+import {DragEvent} from '../interface/DragEvent';
 import {getSlideDirection, getTranslateParams} from '../utils';
 
 
