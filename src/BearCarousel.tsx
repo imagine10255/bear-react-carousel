@@ -19,6 +19,8 @@ import Controller from './manager/Controller';
 import AutoPlayer from './manager/AutoPlayer';
 
 import './styles.css';
+import WindowSize from './components/WindowSize';
+import Page from './components/Page';
 
 
 // debug log switch
@@ -344,8 +346,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         if(this.props.isDebug && logEnable.onWebMouseStart) log.printInText('[_onWebMouseStart]');
 
         this._autoPlayer.pause();
-
         this._controller.slideResetToMatchIndex();
+
         const {containerEl} = this._elementor;
         if (containerEl) {
             this._locator.touchStart2(new DesktopTouchEvent(event), containerEl);
@@ -507,33 +509,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         </div>);
     };
 
-    /**
-   * render button block
-   */
-    _renderPagination = () => {
-        const {data} = this.props;
-        const {page} = this._stater;
-        const pageElement = [];
 
-        for (let i = 0; i < page.pageTotal; i++) {
-            pageElement.push(
-                <div
-                    ref={(el) => this._elementor.setPageRefs(el, i)}
-                    key={`page_${i}`}
-                    role='button'
-                    onClick={() => this._controller.slideToPage(i + 1)}
-                    className={elClassName.paginationButton}
-                    data-active={page.activePage === i + 1 ? true : undefined}
-                    data-page={i + 1}
-                >
-                    <div className={elClassName.paginationContent}>
-                        {data[i]?.paginationContent}
-                    </div>
-                </div>
-            );
-        }
-        return pageElement;
-    };
 
     /**
      * render slide item
@@ -563,14 +539,27 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     /**
      * Page number navigation buttons
      */
-    renderPagination() {
+    _renderPagination() {
         const {page} = this._stater;
+        const pageElement = [];
+
+        for (let i = 0; i < page.pageTotal; i++) {
+            pageElement.push(
+                <Page
+                    key={`page_${i}`}
+                    ref={(el) => this._elementor.setPageRefs(el, i)}
+                    onSlideToPage={this._controller.slideToPage}
+                    page={i + 1}
+                    isActive={page.activePage === i + 1}
+                />
+            );
+        }
 
         return <div
             ref={this._elementor._pageGroupRef}
             className={elClassName.paginationGroup}
         >
-            {page.pageTotal > 0 && this._renderPagination()}
+            {pageElement}
         </div>;
     }
 
@@ -596,15 +585,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
               `}</style>;
     }
 
-    /**
-     * Display current detection size (debug)
-     */
-    private _renderWindowSize() {
-        const {windowSize} = this.state;
-        return <div className={elClassName.testWindowSize}>
-            {windowSize}
-        </div>;
-    }
+
+
 
     render() {
         const {style, className, isDebug} = this.props;
@@ -634,9 +616,9 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                         </div>
                     </div>
 
-                    {this._stater.info.isVisiblePagination && this.renderPagination()}
+                    {this._stater.info.isVisiblePagination && this._renderPagination()}
 
-                    {isDebug && this._renderWindowSize()}
+                    {isDebug && <WindowSize size={this.state.windowSize}/>}
                 </div>
             </BearCarouselProvider>
 
