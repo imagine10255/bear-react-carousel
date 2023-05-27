@@ -2,6 +2,7 @@ import elClassName from '../el-class-name';
 import {CloneIcon} from '../Icon';
 import * as React from 'react';
 import {forwardRef} from 'react';
+import {booleanToDataAttr} from '../utils';
 
 
 interface IProps {
@@ -31,12 +32,12 @@ const SlideItem = forwardRef<HTMLInputElement, IProps>(({
     return <div
         className={elClassName.slideItem}
         ref={ref}
-        data-active={isActive}
+        data-active={booleanToDataAttr(isActive)}
         data-actual={actualIndex}
-        data-match={isClone ? matchIndex : undefined}
+        data-match={booleanToDataAttr(isClone, matchIndex)}
         data-page={inPage}
         data-source={sourceIndex}
-        data-is-clone={isClone ? true : undefined}
+        data-is-clone={booleanToDataAttr(isClone)}
     >
         {element}
 

@@ -550,3 +550,11 @@ export function getPrevIndex(
     return [];
 }
 
+
+export function booleanToDataAttr(isTrue: boolean, returnValue: number|string = 'true'): string|undefined{
+    if(isTrue){
+        return String(returnValue);
+    }
+    return undefined;
+}
+

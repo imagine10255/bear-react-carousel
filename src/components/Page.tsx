@@ -2,6 +2,7 @@ import elClassName from '../el-class-name';
 import {CloneIcon} from '../Icon';
 import * as React from 'react';
 import {forwardRef, useCallback} from 'react';
+import {booleanToDataAttr} from '../utils';
 
 
 interface IProps {
@@ -25,7 +26,7 @@ const Page = forwardRef<HTMLDivElement, IProps>(({
         ref={ref}
         role='button'
         onClick={handleSlideToPage}
-        data-active={isActive ? true : undefined}
+        data-active={booleanToDataAttr(isActive)}
         data-page={page}
     >
         {/*<div className={elClassName.paginationContent}>*/}

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {checkIsMobile, getPaddingBySize, getSizeByRange} from './utils';
+import {booleanToDataAttr, checkIsMobile, getPaddingBySize, getSizeByRange} from './utils';
 import {ulid} from 'ulid';
 import log from './log';
 import deepCompare from './deepCompare';
@@ -574,11 +574,11 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                     id={this._configurator.carouselId}
                     style={style}
                     className={[className, elClassName.root].join(' ').trim()}
-                    data-gpu-render={this._device === EDevice.desktop ? 'true': undefined}
+                    data-gpu-render={booleanToDataAttr(this._device === EDevice.desktop)}
                     data-per-view-auto={this._configurator.setting.slidesPerView === 'auto'}
                     data-mouse-move={this._configurator.setting.isEnableMouseMove}
                     data-actual={`${this._stater.info.actual.minIndex},${this._stater.info.actual.firstIndex}-${this._stater.info.actual.lastIndex},${this._stater.info.actual.maxIndex}`}
-                    data-debug={isDebug ? 'true':undefined}
+                    data-debug={booleanToDataAttr(isDebug)}
                     ref={this._elementor._rootRef}
                 >
                     <style scoped dangerouslySetInnerHTML={{__html: this._configurator.style}}/>
