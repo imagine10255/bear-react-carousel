@@ -20,6 +20,7 @@ import AutoPlayer from './manager/AutoPlayer';
 import './styles.css';
 import WindowSize from './components/WindowSize';
 import Page from './components/Page';
+import Dragger from './manager/Dragger';
 
 
 // debug log switch
@@ -87,6 +88,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     _elementor: Elementor;
     _controller: Controller;
     _autoPlayer: AutoPlayer;
+    _dragger: Dragger;
 
 
     constructor(props: IBearCarouselProps) {
@@ -145,6 +147,14 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             controller: this._controller,
         });
 
+        this._dragger = new Dragger({
+            locator: this._locator,
+            configurator: this._configurator,
+            autoPlayer: this._autoPlayer,
+            elementor: this._elementor,
+            controller: this._controller,
+        }, this._device);
+
         // this.info = info;
         this.state = {
             windowSize: this._windowSizer.size
@@ -177,16 +187,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                 }
             });
 
-
-            switch (this._device){
-            case EDevice.mobile:
-                containerEl.addEventListener('touchstart', this._onMobileTouchStart, {passive: false});
-                break;
-            case EDevice.desktop:
-                containerEl.addEventListener('mousedown', this._onWebMouseStart, {passive: false});
-                break;
-
-            }
+            this._dragger.mount();
         }
 
         this._handleSyncCarousel();
@@ -195,19 +196,9 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
     componentWillUnmount() {
         if(this.props.isDebug && logEnable.componentWillUnmount) log.printInText('[componentWillUnmount]');
-        const {containerEl} = this._elementor;
-
         this._autoPlayer.unmount();
         this._windowSizer.unmount();
-
-        if (containerEl) {
-            if (this._device === EDevice.mobile) {
-                containerEl.removeEventListener('touchstart', this._onMobileTouchStart, false);
-            } else {
-                containerEl.removeEventListener('mousedown', this._onWebMouseStart, false);
-            }
-
-        }
+        this._dragger.unmount();
     }
 
 
@@ -282,104 +273,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     _isSyncControl = () => !!this.props.syncControlRefs === false;
 
 
-    /**
-   * mobile phone finger press start
-   * @param event
-   */
-    _onMobileTouchStart = (event: TouchEvent): void => {
-        if(this.props.isDebug && logEnable.onMobileTouchStart) log.printInText('[_onMobileTouchStart]');
-
-        this._autoPlayer.pause();
-
-        const {containerEl} = this._elementor;
-        if(containerEl?.style.transitionDuration === '0ms'){
-            this._controller.slideResetToMatchIndex();
-            this._locator.touchStart2(new MobileTouchEvent(event), containerEl);
-
-            containerEl.addEventListener('touchmove', this._onMobileTouchMove, false);
-            containerEl.addEventListener('touchend', this._onMobileTouchEnd, false);
-        }
-
-    };
-
-
-
-    /**
-   * Mobile phone finger press and move
-   * @param event
-   */
-    _onMobileTouchMove = (event: TouchEvent): void => {
-        event.preventDefault();
-
-        const movePx = this._locator.touchMove(new MobileTouchEvent(event), this._elementor.containerEl);
-        this._controller.dragMove(movePx);
-    };
-
-    /**
-   * Mobile phone finger press to end
-   * @param event
-   *
-   * PS: Add event.preventDefault(); will affect the mobile phone click onClick event
-   */
-    _onMobileTouchEnd = (event: TouchEvent): void => {
-        if(this.props.isDebug && logEnable.onMobileTouchEnd) log.printInText('[_onMobileTouchEnd]');
-
-        this._elementor.containerEl?.removeEventListener('touchmove', this._onMobileTouchMove, false);
-        this._elementor.containerEl?.removeEventListener('touchend', this._onMobileTouchEnd, false);
-        this._controller.dragDone();
-        this._autoPlayer.play();
-    };
-
-    /**
-   * Web mouse click
-   * @param event
-   */
-    _onWebMouseStart = (event: MouseEvent): void => {
-        if(this.props.isDebug && logEnable.onWebMouseStart) log.printInText('[_onWebMouseStart]');
-
-        this._autoPlayer.pause();
-        this._controller.slideResetToMatchIndex();
-
-        const {containerEl} = this._elementor;
-        if (containerEl) {
-            this._locator.touchStart2(new DesktopTouchEvent(event), containerEl);
-
-            if(this.resetDurationTimer) clearTimeout(this.resetDurationTimer);
-
-            this._elementor.rootEl?.addEventListener('mouseleave', this._onWebMouseEnd, false);
-            containerEl.addEventListener('mousemove', this._onWebMouseMove, false);
-            containerEl.addEventListener('mouseup', this._onWebMouseEnd, false);
-        }
-
-    };
-
-
-    /**
-   * Web mouse movement
-   * @param event
-   */
-    _onWebMouseMove = (event: MouseEvent):void => {
-        event.preventDefault();
-        if(this.props.isDebug && logEnable.onWebMouseMove) log.printInText('[_onWebMouseMove]');
-
-        const movePx = this._locator.touchMove(new DesktopTouchEvent(event), this._elementor.containerEl);
-        this._controller.dragMove(movePx);
-    };
-
-    /**
-   * web mouse release
-   * @param event
-   */
-    _onWebMouseEnd = (event: MouseEvent):void => {
-        event.preventDefault();
-        if(this.props.isDebug && logEnable.onWebMouseEnd) log.printInText('[_onWebMouseEnd]');
-
-        this._elementor.rootEl?.removeEventListener('mouseleave', this._onWebMouseEnd, false);
-        this._elementor.containerEl?.removeEventListener('mousemove', this._onWebMouseMove, false);
-        this._elementor.containerEl?.removeEventListener('mouseup', this._onWebMouseEnd, false);
-        this._controller.dragDone();
-        this._autoPlayer.play();
-    };
 
 
     // _syncControlMove = (percentage: number) => {
