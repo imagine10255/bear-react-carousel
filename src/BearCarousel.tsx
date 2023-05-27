@@ -82,7 +82,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         defaultActivePage: 1,
     };
     _device = EDevice.desktop;
-    _carouselId = `bear-react-carousel_${ulid().toLowerCase()}`;
 
     resetDurationTimer?: any;
     // activePage = 0;        // real page location
@@ -563,30 +562,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         </div>;
     }
 
-    /**
-     * Item CSS style
-     */
-    private _renderStyle() {
-        // Generate the desired style (note the trailing ;)
-        const rootStyle: string = [
-            `padding-top: ${this._configurator.setting.aspectRatio && this._configurator.setting.slidesPerView !== 'auto' ? getPaddingBySize(this._configurator.setting.aspectRatio, this._configurator.setting.slidesPerView): '0'};`,
-            `height: ${this._configurator.setting.staticHeight ? `${this._configurator.setting.staticHeight}`: 'inherit'};`,
-        ].join('');
-        const slideItemStyle: string = [
-            `flex: ${this._configurator.setting.slidesPerView === 'auto' ? '0 0 auto;-webkit-flex: 0 0 auto;' : `1 0 ${100 / this._configurator.setting.slidesPerViewActual}%`};`,
-            `padding-left: ${this._configurator.setting.spaceBetween / 2}px;`,
-            `padding-right: ${this._configurator.setting.spaceBetween / 2}px;`,
-        ].join('');
-
-        {/*  */}
-        return <style scoped>{`
-#${this._carouselId}{${rootStyle}}
-#${this._carouselId} .${elClassName.slideItem}{${slideItemStyle}}
-              `}</style>;
-    }
-
-
-
 
     render() {
         const {style, className, isDebug} = this.props;
@@ -596,7 +571,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                 staticHeight={this._configurator.setting.staticHeight}
             >
                 <div
-                    id={this._carouselId}
+                    id={this._configurator.carouselId}
                     style={style}
                     className={[className, elClassName.root].join(' ').trim()}
                     data-gpu-render={this._device === EDevice.desktop ? 'true': undefined}
@@ -606,7 +581,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                     data-debug={isDebug ? 'true':undefined}
                     ref={this._elementor._rootRef}
                 >
-                    {this._renderStyle()}
+                    <style scoped dangerouslySetInnerHTML={{__html: this._configurator.style}}/>
 
                     {this._stater.info.isVisibleNavButton && this._renderNavButton()}
 
