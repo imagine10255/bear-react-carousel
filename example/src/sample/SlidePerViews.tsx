@@ -51,9 +51,9 @@ function SlidePerViews() {
         <button type="button" onClick={() => setEnable(curr => !curr)}> enable: {String(enable)}</button>
         <button type="button" onClick={() => {
             if(controllerRef.current){
-                controllerRef.current.slideToPage(5);
+                controllerRef.current.slideToPage(7);
             }
-        }}> slideToPage5 </button>
+        }}> slideToPage 7 </button>
 
         <br/>
         <pre>

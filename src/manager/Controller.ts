@@ -168,9 +168,9 @@ class Controller {
             //         rootEl.setAttribute('data-position', page.activePage === page.pageTotal ? 'last': '');
             //     }
             // }
+            const {slideItemEls, pageEls} = this._elementor;
 
             // 更改顯示在第幾個 (父元件使用可判定樣式設定)
-            const slideItemEls = this._elementor.pageEls;
             if(slideItemEls){
                 slideItemEls
                     // .filter(row => isNotEmpty(row))
@@ -184,19 +184,19 @@ class Controller {
             }
 
 
-            //         // 更改顯示在第幾頁的樣式 (父元件使用可判定樣式設定)
-            //         if (pageEls && this.slideItem.info.isVisiblePagination && page.activePage > 0) {
-            //             pageEls.forEach((row, index) => {
-            //                 if(row && row.setAttribute !== null) {
-            //                     if (page.activePage === index + 1) {
-            //                         row.setAttribute('data-active', 'true');
-            //                     } else if(row?.dataset.active) {
-            //                         row.removeAttribute('data-active');
-            //                     }
-            //                 }
-            //
-            //             });
-            //         }
+            // 更改顯示在第幾頁的樣式 (父元件使用可判定樣式設定)
+            if (pageEls && this._stater.info.isVisiblePagination && this._stater.page.activePage > 0) {
+                pageEls.forEach((row, index) => {
+                    if(row && row.setAttribute !== null) {
+                        if (this._stater.page.activePage === index + 1) {
+                            row.setAttribute('data-active', 'true');
+                        } else if(row?.dataset.active) {
+                            row.removeAttribute('data-active');
+                        }
+                    }
+
+                });
+            }
             //
             //         // 結束移動後再繼續自動模式
             //         this._checkAndAutoPlay();
@@ -222,6 +222,8 @@ class Controller {
         const {setting} = this._configurator;
         const {actual} = this._stater;
 
+        page = page > this._stater.page.pageTotal ? this._stater.page.pageTotal: page;
+
         const slideIndex = getSlideIndex(page, setting.slidesPerGroup, actual.firstIndex);
         this.slideToActualIndex(slideIndex, isUseAnimation);
     }
@@ -235,6 +237,8 @@ class Controller {
         const {nextPage, formatElement, page, actual, residue, element, nextPageFirstIndex} = this._stater;
         const {setting} = this._configurator;
         const activeActual = formatElement[actual.activeIndex];
+        
+        console.log('activeActual', activeActual);
 
         getNextIndex(
             activeActual,
