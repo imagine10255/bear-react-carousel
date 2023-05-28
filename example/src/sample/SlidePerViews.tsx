@@ -24,7 +24,7 @@ const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
 
 
 
-function Base() {
+function SlidePerViews() {
     const [info, setInfo] = useState<IInfo>();
     const [enable, setEnable] = useState<boolean>(true);
     const [count, setCount] = useState<number>(0);
@@ -37,14 +37,13 @@ function Base() {
                 controllerRef={controllerRef}
                 data={bearSlideItemData1}
                 onChange={setInfo}
-                isCenteredSlides={true}
+
+                slidesPerView={3}
+                slidesPerGroup={3}
                 staticHeight="200px"
                 isEnableNavButton
                 isEnablePagination
-                isEnableLoop
-                isEnableAutoPlay
-                autoPlayTime={0}
-                moveTime={400}
+                // isEnableLoop
                 isDebug
             />)}
 
@@ -64,7 +63,7 @@ function Base() {
 
 }
 
-export default Base;
+export default SlidePerViews;
 
 
 

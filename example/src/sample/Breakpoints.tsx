@@ -24,7 +24,7 @@ const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
 
 
 
-function Base() {
+function Breakpoints() {
     const [info, setInfo] = useState<IInfo>();
     const [enable, setEnable] = useState<boolean>(true);
     const [count, setCount] = useState<number>(0);
@@ -37,16 +37,33 @@ function Base() {
                 controllerRef={controllerRef}
                 data={bearSlideItemData1}
                 onChange={setInfo}
+                // slidesPerView="auto"
                 isCenteredSlides={true}
                 staticHeight="200px"
+                // aspectRatio={{
+                //     widthRatio: 32,
+                //     heightRatio: 9,
+                //     addStaticHeight: '200px'
+                // }}
+                // spaceBetween={20}
                 isEnableNavButton
                 isEnablePagination
                 isEnableLoop
-                isEnableAutoPlay
-                autoPlayTime={0}
                 moveTime={400}
+                // onElementMove={handleMove}
+                // onElementDone={handleDone}
+                breakpoints={{
+                    992: {
+                        slidesPerView: 3,
+                        slidesPerGroup: 3,
+                        isCenteredSlides: false,
+                    }
+                }}
+
                 isDebug
             />)}
+
+
 
         <button type="button" onClick={() => setCount(curr => curr += 1)}> count: {count}</button>
         <button type="button" onClick={() => setEnable(curr => !curr)}> enable: {String(enable)}</button>
@@ -64,7 +81,7 @@ function Base() {
 
 }
 
-export default Base;
+export default Breakpoints;
 
 
 

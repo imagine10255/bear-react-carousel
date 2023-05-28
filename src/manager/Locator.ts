@@ -40,9 +40,9 @@ class Locator {
         // if(this.props.isDebug && logEnable.onMobileTouchMove) log.printInText(`[_onMobileTouchMove] ${startPosition.moveDirection}`);
 
         // 水平移動
-        if(this.moveDirection === EDirection.horizontal){
+        // if(this.moveDirection === EDirection.horizontal){
             return containerEl.offsetLeft + dropEvent.x;
-        }
+        // }
         return 0;
     }
 

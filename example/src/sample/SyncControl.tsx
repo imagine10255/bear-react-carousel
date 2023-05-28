@@ -108,26 +108,26 @@ function SyncControl() {
     return <div>
 
         {/*測試同步*/}
-        <Box>
-            <BearCarousel
-                ref={syncControlRefs}
-                data={bearSlideItemData2}
-                slidesPerView="auto"
-                isCenteredSlides={true}
-                staticHeight="200px"
-                // spaceBetween={20}
-                isEnableNavButton
-                isEnablePagination
-                // onElementMove={handleMove}
-                // onElementDone={handleDone}
-                isDebug
-            />
-        </Box>
+        {/*<Box>*/}
+        {/*    <BearCarousel*/}
+        {/*        ref={syncControlRefs}*/}
+        {/*        data={bearSlideItemData2}*/}
+        {/*        slidesPerView="auto"*/}
+        {/*        isCenteredSlides={true}*/}
+        {/*        staticHeight="200px"*/}
+        {/*        // spaceBetween={20}*/}
+        {/*        isEnableNavButton*/}
+        {/*        isEnablePagination*/}
+        {/*        // onElementMove={handleMove}*/}
+        {/*        // onElementDone={handleDone}*/}
+        {/*        isDebug*/}
+        {/*    />*/}
+        {/*</Box>*/}
 
 
         <Box2>
             <BearCarousel
-                syncControlRefs={syncControlRefs}
+                // syncControlRefs={syncControlRefs}
                 data={bearSlideItemData2}
                 slidesPerView="auto"
                 isCenteredSlides={true}

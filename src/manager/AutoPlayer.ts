@@ -47,13 +47,11 @@ class AutoPlayer {
     play(){
         const {setting} = this._configurator;
 
-        if(this.isPlaying || setting.isEnableAutoPlay || setting.autoPlayTime <= 0){
-            return;
+        if(!this.isPlaying && setting.isEnableAutoPlay && setting.autoPlayTime > 0){
+            this._timer = setInterval(() => {
+                this._controller.slideToNextPage();
+            }, setting.autoPlayTime);
         }
-
-        this._timer = setInterval(() => {
-            this._controller.slideToNextPage();
-        }, setting.autoPlayTime);
     }
 
     pause(){

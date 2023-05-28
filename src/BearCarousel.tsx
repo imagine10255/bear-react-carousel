@@ -13,7 +13,6 @@ import Stater from './manager/Stater';
 import SlideItem from './components/SlideItem';
 import Elementor from './manager/Elementor';
 import Locator from './manager/Locator';
-import {DesktopTouchEvent, MobileTouchEvent} from './interface/DragEvent';
 import Controller from './manager/Controller';
 import AutoPlayer from './manager/AutoPlayer';
 

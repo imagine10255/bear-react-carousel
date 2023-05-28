@@ -143,6 +143,7 @@ class Dragger {
     _onWebMouseMove = (event: MouseEvent):void => {
         event.preventDefault();
         // if(this.props.isDebug && logEnable.onWebMouseMove) log.printInText('[_onWebMouseMove]');
+        console.log('_onWebMouseMove');
 
         const movePx = this._locator.touchMove(new DesktopTouchEvent(event), this._elementor.containerEl);
         this._controller.dragMove(movePx);
@@ -155,6 +156,7 @@ class Dragger {
     _onWebMouseEnd = (event: MouseEvent):void => {
         event.preventDefault();
         // if(this.props.isDebug && logEnable.onWebMouseEnd) log.printInText('[_onWebMouseEnd]');
+console.log('_onWebMouseEnd');
 
         this._elementor.rootEl?.removeEventListener('mouseleave', this._onWebMouseEnd, false);
         this._elementor.containerEl?.removeEventListener('mousemove', this._onWebMouseMove, false);
