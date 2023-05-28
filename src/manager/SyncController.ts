@@ -26,7 +26,7 @@ class SyncController {
     }
 
 
-    // _syncControlMove = (percentage: number) => {
+    _syncControlMove = (percentage: number) => {
     //     if(this.props.syncControlRefs?.current){
     //         const syncControl = this.props.syncControlRefs.current;
     //         // 將進度比例換算成 movePx
@@ -40,14 +40,14 @@ class SyncController {
     //
     //         syncControl._elementMove(moveX);
     //     }
-    // };
-    //
-    // _syncControlDone = (targetIndex: number) => {
+    };
+
+    _syncControlDone = (targetIndex: number) => {
     //     if(this.props.syncControlRefs?.current){
     //         const syncControl = this.props.syncControlRefs.current;
     //         syncControl.goToActualIndex(targetIndex);
     //     }
-    // };
+    };
 
 }
 

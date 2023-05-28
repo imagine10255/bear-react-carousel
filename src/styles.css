@@ -212,9 +212,10 @@ div.bear-react-carousel__slide-item__div{
 .bear-react-carousel__root[data-debug="true"] .bear-react-carousel__content:before {
     content: '';
     position: absolute;
-    left: 50%;
-    background-color: #fff;
+    left: calc(50%);
+    /*background-color: #a4a4a4;*/
     height: 100%;
-    width: 1px;
+    width: 0;
+    border-left: 1px dashed #a4a4a4;
     z-index: 50;
 }
