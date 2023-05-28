@@ -1,7 +1,7 @@
 import {useCallback, useRef, useState} from 'react';
 import styled from 'styled-components';
 import BearCarousel, {BearSlideItem, TBearSlideItemDataList, elClassName} from 'bear-react-carousel';
-import {baseImage as images} from './config/images';
+import {baseImage as images} from '../config/images';
 
 
 
@@ -22,7 +22,7 @@ const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
         key: row.id,
         children: <BearSlideItem as="card">
             <div className="h-100 d-flex"
-                 style={{fontSize: '40px', backgroundColor: row.color}}
+                style={{fontSize: '40px', backgroundColor: row.color}}
             >
                 {/*<a href="https://carousel.bearests.com" rel="noreferrer" target="_blank">{row.id}</a>*/}
             </div>
@@ -36,7 +36,7 @@ const bearSlideItemData2: TBearSlideItemDataList = images.map(row => {
         key: row.id,
         children: <BearSlideItem as="card">
             <div className="h-100 d-flex"
-                 style={{fontSize: '40px', width: '200px', height: '200px', backgroundColor: row.color}}
+                style={{fontSize: '40px', width: '200px', height: '200px', backgroundColor: row.color}}
             >
                 {/*<a href="https://carousel.bearests.com" rel="noreferrer" target="_blank">{row.id}</a>*/}
             </div>
@@ -50,7 +50,7 @@ const bearSlideItemData3: TBearSlideItemDataList = images.map(row => {
         key: row.id,
         children: <BearSlideItem as="card">
             <div className="h-100 d-flex"
-                 style={{fontSize: '40px', backgroundColor: row.color}}
+                style={{fontSize: '40px', backgroundColor: row.color}}
             >
                 <Do/>
                 {/*<a href="https://carousel.bearests.com" rel="noreferrer" target="_blank">{row.id}</a>*/}
@@ -105,107 +105,42 @@ function SyncControl() {
 
     };
 
-    return <div style={{padding: '10px', backgroundColor: '#bdbdbd'}}>
-        {/*<BearCarousel*/}
-        {/*    data={bearSlideItemData1}*/}
-        {/*    slidesPerView={1}*/}
-        {/*    staticHeight="200px"*/}
-        {/*    spaceBetween={20}*/}
-        {/*    isEnableNavButton*/}
-        {/*    isEnablePagination*/}
-        {/*    moveTime={400}*/}
-        {/*    isEnableLoop*/}
-        {/*    isDebug*/}
-        {/*/>*/}
+    return <div>
 
-        {/*<BearCarousel*/}
-        {/*    data={bearSlideItemData1}*/}
-        {/*    slidesPerView={1.5}*/}
-        {/*    isCenteredSlides={true}*/}
-        {/*    staticHeight="200px"*/}
-        {/*    spaceBetween={20}*/}
-        {/*    isEnableNavButton*/}
-        {/*    isEnablePagination*/}
-        {/*    moveTime={400}*/}
-        {/*    // isEnableLoop*/}
-        {/*    // onElementMove={handleMove}*/}
-        {/*    // onElementDone={handleDone}*/}
-        {/*    isDebug*/}
-        {/*/>*/}
-
-
-
-
-
-        {/*/!*測試同步*!/*/}
-        {/*<Box>*/}
-        {/*    <BearCarousel*/}
-        {/*        ref={syncControlRefs}*/}
-        {/*        data={bearSlideItemData2}*/}
-        {/*        slidesPerView="auto"*/}
-        {/*        isCenteredSlides={true}*/}
-        {/*        staticHeight="200px"*/}
-        {/*        // spaceBetween={20}*/}
-        {/*        isEnableNavButton*/}
-        {/*        isEnablePagination*/}
-        {/*        moveTime={400}*/}
-        {/*        // onElementMove={handleMove}*/}
-        {/*        // onElementDone={handleDone}*/}
-        {/*        isDebug*/}
-        {/*    />*/}
-        {/*</Box>*/}
-
-
-        {/*<Box2>*/}
-        {/*<BearCarousel*/}
-        {/*    syncControlRefs={syncControlRefs}*/}
-        {/*    data={bearSlideItemData2}*/}
-        {/*    slidesPerView="auto"*/}
-        {/*    isCenteredSlides={true}*/}
-        {/*    staticHeight="200px"*/}
-        {/*    // spaceBetween={20}*/}
-        {/*    isEnableNavButton*/}
-        {/*    isEnablePagination*/}
-        {/*    moveTime={400}*/}
-        {/*    // onElementMove={handleMove}*/}
-        {/*    // onElementDone={handleDone}*/}
-        {/*    isDebug*/}
-        {/*/>*/}
-        {/*</Box2>*/}
-
-
-
-        {/*測試依照比例設定容器高度*/}
-        {enable && (
+        {/*測試同步*/}
+        <Box>
             <BearCarousel
-                syncControlRefs={syncControlRefs}
-                data={bearSlideItemData1}
-                // slidesPerView="auto"
+                ref={syncControlRefs}
+                data={bearSlideItemData2}
+                slidesPerView="auto"
                 isCenteredSlides={true}
                 staticHeight="200px"
-                // aspectRatio={{
-                //     widthRatio: 32,
-                //     heightRatio: 9,
-                //     addStaticHeight: '200px'
-                // }}
                 // spaceBetween={20}
                 isEnableNavButton
                 isEnablePagination
-                isEnableLoop
-                isEnableAutoPlay
-                autoPlayTime={1500}
-                moveTime={400}
                 // onElementMove={handleMove}
                 // onElementDone={handleDone}
-                // breakpoints={{
-                //     992: {
-                //         slidesPerView: 2,
-                //         isCenteredSlides: false,
-                //     }
-                // }}
-
                 isDebug
-            />)}
+            />
+        </Box>
+
+
+        <Box2>
+            <BearCarousel
+                syncControlRefs={syncControlRefs}
+                data={bearSlideItemData2}
+                slidesPerView="auto"
+                isCenteredSlides={true}
+                staticHeight="200px"
+                // spaceBetween={20}
+                isEnableNavButton
+                isEnablePagination
+                // onElementMove={handleMove}
+                // onElementDone={handleDone}
+                isDebug
+            />
+        </Box2>
+
 
 
         {/*<textarea cols={30} rows={10} ref={textareaRef} style={{width: '100%'}}/>*/}
@@ -224,24 +159,6 @@ function SyncControl() {
         <button type="button" onClick={() => setEnable(curr => !curr)}> enable: {String(enable)}</button>
     </div>;
 
-
-    // return (
-    //     <div className="App">
-    //         <div>
-    //             <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-    //                 <img src={viteLogo} className="logo" alt="Vite logo" />
-    //             </a>
-    //             <a href="https://reactjs.org" target="_blank" rel="noreferrer">
-    //                 <img src={reactLogo} className="logo react" alt="React logo" />
-    //             </a>
-    //         </div>
-    //         <h1>Vite + React</h1>
-    //
-    //         <p className="read-the-docs">
-    //     Click on the Vite and React logos to learn more
-    //         </p>
-    //     </div>
-    // );
 }
 
 export default SyncControl;
