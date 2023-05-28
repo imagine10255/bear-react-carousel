@@ -18,7 +18,6 @@ class Elementor {
     private _stater: Stater;
     private _locator: Locator;
 
-    moveTime = 500;
 
     constructor(manager: {
         configurator: Configurator,
