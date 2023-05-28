@@ -1,16 +1,18 @@
+import * as React from 'react';
 import {getMoveDistance, getMovePercentage, getStartPosition} from '../utils';
 import Configurator from './Configurator';
-import * as React from 'react';
 import Stater from './Stater';
 import Locator from './Locator';
+import {IRefObject} from '../types';
 
 class Elementor {
     _rootRef: React.RefObject<HTMLDivElement> = React.createRef();
     _containerRef: React.RefObject<HTMLDivElement> = React.createRef();
-    _slideItemRefs: React.RefObject<Array<HTMLDivElement>> = React.createRef();
-    _pageRefs: React.RefObject<Array<HTMLDivElement>> = React.createRef();
     _pageGroupRef: React.RefObject<HTMLDivElement> = React.createRef();
     _navGroupRef: React.RefObject<HTMLDivElement> = React.createRef();
+
+    _slideItemRefs: IRefObject<Array<HTMLDivElement>> = React.createRef();
+    _pageRefs: IRefObject<Array<HTMLDivElement>> = React.createRef();
 
     private _setter: Configurator;
     private _stater: Stater;
@@ -23,9 +25,7 @@ class Elementor {
         stater: Stater,
         locator: Locator,
     }) {
-        // @ts-ignore
         this._slideItemRefs.current = [];
-        // @ts-ignore
         this._pageRefs.current = [];
 
         this._setter = manager.configurator;

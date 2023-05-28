@@ -32,7 +32,7 @@ export enum EDirection {
 
 export type IRenderNavButton = (toPrev: TToPrev, toNext: TToNext) => void
 
-interface IRefObject<T> {
+export interface IRefObject<T> {
   current: T;
 }
 
