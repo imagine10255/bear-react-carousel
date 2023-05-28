@@ -115,8 +115,9 @@ class Controller {
         if(this._elementor.slideItemEls){
             const active = this._elementor.slideItemEls.find(row => row.dataset.active === 'true');
             if(active){
-                const activeActualIndex = Number(active.dataset.actual);
-                this.slideToActualIndex(activeActualIndex);
+                const activePage = Number(active.dataset.page);
+                this.slideToPage(activePage);
+                // this.slideToActualIndex(activeActualIndex);
 
                 // const activeSourceIndex = Number(active.dataset.source);
                 // this._syncControlDone(activeSourceIndex);

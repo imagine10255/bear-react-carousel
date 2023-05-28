@@ -39,7 +39,7 @@ function SlidePerViews() {
                 onChange={setInfo}
 
                 slidesPerView={3}
-                slidesPerGroup={3}
+                slidesPerGroup={1}
                 staticHeight="200px"
                 isEnableNavButton
                 isEnablePagination

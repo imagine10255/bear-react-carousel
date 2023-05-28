@@ -203,8 +203,11 @@ div.bear-react-carousel__slide-item__div{
 .bear-react-carousel__root[data-mouse-move="true"] .bear-react-carousel__container{
     cursor: pointer;
 }
+.bear-react-carousel__root[data-debug="true"] .bear-react-carousel__slide-item[data-active="true"]{
+    border: 1px solid #f64f4f;
+}
 
-.bear-react-carousel__root[data-debug="true"] .bear-react-carousel__test-number{
+.bear-react-carousel__test-number{
     background-color: rgba(0, 0, 0, .5);
 }
 
