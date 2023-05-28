@@ -2,13 +2,14 @@ import {useCallback, useRef, useState} from 'react';
 import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
 import styled from 'styled-components';
-import BearCarousel, {BearSlideItem, TBearSlideItemDataList, elClassName} from 'bear-react-carousel';
+import BearCarousel, {BearSlideItem, TBearSlideItemDataList, elClassName, IInfo} from 'bear-react-carousel';
 import {baseImage as images} from './config/images';
 
 import './App.css';
 import './bootstrap-base.min.css';
 import 'bear-react-carousel/dist/index.css';
 import {IBearCarouselObj} from '../../src';
+import Controller from 'bear-react-carousel/dist/manager/Controller';
 
 
 const Do = styled.div`
@@ -68,12 +69,13 @@ const bearSlideItemData3: TBearSlideItemDataList = images.map(row => {
 
 
 function App() {
-    const [carousel, setCarousel] = useState<IBearCarouselObj>();
+    const [info, setInfo] = useState<IInfo>();
     const [enable, setEnable] = useState<boolean>(true);
     const [count, setCount] = useState<number>(0);
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const flexItemRef = useRef<HTMLDivElement>(null);
     const syncControlRefs = useRef<BearCarousel>(null);
+    const controllerRef = useRef<Controller>(null);
 
     const slideRef = useRef<HTMLInputElement>(null);
 
@@ -92,142 +94,73 @@ function App() {
         }
     }, []);
 
-    const handleDone = useCallback((activeActualIndex: number) => {
-        if(textareaRef.current){
-            textareaRef.current.innerHTML = `activeActualIndex: ${activeActualIndex}, percentage: ${activeActualIndex}\r\n` + textareaRef.current.innerHTML;
-        }
-        if(flexItemRef.current){
-            flexItemRef.current.style.width = `${activeActualIndex * 100 / 7}%`;
-            flexItemRef.current.style.transition = 'width .3s';
-        }
-        if(slideRef.current){
-            slideRef.current.value = `${activeActualIndex * 100 / 7}`;
-        }
-        console.log('activeActualIndex', activeActualIndex);
-        carousel?.goToPage(activeActualIndex + 1);
-    }, [carousel]);
+    // const handleDone = useCallback((activeActualIndex: number) => {
+    //     if(textareaRef.current){
+    //         textareaRef.current.innerHTML = `activeActualIndex: ${activeActualIndex}, percentage: ${activeActualIndex}\r\n` + textareaRef.current.innerHTML;
+    //     }
+    //     if(flexItemRef.current){
+    //         flexItemRef.current.style.width = `${activeActualIndex * 100 / 7}%`;
+    //         flexItemRef.current.style.transition = 'width .3s';
+    //     }
+    //     if(slideRef.current){
+    //         slideRef.current.value = `${activeActualIndex * 100 / 7}`;
+    //     }
+    //     console.log('activeActualIndex', activeActualIndex);
+    //     carousel?.goToPage(activeActualIndex + 1);
+    // }, [carousel]);
 
-    const handleControl = () => {
-
-    };
 
     return <div style={{padding: '10px', backgroundColor: '#bdbdbd'}}>
-        {/*<BearCarousel*/}
-        {/*    data={bearSlideItemData1}*/}
-        {/*    slidesPerView={1}*/}
-        {/*    staticHeight="200px"*/}
-        {/*    spaceBetween={20}*/}
-        {/*    isEnableNavButton*/}
-        {/*    isEnablePagination*/}
-        {/*    moveTime={400}*/}
-        {/*    isEnableLoop*/}
-        {/*    isDebug*/}
-        {/*/>*/}
-
-        {/*<BearCarousel*/}
-        {/*    data={bearSlideItemData1}*/}
-        {/*    slidesPerView={1.5}*/}
-        {/*    isCenteredSlides={true}*/}
-        {/*    staticHeight="200px"*/}
-        {/*    spaceBetween={20}*/}
-        {/*    isEnableNavButton*/}
-        {/*    isEnablePagination*/}
-        {/*    moveTime={400}*/}
-        {/*    // isEnableLoop*/}
-        {/*    // onElementMove={handleMove}*/}
-        {/*    // onElementDone={handleDone}*/}
-        {/*    isDebug*/}
-        {/*/>*/}
-
-
-
-
-
-        {/*/!*測試同步*!/*/}
-        {/*<Box>*/}
-        {/*    <BearCarousel*/}
-        {/*        ref={syncControlRefs}*/}
-        {/*        data={bearSlideItemData2}*/}
-        {/*        slidesPerView="auto"*/}
-        {/*        isCenteredSlides={true}*/}
-        {/*        staticHeight="200px"*/}
-        {/*        // spaceBetween={20}*/}
-        {/*        isEnableNavButton*/}
-        {/*        isEnablePagination*/}
-        {/*        moveTime={400}*/}
-        {/*        // onElementMove={handleMove}*/}
-        {/*        // onElementDone={handleDone}*/}
-        {/*        isDebug*/}
-        {/*    />*/}
-        {/*</Box>*/}
-
-
-        {/*<Box2>*/}
-        {/*<BearCarousel*/}
-        {/*    syncControlRefs={syncControlRefs}*/}
-        {/*    data={bearSlideItemData2}*/}
-        {/*    slidesPerView="auto"*/}
-        {/*    isCenteredSlides={true}*/}
-        {/*    staticHeight="200px"*/}
-        {/*    // spaceBetween={20}*/}
-        {/*    isEnableNavButton*/}
-        {/*    isEnablePagination*/}
-        {/*    moveTime={400}*/}
-        {/*    // onElementMove={handleMove}*/}
-        {/*    // onElementDone={handleDone}*/}
-        {/*    isDebug*/}
-        {/*/>*/}
-        {/*</Box2>*/}
-
 
 
         {/*測試依照比例設定容器高度*/}
         {enable && (
-        <BearCarousel
-            syncControlRefs={syncControlRefs}
-            data={bearSlideItemData1}
-            // slidesPerView="auto"
-            isCenteredSlides={true}
-            staticHeight="200px"
-            // aspectRatio={{
-            //     widthRatio: 32,
-            //     heightRatio: 9,
-            //     addStaticHeight: '200px'
-            // }}
-            // spaceBetween={20}
-            isEnableNavButton
-            isEnablePagination
-            isEnableLoop
-            isEnableAutoPlay
-            autoPlayTime={0}
-            moveTime={400}
-            // onElementMove={handleMove}
-            // onElementDone={handleDone}
-            breakpoints={{
-                992: {
-                    slidesPerView: 2,
-                    isCenteredSlides: false,
-                }
-            }}
+            <BearCarousel
+            // syncControlRefs={syncControlRefs}
+                controllerRef={controllerRef}
+                data={bearSlideItemData1}
+                onChange={setInfo}
+                // slidesPerView="auto"
+                isCenteredSlides={true}
+                staticHeight="200px"
+                // aspectRatio={{
+                //     widthRatio: 32,
+                //     heightRatio: 9,
+                //     addStaticHeight: '200px'
+                // }}
+                // spaceBetween={20}
+                isEnableNavButton
+                isEnablePagination
+                isEnableLoop
+                isEnableAutoPlay
+                autoPlayTime={0}
+                moveTime={400}
+                // onElementMove={handleMove}
+                // onElementDone={handleDone}
+                breakpoints={{
+                    992: {
+                        slidesPerView: 2,
+                        isCenteredSlides: false,
+                    }
+                }}
 
-            isDebug
-        />)}
+                isDebug
+            />)}
 
 
-        {/*<textarea cols={30} rows={10} ref={textareaRef} style={{width: '100%'}}/>*/}
-
-        {/*<Flex>*/}
-        {/*    <FlexItem ref={flexItemRef}/>*/}
-        {/*    <SlideControlInput*/}
-        {/*        type="range"*/}
-        {/*        min="1"*/}
-        {/*        max="100"*/}
-        {/*        ref={slideRef}*/}
-        {/*    />*/}
-        {/*</Flex>*/}
 
         <button type="button" onClick={() => setCount(curr => curr += 1)}> count: {count}</button>
         <button type="button" onClick={() => setEnable(curr => !curr)}> enable: {String(enable)}</button>
+        <button type="button" onClick={() => {
+            if(controllerRef.current){
+                controllerRef.current.slideToPage(5);
+            }
+        }}> slideToPage5 </button>
+
+        <br/>
+        <pre>
+            {JSON.stringify(info, null, '\t')}
+        </pre>
     </div>;
 
 

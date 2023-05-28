@@ -35,7 +35,7 @@ class RWDMedia {
 
 
     get size() {
-        return getSizeByRange(window.innerWidth, Object.keys(this._breakpoints).map(Number))
+        return getSizeByRange(window.innerWidth, Object.keys(this._breakpoints).map(Number));
     }
 }
 

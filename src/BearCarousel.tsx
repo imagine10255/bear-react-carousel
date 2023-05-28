@@ -91,9 +91,11 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     _dragger: Dragger;
 
 
+
     constructor(props: IBearCarouselProps) {
         super(props);
         this._device = checkIsMobile() ? EDevice.mobile : EDevice.desktop;
+
 
         const {
             data,
@@ -124,7 +126,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             isDebug
         };
 
-
         this._windowSizer = new WindowSizer(breakpoints, this._device);
         this._configurator = new Configurator(breakpoints, setting);
         this._stater = new Stater(this._configurator, data);
@@ -142,6 +143,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             elementor: this._elementor
         });
 
+
         this._autoPlayer = new AutoPlayer({
             configurator: this._configurator,
             controller: this._controller,
@@ -154,6 +156,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             elementor: this._elementor,
             controller: this._controller,
         }, this._device);
+
+        this._controller.onChange(this._setOnChange);
 
         // this.info = info;
         this.state = {
@@ -190,7 +194,9 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             this._dragger.mount();
         }
 
-        this._handleSyncCarousel();
+        this._setOnChange();
+        this._setControllerRef();
+
 
     }
 
@@ -211,8 +217,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
         const {windowSize: nextWindowSize} = nextState;
         const {windowSize} = this.state;
-        const {data, setCarousel, renderNavButton, onElementDone, syncControlRefs, onElementMove, ...otherParams} = this.props;
-        const {data: nextData, setCarousel: nextSetCarousel, renderNavButton: nextRenderNavButton, syncControlRefs: nextSyncControlRefs, onElementDone: nextOnElementDone, onElementMove: nextOnElementMove, ...nextOtherProps} = nextProps;
+        const {data, onChange, renderNavButton, onElementDone, syncControlRef, onElementMove, ...otherParams} = this.props;
+        const {data: nextData, onChange: nextSetCarousel, renderNavButton: nextRenderNavButton, syncControlRef: nextsyncControlRef, onElementDone: nextOnElementDone, onElementMove: nextOnElementMove, ...nextOtherProps} = nextProps;
 
         const oldKey = data?.map((row) => row.key).join('_');
         const nextKey = nextData?.map((row) => row.key).join('_');
@@ -261,7 +267,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                 $this._controller.slideToPage(1, false);
             }, 0);
 
-            this._handleSyncCarousel();
+            this._setOnChange();
 
             return true;
         }
@@ -270,61 +276,33 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     }
 
 
-    _isSyncControl = () => !!this.props.syncControlRefs === false;
-
-
-
-
-    // _syncControlMove = (percentage: number) => {
-    //     if(this.props.syncControlRefs?.current){
-    //         const syncControl = this.props.syncControlRefs.current;
-    //         // 將進度比例換算成 movePx
-    //         const moveX = syncControl._getPercentageToMovePx(percentage);
-    //         const {slideItemEls} = syncControl._elementor;
-    //         const x = slideItemEls[0].clientWidth;
-    //
-    //         syncControl.positionManager.touchStart({
-    //             x: this._configurator.setting.isEnableLoop ? -x : 0,
-    //         });
-    //
-    //         syncControl._elementMove(moveX);
-    //     }
-    // };
-    //
-    // _syncControlDone = (targetIndex: number) => {
-    //     if(this.props.syncControlRefs?.current){
-    //         const syncControl = this.props.syncControlRefs.current;
-    //         syncControl.goToActualIndex(targetIndex);
-    //     }
-    // };
+    _isSyncControl = () => !!this.props.syncControlRef === false;
 
 
     /**
-   * Sync Carousel state
-   */
-    _handleSyncCarousel = () => {
-        // if(this.props.setCarousel){
-        //     this.props.setCarousel({
-        //         goToPage: this.goToPage,
-        //         toNext: this.toNext,
-        //         toPrev: this.toPrev,
-        //         info: this.info,
-        //         activePage: this.activePage,
-        //         activeActualIndex: this.activeActualIndex,
-        //     });
-        // }
+     * set Controller method
+     */
+    _setControllerRef = () => {
+        if(this.props.controllerRef){
+            this.props.controllerRef.current = this._controller;
+        }
     };
 
-
-
-
-
+    
+    /**
+   * set OnChange emit
+   */
+    _setOnChange = () => {
+        if(this.props.onChange){
+            const {element, actual, page} = this._stater;
+            this.props.onChange({element, actual, page});
+        }
+    };
 
     /**
    * Render left and right navigation blocks
    */
     _renderNavButton = () => {
-
         const {renderNavButton} = this.props;
 
         if (typeof renderNavButton !== 'undefined') {
@@ -349,8 +327,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             </button>
         </div>);
     };
-
-
 
     /**
      * render slide item
@@ -403,7 +379,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             {pageElement}
         </div>;
     }
-
 
     render() {
         const {style, className, isDebug} = this.props;

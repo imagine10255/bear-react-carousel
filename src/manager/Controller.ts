@@ -4,6 +4,7 @@ import Stater from './Stater';
 import elClassName from '../el-class-name';
 import Locator from './Locator';
 import Elementor from './Elementor';
+import {ICarouselState} from '../types';
 
 class Controller {
 
@@ -11,6 +12,7 @@ class Controller {
     private readonly _stater: Stater;
     private readonly _locator: Locator;
     private readonly _elementor: Elementor;
+    _onChange: () => void;
 
     moveTime = 500;
 
@@ -204,6 +206,7 @@ class Controller {
             //             this.props.onElementDone(slideIndex);
             //         }
 
+            this._onChange();
         }
     }
 
@@ -286,6 +289,15 @@ class Controller {
 
     };
 
+
+    onChange(cb: () => void){
+        this._onChange = cb;
+        // if(this.props.onChange){
+        //     console.log('onChange');
+        //     const {element, actual, page} = this._stater;
+        //     this.props?.onChange({element, actual, page});
+        // }
+    }
 
 }
 

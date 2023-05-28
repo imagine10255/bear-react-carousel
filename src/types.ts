@@ -1,6 +1,7 @@
 import {ReactNode} from 'react';
 import * as CSS from 'csstype';
 import BearCarousel from './BearCarousel';
+import Controller from './manager/Controller';
 
 export type TSlidesPerView = number|'auto'
 export type TSlidesPerViewActual = number
@@ -11,9 +12,9 @@ export enum EDevice {
 }
 
 export interface IBearCarouselObj {
-  goToPage: (page: number) => void;
-  toNext: () => void;
-  toPrev: () => void;
+  // goToPage: (page: number) => void;
+  // toNext: () => void;
+  // toPrev: () => void;
   activeActualIndex: number;
   activePage: number;
   info: IInfo,
@@ -31,8 +32,12 @@ export enum EDirection {
 
 export type IRenderNavButton = (toPrev: TToPrev, toNext: TToNext) => void
 
+interface IRefObject<T> {
+  current: T;
+}
+
 export interface IBearCarouselProps extends IBreakpointSetting{
-  setCarousel?: (carouselObj: IBearCarouselObj) => void,
+  onChange?: (carouselState: ICarouselState) => void,
   // control?: (carouselObj: IBearCarouselObj) => void,
   renderNavButton?: IRenderNavButton
   style?: CSS.Properties
@@ -45,7 +50,8 @@ export interface IBearCarouselProps extends IBreakpointSetting{
   onElementMove?: (activeActualIndex: number, percentage: number) => void,
   onElementDone?: (activeActualIndex: number) => void,
   isDebug: boolean
-  syncControlRefs: React.RefObject<BearCarousel>,
+  syncControlRef?: IRefObject<Controller>,
+  controllerRef?: IRefObject<Controller>,
 }
 
 export type TBearCarouselSetting = Partial<IBearCarouselProps>;
@@ -67,6 +73,27 @@ export interface InitData {
   inPage: number;
   isClone: boolean;
   element: React.ReactNode;
+}
+
+export interface ICarouselState {
+  element: {
+    total: number,
+    firstIndex: number,
+    lastIndex: number,
+    activeIndex: number,
+  },
+  // 0為實際一開始的位置(往前為負數), 結束值為最後結束位置
+  actual: {
+    activeIndex: number,
+    minIndex: number,
+    maxIndex: number,
+    firstIndex: number,
+    lastIndex: number,
+  },
+  page: {
+    activePage: number
+    pageTotal: number,
+  },
 }
 
 export interface IInfo {

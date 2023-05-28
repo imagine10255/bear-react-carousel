@@ -79,13 +79,13 @@ class Configurator {
     }
 
 
-//
-//
-//         return `<style scoped>
-// #${this.carouselId}{${rootStyle}}
-// #${this.carouselId} .${elClassName.slideItem}{${slideItemStyle}}
-//               </style>`;
-//     }
+    //
+    //
+    //         return `<style scoped>
+    // #${this.carouselId}{${rootStyle}}
+    // #${this.carouselId} .${elClassName.slideItem}{${slideItemStyle}}
+    //               </style>`;
+    //     }
 
     //
     // const rwdMedia = getMediaSetting({
