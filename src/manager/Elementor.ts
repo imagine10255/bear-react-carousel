@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {getMoveDistance, getMovePercentage, getStartPosition} from '../utils';
+import {booleanToDataAttr, checkInRange, getMoveDistance, getMovePercentage, getStartPosition} from '../utils';
 import Configurator from './Configurator';
 import Stater from './Stater';
 import Locator from './Locator';
@@ -14,7 +14,7 @@ class Elementor {
     _slideItemRefs: IRefObject<Array<HTMLDivElement>> = React.createRef();
     _pageRefs: IRefObject<Array<HTMLDivElement>> = React.createRef();
 
-    private _setter: Configurator;
+    private _configurator: Configurator;
     private _stater: Stater;
     private _locator: Locator;
 
@@ -28,7 +28,7 @@ class Elementor {
         this._slideItemRefs.current = [];
         this._pageRefs.current = [];
 
-        this._setter = manager.configurator;
+        this._configurator = manager.configurator;
         this._stater = manager.stater;
         this._locator = manager.locator;
 
@@ -51,6 +51,10 @@ class Elementor {
     }
     get navGroupEl(){
         return this._navGroupRef.current;
+    }
+
+    get isUseAnimation(){
+        return this.containerEl.style.transitionDuration !== '0ms';
     }
 
 
@@ -83,10 +87,10 @@ class Elementor {
      * @param slideItemWidth
      */
     private _getStartPosition = (slideItemWidth: number) => {
-        return getStartPosition(this._setter.setting.isCenteredSlides,
+        return getStartPosition(this._configurator.setting.isCenteredSlides,
             {
-                slidesPerView: this._setter.setting.slidesPerView,
-                slidesPerViewActual: this._setter.setting.slidesPerViewActual,
+                slidesPerView: this._configurator.setting.slidesPerView,
+                slidesPerViewActual: this._configurator.setting.slidesPerViewActual,
             },
             {
                 containerWidth: this.rootEl.clientWidth,
@@ -116,12 +120,7 @@ class Elementor {
      * @param isEnable
      */
     setNonSubjectTouch = (isEnable: boolean) => {
-        if(this.pageGroupEl){
-            this.pageGroupEl.setAttribute('data-touch', isEnable ? 'true': 'false');
-        }
-        if(this.navGroupEl){
-            this.navGroupEl.setAttribute('data-touch', isEnable ? 'true': 'false');
-        }
+        this.rootEl.setAttribute('data-touch', String(isEnable));
     };
 
 
@@ -132,6 +131,52 @@ class Elementor {
     setPageRefs(el: HTMLDivElement, index: number){
         this._pageRefs.current[index] = el;
     }
+
+
+    transform(translateX: number, isUseAnimation = true){
+        this.containerEl.style.transform = `translate(${translateX}px, 0px)`;
+        this.containerEl.style.transitionDuration = isUseAnimation
+            ? `${this._configurator.setting.moveTime}ms`
+            : '0ms';
+
+        return this;
+    }
+
+
+
+    syncActiveState(activeActualIndex: number){
+
+        // 更改顯示在第幾個 (父元件使用可判定樣式設定)
+        this.slideItemEls.forEach((row, index) => {
+            if(checkInRange(index, activeActualIndex, this.slideItemEls.length)){
+                row.setAttribute('data-active', 'true');
+            } else if (row?.dataset.active) {
+                row.removeAttribute('data-active');
+            }
+        });
+
+        const active = this.slideItemEls.find(row => row.dataset.active === 'true');
+        const activePage = parseInt(active?.dataset.page);
+
+        // 更改顯示在第幾頁的樣式 (父元件使用可判定樣式設定)
+        if (this._stater.info.isVisiblePagination && this._stater.page.activePage > 0) {
+            this.pageEls.forEach((row, index) => {
+                if (activePage === index + 1) {
+                    row.setAttribute('data-active', 'true');
+                } else if(row?.dataset.active) {
+                    row.removeAttribute('data-active');
+                }
+            });
+        }
+
+
+
+        // 提供是否為第一頁/最後一頁的判斷屬性
+        this.navGroupEl.setAttribute('data-first', booleanToDataAttr(activePage === 1));
+        this.navGroupEl.setAttribute('data-last',  booleanToDataAttr(activePage === this._stater.info.page.pageTotal));
+
+    }
+
 
 
 

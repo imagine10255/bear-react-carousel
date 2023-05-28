@@ -6,6 +6,8 @@ import log from '../log';
 import {DesktopTouchEvent, MobileTouchEvent} from '../interface/DragEvent';
 import AutoPlayer from './AutoPlayer';
 import Locator from './Locator';
+import {calcMoveTranslatePx, checkInRange} from '../utils';
+import Stater from './Stater';
 
 
 /**
@@ -18,6 +20,7 @@ class Dragger {
     _autoPlayer: AutoPlayer;
     _locator: Locator;
     _device: EDevice;
+    _stater: Stater;
 
 
     constructor(manager: {
@@ -25,12 +28,15 @@ class Dragger {
         controller: Controller,
         elementor: Elementor,
         autoPlayer: AutoPlayer,
+        stater: Stater,
         locator: Locator,
     }, device: EDevice) {
         this._configurator = manager.configurator;
         this._controller = manager.controller;
         this._elementor = manager.elementor;
+        this._elementor = manager.elementor;
         this._autoPlayer = manager.autoPlayer;
+        this._stater = manager.stater;
         this._locator = manager.locator;
 
         this._device = device;
@@ -74,7 +80,7 @@ class Dragger {
         this._autoPlayer.pause();
 
         const {containerEl} = this._elementor;
-        if(containerEl?.style.transitionDuration === '0ms'){
+        if(this._elementor.isUseAnimation === false){
             this._controller.slideResetToMatchIndex();
             this._locator.touchStart2(new MobileTouchEvent(event), containerEl);
 
@@ -94,7 +100,7 @@ class Dragger {
         event.preventDefault();
 
         const movePx = this._locator.touchMove(new MobileTouchEvent(event), this._elementor.containerEl);
-        this._controller.dragMove(movePx);
+        this._dragMove(movePx);
     };
 
     /**
@@ -108,7 +114,7 @@ class Dragger {
 
         this._elementor.containerEl?.removeEventListener('touchmove', this._onMobileTouchMove, false);
         this._elementor.containerEl?.removeEventListener('touchend', this._onMobileTouchEnd, false);
-        this._controller.dragDone();
+        this._dragDone();
         this._autoPlayer.play();
     };
 
@@ -143,10 +149,10 @@ class Dragger {
     _onWebMouseMove = (event: MouseEvent):void => {
         event.preventDefault();
         // if(this.props.isDebug && logEnable.onWebMouseMove) log.printInText('[_onWebMouseMove]');
-        console.log('_onWebMouseMove');
 
         const movePx = this._locator.touchMove(new DesktopTouchEvent(event), this._elementor.containerEl);
-        this._controller.dragMove(movePx);
+        this._dragMove(movePx);
+        // this._controller.dragMove(movePx);
     };
 
     /**
@@ -156,14 +162,71 @@ class Dragger {
     _onWebMouseEnd = (event: MouseEvent):void => {
         event.preventDefault();
         // if(this.props.isDebug && logEnable.onWebMouseEnd) log.printInText('[_onWebMouseEnd]');
-console.log('_onWebMouseEnd');
 
         this._elementor.rootEl?.removeEventListener('mouseleave', this._onWebMouseEnd, false);
         this._elementor.containerEl?.removeEventListener('mousemove', this._onWebMouseMove, false);
         this._elementor.containerEl?.removeEventListener('mouseup', this._onWebMouseEnd, false);
-        this._controller.dragDone();
+        this._dragDone();
         this._autoPlayer.play();
     };
+
+
+
+
+    _dragMove(moveX: number) {
+        //     if(this.props.isDebug && logEnable.elementMove) log.printInText('[_elementMove]');
+
+        this._elementor.setNonSubjectTouch(false);
+
+        const {startPosition} = this._locator;
+        const {setting} = this._configurator;
+
+        if (this._elementor.containerEl && setting.isEnableMouseMove && this._elementor.slideItemEls) {
+            // console.log('this.position.startPosition.x', this._isSyncControl(), moveX);
+            const translateX = calcMoveTranslatePx(startPosition.x, moveX);
+
+            const percentage = this._elementor.getMovePercentage(translateX); //TODO: 應該移動到 Positioner
+
+            // 取得移動進度
+            // if(this.props.onElementMove){
+            //     this.props.onElementMove(this.activeActualIndex, percentage);
+            // }
+
+            // 同步控制
+            // this._syncControlMove(percentage);
+
+            this._elementor
+                .transform(translateX, false)
+                .syncActiveState(Math.round(percentage));
+        }
+    }
+
+
+
+    /**
+     * The object movement ends (confirm the stop position and which Index position should be sucked)
+     */
+    _dragDone = (): void => {
+        // if(this.props.isDebug && logEnable.elementMoveDone) log.printInText('[_elementMoveDone]');
+        this._elementor.setNonSubjectTouch(true);
+
+
+        if(this._elementor.slideItemEls){
+            const active = this._elementor.slideItemEls.find(row => row.dataset.active === 'true');
+            if(active){
+                const activePage = Number(active.dataset.page);
+                this._controller.slideToPage(activePage);
+                // this.slideToActualIndex(activeActualIndex);
+
+                // const activeSourceIndex = Number(active.dataset.source);
+                // this._syncControlDone(activeSourceIndex);
+            }
+        }
+
+        // this._setOtherTouch(true);
+    };
+
+
 }
 
 

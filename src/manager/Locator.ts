@@ -41,7 +41,7 @@ class Locator {
 
         // 水平移動
         // if(this.moveDirection === EDirection.horizontal){
-            return containerEl.offsetLeft + dropEvent.x;
+        return containerEl.offsetLeft + dropEvent.x;
         // }
         return 0;
     }

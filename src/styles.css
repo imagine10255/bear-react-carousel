@@ -44,7 +44,7 @@
     z-index: 10;
 }
 
-.bear-react-carousel__pagination-group[data-touch="false"]{
+.bear-react-carousel__root[data-touch="false"] .bear-react-carousel__pagination-group{
     pointer-events: none;
 }
 
@@ -100,6 +100,7 @@
     border-radius: 99em;
     overflow: hidden;
     opacity: .6;
+    transition: .4s opacity;
 
     position: absolute;
     z-index: 11;
@@ -110,10 +111,14 @@
     flex-wrap: wrap;
     align-content: center;
     justify-content: center;
-
 }
 
-.bear-react-carousel__nav-group[data-touch="false"]{
+.bear-react-carousel__root[data-touch="false"] .bear-react-carousel__nav-group{
+    pointer-events: none;
+}
+.bear-react-carousel__nav-group[data-first="true"] > .bear-react-carousel__nav-prev-button,
+.bear-react-carousel__nav-group[data-last="true"] > .bear-react-carousel__nav-next-button{
+    opacity: 0;
     pointer-events: none;
 }
 

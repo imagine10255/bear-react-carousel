@@ -153,10 +153,11 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             configurator: this._configurator,
             autoPlayer: this._autoPlayer,
             elementor: this._elementor,
+            stater: this._stater,
             controller: this._controller,
         }, this._device);
 
-        this._controller.onChange(this._setOnChange);
+        this._controller.setOnChange(this._setOnChange);
         
         this._slideToPage = this._controller.slideToPage.bind(this._controller);
 
@@ -198,7 +199,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         this._setOnChange();
         this._setControllerRef();
 
-
+        this._init();
     }
 
     componentWillUnmount() {
@@ -280,6 +281,16 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     _isSyncControl = () => !!this.props.syncControlRef === false;
 
 
+
+    _init = () => {
+        if (this._elementor.containerEl) {
+            const className = this._elementor.containerEl.classList;
+            if(!className.contains(elClassName.containerInit)){
+                className.add(elClassName.containerInit);
+            }
+        }
+    }
+
     /**
      * set Controller method
      */
@@ -289,7 +300,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         }
     };
 
-    
+
+
     /**
    * set OnChange emit
    */
