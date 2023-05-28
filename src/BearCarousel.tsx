@@ -89,7 +89,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     _autoPlayer: AutoPlayer;
     _dragger: Dragger;
 
-
+    _slideToPage: (page: number, isUseAnimation?: boolean) => void;
 
     constructor(props: IBearCarouselProps) {
         super(props);
@@ -157,6 +157,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         }, this._device);
 
         this._controller.onChange(this._setOnChange);
+        
+        this._slideToPage = this._controller.slideToPage.bind(this._controller);
 
         // this.info = info;
         this.state = {
@@ -263,7 +265,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             // reset page position
             const $this = this;
             setTimeout(() => {
-                $this._controller.slideToPage(1, false);
+                $this._slideToPage(1, false);
             }, 0);
 
             this._setOnChange();
@@ -298,6 +300,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         }
     };
 
+
     /**
    * Render left and right navigation blocks
    */
@@ -327,6 +330,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         </div>);
     };
 
+
     /**
      * render slide item
      */
@@ -352,6 +356,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         });
     }
 
+
     /**
      * Page number navigation buttons
      */
@@ -364,7 +369,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                 <Page
                     key={`page_${i}`}
                     ref={(el) => this._elementor.setPageRefs(el, i)}
-                    onSlideToPage={this._controller.slideToPage}
+                    onSlideToPage={this._slideToPage}
                     page={i + 1}
                     isActive={page.activePage === i + 1}
                 />
