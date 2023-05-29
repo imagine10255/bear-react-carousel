@@ -37,6 +37,7 @@ class Controller {
         // if(this.props.isDebug && logEnable.resetPosition) log.printInText('[_resetPosition]');
         const {actual, formatElement} = this._stater;
 
+        console.log('============= reset =========');
         if (formatElement[actual.activeIndex].isClone) {
             this.slideToActualIndex(formatElement[actual.activeIndex].matchIndex, false);
         }

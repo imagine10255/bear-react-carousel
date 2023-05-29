@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
 import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
 import './App.css';
@@ -8,7 +8,7 @@ import 'bear-react-carousel/dist/index.css';
 
 // import Base from './sample/Base';
 import SyncControl from './sample/SyncControl';
-import {ChangeEvent, EventHandler, ReactEventHandler, useState} from 'react';
+import {ChangeEvent, ChangeEventHandler, EventHandler, ReactEventHandler, useState} from 'react';
 import Breakpoints from './sample/Breakpoints';
 import Base from './sample/Base';
 import SlidePerViews from './sample/SlidePerViews';
@@ -24,7 +24,7 @@ enum EExampleCode {
 }
 
 
-const examples: Record<EExampleCode, JEX.Element> = {
+const examples: Record<EExampleCode, () => JSX.Element> = {
     [EExampleCode.base]: Base,
     [EExampleCode.breakpoints]: Breakpoints,
     [EExampleCode.slidePerViews]: SlidePerViews,
@@ -32,35 +32,64 @@ const examples: Record<EExampleCode, JEX.Element> = {
 };
 
 function App() {
-    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.slidePerViews);
+    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.base);
     const Comp = examples[exampleKey];
     
 
-    const handleSetItem = (e: ChangeEvent) => {
-        setExampleItem(e.target.value);
-    };
-
 
     return (
-        <div className="App">
-            <select
-                value={exampleKey}
-                onChange={handleSetItem}
-            >
+        <AppRoot className="App">
+
+
+            <Menu>
                 {Object.keys(examples).map(code => {
-                    return <option
+                    return <Button type="button"
                         key={code}
-                        value={code}
-                    >{code}</option>;
+                        isActive={code === exampleKey}
+                        onClick={() => setExampleItem(code as EExampleCode)}
+                    >{code}</Button>;
                 })}
-            </select>
+            </Menu>
 
 
-            <Comp/>
-        </div>
+            <Example>
+                <Comp/>
+            </Example>
+        </AppRoot>
     );
 }
 
 export default App;
 
 
+
+const Button = styled.button<{
+    isActive: boolean
+}>`
+  ${props => props.isActive && css`
+      background-color: #00a3e0; 
+  `}
+  
+`;
+
+
+const Menu = styled.div`
+    display: flex;
+  flex-direction: column;
+  width: 150px;
+`;
+
+
+const Example = styled.div`
+    display: flex;
+  flex-direction: column;
+  flex: 1;
+`;
+
+
+
+const AppRoot = styled.div`
+    display: flex;
+  flex-direction: row;
+  
+`;

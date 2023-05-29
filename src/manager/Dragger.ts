@@ -181,7 +181,11 @@ class Dragger {
         const {startPosition} = this._locator;
         const {setting} = this._configurator;
 
-        if (this._elementor.containerEl && setting.isEnableMouseMove && this._elementor.slideItemEls) {
+        if (this._elementor.containerEl &&
+            setting.isEnableMouseMove &&
+            this._elementor.slideItemEls &&
+            this._stater.page.pageTotal > 1
+        ) {
             // console.log('this.position.startPosition.x', this._isSyncControl(), moveX);
             const translateX = calcMoveTranslatePx(startPosition.x, moveX);
 
@@ -214,11 +218,12 @@ class Dragger {
         if(this._elementor.slideItemEls){
             const active = this._elementor.slideItemEls.find(row => row.dataset.active === 'true');
             if(active){
-                const activePage = Number(active.dataset.page);
-                this._controller.slideToPage(activePage);
-                // this.slideToActualIndex(activeActualIndex);
+                // const activePage = Number(active.dataset.page);
+                // this._controller.slideToPage(activePage);
 
-                // const activeSourceIndex = Number(active.dataset.source);
+                const activeSourceIndex = Number(active.dataset.actual);
+                this._controller.slideToActualIndex(activeSourceIndex);
+
                 // this._syncControlDone(activeSourceIndex);
             }
         }

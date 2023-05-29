@@ -44,6 +44,10 @@
     z-index: 10;
 }
 
+.bear-react-carousel__root[data-onlyOne="true"] .bear-react-carousel__pagination-group,
+.bear-react-carousel__root[data-onlyOne="true"] .bear-react-carousel__nav-group {
+    display: none;
+}
 .bear-react-carousel__root[data-touch="false"] .bear-react-carousel__pagination-group{
     pointer-events: none;
 }

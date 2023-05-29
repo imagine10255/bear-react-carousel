@@ -171,9 +171,13 @@ class Elementor {
 
 
         // 提供是否為第一頁/最後一頁的判斷屬性
-        if(this._stater.info.isVisibleNavButton && !this._configurator.setting.isEnableLoop){
+        if(this._stater.info.isVisibleNavButton &&
+            !this._configurator.setting.isEnableLoop ||
+            this._stater.page.pageTotal === 1
+        ){
             this.navGroupEl.setAttribute('data-first', booleanToDataAttr(activePage === 1));
             this.navGroupEl.setAttribute('data-last',  booleanToDataAttr(activePage === this._stater.info.page.pageTotal));
+            this.rootEl.setAttribute('data-onlyOne',  booleanToDataAttr(true));
         }
 
     }
