@@ -91,7 +91,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     _dragger: Dragger;
     _syncCarousel: SyncCarousel;
 
-    _slideToPage: (page: number, isUseAnimation?: boolean) => void;
 
     constructor(props: IBearCarouselProps) {
         super(props);
@@ -161,13 +160,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             dragger: this._dragger,
         });
 
-        this._stater.on('change', this._onChange);
-
-        this._slideToPage = this._controller.slideToPage.bind(this._controller);
-
-        this.state = {
-            windowSize: this._windowSizer.size
-        };
+        this._stater.on('infoChanged', this._onChange);
+        this.state = {windowSize: this._windowSizer.size};
 
     }
 
@@ -262,12 +256,9 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             this._stater.init(data);
 
             // reset page position
-            const $this = this;
             setTimeout(() => {
-                $this._slideToPage(1, false);
+                this._controller.slideToPage(1, false);
             }, 0);
-
-            // this._onChange();
 
             return true;
         }
@@ -384,7 +375,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                 <Page
                     key={`page_${i}`}
                     ref={(el) => this._elementor.setPageRefs(el, i)}
-                    onSlideToPage={this._slideToPage}
+                    onSlideToPage={(page) => this._controller.slideToPage(page)}
                     page={i + 1}
                     isActive={page.activePage === i + 1}
                 />

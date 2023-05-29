@@ -1,7 +1,11 @@
 import {IInfo, TBearSlideItemDataList} from '../types';
 import {checkActualIndexInRange, getNextPageFirstIndex, getSlideIndex, initDataList} from '../utils';
 import Configurator from './Configurator';
-type TCallback = () => void
+
+
+type StateEvent = 'infoChanged';
+type TCallback = () => void;
+
 
 class Stater {
     private _configurator: Configurator;
@@ -14,7 +18,7 @@ class Stater {
     }
 
 
-    // @TODO: 禁止使用，所以需要刪除
+    // @TODO: 禁止使用，所以需要除
     get info(): IInfo {
         return this._info;
     }
@@ -53,14 +57,14 @@ class Stater {
     }
 
 
-    on(eventName: string, callback: TCallback) {
+    on(eventName: StateEvent, callback: TCallback) {
         if (!this.events[eventName]) {
             this.events[eventName] = [];
         }
         this.events[eventName].push(callback);
     }
 
-    emit(eventName: string) {
+    emit(eventName: StateEvent) {
         if (this.events[eventName]) {
             for (const callback of this.events[eventName]) {
                 callback();
@@ -132,13 +136,13 @@ class Stater {
             isVisiblePagination: isEnablePagination && formatElement.length > 0,
             isVisibleNavButton: isEnableNavButton && formatElement.length > 0
         };
-        this.emit('change');
+        this.emit('infoChanged');
     };
 
     setActiveActual = (index: number, page: number) => {
         this.info.actual.activeIndex = index;
         this.info.page.activePage = page;
-        this.emit('change');
+        this.emit('infoChanged');
     };
 
 }

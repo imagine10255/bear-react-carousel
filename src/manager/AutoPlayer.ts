@@ -30,14 +30,15 @@ class AutoPlayer {
         this.boundPlay = this.play.bind(this, this._configurator);
         this.boundPause = this.pause.bind(this, this._configurator);
 
-        this._controller.on('slideToActualIndex', this.pause);
-        this._controller.on('slideDone', this.play);
-        this._dragger.on('dragStart', this.pause);
+
     }
 
     mount = () => {
         window.addEventListener('focus', this.boundPlay, false);
         window.addEventListener('blur', this.boundPause, false);
+        this._controller.on('slideBefore', this.pause);
+        this._controller.on('slideAfter', this.play);
+        this._dragger.on('dragStart', this.pause);
 
         this.play();
     };
@@ -48,6 +49,9 @@ class AutoPlayer {
     unmount = () => {
         window.removeEventListener('focus', this.boundPlay, false);
         window.removeEventListener('blur', this.boundPause, false);
+        this._controller.off('slideBefore', this.pause);
+        this._controller.off('slideAfter', this.play);
+        this._dragger.off('dragStart', this.pause);
 
         this.pause();
     };

@@ -5,7 +5,8 @@ import Locator from './Locator';
 import Elementor from './Elementor';
 import SyncCarousel from './SyncCarousel';
 
-type TCallback = () => void
+type SlideEvent = 'slideBefore'|'slideAfter';
+type TCallback = () => void;
 
 class Controller {
     private readonly _configurator: Configurator;
@@ -14,7 +15,7 @@ class Controller {
     private readonly _elementor: Elementor;
     private readonly _syncCarousel: SyncCarousel;
 
-    private events: Record<string, TCallback[]> = {};
+    private events: Map<string, TCallback[]> = new Map();
 
 
     constructor(manager: {
@@ -31,16 +32,26 @@ class Controller {
         this._syncCarousel = manager.syncCarousel;
     }
 
-    on(eventName: string, callback: TCallback) {
-        if (!this.events[eventName]) {
-            this.events[eventName] = [];
+    on(eventName: SlideEvent, callback: TCallback) {
+        if (!this.events.has(eventName)) {
+            this.events.set(eventName, []);
         }
-        this.events[eventName].push(callback);
+        this.events.get(eventName).push(callback);
     }
 
-    emit(eventName: string) {
-        if (this.events[eventName]) {
-            for (const callback of this.events[eventName]) {
+    off(eventName: SlideEvent, callback: TCallback) {
+        if (this.events.has(eventName)) {
+            const callbacks = this.events.get(eventName);
+            const idx = callbacks.indexOf(callback);
+            if (idx >= 0) {
+                callbacks.splice(idx, 1);
+            }
+        }
+    }
+
+    emit(eventName: SlideEvent) {
+        if (this.events.has(eventName)) {
+            for (const callback of this.events.get(eventName)) {
                 callback();
             }
         }
@@ -61,7 +72,7 @@ class Controller {
     };
 
     slideToActualIndex = (slideIndex: number, isUseAnimation = true) => {
-        this.emit('slideToActualIndex');
+        this.emit('slideBefore');
 
         if (this._stater.checkActualIndexInRange(slideIndex)) {
             const {formatElement} = this._stater;
@@ -75,7 +86,7 @@ class Controller {
 
             this._syncCarousel.slideToActualIndex(slideIndex, isUseAnimation);
         }
-        this.emit('slideDone');
+        this.emit('slideAfter');
 
     };
 

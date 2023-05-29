@@ -10,8 +10,9 @@ import {calcMoveTranslatePx, checkInRange} from '../utils';
 import Stater from './Stater';
 import SyncCarousel from './SyncCarousel';
 
-type TCallback = () => void
 
+type DragEvent = 'dragStart'|'dragDone';
+type TCallback = () => void;
 /**
  * unmount 跟 blur 都需要 停止計時器
  */
@@ -24,7 +25,7 @@ class Dragger {
     _stater: Stater;
     _syncCarousel: SyncCarousel;
 
-    private events: Record<string, TCallback[]> = {};
+    private events: Map<string, TCallback[]> = new Map();
 
     constructor(manager: {
         configurator: Configurator,
@@ -45,16 +46,26 @@ class Dragger {
         this._device = device;
     }
 
-    on(eventName: string, callback: TCallback) {
-        if (!this.events[eventName]) {
-            this.events[eventName] = [];
+    on(eventName: DragEvent, callback: TCallback) {
+        if (!this.events.has(eventName)) {
+            this.events.set(eventName, []);
         }
-        this.events[eventName].push(callback);
+        this.events.get(eventName).push(callback);
     }
 
-    emit(eventName: string) {
-        if (this.events[eventName]) {
-            for (const callback of this.events[eventName]) {
+    off(eventName: DragEvent, callback: TCallback) {
+        if (this.events.has(eventName)) {
+            const callbacks = this.events.get(eventName);
+            const idx = callbacks.indexOf(callback);
+            if (idx >= 0) {
+                callbacks.splice(idx, 1);
+            }
+        }
+    }
+
+    emit(eventName: DragEvent) {
+        if (this.events.has(eventName)) {
+            for (const callback of this.events.get(eventName)) {
                 callback();
             }
         }
@@ -129,12 +140,11 @@ class Dragger {
      */
     _onMobileTouchEnd = (event: TouchEvent): void => {
         // if(this.props.isDebug && logEnable.onMobileTouchEnd) log.printInText('[_onMobileTouchEnd]');
-        this.emit('dragDone');
 
         this._elementor.containerEl?.removeEventListener('touchmove', this._onMobileTouchMove, false);
         this._elementor.containerEl?.removeEventListener('touchend', this._onMobileTouchEnd, false);
         this._dragDone();
-
+        this.emit('dragDone');
     };
 
     /**
@@ -169,7 +179,6 @@ class Dragger {
 
         const movePx = this._locator.touchMove(new DesktopTouchEvent(event), this._elementor.containerEl);
         this._dragMove(movePx);
-        // this._controller.dragMove(movePx);
     };
 
     /**
@@ -184,7 +193,6 @@ class Dragger {
         this._elementor.containerEl?.removeEventListener('mousemove', this._onWebMouseMove, false);
         this._elementor.containerEl?.removeEventListener('mouseup', this._onWebMouseEnd, false);
         this._dragDone();
-
         this.emit('dragDone');
     };
 
