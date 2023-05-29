@@ -20,6 +20,7 @@ import './styles.css';
 import WindowSize from './components/WindowSize';
 import Page from './components/Page';
 import Dragger from './manager/Dragger';
+import SyncCarousel from './manager/SyncCarousel';
 
 
 // debug log switch
@@ -88,6 +89,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     _controller: Controller;
     _autoPlayer: AutoPlayer;
     _dragger: Dragger;
+    _syncCarousel: SyncCarousel;
 
     _slideToPage: (page: number, isUseAnimation?: boolean) => void;
 
@@ -124,11 +126,12 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             autoPlayTime,
             isDebug
         };
+        this._syncCarousel = new SyncCarousel(props.syncCarouselRef);
 
         this._windowSizer = new WindowSizer(breakpoints, this._device);
         this._configurator = new Configurator(breakpoints, setting);
         this._stater = new Stater(this._configurator, data);
-        this._locator = new Locator();
+        this._locator = new Locator(this._configurator.carouselId);
         this._elementor = new Elementor({
             locator: this._locator,
             configurator: this._configurator,
@@ -139,8 +142,10 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             locator: this._locator,
             configurator: this._configurator,
             stater: this._stater,
-            elementor: this._elementor
+            elementor: this._elementor,
+            syncCarousel: this._syncCarousel,
         });
+
 
 
         this._autoPlayer = new AutoPlayer({
@@ -155,6 +160,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             elementor: this._elementor,
             stater: this._stater,
             controller: this._controller,
+            syncCarousel: this._syncCarousel,
         }, this._device);
 
         this._controller.setOnChange(this._setOnChange);
@@ -219,8 +225,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
         const {windowSize: nextWindowSize} = nextState;
         const {windowSize} = this.state;
-        const {data, onChange, renderNavButton, onElementDone, syncControlRef, onElementMove, ...otherParams} = this.props;
-        const {data: nextData, onChange: nextSetCarousel, renderNavButton: nextRenderNavButton, syncControlRef: nextsyncControlRef, onElementDone: nextOnElementDone, onElementMove: nextOnElementMove, ...nextOtherProps} = nextProps;
+        const {data, onChange, renderNavButton, onElementDone, syncCarouselRef, onElementMove, ...otherParams} = this.props;
+        const {data: nextData, onChange: nextSetCarousel, renderNavButton: nextRenderNavButton, syncCarouselRef: nextSyncCarouselRef, onElementDone: nextOnElementDone, onElementMove: nextOnElementMove, ...nextOtherProps} = nextProps;
 
         const oldKey = data?.map((row) => row.key).join('_');
         const nextKey = nextData?.map((row) => row.key).join('_');
@@ -278,7 +284,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     }
 
 
-    _isSyncControl = () => !!this.props.syncControlRef === false;
+    _isSyncControl = () => !!this.props.syncCarouselRef === false;
 
 
 

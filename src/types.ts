@@ -50,7 +50,7 @@ export interface IBearCarouselProps extends IBreakpointSetting{
   onElementMove?: (activeActualIndex: number, percentage: number) => void,
   onElementDone?: (activeActualIndex: number) => void,
   isDebug: boolean
-  syncControlRef?: IRefObject<Controller>,
+  syncCarouselRef?: IRefObject<BearCarousel>,
   controllerRef?: IRefObject<Controller>,
 }
 

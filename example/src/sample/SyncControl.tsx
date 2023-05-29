@@ -1,6 +1,6 @@
 import {useCallback, useRef, useState} from 'react';
 import styled from 'styled-components';
-import BearCarousel, {BearSlideItem, TBearSlideItemDataList, elClassName} from 'bear-react-carousel';
+import BearCarousel, {BearSlideItem, TBearSlideItemDataList, elClassName, IInfo} from 'bear-react-carousel';
 import {baseImage as images} from '../config/images';
 
 
@@ -62,44 +62,46 @@ const bearSlideItemData3: TBearSlideItemDataList = images.map(row => {
 
 
 function SyncControl() {
-    const [carousel, setCarousel] = useState<IBearCarouselObj>();
+    const [info, setInfo] = useState<IInfo>();
+
+    // const [carousel, setCarousel] = useState<IBearCarouselObj>();
     const [enable, setEnable] = useState<boolean>(true);
     const [count, setCount] = useState<number>(0);
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const flexItemRef = useRef<HTMLDivElement>(null);
-    const syncControlRefs = useRef<BearCarousel>(null);
+    const syncCarouselRef = useRef<BearCarousel>(null);
 
     const slideRef = useRef<HTMLInputElement>(null);
 
 
-
-    const handleMove = useCallback((activeActualIndex: number, percentage: number) => {
-        if(textareaRef.current){
-            textareaRef.current.innerHTML = `activeActualIndex: ${activeActualIndex}, percentage: ${percentage}\r\n` + textareaRef.current.innerHTML;
-        }
-        if(flexItemRef.current){
-            flexItemRef.current.style.width = `${percentage * 100 / 7}%`;
-            flexItemRef.current.style.transition = 'none';
-        }
-        if(slideRef.current){
-            slideRef.current.value = `${percentage * 100 / 7}`;
-        }
-    }, []);
-
-    const handleDone = useCallback((activeActualIndex: number) => {
-        if(textareaRef.current){
-            textareaRef.current.innerHTML = `activeActualIndex: ${activeActualIndex}, percentage: ${activeActualIndex}\r\n` + textareaRef.current.innerHTML;
-        }
-        if(flexItemRef.current){
-            flexItemRef.current.style.width = `${activeActualIndex * 100 / 7}%`;
-            flexItemRef.current.style.transition = 'width .3s';
-        }
-        if(slideRef.current){
-            slideRef.current.value = `${activeActualIndex * 100 / 7}`;
-        }
-        console.log('activeActualIndex', activeActualIndex);
-        carousel?.goToPage(activeActualIndex + 1);
-    }, [carousel]);
+    //
+    // const handleMove = useCallback((activeActualIndex: number, percentage: number) => {
+    //     if(textareaRef.current){
+    //         textareaRef.current.innerHTML = `activeActualIndex: ${activeActualIndex}, percentage: ${percentage}\r\n` + textareaRef.current.innerHTML;
+    //     }
+    //     if(flexItemRef.current){
+    //         flexItemRef.current.style.width = `${percentage * 100 / 7}%`;
+    //         flexItemRef.current.style.transition = 'none';
+    //     }
+    //     if(slideRef.current){
+    //         slideRef.current.value = `${percentage * 100 / 7}`;
+    //     }
+    // }, []);
+    //
+    // const handleDone = useCallback((activeActualIndex: number) => {
+    //     if(textareaRef.current){
+    //         textareaRef.current.innerHTML = `activeActualIndex: ${activeActualIndex}, percentage: ${activeActualIndex}\r\n` + textareaRef.current.innerHTML;
+    //     }
+    //     if(flexItemRef.current){
+    //         flexItemRef.current.style.width = `${activeActualIndex * 100 / 7}%`;
+    //         flexItemRef.current.style.transition = 'width .3s';
+    //     }
+    //     if(slideRef.current){
+    //         slideRef.current.value = `${activeActualIndex * 100 / 7}`;
+    //     }
+    //     console.log('activeActualIndex', activeActualIndex);
+    //     carousel?.goToPage(activeActualIndex + 1);
+    // }, [carousel]);
 
     const handleControl = () => {
 
@@ -108,12 +110,31 @@ function SyncControl() {
     return <div>
 
         {/*測試同步*/}
-        {/*<Box>*/}
+        <Box>
+            <BearCarousel
+                ref={syncCarouselRef}
+                data={bearSlideItemData2}
+                slidesPerView={3}
+                isCenteredSlides
+                staticHeight="200px"
+                // spaceBetween={20}
+                isEnableNavButton
+                isEnablePagination
+                // onElementMove={handleMove}
+                // onElementDone={handleDone}
+                isDebug
+            />
+        </Box>
+
+
+        {/*<Box2>*/}
         {/*    <BearCarousel*/}
-        {/*        ref={syncControlRefs}*/}
-        {/*        data={bearSlideItemData2}*/}
-        {/*        slidesPerView="auto"*/}
-        {/*        isCenteredSlides={true}*/}
+        {/*        ref={syncCarouselRef}*/}
+
+
+        {/*        data={bearSlideItemData1}*/}
+        {/*        slidesPerView={1.5}*/}
+        {/*        isCenteredSlides*/}
         {/*        staticHeight="200px"*/}
         {/*        // spaceBetween={20}*/}
         {/*        isEnableNavButton*/}
@@ -122,15 +143,16 @@ function SyncControl() {
         {/*        // onElementDone={handleDone}*/}
         {/*        isDebug*/}
         {/*    />*/}
-        {/*</Box>*/}
-
+        {/*</Box2>*/}
 
         <Box2>
             <BearCarousel
-                // syncControlRefs={syncControlRefs}
-                data={bearSlideItemData2}
-                slidesPerView="auto"
-                isCenteredSlides={true}
+                syncCarouselRef={syncCarouselRef}
+                onChange={setInfo}
+
+                data={bearSlideItemData1}
+                slidesPerView={1}
+                isCenteredSlides
                 staticHeight="200px"
                 // spaceBetween={20}
                 isEnableNavButton
@@ -142,6 +164,10 @@ function SyncControl() {
         </Box2>
 
 
+        <br/>
+        <pre>
+            {JSON.stringify(info, null, '\t')}
+        </pre>
 
         {/*<textarea cols={30} rows={10} ref={textareaRef} style={{width: '100%'}}/>*/}
 
@@ -167,7 +193,7 @@ export default SyncControl;
 
 
 const Box = styled.div`
-    width: 375px;
+    width: 400px;
   display: flex;
   margin: 0 auto;
 
@@ -186,14 +212,6 @@ const Box2 = styled.div`
   display: flex;
   margin: 0 auto;
 
-  .${elClassName.slideItem}:not([data-active="true"]){
-    opacity: .1;
-    -webkit-transform: scale3d(0.8, 0.8, 1);
-    transform: scale3d(0.8, 0.8, 1);
-    -webkit-transition: all 0.3s ease-in-out;
-    -moz-transition: all 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out;
-  }
 `;
 
 

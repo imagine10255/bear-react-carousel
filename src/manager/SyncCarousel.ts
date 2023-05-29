@@ -6,15 +6,10 @@ import Locator from './Locator';
 import Elementor from './Elementor';
 import BearCarousel from '../BearCarousel';
 import {IRefObject} from '../types';
+import {MobileTouchEvent} from '../interface/DragEvent';
 
-class SyncController {
-
+class SyncCarousel {
     private readonly _carouselRef: IRefObject<BearCarousel>;
-    // private readonly _configurator: Configurator;
-    // private readonly _stater: Stater;
-    // private readonly _locator: Locator;
-    // private readonly _elementor: Elementor;
-
 
     constructor(carouselRef: IRefObject<BearCarousel>) {
         this._carouselRef = carouselRef;
@@ -38,23 +33,39 @@ class SyncController {
 
     syncControlMove = (percentage: number) => {
         // 將進度比例換算成 movePx
-        const moveX = this._elementor.getPercentageToMovePx(percentage);
-        const x = this._elementor.slideItemEls[0].clientWidth;
+        if(!this._carouselRef){
+            return null;
+        }
+        const moveX = this._elementor.getPercentageToMovePx2(percentage);
 
-        console.log('this._elementor.slideItemEls[0].clientWidth', this._elementor.slideItemEls[0].clientWidth);
+        
+        console.log('percentage', percentage, moveX);
 
         this._locator.touchStart({
-            x: this._configurator.setting.isEnableLoop ? -x : 0,
+            // x: this._configurator.setting.isEnableLoop ? -x : 0,
+            x: 0,
         });
 
+        // console.log('this._elementor', this._elementor.containerEl);
+        // console.log('this._elementor', this._locator.id, this._locator._startPosition);
         this._elementor.transform(moveX);
     };
 
     syncControlDone = (targetIndex: number) => {
+        if(!this._carouselRef){
+            return null;
+        }
         this._controller.slideToActualIndex(targetIndex);
+    };
+
+    slideToActualIndex = (slideIndex: number, isUseAnimation = true) => {
+        if(!this._carouselRef){
+            return null;
+        }
+        this._controller.slideToActualIndex(slideIndex, isUseAnimation);
     };
 
 }
 
 
-export default SyncController;
+export default SyncCarousel;

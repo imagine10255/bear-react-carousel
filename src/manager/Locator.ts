@@ -15,10 +15,15 @@ const defaultPosition: ITouchStart = {
  * 計算距離位置管理器
  */
 class Locator {
+    id: string
     _startPosition = defaultPosition;
     translateX: 0;
     percentage: 0;
     moveDirection: EDirection|undefined;
+
+    constructor(id: string) {
+        this.id = id;
+    }
 
     get startPosition(){
         return this._startPosition;
@@ -27,6 +32,7 @@ class Locator {
     public touchStart(startPosition: Partial<ITouchStart>){
         this._startPosition = {...defaultPosition, ...startPosition};
     }
+
 
     public touchStart2(dropEvent: DragEvent, containerEl: HTMLDivElement){
         const {x} = getTranslateParams(containerEl);

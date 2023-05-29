@@ -1,10 +1,9 @@
-import {calcMoveTranslatePx, checkInRange, getNextIndex, getPrevIndex, getSlideIndex} from '../utils';
+import {getNextIndex, getPrevIndex, getSlideIndex} from '../utils';
 import Configurator from './Configurator';
 import Stater from './Stater';
-import elClassName from '../el-class-name';
 import Locator from './Locator';
 import Elementor from './Elementor';
-import {ICarouselState} from '../types';
+import SyncCarousel from './SyncCarousel';
 
 class Controller {
 
@@ -12,20 +11,22 @@ class Controller {
     private readonly _stater: Stater;
     private readonly _locator: Locator;
     private readonly _elementor: Elementor;
+    private readonly _syncCarousel: SyncCarousel;
     _onChange: () => void;
 
-    moveTime = 500;
 
     constructor(manager: {
         configurator: Configurator,
         stater: Stater,
         locator: Locator,
         elementor: Elementor,
+        syncCarousel: SyncCarousel,
     }) {
         this._configurator = manager.configurator;
         this._stater = manager.stater;
         this._locator = manager.locator;
         this._elementor = manager.elementor;
+        this._syncCarousel = manager.syncCarousel;
     }
 
 
@@ -57,6 +58,9 @@ class Controller {
                 .transform(position, isUseAnimation)
                 .syncActiveState(slideIndex);
 
+            this._syncCarousel.slideToActualIndex(slideIndex, isUseAnimation);
+
+
             // if (this._elementor.containerEl) {
             //     const className = this._elementor.containerEl.classList;
             //     if(!className.contains(elClassName.containerInit)){
@@ -82,7 +86,6 @@ class Controller {
             //         // 結束移動後再繼續自動模式
             //         this._checkAndAutoPlay();
             //
-            //         this._handleSyncCarousel();
             //
             //         if(this.props.onElementDone){
             //             this.props.onElementDone(slideIndex);

@@ -8,6 +8,7 @@ import AutoPlayer from './AutoPlayer';
 import Locator from './Locator';
 import {calcMoveTranslatePx, checkInRange} from '../utils';
 import Stater from './Stater';
+import SyncCarousel from './SyncCarousel';
 
 
 /**
@@ -21,6 +22,7 @@ class Dragger {
     _locator: Locator;
     _device: EDevice;
     _stater: Stater;
+    _syncCarousel: SyncCarousel;
 
 
     constructor(manager: {
@@ -30,6 +32,7 @@ class Dragger {
         autoPlayer: AutoPlayer,
         stater: Stater,
         locator: Locator,
+        syncCarousel: SyncCarousel,
     }, device: EDevice) {
         this._configurator = manager.configurator;
         this._controller = manager.controller;
@@ -38,6 +41,7 @@ class Dragger {
         this._autoPlayer = manager.autoPlayer;
         this._stater = manager.stater;
         this._locator = manager.locator;
+        this._syncCarousel = manager.syncCarousel;
 
         this._device = device;
     }
@@ -197,10 +201,10 @@ class Dragger {
             // }
 
             // 同步控制
-            // this._syncControlMove(percentage);
+            this._syncCarousel.syncControlMove(percentage);
 
             this._elementor
-                .transform(translateX, false)
+                .transform(translateX)
                 .syncActiveState(Math.round(percentage));
         }
     }
@@ -224,7 +228,7 @@ class Dragger {
                 const activeSourceIndex = Number(active.dataset.actual);
                 this._controller.slideToActualIndex(activeSourceIndex);
 
-                // this._syncControlDone(activeSourceIndex);
+                this._syncCarousel.syncControlDone(activeSourceIndex);
             }
         }
 

@@ -73,11 +73,26 @@ class Elementor {
      * Percentage Move Percentage
      * @param movePx
      */
-    getPercentageToMovePx = (movePx: number) => {
+    getPercentageToMovePx = (percentage: number) => {
         const {actual} = this._stater;
         const slideCurrWidth = this.slideItemEls[actual.activeIndex].clientWidth;
         const startPosition = this._getStartPosition(slideCurrWidth);
-        return getMovePercentage(movePx, startPosition, slideCurrWidth);
+        return getMovePercentage(percentage, startPosition, slideCurrWidth);
+    };
+    /**
+     * Percentage Move Percentage
+     * @param movePx
+     */
+    getPercentageToMovePx2 = (percentage: number) => {
+        const {actual} = this._stater;
+        const slideCurrWidth = this.slideItemEls[actual.activeIndex].clientWidth;
+        const startPosition = this._getStartPosition(slideCurrWidth);
+
+        return -(slideCurrWidth * percentage) + startPosition;
+        // const startPosition = this._getStartPosition(slideCurrWidth);
+        // console.log('startPosition', startPosition);
+        // console.log('this.containerEl.clientWidth',this.containerEl.clientWidth);
+        // return getMovePercentage(percentage, startPosition, slideCurrWidth);
     };
 
 
@@ -132,7 +147,7 @@ class Elementor {
     }
 
 
-    transform(translateX: number, isUseAnimation = true){
+    transform(translateX: number, isUseAnimation = false){
         this.containerEl.style.transform = `translate(${translateX}px, 0px)`;
         this.containerEl.style.transitionDuration = isUseAnimation
             ? `${this._configurator.setting.moveTime}ms`
@@ -171,12 +186,12 @@ class Elementor {
 
 
         // 提供是否為第一頁/最後一頁的判斷屬性
-        if(this._stater.info.isVisibleNavButton &&
-            !this._configurator.setting.isEnableLoop ||
-            this._stater.page.pageTotal === 1
-        ){
+        if(this._stater.info.isVisibleNavButton && !this._configurator.setting.isEnableLoop){
             this.navGroupEl.setAttribute('data-first', booleanToDataAttr(activePage === 1));
             this.navGroupEl.setAttribute('data-last',  booleanToDataAttr(activePage === this._stater.info.page.pageTotal));
+        }
+
+        if(this._stater.page.pageTotal === 1){
             this.rootEl.setAttribute('data-onlyOne',  booleanToDataAttr(true));
         }
 
