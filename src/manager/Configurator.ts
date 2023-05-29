@@ -80,7 +80,7 @@ class Configurator {
 
     init = (responsiveBreakpoints: IPropsBreakpoints, options?: ISetting) => {
         this._setting = getMediaSetting(options, responsiveBreakpoints);
-    }
+    };
 
 }
 

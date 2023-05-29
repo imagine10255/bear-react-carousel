@@ -287,7 +287,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                 className.add(elClassName.containerInit);
             }
         }
-    }
+    };
 
     /**
      * set Controller method
@@ -398,7 +398,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         >
             {pageElement}
         </div>;
-    }
+    };
 
     render(){
         const {style, className, isDebug} = this.props;

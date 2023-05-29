@@ -69,7 +69,7 @@ class Dragger {
             this._elementor.containerEl.addEventListener('mousedown', this._onWebMouseStart, {passive: false});
             break;
         }
-    }
+    };
 
     /**
      * 完全移除
@@ -83,7 +83,7 @@ class Dragger {
             this._elementor.containerEl.removeEventListener('mousedown', this._onWebMouseStart, {passive: false} as any);
             break;
         }
-    }
+    };
 
 
 

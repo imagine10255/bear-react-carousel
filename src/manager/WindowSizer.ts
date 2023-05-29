@@ -55,11 +55,11 @@ class WindowSizer {
         this._size = this._calculateSize();
         window.addEventListener(resizeEvent[this._device], this._onResize, false);
         return this;
-    }
+    };
 
     public unmount = () => {
         window.removeEventListener(resizeEvent[this._device], this._onResize, false);
-    }
+    };
 
 
 }

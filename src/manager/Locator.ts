@@ -15,7 +15,7 @@ const defaultPosition: ITouchStart = {
  * 計算距離位置管理器
  */
 class Locator {
-    id: string
+    id: string;
     _startPosition = defaultPosition;
     translateX: 0;
     percentage: 0;
@@ -32,7 +32,7 @@ class Locator {
     public touchStart = (dropEvent: DragEvent, containerEl: HTMLDivElement) => {
         const {x} = getTranslateParams(containerEl);
         this._startPosition.x = dropEvent.x - x;
-    }
+    };
 
     public touchMove = (dropEvent: DragEvent, containerEl: HTMLDivElement) => {
         const {endX, endY} = dropEvent;
@@ -44,8 +44,8 @@ class Locator {
         // if(this.moveDirection === EDirection.horizontal){
         return containerEl.offsetLeft + dropEvent.x;
         // }
-        return 0;
-    }
+        // return 0;
+    };
 
 
 
