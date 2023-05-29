@@ -35,7 +35,7 @@ const examples: Record<EExampleCode, () => JSX.Element> = {
 };
 
 function App() {
-    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.autoPlay);
+    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.breakpoints);
     const Comp = examples[exampleKey];
     
 

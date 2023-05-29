@@ -14,7 +14,6 @@ class Controller {
     private readonly _locator: Locator;
     private readonly _elementor: Elementor;
     private readonly _syncCarousel: SyncCarousel;
-    private readonly _autoPlayer: AutoPlayer;
     _onChange: () => void;
 
     private events: Record<string, TCallback[]> = {};

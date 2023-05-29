@@ -188,15 +188,11 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
             // End of moving animation (Need to return to the position, to be fake)
 
-            this._autoPlayer.mount();
-            this._windowSizer.mount((windowSize) => {
-                if(windowSize !== this.state.windowSize){
-                    this.setState({windowSize});
-                }else{
-                    this._controller.slideToPage(1, false);
-                }
-            });
+            this._windowSizer
+                .mount()
+                .on('resize', this._onResize);
 
+            this._autoPlayer.mount();
             this._dragger.mount();
         }
 
@@ -304,8 +300,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         }
     };
 
-
-
     /**
    * set OnChange emit
    */
@@ -316,6 +310,13 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         }
     };
 
+    _onResize = (windowSize: number) => {
+        if(windowSize !== this.state.windowSize){
+            this.setState({windowSize});
+        }else{
+            this._controller.slideToPage(1, false);
+        }
+    };
 
     /**
    * Render left and right navigation blocks
@@ -350,7 +351,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     /**
      * render slide item
      */
-    _renderSlideItems(){
+    _renderSlideItems = () => {
         const {isDebug} = this.props;
         const {actual, formatElement} = this._stater;
         return formatElement.map((row, i) => {
@@ -370,13 +371,13 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                 index={i}
             />;
         });
-    }
+    };
 
 
     /**
      * Page number navigation buttons
      */
-    _renderPagination() {
+    _renderPagination = () => {
         const {page} = this._stater;
         const pageElement = [];
 
@@ -400,7 +401,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         </div>;
     }
 
-    render() {
+    render(){
         const {style, className, isDebug} = this.props;
         return (
             <BearCarouselProvider

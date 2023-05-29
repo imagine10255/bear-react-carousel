@@ -7,12 +7,13 @@ const resizeEvent: Record<EDevice, string> = {
     [EDevice.mobile]: 'orientationchange',
     [EDevice.desktop]:  'resize'
 };
+type TCallback = (args: any) => void
 
 class WindowSizer {
     private _breakpoints: IPropsBreakpoints;
     private _size: number;
     private _device: EDevice;
-    private _onResizeCallback: TOnResize | null = null;
+    private events: Record<string, TCallback[]> = {};
 
     get size() {
         return this._size;
@@ -26,26 +27,38 @@ class WindowSizer {
         this._onResize = this._onResize.bind(this);
     }
 
+    on(eventName: string, callback: TCallback) {
+        if (!this.events[eventName]) {
+            this.events[eventName] = [];
+        }
+        this.events[eventName].push(callback);
+    }
+
+    emit(eventName: string, args: any) {
+        if (this.events[eventName]) {
+            for (const callback of this.events[eventName]) {
+                callback(args);
+            }
+        }
+    }
+
     private _onResize(){
         this._size = this._calculateSize();
-        if (this._onResizeCallback) {
-            this._onResizeCallback(this._size);
-        }
+        this.emit('resize', this._size);
     }
 
     private _calculateSize() {
         return getSizeByRange(window.innerWidth, Object.keys(this._breakpoints).map(Number));
     }
 
-    public mount = (onResize: TOnResize) => {
+    public mount = () => {
         this._size = this._calculateSize();
-        this._onResizeCallback = onResize;
         window.addEventListener(resizeEvent[this._device], this._onResize, false);
+        return this;
     }
 
     public unmount = () => {
         window.removeEventListener(resizeEvent[this._device], this._onResize, false);
-        this._onResizeCallback = null;
     }
 
 
