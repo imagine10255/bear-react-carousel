@@ -302,7 +302,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
    * set OnChange emit
    */
     _onChange = () => {
-        console.log('onChange');
         if(this.props.onChange){
             const {element, actual, page} = this._stater;
             this.props.onChange({element, actual, page});
