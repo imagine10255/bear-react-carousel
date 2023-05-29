@@ -6,6 +6,8 @@ import Elementor from './Elementor';
 import SyncCarousel from './SyncCarousel';
 import AutoPlayer from './AutoPlayer';
 
+type TCallback = () => void
+
 class Controller {
     private readonly _configurator: Configurator;
     private readonly _stater: Stater;
@@ -15,21 +17,38 @@ class Controller {
     private readonly _autoPlayer: AutoPlayer;
     _onChange: () => void;
 
+    private events: Record<string, TCallback[]> = {};
+
+
     constructor(manager: {
         configurator: Configurator,
         stater: Stater,
         locator: Locator,
         elementor: Elementor,
         syncCarousel: SyncCarousel,
-        autoPlayer: AutoPlayer,
     }) {
         this._configurator = manager.configurator;
         this._stater = manager.stater;
         this._locator = manager.locator;
         this._elementor = manager.elementor;
         this._syncCarousel = manager.syncCarousel;
-        this._autoPlayer = manager.autoPlayer;
     }
+
+    on(eventName: string, callback: TCallback) {
+        if (!this.events[eventName]) {
+            this.events[eventName] = [];
+        }
+        this.events[eventName].push(callback);
+    }
+
+    emit(eventName: string) {
+        if (this.events[eventName]) {
+            for (const callback of this.events[eventName]) {
+                callback();
+            }
+        }
+    }
+
 
     /**
      * reset page position (Only LoopMode)
@@ -45,6 +64,8 @@ class Controller {
     };
 
     slideToActualIndex = (slideIndex: number, isUseAnimation = true) => {
+        this.emit('slideToActualIndex');
+
         if (this._stater.checkActualIndexInRange(slideIndex)) {
             const {formatElement} = this._stater;
             this._stater.setActiveActual(slideIndex, formatElement[slideIndex]?.inPage ?? 1);
@@ -55,12 +76,13 @@ class Controller {
                 .transform(position, isUseAnimation)
                 .syncActiveState(slideIndex);
 
-            this._syncCarousel.slideToActualIndex(slideIndex, isUseAnimation);
 
-            console.log('this._autoPlayer',this._autoPlayer);
+            this._syncCarousel.slideToActualIndex(slideIndex, isUseAnimation);
 
             this._onChange();
         }
+        this.emit('slideDone');
+
     };
 
     /**

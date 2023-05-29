@@ -127,7 +127,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             isDebug
         };
         this._syncCarousel = new SyncCarousel(props.syncCarouselRef);
-
         this._windowSizer = new WindowSizer(breakpoints, this._device);
         this._configurator = new Configurator(breakpoints, setting);
         this._stater = new Stater(this._configurator, data);
@@ -144,31 +143,29 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             stater: this._stater,
             elementor: this._elementor,
             syncCarousel: this._syncCarousel,
-            autoPlayer: this._autoPlayer,
-        });
-
-
-
-        this._autoPlayer = new AutoPlayer({
-            configurator: this._configurator,
-            controller: this._controller,
         });
 
         this._dragger = new Dragger({
             locator: this._locator,
             configurator: this._configurator,
-            autoPlayer: this._autoPlayer,
             elementor: this._elementor,
             stater: this._stater,
             controller: this._controller,
             syncCarousel: this._syncCarousel,
         }, this._device);
 
+
+        this._autoPlayer = new AutoPlayer({
+            configurator: this._configurator,
+            controller: this._controller,
+            dragger: this._dragger,
+        });
+
+
         this._controller.setOnChange(this._setOnChange);
         
         this._slideToPage = this._controller.slideToPage.bind(this._controller);
 
-        // this.info = info;
         this.state = {
             windowSize: this._windowSizer.size
         };

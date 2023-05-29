@@ -1,5 +1,6 @@
 import Configurator from './Configurator';
 import Controller from './Controller';
+import Dragger from './Dragger';
 
 
 /**
@@ -8,6 +9,7 @@ import Controller from './Controller';
 class AutoPlayer {
     _configurator: Configurator;
     _controller: Controller;
+    _dragger: Dragger;
     _timer: NodeJS.Timeout;
     boundPlay: () => void;
     boundPause: () => void;
@@ -19,12 +21,18 @@ class AutoPlayer {
     constructor(manager: {
         configurator: Configurator,
         controller: Controller,
+        dragger: Dragger,
     }) {
         this._configurator = manager.configurator;
         this._controller = manager.controller;
+        this._dragger = manager.dragger;
 
         this.boundPlay = this.play.bind(this, this._configurator);
         this.boundPause = this.pause.bind(this, this._configurator);
+
+        this._controller.on('slideToActualIndex', this.pause);
+        this._controller.on('slideDone', this.play);
+        this._dragger.on('dragStart', this.pause);
     }
 
     mount = () => {

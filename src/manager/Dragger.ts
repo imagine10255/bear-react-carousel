@@ -10,6 +10,7 @@ import {calcMoveTranslatePx, checkInRange} from '../utils';
 import Stater from './Stater';
 import SyncCarousel from './SyncCarousel';
 
+type TCallback = () => void
 
 /**
  * unmount 跟 blur 都需要 停止計時器
@@ -18,18 +19,17 @@ class Dragger {
     _configurator: Configurator;
     _controller: Controller;
     _elementor: Elementor;
-    _autoPlayer: AutoPlayer;
     _locator: Locator;
     _device: EDevice;
     _stater: Stater;
     _syncCarousel: SyncCarousel;
 
+    private events: Record<string, TCallback[]> = {};
 
     constructor(manager: {
         configurator: Configurator,
         controller: Controller,
         elementor: Elementor,
-        autoPlayer: AutoPlayer,
         stater: Stater,
         locator: Locator,
         syncCarousel: SyncCarousel,
@@ -38,12 +38,26 @@ class Dragger {
         this._controller = manager.controller;
         this._elementor = manager.elementor;
         this._elementor = manager.elementor;
-        this._autoPlayer = manager.autoPlayer;
         this._stater = manager.stater;
         this._locator = manager.locator;
         this._syncCarousel = manager.syncCarousel;
 
         this._device = device;
+    }
+
+    on(eventName: string, callback: TCallback) {
+        if (!this.events[eventName]) {
+            this.events[eventName] = [];
+        }
+        this.events[eventName].push(callback);
+    }
+
+    emit(eventName: string) {
+        if (this.events[eventName]) {
+            for (const callback of this.events[eventName]) {
+                callback();
+            }
+        }
     }
 
     mount = () => {
@@ -81,7 +95,7 @@ class Dragger {
     _onMobileTouchStart = (event: TouchEvent): void => {
         // if(this.props.isDebug && logEnable.onMobileTouchStart) log.printInText('[_onMobileTouchStart]');
 
-        this._autoPlayer.pause();
+        this.emit('dragStart');
 
         const {containerEl} = this._elementor;
         if(this._elementor.isUseAnimation === false){
@@ -115,11 +129,12 @@ class Dragger {
      */
     _onMobileTouchEnd = (event: TouchEvent): void => {
         // if(this.props.isDebug && logEnable.onMobileTouchEnd) log.printInText('[_onMobileTouchEnd]');
+        this.emit('dragDone');
 
         this._elementor.containerEl?.removeEventListener('touchmove', this._onMobileTouchMove, false);
         this._elementor.containerEl?.removeEventListener('touchend', this._onMobileTouchEnd, false);
         this._dragDone();
-        this._autoPlayer.play();
+
     };
 
     /**
@@ -129,7 +144,8 @@ class Dragger {
     _onWebMouseStart = (event: MouseEvent): void => {
         // if(this.props.isDebug && logEnable.onWebMouseStart) log.printInText('[_onWebMouseStart]');
 
-        this._autoPlayer.pause();
+        this.emit('dragStart');
+
         this._controller.slideResetToMatchIndex();
 
         const {containerEl} = this._elementor;
@@ -168,7 +184,8 @@ class Dragger {
         this._elementor.containerEl?.removeEventListener('mousemove', this._onWebMouseMove, false);
         this._elementor.containerEl?.removeEventListener('mouseup', this._onWebMouseEnd, false);
         this._dragDone();
-        this._autoPlayer.play();
+
+        this.emit('dragDone');
     };
 
 
