@@ -135,9 +135,6 @@ class Dragger {
         const {containerEl} = this._elementor;
         if (containerEl) {
             this._locator.touchStart2(new DesktopTouchEvent(event), containerEl);
-
-            // if(this.resetDurationTimer) clearTimeout(this.resetDurationTimer);
-
             this._elementor.rootEl?.addEventListener('mouseleave', this._onWebMouseEnd, false);
             containerEl.addEventListener('mousemove', this._onWebMouseMove, false);
             containerEl.addEventListener('mouseup', this._onWebMouseEnd, false);
@@ -190,7 +187,6 @@ class Dragger {
             this._elementor.slideItemEls &&
             this._stater.page.pageTotal > 1
         ) {
-            // console.log('this.position.startPosition.x', this._isSyncControl(), moveX);
             const translateX = calcMoveTranslatePx(startPosition.x, moveX);
 
             const percentage = this._elementor.getMovePercentage(translateX); //TODO: 應該移動到 Positioner
@@ -222,17 +218,12 @@ class Dragger {
         if(this._elementor.slideItemEls){
             const active = this._elementor.slideItemEls.find(row => row.dataset.active === 'true');
             if(active){
-                // const activePage = Number(active.dataset.page);
-                // this._controller.slideToPage(activePage);
-
                 const activeSourceIndex = Number(active.dataset.actual);
                 this._controller.slideToActualIndex(activeSourceIndex);
-
                 this._syncCarousel.syncControlDone(activeSourceIndex);
             }
         }
 
-        // this._setOtherTouch(true);
     };
 
 

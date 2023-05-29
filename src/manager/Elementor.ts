@@ -73,26 +73,22 @@ class Elementor {
      * Percentage Move Percentage
      * @param movePx
      */
-    getPercentageToMovePx = (percentage: number) => {
-        const {actual} = this._stater;
-        const slideCurrWidth = this.slideItemEls[actual.activeIndex].clientWidth;
-        const startPosition = this._getStartPosition(slideCurrWidth);
-        return getMovePercentage(percentage, startPosition, slideCurrWidth);
-    };
+    // getPercentageToMovePx = (percentage: number) => {
+    //     const {actual} = this._stater;
+    //     const slideCurrWidth = this.slideItemEls[actual.activeIndex].clientWidth;
+    //     const startPosition = this._getStartPosition(slideCurrWidth);
+    //     return getMovePercentage(percentage, startPosition, slideCurrWidth);
+    // };
     /**
      * Percentage Move Percentage
      * @param movePx
      */
-    getPercentageToMovePx2 = (percentage: number) => {
+    getPercentageToMovePx = (percentage: number) => {
         const {actual} = this._stater;
         const slideCurrWidth = this.slideItemEls[actual.activeIndex].clientWidth;
         const startPosition = this._getStartPosition(slideCurrWidth);
 
         return -(slideCurrWidth * percentage) + startPosition;
-        // const startPosition = this._getStartPosition(slideCurrWidth);
-        // console.log('startPosition', startPosition);
-        // console.log('this.containerEl.clientWidth',this.containerEl.clientWidth);
-        // return getMovePercentage(percentage, startPosition, slideCurrWidth);
     };
 
 

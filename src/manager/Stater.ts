@@ -56,7 +56,6 @@ class Stater {
      */
     checkActualIndexInRange(index: number) {
         const {minIndex, maxIndex} = this.actual;
-        console.log('index', index);
         return checkActualIndexInRange(index, {minIndex, maxIndex});
     }
 

@@ -38,7 +38,6 @@ class Controller {
         // if(this.props.isDebug && logEnable.resetPosition) log.printInText('[_resetPosition]');
         const {actual, formatElement} = this._stater;
 
-        console.log('============= reset =========');
         if (formatElement[actual.activeIndex].isClone) {
             this.slideToActualIndex(formatElement[actual.activeIndex].matchIndex, false);
         }
@@ -121,8 +120,6 @@ class Controller {
         const {nextPage, formatElement, page, actual, residue, element, nextPageFirstIndex} = this._stater;
         const {setting} = this._configurator;
         const activeActual = formatElement[actual.activeIndex];
-        
-        console.log('activeActual', activeActual);
 
         getNextIndex(
             activeActual,
@@ -181,11 +178,6 @@ class Controller {
 
     setOnChange(cb: () => void){
         this._onChange = cb;
-        // if(this.props.onChange){
-        //     console.log('onChange');
-        //     const {element, actual, page} = this._stater;
-        //     this.props?.onChange({element, actual, page});
-        // }
     }
 
 }

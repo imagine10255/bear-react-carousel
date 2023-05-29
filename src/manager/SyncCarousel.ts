@@ -32,22 +32,12 @@ class SyncCarousel {
     }
 
     syncControlMove = (percentage: number) => {
-        // 將進度比例換算成 movePx
         if(!this._carouselRef){
             return null;
         }
-        const moveX = this._elementor.getPercentageToMovePx2(percentage);
 
-        
-        console.log('percentage', percentage, moveX);
-
-        this._locator.touchStart({
-            // x: this._configurator.setting.isEnableLoop ? -x : 0,
-            x: 0,
-        });
-
-        // console.log('this._elementor', this._elementor.containerEl);
-        // console.log('this._elementor', this._locator.id, this._locator._startPosition);
+        // 將進度比例換算成 movePx
+        const moveX = this._elementor.getPercentageToMovePx(percentage);
         this._elementor.transform(moveX);
     };
 
