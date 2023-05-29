@@ -29,17 +29,12 @@ class Locator {
         return this._startPosition;
     }
 
-    public touchStart(startPosition: Partial<ITouchStart>){
-        this._startPosition = {...defaultPosition, ...startPosition};
-    }
-
-
-    public touchStart2(dropEvent: DragEvent, containerEl: HTMLDivElement){
+    public touchStart = (dropEvent: DragEvent, containerEl: HTMLDivElement) => {
         const {x} = getTranslateParams(containerEl);
         this._startPosition.x = dropEvent.x - x;
     }
 
-    public touchMove(dropEvent: DragEvent, containerEl: HTMLDivElement){
+    public touchMove = (dropEvent: DragEvent, containerEl: HTMLDivElement) => {
         const {endX, endY} = dropEvent;
 
         this.moveDirection = getSlideDirection(this.startPosition.x, this.startPosition.y, endX, endY);

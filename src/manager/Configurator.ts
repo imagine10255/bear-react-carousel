@@ -79,37 +79,10 @@ class Configurator {
     }
 
 
-    //
-    //
-    //         return `<style scoped>
-    // #${this.carouselId}{${rootStyle}}
-    // #${this.carouselId} .${elClassName.slideItem}{${slideItemStyle}}
-    //               </style>`;
-    //     }
-
-    //
-    // const rwdMedia = getMediaSetting({
-    //     slidesPerView: typeof slidesPerView === 'number' && slidesPerView <= 0 ? 1: slidesPerView,
-    //     slidesPerGroup: slidesPerGroup,
-    //     aspectRatio: aspectRatio,
-    //     staticHeight: staticHeight,
-    //     spaceBetween: spaceBetween,
-    //     isCenteredSlides: isCenteredSlides,
-    //     isEnableNavButton: isEnableNavButton,
-    //     isEnablePagination: isEnablePagination,
-    //     isEnableMouseMove: isEnableMouseMove,
-    //     isEnableAutoPlay: isEnableAutoPlay,
-    //     isEnableLoop: isEnableLoop,
-    // }, breakpoints);
-
-    init(responsiveBreakpoints: IPropsBreakpoints, options?: ISetting) {
+    init = (responsiveBreakpoints: IPropsBreakpoints, options?: ISetting) => {
         this._setting = getMediaSetting(options, responsiveBreakpoints);
     }
 
-    // init(breakpoints: IPropsBreakpoints, defaultBreakpoint = defaultSetting) {
-    //
-    //     this._setting = getMediaSetting(defaultBreakpoint, breakpoints);
-    // }
 }
 
 

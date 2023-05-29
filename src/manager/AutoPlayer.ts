@@ -27,24 +27,24 @@ class AutoPlayer {
         this.boundPause = this.pause.bind(this, this._configurator);
     }
 
-    mount(){
+    mount = () => {
         window.addEventListener('focus', this.boundPlay, false);
         window.addEventListener('blur', this.boundPause, false);
 
         this.play();
-    }
+    };
 
     /**
      * 完全移除
      */
-    unmount(){
+    unmount = () => {
         window.removeEventListener('focus', this.boundPlay, false);
         window.removeEventListener('blur', this.boundPause, false);
 
         this.pause();
-    }
+    };
 
-    play(){
+    play = () => {
         const {setting} = this._configurator;
 
         if(!this.isPlaying && setting.isEnableAutoPlay && setting.autoPlayTime > 0){
@@ -52,12 +52,12 @@ class AutoPlayer {
                 this._controller.slideToNextPage();
             }, setting.autoPlayTime);
         }
-    }
+    };
 
-    pause(){
+    pause = () => {
         clearInterval(this._timer);
         this._timer = null;
-    }
+    };
 }
 
 

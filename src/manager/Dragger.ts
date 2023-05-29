@@ -46,7 +46,7 @@ class Dragger {
         this._device = device;
     }
 
-    mount(){
+    mount = () => {
         switch (this._device){
         case EDevice.mobile:
             this._elementor.containerEl.addEventListener('touchstart', this._onMobileTouchStart, {passive: false});
@@ -60,7 +60,7 @@ class Dragger {
     /**
      * 完全移除
      */
-    unmount(){
+    unmount = () => {
         switch (this._device){
         case EDevice.mobile:
             this._elementor.containerEl.removeEventListener('touchstart', this._onMobileTouchStart, {passive: false} as any);
@@ -86,7 +86,7 @@ class Dragger {
         const {containerEl} = this._elementor;
         if(this._elementor.isUseAnimation === false){
             this._controller.slideResetToMatchIndex();
-            this._locator.touchStart2(new MobileTouchEvent(event), containerEl);
+            this._locator.touchStart(new MobileTouchEvent(event), containerEl);
 
             containerEl.addEventListener('touchmove', this._onMobileTouchMove, false);
             containerEl.addEventListener('touchend', this._onMobileTouchEnd, false);
@@ -134,7 +134,7 @@ class Dragger {
 
         const {containerEl} = this._elementor;
         if (containerEl) {
-            this._locator.touchStart2(new DesktopTouchEvent(event), containerEl);
+            this._locator.touchStart(new DesktopTouchEvent(event), containerEl);
             this._elementor.rootEl?.addEventListener('mouseleave', this._onWebMouseEnd, false);
             containerEl.addEventListener('mousemove', this._onWebMouseMove, false);
             containerEl.addEventListener('mouseup', this._onWebMouseEnd, false);

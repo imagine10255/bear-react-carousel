@@ -144,6 +144,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             stater: this._stater,
             elementor: this._elementor,
             syncCarousel: this._syncCarousel,
+            autoPlayer: this._autoPlayer,
         });
 
 

@@ -154,7 +154,7 @@ class Elementor {
 
 
 
-    syncActiveState(activeActualIndex: number){
+    syncActiveState = (activeActualIndex: number) => {
 
         // 更改顯示在第幾個 (父元件使用可判定樣式設定)
         this.slideItemEls.forEach((row, index) => {
@@ -190,8 +190,7 @@ class Elementor {
         if(this._stater.page.pageTotal === 1){
             this.rootEl.setAttribute('data-onlyOne',  booleanToDataAttr(true));
         }
-
-    }
+    };
 
 
 

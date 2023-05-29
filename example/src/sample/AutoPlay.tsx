@@ -24,7 +24,7 @@ const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
 
 
 
-function Base() {
+function AutoPlay() {
     const [info, setInfo] = useState<IInfo>();
     const [enable, setEnable] = useState<boolean>(true);
     const [count, setCount] = useState<number>(0);
@@ -42,7 +42,8 @@ function Base() {
                 isEnableNavButton
                 isEnablePagination
                 isEnableLoop
-                isEnableAutoPlay={false}
+                isEnableAutoPlay
+                autoPlayTime={1500}
                 moveTime={400}
                 isDebug
             />)}
@@ -63,7 +64,7 @@ function Base() {
 
 }
 
-export default Base;
+export default AutoPlay;
 
 
 

@@ -54,13 +54,13 @@ class Stater {
      * 確認是否超出範圍
      * @param index
      */
-    checkActualIndexInRange(index: number) {
+    checkActualIndexInRange = (index: number) => {
         const {minIndex, maxIndex} = this.actual;
         return checkActualIndexInRange(index, {minIndex, maxIndex});
     }
 
 
-    init(slideData: TBearSlideItemDataList = []) {
+    init = (slideData: TBearSlideItemDataList = []) => {
         const {slidesPerView, slidesPerViewActual, slidesPerGroup, isCenteredSlides, isEnablePagination, isEnableNavButton, isEnableLoop} = this._configurator.setting;
 
         let sourceTotal = slideData.length;
@@ -116,18 +116,10 @@ class Stater {
         };
     }
 
-    setActiveActual(index: number, page: number){
+    setActiveActual = (index: number, page: number) => {
         this.info.actual.activeIndex = index;
         this.info.page.activePage = page;
     }
-
-
-
-    //
-    // setSetting(setting: IBreakpointSettingActual) {
-    //     this._setting = setting;
-    // }
-
 
 }
 

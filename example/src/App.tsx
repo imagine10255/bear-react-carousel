@@ -12,12 +12,14 @@ import {ChangeEvent, ChangeEventHandler, EventHandler, ReactEventHandler, useSta
 import Breakpoints from './sample/Breakpoints';
 import Base from './sample/Base';
 import SlidePerViews from './sample/SlidePerViews';
+import AutoPlay from './sample/AutoPlay';
 
 
 
 
 enum EExampleCode {
     base = 'base',
+    autoPlay = 'autoPlay',
     breakpoints = 'breakpoints',
     slidePerViews = 'slidePerViews',
     syncController = 'syncController',
@@ -26,6 +28,7 @@ enum EExampleCode {
 
 const examples: Record<EExampleCode, () => JSX.Element> = {
     [EExampleCode.base]: Base,
+    [EExampleCode.autoPlay]: AutoPlay,
     [EExampleCode.breakpoints]: Breakpoints,
     [EExampleCode.slidePerViews]: SlidePerViews,
     [EExampleCode.syncController]: SyncControl,

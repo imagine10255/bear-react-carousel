@@ -122,7 +122,6 @@ function SyncControl() {
                 isEnablePagination
                 // onElementMove={handleMove}
                 // onElementDone={handleDone}
-                isEnableLoop
                 isDebug
             />
         </Box>

@@ -4,16 +4,16 @@ import Stater from './Stater';
 import Locator from './Locator';
 import Elementor from './Elementor';
 import SyncCarousel from './SyncCarousel';
+import AutoPlayer from './AutoPlayer';
 
 class Controller {
-
     private readonly _configurator: Configurator;
     private readonly _stater: Stater;
     private readonly _locator: Locator;
     private readonly _elementor: Elementor;
     private readonly _syncCarousel: SyncCarousel;
+    private readonly _autoPlayer: AutoPlayer;
     _onChange: () => void;
-
 
     constructor(manager: {
         configurator: Configurator,
@@ -21,14 +21,15 @@ class Controller {
         locator: Locator,
         elementor: Elementor,
         syncCarousel: SyncCarousel,
+        autoPlayer: AutoPlayer,
     }) {
         this._configurator = manager.configurator;
         this._stater = manager.stater;
         this._locator = manager.locator;
         this._elementor = manager.elementor;
         this._syncCarousel = manager.syncCarousel;
+        this._autoPlayer = manager.autoPlayer;
     }
-
 
     /**
      * reset page position (Only LoopMode)
@@ -43,10 +44,7 @@ class Controller {
         }
     };
 
-
-
-
-    slideToActualIndex(slideIndex: number, isUseAnimation = true){
+    slideToActualIndex = (slideIndex: number, isUseAnimation = true) => {
         if (this._stater.checkActualIndexInRange(slideIndex)) {
             const {formatElement} = this._stater;
             this._stater.setActiveActual(slideIndex, formatElement[slideIndex]?.inPage ?? 1);
@@ -59,40 +57,11 @@ class Controller {
 
             this._syncCarousel.slideToActualIndex(slideIndex, isUseAnimation);
 
-
-            // if (this._elementor.containerEl) {
-            //     const className = this._elementor.containerEl.classList;
-            //     if(!className.contains(elClassName.containerInit)){
-            //         className.add(elClassName.containerInit);
-            //     }
-            //
-            //     if(isUseAnimation){
-            //         // if(this.resetDurationTimer) clearTimeout(this.resetDurationTimer);
-            //         // this.resetDurationTimer = setTimeout(() => {
-            //         //     containerEl.style.transitionDuration = '0ms';
-            //         // }, this.moveTime / 1.5);
-            //     }
-            //
-            // }
-
-
-
-
-
-
-
-            //
-            //         // 結束移動後再繼續自動模式
-            //         this._checkAndAutoPlay();
-            //
-            //
-            //         if(this.props.onElementDone){
-            //             this.props.onElementDone(slideIndex);
-            //         }
+            console.log('this._autoPlayer',this._autoPlayer);
 
             this._onChange();
         }
-    }
+    };
 
     /**
      * 移動到指定頁面
@@ -110,7 +79,6 @@ class Controller {
         const slideIndex = getSlideIndex(page, setting.slidesPerGroup, actual.firstIndex);
         this.slideToActualIndex(slideIndex, isUseAnimation);
     }
-
 
     /**
      * 移動到下一頁
@@ -140,11 +108,6 @@ class Controller {
             .forEach(action => this.slideToActualIndex(action.index, action.isUseAnimation));
 
     };
-
-
-
-
-
 
     /**
      * go to previous
@@ -176,9 +139,9 @@ class Controller {
     };
 
 
-    setOnChange(cb: () => void){
+    setOnChange = (cb: () => void) => {
         this._onChange = cb;
-    }
+    };
 
 }
 

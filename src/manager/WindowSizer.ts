@@ -14,6 +14,10 @@ class WindowSizer {
     private _device: EDevice;
     private _onResizeCallback: TOnResize | null = null;
 
+    get size() {
+        return this._size;
+    }
+
     constructor(breakpoints: IPropsBreakpoints, device: EDevice) {
         this._breakpoints = breakpoints;
         this._device = device;
@@ -22,31 +26,29 @@ class WindowSizer {
         this._onResize = this._onResize.bind(this);
     }
 
-    _onResize(){
+    private _onResize(){
         this._size = this._calculateSize();
         if (this._onResizeCallback) {
             this._onResizeCallback(this._size);
         }
     }
 
-    mount(onResize: TOnResize){
+    private _calculateSize() {
+        return getSizeByRange(window.innerWidth, Object.keys(this._breakpoints).map(Number));
+    }
+
+    public mount = (onResize: TOnResize) => {
         this._size = this._calculateSize();
         this._onResizeCallback = onResize;
         window.addEventListener(resizeEvent[this._device], this._onResize, false);
     }
 
-    unmount(){
+    public unmount = () => {
         window.removeEventListener(resizeEvent[this._device], this._onResize, false);
         this._onResizeCallback = null;
     }
 
-    private _calculateSize() {
-        return getSizeByRange(window.innerWidth, Object.keys(this._breakpoints).map(Number));
-    }
 
-    get size() {
-        return this._size;
-    }
 }
 
 
