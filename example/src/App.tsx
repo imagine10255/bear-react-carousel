@@ -8,11 +8,12 @@ import 'bear-react-carousel/dist/index.css';
 
 // import Base from './sample/Base';
 import SyncControl from './sample/SyncControl';
-import {ChangeEvent, ChangeEventHandler, EventHandler, ReactEventHandler, useState} from 'react';
+import {useState} from 'react';
 import Breakpoints from './sample/Breakpoints';
 import Base from './sample/Base';
 import SlidePerViews from './sample/SlidePerViews';
 import AutoPlay from './sample/AutoPlay';
+import UpdateSlideItem from './sample/UpdateSlideItem';
 
 
 
@@ -23,6 +24,7 @@ enum EExampleCode {
     breakpoints = 'breakpoints',
     slidePerViews = 'slidePerViews',
     syncController = 'syncController',
+    updateSlideItem = 'updateSlideItem',
 }
 
 
@@ -32,10 +34,11 @@ const examples: Record<EExampleCode, () => JSX.Element> = {
     [EExampleCode.breakpoints]: Breakpoints,
     [EExampleCode.slidePerViews]: SlidePerViews,
     [EExampleCode.syncController]: SyncControl,
+    [EExampleCode.updateSlideItem]: UpdateSlideItem,
 };
 
 function App() {
-    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.breakpoints);
+    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.updateSlideItem);
     const Comp = examples[exampleKey];
     
 

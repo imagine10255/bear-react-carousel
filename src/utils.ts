@@ -70,97 +70,97 @@ export function getMediaSetting(defaultBreakpoint: IBreakpointSetting, breakpoin
  * 取得響應式設定
  * @param props
  */
-export function getMediaInfo(props: IBearCarouselProps): {rwdMedia: IBreakpointSettingActual, info: IInfo} {
-
-    const {
-        data,
-        breakpoints,
-
-        slidesPerView,
-        slidesPerGroup,
-        aspectRatio,
-        staticHeight,
-        spaceBetween,
-        isCenteredSlides,
-        isEnableNavButton,
-        isEnablePagination,
-        isEnableMouseMove,
-        isEnableAutoPlay,
-        isEnableLoop,
-    } = props;
-
-    const rwdMedia = getMediaSetting({
-        slidesPerView: typeof slidesPerView === 'number' && slidesPerView <= 0 ? 1: slidesPerView,
-        slidesPerGroup,
-        aspectRatio,
-        staticHeight,
-        spaceBetween,
-        isCenteredSlides,
-        isEnableNavButton,
-        isEnablePagination,
-        isEnableMouseMove,
-        isEnableAutoPlay,
-        isEnableLoop,
-    }, breakpoints);
-
-
-    // const divisible = data.length % rwdMedia.slidesPerGroup; // 餘數
-    // let sliceData = divisible > 0 ? data.slice(0, data.length - divisible) : data;
-    let sliceData = data ?? [];
-    let sourceTotal = sliceData.length;
-    const formatElement = initDataList(
-        sliceData,
-        rwdMedia.slidesPerViewActual,
-        rwdMedia.slidesPerGroup,
-        rwdMedia.isEnableLoop
-    );
-
-
-    const elementTotal = formatElement.length;
-    const cloneBeforeTotal = rwdMedia.isEnableLoop ? rwdMedia.slidesPerViewActual : 0;
-    const cloneAfterTotal = cloneBeforeTotal;
-    const actualMinIndex = 0;
-    const actualMaxIndex = elementTotal - 1;
-
-
-    let fakeTotalPage = Math.ceil(sourceTotal / rwdMedia.slidesPerGroup);
-    if(!rwdMedia.isEnableLoop && rwdMedia.slidesPerView !== 'auto' && !rwdMedia.isCenteredSlides){
-        fakeTotalPage = fakeTotalPage - (rwdMedia.slidesPerView - rwdMedia.slidesPerGroup);
-    }
-
-    const info: IInfo = {
-        formatElement,
-        sourceTotal, // 來源總數
-        // 從0開始
-        element: {
-            activeIndex: 1,
-            total: elementTotal,
-            firstIndex: 0,
-            lastIndex: elementTotal - 1
-        },
-        // 0為實際一開始的位置(往前為負數), 結束值為最後結束位置
-        actual: {
-            activeIndex: 1,
-            minIndex: actualMinIndex,
-            maxIndex: actualMaxIndex,
-            firstIndex: Math.ceil(cloneBeforeTotal),
-            lastIndex: Math.ceil(sourceTotal + cloneAfterTotal - 1)
-        },
-        // 總頁數
-        page: {
-            pageTotal: fakeTotalPage,
-            activePage: 1,
-        },
-        residue: elementTotal % rwdMedia.slidesPerGroup,
-        isVisiblePagination: rwdMedia.isEnablePagination && formatElement.length > 0,
-        isVisibleNavButton: rwdMedia.isEnableNavButton && formatElement.length > 0
-    };
-
-    return {
-        info,
-        rwdMedia,
-    };
-}
+// export function getMediaInfo(props: IBearCarouselProps): {rwdMedia: IBreakpointSettingActual, info: IInfo} {
+//
+//     const {
+//         data,
+//         breakpoints,
+//
+//         slidesPerView,
+//         slidesPerGroup,
+//         aspectRatio,
+//         staticHeight,
+//         spaceBetween,
+//         isCenteredSlides,
+//         isEnableNavButton,
+//         isEnablePagination,
+//         isEnableMouseMove,
+//         isEnableAutoPlay,
+//         isEnableLoop,
+//     } = props;
+//
+//     const rwdMedia = getMediaSetting({
+//         slidesPerView: typeof slidesPerView === 'number' && slidesPerView <= 0 ? 1: slidesPerView,
+//         slidesPerGroup,
+//         aspectRatio,
+//         staticHeight,
+//         spaceBetween,
+//         isCenteredSlides,
+//         isEnableNavButton,
+//         isEnablePagination,
+//         isEnableMouseMove,
+//         isEnableAutoPlay,
+//         isEnableLoop,
+//     }, breakpoints);
+//
+//
+//     // const divisible = data.length % rwdMedia.slidesPerGroup; // 餘數
+//     // let sliceData = divisible > 0 ? data.slice(0, data.length - divisible) : data;
+//     let sliceData = data ?? [];
+//     let sourceTotal = sliceData.length;
+//     const formatElement = initDataList(
+//         sliceData,
+//         rwdMedia.slidesPerViewActual,
+//         rwdMedia.slidesPerGroup,
+//         rwdMedia.isEnableLoop
+//     );
+//
+//
+//     const elementTotal = formatElement.length;
+//     const cloneBeforeTotal = rwdMedia.isEnableLoop ? rwdMedia.slidesPerViewActual : 0;
+//     const cloneAfterTotal = cloneBeforeTotal;
+//     const actualMinIndex = 0;
+//     const actualMaxIndex = elementTotal - 1;
+//
+//
+//     let fakeTotalPage = Math.ceil(sourceTotal / rwdMedia.slidesPerGroup);
+//     if(!rwdMedia.isEnableLoop && rwdMedia.slidesPerView !== 'auto' && !rwdMedia.isCenteredSlides){
+//         fakeTotalPage = fakeTotalPage - (rwdMedia.slidesPerView - rwdMedia.slidesPerGroup);
+//     }
+//
+//     const info: IInfo = {
+//         formatElement,
+//         sourceTotal, // 來源總數
+//         // 從0開始
+//         element: {
+//             activeIndex: 1,
+//             total: elementTotal,
+//             firstIndex: 0,
+//             lastIndex: elementTotal - 1
+//         },
+//         // 0為實際一開始的位置(往前為負數), 結束值為最後結束位置
+//         actual: {
+//             activeIndex: 1,
+//             minIndex: actualMinIndex,
+//             maxIndex: actualMaxIndex,
+//             firstIndex: Math.ceil(cloneBeforeTotal),
+//             lastIndex: Math.ceil(sourceTotal + cloneAfterTotal - 1)
+//         },
+//         // 總頁數
+//         page: {
+//             pageTotal: fakeTotalPage,
+//             activePage: 1,
+//         },
+//         residue: elementTotal % rwdMedia.slidesPerGroup,
+//         isVisiblePagination: rwdMedia.isEnablePagination && formatElement.length > 0,
+//         isVisibleNavButton: rwdMedia.isEnableNavButton && formatElement.length > 0
+//     };
+//
+//     return {
+//         info,
+//         rwdMedia,
+//     };
+// }
 
 
 /**

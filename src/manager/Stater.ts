@@ -1,4 +1,4 @@
-import {IInfo, TBearSlideItemDataList} from '../types';
+import {IInfo, InitData, TBearSlideItemDataList} from '../types';
 import {checkActualIndexInRange, getNextPageFirstIndex, getSlideIndex, initDataList} from '../utils';
 import Configurator from './Configurator';
 
@@ -9,7 +9,9 @@ type TCallback = () => void;
 
 class Stater {
     private _configurator: Configurator;
-    private _info: IInfo;
+    _info: IInfo;
+    _formatElement: InitData[];
+
     private events: Record<string, TCallback[]> = {};
 
     constructor(setter: Configurator, data: TBearSlideItemDataList) {
@@ -45,7 +47,7 @@ class Stater {
     }
 
     get formatElement() {
-        return this._info.formatElement;
+        return this._formatElement;
     }
 
     get element() {
@@ -86,14 +88,9 @@ class Stater {
         const {slidesPerView, slidesPerViewActual, slidesPerGroup, isCenteredSlides, isEnablePagination, isEnableNavButton, isEnableLoop} = this._configurator.setting;
 
         let sourceTotal = slideData.length;
-        const formatElement = initDataList(
-            slideData,
-            slidesPerViewActual,
-            slidesPerGroup,
-            isEnableLoop
-        );
+        this.updateData(slideData);
 
-        const elementTotal = formatElement.length;
+        const elementTotal = this._formatElement.length;
 
         // clone
         const cloneBeforeTotal = isEnableLoop ? slidesPerViewActual : 0;
@@ -110,7 +107,6 @@ class Stater {
         }
 
         this._info = {
-            formatElement,
             sourceTotal, // 來源總數
             // 從0開始
             element: {
@@ -133,10 +129,23 @@ class Stater {
             },
             // 總頁數
             residue: elementTotal % slidesPerGroup,
-            isVisiblePagination: isEnablePagination && formatElement.length > 0,
-            isVisibleNavButton: isEnableNavButton && formatElement.length > 0
+            isVisiblePagination: isEnablePagination && this._formatElement.length > 0,
+            isVisibleNavButton: isEnableNavButton && this._formatElement.length > 0
         };
         this.emit('infoChanged');
+    };
+
+    updateData = (slideData: TBearSlideItemDataList = []) => {
+        const {slidesPerView, slidesPerViewActual, slidesPerGroup, isCenteredSlides, isEnablePagination, isEnableNavButton, isEnableLoop} = this._configurator.setting;
+        this._formatElement = initDataList(
+            slideData,
+            slidesPerViewActual,
+            slidesPerGroup,
+            isEnableLoop
+        );
+
+        return this._formatElement;
+
     };
 
     setActiveActual = (index: number, page: number) => {

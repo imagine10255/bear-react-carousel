@@ -97,7 +97,7 @@ export interface ICarouselState {
 }
 
 export interface IInfo {
-  formatElement: InitData[],
+
   sourceTotal: number, // 來源總數
   // 從0開始
   element: {

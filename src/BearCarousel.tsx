@@ -253,12 +253,18 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             };
 
             this._configurator.init(breakpoints, setting);
-            this._stater.init(data);
+
 
             // reset page position
-            setTimeout(() => {
-                this._controller.slideToPage(1, false);
-            }, 0);
+            if(data.length !== nextData.length){
+                this._stater.init(data);
+                setTimeout(() => {
+                    this._controller.slideToPage(1, false);
+                }, 0);
+            }else{
+                this._stater.updateData(data);
+            }
+
 
             return true;
         }

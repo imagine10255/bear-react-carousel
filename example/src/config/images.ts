@@ -15,10 +15,10 @@ export const baseImage = [
     {id: 2, color: 'green',imageUrl: asset('/sample/cat/02.jpg')},
     {id: 3, color: 'blue',imageUrl: asset('/sample/cat/03.jpg')},
     {id: 4, color: 'gray',imageUrl: asset('/sample/cat/04.jpg')},
-    // {id: 5, color: 'white',imageUrl: asset('/sample/cat/05.jpg')},
-    // {id: 6, color: 'black',imageUrl: asset('/sample/cat/06.jpg')},
-    // {id: 7, color: 'yellow',imageUrl: asset('/sample/cat/07.jpg')},
-    // {id: 8, color: 'purple',imageUrl: asset('/sample/cat/08.jpg')},
+    {id: 5, color: 'white',imageUrl: asset('/sample/cat/05.jpg')},
+    {id: 6, color: 'black',imageUrl: asset('/sample/cat/06.jpg')},
+    {id: 7, color: 'yellow',imageUrl: asset('/sample/cat/07.jpg')},
+    {id: 8, color: 'purple',imageUrl: asset('/sample/cat/08.jpg')},
 ];
 
 
