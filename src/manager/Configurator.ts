@@ -1,7 +1,6 @@
 import {IBreakpointSetting, IPropsBreakpoints, TSlidesPerViewActual} from '../types';
 import {getMediaSetting, getPaddingBySize} from '../utils';
 import elClassName from '../el-class-name';
-import * as React from 'react';
 import {ulid} from 'ulid';
 
 const defaultSetting: IBreakpointSetting = {

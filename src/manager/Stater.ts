@@ -1,10 +1,12 @@
 import {IInfo, TBearSlideItemDataList} from '../types';
 import {checkActualIndexInRange, getNextPageFirstIndex, getSlideIndex, initDataList} from '../utils';
 import Configurator from './Configurator';
+type TCallback = () => void
 
 class Stater {
     private _configurator: Configurator;
     private _info: IInfo;
+    private events: Record<string, TCallback[]> = {};
 
     constructor(setter: Configurator, data: TBearSlideItemDataList) {
         this._configurator = setter;
@@ -50,6 +52,22 @@ class Stater {
         return this._info.residue;
     }
 
+
+    on(eventName: string, callback: TCallback) {
+        if (!this.events[eventName]) {
+            this.events[eventName] = [];
+        }
+        this.events[eventName].push(callback);
+    }
+
+    emit(eventName: string) {
+        if (this.events[eventName]) {
+            for (const callback of this.events[eventName]) {
+                callback();
+            }
+        }
+    }
+
     /**
      * 確認是否超出範圍
      * @param index
@@ -57,7 +75,7 @@ class Stater {
     checkActualIndexInRange = (index: number) => {
         const {minIndex, maxIndex} = this.actual;
         return checkActualIndexInRange(index, {minIndex, maxIndex});
-    }
+    };
 
 
     init = (slideData: TBearSlideItemDataList = []) => {
@@ -114,12 +132,14 @@ class Stater {
             isVisiblePagination: isEnablePagination && formatElement.length > 0,
             isVisibleNavButton: isEnableNavButton && formatElement.length > 0
         };
-    }
+        this.emit('change');
+    };
 
     setActiveActual = (index: number, page: number) => {
         this.info.actual.activeIndex = index;
         this.info.page.activePage = page;
-    }
+        this.emit('change');
+    };
 
 }
 

@@ -161,9 +161,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             dragger: this._dragger,
         });
 
+        this._stater.on('change', this._onChange);
 
-        this._controller.setOnChange(this._setOnChange);
-        
         this._slideToPage = this._controller.slideToPage.bind(this._controller);
 
         this.state = {
@@ -196,7 +195,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             this._dragger.mount();
         }
 
-        this._setOnChange();
         this._setControllerRef();
 
         this._init();
@@ -269,7 +267,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                 $this._slideToPage(1, false);
             }, 0);
 
-            this._setOnChange();
+            // this._onChange();
 
             return true;
         }
@@ -303,7 +301,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     /**
    * set OnChange emit
    */
-    _setOnChange = () => {
+    _onChange = () => {
+        console.log('onChange');
         if(this.props.onChange){
             const {element, actual, page} = this._stater;
             this.props.onChange({element, actual, page});

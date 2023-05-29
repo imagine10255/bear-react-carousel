@@ -4,7 +4,6 @@ import Stater from './Stater';
 import Locator from './Locator';
 import Elementor from './Elementor';
 import SyncCarousel from './SyncCarousel';
-import AutoPlayer from './AutoPlayer';
 
 type TCallback = () => void
 
@@ -14,7 +13,6 @@ class Controller {
     private readonly _locator: Locator;
     private readonly _elementor: Elementor;
     private readonly _syncCarousel: SyncCarousel;
-    _onChange: () => void;
 
     private events: Record<string, TCallback[]> = {};
 
@@ -75,10 +73,7 @@ class Controller {
                 .transform(position, isUseAnimation)
                 .syncActiveState(slideIndex);
 
-
             this._syncCarousel.slideToActualIndex(slideIndex, isUseAnimation);
-
-            this._onChange();
         }
         this.emit('slideDone');
 
@@ -157,11 +152,6 @@ class Controller {
         )
             .forEach(action => this.slideToActualIndex(action.index, action.isUseAnimation));
 
-    };
-
-
-    setOnChange = (cb: () => void) => {
-        this._onChange = cb;
     };
 
 }
