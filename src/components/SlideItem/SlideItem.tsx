@@ -1,8 +1,7 @@
-import elClassName from '../el-class-name';
-import {CloneIcon} from '../Icon';
-import * as React from 'react';
 import {forwardRef} from 'react';
-import {booleanToDataAttr} from '../utils';
+import elClassName from '../../el-class-name';
+import {CloneIcon} from '../../Icon';
+import {booleanToDataAttr} from '../../utils';
 
 
 interface IProps {
@@ -12,9 +11,9 @@ interface IProps {
     matchIndex: number
     sourceIndex: number
     inPage: number
-    isActive: boolean
-    isClone: boolean
-    isDebug: boolean
+    isActive?: boolean
+    isClone?: boolean
+    isDebug?: boolean
 }
 
 const SlideItem = forwardRef<HTMLInputElement, IProps>(({
@@ -24,14 +23,15 @@ const SlideItem = forwardRef<HTMLInputElement, IProps>(({
     matchIndex,
     sourceIndex,
     inPage,
-    isActive,
-    isClone,
-    isDebug,
+    isActive = false,
+    isClone = false,
+    isDebug = false,
 }, ref) => {
 
     return <div
         className={elClassName.slideItem}
         ref={ref}
+        data-testid="bear-carousel-slideItem"
         data-actual={actualIndex}
         data-match={booleanToDataAttr(isClone, matchIndex)}
         data-page={inPage}

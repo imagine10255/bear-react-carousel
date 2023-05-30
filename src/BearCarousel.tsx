@@ -405,6 +405,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             >
                 <div
                     id={this._configurator.carouselId}
+                    data-testid="bear-carousel"
                     style={style}
                     className={[className, elClassName.root].join(' ').trim()}
                     data-gpu-render={booleanToDataAttr(this._device === EDevice.desktop)}

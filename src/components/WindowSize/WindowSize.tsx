@@ -1,5 +1,4 @@
-import * as React from 'react';
-import elClassName from '../el-class-name';
+import elClassName from '../../el-class-name';
 
 interface IProps {
     size: number,
@@ -13,7 +12,10 @@ interface IProps {
 const WindowsSize = ({
     size = 0,
 }: IProps) => {
-    return <div className={elClassName.testWindowSize}>
+    return <div
+    data-testid="bear-carousel-windowSize"
+        className={elClassName.testWindowSize}
+    >
         {size}
     </div>;
 };
