@@ -1,4 +1,6 @@
+import {useState} from 'react';
 import styled, {css} from 'styled-components';
+
 import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
 import './App.css';
@@ -8,7 +10,6 @@ import 'bear-react-carousel/dist/index.css';
 
 // import Base from './sample/Base';
 import SyncControl from './sample/SyncControl';
-import {useState} from 'react';
 import Breakpoints from './sample/Breakpoints';
 import Base from './sample/Base';
 import SlidePerViews from './sample/SlidePerViews';

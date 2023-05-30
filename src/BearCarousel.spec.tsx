@@ -4,7 +4,7 @@ import {render, screen} from '@testing-library/react';
 
 import BearCarousel from './BearCarousel';
 
-test('test WindowSize render', async () => {
+test('test BearCarousel render', async () => {
     // ARRANGE
     render(<BearCarousel/>);
 

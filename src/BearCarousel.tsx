@@ -5,6 +5,7 @@ import deepCompare from './deepCompare';
 import {EDevice, IBearCarouselProps} from './types';
 import elClassName from './el-class-name';
 import {BearCarouselProvider} from './BearCarouselProvider';
+import './styles.css';
 
 import {ArrowIcon} from './Icon';
 import Configurator from './manager/Configurator';
@@ -16,7 +17,6 @@ import Locator from './manager/Locator';
 import Controller from './manager/Controller';
 import AutoPlayer from './manager/AutoPlayer';
 
-import './styles.css';
 import WindowSize from './components/WindowSize';
 import Page from './components/Page';
 import Dragger from './manager/Dragger';
