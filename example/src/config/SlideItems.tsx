@@ -1,4 +1,4 @@
-import {BearSlideItem, TBearSlideItemDataList} from '../../../dist';
+import {BearSlideItem, TBearSlideItemDataList} from 'bear-react-carousel';
 import {baseImage as images} from './images';
 
 export const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {

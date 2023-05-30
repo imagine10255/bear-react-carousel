@@ -17,7 +17,6 @@ test('test page render', async () => {
     // ACT
     const element = screen.getByTestId('bear-carousel-button');
 
-    await userEvent.click(element);
 
     // ASSERT
     expect(onSlideToPage).toHaveBeenCalledTimes(1);

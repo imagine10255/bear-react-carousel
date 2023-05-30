@@ -10,11 +10,12 @@ import Page from '../src/components/Page';
 
 test('loads and displays greeting', async () => {
     // ARRANGE
-    render(<TestReact labelOff="on" />);
+    const {getByTestId} = render(<TestReact labelOff="on" />);
 
     // ACT
-    const element = screen.getByTestId('custom-element');
+    const element = getByTestId('custom-element');
 
+    await userEvent.click(element);
 
     // await userEvent.click(screen.getByText('Load Greeting'));
     // await screen.findByRole('heading');

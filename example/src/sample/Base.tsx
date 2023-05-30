@@ -34,17 +34,17 @@ function Base() {
         {/*測試依照比例設定容器高度*/}
         {enable && (
             <BearCarousel
-                controllerRef={controllerRef}
+                // controllerRef={controllerRef}
                 data={bearSlideItemData1}
-                onChange={setInfo}
+                // onChange={setInfo}
                 isCenteredSlides={true}
-                staticHeight="200px"
+                // staticHeight="200px"
                 isEnableNavButton
-                isEnablePagination
+                // isEnablePagination
                 isEnableLoop
-                isEnableAutoPlay={false}
-                moveTime={400}
-                isDebug
+                // isEnableAutoPlay={false}
+                // moveTime={400}
+                // isDebug
             />)}
 
         <button type="button" onClick={() => setCount(curr => curr += 1)}> count: {count}</button>

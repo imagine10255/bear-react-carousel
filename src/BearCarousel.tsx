@@ -7,7 +7,6 @@ import elClassName from './el-class-name';
 import {BearCarouselProvider} from './BearCarouselProvider';
 import './styles.css';
 
-import {ArrowIcon} from './Icon';
 import Configurator from './manager/Configurator';
 import WindowSizer from './manager/WindowSizer';
 import Stater from './manager/Stater';
@@ -16,11 +15,12 @@ import Elementor from './manager/Elementor';
 import Locator from './manager/Locator';
 import Controller from './manager/Controller';
 import AutoPlayer from './manager/AutoPlayer';
+import Dragger from './manager/Dragger';
+import SyncCarousel from './manager/SyncCarousel';
 
 import WindowSize from './components/WindowSize';
 import Page from './components/Page';
-import Dragger from './manager/Dragger';
-import SyncCarousel from './manager/SyncCarousel';
+import {NavNextButton, NavPrevButton} from './components/NavButton';
 
 
 // debug log switch
@@ -329,16 +329,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             ref={this._elementor._navGroupRef}
             className={elClassName.navGroup}
         >
-            <button type="button" className={elClassName.navPrevButton} onClick={this._controller.slideToPrevPage}>
-                <div className={elClassName.navIcon}>
-                    <ArrowIcon/>
-                </div>
-            </button>
-            <button type="button" className={elClassName.navNextButton} onClick={this._controller.slideToNextPage}>
-                <div className={elClassName.navIcon}>
-                    <ArrowIcon/>
-                </div>
-            </button>
+            <NavPrevButton onClick={this._controller.slideToPrevPage}/>
+            <NavNextButton onClick={this._controller.slideToNextPage}/>
         </div>);
     };
 
