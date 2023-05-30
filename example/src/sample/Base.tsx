@@ -38,13 +38,13 @@ function Base() {
                 data={bearSlideItemData1}
                 // onChange={setInfo}
                 isCenteredSlides={true}
-                // staticHeight="200px"
+                staticHeight="200px"
                 isEnableNavButton
-                // isEnablePagination
+                isEnablePagination
                 isEnableLoop
                 // isEnableAutoPlay={false}
                 // moveTime={400}
-                // isDebug
+                isDebug
             />)}
 
         <button type="button" onClick={() => setCount(curr => curr += 1)}> count: {count}</button>
