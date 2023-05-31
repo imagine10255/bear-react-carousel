@@ -52,6 +52,7 @@ export interface IBearCarouselProps extends IBreakpointSetting{
   isDebug: boolean
   syncCarouselRef?: IRefObject<BearCarousel>,
   controllerRef?: IRefObject<Controller>,
+  onMount?: () => void;
 }
 
 export type TBearCarouselSetting = Partial<IBearCarouselProps>;

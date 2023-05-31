@@ -16,25 +16,29 @@ describe('Loop mode testing', () => {
         navNextButton: HTMLElement,
         navPrevButton: HTMLElement;
 
-    beforeEach(() => {
-        const mockData = new Array(6).fill('test');
-        render(<BearCarousel
-            data={mockData.map((row, index) => {
-                return {key: index, children: <BearSlideItem as="card"/>};
-            })}
-            isEnableNavButton
-            isEnablePagination
-            isEnableLoop
-        />);
-
+    const containerSize = 400;
+    const createData = new Array(6).fill('test');
+    const data = createData.map((row, index) => ({key: index, children: <BearSlideItem as="card"/>}))
+    const onMount = () => {
         container = screen.getByTestId('bear-carousel-container');
         slideItems = screen.getAllByTestId('bear-carousel-slideItem');
         pageButtons = screen.getAllByTestId('bear-carousel-page-button');
         navNextButton = screen.getByTestId('bear-carousel-navNextButton');
         navPrevButton = screen.getByTestId('bear-carousel-navPrevButton');
 
-        setContainerSize(container, 400);
-        setSlideItemsSizes(slideItems, 400);
+        setContainerSize(container, containerSize);
+        setSlideItemsSizes(slideItems, Math.floor(containerSize));
+    };
+
+
+    beforeEach(() => {
+        render(<BearCarousel
+            onMount={onMount}
+            data={data}
+            isEnableNavButton
+            isEnablePagination
+            isEnableLoop
+        />);
     });
 
     afterEach(() => {

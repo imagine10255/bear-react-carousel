@@ -16,23 +16,10 @@ describe('Center mode testing', () => {
         navNextButton: HTMLElement,
         navPrevButton: HTMLElement;
 
-    beforeEach(async () => {
 
-        const mockData = new Array(6).fill('test');
-
-        // Object.defineProperty(HTMLElement.prototype, 'offsetWidth', {configurable: true, value: 400 / 3});
-
-
-        render(<BearCarousel
-            data={mockData.map((row, index) => {
-                return {key: index, children: <BearSlideItem as="card"/>};
-            })}
-            isEnableNavButton
-            isEnablePagination
-            isCenteredSlides
-            slidesPerView={3}
-        />);
-
+    const createData = new Array(6).fill('test');
+    const data = createData.map((row, index) => ({key: index, children: <BearSlideItem as="card"/>}))
+    const onMount = () => {
         container = screen.getByTestId('bear-carousel-container');
         slideItems = screen.getAllByTestId('bear-carousel-slideItem');
         pageButtons = screen.getAllByTestId('bear-carousel-page-button');
@@ -41,9 +28,18 @@ describe('Center mode testing', () => {
 
         setContainerSize(container, 400);
         setSlideItemsSizes(slideItems, Math.floor(400 / 3));
+    };
 
-        // Act - mock reset size
-        await userEvent.click(pageButtons[0]);
+
+    beforeEach(() => {
+        render(<BearCarousel
+            onMount={onMount}
+            data={data}
+            isEnableNavButton
+            isEnablePagination
+            isCenteredSlides
+            slidesPerView={3}
+        />);
     });
 
     afterEach(() => {

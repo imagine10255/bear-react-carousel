@@ -171,9 +171,11 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
         const {page} = this._stater.info;
 
+        if(this.props.onMount){
+            this.props.onMount();
+        }
 
-        const {containerEl} = this._elementor;
-        if (containerEl) {
+        if (this._elementor) {
             // Move to the correct position for the first time
             if(page.pageTotal > 0){
                 this._controller.slideToPage(this.props.defaultActivePage ?? 1, false);
@@ -211,8 +213,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
         const {windowSize: nextWindowSize} = nextState;
         const {windowSize} = this.state;
-        const {data, onChange, renderNavButton, onElementDone, syncCarouselRef, onElementMove, ...otherParams} = this.props;
-        const {data: nextData, onChange: nextSetCarousel, renderNavButton: nextRenderNavButton, syncCarouselRef: nextSyncCarouselRef, onElementDone: nextOnElementDone, onElementMove: nextOnElementMove, ...nextOtherProps} = nextProps;
+        const {data, onChange, renderNavButton, onMount, onElementDone, syncCarouselRef, onElementMove, ...otherParams} = this.props;
+        const {data: nextData, onChange: nextSetCarousel, renderNavButton: nextRenderNavButton, syncCarouselRef: nextSyncCarouselRef, onMount: nextOnMount, onElementDone: nextOnElementDone, onElementMove: nextOnElementMove, ...nextOtherProps} = nextProps;
 
         const oldKey = data?.map((row) => row.key).join('_');
         const nextKey = nextData?.map((row) => row.key).join('_');

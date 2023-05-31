@@ -20,23 +20,27 @@ describe('Auto play testing', () => {
     beforeEach(() => {
         jest.useFakeTimers();
 
-        const mockData = new Array(6).fill('test');
+        const containerSize = 400;
+        const createData = new Array(6).fill('test');
+        const data = createData.map((row, index) => ({key: index, children: <BearSlideItem as="card"/>}))
+        const onMount = () => {
+            container = screen.getByTestId('bear-carousel-container');
+            slideItems = screen.getAllByTestId('bear-carousel-slideItem');
+            navNextButton = screen.getByTestId('bear-carousel-navNextButton');
+            navPrevButton = screen.getByTestId('bear-carousel-navPrevButton');
+
+            setContainerSize(container, containerSize);
+            setSlideItemsSizes(slideItems, Math.floor(containerSize));
+        };
+
         render(<BearCarousel
-            data={mockData.map((row, index) => {
-                return {key: index, children: <BearSlideItem as="card"/>};
-            })}
+            onMount={onMount}
+            data={data}
             isEnableNavButton
             isEnableAutoPlay
             autoPlayTime={autoPlayTime}
         />);
 
-        container = screen.getByTestId('bear-carousel-container');
-        slideItems = screen.getAllByTestId('bear-carousel-slideItem');
-        navNextButton = screen.getByTestId('bear-carousel-navNextButton');
-        navPrevButton = screen.getByTestId('bear-carousel-navPrevButton');
-
-        setContainerSize(container, 400);
-        setSlideItemsSizes(slideItems, 400);
     });
 
     afterEach(() => {

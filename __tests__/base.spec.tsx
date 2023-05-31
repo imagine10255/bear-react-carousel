@@ -17,25 +17,25 @@ describe('Base testing', () => {
         navPrevButton: HTMLElement;
 
     const containerSize = 400;
-
-    beforeEach(async () => {
-        const mockData = new Array(6).fill('test');
-        render(<BearCarousel
-            data={mockData.map((row, index) => {
-                return {key: index, children: <BearSlideItem as="card"/>};
-            })}
-            isEnableNavButton
-            isEnablePagination
-        />);
-
+    const createData = new Array(6).fill('test');
+    const data = createData.map((row, index) => ({key: index, children: <BearSlideItem as="card"/>}));
+    const onMount = () => {
         container = screen.getByTestId('bear-carousel-container');
         slideItems = screen.getAllByTestId('bear-carousel-slideItem');
         pageButtons = screen.getAllByTestId('bear-carousel-page-button');
         navNextButton = screen.getByTestId('bear-carousel-navNextButton');
         navPrevButton = screen.getByTestId('bear-carousel-navPrevButton');
-
         setContainerSize(container, containerSize);
         setSlideItemsSizes(slideItems, containerSize);
+    };
+    
+    beforeEach(() => {
+        render(<BearCarousel
+            onMount={onMount}
+            data={data}
+            isEnableNavButton
+            isEnablePagination
+        />);
     });
 
     afterEach(() => {
