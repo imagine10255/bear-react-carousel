@@ -8,7 +8,7 @@ import BearSlideItem from '../src/BearSlideItem';
 
 
 
-describe('Index testing', () => {
+describe('Base testing', () => {
     let container: HTMLElement,
         slideItems: HTMLElement[],
         pageButtons: HTMLElement[],
@@ -88,11 +88,8 @@ describe('Index testing', () => {
         await userEvent.click(navNextButton);
 
         // ASSERT
-        const activeSlideItem = getActiveSlideItem();
-        const activePageButton = getActivePageButton();
-
-        expect(activeSlideItem).toHaveAttribute('data-page','3');
-        expect(activePageButton).toHaveAttribute('data-page','3');
+        expect(getActiveSlideItem()).toHaveAttribute('data-page','3');
+        expect(getActivePageButton()).toHaveAttribute('data-page','3');
     });
 
     test('Navigates back to first page using prev button', async () => {
@@ -100,11 +97,8 @@ describe('Index testing', () => {
         await userEvent.click(navPrevButton);
 
         // ASSERT
-        const activeSlideItem = getActiveSlideItem();
-        const activePageButton = getActivePageButton();
-
-        expect(activeSlideItem).toHaveAttribute('data-page','1');
-        expect(activePageButton).toHaveAttribute('data-page','1');
+        expect(getActiveSlideItem()).toHaveAttribute('data-page','1');
+        expect(getActivePageButton()).toHaveAttribute('data-page','1');
     });
 
 
@@ -120,26 +114,20 @@ describe('Index testing', () => {
         await userEvent.click(navPrevButton);
 
         // ASSERT
-        const activeSlideItem = getActiveSlideItem();
-        const activePageButton = getActivePageButton();
-
-        expect(activeSlideItem).toHaveAttribute('data-page','2');
-        expect(activePageButton).toHaveAttribute('data-page','2');
+        expect(getActiveSlideItem()).toHaveAttribute('data-page','2');
+        expect(getActivePageButton()).toHaveAttribute('data-page','2');
     });
 
 
     test('Navigates to third page using pagination button', async () => {
-        // Act
         const targetPageButton = pageButtons.find(el => el.dataset.page === '3');
 
-        // ASSERT
+        // Act
         await userEvent.click(targetPageButton);
 
-        const activeSlideItem = getActiveSlideItem();
-        const activePageButton = getActivePageButton();
-
-        expect(activeSlideItem).toHaveAttribute('data-page','3');
-        expect(activePageButton).toHaveAttribute('data-page','3');
+        // ASSERT
+        expect(getActiveSlideItem()).toHaveAttribute('data-page','3');
+        expect(getActivePageButton()).toHaveAttribute('data-page','3');
     });
 
 
@@ -158,6 +146,7 @@ describe('Index testing', () => {
         // ASSERT
         expect(container.style.transform).toEqual('translate(-400px, 0px)');
         expect(getActiveSlideItem()).toHaveAttribute('data-page','2');
+        expect(getActivePageButton()).toHaveAttribute('data-page','2');
     });
 
     test('Mobile drag to third page using next button', async () => {
@@ -174,6 +163,7 @@ describe('Index testing', () => {
         // ASSERT
         expect(container.style.transform).toEqual('translate(-400px, 0px)');
         expect(getActiveSlideItem()).toHaveAttribute('data-page','2');
+        expect(getActivePageButton()).toHaveAttribute('data-page','2');
     });
 
 });
