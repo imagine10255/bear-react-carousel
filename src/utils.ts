@@ -6,6 +6,12 @@ import {IBreakpointSetting, TSlidesPerView, IBreakpointSettingActual, IInfo, IPr
 export function checkIsMobile(): boolean {
     try { document.createEvent('TouchEvent'); return true; } catch (e) { return false; }
 }
+/**
+ * 判斷是否為桌面裝置
+ */
+export function checkIsDesktop(): boolean {
+    try { document.createEvent('MouseEvent'); return true; } catch (e) { return false; }
+}
 
 /**
  * 轉數字
@@ -64,103 +70,6 @@ export function getMediaSetting(defaultBreakpoint: IBreakpointSetting, breakpoin
         slidesPerGroup: setting.slidesPerGroup > slidesPerViewActual ? slidesPerViewActual:anyToNumber(setting.slidesPerGroup, 1), // fix
     };
 }
-
-
-/**
- * 取得響應式設定
- * @param props
- */
-// export function getMediaInfo(props: IBearCarouselProps): {rwdMedia: IBreakpointSettingActual, info: IInfo} {
-//
-//     const {
-//         data,
-//         breakpoints,
-//
-//         slidesPerView,
-//         slidesPerGroup,
-//         aspectRatio,
-//         staticHeight,
-//         spaceBetween,
-//         isCenteredSlides,
-//         isEnableNavButton,
-//         isEnablePagination,
-//         isEnableMouseMove,
-//         isEnableAutoPlay,
-//         isEnableLoop,
-//     } = props;
-//
-//     const rwdMedia = getMediaSetting({
-//         slidesPerView: typeof slidesPerView === 'number' && slidesPerView <= 0 ? 1: slidesPerView,
-//         slidesPerGroup,
-//         aspectRatio,
-//         staticHeight,
-//         spaceBetween,
-//         isCenteredSlides,
-//         isEnableNavButton,
-//         isEnablePagination,
-//         isEnableMouseMove,
-//         isEnableAutoPlay,
-//         isEnableLoop,
-//     }, breakpoints);
-//
-//
-//     // const divisible = data.length % rwdMedia.slidesPerGroup; // 餘數
-//     // let sliceData = divisible > 0 ? data.slice(0, data.length - divisible) : data;
-//     let sliceData = data ?? [];
-//     let sourceTotal = sliceData.length;
-//     const formatElement = initDataList(
-//         sliceData,
-//         rwdMedia.slidesPerViewActual,
-//         rwdMedia.slidesPerGroup,
-//         rwdMedia.isEnableLoop
-//     );
-//
-//
-//     const elementTotal = formatElement.length;
-//     const cloneBeforeTotal = rwdMedia.isEnableLoop ? rwdMedia.slidesPerViewActual : 0;
-//     const cloneAfterTotal = cloneBeforeTotal;
-//     const actualMinIndex = 0;
-//     const actualMaxIndex = elementTotal - 1;
-//
-//
-//     let fakeTotalPage = Math.ceil(sourceTotal / rwdMedia.slidesPerGroup);
-//     if(!rwdMedia.isEnableLoop && rwdMedia.slidesPerView !== 'auto' && !rwdMedia.isCenteredSlides){
-//         fakeTotalPage = fakeTotalPage - (rwdMedia.slidesPerView - rwdMedia.slidesPerGroup);
-//     }
-//
-//     const info: IInfo = {
-//         formatElement,
-//         sourceTotal, // 來源總數
-//         // 從0開始
-//         element: {
-//             activeIndex: 1,
-//             total: elementTotal,
-//             firstIndex: 0,
-//             lastIndex: elementTotal - 1
-//         },
-//         // 0為實際一開始的位置(往前為負數), 結束值為最後結束位置
-//         actual: {
-//             activeIndex: 1,
-//             minIndex: actualMinIndex,
-//             maxIndex: actualMaxIndex,
-//             firstIndex: Math.ceil(cloneBeforeTotal),
-//             lastIndex: Math.ceil(sourceTotal + cloneAfterTotal - 1)
-//         },
-//         // 總頁數
-//         page: {
-//             pageTotal: fakeTotalPage,
-//             activePage: 1,
-//         },
-//         residue: elementTotal % rwdMedia.slidesPerGroup,
-//         isVisiblePagination: rwdMedia.isEnablePagination && formatElement.length > 0,
-//         isVisibleNavButton: rwdMedia.isEnableNavButton && formatElement.length > 0
-//     };
-//
-//     return {
-//         info,
-//         rwdMedia,
-//     };
-// }
 
 
 /**
@@ -260,14 +169,15 @@ export function getTranslateParams(el: HTMLElement): {x: number, y: number, z: n
     const matrixType = matrix.includes('3d') ? '3d' : '2d';
     let matrixArray = getMatrixValue(matrix);
 
+
     switch (matrixType){
     case '2d':
         // 2d matrices have 6 values, Last 2 values are X and Y, 2d matrices does not have Z value.
-        return {x: matrixArray[4], y: matrixArray[5], z: 0};
+        return {x: matrixArray[4] ?? 0, y: matrixArray[5] ?? 0, z: 0};
         
     case '3d':
         // 3d matrices have 16 values, The 13th, 14th, and 15th values are X, Y, and Z
-        return {x: matrixArray[12], y: matrixArray[13], z: matrixArray[14]};
+        return {x: matrixArray[12] ?? 0, y: matrixArray[13] ?? 0, z: matrixArray[14]};
     default:
         return {x: 0, y: 0, z: 0,};
     }

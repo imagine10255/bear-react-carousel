@@ -4,7 +4,6 @@ import {EDevice} from '../types';
 import Elementor from './Elementor';
 import log from '../log';
 import {DesktopTouchEvent, MobileTouchEvent} from '../interface/DragEvent';
-import AutoPlayer from './AutoPlayer';
 import Locator from './Locator';
 import {calcMoveTranslatePx, checkInRange} from '../utils';
 import Stater from './Stater';
@@ -72,14 +71,14 @@ class Dragger {
     }
 
     mount = () => {
-        switch (this._device){
-        case EDevice.mobile:
+        // switch (this._device){
+        // case EDevice.mobile:
             this._elementor.containerEl.addEventListener('touchstart', this._onMobileTouchStart, {passive: false});
-            break;
-        case EDevice.desktop:
+            // break;
+        // case EDevice.desktop:
             this._elementor.containerEl.addEventListener('mousedown', this._onWebMouseStart, {passive: false});
-            break;
-        }
+            // break;
+        // }
     };
 
     /**
@@ -238,7 +237,6 @@ class Dragger {
     _dragDone = (): void => {
         // if(this.props.isDebug && logEnable.elementMoveDone) log.printInText('[_elementMoveDone]');
         this._elementor.setNonSubjectTouch(true);
-
 
         if(this._elementor.slideItemEls){
             const active = this._elementor.slideItemEls.find(row => row.dataset.active === 'true');

@@ -34,6 +34,7 @@ function Base() {
         {/*測試依照比例設定容器高度*/}
         {enable && (
             <BearCarousel
+                style={{width: '400px'}}
                 // controllerRef={controllerRef}
                 data={bearSlideItemData1}
                 // onChange={setInfo}
@@ -41,7 +42,7 @@ function Base() {
                 staticHeight="200px"
                 isEnableNavButton
                 isEnablePagination
-                isEnableLoop
+                // isEnableLoop
                 // isEnableAutoPlay={false}
                 // moveTime={400}
                 isDebug

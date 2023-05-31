@@ -1,15 +1,16 @@
+import * as React from 'react';
 import '@testing-library/jest-dom';
-import {fireEvent, render, screen, waitFor} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import {fireEvent, render, screen} from '@testing-library/react';
 
 import BearCarousel from './BearCarousel';
-import userEvent from '@testing-library/user-event';
-import elClassName from './el-class-name';
 import {TBearSlideItemDataList} from './types';
-import BearSlideItem from './components/SlideItem';
+import BearSlideItem from './BearSlideItem';
 import {baseImage as images} from '../example/src/config/images';
 
 
-export const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
+
+const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
     return {
         key: row.id,
         children: <BearSlideItem as="card">
@@ -22,12 +23,18 @@ export const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
 });
 
 describe('Index testing', () => {
+
+
+
     beforeEach(() => {
+
+
         render(<BearCarousel
             data={bearSlideItemData1}
             isEnableNavButton
             isEnablePagination
         />);
+
     });
 
     test('Should render content correctly', async () => {
@@ -116,5 +123,29 @@ describe('Index testing', () => {
     });
 
 
+    test('Should drag', async () => {
+        // ASSERT
+        const slideItems = screen.getAllByTestId('bear-carousel-slideItem');
+        console.log('slideItems', slideItems.length);
+        slideItems.forEach((el, index) => {
+            Object.defineProperty(el, 'clientWidth', {configurable: true, value: 400});
+            Object.defineProperty(el, 'offsetLeft', {configurable: true, value: 400 * index});
+        });
+
+        let container = screen.getByTestId('bear-carousel-container');
+
+        Object.defineProperty(container, 'clientWidth', {configurable: true, value: 400});
+        Object.defineProperty(container, 'offsetLeft', {configurable: true, value: 0});
+
+        fireEvent.mouseDown(container, {clientX: 500});
+        fireEvent.mouseMove(container, {clientX: 290});
+        expect(container.style.transform).toEqual('translate(-210px, 0px)');
+
+        fireEvent.mouseUp(container);
+        expect(container.style.transform).toEqual('translate(-400px, 0px)');
+
+        const activeSlideItem = slideItems.find(el => el.dataset.active === 'true');
+        expect(activeSlideItem).toHaveAttribute('data-page','2');
+    });
 
 });

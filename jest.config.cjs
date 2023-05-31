@@ -2,7 +2,7 @@ module.exports = {
     coverageDirectory: 'coverage',
     preset: 'ts-jest',
     testEnvironment: 'jsdom',
-    testMatch: ['<rootDir>/**/*.spec.[jt]s?(x)'],
+    testMatch: ['<rootDir>/**/*.spec.ts?(x)'],
     transform: {
         '^.+\\.(t|j)sx?$': [
             '@swc/jest',

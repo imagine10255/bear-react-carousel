@@ -412,7 +412,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                     {this._stater.info.isVisibleNavButton && this._renderNavButton()}
 
                     <div className={elClassName.content}>
-                        <div ref={this._elementor._containerRef} className={elClassName.container}>
+                        <div ref={this._elementor._containerRef} className={elClassName.container} data-testid="bear-carousel-container">
                             {this._renderSlideItems()}
                         </div>
                     </div>
