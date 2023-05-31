@@ -13,7 +13,7 @@ const WindowsSize = ({
     size = 0,
 }: IProps) => {
     return <div
-    data-testid="bear-carousel-windowSize"
+        data-testid="bear-carousel-windowSize"
         className={elClassName.testWindowSize}
     >
         {size}

@@ -95,39 +95,11 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         super(props);
         this._device = checkIsMobile() ? EDevice.mobile : EDevice.desktop;
 
-
-        const {
-            data,
-            slidesPerGroup,
-            aspectRatio,
-            staticHeight,
-            spaceBetween,
-            isCenteredSlides,
-            isEnableNavButton,
-            isEnablePagination,
-            isEnableMouseMove,
-            isEnableAutoPlay,
-            isEnableLoop,
-
-            breakpoints,
-
-            moveTime,
-            defaultActivePage,
-            autoPlayTime,
-            isDebug
-        } = props;
-        const slidesPerView = typeof props.slidesPerView === 'number' && props.slidesPerView <= 0 ? 1: props.slidesPerView;
-        const setting = {
-            slidesPerView, slidesPerGroup, aspectRatio, staticHeight, spaceBetween, isCenteredSlides, isEnableNavButton, isEnablePagination, isEnableMouseMove, isEnableAutoPlay, isEnableLoop,
-            moveTime,
-            defaultActivePage,
-            autoPlayTime,
-            isDebug
-        };
+        const setting = getSetting(props);
         this._syncCarousel = new SyncCarousel(props.syncCarouselRef);
-        this._windowSizer = new WindowSizer(breakpoints, this._device);
-        this._configurator = new Configurator(breakpoints, setting);
-        this._stater = new Stater(this._configurator, data);
+        this._windowSizer = new WindowSizer(props.breakpoints, this._device);
+        this._configurator = new Configurator(props.breakpoints, setting);
+        this._stater = new Stater(this._configurator, props.data);
         this._locator = new Locator(this._configurator.carouselId);
         this._elementor = new Elementor({
             locator: this._locator,
@@ -161,7 +133,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
         this._stater.on('infoChanged', this._onChange);
         this.state = {windowSize: this._windowSizer.size};
-
     }
 
 
@@ -191,7 +162,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         }
 
         this._setControllerRef();
-
         this._init();
     }
 
@@ -234,8 +204,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             this._stater.updateData(nextProps.data);
             return true;
         }
-        console.log('case non');
-
 
         return false;
     }

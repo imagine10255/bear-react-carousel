@@ -55,7 +55,6 @@ describe('Center mode testing', () => {
 
 
     test('Navigates to third page using next button', async () => {
-        console.log('slideItems', slideItems[0].offsetWidth);
         // ASSERT
         expect(container.style.transform).toEqual('translate(133px, 0px)');
     });

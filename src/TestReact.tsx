@@ -4,7 +4,7 @@ interface ITestReact {
 }
 
 const TestReact = ({
-   labelOff
+    labelOff
 }: ITestReact) => {
     return <div data-off={labelOff} data-testid="custom-element">
         test ok
