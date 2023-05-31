@@ -1,18 +1,26 @@
 import * as React from 'react';
-import {checkIsMobile, calcSingleAspectRatio, getMediaInfo, getMediaRangeSize, getSlideDirection, getTranslateParams} from './utils';
-import {ulid} from 'ulid';
+import {booleanToDataAttr, checkIsMobile, getPaddingBySize, getSetting, getSizeByRange, isDataKeyDff, isPropsDiff} from './utils';
 import log from './log';
-import deepCompare from './deepCompare';
-import {EDirection, EHorizontal, IBearCarouselProps, IBreakpointSettingActual, IInfo, ITouchStart} from './types';
+import {EDevice, ESlideItemCacheMode, IBearCarouselProps} from './types';
 import elClassName from './el-class-name';
 import {BearCarouselProvider} from './BearCarouselProvider';
-
 import './styles.css';
-import {ArrowIcon, CloneIcon} from './Icon';
 
+import Configurator from './manager/Configurator';
+import WindowSizer from './manager/WindowSizer';
+import Stater from './manager/Stater';
+import SlideItem from './components/SlideItem';
+import Elementor from './manager/Elementor';
+import Locator from './manager/Locator';
+import Controller from './manager/Controller';
+import AutoPlayer from './manager/AutoPlayer';
+import Dragger from './manager/Dragger';
+import SyncCarousel from './manager/SyncCarousel';
 
-// Swipe trigger movement distance
-const triggerTouchDistance = 60;
+import WindowSize from './components/WindowSize';
+import Page from './components/Page';
+import {NavNextButton, NavPrevButton} from './components/NavButton';
+
 
 // debug log switch
 const logEnable = {
@@ -40,6 +48,8 @@ interface IState {
 
 
 
+
+
 class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     static defaultProps = {
         data: undefined,
@@ -57,84 +67,100 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         spaceBetween: 0,
         autoPlayTime: 5000,
         defaultActivePage: 1,
+        isSlideItemMemo: false,
     };
-    _isMobile = checkIsMobile();
-    _carouselId = `bear-react-carousel_${ulid().toLowerCase()}`;
+    _device = EDevice.desktop;
 
-    timer?: any;
     resetDurationTimer?: any;
-    activePage = 0;        // real page location
-    activeActualIndex = 0; // real item index location
-    info: IInfo = {
-        formatElement: [],
-        sourceTotal: 0, // Total number of sources
-        // 從0開始
-        element: {
-            total: 0,
-            firstIndex: 0,
-            lastIndex: 0
-        },
-        // 0 is the actual starting position (a negative number forward), and the ending value is the last ending position
-        actual: {
-            minIndex: 0,
-            maxIndex: 0,
-            firstIndex: 1,
-            lastIndex: 1
-        },
-        // 總頁數
-        pageTotal: 0,
-        residue: 1,
-        isVisiblePagination: false,
-        isVisibleNavButton: false
-    };
+    // activePage = 0;        // real page location
+    // activeActualIndex = 0; // real item index location
 
 
-    rwdMedia: IBreakpointSettingActual = {
-        slidesPerView: 1,
-        slidesPerViewActual: 1,
-        aspectRatio: undefined,
-        slidesPerGroup: 1,
-        spaceBetween: 0,
-        isCenteredSlides: false,
-        isEnableLoop: false,
-        isEnablePagination: true,
-        isEnableNavButton: true,
-        isEnableMouseMove: true,
-        isEnableAutoPlay: false,
-    };
-
-    touchStart: ITouchStart = {
-        pageX: 0,
-        pageY: 0,
-        x: 0,
-        y: 0,
-        movePositionX: 0,
-        movePositionY: 0
-    };
     state = {
         windowSize: 0
     };
 
-    // Ref
-    rootRef: React.RefObject<HTMLDivElement> = React.createRef();
-    containerRef: React.RefObject<HTMLDivElement> = React.createRef();
-    slideItemRefs: React.RefObject<Array<HTMLDivElement>> = React.createRef();
-    pageRefs: React.RefObject<Array<HTMLDivElement>> = React.createRef();
+    _stater: Stater;
+    _configurator: Configurator;
+    _windowSizer: WindowSizer;
+    _locator: Locator;
+    _elementor: Elementor;
+    _controller: Controller;
+    _autoPlayer: AutoPlayer;
+    _dragger: Dragger;
+    _syncCarousel: SyncCarousel;
+
 
     constructor(props: IBearCarouselProps) {
         super(props);
+        this._device = checkIsMobile() ? EDevice.mobile : EDevice.desktop;
 
-        // @ts-ignore
-        this.slideItemRefs['current'] = [];
-        // @ts-ignore
-        this.pageRefs['current'] = [];
 
-        const {rwdMedia, info} = getMediaInfo(props);
-        this.rwdMedia = rwdMedia;
-        this.info = info;
-        this.state = {
-            windowSize: getMediaRangeSize(Object.keys(props.breakpoints))
+        const {
+            data,
+            slidesPerGroup,
+            aspectRatio,
+            staticHeight,
+            spaceBetween,
+            isCenteredSlides,
+            isEnableNavButton,
+            isEnablePagination,
+            isEnableMouseMove,
+            isEnableAutoPlay,
+            isEnableLoop,
+
+            breakpoints,
+
+            moveTime,
+            defaultActivePage,
+            autoPlayTime,
+            isDebug
+        } = props;
+        const slidesPerView = typeof props.slidesPerView === 'number' && props.slidesPerView <= 0 ? 1: props.slidesPerView;
+        const setting = {
+            slidesPerView, slidesPerGroup, aspectRatio, staticHeight, spaceBetween, isCenteredSlides, isEnableNavButton, isEnablePagination, isEnableMouseMove, isEnableAutoPlay, isEnableLoop,
+            moveTime,
+            defaultActivePage,
+            autoPlayTime,
+            isDebug
         };
+        this._syncCarousel = new SyncCarousel(props.syncCarouselRef);
+        this._windowSizer = new WindowSizer(breakpoints, this._device);
+        this._configurator = new Configurator(breakpoints, setting);
+        this._stater = new Stater(this._configurator, data);
+        this._locator = new Locator(this._configurator.carouselId);
+        this._elementor = new Elementor({
+            locator: this._locator,
+            configurator: this._configurator,
+            stater: this._stater
+        });
+
+        this._controller = new Controller({
+            locator: this._locator,
+            configurator: this._configurator,
+            stater: this._stater,
+            elementor: this._elementor,
+            syncCarousel: this._syncCarousel,
+        });
+
+        this._dragger = new Dragger({
+            locator: this._locator,
+            configurator: this._configurator,
+            elementor: this._elementor,
+            stater: this._stater,
+            controller: this._controller,
+            syncCarousel: this._syncCarousel,
+        });
+
+
+        this._autoPlayer = new AutoPlayer({
+            configurator: this._configurator,
+            controller: this._controller,
+            dragger: this._dragger,
+        });
+
+        this._stater.on('infoChanged', this._onChange);
+        this.state = {windowSize: this._windowSizer.size};
 
     }
 
@@ -142,51 +168,38 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     componentDidMount() {
         if(this.props.isDebug && logEnable.componentDidMount) log.printInText('[componentDidMount]');
 
-        const containerRef = this.containerRef?.current;
-        if (containerRef) {
+        const {page} = this._stater.info;
+
+        if(this.props.onMount){
+            this.props.onMount();
+        }
+
+        if (this._elementor) {
             // Move to the correct position for the first time
-            if(this.info.pageTotal > 0){
-                this.goToPage(this.props.defaultActivePage ?? 1, false);
+            if(page.pageTotal > 0){
+                this._controller.slideToPage(this.props.defaultActivePage ?? 1, false);
             }
 
             // End of moving animation (Need to return to the position, to be fake)
 
+            this._windowSizer
+                .mount()
+                .on('resize', this._onResize);
 
-            window.addEventListener('focus', this._onWindowFocus, false);
-            window.addEventListener('blur', this._onWindowBlur, false);
-
-            if (this._isMobile) {
-                // When the window size is changed
-                window.addEventListener('orientationchange', this._onOrientationchange, {passive: false});
-                containerRef.addEventListener('touchstart', this._onMobileTouchStart, {passive: false});
-            } else {
-                // When the window size is changed (through throttling)
-                window.addEventListener('resize', this._onResize, {passive: false});
-                containerRef.addEventListener('mousedown', this._onWebMouseStart, {passive: false});
-            }
+            this._autoPlayer.mount();
+            this._dragger.mount();
         }
 
-        this._handleSyncCarousel();
+        this._setControllerRef();
 
+        this._init();
     }
 
     componentWillUnmount() {
         if(this.props.isDebug && logEnable.componentWillUnmount) log.printInText('[componentWillUnmount]');
-        if (this.timer) clearTimeout(this.timer);
-
-        const containerRef = this.containerRef?.current;
-        if (containerRef) {
-            if (this._isMobile) {
-                window.removeEventListener('orientationchange', this._onOrientationchange, false);
-                containerRef.removeEventListener('touchstart', this._onMobileTouchStart, false);
-            } else {
-                window.removeEventListener('resize', this._onResize, false);
-                containerRef.removeEventListener('mousedown', this._onWebMouseStart, false);
-            }
-
-        }
-
-
+        this._autoPlayer.unmount();
+        this._windowSizer.unmount();
+        this._dragger.unmount();
     }
 
 
@@ -198,623 +211,73 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     shouldComponentUpdate(nextProps: IBearCarouselProps, nextState: IState) {
 
         const {windowSize: nextWindowSize} = nextState;
-        const {windowSize} = this.state;
-        const {data, setCarousel, renderNavButton, ...otherParams} = this.props;
-        const {data: nextData, setCarousel: nextSetCarousel, renderNavButton: nextRenderNavButton, ...nextOtherProps} = nextProps;
 
-        const oldKey = data?.map((row) => row.key).join('_');
-        const nextKey = nextData?.map((row) => row.key).join('_');
-        if (oldKey !== nextKey ||
-      !deepCompare(otherParams, nextOtherProps) ||
-      nextWindowSize !== windowSize
-        ) {
-            if(this.props.isDebug && logEnable.shouldComponentUpdate) log.printInText('[shouldComponentUpdate] true');
-
-            const {rwdMedia, info} = getMediaInfo(nextProps);
-            this.rwdMedia = rwdMedia;
-            this.info = info;
-
-            // reset page position
-            const $this = this;
+        if(isPropsDiff(this.props, nextProps, ['data']) ||
+            this.state.windowSize !== nextWindowSize ||
+            this.props.data.length !== nextProps.data.length
+        ){
+            this._configurator.init(nextProps.breakpoints, getSetting(nextProps));
+            this._stater.init(nextProps.data);
             setTimeout(() => {
-                $this.goToPage(1, false);
+                this._controller.slideToPage(1, false);
             }, 0);
-
-            this._handleSyncCarousel();
 
             return true;
         }
 
+        if(nextProps.isSlideItemMemo && this.props.data !== nextProps.data){
+            this._stater.updateData(nextProps.data);
+            return true;
+        }
+
+        if(isDataKeyDff(this.props.data, nextProps.data)){
+            this._stater.updateData(nextProps.data);
+            return true;
+        }
+        console.log('case non');
+
+
         return false;
     }
 
+
+    _isSyncControl = () => !!this.props.syncCarouselRef === false;
+
+
+
+    _init = () => {
+        if (this._elementor.containerEl) {
+            const className = this._elementor.containerEl.classList;
+            if(!className.contains(elClassName.containerInit)){
+                className.add(elClassName.containerInit);
+            }
+        }
+    };
+
     /**
-     * browser focus check auto play
-     * @private
+     * set Controller method
      */
-    _onWindowFocus = (): void => {
-        this._checkAndAutoPlay();
-    };
-
-
-    /**
-     * browser blur clean auto play timer
-     * @private
-     */
-    _onWindowBlur = (): void => {
-        if (this.timer) {
-            clearTimeout(this.timer);
+    _setControllerRef = () => {
+        if(this.props.controllerRef){
+            this.props.controllerRef.current = this._controller;
         }
     };
 
-
     /**
-   * mobile phone finger press start
-   * @param event
+   * set OnChange emit
    */
-    _onMobileTouchStart = (event: TouchEvent): void => {
-        if(this.props.isDebug && logEnable.onMobileTouchStart) log.printInText('[_onMobileTouchStart]');
-
-        if (this.timer) clearTimeout(this.timer);
-
-        const containerRef = this.containerRef?.current;
-        if (containerRef) {
-            if(containerRef.style.transitionDuration === '0ms'){
-                this._resetPosition();
-                const movePosition = getTranslateParams(containerRef);
-
-                // 紀錄位置
-                this.touchStart = {
-                    pageX: event.targetTouches[0].pageX,
-                    pageY: event.targetTouches[0].pageY,
-                    x: event.targetTouches[0].pageX - movePosition.x,
-                    y: event.targetTouches[0].pageY - containerRef.offsetTop,
-                    movePositionX: movePosition.x,
-                    movePositionY: movePosition.y,
-                    moveDirection: undefined,
-                };
-
-                containerRef.addEventListener('touchmove', this._onMobileTouchMove, false);
-                containerRef.addEventListener('touchend', this._onMobileTouchEnd, false);
-            }
-
+    _onChange = () => {
+        if(this.props.onChange){
+            const {element, actual, page} = this._stater;
+            this.props.onChange({element, actual, page});
         }
     };
 
-
-    /**
-   * Mobile phone finger press and move
-   * @param event
-   */
-    _onMobileTouchMove = (event: TouchEvent): void => {
-
-        event.preventDefault();
-
-        const endX = event.targetTouches[0].clientX;
-        const endY = event.targetTouches[0].pageY;
-
-
-        const direction = getSlideDirection(this.touchStart.pageX, this.touchStart.pageY, endX, endY);
-        if(typeof this.touchStart.moveDirection === 'undefined'){
-            this.touchStart.moveDirection = direction;
-        }
-        if(this.props.isDebug && logEnable.onMobileTouchMove) log.printInText(`[_onMobileTouchMove] ${this.touchStart.moveDirection}`);
-
-
-        // 判斷一開始的移動方向
-        if(this.touchStart.moveDirection === EDirection.vertical){
-            // 垂直移動
-
-        }else if(this.touchStart.moveDirection === EDirection.horizontal){
-            // 水平移動
-            const containerRef = this.containerRef?.current;
-            if(containerRef){
-
-                const moveX = containerRef.offsetLeft + event.targetTouches[0].pageX;
-                this._elementMove(moveX);
-            }
-        }
-
-    };
-
-    /**
-   * Mobile phone finger press to end
-   * @param event
-   *
-   * PS: Add event.preventDefault(); will affect the mobile phone click onClick event
-   */
-    _onMobileTouchEnd = (event: TouchEvent): void => {
-        if(this.props.isDebug && logEnable.onMobileTouchEnd) log.printInText('[_onMobileTouchEnd]');
-
-        const containerRef = this.containerRef?.current;
-        if (containerRef) {
-            containerRef.removeEventListener('touchmove', this._onMobileTouchMove, false);
-            containerRef.removeEventListener('touchend', this._onMobileTouchEnd, false);
-        }
-        this._elementMoveDone();
-    };
-
-    /**
-   * Web mouse click
-   * @param event
-   */
-    _onWebMouseStart = (event: MouseEvent): void => {
-        if(this.props.isDebug && logEnable.onWebMouseStart) log.printInText('[_onWebMouseStart]');
-
-
-        if (this.timer) clearTimeout(this.timer);
-        this._resetPosition();
-
-        const containerRef = this.containerRef?.current;
-        if (containerRef) {
-            const movePosition = getTranslateParams(containerRef);
-
-            this.touchStart = {
-                pageX: event.clientX,
-                pageY: event.clientY,
-                x: event.clientX - movePosition.x,
-                y: event.clientY - containerRef.offsetTop,
-                movePositionX: movePosition.x,
-                movePositionY: movePosition.y
-            };
-
-
-            if(this.resetDurationTimer) clearTimeout(this.resetDurationTimer);
-
-            this._elementMove(this.touchStart.pageX);
-
-            const rootRef = this.rootRef.current;
-            if(rootRef){
-                rootRef.addEventListener('mouseleave', this._onWebMouseEnd, false);
-            }
-            containerRef.addEventListener('mousemove', this._onWebMouseMove, false);
-            containerRef.addEventListener('mouseup', this._onWebMouseEnd, false);
-        }
-
-    };
-
-
-    /**
-   * Web mouse movement
-   * @param event
-   */
-    _onWebMouseMove = (event: MouseEvent):void => {
-        if(this.props.isDebug && logEnable.onWebMouseMove) log.printInText('[_onWebMouseMove]');
-
-        event.preventDefault();
-        const moveX = event.clientX;
-
-        this._elementMove(moveX);
-    };
-
-    /**
-   * web mouse release
-   * @param event
-   */
-    _onWebMouseEnd = (event: MouseEvent):void => {
-        if(this.props.isDebug && logEnable.onWebMouseEnd) log.printInText('[_onWebMouseEnd]');
-
-        event.preventDefault();
-
-        const containerRef = this.containerRef?.current;
-        if (containerRef) {
-            const rootRef = this.rootRef.current;
-            if(rootRef){
-                rootRef.removeEventListener('mouseleave', this._onWebMouseEnd, false);
-            }
-
-            containerRef.removeEventListener('mousemove', this._onWebMouseMove, false);
-            containerRef.removeEventListener('mouseup', this._onWebMouseEnd, false);
-        }
-
-        this._elementMoveDone();
-    };
-
-
-    /**
-   * final move execution
-   * @param moveX Move the X-axis
-   */
-    _elementMove = (moveX: number): void => {
-        if(this.props.isDebug && logEnable.elementMove) log.printInText('[_elementMove]');
-
-        const containerRef = this.containerRef?.current;
-        if (containerRef && this.rwdMedia.isEnableMouseMove && this.slideItemRefs.current) {
-            const translateX = moveX - this.touchStart.x;
-            containerRef.style.transform = `translate(${translateX}px, 0px)`;
-            containerRef.style.transitionDuration = '0ms';
-        }
-
-
-    };
-
-
-    /**
-   * The object movement ends (confirm the stop position and which Index position should be sucked)
-   */
-    _elementMoveDone = (): void => {
-        if(this.props.isDebug && logEnable.elementMoveDone) log.printInText('[_elementMoveDone]');
-
-        const containerRef = this.containerRef?.current;
-        if (containerRef) {
-
-            // get mobile location
-            const movePosition = getTranslateParams(containerRef).x;
-
-            // Confirmed travel distance
-            const checkMove = movePosition - this.touchStart.movePositionX;
-
-            // 取得移動限制
-            const distance = {
-                min: this._getMoveDistance(this.info.actual.minIndex),
-                max: this._getMoveDistance(this.info.actual.lastIndex)
-            };
-
-            if (distance.min < movePosition && !this.rwdMedia.isEnableLoop) {
-                this.goToPage(1);
-
-            } else if (distance.max > movePosition && !this.rwdMedia.isEnableLoop) {
-                this.goToPage(this.info.pageTotal);
-
-            } else if (checkMove <= triggerTouchDistance && checkMove >= -triggerTouchDistance) {
-                this.goToActualIndex(this.activeActualIndex);
-
-            } else if (checkMove >= -triggerTouchDistance) {
-                if(this.rwdMedia.slidesPerView === 'auto'){
-                    this.toPrev();
-                }else{
-                    this.goToActualIndex(this._getPageByPosition(movePosition, EHorizontal.left));
-                }
-
-            } else if (checkMove <= triggerTouchDistance) {
-
-                if(this.rwdMedia.slidesPerView === 'auto'){
-                    this.toNext();
-                }else{
-                    this.goToActualIndex(this._getPageByPosition(movePosition, EHorizontal.right));
-                }
-
-            }
-
-        }
-
-    };
-
-
-
-
-
-    /**
-   * Check and autoplay feature
-   */
-    _checkAndAutoPlay = (): void => {
-        const {autoPlayTime} = this.props;
-        if(this.props.isDebug && logEnable.checkAndAutoPlay) log.printInText(`[_checkAndAutoPlay] autoPlayTime: ${autoPlayTime}`);
-
-
-        // Clear the last timer
-        if (this.timer) {
-            clearTimeout(this.timer);
-        }
-
-        if (this.rwdMedia.isEnableLoop && this.rwdMedia.isEnableAutoPlay && autoPlayTime > 0 && this.info.pageTotal > 1) {
-            this.timer = setTimeout(() => {
-                this.toNext();
-            }, autoPlayTime);
-        }
-    };
-
-
-    /**
-   * reset page position (LoopMode)
-   *
-   * PS: If the element is isClone then return to the position where it should actually be displayed
-   */
-    _resetPosition = (): void => {
-        if(this.props.isDebug && logEnable.resetPosition) log.printInText('[_resetPosition]');
-
-        const formatElement = this.info?.formatElement ? this.info.formatElement : [];
-
-        if (formatElement[this.activeActualIndex].isClone) {
-            this.goToActualIndex(formatElement[this.activeActualIndex].matchIndex, false);
-        }
-    };
-
-
-    /**
-   * When dealing with changing screen size
-   */
-    _onResize = () => {
-        const {breakpoints} = this.props;
-        const {windowSize} = this.state;
-        if(this.props.isDebug && logEnable.handleResize) log.printInText(`[_handleResize] windowSize: ${windowSize}px`);
-
-        const selectSize = getMediaRangeSize(Object.keys(breakpoints));
-
-        // 只在區間內有設定的值才會 setState
-        if (windowSize !== selectSize) {
-            if(this.props.isDebug && logEnable.handleResizeDiff) log.printInText(`[_handleResize] diff windowSize: ${windowSize} -> ${selectSize}px`);
-            this.setState({
-                windowSize: selectSize
-            });
+    _onResize = (windowSize: number) => {
+        if(windowSize !== this.state.windowSize){
+            this.setState({windowSize});
         }else{
-            this.goToPage(1, false);
-        }
-    };
-
-    /**
-   * When dealing with changing screen size
-   */
-    _onOrientationchange = () => {
-        const {breakpoints} = this.props;
-        const {windowSize} = this.state;
-
-        // @ts-ignore
-        if(this.props.isDebug && logEnable.handleResize) log.printInText('[_onOrientationchange] ');
-
-        const selectSize = getMediaRangeSize(Object.keys(breakpoints));
-        if (windowSize !== selectSize) {
-            this.setState({
-                windowSize: selectSize
-            });
-            if(this.props.isDebug && logEnable.handleResize) log.printInText('[_onOrientationchange] set windowSize');
-
-        }else{
-            if(this.props.isDebug && logEnable.handleResize) log.printInText('[_onOrientationchange] goToPage 1');
-            setTimeout(() => {
-                this.goToPage(1, false);
-            }, 400);
-
-        }
-
-
-    };
-
-    /**
-     * get Page By Position
-     * not support auto width
-     */
-    _getPageByPosition = (position: number, horizontal: EHorizontal):number => {
-        const oneSlideItemMoveX = this._getMoveDistance(1);
-        let defaultPage = 1;
-
-        if(horizontal === EHorizontal.left){
-            defaultPage = Math.floor(position / oneSlideItemMoveX);
-
-        }else{
-            defaultPage = Math.ceil(position / oneSlideItemMoveX);
-        }
-
-        return defaultPage;
-    };
-
-    /**
-   * get next page
-   */
-    getNextPage = (): number => {
-        return this.activePage + 1;
-    };
-
-    /**
-   * Get the first item on the next page
-   */
-    getNextPageFirstIndex = (): number => {
-        if (this.rwdMedia.isCenteredSlides) {
-            return this.activeActualIndex + this.rwdMedia.slidesPerGroup;
-        }
-        // Avoid trailing whitespace
-        return this.activeActualIndex + this.rwdMedia.slidesPerViewActual;
-    };
-
-    /**
-   * Get the maximum Index
-   */
-    getMaxIndex = (): number => {
-        return this.info.formatElement.length - 1;
-    };
-
-    /**
-   * Get virtual index
-   */
-    checkActualIndexInRange = (slideIndex: number): boolean => {
-        return slideIndex <= this.info.actual.maxIndex && slideIndex >= this.info.actual.minIndex;
-    };
-
-
-    /**
-   * go to next page
-   */
-    toNext = (): void => {
-
-        const nextPage = this.getNextPage();
-        const formatElement = this.info?.formatElement ? this.info.formatElement : [];
-
-        if (formatElement[this.activeActualIndex].isClone) {
-            this.goToActualIndex(formatElement[this.activeActualIndex].matchIndex, false);
-            this.goToActualIndex(this.activeActualIndex + this.rwdMedia.slidesPerGroup);
-
-        }else if (this.rwdMedia.isEnableLoop && nextPage > this.info.pageTotal && this.info.residue > 0) {
-            // 若為Loop(最後一頁移動在不整除的時候, 移動位置需要復歸到第一個)
-            this.goToActualIndex(this.activeActualIndex + this.info.residue);
-
-        } else if (
-            this.rwdMedia.slidesPerViewActual < this.info.formatElement.length &&
-      this.getNextPageFirstIndex() <= this.getMaxIndex()
-        ) {
-            // 正常移動到下一頁
-            this.goToActualIndex(this.activeActualIndex + this.rwdMedia.slidesPerGroup);
-
-        }
-
-
-    };
-
-    /**
-   * go to previous
-   */
-    toPrev = (): void => {
-        const formatElement = this.info?.formatElement ? this.info.formatElement : [];
-
-        if (formatElement[this.activeActualIndex].isClone) {
-
-            this.goToActualIndex(formatElement[this.activeActualIndex].matchIndex, false);
-            this.goToPage(this.info.pageTotal - 1);
-
-        } else if (this.rwdMedia.isEnableLoop && this.activePage === 1 && this.info.residue > 0) {
-            // 檢查若為Loop(第一頁移動不整除的時候, 移動位置需要復歸到第一個)
-            this.goToActualIndex(this.activeActualIndex - this.info.residue);
-
-        } else if (this.rwdMedia.slidesPerViewActual < this.info.formatElement.length) {
-            // Normal move to prev
-            this.goToActualIndex(this.activeActualIndex - this.rwdMedia.slidesPerGroup);
-        }
-    };
-
-
-    /**
-   * go to page
-   * ex: slideView: 2, slideGroup: 2, total: 4
-   * page1 -> (1-1) * 2) + 1 + (firstIndex -1) = 1
-   */
-    goToPage = (page: number, isUseAnimation = true): void => {
-        this.goToActualIndex(((page-1) * this.rwdMedia.slidesPerGroup) + 1 + (this.info.actual.firstIndex - 1), isUseAnimation);
-    };
-
-    /**
-   * Sync Carousel state
-   */
-    _handleSyncCarousel = () => {
-        if(this.props.setCarousel){
-            this.props.setCarousel({
-                goToPage: this.goToPage,
-                toNext: this.toNext,
-                toPrev: this.toPrev,
-                info: this.info,
-                activePage: this.activePage,
-                activeActualIndex: this.activeActualIndex,
-            });
-        }
-    };
-
-
-    /**
-   * Get the target item distance width(px)
-   * @param slideIndex
-   */
-    _getMoveDistance = (slideIndex: number): number => {
-
-        if (this.slideItemRefs.current) {
-            const slideItemRef = this.slideItemRefs.current[slideIndex];
-            if (slideItemRef) {
-                // const movePx = -dom.clientWidth * slideIndex;
-                const movePx = -slideItemRef.offsetLeft;
-                if (this.rwdMedia.isCenteredSlides) {
-                    return movePx + (slideItemRef.clientWidth * ((this.rwdMedia.slidesPerViewActual - 1) / 2));
-                }
-                return movePx;
-            }
-        }
-
-        return 0;
-    };
-
-    /**
-   * Go to the actual location
-   */
-    goToActualIndex = (slideIndex: number, isUseAnimation = true) => {
-        const {moveTime} = this.props;
-
-        if(this.props.isDebug && logEnable.goToActualIndex) log.printInText(`[goToActualIndex] slideIndex: ${slideIndex}, isUseAnimation: ${isUseAnimation}`);
-
-
-        if (Math.ceil(slideIndex) !== slideIndex) {
-            throw Error(`slideIndex(${slideIndex}) can't has floating .xx`);
-        }
-
-        // 檢查:
-        // 1. 移動是否在範圍內
-        if (this.checkActualIndexInRange(slideIndex)) {
-            // 套用目前位置
-            this.activeActualIndex = slideIndex;
-
-            // 計算目前正在第幾頁頁數
-            this.activePage = 1;
-            if (typeof this.info.formatElement[this.activeActualIndex] !== 'undefined') {
-                this.activePage = this.info.formatElement[this.activeActualIndex].inPage;
-            }
-
-
-            // 移動EL位置
-            const position = this._getMoveDistance(this.activeActualIndex);
-            const containerRef = this.containerRef?.current;
-            if (containerRef) {
-                const className = containerRef.classList;
-                if(!className.contains(elClassName.containerInit)){
-                    className.add(elClassName.containerInit);
-                }
-
-                containerRef.style.transform = `translate(${position}px, 0px)`;
-                containerRef.style.transitionDuration = isUseAnimation
-                    ? `${moveTime}ms`
-                    : '0ms';
-
-
-                if(isUseAnimation){
-                    if(this.resetDurationTimer) clearTimeout(this.resetDurationTimer);
-                    this.resetDurationTimer = setTimeout(() => {
-                        containerRef.style.transitionDuration = '0ms';
-                    }, moveTime / 1.5);
-                }
-
-            }
-
-
-            // 提供是否為第一頁/最後一頁的判斷屬性
-            const rootRef = this.rootRef?.current;
-            if (rootRef) {
-                if (this.activePage === 1) {
-                    rootRef.setAttribute('data-position', this.activePage === this.info.pageTotal ? 'hidden' : 'first');
-
-                }else{
-                    rootRef.setAttribute('data-position', this.activePage === this.info.pageTotal ? 'last': '');
-                }
-            }
-
-            // 更改顯示在第幾個 (父元件使用可判定樣式設定)
-            const slideItemRefs = this.slideItemRefs?.current;
-            if(slideItemRefs){
-                slideItemRefs
-                    // .filter(row => isNotEmpty(row))
-                    .forEach((row, index) => {
-                        if (index === this.activeActualIndex) {
-                            row.setAttribute('data-active', 'true');
-                        } else if (row) {
-                            row.removeAttribute('data-active');
-                        }
-                    });
-            }
-
-
-
-            // 更改顯示在第幾頁的樣式 (父元件使用可判定樣式設定)
-            const pageRefs = this.pageRefs?.current;
-            if (pageRefs && this.info.isVisiblePagination && this.activePage > 0) {
-                pageRefs.forEach((row, index) => {
-                    if(row && row.setAttribute !== null) {
-                        if (this.activePage === index + 1) {
-                            row.setAttribute('data-active', 'true');
-                        } else {
-                            row.removeAttribute('data-active');
-                        }
-                    }
-
-                });
-            }
-
-            // 結束移動後再繼續自動模式
-            this._checkAndAutoPlay();
-
-            this._handleSyncCarousel();
+            this._controller.slideToPage(1, false);
         }
     };
 
@@ -822,160 +285,111 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
    * Render left and right navigation blocks
    */
     _renderNavButton = () => {
-
         const {renderNavButton} = this.props;
 
         if (typeof renderNavButton !== 'undefined') {
-            return renderNavButton(() => this.toPrev(), () => this.toNext());
+            return <>
+                {renderNavButton(this._controller.slideToPrevPage, this._controller.slideToNextPage)}
+            </>;
         }
 
-        return (<div className={elClassName.navGroup}>
-            <button type="button" className={elClassName.navPrevButton} onClick={() => this.toPrev()}>
-                <div className={elClassName.navIcon}>
-                    <ArrowIcon/>
-                </div>
-            </button>
-            <button type="button" className={elClassName.navNextButton} onClick={() => this.toNext()}>
-                <div className={elClassName.navIcon}>
-                    <ArrowIcon/>
-                </div>
-            </button>
+        return (<div
+            ref={this._elementor._navGroupRef}
+            className={elClassName.navGroup}
+        >
+            <NavPrevButton onClick={this._controller.slideToPrevPage}/>
+            <NavNextButton onClick={this._controller.slideToNextPage}/>
         </div>);
     };
 
-    /**
-   * render button block
-   */
-    _renderPagination = () => {
-        const {data} = this.props;
-        const pageElement = [];
 
-        for (let i = 0; i < this.info.pageTotal; i++) {
-            pageElement.push(
-                <div
-                    ref={(el: any) => {
-                        // @ts-ignore
-                        this.pageRefs.current[i] = el;
-                        return false;
-                    }}
-                    key={`page_${i}`}
-                    role='button'
-                    onClick={() => this.goToPage(i + 1)}
-                    className={elClassName.paginationButton}
-                    data-active={this.activePage === i + 1 ? true : undefined}
-                    data-page={i + 1}
-                >
-                    <div className={elClassName.paginationContent}>
-                        {data[i]?.paginationContent}
-                    </div>
-                </div>
-            );
-        }
-        return pageElement;
+    /**
+     * render slide item
+     */
+    _renderSlideItems = () => {
+        const {isDebug} = this.props;
+        const {actual, formatElement} = this._stater;
+        return formatElement.map((row, i) => {
+            const isActive = row.actualIndex === actual.activeIndex;
+
+            return <SlideItem
+                key={`bear-carousel_${row.key}`}
+                ref={(el) => this._elementor.setSlideItemRefs(el, i)}
+                element={row.element}
+                actualIndex={row.actualIndex}
+                matchIndex={row.matchIndex}
+                inPage={row.inPage}
+                sourceIndex={row.sourceIndex}
+                isActive={isActive}
+                isClone={row.isClone}
+                isDebug={isDebug}
+                index={i}
+            />;
+        });
     };
 
 
-    render() {
+    /**
+     * Page number navigation buttons
+     */
+    _renderPagination = () => {
+        const {page} = this._stater;
+        const pageElement = [];
+
+        for (let i = 0; i < page.pageTotal; i++) {
+            pageElement.push(
+                <Page
+                    key={`page_${i}`}
+                    ref={(el) => this._elementor.setPageRefs(el, i)}
+                    onSlideToPage={(page) => this._controller.slideToPage(page)}
+                    page={i + 1}
+                    isActive={page.activePage === i + 1}
+                />
+            );
+        }
+
+        return <div
+            ref={this._elementor._pageGroupRef}
+            className={elClassName.paginationGroup}
+        >
+            {pageElement}
+        </div>;
+    };
+
+    render(){
         const {style, className, isDebug} = this.props;
-        const {windowSize} = this.state;
-
-
-        // Generate the desired style (note the trailing ;)
-        const rootStyle: string = [
-            `padding-top: ${this.rwdMedia.aspectRatio && this.rwdMedia.slidesPerView !== 'auto' ? calcSingleAspectRatio(this.rwdMedia.aspectRatio, this.rwdMedia.slidesPerView): '0'};`,
-            `height: ${this.rwdMedia.staticHeight ? `${this.rwdMedia.staticHeight}`: 'inherit'};`,
-        ].join('');
-        const slideItemStyle: string = [
-            `flex: ${this.rwdMedia.slidesPerView === 'auto' ? '0 0 auto;-webkit-flex: 0 0 auto;' : `1 0 ${100 / this.rwdMedia.slidesPerViewActual}%`};`,
-            `padding-left: ${this.rwdMedia.spaceBetween / 2}px;`,
-            `padding-right: ${this.rwdMedia.spaceBetween / 2}px;`,
-        ].join('');
-
-
         return (
             <BearCarouselProvider
-                slidesPerView={this.rwdMedia.slidesPerView}
-                staticHeight={this.rwdMedia.staticHeight}
+                slidesPerView={this._configurator.setting.slidesPerView}
+                staticHeight={this._configurator.setting.staticHeight}
             >
                 <div
-                    id={this._carouselId}
+                    id={this._configurator.carouselId}
+                    data-testid="bear-carousel"
                     style={style}
                     className={[className, elClassName.root].join(' ').trim()}
-                    data-gpu-render={!this._isMobile ? 'true': undefined}
-                    data-per-view-auto={this.rwdMedia.slidesPerView === 'auto'}
-                    data-mouse-move={this.rwdMedia.isEnableMouseMove}
-                    data-actual={`${this.info.actual.minIndex},${this.info.actual.firstIndex}-${this.info.actual.lastIndex},${this.info.actual.maxIndex}`}
-                    data-debug={isDebug ? 'true':undefined}
-                    ref={this.rootRef}
+                    data-gpu-render={booleanToDataAttr(this._device === EDevice.desktop)}
+                    data-per-view-auto={booleanToDataAttr(this._configurator.setting.slidesPerView === 'auto')}
+                    data-mouse-move={this._configurator.setting.isEnableMouseMove}
+                    data-actual={`${this._stater.info.actual.minIndex},${this._stater.info.actual.firstIndex}-${this._stater.info.actual.lastIndex},${this._stater.info.actual.maxIndex}`}
+                    data-debug={booleanToDataAttr(isDebug)}
+                    ref={this._elementor._rootRef}
                 >
+                    <style scoped dangerouslySetInnerHTML={{__html: this._configurator.style}}/>
 
-                    {/* Item CSS style */}
-                    <style scoped>{`
-#${this._carouselId}{${rootStyle}}
-#${this._carouselId} .${elClassName.slideItem}{${slideItemStyle}}
-              `}</style>
-
-                    {/* Left and right navigation buttons */}
-                    <>
-                        {this.info.isVisibleNavButton && this._renderNavButton()}
-                    </>
+                    {this._stater.info.isVisibleNavButton && this._renderNavButton()}
 
                     <div className={elClassName.content}>
-                        <div
-                            ref={this.containerRef}
-                            className={elClassName.container}
-                        >
-                            {this.info.formatElement.map((row, i) => (
-                                <div
-                                    key={`carousel_${i}`}
-                                    className={elClassName.slideItem}
-                                    ref={(el: any) => {
-                                        // @ts-ignore
-                                        this.slideItemRefs.current[i] = el;
-                                        return false;
-                                    }}
-                                    data-active={
-                                        row.actualIndex === this.activeActualIndex ? true : undefined
-                                    }
-                                    data-actual={row.actualIndex}
-                                    data-match={row.isClone ? row.matchIndex : undefined}
-                                    data-page={row.inPage}
-                                    data-source={row.sourceIndex}
-                                    data-is-clone={row.isClone ? true : undefined}
-                                >
-                                    {row.element}
-
-                                    <div className={elClassName.testNumber}>
-                                        {isDebug && row.sourceIndex}
-                                        {isDebug && row.isClone && (
-                                            <div className={elClassName.cloneIconGroup}>
-                                                <div className={elClassName.cloneIcon}>
-                                                    <CloneIcon/>
-                                                </div>
-                                                {i}
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
-                            ))}
+                        <div ref={this._elementor._containerRef} className={elClassName.container} data-testid="bear-carousel-container">
+                            {this._renderSlideItems()}
                         </div>
                     </div>
 
-                    {/* Page number navigation buttons */}
-                    {this.info.isVisiblePagination && (
-                        <div className={elClassName.paginationGroup}>
-                            {this.info.pageTotal > 0 && this._renderPagination()}
-                        </div>
-                    )}
+                    {this._stater.info.isVisiblePagination && this._renderPagination()}
 
-                    {/* Display current detection size (debug) */}
-                    {isDebug && (<div className={elClassName.testWindowSize}>
-                        {windowSize}
-                    </div>)}
-
+                    {isDebug && <WindowSize size={this._windowSizer.size}/>}
                 </div>
             </BearCarouselProvider>
-
 
         );
     }

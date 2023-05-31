@@ -9,13 +9,21 @@ import eslint from 'vite-plugin-eslint';
 export default defineConfig({
     plugins: [
         eslint(),
-        react(),
+        react({
+            plugins: process.env.NODE_ENV !== 'production' ? [[
+                "@swc/plugin-styled-components", {
+                    "displayName": true,
+                    "ssr": false
+                }
+            ]]: [],
+        }),
         dts({
             insertTypesEntry: true,
         }),
         visualizer() as Plugin,
     ],
     build: {
+        minify: false,
         sourcemap: process.env.NODE_ENV !== 'production',
         lib: {
             entry: path.resolve(__dirname, 'src/index.ts'),

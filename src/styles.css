@@ -36,10 +36,20 @@
 
 .bear-react-carousel__pagination-group{
     position: absolute;
+    left: 50%;
     bottom: 20px;
+    transform: translateX(-50%);
     text-align: center;
-    width: 100%;
+    width: auto;
     z-index: 10;
+}
+
+.bear-react-carousel__root[data-onlyOne="true"] .bear-react-carousel__pagination-group,
+.bear-react-carousel__root[data-onlyOne="true"] .bear-react-carousel__nav-group {
+    display: none;
+}
+.bear-react-carousel__root[data-touch="false"] .bear-react-carousel__pagination-group{
+    pointer-events: none;
 }
 
 .bear-react-carousel__pagination-button{
@@ -94,6 +104,7 @@
     border-radius: 99em;
     overflow: hidden;
     opacity: .6;
+    transition: .4s opacity;
 
     position: absolute;
     z-index: 11;
@@ -104,7 +115,15 @@
     flex-wrap: wrap;
     align-content: center;
     justify-content: center;
+}
 
+.bear-react-carousel__root[data-touch="false"] .bear-react-carousel__nav-group{
+    pointer-events: none;
+}
+.bear-react-carousel__nav-group[data-first="true"] > .bear-react-carousel__nav-prev-button,
+.bear-react-carousel__nav-group[data-last="true"] > .bear-react-carousel__nav-next-button{
+    opacity: 0;
+    pointer-events: none;
 }
 
 .bear-react-carousel__nav-group > .bear-react-carousel__nav-prev-button{
@@ -127,6 +146,7 @@
 
 
 .bear-react-carousel__slide-item{
+    box-sizing: border-box;
     transition-property: transform;
     position: relative;
     overflow: hidden;
@@ -192,8 +212,23 @@ div.bear-react-carousel__slide-item__div{
 .bear-react-carousel__root[data-mouse-move="true"] .bear-react-carousel__container{
     cursor: pointer;
 }
+.bear-react-carousel__root[data-debug="true"] .bear-react-carousel__slide-item[data-active="true"]{
+    border: 1px solid #f64f4f;
+}
 
-.bear-react-carousel__root[data-debug="true"] .bear-react-carousel__test-number{
+.bear-react-carousel__test-number{
     background-color: rgba(0, 0, 0, .5);
 }
 
+
+.bear-react-carousel__root[data-debug="true"] .bear-react-carousel__content:before {
+    content: '';
+    position: absolute;
+    left: calc(50%);
+    /*background-color: #a4a4a4;*/
+    height: 100%;
+    width: 0;
+    border-left: 1px dashed #a4a4a4;
+    z-index: 50;
+    pointer-events: none;
+}

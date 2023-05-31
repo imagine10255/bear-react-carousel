@@ -1,63 +1,111 @@
 import {useState} from 'react';
+import styled, {css} from 'styled-components';
+
 import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
-import BearCarousel, {BearSlideItem, TBearSlideItemDataList} from 'bear-react-carousel';
-import {baseImage as images} from './config/images';
-
 import './App.css';
 import './bootstrap-base.min.css';
 import 'bear-react-carousel/dist/index.css';
 
 
+// import Base from './sample/Base';
+import SyncControl from './sample/SyncControl';
+import Breakpoints from './sample/Breakpoints';
+import Base from './sample/Base';
+import SlidePerViews from './sample/SlidePerViews';
+import AutoPlay from './sample/AutoPlay';
+import UpdateSlideItem from './sample/UpdateSlideItem';
+import Loop from './sample/Loop';
+import Center from './sample/Center';
+import SlidePerGroup from './sample/SlidePerGroup';
 
-// 輪播項目
-const bearSlideItemData: TBearSlideItemDataList = images.map(row => {
-    return {
-        key: row.id,
-        children: <BearSlideItem as="card">
-            <div className="h-100 d-flex al"
-                style={{fontSize: '40px', backgroundColor: row.color}}
-            >
-                {/*<a href="https://carousel.bearests.com" rel="noreferrer" target="_blank">{row.id}</a>*/}
-            </div>
-        </BearSlideItem>
-    };
-});
 
+
+
+enum EExampleCode {
+    base = 'base',
+    autoPlay = 'autoPlay',
+    loop = 'loop',
+    center = 'center',
+    breakpoints = 'breakpoints',
+    slidePerViews = 'slidePerViews',
+    slidePerGroup = 'slidePerGroup',
+    syncController = 'syncController',
+    updateSlideItem = 'updateSlideItem',
+}
+
+
+const examples: Record<EExampleCode, () => JSX.Element> = {
+    [EExampleCode.base]: Base,
+    [EExampleCode.autoPlay]: AutoPlay,
+    [EExampleCode.loop]: Loop,
+    [EExampleCode.center]: Center,
+    [EExampleCode.breakpoints]: Breakpoints,
+    [EExampleCode.slidePerViews]: SlidePerViews,
+    [EExampleCode.slidePerGroup]: SlidePerGroup,
+    [EExampleCode.syncController]: SyncControl,
+    [EExampleCode.updateSlideItem]: UpdateSlideItem,
+};
 
 function App() {
+    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.updateSlideItem);
+    const Comp = examples[exampleKey];
+
+
 
     return (
-        <div className="App">
-            <div>
-                <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
-                    <img src={viteLogo} className="logo" alt="Vite logo" />
-                </a>
-                <a href="https://reactjs.org" target="_blank" rel="noreferrer">
-                    <img src={reactLogo} className="logo react" alt="React logo" />
-                </a>
-            </div>
-            <h1>Vite + React</h1>
-            <div className="card">
-                <BearCarousel
-                    data={bearSlideItemData}
-                    slidesPerView={1}
-                    staticHeight="300px"
-                    isEnableNavButton
-                    isEnablePagination
-                    moveTime={400}
-                    isDebug
-                />
+        <AppRoot className="App">
 
-                <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-                </p>
-            </div>
-            <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-            </p>
-        </div>
+
+            <Menu>
+                {Object.keys(examples).map(code => {
+                    return <Button type="button"
+                        key={code}
+                        isActive={code === exampleKey}
+                        onClick={() => setExampleItem(code as EExampleCode)}
+                    >{code}</Button>;
+                })}
+            </Menu>
+
+
+            <Example>
+                <Comp/>
+            </Example>
+        </AppRoot>
     );
 }
 
 export default App;
+
+
+
+const Button = styled.button<{
+    isActive: boolean
+}>`
+  ${props => props.isActive && css`
+    background-color: #00a3e0;
+  `}
+
+`;
+
+
+const Menu = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 150px;
+`;
+
+
+const Example = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+`;
+
+
+
+const AppRoot = styled.div`
+  display: flex;
+  flex-direction: row;
+
+`;

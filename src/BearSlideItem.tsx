@@ -44,7 +44,7 @@ const BearSlideItem = ({
 
 
 
-    if(as === 'image' || slidesPerView === 'auto'){
+    if(as === 'image'){
         return <img
             style={style}
             className={[className, elClassName.slideItemImg].join(' ').trim()}

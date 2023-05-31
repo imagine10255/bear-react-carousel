@@ -1,14 +1,20 @@
 import {ReactNode} from 'react';
 import * as CSS from 'csstype';
+import BearCarousel from './BearCarousel';
+import Controller from './manager/Controller';
 
 export type TSlidesPerView = number|'auto'
 export type TSlidesPerViewActual = number
 
+export enum EDevice {
+  mobile,
+  desktop,
+}
 
 export interface IBearCarouselObj {
-  goToPage: (page: number) => void;
-  toNext: () => void;
-  toPrev: () => void;
+  // goToPage: (page: number) => void;
+  // toNext: () => void;
+  // toPrev: () => void;
   activeActualIndex: number;
   activePage: number;
   info: IInfo,
@@ -26,8 +32,14 @@ export enum EDirection {
 
 export type IRenderNavButton = (toPrev: TToPrev, toNext: TToNext) => void
 
+export interface IRefObject<T> {
+  current: T;
+}
+
+
 export interface IBearCarouselProps extends IBreakpointSetting{
-  setCarousel?: (carouselObj: IBearCarouselObj) => void,
+  onChange?: (carouselState: ICarouselState) => void,
+  // control?: (carouselObj: IBearCarouselObj) => void,
   renderNavButton?: IRenderNavButton
   style?: CSS.Properties
   className?: string
@@ -36,7 +48,13 @@ export interface IBearCarouselProps extends IBreakpointSetting{
   autoPlayTime: number
   breakpoints: IPropsBreakpoints
   defaultActivePage?: number,
+  onElementMove?: (activeActualIndex: number, percentage: number) => void,
+  onElementDone?: (activeActualIndex: number) => void,
   isDebug: boolean
+  isSlideItemMemo?: boolean,
+  syncCarouselRef?: IRefObject<BearCarousel>,
+  controllerRef?: IRefObject<Controller>,
+  onMount?: () => void;
 }
 
 export type TBearCarouselSetting = Partial<IBearCarouselProps>;
@@ -47,13 +65,12 @@ export interface ITouchStart {
   pageY: number,
   x: number,
   y: number,
-  movePositionX: number,
-  movePositionY: number,
   moveDirection?: EDirection,
 }
 
 
 export interface InitData {
+  key: string;
   actualIndex: number;
   matchIndex: number;
   sourceIndex?: number;
@@ -62,24 +79,49 @@ export interface InitData {
   element: React.ReactNode;
 }
 
+export interface ICarouselState {
+  element: {
+    total: number,
+    firstIndex: number,
+    lastIndex: number,
+    activeIndex: number,
+  },
+  // 0為實際一開始的位置(往前為負數), 結束值為最後結束位置
+  actual: {
+    activeIndex: number,
+    minIndex: number,
+    maxIndex: number,
+    firstIndex: number,
+    lastIndex: number,
+  },
+  page: {
+    activePage: number
+    pageTotal: number,
+  },
+}
+
 export interface IInfo {
-  formatElement: InitData[],
+
   sourceTotal: number, // 來源總數
   // 從0開始
   element: {
     total: number,
     firstIndex: number,
     lastIndex: number,
+    activeIndex: number,
   },
   // 0為實際一開始的位置(往前為負數), 結束值為最後結束位置
   actual: {
+    activeIndex: number,
     minIndex: number,
     maxIndex: number,
     firstIndex: number,
     lastIndex: number,
   },
-  // 總頁數
-  pageTotal: number,
+  page: {
+    activePage: number
+    pageTotal: number,
+  },
   residue: number,
   isVisiblePagination: boolean,
   isVisibleNavButton: boolean,
@@ -121,3 +163,14 @@ export interface IPropsBreakpoints {
 
 export type TToPrev = () => void
 export type TToNext = () => void
+
+
+
+
+export interface ISetting extends IBreakpointSetting {
+  slidesPerViewActual: TSlidesPerViewActual
+  moveTime: number,
+  defaultActivePage: number,
+  autoPlayTime: number,
+  isDebug: boolean,
+}
