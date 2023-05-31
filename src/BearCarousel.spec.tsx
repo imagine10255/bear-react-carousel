@@ -123,10 +123,9 @@ describe('Index testing', () => {
     });
 
 
-    test('Should drag', async () => {
+    test('Should desktop drag', async () => {
         // ASSERT
         const slideItems = screen.getAllByTestId('bear-carousel-slideItem');
-        console.log('slideItems', slideItems.length);
         slideItems.forEach((el, index) => {
             Object.defineProperty(el, 'clientWidth', {configurable: true, value: 400});
             Object.defineProperty(el, 'offsetLeft', {configurable: true, value: 400 * index});
@@ -142,6 +141,30 @@ describe('Index testing', () => {
         expect(container.style.transform).toEqual('translate(-210px, 0px)');
 
         fireEvent.mouseUp(container);
+        expect(container.style.transform).toEqual('translate(-400px, 0px)');
+
+        const activeSlideItem = slideItems.find(el => el.dataset.active === 'true');
+        expect(activeSlideItem).toHaveAttribute('data-page','2');
+    });
+
+    test('Should mobile drag', async () => {
+        // ASSERT
+        const slideItems = screen.getAllByTestId('bear-carousel-slideItem');
+        slideItems.forEach((el, index) => {
+            Object.defineProperty(el, 'clientWidth', {configurable: true, value: 400});
+            Object.defineProperty(el, 'offsetLeft', {configurable: true, value: 400 * index});
+        });
+
+        let container = screen.getByTestId('bear-carousel-container');
+
+        Object.defineProperty(container, 'clientWidth', {configurable: true, value: 400});
+        Object.defineProperty(container, 'offsetLeft', {configurable: true, value: 0});
+
+        fireEvent.touchStart(container, {targetTouches: [{pageX: 500}]});
+        fireEvent.touchMove(container, {targetTouches: [{pageX: 290}]});
+        expect(container.style.transform).toEqual('translate(-210px, 0px)');
+
+        fireEvent.touchEnd(container);
         expect(container.style.transform).toEqual('translate(-400px, 0px)');
 
         const activeSlideItem = slideItems.find(el => el.dataset.active === 'true');

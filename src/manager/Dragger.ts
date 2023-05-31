@@ -20,7 +20,6 @@ class Dragger {
     _controller: Controller;
     _elementor: Elementor;
     _locator: Locator;
-    _device: EDevice;
     _stater: Stater;
     _syncCarousel: SyncCarousel;
 
@@ -33,7 +32,7 @@ class Dragger {
         stater: Stater,
         locator: Locator,
         syncCarousel: SyncCarousel,
-    }, device: EDevice) {
+    }) {
         this._configurator = manager.configurator;
         this._controller = manager.controller;
         this._elementor = manager.elementor;
@@ -42,7 +41,6 @@ class Dragger {
         this._locator = manager.locator;
         this._syncCarousel = manager.syncCarousel;
 
-        this._device = device;
     }
 
     on(eventName: DragEvent, callback: TCallback) {
@@ -71,28 +69,16 @@ class Dragger {
     }
 
     mount = () => {
-        // switch (this._device){
-        // case EDevice.mobile:
-            this._elementor.containerEl.addEventListener('touchstart', this._onMobileTouchStart, {passive: false});
-            // break;
-        // case EDevice.desktop:
-            this._elementor.containerEl.addEventListener('mousedown', this._onWebMouseStart, {passive: false});
-            // break;
-        // }
+        this._elementor.containerEl.addEventListener('touchstart', this._onMobileTouchStart, {passive: false});
+        this._elementor.containerEl.addEventListener('mousedown', this._onWebMouseStart, {passive: false});
     };
 
     /**
      * 完全移除
      */
     unmount = () => {
-        switch (this._device){
-        case EDevice.mobile:
-            this._elementor.containerEl.removeEventListener('touchstart', this._onMobileTouchStart, {passive: false} as any);
-            break;
-        case EDevice.desktop:
-            this._elementor.containerEl.removeEventListener('mousedown', this._onWebMouseStart, {passive: false} as any);
-            break;
-        }
+        this._elementor.containerEl.removeEventListener('touchstart', this._onMobileTouchStart, {passive: false} as any);
+        this._elementor.containerEl.removeEventListener('mousedown', this._onWebMouseStart, {passive: false} as any);
     };
 
 
