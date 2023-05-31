@@ -20,7 +20,7 @@ describe('Center mode testing', () => {
 
         const mockData = new Array(6).fill('test');
 
-        // Object.defineProperty(HTMLElement.prototype, 'clientWidth', {configurable: true, value: 400 / 3});
+        // Object.defineProperty(HTMLElement.prototype, 'offsetWidth', {configurable: true, value: 400 / 3});
 
 
         render(<BearCarousel
@@ -60,7 +60,7 @@ describe('Center mode testing', () => {
 
 
     test('Navigates to third page using next button', async () => {
-        console.log('slideItems', slideItems[0].clientWidth);
+        console.log('slideItems', slideItems[0].offsetWidth);
         // ASSERT
         expect(container.style.transform).toEqual('translate(133px, 0px)');
     });
