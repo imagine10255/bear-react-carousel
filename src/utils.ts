@@ -1,4 +1,6 @@
-import {IBreakpointSetting, TSlidesPerView, IBreakpointSettingActual, IInfo, IPropsBreakpoints, IBearCarouselProps, InitData, EDirection, IAspectRatio} from './types';
+import {IBreakpointSetting, TSlidesPerView, IBreakpointSettingActual, IInfo, IPropsBreakpoints, IBearCarouselProps, InitData, EDirection, IAspectRatio, TBearSlideItemDataList} from './types';
+import deepCompare from './deepCompare';
+import {ISetting} from './manager/Configurator';
 
 /**
  * 判斷是否為手機裝置
@@ -106,6 +108,7 @@ export function initDataList(sourceList: Array<any> = [], slidesPerView: TSlides
     let pageFirstIndex = 0;
     for (const [sourceIndex, row] of sourceList.entries()) {
         formatList[index] = {
+            key: String(row.key),
             actualIndex: index,
             matchIndex: index,
             sourceIndex: sourceIndex,
@@ -122,6 +125,7 @@ export function initDataList(sourceList: Array<any> = [], slidesPerView: TSlides
 
         for (const [cloneIndex, row] of sourceList.slice(0, formatSlidesPerView).entries()) {
             formatList[index] = {
+                key: `${row.key}_clone`,
                 actualIndex: index,
                 matchIndex: matchFirstIndex,
                 sourceIndex: cloneIndex,
@@ -397,12 +401,14 @@ export function getNextIndex(
         ];
 
     }else if (setting.isLoopMode && info.isOverflowPage && info.residue > 0) {
+
         // 若為Loop(最後一頁移動在不整除的時候, 移動位置需要復歸到第一個)
         return [
-            {index: activeActual.actualIndex, isUseAnimation: true},
+            {index: activeActual.actualIndex + info.residue, isUseAnimation: true},
         ];
 
     }else if (setting.slidesPerViewActual < info.slideTotal && info.isOverflowIndex === false) {
+
         // 若在範圍內，正常移動到下一頁
         return [
             {index: activeActual.actualIndex + setting.slidesPerGroup, isUseAnimation: true}
@@ -467,4 +473,46 @@ export function booleanToDataAttr(isTrue: boolean, returnValue: number|string|bo
     }
     return undefined;
 }
+
+export function isPropsDiff(props: IBearCarouselProps, nextProps: IBearCarouselProps, exclude: string[]) {
+    const filterProps = Object.keys(props)
+        .filter(key => typeof props[key] !== 'function' && exclude.includes(key))
+        .map(key => props[key]);
+    const nextFilterProps = Object.keys(nextProps)
+        .filter(key => typeof props[key] !== 'function' && exclude.includes(key))
+        .map(key => props[key]);
+
+    return deepCompare(filterProps, nextFilterProps) === false;
+}
+
+export function isDataKeyDff(data: TBearSlideItemDataList, nextData: TBearSlideItemDataList) {
+    const oldKey = data?.map((row) => row.key).join('_');
+    const nextKey = nextData?.map((row) => row.key).join('_');
+
+    return oldKey !== nextKey;
+};
+
+
+
+
+export function getSetting(props: IBearCarouselProps): ISetting {
+    return {
+        slidesPerView: props.slidesPerView,
+        slidesPerGroup: props.slidesPerGroup,
+        aspectRatio: props.aspectRatio,
+        staticHeight: props.staticHeight,
+        spaceBetween: props.spaceBetween,
+        isCenteredSlides: props.isCenteredSlides,
+        isEnableNavButton: props.isEnableNavButton,
+        isEnablePagination: props.isEnablePagination,
+        isEnableMouseMove: props.isEnableMouseMove,
+        isEnableAutoPlay: props.isEnableAutoPlay,
+        isEnableLoop: props.isEnableLoop,
+        moveTime: props.moveTime,
+        defaultActivePage: props.defaultActivePage,
+        autoPlayTime: props.autoPlayTime,
+        isDebug: props.isDebug
+    };
+};
+
 

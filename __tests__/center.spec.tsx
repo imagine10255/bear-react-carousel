@@ -1,7 +1,6 @@
 import * as React from 'react';
 import '@testing-library/jest-dom';
-import userEvent from '@testing-library/user-event';
-import {act, cleanup, fireEvent, render, screen} from '@testing-library/react';
+import {cleanup, render, screen} from '@testing-library/react';
 
 import BearCarousel from '../src/BearCarousel';
 import BearSlideItem from '../src/BearSlideItem';

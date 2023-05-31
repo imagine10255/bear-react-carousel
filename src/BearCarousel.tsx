@@ -1,8 +1,7 @@
 import * as React from 'react';
-import {booleanToDataAttr, checkIsMobile, getPaddingBySize, getSizeByRange} from './utils';
+import {booleanToDataAttr, checkIsMobile, getPaddingBySize, getSetting, getSizeByRange, isDataKeyDff, isPropsDiff} from './utils';
 import log from './log';
-import deepCompare from './deepCompare';
-import {EDevice, IBearCarouselProps} from './types';
+import {EDevice, ESlideItemCacheMode, IBearCarouselProps} from './types';
 import elClassName from './el-class-name';
 import {BearCarouselProvider} from './BearCarouselProvider';
 import './styles.css';
@@ -51,7 +50,6 @@ interface IState {
 
 
 
-
 class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     static defaultProps = {
         data: undefined,
@@ -69,6 +67,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         spaceBetween: 0,
         autoPlayTime: 5000,
         defaultActivePage: 1,
+        isSlideItemMemo: false,
     };
     _device = EDevice.desktop;
 
@@ -212,64 +211,31 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     shouldComponentUpdate(nextProps: IBearCarouselProps, nextState: IState) {
 
         const {windowSize: nextWindowSize} = nextState;
-        const {windowSize} = this.state;
-        const {data, onChange, renderNavButton, onMount, onElementDone, syncCarouselRef, onElementMove, ...otherParams} = this.props;
-        const {data: nextData, onChange: nextSetCarousel, renderNavButton: nextRenderNavButton, syncCarouselRef: nextSyncCarouselRef, onMount: nextOnMount, onElementDone: nextOnElementDone, onElementMove: nextOnElementMove, ...nextOtherProps} = nextProps;
 
-        const oldKey = data?.map((row) => row.key).join('_');
-        const nextKey = nextData?.map((row) => row.key).join('_');
-        if (oldKey !== nextKey ||
-      !deepCompare(otherParams, nextOtherProps) ||
-      nextWindowSize !== windowSize
-        ) {
-            if(this.props.isDebug && logEnable.shouldComponentUpdate) log.printInText('[shouldComponentUpdate] true');
-
-            const {
-                data,
-                slidesPerGroup,
-                aspectRatio,
-                staticHeight,
-                spaceBetween,
-                isCenteredSlides,
-                isEnableNavButton,
-                isEnablePagination,
-                isEnableMouseMove,
-                isEnableAutoPlay,
-                isEnableLoop,
-
-                breakpoints,
-
-                moveTime,
-                defaultActivePage,
-                autoPlayTime,
-                isDebug
-            } = nextProps;
-
-            const slidesPerView = typeof nextProps.slidesPerView === 'number' && nextProps.slidesPerView <= 0 ? 1: nextProps.slidesPerView;
-            const setting = {
-                slidesPerView, slidesPerGroup, aspectRatio, staticHeight, spaceBetween, isCenteredSlides, isEnableNavButton, isEnablePagination, isEnableMouseMove, isEnableAutoPlay, isEnableLoop,
-                moveTime,
-                defaultActivePage,
-                autoPlayTime,
-                isDebug
-            };
-
-            this._configurator.init(breakpoints, setting);
-
-
-            // reset page position
-            if(data.length !== nextData.length){
-                this._stater.init(data);
-                setTimeout(() => {
-                    this._controller.slideToPage(1, false);
-                }, 0);
-            }else{
-                this._stater.updateData(data);
-            }
-
+        if(isPropsDiff(this.props, nextProps, ['data']) ||
+            this.state.windowSize !== nextWindowSize ||
+            this.props.data.length !== nextProps.data.length
+        ){
+            this._configurator.init(nextProps.breakpoints, getSetting(nextProps));
+            this._stater.init(nextProps.data);
+            setTimeout(() => {
+                this._controller.slideToPage(1, false);
+            }, 0);
 
             return true;
         }
+
+        if(nextProps.isSlideItemMemo && this.props.data !== nextProps.data){
+            this._stater.updateData(nextProps.data);
+            return true;
+        }
+
+        if(isDataKeyDff(this.props.data, nextProps.data)){
+            this._stater.updateData(nextProps.data);
+            return true;
+        }
+        console.log('case non');
+
 
         return false;
     }
@@ -347,7 +313,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             const isActive = row.actualIndex === actual.activeIndex;
 
             return <SlideItem
-                key={`carousel_${i}`}
+                key={`bear-carousel_${row.key}`}
                 ref={(el) => this._elementor.setSlideItemRefs(el, i)}
                 element={row.element}
                 actualIndex={row.actualIndex}

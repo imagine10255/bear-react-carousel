@@ -36,6 +36,7 @@ export interface IRefObject<T> {
   current: T;
 }
 
+
 export interface IBearCarouselProps extends IBreakpointSetting{
   onChange?: (carouselState: ICarouselState) => void,
   // control?: (carouselObj: IBearCarouselObj) => void,
@@ -50,6 +51,7 @@ export interface IBearCarouselProps extends IBreakpointSetting{
   onElementMove?: (activeActualIndex: number, percentage: number) => void,
   onElementDone?: (activeActualIndex: number) => void,
   isDebug: boolean
+  isSlideItemMemo?: boolean,
   syncCarouselRef?: IRefObject<BearCarousel>,
   controllerRef?: IRefObject<Controller>,
   onMount?: () => void;
@@ -68,6 +70,7 @@ export interface ITouchStart {
 
 
 export interface InitData {
+  key: string;
   actualIndex: number;
   matchIndex: number;
   sourceIndex?: number;

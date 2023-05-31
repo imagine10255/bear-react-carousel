@@ -136,7 +136,7 @@ class Stater {
     };
 
     updateData = (slideData: TBearSlideItemDataList = []) => {
-        const {slidesPerView, slidesPerViewActual, slidesPerGroup, isCenteredSlides, isEnablePagination, isEnableNavButton, isEnableLoop} = this._configurator.setting;
+        const {slidesPerViewActual, slidesPerGroup, isEnableLoop} = this._configurator.setting;
         this._formatElement = initDataList(
             slideData,
             slidesPerViewActual,

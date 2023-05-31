@@ -17,6 +17,7 @@ import AutoPlay from './sample/AutoPlay';
 import UpdateSlideItem from './sample/UpdateSlideItem';
 import Loop from './sample/Loop';
 import Center from './sample/Center';
+import SlidePerGroup from './sample/SlidePerGroup';
 
 
 
@@ -28,6 +29,7 @@ enum EExampleCode {
     center = 'center',
     breakpoints = 'breakpoints',
     slidePerViews = 'slidePerViews',
+    slidePerGroup = 'slidePerGroup',
     syncController = 'syncController',
     updateSlideItem = 'updateSlideItem',
 }
@@ -40,14 +42,15 @@ const examples: Record<EExampleCode, () => JSX.Element> = {
     [EExampleCode.center]: Center,
     [EExampleCode.breakpoints]: Breakpoints,
     [EExampleCode.slidePerViews]: SlidePerViews,
+    [EExampleCode.slidePerGroup]: SlidePerGroup,
     [EExampleCode.syncController]: SyncControl,
     [EExampleCode.updateSlideItem]: UpdateSlideItem,
 };
 
 function App() {
-    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.center);
+    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.updateSlideItem);
     const Comp = examples[exampleKey];
-    
+
 
 
     return (
@@ -80,21 +83,21 @@ const Button = styled.button<{
     isActive: boolean
 }>`
   ${props => props.isActive && css`
-      background-color: #00a3e0; 
+    background-color: #00a3e0;
   `}
-  
+
 `;
 
 
 const Menu = styled.div`
-    display: flex;
+  display: flex;
   flex-direction: column;
   width: 150px;
 `;
 
 
 const Example = styled.div`
-    display: flex;
+  display: flex;
   flex-direction: column;
   flex: 1;
 `;
@@ -102,7 +105,7 @@ const Example = styled.div`
 
 
 const AppRoot = styled.div`
-    display: flex;
+  display: flex;
   flex-direction: row;
-  
+
 `;
