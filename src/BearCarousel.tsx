@@ -1,7 +1,7 @@
 import * as React from 'react';
-import {booleanToDataAttr, checkIsMobile, getPaddingBySize, getSetting, getSizeByRange, isDataKeyDff, isPropsDiff} from './utils';
+import {booleanToDataAttr, checkIsMobile, getSetting, isDataKeyDff, isPropsDiff} from './utils';
 import log from './log';
-import {EDevice, ESlideItemCacheMode, IBearCarouselProps} from './types';
+import {EDevice, IBearCarouselProps} from './types';
 import elClassName from './el-class-name';
 import {BearCarouselProvider} from './BearCarouselProvider';
 import './styles.css';
