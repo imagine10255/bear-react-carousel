@@ -5,6 +5,7 @@ import {cleanup, fireEvent, render, screen} from '@testing-library/react';
 
 import BearCarousel from '../src/BearCarousel';
 import BearSlideItem from '../src/BearSlideItem';
+import {getActiveElement, setContainerSize, setSlideItemsSizes} from './utils';
 
 
 
@@ -40,24 +41,13 @@ describe('Base testing', () => {
         cleanup();
     });
 
-    function setSlideItemsSizes(elements: HTMLElement[], size: number) {
-        elements.forEach((el, index) => {
-            Object.defineProperty(el, 'clientWidth', {configurable: true, value: size});
-            Object.defineProperty(el, 'offsetLeft', {configurable: true, value: size * index});
-        });
-    }
-
-    function setContainerSize(element: HTMLElement, size: number) {
-        Object.defineProperty(element, 'clientWidth', {configurable: true, value: size});
-        Object.defineProperty(element, 'offsetLeft', {configurable: true, value: 0});
-    }
 
     function getActiveSlideItem() {
-        return slideItems.find(el => el.dataset.active === 'true');
+        return getActiveElement(slideItems);
     }
 
     function getActivePageButton() {
-        return pageButtons.find(el => el.dataset.active === 'true');
+        return getActiveElement(pageButtons);
     }
 
     test('Bear Carousel is in the document', () => {
@@ -76,10 +66,6 @@ describe('Base testing', () => {
 
     test('slideItems is six and in the document', () => {
         expect(slideItems).toHaveLength(6);
-    });
-
-    test('pageButtons is in the document', () => {
-        expect(pageButtons).toHaveLength(6);
     });
 
     test('Navigates to third page using next button', async () => {

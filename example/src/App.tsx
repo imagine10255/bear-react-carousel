@@ -15,6 +15,7 @@ import Base from './sample/Base';
 import SlidePerViews from './sample/SlidePerViews';
 import AutoPlay from './sample/AutoPlay';
 import UpdateSlideItem from './sample/UpdateSlideItem';
+import Loop from './sample/Loop';
 
 
 
@@ -22,6 +23,7 @@ import UpdateSlideItem from './sample/UpdateSlideItem';
 enum EExampleCode {
     base = 'base',
     autoPlay = 'autoPlay',
+    loop = 'loop',
     breakpoints = 'breakpoints',
     slidePerViews = 'slidePerViews',
     syncController = 'syncController',
@@ -32,6 +34,7 @@ enum EExampleCode {
 const examples: Record<EExampleCode, () => JSX.Element> = {
     [EExampleCode.base]: Base,
     [EExampleCode.autoPlay]: AutoPlay,
+    [EExampleCode.loop]: Loop,
     [EExampleCode.breakpoints]: Breakpoints,
     [EExampleCode.slidePerViews]: SlidePerViews,
     [EExampleCode.syncController]: SyncControl,

@@ -1,28 +1,33 @@
 import * as React from 'react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
-import {cleanup, fireEvent, render, screen, waitFor} from '@testing-library/react';
+import {act, cleanup, render, screen, waitFor} from '@testing-library/react';
 
 import BearCarousel from '../src/BearCarousel';
 import BearSlideItem from '../src/BearSlideItem';
+import {getActiveElement, setSlideItemsSizes, setContainerSize} from './utils';
 
 
 
-describe('Base testing', () => {
+describe('Auto play testing', () => {
     let container: HTMLElement,
         slideItems: HTMLElement[],
         navNextButton: HTMLElement,
         navPrevButton: HTMLElement;
 
+    const autoPlayTime = 500;
+
     beforeEach(() => {
+        jest.useFakeTimers();
+
         const mockData = new Array(6).fill('test');
         render(<BearCarousel
             data={mockData.map((row, index) => {
                 return {key: index, children: <BearSlideItem as="card"/>};
             })}
-            isEnableAutoPlay
             isEnableNavButton
-            autoPlayTime={1000}
+            isEnableAutoPlay
+            autoPlayTime={autoPlayTime}
         />);
 
         container = screen.getByTestId('bear-carousel-container');
@@ -36,42 +41,42 @@ describe('Base testing', () => {
 
     afterEach(() => {
         cleanup();
+        jest.useRealTimers();
     });
 
-    function setSlideItemsSizes(elements: HTMLElement[], size: number) {
-        elements.forEach((el, index) => {
-            Object.defineProperty(el, 'clientWidth', {configurable: true, value: size});
-            Object.defineProperty(el, 'offsetLeft', {configurable: true, value: size * index});
-        });
-    }
-
-    function setContainerSize(element: HTMLElement, size: number) {
-        Object.defineProperty(element, 'clientWidth', {configurable: true, value: size});
-        Object.defineProperty(element, 'offsetLeft', {configurable: true, value: 0});
-    }
-
     function getActiveSlideItem() {
-        return slideItems.find(el => el.dataset.active === 'true');
+        return getActiveElement(slideItems);
     }
 
     test('Auto navigates to next page after one second', async () => {
-        await waitFor(() => {
-            expect(getActiveSlideItem()).toHaveAttribute('data-page','2');
-        }, {timeout: 1000});
+        // Act
+        act(() => jest.advanceTimersByTime(autoPlayTime));
+        expect(getActiveSlideItem()).toHaveAttribute('data-page','2');
 
-        await waitFor(() => {
-            expect(getActiveSlideItem()).toHaveAttribute('data-page','3');
-        }, {timeout: 1000});
+        act(() => jest.advanceTimersByTime(autoPlayTime));
+        expect(getActiveSlideItem()).toHaveAttribute('data-page','3');
+
+        act(() => jest.advanceTimersByTime(autoPlayTime));
+        expect(getActiveSlideItem()).toHaveAttribute('data-page','4');
+
     });
 
 
     test('Auto navigates to next page, but click slideTom pause after play', async () => {
-        await waitFor(() => userEvent.click(navNextButton), {timeout: 600});
-        await waitFor(() => {}, {timeout: 10});
+        // Act - to page 2 then wait 10ms
+        const user = userEvent.setup({delay: null});
 
-        await waitFor(() => {
-            expect(getActiveSlideItem()).toHaveAttribute('data-page','3');
-        }, {timeout: 1000});
+        act(() => jest.advanceTimersByTime(autoPlayTime));
+        expect(getActiveSlideItem()).toHaveAttribute('data-page','2');
+
+        // Act - autoPlayer time before 10ms trigger
+        act(() => jest.advanceTimersByTime(autoPlayTime / 2));
+
+        await user.click(navPrevButton);
+        expect(getActiveSlideItem()).toHaveAttribute('data-page','1');
+
+        act(() => jest.advanceTimersByTime(autoPlayTime));
+        expect(getActiveSlideItem()).toHaveAttribute('data-page','2');
     });
 
 });
