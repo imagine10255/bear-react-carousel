@@ -1,7 +1,7 @@
 import * as React from 'react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
-import {cleanup, fireEvent, render, screen} from '@testing-library/react';
+import {act, cleanup, fireEvent, render, screen} from '@testing-library/react';
 
 import BearCarousel from '../src/BearCarousel';
 import BearSlideItem from '../src/BearSlideItem';
@@ -16,7 +16,9 @@ describe('Base testing', () => {
         navNextButton: HTMLElement,
         navPrevButton: HTMLElement;
 
-    beforeEach(() => {
+    const containerSize = 400;
+
+    beforeEach(async () => {
         const mockData = new Array(6).fill('test');
         render(<BearCarousel
             data={mockData.map((row, index) => {
@@ -32,9 +34,8 @@ describe('Base testing', () => {
         navNextButton = screen.getByTestId('bear-carousel-navNextButton');
         navPrevButton = screen.getByTestId('bear-carousel-navPrevButton');
 
-        setContainerSize(container, 400);
-        setSlideItemsSizes(slideItems, 400);
-
+        setContainerSize(container, containerSize);
+        setSlideItemsSizes(slideItems, containerSize);
     });
 
     afterEach(() => {
@@ -120,34 +121,34 @@ describe('Base testing', () => {
 
     test('Desktop drag to third page using next button', async () => {
         // Act
-        fireEvent.mouseDown(container, {clientX: 500});
-        fireEvent.mouseMove(container, {clientX: 290});
+        fireEvent.mouseDown(container, {clientX: containerSize + 100});
+        fireEvent.mouseMove(container, {clientX: 250});
 
         // ASSERT
-        expect(container.style.transform).toEqual('translate(-210px, 0px)');
+        expect(container.style.transform).toEqual('translate(-250px, 0px)');
 
         // Act
         fireEvent.mouseUp(container);
 
         // ASSERT
-        expect(container.style.transform).toEqual('translate(-400px, 0px)');
+        expect(container.style.transform).toEqual(`translate(-${containerSize}px, 0px)`);
         expect(getActiveSlideItem()).toHaveAttribute('data-page','2');
         expect(getActivePageButton()).toHaveAttribute('data-page','2');
     });
 
     test('Mobile drag to third page using next button', async () => {
         // Act
-        fireEvent.touchStart(container, {targetTouches: [{pageX: 500}]});
-        fireEvent.touchMove(container, {targetTouches: [{pageX: 290}]});
+        fireEvent.touchStart(container, {targetTouches: [{pageX: containerSize + 100}]});
+        fireEvent.touchMove(container, {targetTouches: [{pageX: 250}]});
 
         // ASSERT
-        expect(container.style.transform).toEqual('translate(-210px, 0px)');
+        expect(container.style.transform).toEqual('translate(-250px, 0px)');
 
         // Act
         fireEvent.touchEnd(container);
 
         // ASSERT
-        expect(container.style.transform).toEqual('translate(-400px, 0px)');
+        expect(container.style.transform).toEqual(`translate(-${containerSize}px, 0px)`);
         expect(getActiveSlideItem()).toHaveAttribute('data-page','2');
         expect(getActivePageButton()).toHaveAttribute('data-page','2');
     });

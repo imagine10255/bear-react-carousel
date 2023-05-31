@@ -16,6 +16,7 @@ import SlidePerViews from './sample/SlidePerViews';
 import AutoPlay from './sample/AutoPlay';
 import UpdateSlideItem from './sample/UpdateSlideItem';
 import Loop from './sample/Loop';
+import Center from './sample/Center';
 
 
 
@@ -24,6 +25,7 @@ enum EExampleCode {
     base = 'base',
     autoPlay = 'autoPlay',
     loop = 'loop',
+    center = 'center',
     breakpoints = 'breakpoints',
     slidePerViews = 'slidePerViews',
     syncController = 'syncController',
@@ -35,6 +37,7 @@ const examples: Record<EExampleCode, () => JSX.Element> = {
     [EExampleCode.base]: Base,
     [EExampleCode.autoPlay]: AutoPlay,
     [EExampleCode.loop]: Loop,
+    [EExampleCode.center]: Center,
     [EExampleCode.breakpoints]: Breakpoints,
     [EExampleCode.slidePerViews]: SlidePerViews,
     [EExampleCode.syncController]: SyncControl,
@@ -42,7 +45,7 @@ const examples: Record<EExampleCode, () => JSX.Element> = {
 };
 
 function App() {
-    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.base);
+    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.center);
     const Comp = examples[exampleKey];
     
 

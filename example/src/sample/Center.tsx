@@ -24,7 +24,7 @@ const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
 
 
 
-function Loop() {
+function Center() {
     const [info, setInfo] = useState<IInfo>();
     const [enable, setEnable] = useState<boolean>(true);
     const [count, setCount] = useState<number>(0);
@@ -33,17 +33,23 @@ function Loop() {
     return <div>
         {/*測試依照比例設定容器高度*/}
         {enable && (
-            <BearCarousel
+            <div
                 style={{width: '400px'}}
-                // controllerRef={controllerRef}
-                data={bearSlideItemData1}
-                // onChange={setInfo}
-                staticHeight="200px"
-                isEnableNavButton
-                isEnablePagination
-                isEnableLoop
-                isDebug
-            />)}
+            >
+                <BearCarousel
+                    // style={{width: '400px'}}
+                    // controllerRef={controllerRef}
+                    data={bearSlideItemData1}
+                    slidesPerView={3}
+                    // onChange={setInfo}
+                    staticHeight="200px"
+                    isEnableNavButton
+                    isEnablePagination
+                    isCenteredSlides
+                    isDebug
+                />
+            </div>)}
+
 
         <button type="button" onClick={() => setCount(curr => curr += 1)}> count: {count}</button>
         <button type="button" onClick={() => setEnable(curr => !curr)}> enable: {String(enable)}</button>
@@ -61,7 +67,7 @@ function Loop() {
 
 }
 
-export default Loop;
+export default Center;
 
 
 

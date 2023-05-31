@@ -114,11 +114,9 @@ class Elementor {
      * @param slideIndex
      */
     getMoveDistance = (slideIndex: number): number => {
-        if (this.slideItemEls) {
-            const slideItemEl = this.slideItemEls[slideIndex];
-            if (slideItemEl) {
-                return getMoveDistance(slideItemEl.offsetLeft, this._getStartPosition(slideItemEl.clientWidth));
-            }
+        const slideItemEl = this.slideItemEls[slideIndex];
+        if (this.slideItemEls[slideIndex]) {
+            return getMoveDistance(slideItemEl.offsetLeft, this._getStartPosition(slideItemEl.offsetWidth));
         }
 
         return 0;
