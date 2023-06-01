@@ -8,10 +8,14 @@ import elClassName from '../../el-class-name';
 
 class Configurator {
     private _setting: ISetting;
-    carouselId = `bear-react-carousel_${ulid().toLowerCase()}`;
+    private _carouselId = `bear-react-carousel_${ulid().toLowerCase()}`;
 
     constructor(breakpoint: IPropsBreakpoints, options?: ISetting) {
         this.init(breakpoint, options);
+    }
+
+    get carouselId(){
+        return this._carouselId;
     }
 
     get setting() {
@@ -21,7 +25,7 @@ class Configurator {
     get style() {
         const styleData = [
             {
-                targetEl: `#${this.carouselId}`,
+                targetEl: `#${this._carouselId}`,
                 styles: [
                     `padding-top: ${this.setting.aspectRatio && this.setting.slidesPerView !== 'auto' ? getPaddingBySize(this.setting.aspectRatio, this.setting.slidesPerView) : '0'};`,
                     `height: ${this.setting.staticHeight ? `${this.setting.staticHeight}` : 'inherit'};`,

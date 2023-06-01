@@ -20,6 +20,7 @@ import SyncCarousel from './manager/SyncCarousel';
 import WindowSize from './components/WindowSize';
 import Page from './components/Page';
 import {NavNextButton, NavPrevButton} from './components/NavButton';
+import CarouselRoot from './components/CarouselRoot';
 
 
 // debug log switch
@@ -69,16 +70,9 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         defaultActivePage: 1,
         isSlideItemMemo: false,
     };
-    _device = EDevice.desktop;
-
+    // _device = EDevice.desktop;
     resetDurationTimer?: any;
-    // activePage = 0;        // real page location
-    // activeActualIndex = 0; // real item index location
-
-
-    state = {
-        windowSize: 0
-    };
+    state = {windowSize: 0};
 
     _stater: Stater;
     _configurator: Configurator;
@@ -93,7 +87,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
     constructor(props: IBearCarouselProps) {
         super(props);
-        this._device = checkIsMobile() ? EDevice.mobile : EDevice.desktop;
+        // this._device = checkIsMobile() ? EDevice.mobile : EDevice.desktop;
 
         const setting = getSetting(props);
         this._syncCarousel = new SyncCarousel(props.syncCarouselRef);
@@ -168,7 +162,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         this._dragger.offDragEnd();
     }
 
-
     /***
    * Optimized rendering
    * @param nextProps
@@ -204,12 +197,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         return false;
     }
 
-
-    _isSyncControl = () => !!this.props.syncCarouselRef === false;
-
-
-
-    _init = () => {
+    private _init = () => {
         if (this._elementor.containerEl) {
             const className = this._elementor.containerEl.classList;
             if(!className.contains(elClassName.containerInit)){
@@ -221,7 +209,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     /**
      * set Controller method
      */
-    _setControllerRef = () => {
+    private _setControllerRef = () => {
         if(this.props.controllerRef){
             this.props.controllerRef.current = this._controller;
         }
@@ -230,14 +218,14 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     /**
    * set OnChange emit
    */
-    _onChange = () => {
+    private _onChange = () => {
         if(this.props.onChange){
             const {element, actual, page} = this._stater;
             this.props.onChange({element, actual, page});
         }
     };
 
-    _onResize = (args: {windowSize: number}) => {
+    private _onResize = (args: {windowSize: number}) => {
         if(args.windowSize !== this.state.windowSize){
             this.setState({windowSize: args.windowSize});
         }else{
@@ -248,7 +236,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     /**
    * Render left and right navigation blocks
    */
-    _renderNavButton = () => {
+    private _renderNavButton = () => {
         const {renderNavButton} = this.props;
 
         if (typeof renderNavButton !== 'undefined') {
@@ -270,7 +258,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     /**
      * render slide item
      */
-    _renderSlideItems = () => {
+    private _renderSlideItems = () => {
         const {isDebug} = this.props;
         const {actual, formatElement} = this._stater;
         return formatElement.map((row, i) => {
@@ -296,7 +284,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     /**
      * Page number navigation buttons
      */
-    _renderPagination = () => {
+    private _renderPagination = () => {
         const {page} = this._stater;
         const pageElement = [];
 
@@ -327,20 +315,16 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                 slidesPerView={this._configurator.setting.slidesPerView}
                 staticHeight={this._configurator.setting.staticHeight}
             >
-                <div
+                <CarouselRoot
                     id={this._configurator.carouselId}
-                    data-testid="bear-carousel"
-                    style={style}
-                    className={[className, elClassName.root].join(' ').trim()}
-                    data-gpu-render={booleanToDataAttr(this._device === EDevice.desktop)}
-                    data-per-view-auto={booleanToDataAttr(this._configurator.setting.slidesPerView === 'auto')}
-                    data-mouse-move={this._configurator.setting.isEnableMouseMove}
-                    data-actual={`${this._stater.actual.minIndex},${this._stater.actual.firstIndex}-${this._stater.actual.lastIndex},${this._stater.actual.maxIndex}`}
-                    data-debug={booleanToDataAttr(isDebug)}
                     ref={this._elementor._rootRef}
+                    style={style}
+                    className={className}
+                    setting={this._configurator.setting}
+                    actual={this._stater.actual}
+                    isDebug={isDebug}
+                    extendStyle={this._configurator.style}
                 >
-                    <style scoped dangerouslySetInnerHTML={{__html: this._configurator.style}}/>
-
                     {this._stater.isVisibleNavButton && this._renderNavButton()}
 
                     <div className={elClassName.content}>
@@ -352,7 +336,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                     {this._stater.isVisiblePagination && this._renderPagination()}
 
                     {isDebug && <WindowSize size={this._windowSizer.size}/>}
-                </div>
+                </CarouselRoot>
             </BearCarouselProvider>
 
         );
