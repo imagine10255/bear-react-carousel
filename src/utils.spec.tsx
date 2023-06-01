@@ -17,8 +17,6 @@ test('get matrix value', async () => {
 });
 
 
-
-
 test('truncate two decimal round down', async () => {
     expect(decimal2Rounding(10.454)).toEqual(10.45);
     expect(decimal2Rounding(11.469)).toEqual(11.46);
@@ -37,10 +35,6 @@ test('get media range size', async () => {
 
 
 
-test('get next page first index', async () => {
-    expect(getNextPageFirstIndex(true, 2, 2, 1)).toEqual(4);
-});
-
 
 test('get next page', async () => {
     expect(getNextPage(6)).toEqual(7);
@@ -52,23 +46,6 @@ test('get last index', async () => {
 });
 
 
-test('check actual index in range', async () => {
-    expect(checkActualIndexInRange(1, {minIndex: 1, maxIndex: 5})).toEqual(true);
-    expect(checkActualIndexInRange(6, {minIndex: 1, maxIndex: 5})).toEqual(false);
-});
-
-
 test('get last reset index', async () => {
     expect(getLoopResetIndex(1, 5)).toEqual(6);
-});
-
-
-
-test('test onMove activeIndex', async () => {
-
-
-    // 觸發移動
-
-    // 確認 active 標籤位置
-
 });

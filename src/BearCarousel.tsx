@@ -131,7 +131,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             dragger: this._dragger,
         });
 
-        this._stater.on('infoChanged', this._onChange);
+        this._stater.onChange(this._onChange);
         this.state = {windowSize: this._windowSizer.size};
     }
 
@@ -144,6 +144,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         if(this.props.onMount){
             this.props.onMount();
         }
+
+        this._stater.offChange();
 
         if (this._elementor) {
             // Move to the correct position for the first time

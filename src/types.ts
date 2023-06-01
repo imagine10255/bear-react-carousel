@@ -65,15 +65,6 @@ export type TBearCarouselSetting = Partial<IBearCarouselProps>;
 
 
 
-export interface InitData {
-  key: string;
-  actualIndex: number;
-  matchIndex: number;
-  sourceIndex?: number;
-  inPage: number;
-  isClone: boolean;
-  element: React.ReactNode;
-}
 
 export interface ICarouselState {
   element: {

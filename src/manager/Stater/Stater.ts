@@ -1,24 +1,22 @@
-import {IInfo, InitData, TBearSlideItemDataList} from '../../types';
-import {checkActualIndexInRange, getNextPageFirstIndex, initDataList} from '../../utils';
+import {TEventMap, InitData} from './types';
+import {IInfo, TBearSlideItemDataList} from '../../types';
+import {initDataList} from './utils';
+import {getNextPageFirstIndex, checkActualIndexInRange} from './utils';
 import Configurator from '../Configurator';
-
-
-type StateEvent = 'infoChanged';
-type TCallback = () => void;
+import Eventor from '../Eventor';
 
 
 class Stater {
-    private _configurator: Configurator;
     _info: IInfo;
     _formatElement: InitData[];
+    private _configurator: Configurator;
+    private _eventor = new Eventor<TEventMap>();
 
-    private events: Record<string, TCallback[]> = {};
 
     constructor(setter: Configurator, data: TBearSlideItemDataList) {
         this._configurator = setter;
         this.init(data);
     }
-
 
     // @TODO: 禁止使用，所以需要除
     get info(): IInfo {
@@ -59,20 +57,14 @@ class Stater {
     }
 
 
-    on(eventName: StateEvent, callback: TCallback) {
-        if (!this.events[eventName]) {
-            this.events[eventName] = [];
-        }
-        this.events[eventName].push(callback);
-    }
+    onChange = (callback: TEventMap['change']) => {
+        this._eventor.on('change', callback);
+    };
 
-    emit(eventName: StateEvent) {
-        if (this.events[eventName]) {
-            for (const callback of this.events[eventName]) {
-                callback();
-            }
-        }
-    }
+    offChange = () => {
+        this._eventor.off('change');
+    };
+
 
     /**
      * 確認是否超出範圍
@@ -132,7 +124,7 @@ class Stater {
             isVisiblePagination: isEnablePagination && this._formatElement.length > 0,
             isVisibleNavButton: isEnableNavButton && this._formatElement.length > 0
         };
-        this.emit('infoChanged');
+        this._eventor.emit('change');
     };
 
     updateData = (slideData: TBearSlideItemDataList = []) => {
@@ -151,7 +143,7 @@ class Stater {
     setActiveActual = (index: number, page: number) => {
         this.info.actual.activeIndex = index;
         this.info.page.activePage = page;
-        this.emit('infoChanged');
+        this._eventor.emit('change');
     };
 
 }
