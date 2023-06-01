@@ -25,7 +25,7 @@ class AutoPlayer {
         this._dragger = manager.dragger;
     }
 
-    public onTimeout = () => {
+    onTimeout = () => {
         window.addEventListener('focus', this.play, false);
         window.addEventListener('blur', this.pause, false);
 
@@ -40,7 +40,7 @@ class AutoPlayer {
     /**
      * 完全移除
      */
-    public offTimeout = () => {
+    offTimeout = () => {
         window.removeEventListener('focus', this.play, false);
         window.removeEventListener('blur', this.pause, false);
         this._controller.off('slideBefore', this.pause);

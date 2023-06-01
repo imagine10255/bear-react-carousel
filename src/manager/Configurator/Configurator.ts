@@ -1,9 +1,8 @@
-import {IPropsBreakpoints} from '../../types';
-import {getMediaSetting, getPaddingBySize} from '../../utils';
-import elClassName from '../../el-class-name';
 import {ulid} from 'ulid';
+import {getMediaSetting, getPaddingBySize} from './utils';
 import {ISetting} from './types';
-
+import {IPropsBreakpoints} from '../../types';
+import elClassName from '../../el-class-name';
 
 
 
@@ -15,17 +14,9 @@ class Configurator {
         this.init(breakpoint, options);
     }
 
-    // constructor(manager: {
-    //     breakpoints: IPropsBreakpoints,
-    //     defaultBreakpoint = defaultSetting,
-    // }) {
-    //     // this.init(breakpoints, defaultBreakpoint);
-    // }
-
     get setting() {
         return this._setting;
     }
-
 
     get style() {
         const styleData = [
@@ -55,7 +46,6 @@ class Configurator {
     init = (responsiveBreakpoints: IPropsBreakpoints, options?: ISetting) => {
         this._setting = getMediaSetting(options, responsiveBreakpoints);
     };
-
 }
 
 

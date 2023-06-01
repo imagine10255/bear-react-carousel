@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom';
 import {
     decimal2Rounding,
-    getPaddingBySize,
     getMatrixValue,
     getSizeByRange,
     getSlideIndex,
@@ -24,13 +23,6 @@ test('get matrix value', async () => {
 test('truncate two decimal round down', async () => {
     expect(decimal2Rounding(10.454)).toEqual(10.45);
     expect(decimal2Rounding(11.469)).toEqual(11.46);
-
-});
-
-
-test('get padding by ratio', async () => {
-    expect(getPaddingBySize({widthRatio: 32, heightRatio: 9}, 2)).toEqual('14.06%');
-    expect(getPaddingBySize({widthRatio: 32, heightRatio: 9, addStaticHeight: '100px'}, 2)).toEqual('calc(14.06% + 100px)');
 
 });
 
