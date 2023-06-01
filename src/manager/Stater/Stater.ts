@@ -28,15 +28,15 @@ class Stater {
     }
 
     get prevPage(): number{
-        return this._info.page.activePage - 1;
+        return this._info?.page.activePage - 1;
     }
 
     get actual() {
-        return this._info.actual;
+        return this._info?.actual;
     }
 
     get page() {
-        return this._info.page;
+        return this._info?.page;
     }
 
     get formatElement() {
@@ -44,19 +44,19 @@ class Stater {
     }
 
     get element() {
-        return this._info.element;
+        return this._info?.element;
     }
 
     get residue() {
-        return this._info.residue;
+        return this._info?.residue ?? 0;
     }
 
     get isVisibleNavButton() {
-        return this._info.isVisibleNavButton;
+        return this._info?.isVisibleNavButton;
     }
 
     get isVisiblePagination() {
-        return this._info.isVisiblePagination;
+        return this._info?.isVisiblePagination;
     }
 
 

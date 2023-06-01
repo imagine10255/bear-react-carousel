@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import {decimal2Rounding, getMatrixValue, getSizeByRange, getLastIndex, getNextPage, getLoopResetIndex} from './utils';
+import {decimal2Rounding, getMatrixValue, getSizeByRange, getLastIndex, getNextPage, getLoopResetIndex, checkIsDesktop, checkIsMobile} from './utils';
 
 
 test('get matrix value', async () => {
@@ -12,6 +12,71 @@ test('truncate two decimal round down', async () => {
     expect(decimal2Rounding(10.454)).toEqual(10.45);
     expect(decimal2Rounding(11.469)).toEqual(11.46);
 
+});
+
+
+
+describe('checkIsMobile', () => {
+    let originalCreateEvent: typeof document.createEvent;
+
+    beforeAll(() => {
+        originalCreateEvent = document.createEvent;
+    });
+
+    afterEach(() => {
+        document.createEvent = originalCreateEvent;
+    });
+
+    it('should return true when document.createEvent("TouchEvent") does not throw an error', () => {
+        document.createEvent = jest.fn().mockImplementation((event: string) => {
+            if (event === 'TouchEvent') {
+                return new TouchEvent('touchstart');
+            }
+            throw new Error(`Unsupported event type: ${event}`);
+        });
+
+        expect(checkIsMobile()).toBe(true);
+    });
+
+    it('should return false when document.createEvent("TouchEvent") throws an error', () => {
+        document.createEvent = jest.fn().mockImplementation(() => {
+            throw new Error('Simulated error');
+        });
+
+        expect(checkIsMobile()).toBe(false);
+    });
+});
+
+
+describe('checkIsDesktop', () => {
+    let originalCreateEvent: typeof document.createEvent;
+
+    beforeAll(() => {
+        originalCreateEvent = document.createEvent;
+    });
+
+    afterEach(() => {
+        document.createEvent = originalCreateEvent;
+    });
+
+    it('should return true when document.createEvent("MouseEvent") does not throw an error', () => {
+        document.createEvent = jest.fn().mockImplementation((event: string) => {
+            if (event === 'MouseEvent') {
+                return new MouseEvent('click');
+            }
+            throw new Error(`Unsupported event type: ${event}`);
+        });
+
+        expect(checkIsDesktop()).toBe(true);
+    });
+
+    it('should return false when document.createEvent("MouseEvent") throws an error', () => {
+        document.createEvent = jest.fn().mockImplementation(() => {
+            throw new Error('Simulated error');
+        });
+
+        expect(checkIsDesktop()).toBe(false);
+    });
 });
 
 

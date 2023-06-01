@@ -97,7 +97,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
         const setting = getSetting(props);
         this._syncCarousel = new SyncCarousel(props.syncCarouselRef);
-        this._windowSizer = new WindowSizer(props.breakpoints, this._device);
+        this._windowSizer = new WindowSizer(props.breakpoints, window);
         this._configurator = new Configurator(props.breakpoints, setting);
         this._stater = new Stater(this._configurator, props.data);
         this._locator = new Locator();
