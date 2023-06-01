@@ -29,8 +29,8 @@ class AutoPlayer {
         window.addEventListener('focus', this.play, false);
         window.addEventListener('blur', this.pause, false);
 
-        this._controller.on('slideBefore', this.pause);
-        this._controller.on('slideAfter', this.play);
+        this._controller.onSlideBefore(this.pause);
+        this._controller.onSlideAfter(this.play);
         this._dragger.onDrapStart(this.pause);
 
         this.play();
@@ -43,8 +43,8 @@ class AutoPlayer {
     offTimeout = () => {
         window.removeEventListener('focus', this.play, false);
         window.removeEventListener('blur', this.pause, false);
-        this._controller.off('slideBefore', this.pause);
-        this._controller.off('slideAfter', this.play);
+        this._controller.offSlideBefore();
+        this._controller.offSlideAfter();
         this._dragger.offDrapStart();
 
         this.pause();

@@ -1,12 +1,13 @@
-import {getNextIndex, getPrevIndex, getSlideIndex} from '../../utils';
+import {TEventMap} from './types';
+import {getNextIndex, getPrevIndex, getSlideIndex} from './utils';
+
 import Configurator from '../Configurator';
 import Stater from '../Stater';
 import Locator from '../Locator';
 import Elementor from '../Elementor';
 import SyncCarousel from '../SyncCarousel';
+import Eventor from '../Eventor';
 
-type SlideEvent = 'slideBefore'|'slideAfter';
-type TCallback = () => void;
 
 class Controller {
     private readonly _configurator: Configurator;
@@ -14,9 +15,7 @@ class Controller {
     private readonly _locator: Locator;
     private readonly _elementor: Elementor;
     private readonly _syncCarousel: SyncCarousel;
-
-    private events: Map<string, TCallback[]> = new Map();
-
+    private _eventor = new Eventor<TEventMap>();
 
     constructor(manager: {
         configurator: Configurator,
@@ -32,30 +31,22 @@ class Controller {
         this._syncCarousel = manager.syncCarousel;
     }
 
-    on(eventName: SlideEvent, callback: TCallback) {
-        if (!this.events.has(eventName)) {
-            this.events.set(eventName, []);
-        }
-        this.events.get(eventName).push(callback);
-    }
+    onSlideBefore = (callback: TEventMap['slideBefore']) => {
+        this._eventor.on('slideBefore', callback);
 
-    off(eventName: SlideEvent, callback: TCallback) {
-        if (this.events.has(eventName)) {
-            const callbacks = this.events.get(eventName);
-            const idx = callbacks.indexOf(callback);
-            if (idx >= 0) {
-                callbacks.splice(idx, 1);
-            }
-        }
-    }
+    };
 
-    emit(eventName: SlideEvent) {
-        if (this.events.has(eventName)) {
-            for (const callback of this.events.get(eventName)) {
-                callback();
-            }
-        }
-    }
+    onSlideAfter = (callback: TEventMap['slideAfter']) => {
+        this._eventor.on('slideAfter', callback);
+    };
+
+    offSlideBefore = () => {
+        this._eventor.off('slideBefore');
+    };
+
+    offSlideAfter = () => {
+        this._eventor.off('slideAfter');
+    };
 
 
     /**
@@ -72,7 +63,7 @@ class Controller {
     };
 
     slideToActualIndex = (slideIndex: number, isUseAnimation = true) => {
-        this.emit('slideBefore');
+        this._eventor.emit('slideBefore');
 
         if (this._stater.checkActualIndexInRange(slideIndex)) {
             const {formatElement} = this._stater;
@@ -86,7 +77,7 @@ class Controller {
 
             this._syncCarousel.slideToActualIndex(slideIndex, isUseAnimation);
         }
-        this.emit('slideAfter');
+        this._eventor.emit('slideAfter');
 
     };
 

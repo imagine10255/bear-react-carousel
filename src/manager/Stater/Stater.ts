@@ -1,5 +1,5 @@
 import {IInfo, InitData, TBearSlideItemDataList} from '../../types';
-import {checkActualIndexInRange, getNextPageFirstIndex, getSlideIndex, initDataList} from '../../utils';
+import {checkActualIndexInRange, getNextPageFirstIndex, initDataList} from '../../utils';
 import Configurator from '../Configurator';
 
 

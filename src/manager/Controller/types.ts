@@ -1,4 +1,5 @@
 
 export type TEventMap = {
-    resize: (args: {windowSize: number}) => void;
+    slideBefore: () => void;
+    slideAfter: () => void;
 };

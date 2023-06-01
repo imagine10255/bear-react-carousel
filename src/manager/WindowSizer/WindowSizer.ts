@@ -1,5 +1,5 @@
 import {getSizeByRange} from './utils';
-import {EventMap} from './types';
+import {TEventMap} from './types';
 
 import {EDevice, IPropsBreakpoints} from '../../types';
 import Eventor from '../Eventor';
@@ -14,7 +14,7 @@ class WindowSizer {
     private _breakpoints: IPropsBreakpoints;
     private _size: number;
     private _device: EDevice;
-    private _eventManager = new Eventor<EventMap>();
+    private _eventManager = new Eventor<TEventMap>();
 
     get size() {
         return this._size;
@@ -35,12 +35,12 @@ class WindowSizer {
         this._eventManager.emit('resize', {windowSize: this._size});
     };
 
-    public onResize = (callBack: EventMap['resize']) => {
+    public onResize = (callBack: TEventMap['resize']) => {
         window.addEventListener(resizeEvent[this._device], this._emitResize, false);
         this._eventManager.on('resize', callBack);
     };
 
-    public offResize = (callBack: EventMap['resize']) => {
+    public offResize = (callBack: TEventMap['resize']) => {
         window.removeEventListener(resizeEvent[this._device], this._emitResize, false);
         this._eventManager.off('resize', callBack);
     };

@@ -3,7 +3,6 @@ import {
     decimal2Rounding,
     getMatrixValue,
     getSizeByRange,
-    getSlideIndex,
     checkActualIndexInRange,
     getLastIndex,
     getNextPage,
@@ -36,11 +35,6 @@ test('get media range size', async () => {
     expect(getSizeByRange(800, range)).toEqual(768);
 });
 
-test('get slide index', async () => {
-    expect(getSlideIndex(1, 1, 1)).toEqual(1);
-    expect(getSlideIndex(2, 1, 1)).toEqual(2);
-    expect(getSlideIndex(2, 2, 1)).toEqual(3);
-});
 
 
 test('get next page first index', async () => {
