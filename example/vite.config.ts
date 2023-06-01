@@ -9,4 +9,8 @@ export default defineConfig({
             PUBLIC_URL: JSON.stringify(process.env.PUBLIC_URL),
         },
     },
+    build: {
+        minify: false,
+        sourcemap: true,
+    }
 });

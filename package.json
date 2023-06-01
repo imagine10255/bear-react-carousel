@@ -32,7 +32,7 @@
     "node": ">=14"
   },
   "scripts": {
-    "dev": "vite build -w",
+    "dev": "NODE_ENV=development vite build -w",
     "build:claer": "rm -rf ./dist",
     "prepublishOnly": "run-s build",
     "build": "run-s build:claer && tsc && vite build",

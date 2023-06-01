@@ -9,14 +9,7 @@ import eslint from 'vite-plugin-eslint';
 export default defineConfig({
     plugins: [
         eslint(),
-        react({
-            plugins: process.env.NODE_ENV !== 'production' ? [[
-                "@swc/plugin-styled-components", {
-                    "displayName": true,
-                    "ssr": false
-                }
-            ]]: [],
-        }),
+        react(),
         dts({
             insertTypesEntry: true,
         }),
