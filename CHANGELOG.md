@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.1-alpha.0](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.0...v4.0.1-alpha.0) (2023-06-01)
+
+
+### Bug Fixes
+
+* miss add gpu-render ([3a9e9c0](https://github.com/imagine10255/bear-react-carousel/commit/3a9e9c0cd1a3da6e0811ac8d0fef0c9c08213d65))
+
 ## [4.0.0](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.0-alpha.3...v4.0.0) (2023-06-01)
 
 ## [4.0.0-alpha.3](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.0-alpha.2...v4.0.0-alpha.3) (2023-06-01)
