@@ -60,13 +60,6 @@ export interface IBearCarouselProps extends IBreakpointSetting{
 export type TBearCarouselSetting = Partial<IBearCarouselProps>;
 
 
-export interface ITouchStart {
-  pageX: number,
-  pageY: number,
-  x: number,
-  y: number,
-  moveDirection?: EDirection,
-}
 
 
 export interface InitData {
