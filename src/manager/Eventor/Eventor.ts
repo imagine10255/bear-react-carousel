@@ -9,7 +9,7 @@ class Eventor<T extends Record<string, (...args: any[]) => void>> {
         this.events.get(eventName)!.push(callback);
     }
 
-    off<K extends keyof T>(eventName: K, callback: T[K]) {
+    off<K extends keyof T>(eventName: K, callback?: T[K]) {
         if (this.events.has(eventName)) {
             const callbacks = this.events.get(eventName)!;
             const idx = callbacks.indexOf(callback);
@@ -22,7 +22,9 @@ class Eventor<T extends Record<string, (...args: any[]) => void>> {
     emit<K extends keyof T>(eventName: K, ...args: Parameters<T[K]>) {
         if (this.events.has(eventName)) {
             for (const callback of this.events.get(eventName)!) {
-                callback(...args);
+                if(callback){
+                    callback(...args);
+                }
             }
         }
     }

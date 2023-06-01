@@ -31,7 +31,7 @@ class AutoPlayer {
 
         this._controller.on('slideBefore', this.pause);
         this._controller.on('slideAfter', this.play);
-        this._dragger.on('dragStart', this.pause);
+        this._dragger.onDrapStart(this.pause);
 
         this.play();
     };
@@ -45,7 +45,7 @@ class AutoPlayer {
         window.removeEventListener('blur', this.pause, false);
         this._controller.off('slideBefore', this.pause);
         this._controller.off('slideAfter', this.play);
-        this._dragger.off('dragStart', this.pause);
+        this._dragger.offDrapStart();
 
         this.pause();
     };

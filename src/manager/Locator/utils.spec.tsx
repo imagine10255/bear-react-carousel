@@ -27,7 +27,7 @@ test('get slide angle', async () => {
 test('get translate params', async () => {
     const {container} = render(
         <div style={{transform: 'matrix(1, 0, 0, 1, 20, 30)'}} />,
-);
+    );
     const params = getTranslateParams(container.firstChild as HTMLDivElement);
     expect(params).toEqual({x: 20, y: 30, z: 0});
 });

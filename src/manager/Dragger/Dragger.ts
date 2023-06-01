@@ -1,28 +1,28 @@
+import {calcMoveTranslatePx} from './utils';
+import {TEventMap} from './types';
+
 import Configurator from '../Configurator';
 import Controller from '../Controller';
-import {EDevice} from '../../types';
 import Elementor from '../Elementor';
-import {DesktopTouchEvent, MobileTouchEvent} from '../../interface/DragEvent';
 import Locator from '../Locator';
-import {calcMoveTranslatePx, checkInRange} from '../../utils';
 import Stater from '../Stater';
 import SyncCarousel from '../SyncCarousel';
+import Eventor from '../Eventor';
+import {DesktopTouchEvent, MobileTouchEvent} from '../../interface/DragEvent';
 
 
-type DragEvent = 'dragStart'|'dragDone';
-type TCallback = () => void;
 /**
  * unmount 跟 blur 都需要 停止計時器
  */
 class Dragger {
-    _configurator: Configurator;
-    _controller: Controller;
-    _elementor: Elementor;
-    _locator: Locator;
-    _stater: Stater;
-    _syncCarousel: SyncCarousel;
+    private _configurator: Configurator;
+    private _controller: Controller;
+    private _elementor: Elementor;
+    private _locator: Locator;
+    private _stater: Stater;
+    private _syncCarousel: SyncCarousel;
+    private _eventor = new Eventor<TEventMap>();
 
-    private events: Map<string, TCallback[]> = new Map();
 
     constructor(manager: {
         configurator: Configurator,
@@ -42,55 +42,37 @@ class Dragger {
 
     }
 
-    on(eventName: DragEvent, callback: TCallback) {
-        if (!this.events.has(eventName)) {
-            this.events.set(eventName, []);
-        }
-        this.events.get(eventName).push(callback);
-    }
 
-    off(eventName: DragEvent, callback: TCallback) {
-        if (this.events.has(eventName)) {
-            const callbacks = this.events.get(eventName);
-            const idx = callbacks.indexOf(callback);
-            if (idx >= 0) {
-                callbacks.splice(idx, 1);
-            }
-        }
-    }
-
-    emit(eventName: DragEvent) {
-        if (this.events.has(eventName)) {
-            for (const callback of this.events.get(eventName)) {
-                callback();
-            }
-        }
-    }
-
-    mount = () => {
+    onDrapStart = (callBack?: TEventMap['dragStart']) => {
         this._elementor.containerEl.addEventListener('touchstart', this._onMobileTouchStart, {passive: false});
         this._elementor.containerEl.addEventListener('mousedown', this._onWebMouseStart, {passive: false});
+
+        this._eventor.on('dragStart', callBack);
     };
 
-    /**
-     * 完全移除
-     */
-    unmount = () => {
+    onDragEnd = (callBack?: TEventMap['dragEnd']) => {
+        this._eventor.on('dragEnd', callBack);
+    };
+
+    offDrapStart = () => {
         this._elementor.containerEl.removeEventListener('touchstart', this._onMobileTouchStart, {passive: false} as any);
         this._elementor.containerEl.removeEventListener('mousedown', this._onWebMouseStart, {passive: false} as any);
+        this._eventor.off('dragStart');
     };
 
-
+    offDragEnd = () => {
+        this._eventor.off('dragEnd');
+    };
 
 
     /**
      * mobile phone finger press start
      * @param event
      */
-    _onMobileTouchStart = (event: TouchEvent): void => {
+    private _onMobileTouchStart = (event: TouchEvent): void => {
         // if(this.props.isDebug && logEnable.onMobileTouchStart) log.printInText('[_onMobileTouchStart]');
 
-        this.emit('dragStart');
+        this._eventor.emit('dragStart');
 
         const {containerEl} = this._elementor;
         if(this._elementor.isUseAnimation === false){
@@ -109,7 +91,7 @@ class Dragger {
      * Mobile phone finger press and move
      * @param event
      */
-    _onMobileTouchMove = (event: TouchEvent): void => {
+    private _onMobileTouchMove = (event: TouchEvent): void => {
         event.preventDefault();
 
         const movePx = this._locator.touchMove(new MobileTouchEvent(event), this._elementor.containerEl);
@@ -122,23 +104,22 @@ class Dragger {
      *
      * PS: Add event.preventDefault(); will affect the mobile phone click onClick event
      */
-    _onMobileTouchEnd = (event: TouchEvent): void => {
+    private _onMobileTouchEnd = (event: TouchEvent): void => {
         // if(this.props.isDebug && logEnable.onMobileTouchEnd) log.printInText('[_onMobileTouchEnd]');
 
         this._elementor.containerEl?.removeEventListener('touchmove', this._onMobileTouchMove, false);
         this._elementor.containerEl?.removeEventListener('touchend', this._onMobileTouchEnd, false);
-        this._dragDone();
-        this.emit('dragDone');
+        this._dragEnd();
+        this._eventor.emit('dragEnd');
     };
 
     /**
      * Web mouse click
      * @param event
      */
-    _onWebMouseStart = (event: MouseEvent): void => {
+    private _onWebMouseStart = (event: MouseEvent): void => {
         // if(this.props.isDebug && logEnable.onWebMouseStart) log.printInText('[_onWebMouseStart]');
-
-        this.emit('dragStart');
+        this._eventor.emit('dragStart');
 
         this._controller.slideResetToMatchIndex();
 
@@ -157,7 +138,7 @@ class Dragger {
      * Web mouse movement
      * @param event
      */
-    _onWebMouseMove = (event: MouseEvent):void => {
+    private _onWebMouseMove = (event: MouseEvent):void => {
         event.preventDefault();
         // if(this.props.isDebug && logEnable.onWebMouseMove) log.printInText('[_onWebMouseMove]');
 
@@ -169,21 +150,21 @@ class Dragger {
      * web mouse release
      * @param event
      */
-    _onWebMouseEnd = (event: MouseEvent):void => {
+    private _onWebMouseEnd = (event: MouseEvent):void => {
         event.preventDefault();
         // if(this.props.isDebug && logEnable.onWebMouseEnd) log.printInText('[_onWebMouseEnd]');
 
         this._elementor.rootEl?.removeEventListener('mouseleave', this._onWebMouseEnd, false);
         this._elementor.containerEl?.removeEventListener('mousemove', this._onWebMouseMove, false);
         this._elementor.containerEl?.removeEventListener('mouseup', this._onWebMouseEnd, false);
-        this._dragDone();
-        this.emit('dragDone');
+        this._dragEnd();
+        this._eventor.emit('dragEnd');
     };
 
 
 
 
-    _dragMove(moveX: number) {
+    private _dragMove(moveX: number) {
         //     if(this.props.isDebug && logEnable.elementMove) log.printInText('[_elementMove]');
 
         this._elementor.setNonSubjectTouch(false);
@@ -219,7 +200,7 @@ class Dragger {
     /**
      * The object movement ends (confirm the stop position and which Index position should be sucked)
      */
-    _dragDone = (): void => {
+    private _dragEnd = (): void => {
         // if(this.props.isDebug && logEnable.elementMoveDone) log.printInText('[_elementMoveDone]');
         this._elementor.setNonSubjectTouch(true);
 

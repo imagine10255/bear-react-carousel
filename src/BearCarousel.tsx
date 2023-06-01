@@ -6,7 +6,7 @@ import elClassName from './el-class-name';
 import {BearCarouselProvider} from './BearCarouselProvider';
 import './styles.css';
 
-import Configurator, { getSetting } from './manager/Configurator';
+import Configurator, {getSetting} from './manager/Configurator';
 import WindowSizer from './manager/WindowSizer';
 import Stater from './manager/Stater';
 import SlideItem from './components/SlideItem';
@@ -151,11 +151,9 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                 this._controller.slideToPage(this.props.defaultActivePage ?? 1, false);
             }
 
-            // End of moving animation (Need to return to the position, to be fake)
-
             this._windowSizer.onResize(this._onResize);
             this._autoPlayer.onTimeout();
-            this._dragger.mount();
+            this._dragger.onDrapStart();
         }
 
         this._setControllerRef();
@@ -166,7 +164,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         if(this.props.isDebug && logEnable.componentWillUnmount) log.printInText('[componentWillUnmount]');
         this._autoPlayer.offTimeout();
         this._windowSizer.offResize(this._onResize);
-        this._dragger.unmount();
+        this._dragger.offDrapStart();
+        this._dragger.offDragEnd();
     }
 
 
