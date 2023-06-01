@@ -1,10 +1,10 @@
 import BearCarousel from '../../BearCarousel';
-import {IRefObject} from '../../types';
+import {ICustomRefObject} from '../../types';
 
 class SyncCarousel {
-    private readonly _carouselRef: IRefObject<BearCarousel>;
+    private readonly _carouselRef: ICustomRefObject<BearCarousel>;
 
-    constructor(carouselRef: IRefObject<BearCarousel>) {
+    constructor(carouselRef: ICustomRefObject<BearCarousel>) {
         this._carouselRef = carouselRef;
     }
 
@@ -49,6 +49,5 @@ class SyncCarousel {
     };
 
 }
-
 
 export default SyncCarousel;

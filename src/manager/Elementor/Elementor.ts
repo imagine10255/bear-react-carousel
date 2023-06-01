@@ -1,18 +1,19 @@
-import * as React from 'react';
-import {booleanToDataAttr, checkInRange, getMoveDistance, getMovePercentage, getStartPosition} from '../../utils';
+import {createRef, RefObject} from 'react';
+import {IMultiRefObject} from './types';
+
+import {checkInRange, getMoveDistance, getMovePercentage, getStartPosition} from './utils';
+import {booleanToDataAttr} from '../../utils';
 import Configurator from '../Configurator';
 import Stater from '../Stater';
 import Locator from '../Locator';
-import {IRefObject} from '../../types';
 
 class Elementor {
-    _rootRef: React.RefObject<HTMLDivElement> = React.createRef();
-    _containerRef: React.RefObject<HTMLDivElement> = React.createRef();
-    _pageGroupRef: React.RefObject<HTMLDivElement> = React.createRef();
-    _navGroupRef: React.RefObject<HTMLDivElement> = React.createRef();
-
-    _slideItemRefs: IRefObject<Array<HTMLDivElement>> = React.createRef();
-    _pageRefs: IRefObject<Array<HTMLDivElement>> = React.createRef();
+    _rootRef: RefObject<HTMLDivElement> = createRef();
+    _containerRef: RefObject<HTMLDivElement> = createRef();
+    _pageGroupRef: RefObject<HTMLDivElement> = createRef();
+    _navGroupRef: RefObject<HTMLDivElement> = createRef();
+    _slideItemRefs: IMultiRefObject<Array<HTMLDivElement>> = createRef();
+    _pageRefs: IMultiRefObject<Array<HTMLDivElement>> = createRef();
 
     private _configurator: Configurator;
     private _stater: Stater;
@@ -30,7 +31,6 @@ class Elementor {
         this._configurator = manager.configurator;
         this._stater = manager.stater;
         this._locator = manager.locator;
-
     }
 
     get rootEl(){
@@ -56,6 +56,23 @@ class Elementor {
         return this.containerEl.style.transitionDuration !== '0ms';
     }
 
+
+    /**
+     * 取得初始距離
+     * @param slideItemWidth
+     */
+    private _getStartPosition = (slideItemWidth: number) => {
+        return getStartPosition(this._configurator.setting.isCenteredSlides,
+            {
+                slidesPerView: this._configurator.setting.slidesPerView,
+                slidesPerViewActual: this._configurator.setting.slidesPerViewActual,
+            },
+            {
+                containerWidth: this.rootEl.offsetWidth,
+                currItemWidth: slideItemWidth,
+            }
+        );
+    };
 
     /**
      * Move Percentage
@@ -92,22 +109,6 @@ class Elementor {
     };
 
 
-    /**
-     * 取得初始距離
-     * @param slideItemWidth
-     */
-    private _getStartPosition = (slideItemWidth: number) => {
-        return getStartPosition(this._configurator.setting.isCenteredSlides,
-            {
-                slidesPerView: this._configurator.setting.slidesPerView,
-                slidesPerViewActual: this._configurator.setting.slidesPerViewActual,
-            },
-            {
-                containerWidth: this.rootEl.offsetWidth,
-                currItemWidth: slideItemWidth,
-            }
-        );
-    };
 
     /**
      * Get the target item distance width(px)
@@ -189,9 +190,6 @@ class Elementor {
             this.rootEl.setAttribute('data-onlyOne',  booleanToDataAttr(true));
         }
     };
-
-
-
 
 }
 

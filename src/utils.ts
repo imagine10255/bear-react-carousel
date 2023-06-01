@@ -194,29 +194,6 @@ export function getSlideIndex(page: number, slidesPerGroup: number, actualFirstI
 }
 
 
-/**
- * 取得最起始的位置
- * @param isCenterMode
- * @param view
- * @param size
- */
-export function getStartPosition(
-    isCenterMode: boolean,
-    view: {slidesPerView: number|'auto', slidesPerViewActual: number},
-    size: {containerWidth: number, currItemWidth: number},
-) {
-    if (isCenterMode) {
-        let firstStartPx = 0;
-        if(view.slidesPerView === 'auto'){
-            // containerWidth 計算中間位置
-            firstStartPx = (size.containerWidth / 2) - (size.currItemWidth / 2) ;
-        }
-
-        return firstStartPx + (size.currItemWidth * (view.slidesPerViewActual - 1) / 2);
-    }
-    return 0;
-}
-
 
 /**
  * 取得下一頁的 Index
@@ -266,34 +243,6 @@ export function getLoopResetIndex(activeActualIndex: number, residue: number): n
 }
 
 
-/**
- * 取得移動位置
- * @param slideOffsetLeft
- * @param startPosition
- */
-export function getMoveDistance(slideOffsetLeft: number, startPosition: number): number{
-    return -slideOffsetLeft + startPosition;
-}
-
-
-/**
- * 取得移動進度佔比
- * @param movePx
- * @param startPosition
- * @param slideCurrWidth
- */
-export function getMovePercentage(movePx: number, startPosition: number, slideCurrWidth: number): number{
-    const newMoveX = movePx - startPosition;
-    return decimal2Rounding(-newMoveX / slideCurrWidth);
-}
-
-
-
-export function checkInRange(index, activeActualIndex: number, slideItemTotal: number): boolean{
-    return (activeActualIndex <= 0 && index === 0) ||
-        (activeActualIndex >= slideItemTotal && index === (slideItemTotal - 1)) ||
-        activeActualIndex === index;
-}
 
 /**
  * 取得下一個 Index
@@ -392,13 +341,6 @@ export function getPrevIndex(
 }
 
 
-export function booleanToDataAttr(isTrue: boolean, returnValue: number|string|boolean = true): string|undefined{
-    if(isTrue){
-        return String(returnValue);
-    }
-    return undefined;
-}
-
 export function isPropsDiff(props: IBearCarouselProps, nextProps: IBearCarouselProps, exclude: string[]) {
     const filterProps = Object.keys(props)
         .filter(key => typeof props[key] !== 'function' && exclude.includes(key))
@@ -418,6 +360,13 @@ export function isDataKeyDff(data: TBearSlideItemDataList, nextData: TBearSlideI
 };
 
 
+
+export function booleanToDataAttr(isTrue: boolean, returnValue: number|string|boolean = true): string|undefined{
+    if(isTrue){
+        return String(returnValue);
+    }
+    return undefined;
+}
 
 
 

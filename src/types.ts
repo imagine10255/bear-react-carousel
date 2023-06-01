@@ -32,7 +32,10 @@ export enum EDirection {
 
 export type IRenderNavButton = (toPrev: TToPrev, toNext: TToNext) => void
 
-export interface IRefObject<T> {
+
+
+
+export interface ICustomRefObject<T> {
   current: T;
 }
 
@@ -52,8 +55,8 @@ export interface IBearCarouselProps extends IBreakpointSetting{
   onElementDone?: (activeActualIndex: number) => void,
   isDebug: boolean
   isSlideItemMemo?: boolean,
-  syncCarouselRef?: IRefObject<BearCarousel>,
-  controllerRef?: IRefObject<Controller>,
+  syncCarouselRef?: ICustomRefObject<BearCarousel>,
+  controllerRef?: ICustomRefObject<Controller>,
   onMount?: () => void;
 }
 

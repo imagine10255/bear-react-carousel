@@ -1,2 +1,2 @@
 export {default} from './Elementor';
-// export * from './utils';
+export * from './types';
