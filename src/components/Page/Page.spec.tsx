@@ -15,7 +15,9 @@ test('test page render', async () => {
     />);
 
     // ACT
-    const element = screen.getByTestId('bear-carousel-button');
+    const element = screen.getByTestId('bear-carousel-page-button');
+
+    await userEvent.click(element);
 
 
     // ASSERT
