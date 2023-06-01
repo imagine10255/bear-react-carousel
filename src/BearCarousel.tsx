@@ -1,7 +1,7 @@
 import * as React from 'react';
-import {booleanToDataAttr, checkIsMobile, isDataKeyDff, isPropsDiff} from './utils';
+import {checkIsDesktop, isDataKeyDff, isPropsDiff} from './utils';
 import log from './log';
-import {EDevice, IBearCarouselProps} from './types';
+import {IBearCarouselProps} from './types';
 import elClassName from './el-class-name';
 import {BearCarouselProvider} from './BearCarouselProvider';
 import './styles.css';
@@ -70,7 +70,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         defaultActivePage: 1,
         isSlideItemMemo: false,
     };
-    // _device = EDevice.desktop;
+    _isEnableGpuRender = checkIsDesktop();
     resetDurationTimer?: any;
     state = {windowSize: 0};
 
@@ -324,6 +324,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                     actual={this._stater.actual}
                     isDebug={isDebug}
                     extendStyle={this._configurator.style}
+                    isEnableGpuRender={this._isEnableGpuRender}
                 >
                     {this._stater.isVisibleNavButton && this._renderNavButton()}
 

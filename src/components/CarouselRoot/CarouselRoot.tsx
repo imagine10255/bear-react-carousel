@@ -15,10 +15,11 @@ interface IProps {
         lastIndex: number
         maxIndex: number
     }
-    isDebug: boolean
     setting: ISetting
     children: JSX.Element[]
-    extendStyle: string
+    extendStyle?: string
+    isDebug?: boolean
+    isEnableGpuRender?: boolean
 }
 
 const CarouselRoot = forwardRef<HTMLDivElement, IProps>(({
@@ -29,6 +30,7 @@ const CarouselRoot = forwardRef<HTMLDivElement, IProps>(({
     actual,
     isDebug= false,
     extendStyle,
+    isEnableGpuRender = true,
     children,
 }, ref) => {
 
@@ -38,7 +40,7 @@ const CarouselRoot = forwardRef<HTMLDivElement, IProps>(({
         data-testid="bear-carousel"
         style={style}
         className={[className, elClassName.root].join(' ').trim()}
-        // data-gpu-render={booleanToDataAttr(this._device === EDevice.desktop)}
+        data-gpu-render={booleanToDataAttr(isEnableGpuRender)}
         data-per-view-auto={booleanToDataAttr(setting.slidesPerView === 'auto')}
         data-mouse-move={setting.isEnableMouseMove}
         data-actual={[actual.minIndex, actual.firstIndex, actual.lastIndex, actual.maxIndex].join(',')}
