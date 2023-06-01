@@ -12,4 +12,5 @@ test('test WindowSize render', async () => {
 
     // ASSERT
     expect(element).toBeInTheDocument();
+    expect(element).toHaveTextContent('992');
 });
