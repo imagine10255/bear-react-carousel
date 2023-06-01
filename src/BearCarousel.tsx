@@ -154,11 +154,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             // End of moving animation (Need to return to the position, to be fake)
 
             this._windowSizer.onResize(this._onResize);
-            // this._windowSizer
-            //     .mount()
-            //     .on('resize', this._onResize);
-
-            this._autoPlayer.mount();
+            this._autoPlayer.onTimeout();
             this._dragger.mount();
         }
 
@@ -168,7 +164,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
     componentWillUnmount() {
         if(this.props.isDebug && logEnable.componentWillUnmount) log.printInText('[componentWillUnmount]');
-        this._autoPlayer.unmount();
+        this._autoPlayer.offTimeout();
         this._windowSizer.offResize(this._onResize);
         this._dragger.unmount();
     }

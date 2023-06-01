@@ -6,12 +6,10 @@ import Dragger from '../Dragger';
  * unmount 跟 blur 都需要 停止計時器
  */
 class AutoPlayer {
-    _configurator: Configurator;
-    _controller: Controller;
-    _dragger: Dragger;
-    _timer: NodeJS.Timeout;
-    boundPlay: () => void;
-    boundPause: () => void;
+    private _configurator: Configurator;
+    private _controller: Controller;
+    private _dragger: Dragger;
+    private _timer: NodeJS.Timeout;
 
     get isPlaying(){
         return this._timer;
@@ -25,16 +23,12 @@ class AutoPlayer {
         this._configurator = manager.configurator;
         this._controller = manager.controller;
         this._dragger = manager.dragger;
-
-        this.boundPlay = this.play.bind(this, this._configurator);
-        this.boundPause = this.pause.bind(this, this._configurator);
-
-
     }
 
-    mount = () => {
-        window.addEventListener('focus', this.boundPlay, false);
-        window.addEventListener('blur', this.boundPause, false);
+    public onTimeout = () => {
+        window.addEventListener('focus', this.play, false);
+        window.addEventListener('blur', this.pause, false);
+
         this._controller.on('slideBefore', this.pause);
         this._controller.on('slideAfter', this.play);
         this._dragger.on('dragStart', this.pause);
@@ -42,12 +36,13 @@ class AutoPlayer {
         this.play();
     };
 
+
     /**
      * 完全移除
      */
-    unmount = () => {
-        window.removeEventListener('focus', this.boundPlay, false);
-        window.removeEventListener('blur', this.boundPause, false);
+    public offTimeout = () => {
+        window.removeEventListener('focus', this.play, false);
+        window.removeEventListener('blur', this.pause, false);
         this._controller.off('slideBefore', this.pause);
         this._controller.off('slideAfter', this.play);
         this._dragger.off('dragStart', this.pause);
