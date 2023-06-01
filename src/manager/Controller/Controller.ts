@@ -1,9 +1,9 @@
-import {getNextIndex, getPrevIndex, getSlideIndex} from '../utils';
-import Configurator from './Configurator';
-import Stater from './Stater';
-import Locator from './Locator';
-import Elementor from './Elementor';
-import SyncCarousel from './SyncCarousel';
+import {getNextIndex, getPrevIndex, getSlideIndex} from '../../utils';
+import Configurator from '../Configurator';
+import Stater from '../Stater';
+import Locator from '../Locator';
+import Elementor from '../Elementor';
+import SyncCarousel from '../SyncCarousel';
 
 type SlideEvent = 'slideBefore'|'slideAfter';
 type TCallback = () => void;

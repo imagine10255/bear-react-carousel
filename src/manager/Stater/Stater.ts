@@ -1,6 +1,6 @@
-import {IInfo, InitData, TBearSlideItemDataList} from '../types';
-import {checkActualIndexInRange, getNextPageFirstIndex, getSlideIndex, initDataList} from '../utils';
-import Configurator from './Configurator';
+import {IInfo, InitData, TBearSlideItemDataList} from '../../types';
+import {checkActualIndexInRange, getNextPageFirstIndex, getSlideIndex, initDataList} from '../../utils';
+import Configurator from '../Configurator';
 
 
 type StateEvent = 'infoChanged';

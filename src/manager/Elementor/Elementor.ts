@@ -1,9 +1,9 @@
 import * as React from 'react';
-import {booleanToDataAttr, checkInRange, getMoveDistance, getMovePercentage, getStartPosition} from '../utils';
-import Configurator from './Configurator';
-import Stater from './Stater';
-import Locator from './Locator';
-import {IRefObject} from '../types';
+import {booleanToDataAttr, checkInRange, getMoveDistance, getMovePercentage, getStartPosition} from '../../utils';
+import Configurator from '../Configurator';
+import Stater from '../Stater';
+import Locator from '../Locator';
+import {IRefObject} from '../../types';
 
 class Elementor {
     _rootRef: React.RefObject<HTMLDivElement> = React.createRef();

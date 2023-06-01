@@ -1,7 +1,6 @@
-import Configurator from './Configurator';
-import Controller from './Controller';
-import Dragger from './Dragger';
-
+import Configurator from '../Configurator';
+import Controller from '../Controller';
+import Dragger from '../Dragger';
 
 /**
  * unmount 跟 blur 都需要 停止計時器

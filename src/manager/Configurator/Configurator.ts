@@ -1,37 +1,11 @@
-import {IBreakpointSetting, IPropsBreakpoints, TSlidesPerViewActual} from '../types';
-import {getMediaSetting, getPaddingBySize} from '../utils';
-import elClassName from '../el-class-name';
+import {IPropsBreakpoints} from '../../types';
+import {getMediaSetting, getPaddingBySize} from '../../utils';
+import elClassName from '../../el-class-name';
 import {ulid} from 'ulid';
-
-const defaultSetting: IBreakpointSetting = {
-    slidesPerView: 1,
-    aspectRatio: undefined,
-    slidesPerGroup: 1,
-    spaceBetween: 0,
-
-    isCenteredSlides: false,
-    isEnableLoop: false,
-    isEnablePagination: true,
-    isEnableNavButton: true,
-    isEnableMouseMove: true,
-    isEnableAutoPlay: false,
+import {ISetting} from './types';
 
 
-};
 
-interface IBreakpoint {
-    defaultSetting?: IBreakpointSetting,
-    responsiveBreakpoints?: IPropsBreakpoints,
-}
-
-
-export interface ISetting extends IBreakpointSetting {
-    slidesPerViewActual?: TSlidesPerViewActual
-    moveTime?: number,
-    defaultActivePage?: number,
-    autoPlayTime?: number,
-    isDebug?: boolean,
-}
 
 class Configurator {
     private _setting: ISetting;

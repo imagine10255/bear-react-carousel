@@ -23,7 +23,7 @@ export default defineConfig({
         visualizer() as Plugin,
     ],
     build: {
-        minify: false,
+        minify: process.env.NODE_ENV === 'production',
         sourcemap: process.env.NODE_ENV !== 'production',
         lib: {
             entry: path.resolve(__dirname, 'src/index.ts'),

@@ -1,6 +1,6 @@
-import {EDirection, ITouchStart} from '../types';
-import {DragEvent} from '../interface/DragEvent';
-import {getSlideDirection, getTranslateParams} from '../utils';
+import {EDirection, ITouchStart} from '../../types';
+import {DragEvent} from '../../interface/DragEvent';
+import {getSlideDirection, getTranslateParams} from '../../utils';
 
 
 const defaultPosition: ITouchStart = {

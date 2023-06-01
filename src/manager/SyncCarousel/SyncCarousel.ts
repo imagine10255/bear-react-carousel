@@ -1,12 +1,5 @@
-import {calcMoveTranslatePx, checkInRange, getNextIndex, getPrevIndex, getSlideIndex} from '../utils';
-import Configurator from './Configurator';
-import Stater from './Stater';
-import elClassName from '../el-class-name';
-import Locator from './Locator';
-import Elementor from './Elementor';
-import BearCarousel from '../BearCarousel';
-import {IRefObject} from '../types';
-import {MobileTouchEvent} from '../interface/DragEvent';
+import BearCarousel from '../../BearCarousel';
+import {IRefObject} from '../../types';
 
 class SyncCarousel {
     private readonly _carouselRef: IRefObject<BearCarousel>;

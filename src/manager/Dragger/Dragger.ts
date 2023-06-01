@@ -1,13 +1,12 @@
-import Configurator from './Configurator';
-import Controller from './Controller';
-import {EDevice} from '../types';
-import Elementor from './Elementor';
-import log from '../log';
-import {DesktopTouchEvent, MobileTouchEvent} from '../interface/DragEvent';
-import Locator from './Locator';
-import {calcMoveTranslatePx, checkInRange} from '../utils';
-import Stater from './Stater';
-import SyncCarousel from './SyncCarousel';
+import Configurator from '../Configurator';
+import Controller from '../Controller';
+import {EDevice} from '../../types';
+import Elementor from '../Elementor';
+import {DesktopTouchEvent, MobileTouchEvent} from '../../interface/DragEvent';
+import Locator from '../Locator';
+import {calcMoveTranslatePx, checkInRange} from '../../utils';
+import Stater from '../Stater';
+import SyncCarousel from '../SyncCarousel';
 
 
 type DragEvent = 'dragStart'|'dragDone';

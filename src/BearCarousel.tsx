@@ -1,12 +1,12 @@
 import * as React from 'react';
-import {booleanToDataAttr, checkIsMobile, getSetting, isDataKeyDff, isPropsDiff} from './utils';
+import {booleanToDataAttr, checkIsMobile, isDataKeyDff, isPropsDiff} from './utils';
 import log from './log';
 import {EDevice, IBearCarouselProps} from './types';
 import elClassName from './el-class-name';
 import {BearCarouselProvider} from './BearCarouselProvider';
 import './styles.css';
 
-import Configurator from './manager/Configurator';
+import Configurator, { getSetting } from './manager/Configurator';
 import WindowSizer from './manager/WindowSizer';
 import Stater from './manager/Stater';
 import SlideItem from './components/SlideItem';
@@ -153,9 +153,10 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
             // End of moving animation (Need to return to the position, to be fake)
 
-            this._windowSizer
-                .mount()
-                .on('resize', this._onResize);
+            this._windowSizer.onResize(this._onResize);
+            // this._windowSizer
+            //     .mount()
+            //     .on('resize', this._onResize);
 
             this._autoPlayer.mount();
             this._dragger.mount();
@@ -168,7 +169,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     componentWillUnmount() {
         if(this.props.isDebug && logEnable.componentWillUnmount) log.printInText('[componentWillUnmount]');
         this._autoPlayer.unmount();
-        this._windowSizer.unmount();
+        this._windowSizer.offResize(this._onResize);
         this._dragger.unmount();
     }
 
@@ -241,9 +242,9 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         }
     };
 
-    _onResize = (windowSize: number) => {
-        if(windowSize !== this.state.windowSize){
-            this.setState({windowSize});
+    _onResize = (args: {windowSize: number}) => {
+        if(args.windowSize !== this.state.windowSize){
+            this.setState({windowSize: args.windowSize});
         }else{
             this._controller.slideToPage(1, false);
         }
