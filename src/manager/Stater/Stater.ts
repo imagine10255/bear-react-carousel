@@ -7,8 +7,8 @@ import Eventor from '../Eventor';
 
 
 class Stater {
-    _info: IInfo;
-    _formatElement: InitData[];
+    private _info: IInfo;
+    private _formatElement: InitData[];
     private _configurator: Configurator;
     private _eventor = new Eventor<TEventMap>();
 
@@ -16,11 +16,6 @@ class Stater {
     constructor(setter: Configurator, data: TBearSlideItemDataList) {
         this._configurator = setter;
         this.init(data);
-    }
-
-    // @TODO: 禁止使用，所以需要除
-    get info(): IInfo {
-        return this._info;
     }
 
     get nextPage(): number{
@@ -56,6 +51,14 @@ class Stater {
         return this._info.residue;
     }
 
+    get isVisibleNavButton() {
+        return this._info.isVisibleNavButton;
+    }
+
+    get isVisiblePagination() {
+        return this._info.isVisiblePagination;
+    }
+
 
     onChange = (callback: TEventMap['change']) => {
         this._eventor.on('change', callback);
@@ -82,7 +85,7 @@ class Stater {
         let sourceTotal = slideData.length;
         this.updateData(slideData);
 
-        const elementTotal = this._formatElement.length;
+        const elementTotal = this.formatElement.length;
 
         // clone
         const cloneBeforeTotal = isEnableLoop ? slidesPerViewActual : 0;
@@ -121,8 +124,8 @@ class Stater {
             },
             // 總頁數
             residue: elementTotal % slidesPerGroup,
-            isVisiblePagination: isEnablePagination && this._formatElement.length > 0,
-            isVisibleNavButton: isEnableNavButton && this._formatElement.length > 0
+            isVisiblePagination: isEnablePagination && this.formatElement.length > 0,
+            isVisibleNavButton: isEnableNavButton && this.formatElement.length > 0
         };
         this._eventor.emit('change');
     };
@@ -136,13 +139,13 @@ class Stater {
             isEnableLoop
         );
 
-        return this._formatElement;
+        return this.element;
 
     };
 
     setActiveActual = (index: number, page: number) => {
-        this.info.actual.activeIndex = index;
-        this.info.page.activePage = page;
+        this.actual.activeIndex = index;
+        this.page.activePage = page;
         this._eventor.emit('change');
     };
 

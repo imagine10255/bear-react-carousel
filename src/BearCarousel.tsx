@@ -139,8 +139,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     componentDidMount() {
         if(this.props.isDebug && logEnable.componentDidMount) log.printInText('[componentDidMount]');
 
-        const {page} = this._stater.info;
-
         if(this.props.onMount){
             this.props.onMount();
         }
@@ -149,7 +147,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
         if (this._elementor) {
             // Move to the correct position for the first time
-            if(page.pageTotal > 0){
+            if(this._stater.page.pageTotal > 0){
                 this._controller.slideToPage(this.props.defaultActivePage ?? 1, false);
             }
 
@@ -337,13 +335,13 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                     data-gpu-render={booleanToDataAttr(this._device === EDevice.desktop)}
                     data-per-view-auto={booleanToDataAttr(this._configurator.setting.slidesPerView === 'auto')}
                     data-mouse-move={this._configurator.setting.isEnableMouseMove}
-                    data-actual={`${this._stater.info.actual.minIndex},${this._stater.info.actual.firstIndex}-${this._stater.info.actual.lastIndex},${this._stater.info.actual.maxIndex}`}
+                    data-actual={`${this._stater.actual.minIndex},${this._stater.actual.firstIndex}-${this._stater.actual.lastIndex},${this._stater.actual.maxIndex}`}
                     data-debug={booleanToDataAttr(isDebug)}
                     ref={this._elementor._rootRef}
                 >
                     <style scoped dangerouslySetInnerHTML={{__html: this._configurator.style}}/>
 
-                    {this._stater.info.isVisibleNavButton && this._renderNavButton()}
+                    {this._stater.isVisibleNavButton && this._renderNavButton()}
 
                     <div className={elClassName.content}>
                         <div ref={this._elementor._containerRef} className={elClassName.container} data-testid="bear-carousel-container">
@@ -351,7 +349,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                         </div>
                     </div>
 
-                    {this._stater.info.isVisiblePagination && this._renderPagination()}
+                    {this._stater.isVisiblePagination && this._renderPagination()}
 
                     {isDebug && <WindowSize size={this._windowSizer.size}/>}
                 </div>

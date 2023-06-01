@@ -168,7 +168,7 @@ class Elementor {
         const activePage = parseInt(active?.dataset.page);
 
         // 更改顯示在第幾頁的樣式 (父元件使用可判定樣式設定)
-        if (this._stater.info.isVisiblePagination && this._stater.page.activePage > 0) {
+        if (this._stater.isVisiblePagination && this._stater.page.activePage > 0) {
             this.pageEls.forEach((row, index) => {
                 if (activePage === index + 1) {
                     row.setAttribute('data-active', 'true');
@@ -181,9 +181,9 @@ class Elementor {
 
 
         // 提供是否為第一頁/最後一頁的判斷屬性
-        if(this._stater.info.isVisibleNavButton && !this._configurator.setting.isEnableLoop){
+        if(this._stater.isVisibleNavButton && !this._configurator.setting.isEnableLoop){
             this.navGroupEl.setAttribute('data-first', booleanToDataAttr(activePage === 1));
-            this.navGroupEl.setAttribute('data-last',  booleanToDataAttr(activePage === this._stater.info.page.pageTotal));
+            this.navGroupEl.setAttribute('data-last',  booleanToDataAttr(activePage === this._stater.page.pageTotal));
         }
 
         if(this._stater.page.pageTotal === 1){
