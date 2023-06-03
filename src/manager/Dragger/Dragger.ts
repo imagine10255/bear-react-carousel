@@ -43,7 +43,7 @@ class Dragger {
     }
 
 
-    onDrapStart = (callBack?: TEventMap['dragStart']) => {
+    onDragStart = (callBack?: TEventMap['dragStart']) => {
         this._elementor.containerEl.addEventListener('touchstart', this._onMobileTouchStart, {passive: false});
         this._elementor.containerEl.addEventListener('mousedown', this._onWebMouseStart, {passive: false});
 

@@ -82,8 +82,9 @@ export function getNextIndex(
     },
 ): Array<{index: number, isUseAnimation: boolean}> {
 
-    if(activeActual.isClone){
+    if(activeActual.isClone) {
         // 當移動到的位置 已經是 clone item
+        // 要等到動畫結束才可執行，否則會造成畫面閃動
         return [
             {index: activeActual.matchIndex, isUseAnimation: false},
             {index: activeActual.matchIndex + setting.slidesPerGroup, isUseAnimation: true},

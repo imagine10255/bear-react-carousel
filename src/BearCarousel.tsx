@@ -147,7 +147,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
             this._windowSizer.onResize(this._onResize);
             this._autoPlayer.onTimeout();
-            this._dragger.onDrapStart();
+            this._dragger.onDragStart();
         }
 
         this._setControllerRef();

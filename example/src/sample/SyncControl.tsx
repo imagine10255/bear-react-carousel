@@ -60,6 +60,35 @@ const bearSlideItemData3: TBearSlideItemDataList = images.map(row => {
 });
 
 
+const SyncCarousel = () => {
+    const syncCarouselRef = React.useRef<BearCarousel>(null);
+
+    return <div>
+        <BearCarousel
+            ref={syncCarouselRef}
+            data={divData}
+            slidesPerView={3}
+            isCenteredSlides
+            staticHeight="200px"
+            isEnableNavButton
+            isEnablePagination
+            isDebug
+        />
+
+        <BearCarousel
+            syncCarouselRef={syncCarouselRef ?? undefined}
+            data={divData}
+            slidesPerView={1}
+            isCenteredSlides
+            staticHeight="200px"
+            isEnableNavButton
+            isEnablePagination
+            isDebug
+        />
+    </div>
+}
+
+
 
 function SyncControl() {
     const [info, setInfo] = useState<IInfo>();
@@ -107,6 +136,8 @@ function SyncControl() {
 
     };
 
+
+
     return <div>
 
         {/*測試同步*/}
@@ -116,6 +147,7 @@ function SyncControl() {
                 data={bearSlideItemData2}
                 slidesPerView={3}
                 isCenteredSlides
+
                 staticHeight="200px"
                 // spaceBetween={20}
                 isEnableNavButton

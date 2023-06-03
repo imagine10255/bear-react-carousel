@@ -1,6 +1,6 @@
 import {useRef, useState} from 'react';
 import BearCarousel, {BearSlideItem, TBearSlideItemDataList, elClassName, IInfo} from 'bear-react-carousel';
-import {baseImage as images} from '../config/images';
+import {baseImage as images, foodImages} from '../config/images';
 
 import {Controller} from 'bear-react-carousel';
 
@@ -8,12 +8,12 @@ import {Controller} from 'bear-react-carousel';
 
 
 // 輪播項目1
-const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
+const bearSlideItemData1: TBearSlideItemDataList = foodImages.map(row => {
     return {
         key: row.id,
         children: <BearSlideItem as="card">
             <div className="h-100 d-flex"
-                style={{fontSize: '40px', backgroundColor: row.color}}
+                style={{fontSize: '40px', backgroundImage: `url(${row.imageUrl})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}
             >
                 {/*<a href="https://carousel.bearests.com" rel="noreferrer" target="_blank">{row.id}</a>*/}
             </div>
@@ -34,12 +34,13 @@ function Loop() {
         {/*測試依照比例設定容器高度*/}
         {enable && (
             <BearCarousel
-                style={{width: '400px'}}
+                // style={{width: '400px'}}
                 // controllerRef={controllerRef}
                 data={bearSlideItemData1}
                 // onChange={setInfo}
-                staticHeight="200px"
+                staticHeight="500px"
                 isEnableNavButton
+                moveTime={1500}
                 isEnablePagination
                 isEnableLoop
                 isDebug

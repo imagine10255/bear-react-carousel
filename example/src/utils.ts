@@ -5,7 +5,7 @@
 export function asset(path?: string): string{
     if(path){
         // 去除參數第一個斜線
-        return `${process.env.PUBLIC_URL}/static/${path.replace(/^\//, '')}`;
+        return `/${path.replace(/^\//, '')}`;
     }
     return '';
 }

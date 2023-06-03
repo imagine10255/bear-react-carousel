@@ -31,7 +31,7 @@ class AutoPlayer {
 
         this._controller.onSlideBefore(this.pause);
         this._controller.onSlideAfter(this.play);
-        this._dragger.onDrapStart(this.pause);
+        this._dragger.onDragStart(this.pause);
 
         this.play();
     };
