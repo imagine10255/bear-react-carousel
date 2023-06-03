@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.1-alpha.1](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.1-alpha.0...v4.0.1-alpha.1) (2023-06-03)
+
+
+### Features
+
+* add off browser image drag copy ([18355b1](https://github.com/imagine10255/bear-react-carousel/commit/18355b1081171d6e8cb093e7f51e4f765453a515))
+
 ### [4.0.1-alpha.0](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.0...v4.0.1-alpha.0) (2023-06-01)
 
 
