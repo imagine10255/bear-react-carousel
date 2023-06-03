@@ -151,6 +151,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         }
 
         this._setControllerRef();
+        this._elementor.onSlideAnimation();
         this._init();
     }
 
@@ -160,6 +161,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         this._windowSizer.offResize(this._onResize);
         this._dragger.offDrapStart();
         this._dragger.offDragEnd();
+        this._elementor.offSlideAnimation();
     }
 
     /***

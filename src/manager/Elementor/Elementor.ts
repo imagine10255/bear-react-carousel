@@ -18,6 +18,7 @@ class Elementor {
     private _configurator: Configurator;
     private _stater: Stater;
     private _locator: Locator;
+    private _isAnimation = false;
 
 
     constructor(manager: {
@@ -55,6 +56,26 @@ class Elementor {
     get isUseAnimation(){
         return this.containerEl.style.transitionDuration !== '0ms';
     }
+
+    get isAnimation(){
+        return this._isAnimation;
+    }
+
+
+
+
+    onSlideAnimation = () => {
+        console.log('xx');
+        this.containerEl.addEventListener('transitionstart', this.animationStart, false);
+        this.containerEl.addEventListener('transitionend', this.animationEnd, false);
+        console.log('xx2');
+    };
+
+    offSlideAnimation = () => {
+        this.containerEl.removeEventListener('transitionstart', this.animationStart, false);
+        this.containerEl.removeEventListener('transitionend', this.animationEnd, false);
+
+    };
 
 
     /**
@@ -191,6 +212,16 @@ class Elementor {
         }
     };
 
+
+    animationStart = () => {
+        this._isAnimation = true;
+        this.containerEl.dataset.animation = 'true';
+    };
+
+    animationEnd = () => {
+        this._isAnimation = false;
+        this.containerEl.removeAttribute('data-animation');
+    };
 }
 
 

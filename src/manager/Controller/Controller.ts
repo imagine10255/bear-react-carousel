@@ -33,12 +33,13 @@ class Controller {
 
     onSlideBefore = (callback: TEventMap['slideBefore']) => {
         this._eventor.on('slideBefore', callback);
-
     };
+
 
     onSlideAfter = (callback: TEventMap['slideAfter']) => {
         this._eventor.on('slideAfter', callback);
     };
+
 
     offSlideBefore = () => {
         this._eventor.off('slideBefore');
@@ -77,6 +78,7 @@ class Controller {
 
             this._syncCarousel.slideToActualIndex(slideIndex, isUseAnimation);
         }
+
         this._eventor.emit('slideAfter');
 
     };
@@ -102,10 +104,14 @@ class Controller {
      * 移動到下一頁
      */
     slideToNextPage = (): void => {
-
         const {nextPage, formatElement, page, actual, residue, element, nextPageFirstIndex} = this._stater;
         const {setting} = this._configurator;
         const activeActual = formatElement[actual.activeIndex];
+
+        // 禁止動畫播放中進行重置
+        if(activeActual.isClone && this._elementor.isAnimation){
+            return;
+        }
 
         getNextIndex(
             activeActual,
@@ -124,7 +130,6 @@ class Controller {
             }
         )
             .forEach(action => this.slideToActualIndex(action.index, action.isUseAnimation));
-
     };
 
     /**
@@ -135,6 +140,11 @@ class Controller {
         const {nextPage, formatElement, page, actual, residue, element, nextPageFirstIndex} = this._stater;
         const {setting} = this._configurator;
         const activeActual = formatElement[actual.activeIndex];
+
+        // 禁止動畫播放中進行重置
+        if(activeActual.isClone && this._elementor.isAnimation){
+            return;
+        }
 
         getPrevIndex(
             activeActual,
