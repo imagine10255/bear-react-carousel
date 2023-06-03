@@ -9,6 +9,7 @@ interface IProps {
   as?: 'image'|'card',
   imageUrl?: string,
   imageSize?: '100%'|'cover',
+  imageAlt?: string,
   children?: ReactNode,
   onClick?: () => void,
 }
@@ -21,6 +22,7 @@ const BearSlideItem = ({
     as = 'card',
     imageUrl,
     imageSize,
+    imageAlt,
     children,
     onClick,
 }: IProps) => {
@@ -49,8 +51,9 @@ const BearSlideItem = ({
             style={style}
             className={[className, elClassName.slideItemImg].join(' ').trim()}
             src={imageUrl}
-            alt=""
+            alt={imageAlt}
             height={staticHeight}
+            draggable="false"
             onMouseDown={onClick ? (event) => onMouseDown(event): undefined}
             onMouseUp={onClick ? (event) => onMouseUp(event): undefined}
         />;

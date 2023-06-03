@@ -14,9 +14,7 @@ const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
         children: <BearSlideItem as="card">
             <div className="h-100 d-flex"
                 style={{fontSize: '40px', backgroundColor: row.color}}
-            >
-                {/*<a href="https://carousel.bearests.com" rel="noreferrer" target="_blank">{row.id}</a>*/}
-            </div>
+            />
         </BearSlideItem>
     };
 });
