@@ -201,12 +201,12 @@ class Elementor {
 
         // 提供是否為第一頁/最後一頁的判斷屬性
         const checkNavGroup = this._stater.isVisibleNavButton && !this._configurator.setting.isEnableLoop;
-        this.navGroupEl.setAttribute('data-first', booleanToDataAttr(checkNavGroup && activePage === 1));
-        this.navGroupEl.setAttribute('data-last',  booleanToDataAttr(checkNavGroup && activePage === this._stater.page.pageTotal));
+        this.navGroupEl?.setAttribute('data-first', booleanToDataAttr(checkNavGroup && activePage === 1));
+        this.navGroupEl?.setAttribute('data-last',  booleanToDataAttr(checkNavGroup && activePage === this._stater.page.pageTotal));
 
         // 只有一頁
         const pageOnlyOne = this._stater.page.pageTotal === 1;
-        this.rootEl.setAttribute('data-onlyOne',  pageOnlyOne && booleanToDataAttr(true));
+        this.rootEl?.setAttribute('data-onlyOne',  pageOnlyOne && booleanToDataAttr(true));
     };
 
 
