@@ -112,8 +112,8 @@ export function isPropsDiff(props: IBearCarouselProps, nextProps: IBearCarouselP
         .filter(key => typeof props[key] !== 'function' && !exclude.includes(key))
         .map(key => props[key]);
     const nextFilterProps = Object.keys(nextProps)
-        .filter(key => typeof props[key] !== 'function' && !exclude.includes(key))
-        .map(key => props[key]);
+        .filter(key => typeof nextProps[key] !== 'function' && !exclude.includes(key))
+        .map(key => nextProps[key]);
 
     return deepCompare(filterProps, nextFilterProps) === false;
 }

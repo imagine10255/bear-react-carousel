@@ -27,7 +27,9 @@ function Base() {
     const [enable, setEnable] = useState<boolean>(true);
     const [count, setCount] = useState<number>(0);
     const controllerRef = useRef<Controller>(null);
+    const [slidePreview, setSlidePreview] = useState(1);
 
+    console.log('slidePreview', slidePreview);
     return <div>
         {/*測試依照比例設定容器高度*/}
         {enable && (
@@ -36,6 +38,7 @@ function Base() {
                 // controllerRef={controllerRef}
                 data={bearSlideItemData1}
                 // onChange={setInfo}
+                slidesPerView={slidePreview}
                 isCenteredSlides={true}
                 staticHeight="200px"
                 isEnableNavButton
@@ -55,6 +58,12 @@ function Base() {
         }}> slideToPage5 </button>
 
         <br/>
+
+        <select onChange={event => setSlidePreview(Number(event.target.value))}>
+            <option value={1}>1</option>
+            <option value={2}>2</option>
+            <option value={3}>3</option>
+        </select>
         <pre>
             {JSON.stringify(info, null, '\t')}
         </pre>

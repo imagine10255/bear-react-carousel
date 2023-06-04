@@ -48,7 +48,7 @@ const examples: Record<EExampleCode, () => JSX.Element> = {
 };
 
 function App() {
-    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.loop);
+    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.base);
     const Comp = examples[exampleKey];
 
 
