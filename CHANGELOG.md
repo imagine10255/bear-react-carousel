@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.1-alpha.3](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.1-alpha.2...v4.0.1-alpha.3) (2023-06-04)
+
+
+### Bug Fixes
+
+* fix isPropsDiff include key ([377bd12](https://github.com/imagine10255/bear-react-carousel/commit/377bd1220364e3daa6c7ebebf3817fbf8215f0f6))
+
 ### [4.0.1-alpha.2](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.1-alpha.1...v4.0.1-alpha.2) (2023-06-03)
 
 
