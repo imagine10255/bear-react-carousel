@@ -65,10 +65,8 @@ class Elementor {
 
 
     onSlideAnimation = () => {
-        console.log('xx');
         this.containerEl.addEventListener('transitionstart', this.animationStart, false);
         this.containerEl.addEventListener('transitionend', this.animationEnd, false);
-        console.log('xx2');
     };
 
     offSlideAnimation = () => {

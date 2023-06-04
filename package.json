@@ -48,6 +48,8 @@
     "release:alpha": "standard-version --prerelease alpha"
   },
   "dependencies": {
+    "@bearests/core": "^0.0.5",
+    "@bearests/form": "^0.0.29",
     "react": "^18.x",
     "react-dom": "^18.x"
   },

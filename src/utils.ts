@@ -109,10 +109,10 @@ export function getLoopResetIndex(activeActualIndex: number, residue: number): n
 
 export function isPropsDiff(props: IBearCarouselProps, nextProps: IBearCarouselProps, exclude: string[]) {
     const filterProps = Object.keys(props)
-        .filter(key => typeof props[key] !== 'function' && exclude.includes(key))
+        .filter(key => typeof props[key] !== 'function' && !exclude.includes(key))
         .map(key => props[key]);
     const nextFilterProps = Object.keys(nextProps)
-        .filter(key => typeof props[key] !== 'function' && exclude.includes(key))
+        .filter(key => typeof props[key] !== 'function' && !exclude.includes(key))
         .map(key => props[key]);
 
     return deepCompare(filterProps, nextFilterProps) === false;
