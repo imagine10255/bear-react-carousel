@@ -200,14 +200,13 @@ class Elementor {
 
 
         // 提供是否為第一頁/最後一頁的判斷屬性
-        if(this._stater.isVisibleNavButton && !this._configurator.setting.isEnableLoop){
-            this.navGroupEl.setAttribute('data-first', booleanToDataAttr(activePage === 1));
-            this.navGroupEl.setAttribute('data-last',  booleanToDataAttr(activePage === this._stater.page.pageTotal));
-        }
+        const checkNavGroup = this._stater.isVisibleNavButton && !this._configurator.setting.isEnableLoop;
+        this.navGroupEl.setAttribute('data-first', booleanToDataAttr(checkNavGroup && activePage === 1));
+        this.navGroupEl.setAttribute('data-last',  booleanToDataAttr(checkNavGroup && activePage === this._stater.page.pageTotal));
 
-        if(this._stater.page.pageTotal === 1){
-            this.rootEl.setAttribute('data-onlyOne',  booleanToDataAttr(true));
-        }
+        // 只有一頁
+        const pageOnlyOne = this._stater.page.pageTotal === 1;
+        this.rootEl.setAttribute('data-onlyOne',  pageOnlyOne && booleanToDataAttr(true));
     };
 
 
