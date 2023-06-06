@@ -1,10 +1,10 @@
 import BearCarousel from '../../BearCarousel';
-import {ICustomRefObject} from '../../types';
+import {RefObject} from "react";
 
 class SyncCarousel {
-    private readonly _carouselRef: ICustomRefObject<BearCarousel>;
+    private readonly _carouselRef: RefObject<BearCarousel>;
 
-    constructor(carouselRef: ICustomRefObject<BearCarousel>) {
+    constructor(carouselRef: RefObject<BearCarousel>) {
         this._carouselRef = carouselRef;
     }
 

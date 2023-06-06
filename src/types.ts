@@ -1,9 +1,7 @@
-import {ReactNode} from 'react';
+import {ReactNode, RefObject} from 'react';
 import * as CSS from 'csstype';
 import BearCarousel from './BearCarousel';
 import Controller from './manager/Controller';
-import BearSlideCard from "./BearSlideCard";
-import BearSlideImage from "./BearSlideImage";
 
 export type TSlidesPerView = number|'auto'
 export type TSlidesPerViewActual = number
@@ -14,9 +12,6 @@ export enum EDevice {
 }
 
 export interface IBearCarouselObj {
-  // goToPage: (page: number) => void;
-  // toNext: () => void;
-  // toPrev: () => void;
   activeActualIndex: number;
   activePage: number;
   info: IInfo,
@@ -40,12 +35,6 @@ export type TSlideOnClick = () => void
 
 
 
-
-export interface ICustomRefObject<T> {
-  current: T;
-}
-
-
 export interface IBearCarouselProps extends IBreakpointSetting{
   style?: CSS.Properties
   className?: string
@@ -58,8 +47,8 @@ export interface IBearCarouselProps extends IBreakpointSetting{
   defaultActivePage?: number
   isDebug: boolean
   isSlideItemMemo?: boolean
-  syncCarouselRef?: ICustomRefObject<BearCarousel>
-  controllerRef?: ICustomRefObject<Controller>
+  syncCarouselRef?: RefObject<BearCarousel>
+  controllerRef?: RefObject<Controller>
   onChange?: TStateOnChange
   onMount?: TOnMount
   // onElementMove?: (activeActualIndex: number, percentage: number) => void,
@@ -98,7 +87,7 @@ export interface IInfo extends ICarouselState{
 export interface IBearSlideItemData {
   key: string|number
   onClick?: TSlideOnClick
-  children: typeof BearSlideCard | typeof BearSlideImage
+  children: ReactNode
 }
 export type TBearSlideItemDataList = IBearSlideItemData[];
 

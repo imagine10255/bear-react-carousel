@@ -213,6 +213,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
      */
     private _setControllerRef = () => {
         if(this.props.controllerRef){
+            // @ts-ignore
             this.props.controllerRef.current = this._controller;
         }
     };

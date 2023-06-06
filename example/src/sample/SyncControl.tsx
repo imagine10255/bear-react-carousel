@@ -1,6 +1,6 @@
 import {useCallback, useRef, useState} from 'react';
 import styled from 'styled-components';
-import BearCarousel, {BearSlideCard, TBearSlideItemDataList, elClassName, IInfo} from 'bear-react-carousel';
+import BearCarousel, {BearSlideCard, ICarouselState, TBearSlideItemDataList, elClassName, IInfo} from 'bear-react-carousel';
 import {baseImage as images} from '../config/images';
 
 
@@ -44,54 +44,10 @@ const bearSlideItemData2: TBearSlideItemDataList = images.map(row => {
     };
 });
 
-// 輪播項目3
-const bearSlideItemData3: TBearSlideItemDataList = images.map(row => {
-    return {
-        key: row.id,
-        children: <BearSlideCard>
-            <div className="h-100 d-flex"
-                style={{fontSize: '40px', backgroundColor: row.color}}
-            >
-                <Do/>
-                {/*<a href="https://bear-react-carousel.github.io" rel="noreferrer" target="_blank">{row.id}</a>*/}
-            </div>
-        </BearSlideCard>
-    };
-});
-
-
-const SyncCarousel = () => {
-    const syncCarouselRef = React.useRef<BearCarousel>(null);
-
-    return <div>
-        <BearCarousel
-            ref={syncCarouselRef}
-            data={divData}
-            slidesPerView={3}
-            isCenteredSlides
-            staticHeight="200px"
-            isEnableNavButton
-            isEnablePagination
-            isDebug
-        />
-
-        <BearCarousel
-            syncCarouselRef={syncCarouselRef ?? undefined}
-            data={divData}
-            slidesPerView={1}
-            isCenteredSlides
-            staticHeight="200px"
-            isEnableNavButton
-            isEnablePagination
-            isDebug
-        />
-    </div>
-}
-
 
 
 function SyncControl() {
-    const [info, setInfo] = useState<IInfo>();
+    const [info, setInfo] = useState<ICarouselState>();
 
     // const [carousel, setCarousel] = useState<IBearCarouselObj>();
     const [enable, setEnable] = useState<boolean>(true);
@@ -99,42 +55,10 @@ function SyncControl() {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const flexItemRef = useRef<HTMLDivElement>(null);
     const syncCarouselRef = useRef<BearCarousel>(null);
+    const sync2CarouselRef = useRef<BearCarousel>(null);
 
     const slideRef = useRef<HTMLInputElement>(null);
 
-
-    //
-    // const handleMove = useCallback((activeActualIndex: number, percentage: number) => {
-    //     if(textareaRef.current){
-    //         textareaRef.current.innerHTML = `activeActualIndex: ${activeActualIndex}, percentage: ${percentage}\r\n` + textareaRef.current.innerHTML;
-    //     }
-    //     if(flexItemRef.current){
-    //         flexItemRef.current.style.width = `${percentage * 100 / 7}%`;
-    //         flexItemRef.current.style.transition = 'none';
-    //     }
-    //     if(slideRef.current){
-    //         slideRef.current.value = `${percentage * 100 / 7}`;
-    //     }
-    // }, []);
-    //
-    // const handleDone = useCallback((activeActualIndex: number) => {
-    //     if(textareaRef.current){
-    //         textareaRef.current.innerHTML = `activeActualIndex: ${activeActualIndex}, percentage: ${activeActualIndex}\r\n` + textareaRef.current.innerHTML;
-    //     }
-    //     if(flexItemRef.current){
-    //         flexItemRef.current.style.width = `${activeActualIndex * 100 / 7}%`;
-    //         flexItemRef.current.style.transition = 'width .3s';
-    //     }
-    //     if(slideRef.current){
-    //         slideRef.current.value = `${activeActualIndex * 100 / 7}`;
-    //     }
-    //     console.log('activeActualIndex', activeActualIndex);
-    //     carousel?.goToPage(activeActualIndex + 1);
-    // }, [carousel]);
-
-    const handleControl = () => {
-
-    };
 
 
 
@@ -144,6 +68,8 @@ function SyncControl() {
         <Box>
             <BearCarousel
                 ref={syncCarouselRef}
+                // syncCarouselRef={sync2CarouselRef}
+
                 data={bearSlideItemData2}
                 slidesPerView={3}
                 isCenteredSlides
@@ -159,26 +85,9 @@ function SyncControl() {
         </Box>
 
 
-        {/*<Box2>*/}
-        {/*    <BearCarousel*/}
-        {/*        ref={syncCarouselRef}*/}
-
-
-        {/*        data={bearSlideItemData1}*/}
-        {/*        slidesPerView={1.5}*/}
-        {/*        isCenteredSlides*/}
-        {/*        staticHeight="200px"*/}
-        {/*        // spaceBetween={20}*/}
-        {/*        isEnableNavButton*/}
-        {/*        isEnablePagination*/}
-        {/*        // onElementMove={handleMove}*/}
-        {/*        // onElementDone={handleDone}*/}
-        {/*        isDebug*/}
-        {/*    />*/}
-        {/*</Box2>*/}
-
         <Box2>
             <BearCarousel
+                ref={sync2CarouselRef}
                 syncCarouselRef={syncCarouselRef}
                 onChange={setInfo}
 
@@ -200,18 +109,6 @@ function SyncControl() {
         <pre>
             {JSON.stringify(info, null, '\t')}
         </pre>
-
-        {/*<textarea cols={30} rows={10} ref={textareaRef} style={{width: '100%'}}/>*/}
-
-        {/*<Flex>*/}
-        {/*    <FlexItem ref={flexItemRef}/>*/}
-        {/*    <SlideControlInput*/}
-        {/*        type="range"*/}
-        {/*        min="1"*/}
-        {/*        max="100"*/}
-        {/*        ref={slideRef}*/}
-        {/*    />*/}
-        {/*</Flex>*/}
 
         <button type="button" onClick={() => setCount(curr => curr += 1)}> count: {count}</button>
         <button type="button" onClick={() => setEnable(curr => !curr)}> enable: {String(enable)}</button>
