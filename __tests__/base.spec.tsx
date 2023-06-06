@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event';
 import {cleanup, fireEvent, render, screen} from '@testing-library/react';
 
 import BearCarousel from '../src/BearCarousel';
-import BearSlideItem from '../src/BearSlideItem';
+import BearSlideCard from '../src/BearSlideCard';
 import {getActiveElement, setContainerSize, setSlideItemsSizes} from './utils';
 
 
@@ -18,7 +18,7 @@ describe('Base testing', () => {
 
     const containerSize = 400;
     const createData = new Array(6).fill('test');
-    const data = createData.map((row, index) => ({key: index, children: <BearSlideItem as="card"/>}));
+    const data = createData.map((row, index) => ({key: index, children: <BearSlideCard>item{index}</BearSlideCard>}));
     const onMount = () => {
         container = screen.getByTestId('bear-carousel-container');
         slideItems = screen.getAllByTestId('bear-carousel-slideItem');
@@ -67,6 +67,8 @@ describe('Base testing', () => {
 
     test('slideItems is six and in the document', () => {
         expect(slideItems).toHaveLength(6);
+        expect(slideItems[0].textContent).toEqual('item0');
+        expect(slideItems[1].textContent).toEqual('item1');
     });
 
     test('Navigates to third page using next button', async () => {

@@ -48,7 +48,7 @@ yarn add bear-react-carousel
 ### Usage
 
 ```tsx
-import BearCarousel, {TBearSlideItemDataList, BearSlideItem} from 'bear-react-carousel';
+import BearCarousel, {TBearSlideItemDataList, BearSlideImage} from 'bear-react-carousel';
 import 'bear-react-carousel/dist/index.css';
 
 const images = [
@@ -60,7 +60,7 @@ const images = [
 const bearSlideItemData: TBearSlideItemDataList  = images.map(row => {
         return {
             key: row.id,
-            children: <BearSlideItem imageUrl={row.imageUrl}/>
+            children: <BearSlideImage imageUrl={row.imageUrl}/>
         };
     });
 

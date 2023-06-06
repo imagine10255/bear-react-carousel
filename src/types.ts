@@ -31,7 +31,7 @@ export enum EDirection {
 }
 
 export type IRenderNavButton = (toPrev: TToPrev, toNext: TToNext) => void
-export type IRenderPagination = (pageTotal: number) => JSX.Element
+export type IRenderPagination = (pageTotal: number) => JSX.Element[]
 
 
 

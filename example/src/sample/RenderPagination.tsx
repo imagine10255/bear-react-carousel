@@ -1,7 +1,7 @@
 import {useRef, useState} from 'react';
-import styled, {keyframes, css} from 'styled-components';
+import styled, {css, keyframes} from 'styled-components';
 import {media} from 'bear-react-grid';
-import BearCarousel, {BearSlideItem, TBearSlideItemDataList, elClassName, IInfo} from 'bear-react-carousel';
+import BearCarousel, {BearSlideCard, TBearSlideItemDataList, elClassName, IInfo} from 'bear-react-carousel';
 import {baseImage as images} from '../config/images';
 
 import {Controller} from 'bear-react-carousel';
@@ -14,16 +14,16 @@ const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
     return {
         key: row.id,
         paginationContent: <>{row.color}</>,
-        children: <BearSlideItem as="card">
+        children: <BearSlideCard>
             <div className="h-100 d-flex"
                 style={{fontSize: '40px', backgroundColor: row.color}}
             />
-        </BearSlideItem>
+        </BearSlideCard>
     };
 });
 
 
-const autoPlayTime = 4000;
+const autoPlayTime = 1500;
 
 
 function RenderPagination() {
@@ -46,18 +46,18 @@ function RenderPagination() {
                 staticHeight="200px"
                 isEnableNavButton
                 isEnablePagination
-                // isEnableLoop
+                isEnableLoop
                 isEnableAutoPlay={true}
-                moveTime={autoPlayTime}
-                breakpoints={{
-                    992: {
-                        isEnablePageContent: true,
-                    }
-                }}
+                autoPlayTime={autoPlayTime}
                 renderPagination={(pageTotal: number) => {
                     return images.map(row => {
                         return <>{row.color}</>;
                     });
+                }}
+                breakpoints={{
+                    992: {
+                        isEnablePageContent: true,
+                    }
                 }}
                 isDebug
             />)}
@@ -100,71 +100,43 @@ const progress = keyframes`
 `;
 
 const CarouselBox = styled.div`
+
+  
+  
+  
+  .${elClassName.paginationContent}{
+    background-color: rgba(255, 255, 255, .8);
     
+  }
 
-    .${elClassName.paginationGroup}[data-pageContent="true"]{
-        bottom: 0;
 
-      .${elClassName.paginationButton}{
-        &:after {
-          content: '';
-          width: 0;
-          height: 4px;
-          background-color: greenyellow;
-          position: absolute;
-          bottom: 0;
-          left: 0;
+    ${media.sm`
+        .${elClassName.paginationGroup}{
+            bottom: 0;
+            width: 100%;
+            color: #000;
+            overflow: hidden;
+            
         }
-
-        &[data-active="true"]:after {
-          animation: ${progress} ${autoPlayTime}ms linear infinite;
-          animation-iteration-count: 1;
-        }
-      }
-    }
-    
-
-    
-    
-
-    ${props => css`
-       ${media.xl`
-            .${elClassName.paginationGroup}{
+        .${elClassName.paginationButton}{
+            margin: 0 10px;
+            :after {
+                content: '';
+                width: 0;
+                height: 4px;
+                background-color: greenyellow;
+                position: absolute;
+                bottom: 0;
                 left: 0;
-                right: 0;
-                bottom: -35px;
-                background-color: #fff;
-                height: 70px;
-                width: 70%;
-                margin: auto;
-                display: flex;
-                box-shadow: none;
             }
+            
     
-             .${elClassName.paginationButton}{
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100%;
-                font-size: 12px;
-                font-weight: bold;
-                color: #000;
-                position: relative;
-                flex: 1;
-                background: transparent;
-                border: solid 1px #ededed;
-                border-radius: 0;
-                margin: 0;
-                padding: 0;
-                box-shadow: none;
-    
+            &[data-active="true"]:after {
+                animation-iteration-count: 1;
+                animation: ${progress} ${autoPlayTime}ms linear infinite;
             }
-    
-            .${elClassName.paginationContent}{
-                display: flex;
-            }
-        `}
-    `}   
+        }   
+    `}
     
 `;
 

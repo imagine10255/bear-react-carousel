@@ -291,7 +291,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         const {page} = this._stater;
         const {isEnablePageContent} = this._configurator.setting;
 
-        let pageContent: JSX.Element;
+        let pageContent: JSX.Element[];
         const isPageContent = typeof renderPagination !== 'undefined';
         if (isPageContent) {
             pageContent = renderPagination(this._stater.page.pageTotal);
@@ -312,7 +312,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
         return <div
             ref={this._elementor._pageGroupRef}
-            data-pageContent={booleanToDataAttr(isEnablePageContent)}
+            data-page-content={booleanToDataAttr(isEnablePageContent)}
             className={elClassName.paginationGroup}
         >
             {pageElement}

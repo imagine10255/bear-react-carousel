@@ -4,8 +4,8 @@ import userEvent from '@testing-library/user-event';
 import {act, cleanup, render, screen, waitFor} from '@testing-library/react';
 
 import BearCarousel from '../src/BearCarousel';
-import BearSlideItem from '../src/BearSlideItem';
 import {getActiveElement, setSlideItemsSizes, setContainerSize} from './utils';
+import BearSlideCard from "../src/BearSlideCard";
 
 
 
@@ -22,7 +22,7 @@ describe('Auto play testing', () => {
 
         const containerSize = 400;
         const createData = new Array(6).fill('test');
-        const data = createData.map((row, index) => ({key: index, children: <BearSlideItem as="card"/>}))
+        const data = createData.map((row, index) => ({key: index, children: <BearSlideCard>item{index}</BearSlideCard>}));
         const onMount = () => {
             container = screen.getByTestId('bear-carousel-container');
             slideItems = screen.getAllByTestId('bear-carousel-slideItem');

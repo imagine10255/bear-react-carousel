@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import styled, {css} from 'styled-components';
-
+import gridConfig from './config/grid';
 import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
 import './App.css';
@@ -19,6 +19,7 @@ import Loop from './sample/Loop';
 import Center from './sample/Center';
 import SlidePerGroup from './sample/SlidePerGroup';
 import RenderPagination from './sample/RenderPagination';
+import { GridThemeProvider } from 'bear-react-grid';
 
 
 
@@ -57,24 +58,25 @@ function App() {
 
 
     return (
-        <AppRoot className="App">
+        <GridThemeProvider gridTheme={gridConfig}>
+            <AppRoot className="App">
+
+                <Menu>
+                    {Object.keys(examples).map(code => {
+                        return <Button type="button"
+                            key={code}
+                            isActive={code === exampleKey}
+                            onClick={() => setExampleItem(code as EExampleCode)}
+                        >{code}</Button>;
+                    })}
+                </Menu>
 
 
-            <Menu>
-                {Object.keys(examples).map(code => {
-                    return <Button type="button"
-                        key={code}
-                        isActive={code === exampleKey}
-                        onClick={() => setExampleItem(code as EExampleCode)}
-                    >{code}</Button>;
-                })}
-            </Menu>
-
-
-            <Example>
-                <Comp/>
-            </Example>
-        </AppRoot>
+                <Example>
+                    <Comp/>
+                </Example>
+            </AppRoot>
+        </GridThemeProvider>
     );
 }
 

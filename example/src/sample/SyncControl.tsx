@@ -1,6 +1,6 @@
 import {useCallback, useRef, useState} from 'react';
 import styled from 'styled-components';
-import BearCarousel, {BearSlideItem, TBearSlideItemDataList, elClassName, IInfo} from 'bear-react-carousel';
+import BearCarousel, {BearSlideCard, TBearSlideItemDataList, elClassName, IInfo} from 'bear-react-carousel';
 import {baseImage as images} from '../config/images';
 
 
@@ -20,13 +20,13 @@ const Do = styled.div`
 const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
     return {
         key: row.id,
-        children: <BearSlideItem as="card">
+        children: <BearSlideCard>
             <div className="h-100 d-flex"
                 style={{fontSize: '40px', backgroundColor: row.color}}
             >
                 {/*<a href="https://carousel.bearests.com" rel="noreferrer" target="_blank">{row.id}</a>*/}
             </div>
-        </BearSlideItem>
+        </BearSlideCard>
     };
 });
 
@@ -34,13 +34,13 @@ const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
 const bearSlideItemData2: TBearSlideItemDataList = images.map(row => {
     return {
         key: row.id,
-        children: <BearSlideItem as="card">
+        children: <BearSlideCard>
             <div className="h-100 d-flex"
                 style={{fontSize: '40px', width: '200px', height: '200px', backgroundColor: row.color}}
             >
                 {/*<a href="https://carousel.bearests.com" rel="noreferrer" target="_blank">{row.id}</a>*/}
             </div>
-        </BearSlideItem>
+        </BearSlideCard>
     };
 });
 
@@ -48,14 +48,14 @@ const bearSlideItemData2: TBearSlideItemDataList = images.map(row => {
 const bearSlideItemData3: TBearSlideItemDataList = images.map(row => {
     return {
         key: row.id,
-        children: <BearSlideItem as="card">
+        children: <BearSlideCard>
             <div className="h-100 d-flex"
                 style={{fontSize: '40px', backgroundColor: row.color}}
             >
                 <Do/>
                 {/*<a href="https://carousel.bearests.com" rel="noreferrer" target="_blank">{row.id}</a>*/}
             </div>
-        </BearSlideItem>
+        </BearSlideCard>
     };
 });
 

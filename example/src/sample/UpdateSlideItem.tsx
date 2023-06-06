@@ -1,5 +1,5 @@
 import {useMemo, useRef, useState} from 'react';
-import BearCarousel, {BearSlideItem, TBearSlideItemDataList, elClassName, IInfo, Controller} from 'bear-react-carousel';
+import BearCarousel, {BearSlideCard, TBearSlideItemDataList, elClassName, IInfo, Controller} from 'bear-react-carousel';
 import {baseImage, baseImage as images, catImages} from '../config/images';
 
 
@@ -20,14 +20,14 @@ function UpdateSlideItem() {
     const data: TBearSlideItemDataList = baseImage.map(row => {
         return {
             key: row.id,
-            children: <BearSlideItem as="card">
+            children: <BearSlideCard>
                 <div className="h-100 d-flex"
                     style={{fontSize: '40px', backgroundColor: row.color, border: row.id === activeId ? '5px solid #bdbdbd' : undefined}}
                     onClick={() => setActiveId(row.id)}
                 >
                     {/*<a href="https://carousel.bearests.com" rel="noreferrer" target="_blank">{row.id}</a>*/}
                 </div>
-            </BearSlideItem>
+            </BearSlideCard>
         };
     });
 
