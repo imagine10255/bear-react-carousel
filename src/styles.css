@@ -35,6 +35,11 @@
 
 
 .bear-react-carousel__pagination-group{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+
     position: absolute;
     left: 50%;
     bottom: 12px;
