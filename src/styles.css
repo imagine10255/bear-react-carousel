@@ -37,7 +37,7 @@
 .bear-react-carousel__pagination-group{
     position: absolute;
     left: 50%;
-    bottom: 20px;
+    bottom: 12px;
     transform: translateX(-50%);
     text-align: center;
     width: auto;
@@ -57,6 +57,10 @@
     height: .5rem;
     border-radius: 7px;
     background-color: #bdbdbd;
+    opacity: 0.6;
+    box-shadow: 3px 3px 9px 0 rgb(189 189 189 / 12%);
+    transition: width 0.3s, background-color 0.3s;
+    margin: 0 6px;
 }
 .bear-react-carousel__pagination-group:not([data-dataContent="true"]) .bear-react-carousel__pagination-button[data-active]{
     background-color: var(--primary-color, #00a3e0);
@@ -64,12 +68,8 @@
 
 .bear-react-carousel__pagination-button{
     position: relative;
-    display: inline-block;
-    margin: 0 6px;
+    display: inline-grid;
     cursor: pointer;
-    transition: width 0.3s, background-color 0.3s;
-    box-shadow: 3px 3px 9px 0 rgb(189 189 189 / 12%);
-    opacity: 0.6;
 }
 
 
