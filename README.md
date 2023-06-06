@@ -52,22 +52,22 @@ import BearCarousel, {TBearSlideItemDataList, BearSlideImage} from 'bear-react-c
 import 'bear-react-carousel/dist/index.css';
 
 const images = [
-        {id: 1, imageUrl: "https://dummyimage.com/900x400/dee2e6/6c757d.jpg"},
-        {id: 2, imageUrl: "https://dummyimage.com/900x400/dee2e6/6c757d.jpg"},
-        {id: 3, imageUrl: "https://dummyimage.com/900x400/dee2e6/6c757d.jpg"},
-    ];
+    {id: 1, imageUrl: "https://dummyimage.com/900x400/dee2e6/6c757d.jpg"},
+    {id: 2, imageUrl: "https://dummyimage.com/900x400/dee2e6/6c757d.jpg"},
+    {id: 3, imageUrl: "https://dummyimage.com/900x400/dee2e6/6c757d.jpg"},
+];
     
-const bearSlideItemData: TBearSlideItemDataList  = images.map(row => {
-        return {
-            key: row.id,
-            children: <BearSlideImage imageUrl={row.imageUrl}/>
-        };
-    });
-
+const data: TBearSlideItemDataList = images.map(row => {
+    return {
+        key: row.id,
+        // BearSlideImage or BearSlideCard
+        children: <BearSlideImage imageUrl={row.imageUrl}/>
+    };
+});
 
 export const CustomBanner = () => {
     return <BearCarousel 
-        data={bearSlideItemData}
+        data={data}
         staticHeight="200px"
     />
 }
@@ -79,22 +79,6 @@ There is also a codesandbox template that you can fork and play with it:
 
 
 
-### if your need control by out component
-
-```tsx
-const CustomBanner = ({
-    const [carousel, setCarousel] = useState<IBearCarouselObj>();
-  
-    const goToPage = (index: number): void => control?.goToPage(index);
-    const getPageTotal = (): number => control?.info.pageTotal ?? 0;
-
-    <BearCarousel
-        setCarousel={setCarousel}
-        data={bearSlideItemData}
-        staticHeight="250px"/
-    />
-}
-```
 
 ### License
 
