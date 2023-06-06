@@ -30,9 +30,11 @@ const Page = forwardRef<HTMLDivElement, IProps>(({
         data-active={booleanToDataAttr(isActive)}
         data-page={page}
     >
-        <div className={elClassName.paginationContent}>
-            {pageContent}
-        </div>
+        {pageContent && (
+            <div className={elClassName.paginationContent}>
+                {pageContent}
+            </div>
+        )}
     </div>;
 });
 
