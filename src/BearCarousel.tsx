@@ -60,6 +60,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         breakpoints: {},
         isCenteredSlides: false,
         isEnableLoop: false,
+        isEnablePageContent: false,
         isEnablePagination: false,
         isEnableNavButton: false,
         isEnableMouseMove: true,
@@ -288,6 +289,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     private _renderPagination = () => {
         const {renderPagination} = this.props;
         const {page} = this._stater;
+        const {isEnablePageContent} = this._configurator.setting;
 
         let pageContent: JSX.Element;
         const isPageContent = typeof renderPagination !== 'undefined';
@@ -304,13 +306,13 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                     onSlideToPage={(page) => this._controller.slideToPage(page)}
                     page={index + 1}
                     isActive={page.activePage === index + 1}
-                    pageContent={pageContent && pageContent[index]}
+                    pageContent={isEnablePageContent && pageContent[index]}
                 />;
             });
 
         return <div
             ref={this._elementor._pageGroupRef}
-            data-dataContent={booleanToDataAttr(isPageContent)}
+            data-pageContent={booleanToDataAttr(isEnablePageContent)}
             className={elClassName.paginationGroup}
         >
             {pageElement}

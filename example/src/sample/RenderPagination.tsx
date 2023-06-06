@@ -49,6 +49,11 @@ function RenderPagination() {
                 // isEnableLoop
                 isEnableAutoPlay={true}
                 moveTime={autoPlayTime}
+                breakpoints={{
+                    992: {
+                        isEnablePageContent: true,
+                    }
+                }}
                 renderPagination={(pageTotal: number) => {
                     return images.map(row => {
                         return <>{row.color}</>;
@@ -96,29 +101,28 @@ const progress = keyframes`
 
 const CarouselBox = styled.div`
     
-    // .${elClassName.paginationContent}{
-    //    display: none;
-    //}
 
-    .${elClassName.paginationGroup}{
+    .${elClassName.paginationGroup}[data-pageContent="true"]{
         bottom: 0;
-    }
-    .${elClassName.paginationButton}{
+
+      .${elClassName.paginationButton}{
         &:after {
-            content: '';
-            width: 0;
-            height: 4px;
-            background-color: greenyellow;
-            position: absolute;
-            bottom: 0;
-            left: 0;
+          content: '';
+          width: 0;
+          height: 4px;
+          background-color: greenyellow;
+          position: absolute;
+          bottom: 0;
+          left: 0;
         }
 
         &[data-active="true"]:after {
-            animation: ${progress} ${autoPlayTime}ms linear infinite;
-            animation-iteration-count: 1;
+          animation: ${progress} ${autoPlayTime}ms linear infinite;
+          animation-iteration-count: 1;
         }
+      }
     }
+    
 
     
     

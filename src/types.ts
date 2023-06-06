@@ -131,6 +131,7 @@ export interface IBreakpointSetting {
   spaceBetween: number
   isCenteredSlides: boolean
   isEnableLoop: boolean
+  isEnablePageContent: boolean
   isEnablePagination: boolean
   isEnableNavButton: boolean
   isEnableMouseMove: boolean

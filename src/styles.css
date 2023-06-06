@@ -52,7 +52,7 @@
     pointer-events: none;
 }
 
-.bear-react-carousel__pagination-group:not([data-dataContent="true"]) .bear-react-carousel__pagination-button{
+.bear-react-carousel__pagination-group:not([data-pageContent="true"]) .bear-react-carousel__pagination-button{
     width: .5rem;
     height: .5rem;
     border-radius: 7px;
@@ -62,7 +62,7 @@
     transition: width 0.3s, background-color 0.3s;
     margin: 0 6px;
 }
-.bear-react-carousel__pagination-group:not([data-dataContent="true"]) .bear-react-carousel__pagination-button[data-active]{
+.bear-react-carousel__pagination-group:not([data-pageContent="true"]) .bear-react-carousel__pagination-button[data-active]{
     background-color: var(--primary-color, #00a3e0);
 }
 

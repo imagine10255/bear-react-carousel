@@ -12,6 +12,7 @@ export function getSetting(props: IBearCarouselProps): ISetting {
         isCenteredSlides: props.isCenteredSlides,
         isEnableNavButton: props.isEnableNavButton,
         isEnablePagination: props.isEnablePagination,
+        isEnablePageContent: props.isEnablePageContent,
         isEnableMouseMove: props.isEnableMouseMove,
         isEnableAutoPlay: props.isEnableAutoPlay,
         isEnableLoop: props.isEnableLoop,
