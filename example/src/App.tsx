@@ -18,6 +18,7 @@ import UpdateSlideItem from './sample/UpdateSlideItem';
 import Loop from './sample/Loop';
 import Center from './sample/Center';
 import SlidePerGroup from './sample/SlidePerGroup';
+import RenderPagination from './sample/RenderPagination';
 
 
 
@@ -32,6 +33,7 @@ enum EExampleCode {
     slidePerGroup = 'slidePerGroup',
     syncController = 'syncController',
     updateSlideItem = 'updateSlideItem',
+    renderPagination = 'renderPagination',
 }
 
 
@@ -45,10 +47,11 @@ const examples: Record<EExampleCode, () => JSX.Element> = {
     [EExampleCode.slidePerGroup]: SlidePerGroup,
     [EExampleCode.syncController]: SyncControl,
     [EExampleCode.updateSlideItem]: UpdateSlideItem,
+    [EExampleCode.renderPagination]: RenderPagination,
 };
 
 function App() {
-    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.base);
+    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.renderPagination);
     const Comp = examples[exampleKey];
 
 

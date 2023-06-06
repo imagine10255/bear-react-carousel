@@ -31,6 +31,7 @@ export enum EDirection {
 }
 
 export type IRenderNavButton = (toPrev: TToPrev, toNext: TToNext) => void
+export type IRenderPagination = (pageTotal: number) => JSX.Element
 
 
 
@@ -42,8 +43,8 @@ export interface ICustomRefObject<T> {
 
 export interface IBearCarouselProps extends IBreakpointSetting{
   onChange?: (carouselState: ICarouselState) => void,
-  // control?: (carouselObj: IBearCarouselObj) => void,
   renderNavButton?: IRenderNavButton
+  renderPagination?: IRenderPagination
   style?: CSS.Properties
   className?: string
   data: TBearSlideItemDataList;
@@ -59,10 +60,6 @@ export interface IBearCarouselProps extends IBreakpointSetting{
   controllerRef?: ICustomRefObject<Controller>,
   onMount?: () => void;
 }
-
-export type TBearCarouselSetting = Partial<IBearCarouselProps>;
-
-
 
 
 
@@ -115,7 +112,6 @@ export interface IInfo {
 }
 export interface IBearSlideItemData {
   key: string|number
-  paginationContent?: ReactNode
   onClick?: () => void,
   children: ReactNode
 }

@@ -52,21 +52,24 @@
     pointer-events: none;
 }
 
-.bear-react-carousel__pagination-button{
+.bear-react-carousel__pagination-group:not([data-dataContent="true"]) .bear-react-carousel__pagination-button{
     width: .5rem;
     height: .5rem;
     border-radius: 7px;
     background-color: #bdbdbd;
+}
+.bear-react-carousel__pagination-group:not([data-dataContent="true"]) .bear-react-carousel__pagination-button[data-active]{
+    background-color: var(--primary-color, #00a3e0);
+}
+
+.bear-react-carousel__pagination-button{
+    position: relative;
     display: inline-block;
     margin: 0 6px;
     cursor: pointer;
     transition: width 0.3s, background-color 0.3s;
     box-shadow: 3px 3px 9px 0 rgb(189 189 189 / 12%);
     opacity: 0.6;
-}
-
-.bear-react-carousel__pagination-button[data-active]{
-    background-color: var(--primary-color, #00a3e0);
 }
 
 

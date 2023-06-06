@@ -7,12 +7,14 @@ interface IProps {
     page: number,
     isActive?: boolean
     onSlideToPage: (page: number) => void
+    pageContent?: JSX.Element
 }
 
 const Page = forwardRef<HTMLDivElement, IProps>(({
     isActive= false,
     onSlideToPage,
     page,
+    pageContent
 }, ref) => {
 
     const handleSlideToPage = useCallback(() => {
@@ -28,9 +30,9 @@ const Page = forwardRef<HTMLDivElement, IProps>(({
         data-active={booleanToDataAttr(isActive)}
         data-page={page}
     >
-        {/*<div className={elClassName.paginationContent}>*/}
-        {/*    {data[i]?.paginationContent}*/}
-        {/*</div>*/}
+        <div className={elClassName.paginationContent}>
+            {pageContent}
+        </div>
     </div>;
 });
 

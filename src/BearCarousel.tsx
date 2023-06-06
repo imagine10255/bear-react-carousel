@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {checkIsDesktop, isDataKeyDff, isPropsDiff} from './utils';
+import {booleanToDataAttr, checkIsDesktop, isDataKeyDff, isPropsDiff} from './utils';
 import log from './log';
 import {IBearCarouselProps} from './types';
 import elClassName from './el-class-name';
@@ -117,7 +117,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             controller: this._controller,
             syncCarousel: this._syncCarousel,
         });
-
 
         this._autoPlayer = new AutoPlayer({
             configurator: this._configurator,
@@ -287,23 +286,31 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
      * Page number navigation buttons
      */
     private _renderPagination = () => {
+        const {renderPagination} = this.props;
         const {page} = this._stater;
-        const pageElement = [];
 
-        for (let i = 0; i < page.pageTotal; i++) {
-            pageElement.push(
-                <Page
-                    key={`page_${i}`}
-                    ref={(el) => this._elementor.setPageRefs(el, i)}
-                    onSlideToPage={(page) => this._controller.slideToPage(page)}
-                    page={i + 1}
-                    isActive={page.activePage === i + 1}
-                />
-            );
+        let pageContent: JSX.Element;
+        const isPageContent = typeof renderPagination !== 'undefined';
+        if (isPageContent) {
+            pageContent = renderPagination(this._stater.page.pageTotal);
         }
+
+        const pageElement = new Array(page.pageTotal)
+            .fill('')
+            .map((row, index) => {
+                return <Page
+                    key={`page_${index}`}
+                    ref={(el) => this._elementor.setPageRefs(el, index)}
+                    onSlideToPage={(page) => this._controller.slideToPage(page)}
+                    page={index + 1}
+                    isActive={page.activePage === index + 1}
+                    pageContent={pageContent[index]}
+                />;
+            });
 
         return <div
             ref={this._elementor._pageGroupRef}
+            data-dataContent={booleanToDataAttr(isPageContent)}
             className={elClassName.paginationGroup}
         >
             {pageElement}
