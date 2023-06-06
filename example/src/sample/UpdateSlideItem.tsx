@@ -25,7 +25,7 @@ function UpdateSlideItem() {
                     style={{fontSize: '40px', backgroundColor: row.color, border: row.id === activeId ? '5px solid #bdbdbd' : undefined}}
                     onClick={() => setActiveId(row.id)}
                 >
-                    {/*<a href="https://carousel.bearests.com" rel="noreferrer" target="_blank">{row.id}</a>*/}
+                    {/*<a href="https://bear-react-carousel.github.io" rel="noreferrer" target="_blank">{row.id}</a>*/}
                 </div>
             </BearSlideCard>
         };
