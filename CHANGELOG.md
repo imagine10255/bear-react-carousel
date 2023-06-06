@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.1-alpha.7](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.1-alpha.6...v4.0.1-alpha.7) (2023-06-06)
+
+
+### Bug Fixes
+
+* fix pageContent[index] error ([32aa287](https://github.com/imagine10255/bear-react-carousel/commit/32aa287b0ca85fb791d461af2ee9863465cb89c8))
+
 ### [4.0.1-alpha.6](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.1-alpha.5...v4.0.1-alpha.6) (2023-06-04)
 
 
