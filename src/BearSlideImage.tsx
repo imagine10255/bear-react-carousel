@@ -6,7 +6,8 @@ import {useCarousel} from './BearCarouselProvider';
 interface IProps {
   className?: string,
   style?: CSS.Properties,
-  image: string,
+  imageUrl: string,
+  imageAlt?: string,
   alt?: string,
   onClick?: () => void,
   onClickAllowTime?: number
@@ -16,8 +17,8 @@ interface IProps {
 const BearSlideImage = ({
     className,
     style,
-    image,
-    alt,
+    imageUrl,
+    imageAlt,
     onClick,
     onClickAllowTime = 150,
 }: IProps) => {
@@ -40,8 +41,8 @@ const BearSlideImage = ({
     return <img
         style={style}
         className={[className, elClassName.slideItemImg].join(' ').trim()}
-        src={image}
-        alt={alt}
+        src={imageUrl}
+        alt={imageAlt}
         height={staticHeight}
         draggable="false"
         onMouseDown={onClick ? (event) => onMouseDown(event): undefined}
