@@ -38,7 +38,7 @@ const BearSlideCard = ({
     };
 
     return <div
-        className={[className, elClassName.slideItemDiv].join(' ').trim()}
+        className={[className, elClassName.slideItemCard].join(' ').trim()}
         onMouseDown={onMouseDown}
         onClick={onMouseUp}
         style={{

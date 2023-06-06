@@ -40,7 +40,7 @@ const BearSlideImage = ({
 
     return <img
         style={style}
-        className={[className, elClassName.slideItemImg].join(' ').trim()}
+        className={[className, elClassName.slideItemImage].join(' ').trim()}
         src={imageUrl}
         alt={imageAlt}
         height={staticHeight}

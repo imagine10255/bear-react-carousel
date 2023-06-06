@@ -2,6 +2,8 @@ import {ReactNode} from 'react';
 import * as CSS from 'csstype';
 import BearCarousel from './BearCarousel';
 import Controller from './manager/Controller';
+import BearSlideCard from "./BearSlideCard";
+import BearSlideImage from "./BearSlideImage";
 
 export type TSlidesPerView = number|'auto'
 export type TSlidesPerViewActual = number
@@ -30,8 +32,11 @@ export enum EDirection {
   horizontal = 'horizontal',
 }
 
-export type IRenderNavButton = (toPrev: TToPrev, toNext: TToNext) => void
-export type IRenderPagination = (pageTotal: number) => JSX.Element[]
+export type TRenderNavButton = (toPrev: TToPrev, toNext: TToNext) => void
+export type TRenderPagination = (pageTotal: number) => JSX.Element[]
+export type TStateOnChange = (carouselState: ICarouselState) => void
+export type TOnMount = () => void
+export type TSlideOnClick = () => void
 
 
 
@@ -42,92 +47,72 @@ export interface ICustomRefObject<T> {
 
 
 export interface IBearCarouselProps extends IBreakpointSetting{
-  onChange?: (carouselState: ICarouselState) => void,
-  renderNavButton?: IRenderNavButton
-  renderPagination?: IRenderPagination
   style?: CSS.Properties
   className?: string
-  data: TBearSlideItemDataList;
-  moveTime: number
-  autoPlayTime: number
-  breakpoints: IPropsBreakpoints
-  defaultActivePage?: number,
-  onElementMove?: (activeActualIndex: number, percentage: number) => void,
-  onElementDone?: (activeActualIndex: number) => void,
+  renderNavButton?: TRenderNavButton
+  renderPagination?: TRenderPagination
+  data?: TBearSlideItemDataList
+  moveTime?: number
+  autoPlayTime?: number
+  breakpoints?: IPropsBreakpoints
+  defaultActivePage?: number
   isDebug: boolean
-  isSlideItemMemo?: boolean,
-  syncCarouselRef?: ICustomRefObject<BearCarousel>,
-  controllerRef?: ICustomRefObject<Controller>,
-  onMount?: () => void;
+  isSlideItemMemo?: boolean
+  syncCarouselRef?: ICustomRefObject<BearCarousel>
+  controllerRef?: ICustomRefObject<Controller>
+  onChange?: TStateOnChange
+  onMount?: TOnMount
+  // onElementMove?: (activeActualIndex: number, percentage: number) => void,
+  // onElementDone?: (activeActualIndex: number) => void,
 }
 
 
 
 export interface ICarouselState {
   element: {
-    total: number,
-    firstIndex: number,
-    lastIndex: number,
-    activeIndex: number,
-  },
+    total: number
+    firstIndex: number
+    lastIndex: number
+    activeIndex: number
+  }
   // 0為實際一開始的位置(往前為負數), 結束值為最後結束位置
   actual: {
-    activeIndex: number,
-    minIndex: number,
-    maxIndex: number,
-    firstIndex: number,
-    lastIndex: number,
-  },
+    activeIndex: number
+    minIndex: number
+    maxIndex: number
+    firstIndex: number
+    lastIndex: number
+  }
   page: {
     activePage: number
-    pageTotal: number,
-  },
+    pageTotal: number
+  }
 }
 
-export interface IInfo {
-
-  sourceTotal: number, // 來源總數
-  // 從0開始
-  element: {
-    total: number,
-    firstIndex: number,
-    lastIndex: number,
-    activeIndex: number,
-  },
-  // 0為實際一開始的位置(往前為負數), 結束值為最後結束位置
-  actual: {
-    activeIndex: number,
-    minIndex: number,
-    maxIndex: number,
-    firstIndex: number,
-    lastIndex: number,
-  },
-  page: {
-    activePage: number
-    pageTotal: number,
-  },
-  residue: number,
-  isVisiblePagination: boolean,
-  isVisibleNavButton: boolean,
+export interface IInfo extends ICarouselState{
+  sourceTotal: number // 來源總數
+  residue: number
+  isVisiblePagination: boolean
+  isVisibleNavButton: boolean
 }
 export interface IBearSlideItemData {
   key: string|number
-  onClick?: () => void,
-  children: ReactNode
+  onClick?: TSlideOnClick
+  children: typeof BearSlideCard | typeof BearSlideImage
 }
 export type TBearSlideItemDataList = IBearSlideItemData[];
 
 export interface IAspectRatio {
-  widthRatio: number,
-  heightRatio: number,
-  addStaticHeight?: string,
+  widthRatio: number
+  heightRatio: number
+  addStaticHeight?: string
 }
 
 export interface IBreakpointSetting {
   slidesPerView: TSlidesPerView
   slidesPerGroup: number
   aspectRatio?: IAspectRatio
-  staticHeight?: string,
+  staticHeight?: string
   spaceBetween: number
   isCenteredSlides: boolean
   isEnableLoop: boolean

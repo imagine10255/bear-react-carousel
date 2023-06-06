@@ -160,12 +160,12 @@
     overflow: hidden;
 }
 
-img.bear-react-carousel__slide-item__img{
+img.bear-react-carousel__slide-item__image{
     max-width: 100%;
     width: auto;
 }
 
-div.bear-react-carousel__slide-item__div{
+div.bear-react-carousel__slide-item__card{
     width: 100%;
     height: 100%;
     background-repeat: no-repeat;
