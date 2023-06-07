@@ -98,18 +98,18 @@ export interface IAspectRatio {
 }
 
 export interface IBreakpointSetting {
-  slidesPerView: TSlidesPerView
-  slidesPerGroup: number
+  slidesPerView?: TSlidesPerView
+  slidesPerGroup?: number
   aspectRatio?: IAspectRatio
   staticHeight?: string
-  spaceBetween: number
-  isCenteredSlides: boolean
-  isEnableLoop: boolean
-  isEnablePageContent: boolean
-  isEnablePagination: boolean
-  isEnableNavButton: boolean
-  isEnableMouseMove: boolean
-  isEnableAutoPlay: boolean
+  spaceBetween?: number
+  isCenteredSlides?: boolean
+  isEnableLoop?: boolean
+  isEnablePageContent?: boolean
+  isEnablePagination?: boolean
+  isEnableNavButton?: boolean
+  isEnableMouseMove?: boolean
+  isEnableAutoPlay?: boolean
 }
 export interface IBreakpointSettingActual extends IBreakpointSetting {
   slidesPerViewActual: TSlidesPerViewActual
