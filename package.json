@@ -48,10 +48,9 @@
     "release:alpha": "standard-version --prerelease alpha"
   },
   "dependencies": {
-    "@bearests/core": "^0.0.5",
-    "@bearests/form": "^0.0.29",
     "react": "^18.x",
-    "react-dom": "^18.x"
+    "react-dom": "^18.x",
+    "ulid": "^2.3.0"
   },
   "devDependencies": {
     "@swc/jest": "^0.2.26",
@@ -76,7 +75,6 @@
     "standard-version": "^9.5.0",
     "ts-jest": "^29.1.0",
     "typescript": "^4.9.3",
-    "ulid": "^2.3.0",
     "vite": "^4.2.0",
     "vite-plugin-dts": "^2.1.0",
     "vite-plugin-eslint": "^1.8.1"
