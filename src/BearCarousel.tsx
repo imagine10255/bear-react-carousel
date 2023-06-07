@@ -259,7 +259,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
      * @param percentage
      */
     private _onDragMove = (percentage: number) => {
-        console.log('sync');
         this._syncCarousel?.syncControlMove(percentage);
     };
 

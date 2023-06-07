@@ -24,4 +24,9 @@ export const logEnable = {
     windowSizer: {
         onResize: true,
     },
+    syncCarousel: {
+        onSyncControlMove: false,
+        onSyncControlDone: false,
+        onSlideToActualIndex: false,
+    }
 };
