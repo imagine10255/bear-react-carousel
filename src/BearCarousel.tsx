@@ -3,7 +3,6 @@ import {booleanToDataAttr, checkIsDesktop, isDataKeyDff, isPropsDiff} from './ut
 import logger from './logger';
 import {IBearCarouselProps} from './types';
 import elClassName from './el-class-name';
-import {BearCarouselProvider} from './BearCarouselProvider';
 import './styles.css';
 
 import Configurator, {getSetting} from './manager/Configurator';
@@ -367,35 +366,29 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     render(){
         const {style, className, isDebug} = this.props;
         return (
-            <BearCarouselProvider
-                slidesPerView={this._configurator.setting.slidesPerView}
-                staticHeight={this._configurator.setting.staticHeight}
+            <CarouselRoot
+                id={this._configurator.carouselId}
+                ref={this._elementor._rootRef}
+                style={style}
+                className={className}
+                setting={this._configurator.setting}
+                actual={this._stater.actual}
+                isDebug={isDebug}
+                extendStyle={this._configurator.style}
+                isEnableGpuRender={this._isEnableGpuRender}
             >
-                <CarouselRoot
-                    id={this._configurator.carouselId}
-                    ref={this._elementor._rootRef}
-                    style={style}
-                    className={className}
-                    setting={this._configurator.setting}
-                    actual={this._stater.actual}
-                    isDebug={isDebug}
-                    extendStyle={this._configurator.style}
-                    isEnableGpuRender={this._isEnableGpuRender}
-                >
-                    {this._stater.isVisibleNavButton && this._renderNavButton()}
+                {this._stater.isVisibleNavButton && this._renderNavButton()}
 
-                    <div className={elClassName.content}>
-                        <div ref={this._elementor._containerRef} className={elClassName.container} data-testid="bear-carousel-container">
-                            {this._renderSlideItems()}
-                        </div>
+                <div className={elClassName.content}>
+                    <div ref={this._elementor._containerRef} className={elClassName.container} data-testid="bear-carousel-container">
+                        {this._renderSlideItems()}
                     </div>
+                </div>
 
-                    {this._stater.isVisiblePagination && this._renderPagination()}
+                {this._stater.isVisiblePagination && this._renderPagination()}
 
-                    {isDebug && <WindowSize size={this._windowSizer.size}/>}
-                </CarouselRoot>
-            </BearCarouselProvider>
-
+                {isDebug && <WindowSize size={this._windowSizer.size}/>}
+            </CarouselRoot>
         );
     }
 }

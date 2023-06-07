@@ -6,8 +6,7 @@ export function getSetting(props: IBearCarouselProps): ISetting {
     return {
         slidesPerView: props.slidesPerView,
         slidesPerGroup: props.slidesPerGroup,
-        aspectRatio: props.aspectRatio,
-        staticHeight: props.staticHeight,
+        height: props.height,
         spaceBetween: props.spaceBetween,
         isCenteredSlides: props.isCenteredSlides,
         isEnableNavButton: props.isEnableNavButton,
@@ -65,4 +64,15 @@ export function getMediaSetting(defaultBreakpoint: IBreakpointSetting, breakpoin
         isEnableLoop: setting.slidesPerView === 'auto' ? false : setting.isEnableLoop,
         slidesPerGroup: setting.slidesPerGroup > slidesPerViewActual ? slidesPerViewActual:anyToNumber(setting.slidesPerGroup, 1), // fix
     };
+}
+
+
+export function getHeight(height: IAspectRatio|string) {
+    if(typeof height === 'string'){
+        return `height: ${height};`;
+    }
+    if(typeof height?.widthRatio !== 'undefined'){
+        return `aspect-ratio: ${height.widthRatio} / ${height.heightRatio};`;
+    }
+    return 'height: inherit;';
 }

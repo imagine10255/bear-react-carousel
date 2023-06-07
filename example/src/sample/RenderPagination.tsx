@@ -43,7 +43,7 @@ function RenderPagination() {
                 // onChange={setInfo}
                 slidesPerView={slidePreview}
                 isCenteredSlides={true}
-                staticHeight="200px"
+                height="200px"
                 isEnableNavButton
                 isEnablePagination
                 isEnableLoop

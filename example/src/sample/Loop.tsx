@@ -38,7 +38,7 @@ function Loop() {
                 // controllerRef={controllerRef}
                 data={bearSlideItemData1}
                 // onChange={setInfo}
-                staticHeight="500px"
+                height="500px"
                 isEnableNavButton
                 isEnablePagination
                 isEnableLoop

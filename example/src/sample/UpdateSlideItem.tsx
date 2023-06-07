@@ -43,7 +43,7 @@ function UpdateSlideItem() {
                 onChange={setInfo}
                 slidesPerView={5}
                 isCenteredSlides
-                staticHeight="200px"
+                height="200px"
                 isEnableNavButton
                 isEnablePagination
                 // isEnableLoop

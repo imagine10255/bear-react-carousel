@@ -38,7 +38,7 @@ function AutoPlay() {
                 data={bearSlideItemData1}
                 onChange={setInfo}
                 isCenteredSlides={true}
-                staticHeight="200px"
+                height="200px"
                 isEnableNavButton
                 isEnablePagination
                 isEnableLoop

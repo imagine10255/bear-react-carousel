@@ -100,8 +100,7 @@ export interface IAspectRatio {
 export interface IBreakpointSetting {
   slidesPerView?: TSlidesPerView
   slidesPerGroup?: number
-  aspectRatio?: IAspectRatio
-  staticHeight?: string
+  height?: IAspectRatio|string,
   spaceBetween?: number
   isCenteredSlides?: boolean
   isEnableLoop?: boolean

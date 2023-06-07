@@ -163,6 +163,7 @@
 img.bear-react-carousel__slide-item__image{
     max-width: 100%;
     width: auto;
+    height: 100%;
 }
 
 div.bear-react-carousel__slide-item__card{
@@ -192,7 +193,7 @@ div.bear-react-carousel__slide-item__card{
 
 
 .bear-react-carousel__content{
-    position: absolute; /* 防止子層container超出顯示 */
+    /*position: absolute; !* 防止子層container超出顯示 *!*/
     top: 0;
     right: 0;
     width: 100%;

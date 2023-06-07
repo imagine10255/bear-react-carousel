@@ -40,7 +40,8 @@ function Base() {
                 // onChange={setInfo}
                 slidesPerView={slidePreview}
                 isCenteredSlides={true}
-                staticHeight="200px"
+                // height="200px"
+                height={{widthRatio: 21, heightRatio: 9}}
                 isEnableNavButton
                 isEnablePagination
                 // isEnableLoop

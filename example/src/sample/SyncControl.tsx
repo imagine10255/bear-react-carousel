@@ -74,7 +74,7 @@ function SyncControl() {
                 slidesPerView={3}
                 isCenteredSlides
 
-                staticHeight="200px"
+                height="200px"
                 // spaceBetween={20}
                 isEnableNavButton
                 isEnablePagination
@@ -94,7 +94,7 @@ function SyncControl() {
                 data={bearSlideItemData1}
                 slidesPerView={1}
                 isCenteredSlides
-                staticHeight="200px"
+                height="200px"
                 // spaceBetween={20}
                 isEnableNavButton
                 isEnablePagination

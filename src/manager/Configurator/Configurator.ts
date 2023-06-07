@@ -1,5 +1,5 @@
 import {ulid} from 'ulid';
-import {getMediaSetting, getPaddingBySize} from './utils';
+import {getHeight, getMediaSetting} from './utils';
 import {ISetting} from './types';
 import {IPropsBreakpoints} from '../../types';
 import elClassName from '../../el-class-name';
@@ -22,13 +22,13 @@ class Configurator {
         return this._setting;
     }
 
+
     get style() {
         const styleData = [
             {
                 targetEl: `#${this._carouselId}`,
                 styles: [
-                    `padding-top: ${this.setting.aspectRatio && this.setting.slidesPerView !== 'auto' ? getPaddingBySize(this.setting.aspectRatio, this.setting.slidesPerView) : '0'};`,
-                    `height: ${this.setting.staticHeight ? `${this.setting.staticHeight}` : 'inherit'};`,
+                    getHeight(this.setting.height),
                 ]
             },
             {
@@ -41,9 +41,11 @@ class Configurator {
             }
         ];
 
-        return styleData.map(row => {
-            return `${row.targetEl}{${row.styles.join('')}}`;
-        }).join('\r\n');
+        return styleData
+            .filter(row => typeof row !== 'undefined')
+            .map(row => {
+                return `${row.targetEl}{${row.styles.join('')}}`;
+            }).join('\r\n');
     }
 
 

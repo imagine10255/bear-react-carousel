@@ -42,7 +42,7 @@ function Center() {
                     data={bearSlideItemData1}
                     slidesPerView={3}
                     // onChange={setInfo}
-                    staticHeight="200px"
+                    height="200px"
                     isEnableNavButton
                     isEnablePagination
                     isCenteredSlides

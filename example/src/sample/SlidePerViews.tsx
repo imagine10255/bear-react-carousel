@@ -40,7 +40,7 @@ function SlidePerViews() {
 
                 slidesPerView={3}
                 slidesPerGroup={1}
-                staticHeight="200px"
+                height="200px"
                 isEnableNavButton
                 isEnablePagination
                 // isEnableLoop
