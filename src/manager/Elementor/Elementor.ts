@@ -5,7 +5,6 @@ import {checkInRange, getMoveDistance, getMovePercentage, getStartPosition} from
 import {booleanToDataAttr} from '../../utils';
 import Configurator from '../Configurator';
 import Stater from '../Stater';
-import Locator from '../Locator';
 
 class Elementor {
     _rootRef: RefObject<HTMLDivElement> = createRef();

@@ -11,7 +11,6 @@ import WindowSizer from './manager/WindowSizer';
 import Stater from './manager/Stater';
 import SlideItem from './components/SlideItem';
 import Elementor from './manager/Elementor';
-import Locator from './manager/Locator';
 import Controller from './manager/Controller';
 import AutoPlayer from './manager/AutoPlayer';
 import Dragger from './manager/Dragger';
@@ -111,8 +110,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
         this._autoPlayer = new AutoPlayer({
             configurator: this._configurator,
-            controller: this._controller,
-            dragger: this._dragger,
         });
 
         this._stater.onChange(this._onChange);
@@ -133,12 +130,15 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             }
 
             this._windowSizer.onResize(this._onResize);
-            this._autoPlayer.onTimeout();
+            this._autoPlayer.onTimeout(this._onAutoPlay);
+
             this._dragger.onDragStart(this._onDragStart);
             this._dragger.onDragEnd(this._onDragEnd);
             this._dragger.onDragMove(this._onDragMove);
 
+            this._controller.onSlideBefore(this._onSlideBefore);
             this._controller.onSlideAfter(this._onSlideAfter);
+
             this._syncCarousel = new SyncCarousel(this.props.syncCarouselRef);
         }
 
@@ -154,6 +154,10 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         this._dragger.offDragStart();
         this._dragger.offDragMove();
         this._dragger.offDragEnd();
+
+        this._controller.offSlideBefore();
+        this._controller.offSlideAfter();
+
         this._elementor.offSlideAnimation();
         this._stater.offChange();
     }
@@ -215,19 +219,44 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
     /**
      *
+     * set OnAutoPlay emit
+     * @param index
+     * @param isUseAnimation
+     */
+    private _onAutoPlay = () => {
+        this._controller.slideToNextPage();
+    };
+
+
+
+    /**
+     *
+     * set OnSlideBefore emit
+     * @param index
+     * @param isUseAnimation
+     */
+    private _onSlideBefore = () => {
+        this._autoPlayer.pause();
+    };
+
+
+    /**
+     *
      * set OnSlideAfter emit
      * @param index
      * @param isUseAnimation
      */
     private _onSlideAfter = (index: number, isUseAnimation: boolean) => {
         this._syncCarousel?.slideToActualIndex(index, isUseAnimation);
+        this._autoPlayer.play();
     };
 
     /**
      * set OnDragStart emit
      */
     private _onDragStart = () => {
-        this._controller?.slideResetToMatchIndex();
+        this._controller.slideResetToMatchIndex();
+        this._autoPlayer.pause();
     };
 
     /**

@@ -2,11 +2,9 @@ import {calcMoveTranslatePx} from './utils';
 import {TEventMap} from './types';
 
 import Configurator from '../Configurator';
-import Controller from '../Controller';
 import Elementor from '../Elementor';
 import Locator from '../Locator';
 import Stater from '../Stater';
-import SyncCarousel from '../SyncCarousel';
 import Eventor from '../Eventor';
 import {DesktopTouchEvent, MobileTouchEvent} from '../../interface/DragEvent';
 

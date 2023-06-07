@@ -1,15 +1,14 @@
 import Configurator from '../Configurator';
-import Controller from '../Controller';
-import Dragger from '../Dragger';
+import Eventor from '../Eventor';
+import {TEventMap} from './types';
 
 /**
  * unmount 跟 blur 都需要 停止計時器
  */
 class AutoPlayer {
     private _configurator: Configurator;
-    private _controller: Controller;
-    private _dragger: Dragger;
     private _timer: NodeJS.Timeout;
+    private _eventor = new Eventor<TEventMap>();
 
     get isPlaying(){
         return this._timer;
@@ -17,23 +16,16 @@ class AutoPlayer {
 
     constructor(manager: {
         configurator: Configurator,
-        controller: Controller,
-        dragger: Dragger,
     }) {
         this._configurator = manager.configurator;
-        this._controller = manager.controller;
-        this._dragger = manager.dragger;
     }
 
-    onTimeout = () => {
+    onTimeout = (callback: TEventMap['timeout']) => {
         window.addEventListener('focus', this.play, false);
         window.addEventListener('blur', this.pause, false);
 
-        this._controller.onSlideBefore(this.pause);
-        this._controller.onSlideAfter(this.play);
-        this._dragger.onDragStart(this.pause);
-
         this.play();
+        this._eventor.on('timeout', callback);
     };
 
 
@@ -43,11 +35,9 @@ class AutoPlayer {
     offTimeout = () => {
         window.removeEventListener('focus', this.play, false);
         window.removeEventListener('blur', this.pause, false);
-        this._controller.offSlideBefore();
-        this._controller.offSlideAfter();
-        this._dragger.offDragStart();
 
         this.pause();
+        this._eventor.off('timeout');
     };
 
     play = () => {
@@ -55,7 +45,7 @@ class AutoPlayer {
 
         if(!this.isPlaying && setting.isEnableAutoPlay && setting.autoPlayTime > 0){
             this._timer = setInterval(() => {
-                this._controller.slideToNextPage();
+                this._eventor.emit('timeout');
             }, setting.autoPlayTime);
         }
     };

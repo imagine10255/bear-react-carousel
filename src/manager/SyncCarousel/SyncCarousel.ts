@@ -12,10 +12,6 @@ class SyncCarousel {
         return this._carouselRef?.current?._elementor;
     }
 
-    get _locator(){
-        return this._carouselRef?.current?._locator;
-    }
-
     get _configurator(){
         return this._carouselRef?.current?._configurator;
     }
