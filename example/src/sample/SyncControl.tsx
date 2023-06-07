@@ -68,7 +68,7 @@ function SyncControl() {
         <Box>
             <BearCarousel
                 ref={syncCarouselRef}
-                // syncCarouselRef={sync2CarouselRef}
+                syncCarouselRef={sync2CarouselRef}
 
                 data={bearSlideItemData2}
                 slidesPerView={3}

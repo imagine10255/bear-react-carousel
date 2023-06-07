@@ -20,7 +20,6 @@ class Dragger {
     private _elementor: Elementor;
     private _locator: Locator;
     private _stater: Stater;
-    private _syncCarousel: SyncCarousel;
     private _eventor = new Eventor<TEventMap>();
 
 
@@ -30,7 +29,6 @@ class Dragger {
         elementor: Elementor,
         stater: Stater,
         locator: Locator,
-        syncCarousel: SyncCarousel,
     }) {
         this._configurator = manager.configurator;
         this._controller = manager.controller;
@@ -38,8 +36,6 @@ class Dragger {
         this._elementor = manager.elementor;
         this._stater = manager.stater;
         this._locator = manager.locator;
-        this._syncCarousel = manager.syncCarousel;
-
     }
 
 
@@ -50,14 +46,22 @@ class Dragger {
         this._eventor.on('dragStart', callBack);
     };
 
+    onDragMove = (callBack?: TEventMap['dragMove']) => {
+        this._eventor.on('dragMove', callBack);
+    };
+
     onDragEnd = (callBack?: TEventMap['dragEnd']) => {
         this._eventor.on('dragEnd', callBack);
     };
 
-    offDrapStart = () => {
+    offDragStart = () => {
         this._elementor.containerEl.removeEventListener('touchstart', this._onMobileTouchStart, {passive: false} as any);
         this._elementor.containerEl.removeEventListener('mousedown', this._onWebMouseStart, {passive: false} as any);
         this._eventor.off('dragStart');
+    };
+
+    offDragMove = () => {
+        this._eventor.off('dragMove');
     };
 
     offDragEnd = () => {
@@ -110,7 +114,6 @@ class Dragger {
         this._elementor.containerEl?.removeEventListener('touchmove', this._onMobileTouchMove, false);
         this._elementor.containerEl?.removeEventListener('touchend', this._onMobileTouchEnd, false);
         this._dragEnd();
-        this._eventor.emit('dragEnd');
     };
 
     /**
@@ -158,7 +161,6 @@ class Dragger {
         this._elementor.containerEl?.removeEventListener('mousemove', this._onWebMouseMove, false);
         this._elementor.containerEl?.removeEventListener('mouseup', this._onWebMouseEnd, false);
         this._dragEnd();
-        this._eventor.emit('dragEnd');
     };
 
 
@@ -187,7 +189,7 @@ class Dragger {
             // }
 
             // 同步控制
-            this._syncCarousel.syncControlMove(percentage);
+            this._eventor.emit('dragMove', percentage);
 
             this._elementor
                 .transform(translateX)
@@ -209,7 +211,8 @@ class Dragger {
             if(active){
                 const activeSourceIndex = Number(active.dataset.actual);
                 this._controller.slideToActualIndex(activeSourceIndex);
-                this._syncCarousel.syncControlDone(activeSourceIndex);
+
+                this._eventor.emit('dragEnd', activeSourceIndex);
             }
         }
 

@@ -14,7 +14,6 @@ class Controller {
     private readonly _stater: Stater;
     private readonly _locator: Locator;
     private readonly _elementor: Elementor;
-    private readonly _syncCarousel: SyncCarousel;
     private _eventor = new Eventor<TEventMap>();
 
     constructor(manager: {
@@ -22,13 +21,11 @@ class Controller {
         stater: Stater,
         locator: Locator,
         elementor: Elementor,
-        syncCarousel: SyncCarousel,
     }) {
         this._configurator = manager.configurator;
         this._stater = manager.stater;
         this._locator = manager.locator;
         this._elementor = manager.elementor;
-        this._syncCarousel = manager.syncCarousel;
     }
 
     onSlideBefore = (callback: TEventMap['slideBefore']) => {
@@ -59,12 +56,15 @@ class Controller {
         const {actual, formatElement} = this._stater;
 
         if (formatElement[actual.activeIndex].isClone) {
-            this.slideToActualIndex(formatElement[actual.activeIndex].matchIndex, false);
+            this.slideToActualIndex(formatElement[actual.activeIndex].matchIndex, {isUseAnimation: false});
         }
     };
 
-    slideToActualIndex = (slideIndex: number, isUseAnimation = true) => {
-        this._eventor.emit('slideBefore');
+
+
+    slideToActualIndex = (slideIndex: number, options?: {isUseAnimation?: boolean, isEmitEvent?: boolean}) => {
+        const isEmitEvent = options?.isEmitEvent ?? true;
+        if(isEmitEvent) this._eventor.emit('slideBefore', slideIndex, options?.isUseAnimation);
 
         if (this._stater.checkActualIndexInRange(slideIndex)) {
             const {formatElement} = this._stater;
@@ -73,14 +73,11 @@ class Controller {
             // 移動EL位置
             const position = this._elementor.getMoveDistance(slideIndex);
             this._elementor
-                .transform(position, isUseAnimation)
+                .transform(position, options?.isUseAnimation ?? true)
                 .syncActiveState(slideIndex);
-
-            this._syncCarousel.slideToActualIndex(slideIndex, isUseAnimation);
         }
 
-        this._eventor.emit('slideAfter');
-
+        if(isEmitEvent) this._eventor.emit('slideAfter', slideIndex, options?.isUseAnimation);
     };
 
     /**
@@ -97,7 +94,7 @@ class Controller {
         page = page > this._stater.page.pageTotal ? this._stater.page.pageTotal: page;
 
         const slideIndex = getSlideIndex(page, setting.slidesPerGroup, actual.firstIndex);
-        this.slideToActualIndex(slideIndex, isUseAnimation);
+        this.slideToActualIndex(slideIndex, {isUseAnimation});
     }
 
     /**
@@ -129,7 +126,7 @@ class Controller {
                 isLoopMode: setting.isEnableLoop,
             }
         )
-            .forEach(action => this.slideToActualIndex(action.index, action.isUseAnimation));
+            .forEach(action => this.slideToActualIndex(action.index, {isUseAnimation: action.isUseAnimation}));
     };
 
     /**
@@ -162,7 +159,7 @@ class Controller {
                 isLoopMode: setting.isEnableLoop,
             }
         )
-            .forEach(action => this.slideToActualIndex(action.index, action.isUseAnimation));
+            .forEach(action => this.slideToActualIndex(action.index, {isUseAnimation: action.isUseAnimation}));
 
     };
 

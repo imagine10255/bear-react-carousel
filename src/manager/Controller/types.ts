@@ -1,5 +1,5 @@
 
 export type TEventMap = {
-    slideBefore: () => void;
-    slideAfter: () => void;
+    slideBefore: (slideIndex: number, isUseAnimation: boolean) => void;
+    slideAfter: (slideIndex: number, isUseAnimation: boolean) => void;
 };

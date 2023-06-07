@@ -45,7 +45,7 @@ class AutoPlayer {
         window.removeEventListener('blur', this.pause, false);
         this._controller.offSlideBefore();
         this._controller.offSlideAfter();
-        this._dragger.offDrapStart();
+        this._dragger.offDragStart();
 
         this.pause();
     };

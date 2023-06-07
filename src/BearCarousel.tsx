@@ -72,7 +72,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         isSlideItemMemo: false,
     };
     _isEnableGpuRender = checkIsDesktop();
-    resetDurationTimer?: any;
     state = {windowSize: 0};
 
     _stater: Stater;
@@ -91,7 +90,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         // this._device = checkIsMobile() ? EDevice.mobile : EDevice.desktop;
 
         const setting = getSetting(props);
-        this._syncCarousel = new SyncCarousel(props.syncCarouselRef);
         this._windowSizer = new WindowSizer(props.breakpoints, window);
         this._configurator = new Configurator(props.breakpoints, setting);
         this._stater = new Stater(this._configurator, props.data);
@@ -107,7 +105,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             configurator: this._configurator,
             stater: this._stater,
             elementor: this._elementor,
-            syncCarousel: this._syncCarousel,
         });
 
         this._dragger = new Dragger({
@@ -115,8 +112,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             configurator: this._configurator,
             elementor: this._elementor,
             stater: this._stater,
-            controller: this._controller,
-            syncCarousel: this._syncCarousel,
+            controller: this._controller
         });
 
         this._autoPlayer = new AutoPlayer({
@@ -133,11 +129,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     componentDidMount() {
         if(this.props.isDebug && logEnable.componentDidMount) log.printInText('[componentDidMount]');
 
-        if(this.props.onMount){
-            this.props.onMount();
-        }
+        if(this.props.onMount) this.props.onMount();
 
-        this._stater.offChange();
 
         if (this._elementor) {
             // Move to the correct position for the first time
@@ -148,6 +141,10 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             this._windowSizer.onResize(this._onResize);
             this._autoPlayer.onTimeout();
             this._dragger.onDragStart();
+            this._dragger.onDragMove(this._onSyncDrag);
+
+            this._controller.onSlideAfter(this._onSyncSlideAfter);
+            this._syncCarousel = new SyncCarousel(this.props.syncCarouselRef);
         }
 
         this._setControllerRef();
@@ -159,9 +156,10 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         if(this.props.isDebug && logEnable.componentWillUnmount) log.printInText('[componentWillUnmount]');
         this._autoPlayer.offTimeout();
         this._windowSizer.offResize(this._onResize);
-        this._dragger.offDrapStart();
+        this._dragger.offDragStart();
         this._dragger.offDragEnd();
         this._elementor.offSlideAnimation();
+        this._stater.offChange();
     }
 
     /***
@@ -216,6 +214,25 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             // @ts-ignore
             this.props.controllerRef.current = this._controller;
         }
+    };
+
+
+    /**
+     *
+     * set OnSlideAfter emit
+     * @param index
+     * @param isUseAnimation
+     */
+    private _onSyncSlideAfter = (index: number, isUseAnimation: boolean) => {
+        this._syncCarousel?.slideToActualIndex(index, isUseAnimation);
+    };
+
+    /**
+     * set OnDrag emit
+     * @param percentage
+     */
+    private _onSyncDrag = (percentage: number) => {
+        this._syncCarousel?.syncControlMove(percentage);
     };
 
     /**

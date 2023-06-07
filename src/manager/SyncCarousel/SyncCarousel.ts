@@ -1,5 +1,5 @@
+import {RefObject} from 'react';
 import BearCarousel from '../../BearCarousel';
-import {RefObject} from "react";
 
 class SyncCarousel {
     private readonly _carouselRef: RefObject<BearCarousel>;
@@ -9,43 +9,35 @@ class SyncCarousel {
     }
 
     get _elementor(){
-        return this._carouselRef.current._elementor;
+        return this._carouselRef?.current?._elementor;
     }
 
     get _locator(){
-        return this._carouselRef.current._locator;
+        return this._carouselRef?.current?._locator;
     }
 
     get _configurator(){
-        return this._carouselRef.current._configurator;
+        return this._carouselRef?.current?._configurator;
     }
 
     get _controller(){
-        return this._carouselRef.current._controller;
+        return this._carouselRef?.current?._controller;
     }
 
     syncControlMove = (percentage: number) => {
-        if(!this._carouselRef){
-            return null;
+        if(this._elementor){
+            // 將進度比例換算成 movePx
+            const moveX = this._elementor.getPercentageToMovePx(percentage);
+            this._elementor.transform(moveX);
         }
-
-        // 將進度比例換算成 movePx
-        const moveX = this._elementor.getPercentageToMovePx(percentage);
-        this._elementor.transform(moveX);
     };
 
     syncControlDone = (targetIndex: number) => {
-        if(!this._carouselRef){
-            return null;
-        }
-        this._controller.slideToActualIndex(targetIndex);
+        this._controller?.slideToActualIndex(targetIndex);
     };
 
     slideToActualIndex = (slideIndex: number, isUseAnimation = true) => {
-        if(!this._carouselRef){
-            return null;
-        }
-        this._controller.slideToActualIndex(slideIndex, isUseAnimation);
+        this._controller?.slideToActualIndex(slideIndex, {isUseAnimation, isEmitEvent: false});
     };
 
 }
