@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {booleanToDataAttr, checkIsDesktop, isDataKeyDff, isPropsDiff} from './utils';
-import log from './log';
+import logger from './logger';
 import {IBearCarouselProps} from './types';
 import elClassName from './el-class-name';
 import {BearCarouselProvider} from './BearCarouselProvider';
@@ -20,27 +20,9 @@ import WindowSize from './components/WindowSize';
 import Page from './components/Page';
 import {NavNextButton, NavPrevButton} from './components/NavButton';
 import CarouselRoot from './components/CarouselRoot';
+import {logEnable} from './config';
 
 
-// debug log switch
-const logEnable = {
-    componentDidMount: true,
-    componentWillUnmount: true,
-    shouldComponentUpdate: true,
-    onMobileTouchStart: true,
-    onMobileTouchMove: true,
-    onMobileTouchEnd: true,
-    onWebMouseStart: true,
-    onWebMouseMove: false,
-    onWebMouseEnd: true,
-    elementMove: false,
-    elementMoveDone: false,
-    checkAndAutoPlay: true,
-    resetPosition: true,
-    handleResize: true,
-    handleResizeDiff: true,
-    goToActualIndex: true,
-};
 
 interface IState {
   windowSize: number,
@@ -88,8 +70,12 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         // this._device = checkIsMobile() ? EDevice.mobile : EDevice.desktop;
 
         const setting = getSetting(props);
-        this._windowSizer = new WindowSizer(props.breakpoints, window);
         this._configurator = new Configurator(props.breakpoints, setting);
+        this._windowSizer = new WindowSizer({
+            breakpoints: props.breakpoints,
+            win: window,
+            configurator: this._configurator,
+        });
         this._stater = new Stater(this._configurator, props.data);
         this._elementor = new Elementor({
             configurator: this._configurator,
@@ -118,7 +104,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
 
     componentDidMount() {
-        if(this.props.isDebug && logEnable.componentDidMount) log.printInText('[componentDidMount]');
+        if(this.props.isDebug && logEnable.componentDidMount) logger.printInText('[componentDidMount]');
 
         if(this.props.onMount) this.props.onMount();
 
@@ -148,7 +134,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     }
 
     componentWillUnmount() {
-        if(this.props.isDebug && logEnable.componentWillUnmount) log.printInText('[componentWillUnmount]');
+        if(this.props.isDebug && logEnable.componentWillUnmount) logger.printInText('[componentWillUnmount]');
         this._windowSizer.offResize();
         this._autoPlayer.offTimeout();
         this._dragger.offDragStart();
@@ -168,6 +154,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
    * @param nextState
    */
     shouldComponentUpdate(nextProps: IBearCarouselProps, nextState: IState) {
+        if(this._configurator.setting.isDebug && logEnable.shouldComponentUpdate) logger.printInText('[shouldComponentUpdate]');
 
         const {windowSize: nextWindowSize} = nextState;
 

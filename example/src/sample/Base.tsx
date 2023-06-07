@@ -34,7 +34,7 @@ function Base() {
         {/*測試依照比例設定容器高度*/}
         {enable && (
             <BearCarousel
-                style={{width: '400px'}}
+                // style={{width: '400px'}}
                 // controllerRef={controllerRef}
                 data={bearSlideItemData1}
                 // onChange={setInfo}

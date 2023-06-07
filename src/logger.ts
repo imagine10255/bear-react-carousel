@@ -1,3 +1,5 @@
+import elClassName from './el-class-name';
+
 const baseStyles = [
     'color: #fff',
     'display: block',
@@ -83,7 +85,7 @@ function danger(title: string, watchData?: any) {
 
 
 function printInText(log: any, elseInfo = true){
-    const dom = document.getElementById('console') as HTMLTextAreaElement;
+    const dom = document.getElementById(elClassName.console) as HTMLTextAreaElement;
     if(dom){
         const day = new Date();
         const num = [day.getMinutes(), day.getSeconds()].join('');
@@ -94,7 +96,7 @@ function printInText(log: any, elseInfo = true){
 }
 
 
-const log = {
+const logger = {
     primary,
     success,
     info,
@@ -103,4 +105,4 @@ const log = {
     printInText,
 };
 
-export default log;
+export default logger;

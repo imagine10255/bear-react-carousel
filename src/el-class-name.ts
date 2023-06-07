@@ -2,6 +2,8 @@
  * css class setting
  */
 export default {
+    console: 'bear-react-carousel__console',
+
     root: 'bear-react-carousel__root',
     content: 'bear-react-carousel__content',
     container: 'bear-react-carousel__container',

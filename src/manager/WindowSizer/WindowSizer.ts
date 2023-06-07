@@ -4,6 +4,9 @@ import {TEventMap} from './types';
 import Eventor from '../Eventor';
 import {EDevice, IPropsBreakpoints} from '../../types';
 import {checkIsDesktop, checkIsMobile} from '../../utils';
+import {logEnable} from '../../config';
+import logger from '../../logger';
+import Configurator from '../Configurator';
 
 
 const resizeEvent: Record<EDevice, string> = {
@@ -13,6 +16,7 @@ const resizeEvent: Record<EDevice, string> = {
 
 class WindowSizer {
     private _breakpoints: IPropsBreakpoints;
+    private _configurator: Configurator;
     private _size: number;
     private _device: EDevice;
     private _eventManager = new Eventor<TEventMap>();
@@ -25,9 +29,14 @@ class WindowSizer {
         return this._device;
     }
 
-    constructor(breakpoints: IPropsBreakpoints, win: Window & typeof globalThis) {
-        this._breakpoints = breakpoints;
-        this._window = win;
+    constructor(inject: {
+        breakpoints: IPropsBreakpoints,
+        win: Window & typeof globalThis
+        configurator: Configurator,
+    }) {
+        this._breakpoints = inject.breakpoints;
+        this._configurator = inject.configurator;
+        this._window = inject.win;
         this._device = this._detectDevice();
         this._setSize();
     }
@@ -47,6 +56,8 @@ class WindowSizer {
     };
 
     private _emitResize = () => {
+        if(this._configurator.setting.isDebug && logEnable.windowSizer.onResize) logger.printInText('[WindowSizer.onResize]');
+
         this._setSize();
         this._eventManager.emit('resize', {windowSize: this._size});
     };

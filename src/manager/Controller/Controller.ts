@@ -3,10 +3,10 @@ import {getNextIndex, getPrevIndex, getSlideIndex} from './utils';
 
 import Configurator from '../Configurator';
 import Stater from '../Stater';
-import Locator from '../Locator';
 import Elementor from '../Elementor';
-import SyncCarousel from '../SyncCarousel';
 import Eventor from '../Eventor';
+import {logEnable} from '../../config';
+import logger from '../../logger';
 
 
 class Controller {
@@ -49,7 +49,7 @@ class Controller {
      * PS: If the element is isClone then return to the position where it should actually be displayed
      */
     slideResetToMatchIndex = (): void => {
-        // if(this.props.isDebug && logEnable.resetPosition) log.printInText('[_resetPosition]');
+        if(this._configurator.setting.isDebug && logEnable.controller.onSlideResetToMatchIndex) logger.printInText('[Controller.slideResetToMatchIndex]');
         const {actual, formatElement} = this._stater;
 
         if (formatElement[actual.activeIndex].isClone) {

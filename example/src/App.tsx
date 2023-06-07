@@ -20,6 +20,7 @@ import Center from './sample/Center';
 import SlidePerGroup from './sample/SlidePerGroup';
 import RenderPagination from './sample/RenderPagination';
 import { GridThemeProvider } from 'bear-react-grid';
+import {elClassName} from "../../src";
 
 
 
@@ -52,7 +53,7 @@ const examples: Record<EExampleCode, () => JSX.Element> = {
 };
 
 function App() {
-    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.syncController);
+    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.base);
     const Comp = examples[exampleKey];
 
 
@@ -61,7 +62,7 @@ function App() {
         <GridThemeProvider gridTheme={gridConfig}>
             <AppRoot className="App">
 
-                <Menu>
+                <Menu className="d-none d-md-flex">
                     {Object.keys(examples).map(code => {
                         return <Button type="button"
                             key={code}
@@ -74,7 +75,9 @@ function App() {
 
                 <Example>
                     <Comp/>
+                    <LogArea id={elClassName.console}/>
                 </Example>
+
             </AppRoot>
         </GridThemeProvider>
     );
@@ -82,6 +85,10 @@ function App() {
 
 export default App;
 
+
+const LogArea = styled.textarea`
+    height: 200px;
+`;
 
 
 const Button = styled.button<{
@@ -105,6 +112,7 @@ const Example = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
+  max-width: 100%;
 `;
 
 

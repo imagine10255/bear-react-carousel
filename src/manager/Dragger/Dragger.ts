@@ -7,6 +7,8 @@ import Locator from '../Locator';
 import Stater from '../Stater';
 import Eventor from '../Eventor';
 import {DesktopTouchEvent, MobileTouchEvent} from '../../interface/DragEvent';
+import logger from '../../logger';
+import {logEnable} from '../../config';
 
 
 /**
@@ -68,18 +70,15 @@ class Dragger {
      * @param event
      */
     private _onMobileTouchStart = (event: TouchEvent): void => {
-        // if(this.props.isDebug && logEnable.onMobileTouchStart) log.printInText('[_onMobileTouchStart]');
-
+        if(this._configurator.setting.isDebug && logEnable.dragger.onMobileTouchStart) logger.printInText('[Dragger._onMobileTouchStart]');
         this._eventor.emit('dragStart');
 
         const {containerEl} = this._elementor;
-        if(this._elementor.isUseAnimation === false){
+        if (containerEl) {
             this._locator.touchStart(new MobileTouchEvent(event), containerEl);
-
             containerEl.addEventListener('touchmove', this._onMobileTouchMove, false);
             containerEl.addEventListener('touchend', this._onMobileTouchEnd, false);
         }
-
     };
 
 
@@ -90,6 +89,7 @@ class Dragger {
      */
     private _onMobileTouchMove = (event: TouchEvent): void => {
         event.preventDefault();
+        if(this._configurator.setting.isDebug && logEnable.dragger.onMobileTouchMove) logger.printInText('[Dragger._onMobileTouchMove]');
 
         const movePx = this._locator.touchMove(new MobileTouchEvent(event), this._elementor.containerEl);
         this._dragMove(movePx);
@@ -102,7 +102,7 @@ class Dragger {
      * PS: Add event.preventDefault(); will affect the mobile phone click onClick event
      */
     private _onMobileTouchEnd = (event: TouchEvent): void => {
-        // if(this.props.isDebug && logEnable.onMobileTouchEnd) log.printInText('[_onMobileTouchEnd]');
+        if(this._configurator.setting.isDebug && logEnable.dragger.onMobileTouchEnd) logger.printInText('[Dragger._onMobileTouchEnd]');
 
         this._elementor.containerEl?.removeEventListener('touchmove', this._onMobileTouchMove, false);
         this._elementor.containerEl?.removeEventListener('touchend', this._onMobileTouchEnd, false);
@@ -114,7 +114,7 @@ class Dragger {
      * @param event
      */
     private _onWebMouseStart = (event: MouseEvent): void => {
-        // if(this.props.isDebug && logEnable.onWebMouseStart) log.printInText('[_onWebMouseStart]');
+        if(this._configurator.setting.isDebug && logEnable.dragger.onWebMouseStart) logger.printInText('[Dragger._onWebMouseStart]');
         this._eventor.emit('dragStart');
 
         const {containerEl} = this._elementor;
@@ -134,7 +134,7 @@ class Dragger {
      */
     private _onWebMouseMove = (event: MouseEvent):void => {
         event.preventDefault();
-        // if(this.props.isDebug && logEnable.onWebMouseMove) log.printInText('[_onWebMouseMove]');
+        if(this._configurator.setting.isDebug && logEnable.dragger.onWebMouseMove) logger.printInText('[Dragger._onWebMouseMove]');
 
         const movePx = this._locator.touchMove(new DesktopTouchEvent(event), this._elementor.containerEl);
         this._dragMove(movePx);
@@ -146,7 +146,7 @@ class Dragger {
      */
     private _onWebMouseEnd = (event: MouseEvent):void => {
         event.preventDefault();
-        // if(this.props.isDebug && logEnable.onWebMouseEnd) log.printInText('[_onWebMouseEnd]');
+        if(this._configurator.setting.isDebug && logEnable.dragger.onWebMouseEnd) logger.printInText('[Dragger._onWebMouseEnd]');
 
         this._elementor.rootEl?.removeEventListener('mouseleave', this._onWebMouseEnd, false);
         this._elementor.containerEl?.removeEventListener('mousemove', this._onWebMouseMove, false);
@@ -158,7 +158,7 @@ class Dragger {
 
 
     private _dragMove(moveX: number) {
-        //     if(this.props.isDebug && logEnable.elementMove) log.printInText('[_elementMove]');
+        if(this._configurator.setting.isDebug && logEnable.dragger.onDragMove) logger.printInText('[Dragger._dragMove]');
 
         this._elementor.setNonSubjectTouch(false);
 
@@ -171,11 +171,10 @@ class Dragger {
             this._stater.page.pageTotal > 1
         ) {
             const translateX = calcMoveTranslatePx(startPosition.x, moveX);
-
             const percentage = this._elementor.getMovePercentage(translateX); //TODO: 應該移動到 Positioner
 
             // 同步控制
-            this._eventor.emit('dragMove', percentage);
+            // this._eventor.emit('dragMove', percentage);
 
             this._elementor
                 .transform(translateX)
@@ -189,7 +188,7 @@ class Dragger {
      * The object movement ends (confirm the stop position and which Index position should be sucked)
      */
     private _dragEnd = (): void => {
-        // if(this.props.isDebug && logEnable.elementMoveDone) log.printInText('[_elementMoveDone]');
+        if(this._configurator.setting.isDebug && logEnable.dragger.onDragEnd) logger.printInText('[Dragger._dragEnd]');
         this._elementor.setNonSubjectTouch(true);
 
         if(this._elementor.slideItemEls){

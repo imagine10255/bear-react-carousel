@@ -1,6 +1,8 @@
 import Configurator from '../Configurator';
 import Eventor from '../Eventor';
 import {TEventMap} from './types';
+import {logEnable} from '../../config';
+import logger from '../../logger';
 
 /**
  * unmount 跟 blur 都需要 停止計時器
@@ -42,8 +44,10 @@ class AutoPlayer {
 
     play = () => {
         const {setting} = this._configurator;
+        if(setting.isDebug && logEnable.autoPlayer.play) logger.printInText('[AutoPlayer.play]');
 
         if(!this.isPlaying && setting.isEnableAutoPlay && setting.autoPlayTime > 0){
+
             this._timer = setInterval(() => {
                 this._eventor.emit('timeout');
             }, setting.autoPlayTime);
@@ -51,6 +55,8 @@ class AutoPlayer {
     };
 
     pause = () => {
+        if(this._configurator.setting.isDebug && logEnable.autoPlayer.play) logger.printInText('[AutoPlayer.pause]');
+
         clearInterval(this._timer);
         this._timer = null;
     };
