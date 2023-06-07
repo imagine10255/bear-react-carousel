@@ -56,9 +56,9 @@ class WindowSizer {
         this._eventManager.on('resize', callBack);
     };
 
-    offResize = (callBack: TEventMap['resize']) => {
+    offResize = () => {
         this._window.removeEventListener(resizeEvent[this._device], this._emitResize, false);
-        this._eventManager.off('resize', callBack);
+        this._eventManager.off('resize');
     };
 }
 

@@ -16,7 +16,6 @@ import {DesktopTouchEvent, MobileTouchEvent} from '../../interface/DragEvent';
  */
 class Dragger {
     private _configurator: Configurator;
-    private _controller: Controller;
     private _elementor: Elementor;
     private _locator: Locator;
     private _stater: Stater;
@@ -25,13 +24,11 @@ class Dragger {
 
     constructor(manager: {
         configurator: Configurator,
-        controller: Controller,
         elementor: Elementor,
         stater: Stater,
         locator: Locator,
     }) {
         this._configurator = manager.configurator;
-        this._controller = manager.controller;
         this._elementor = manager.elementor;
         this._elementor = manager.elementor;
         this._stater = manager.stater;
@@ -80,7 +77,6 @@ class Dragger {
 
         const {containerEl} = this._elementor;
         if(this._elementor.isUseAnimation === false){
-            this._controller.slideResetToMatchIndex();
             this._locator.touchStart(new MobileTouchEvent(event), containerEl);
 
             containerEl.addEventListener('touchmove', this._onMobileTouchMove, false);
@@ -123,8 +119,6 @@ class Dragger {
     private _onWebMouseStart = (event: MouseEvent): void => {
         // if(this.props.isDebug && logEnable.onWebMouseStart) log.printInText('[_onWebMouseStart]');
         this._eventor.emit('dragStart');
-
-        this._controller.slideResetToMatchIndex();
 
         const {containerEl} = this._elementor;
         if (containerEl) {
@@ -183,11 +177,6 @@ class Dragger {
 
             const percentage = this._elementor.getMovePercentage(translateX); //TODO: 應該移動到 Positioner
 
-            // 取得移動進度
-            // if(this.props.onElementMove){
-            //     this.props.onElementMove(this.activeActualIndex, percentage);
-            // }
-
             // 同步控制
             this._eventor.emit('dragMove', percentage);
 
@@ -210,8 +199,6 @@ class Dragger {
             const active = this._elementor.slideItemEls.find(row => row.dataset.active === 'true');
             if(active){
                 const activeSourceIndex = Number(active.dataset.actual);
-                this._controller.slideToActualIndex(activeSourceIndex);
-
                 this._eventor.emit('dragEnd', activeSourceIndex);
             }
         }

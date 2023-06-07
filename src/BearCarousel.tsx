@@ -112,7 +112,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             configurator: this._configurator,
             elementor: this._elementor,
             stater: this._stater,
-            controller: this._controller
+            // controller: this._controller
         });
 
         this._autoPlayer = new AutoPlayer({
@@ -140,10 +140,11 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
             this._windowSizer.onResize(this._onResize);
             this._autoPlayer.onTimeout();
-            this._dragger.onDragStart();
-            this._dragger.onDragMove(this._onSyncDrag);
+            this._dragger.onDragStart(this._onDragStart);
+            this._dragger.onDragEnd(this._onDragEnd);
+            this._dragger.onDragMove(this._onDragMove);
 
-            this._controller.onSlideAfter(this._onSyncSlideAfter);
+            this._controller.onSlideAfter(this._onSlideAfter);
             this._syncCarousel = new SyncCarousel(this.props.syncCarouselRef);
         }
 
@@ -154,9 +155,10 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
     componentWillUnmount() {
         if(this.props.isDebug && logEnable.componentWillUnmount) log.printInText('[componentWillUnmount]');
+        this._windowSizer.offResize();
         this._autoPlayer.offTimeout();
-        this._windowSizer.offResize(this._onResize);
         this._dragger.offDragStart();
+        this._dragger.offDragMove();
         this._dragger.offDragEnd();
         this._elementor.offSlideAnimation();
         this._stater.offChange();
@@ -211,8 +213,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
      */
     private _setControllerRef = () => {
         if(this.props.controllerRef){
-            // @ts-ignore
-            this.props.controllerRef.current = this._controller;
+            const propsRef = this.props.controllerRef as { current: Controller};
+            propsRef.current = this._controller;
         }
     };
 
@@ -223,15 +225,30 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
      * @param index
      * @param isUseAnimation
      */
-    private _onSyncSlideAfter = (index: number, isUseAnimation: boolean) => {
+    private _onSlideAfter = (index: number, isUseAnimation: boolean) => {
         this._syncCarousel?.slideToActualIndex(index, isUseAnimation);
     };
 
     /**
-     * set OnDrag emit
+     * set OnDragStart emit
+     */
+    private _onDragStart = () => {
+        this._controller?.slideResetToMatchIndex();
+    };
+
+    /**
+     * set OnDragEnd emit
+     * @param activeSourceIndex
+     */
+    private _onDragEnd = (activeSourceIndex: number) => {
+        this._controller?.slideToActualIndex(activeSourceIndex);
+    };
+
+    /**
+     * set OnDragMove emit
      * @param percentage
      */
-    private _onSyncDrag = (percentage: number) => {
+    private _onDragMove = (percentage: number) => {
         this._syncCarousel?.syncControlMove(percentage);
     };
 

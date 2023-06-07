@@ -105,19 +105,10 @@ class Elementor {
     };
 
 
+
     /**
      * Percentage Move Percentage
-     * @param movePx
-     */
-    // getPercentageToMovePx = (percentage: number) => {
-    //     const {actual} = this._stater;
-    //     const slideCurrWidth = this.slideItemEls[actual.activeIndex].offsetWidth;
-    //     const startPosition = this._getStartPosition(slideCurrWidth);
-    //     return getMovePercentage(percentage, startPosition, slideCurrWidth);
-    // };
-    /**
-     * Percentage Move Percentage
-     * @param movePx
+     * @param percentage
      */
     getPercentageToMovePx = (percentage: number) => {
         const {actual} = this._stater;
