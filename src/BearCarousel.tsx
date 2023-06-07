@@ -119,8 +119,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             this._autoPlayer.onTimeout(this._onAutoPlay);
 
             this._dragger.onDragStart(this._onDragStart);
-            this._dragger.onDragEnd(this._onDragEnd);
             this._dragger.onDragMove(this._onDragMove);
+            this._dragger.onDragEnd(this._onDragEnd);
 
             this._controller.onSlideBefore(this._onSlideBefore);
             this._controller.onSlideAfter(this._onSlideAfter);
@@ -259,6 +259,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
      * @param percentage
      */
     private _onDragMove = (percentage: number) => {
+        console.log('sync');
         this._syncCarousel?.syncControlMove(percentage);
     };
 

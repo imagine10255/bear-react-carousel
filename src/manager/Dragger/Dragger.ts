@@ -174,7 +174,7 @@ class Dragger {
             const percentage = this._elementor.getMovePercentage(translateX); //TODO: 應該移動到 Positioner
 
             // 同步控制
-            // this._eventor.emit('dragMove', percentage);
+            this._eventor.emit('dragMove', percentage);
 
             this._elementor
                 .transform(translateX)

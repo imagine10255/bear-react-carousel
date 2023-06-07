@@ -50,7 +50,7 @@ export function getMediaSetting(defaultBreakpoint: IBreakpointSetting, breakpoin
     const selectSize = getSizeByRange(window.innerWidth, Object.keys(breakpoints).map(Number));
     let setting = defaultBreakpoint;
     if(selectSize > 0){
-        setting = Object.assign(defaultBreakpoint, breakpoints[selectSize]);
+        setting = defaultBreakpoint ? Object.assign(defaultBreakpoint) : breakpoints[selectSize];
     }
 
     // 若顯示項目大於來源項目, 則關閉Loop

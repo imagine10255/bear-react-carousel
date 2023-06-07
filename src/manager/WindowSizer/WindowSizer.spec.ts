@@ -2,6 +2,7 @@ import Eventor from '../Eventor';
 import {EDevice, IPropsBreakpoints} from '../../types';
 import {TEventMap} from './types';
 import WindowSizer from './WindowSizer';
+import Configurator from '../Configurator';
 
 describe('WindowSizer', () => {
     let mockWindow: Window & typeof globalThis;
@@ -41,7 +42,11 @@ describe('WindowSizer', () => {
 
 
     it('should create an instance with correct initial size', () => {
-        const sizer = new WindowSizer(mockBreakpoints, mockWindow);
+        const sizer = new WindowSizer({
+            breakpoints: mockBreakpoints,
+            win: mockWindow,
+            configurator: new Configurator(mockBreakpoints)
+        });
         expect(sizer.size).toEqual(1024); // assuming getSizeByRange returns innerWidth as is
     });
 
@@ -51,12 +56,20 @@ describe('WindowSizer', () => {
             configurable: true
         });
 
-        const sizer = new WindowSizer(mockBreakpoints, mockWindow);
+        const sizer = new WindowSizer({
+            breakpoints: mockBreakpoints,
+            win: mockWindow,
+            configurator: new Configurator(mockBreakpoints)
+        });
         expect(sizer.device).toEqual(EDevice.mobile); // assuming checkIsMobile returns true for this userAgent
     });
 
     it('should emit resize event on window resize', () => {
-        const sizer = new WindowSizer(mockBreakpoints, mockWindow);
+        const sizer = new WindowSizer({
+            breakpoints: mockBreakpoints,
+            win: mockWindow,
+            configurator: new Configurator(mockBreakpoints)
+        });
         const callback = jest.fn();
         sizer.onResize(callback);
 
