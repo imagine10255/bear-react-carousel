@@ -49,7 +49,6 @@ function Breakpoints() {
                 isEnableNavButton
                 isEnablePagination
                 isEnableLoop
-                moveTime={400}
                 // onElementMove={handleMove}
                 // onElementDone={handleDone}
                 breakpoints={{

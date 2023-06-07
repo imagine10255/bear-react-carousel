@@ -40,7 +40,6 @@ function Loop() {
                 // onChange={setInfo}
                 staticHeight="500px"
                 isEnableNavButton
-                moveTime={1500}
                 isEnablePagination
                 isEnableLoop
                 isDebug

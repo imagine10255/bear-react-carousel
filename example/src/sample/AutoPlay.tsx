@@ -44,7 +44,6 @@ function AutoPlay() {
                 isEnableLoop
                 isEnableAutoPlay
                 autoPlayTime={1500}
-                moveTime={400}
                 isDebug
             />)}
 

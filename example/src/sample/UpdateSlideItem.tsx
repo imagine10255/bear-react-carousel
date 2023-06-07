@@ -48,7 +48,6 @@ function UpdateSlideItem() {
                 isEnablePagination
                 // isEnableLoop
                 isEnableAutoPlay={false}
-                moveTime={400}
                 isDebug
                 isSlideItemMemo
             />)}
