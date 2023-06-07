@@ -12,19 +12,16 @@ import Eventor from '../Eventor';
 class Controller {
     private readonly _configurator: Configurator;
     private readonly _stater: Stater;
-    private readonly _locator: Locator;
     private readonly _elementor: Elementor;
     private _eventor = new Eventor<TEventMap>();
 
     constructor(manager: {
         configurator: Configurator,
         stater: Stater,
-        locator: Locator,
         elementor: Elementor,
     }) {
         this._configurator = manager.configurator;
         this._stater = manager.stater;
-        this._locator = manager.locator;
         this._elementor = manager.elementor;
     }
 

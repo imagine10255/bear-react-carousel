@@ -77,7 +77,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     _stater: Stater;
     _configurator: Configurator;
     _windowSizer: WindowSizer;
-    _locator: Locator;
     _elementor: Elementor;
     _controller: Controller;
     _autoPlayer: AutoPlayer;
@@ -93,26 +92,21 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         this._windowSizer = new WindowSizer(props.breakpoints, window);
         this._configurator = new Configurator(props.breakpoints, setting);
         this._stater = new Stater(this._configurator, props.data);
-        this._locator = new Locator();
         this._elementor = new Elementor({
-            locator: this._locator,
             configurator: this._configurator,
             stater: this._stater
         });
 
         this._controller = new Controller({
-            locator: this._locator,
             configurator: this._configurator,
             stater: this._stater,
             elementor: this._elementor,
         });
 
         this._dragger = new Dragger({
-            locator: this._locator,
             configurator: this._configurator,
             elementor: this._elementor,
             stater: this._stater,
-            // controller: this._controller
         });
 
         this._autoPlayer = new AutoPlayer({

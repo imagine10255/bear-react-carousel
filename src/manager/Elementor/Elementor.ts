@@ -17,21 +17,18 @@ class Elementor {
 
     private _configurator: Configurator;
     private _stater: Stater;
-    private _locator: Locator;
     private _isAnimation = false;
 
 
     constructor(manager: {
         configurator: Configurator,
         stater: Stater,
-        locator: Locator,
     }) {
         this._slideItemRefs.current = [];
         this._pageRefs.current = [];
 
         this._configurator = manager.configurator;
         this._stater = manager.stater;
-        this._locator = manager.locator;
     }
 
     get rootEl(){

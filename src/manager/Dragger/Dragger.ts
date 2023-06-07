@@ -26,13 +26,12 @@ class Dragger {
         configurator: Configurator,
         elementor: Elementor,
         stater: Stater,
-        locator: Locator,
     }) {
         this._configurator = manager.configurator;
         this._elementor = manager.elementor;
         this._elementor = manager.elementor;
         this._stater = manager.stater;
-        this._locator = manager.locator;
+        this._locator = new Locator();
     }
 
 
