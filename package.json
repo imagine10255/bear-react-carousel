@@ -1,6 +1,6 @@
 {
   "name": "bear-react-carousel",
-  "version": "4.0.3-alpha.0",
+  "version": "4.0.3-test-nextjs.0",
   "description": "Most modern mobile touch slider with hardware accelerated transitions for ReactJS",
   "keywords": [
     "react",
@@ -76,7 +76,6 @@
     "standard-version": "^9.5.0",
     "ts-jest": "^29.1.0",
     "typescript": "^4.9.3",
-    "ulid": "^2.3.0",
     "vite": "^4.2.0",
     "vite-plugin-dts": "^2.1.0",
     "vite-plugin-eslint": "^1.8.1"
