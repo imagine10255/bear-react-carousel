@@ -1,7 +1,7 @@
 import {RefObject} from 'react';
 import BearCarousel from '../../BearCarousel';
-import {logEnable} from "../../config";
-import logger from "../../logger";
+import {logEnable} from '../../config';
+import logger from '../../logger';
 
 class SyncCarousel {
     private readonly _carouselRef: RefObject<BearCarousel>;

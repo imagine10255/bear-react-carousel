@@ -45,7 +45,7 @@ export interface IBearCarouselProps extends IBreakpointSetting{
   autoPlayTime?: number
   breakpoints?: IPropsBreakpoints
   defaultActivePage?: number
-  isDebug: boolean
+  isDebug?: boolean
   isSlideItemMemo?: boolean
   syncCarouselRef?: RefObject<BearCarousel>
   controllerRef?: RefObject<Controller>
