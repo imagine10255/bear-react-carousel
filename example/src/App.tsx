@@ -1,12 +1,11 @@
 import {useState} from 'react';
 import styled, {css} from 'styled-components';
 import gridConfig from './config/grid';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
 import './App.css';
 import './bootstrap-base.min.css';
 import 'bear-react-carousel/dist/index.css';
 
+import {elClassName} from 'bear-react-carousel';
 
 // import Base from './sample/Base';
 import SyncControl from './sample/SyncControl';
@@ -20,7 +19,7 @@ import Center from './sample/Center';
 import SlidePerGroup from './sample/SlidePerGroup';
 import RenderPagination from './sample/RenderPagination';
 import { GridThemeProvider } from 'bear-react-grid';
-import {elClassName} from "../../src";
+import TextAnimationsCarousel from "./sample/TextAnimationsCarousel";
 
 
 
@@ -36,6 +35,7 @@ enum EExampleCode {
     syncController = 'syncController',
     updateSlideItem = 'updateSlideItem',
     renderPagination = 'renderPagination',
+    textAnimations = 'textAnimations',
 }
 
 
@@ -50,10 +50,11 @@ const examples: Record<EExampleCode, () => JSX.Element> = {
     [EExampleCode.syncController]: SyncControl,
     [EExampleCode.updateSlideItem]: UpdateSlideItem,
     [EExampleCode.renderPagination]: RenderPagination,
+    [EExampleCode.textAnimations]: TextAnimationsCarousel,
 };
 
 function App() {
-    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.syncController);
+    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.textAnimations);
     const Comp = examples[exampleKey];
 
 
