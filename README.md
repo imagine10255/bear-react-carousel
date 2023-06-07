@@ -16,7 +16,7 @@
 </div>
 
 <p align="center">
-  <a href="https://bear-react-carousel.github.io">Get started</a> | 
+  <a href="https://bear-react-carousel.github.io/docs/getting-started">Get started</a> | 
   <a href="https://bear-react-carousel.github.io/docs/category/components">Component</a> |
   <a href="https://bear-react-carousel.github.io/docs/category/examples">Examples</a> |
   <a href="https://bear-react-carousel.github.io/docs/props-try">Prop Try</a>
