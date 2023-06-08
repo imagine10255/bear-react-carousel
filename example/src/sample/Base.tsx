@@ -60,7 +60,7 @@ function Base() {
         <button type="button" onClick={() => setEnable(curr => !curr)}> enable: {String(enable)}</button>
 
         {Array.from({length: 5}).map((row, index) => {
-            return <button type="button" onClick={() => controller?.slideToPage(index + 1)}> slideToPage {index +1} </button>
+            return <button key={index} type="button" onClick={() => controller?.slideToPage(index + 1)}> slideToPage {index +1} </button>
         })}
 
         <br/>

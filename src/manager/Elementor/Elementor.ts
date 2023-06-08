@@ -50,7 +50,7 @@ class Elementor {
     }
 
     get isUseAnimation(){
-        return this.containerEl.style.transitionDuration !== '0ms';
+        return this.containerEl?.style.transitionDuration !== '0ms';
     }
 
     get isAnimation(){
@@ -149,10 +149,12 @@ class Elementor {
 
 
     transform(translateX: number, isUseAnimation = false){
-        this.containerEl.style.transform = `translate(${translateX}px, 0px)`;
-        this.containerEl.style.transitionDuration = isUseAnimation
-            ? `${this._configurator.setting.moveTime}ms`
-            : '0ms';
+        if(this.containerEl){
+            this.containerEl.style.transform = `translate(${translateX}px, 0px)`;
+            this.containerEl.style.transitionDuration = isUseAnimation
+                ? `${this._configurator.setting.moveTime}ms`
+                : '0ms';
+        }
 
         return this;
     }
@@ -160,17 +162,20 @@ class Elementor {
 
 
     syncActiveState = (activeActualIndex: number) => {
+        const itemEls = this.slideItemEls
+            .filter(row => row);
 
         // 更改顯示在第幾個 (父元件使用可判定樣式設定)
-        this.slideItemEls.forEach((row, index) => {
-            if(checkInRange(index, activeActualIndex, this.slideItemEls.length)){
-                row.setAttribute('data-active', 'true');
-            } else if (row?.dataset.active) {
-                row.removeAttribute('data-active');
-            }
-        });
+        itemEls
+            .forEach((row, index) => {
+                if(checkInRange(index, activeActualIndex, this.slideItemEls.length)){
+                    row.setAttribute('data-active', 'true');
+                } else if (row?.dataset.active) {
+                    row.removeAttribute('data-active');
+                }
+            });
 
-        const active = this.slideItemEls.find(row => row.dataset.active === 'true');
+        const active = itemEls.find(row => row.dataset.active === 'true');
         const activePage = parseInt(active?.dataset.page);
 
         // 更改顯示在第幾頁的樣式 (父元件使用可判定樣式設定)

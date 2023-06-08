@@ -34,12 +34,12 @@ class AutoPlayer {
     /**
      * 完全移除
      */
-    offTimeout = () => {
+    offTimeout = (callback: TEventMap['timeout']) => {
         window.removeEventListener('focus', this.play, false);
         window.removeEventListener('blur', this.pause, false);
 
         this.pause();
-        this._eventor.off('timeout');
+        this._eventor.off('timeout', callback);
     };
 
     play = () => {

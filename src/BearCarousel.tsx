@@ -134,17 +134,17 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
     componentWillUnmount() {
         if(this.props.isDebug && logEnable.componentWillUnmount) logger.printInText('[componentWillUnmount]');
-        this._windowSizer.offResize();
-        this._autoPlayer.offTimeout();
-        this._dragger.offDragStart();
-        this._dragger.offDragMove();
-        this._dragger.offDragEnd();
+        this._windowSizer.offResize(this._onResize);
+        this._autoPlayer.offTimeout(this._onAutoPlay);
+        this._dragger.offDragStart(this._onDragStart);
+        this._dragger.offDragMove(this._onDragMove);
+        this._dragger.offDragEnd(this._onDragEnd);
 
-        this._controller.offSlideBefore();
-        this._controller.offSlideAfter();
+        this._controller.offSlideBefore(this._onSlideBefore);
+        this._controller.offSlideAfter(this._onSlideAfter);
 
         this._elementor.offSlideAnimation();
-        this._stater.offChange();
+        this._stater.offChange(this._onChange);
     }
 
     /***

@@ -35,12 +35,12 @@ class Controller {
     };
 
 
-    offSlideBefore = () => {
-        this._eventor.off('slideBefore');
+    offSlideBefore = (callback: TEventMap['slideBefore']) => {
+        this._eventor.off('slideBefore', callback);
     };
 
-    offSlideAfter = () => {
-        this._eventor.off('slideAfter');
+    offSlideAfter = (callback: TEventMap['slideAfter']) => {
+        this._eventor.off('slideAfter', callback);
     };
 
 

@@ -64,8 +64,8 @@ class Stater {
         this._eventor.on('change', callback);
     };
 
-    offChange = () => {
-        this._eventor.off('change');
+    offChange = (callback: TEventMap['change']) => {
+        this._eventor.off('change', callback);
     };
 
 

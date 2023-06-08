@@ -38,7 +38,6 @@ class Dragger {
     onDragStart = (callBack?: TEventMap['dragStart']) => {
         this._elementor.containerEl.addEventListener('touchstart', this._onMobileTouchStart, {passive: false});
         this._elementor.containerEl.addEventListener('mousedown', this._onWebMouseStart, {passive: false});
-
         this._eventor.on('dragStart', callBack);
     };
 
@@ -50,18 +49,18 @@ class Dragger {
         this._eventor.on('dragEnd', callBack);
     };
 
-    offDragStart = () => {
+    offDragStart = (callBack?: TEventMap['dragStart']) => {
         this._elementor.containerEl.removeEventListener('touchstart', this._onMobileTouchStart, {passive: false} as any);
         this._elementor.containerEl.removeEventListener('mousedown', this._onWebMouseStart, {passive: false} as any);
-        this._eventor.off('dragStart');
+        this._eventor.off('dragStart', callBack);
     };
 
-    offDragMove = () => {
-        this._eventor.off('dragMove');
+    offDragMove = (callBack?: TEventMap['dragMove']) => {
+        this._eventor.off('dragMove', callBack);
     };
 
-    offDragEnd = () => {
-        this._eventor.off('dragEnd');
+    offDragEnd = (callBack?: TEventMap['dragEnd']) => {
+        this._eventor.off('dragEnd', callBack);
     };
 
 
