@@ -340,8 +340,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             pageContent = renderPagination(this._stater.page.pageTotal);
         }
 
-        const pageElement = new Array(page.pageTotal)
-            .fill('')
+        const pageElement = Array.from({length: page.pageTotal})
             .map((row, index) => {
                 return <Page
                     key={`page_${index}`}
