@@ -68,7 +68,7 @@ const data: TBearSlideItemDataList = images.map(row => {
 export const CustomBanner = () => {
     return <BearCarousel 
         data={data}
-        staticHeight="200px"
+        height="200px"
     />
 }
 ```
