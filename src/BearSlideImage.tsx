@@ -1,8 +1,7 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
 import CSS from 'csstype';
 import elClassName from './el-class-name';
-import useLazyLoadBg from "./hook/useLazyLoadBg";
-import useLazyLoadImage from "./hook/useLazyLoadImage";
+import useLazyLoadImage from './hook/useLazyLoadImage';
+import useDraggableClick from './hook/useDraggableClick';
 
 interface IProps {
   className?: string,
@@ -16,8 +15,6 @@ interface IProps {
   onClickAllowTime?: number
 }
 
-
-
 const BearSlideImage = ({
     className,
     style,
@@ -28,22 +25,8 @@ const BearSlideImage = ({
     onClick,
     onClickAllowTime = 150,
 }: IProps) => {
-    let lastTouchEnd = 0;
     const {imageRef, isLoading} = useLazyLoadImage({isLazy, imageUrl});
-
-
-    const onMouseDown = (event: React.MouseEvent<HTMLElement>) => {
-        event.preventDefault();
-        lastTouchEnd = (new Date()).getTime();
-    };
-
-    const onMouseUp = (event: React.MouseEvent<HTMLElement>) => {
-        const now = (new Date()).getTime();
-        if (now - lastTouchEnd <= onClickAllowTime) {
-            event.preventDefault();
-            if(onClick) onClick();
-        }
-    };
+    const {onMouseDown, onMouseUp} = useDraggableClick({onClick, onClickAllowTime});
 
     return <>
         <img
@@ -54,16 +37,13 @@ const BearSlideImage = ({
             alt={imageAlt}
             draggable="false"
             data-lazy-src={isLazy ? imageUrl: undefined}
-            onMouseDown={onClick ? (event) => onMouseDown(event): undefined}
-            onMouseUp={onClick ? (event) => onMouseUp(event): undefined}
+            onMouseDown={onClick ? onMouseDown: undefined}
+            onMouseUp={onClick ? onMouseUp: undefined}
         />
         {isLazy && isLoading && <div className={elClassName.slideItemImagePreLoad}>
             {preloader}
         </div>}
-
     </>;
 };
-
-
 
 export default BearSlideImage;

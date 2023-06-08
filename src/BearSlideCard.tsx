@@ -1,7 +1,8 @@
-import React, {ReactNode, useCallback, useEffect, useRef, useState} from 'react';
+import React, {ReactNode} from 'react';
 import CSS from 'csstype';
 import elClassName from './el-class-name';
 import useLazyLoadBg from './hook/useLazyLoadBg';
+import useDraggableClick from "./hook/useDraggableClick";
 
 interface IProps {
   className?: string,
@@ -26,28 +27,14 @@ const BearSlideCard = ({
     onClick,
     onClickAllowTime = 150,
 }: IProps) => {
-    let lastTouchEnd = 0;
-
     const {imageRef, isLoading} = useLazyLoadBg({isLazy, imageUrl: bgUrl});
-
-    const onMouseDown = (event: React.MouseEvent<HTMLElement>) => {
-        event.preventDefault();
-        lastTouchEnd = (new Date()).getTime();
-    };
-
-    const onMouseUp = (event: React.MouseEvent<HTMLElement>) => {
-        const now = (new Date()).getTime();
-        if (now - lastTouchEnd <= onClickAllowTime) {
-            event.preventDefault();
-            if(onClick) onClick();
-        }
-    };
+    const {onMouseDown, onMouseUp} = useDraggableClick({onClick, onClickAllowTime});
 
     return <div
         ref={imageRef}
         className={[className, elClassName.slideItemCard].join(' ').trim()}
-        onMouseDown={onMouseDown}
-        onClick={onMouseUp}
+        onMouseDown={onClick ? onMouseDown: undefined}
+        onMouseUp={onClick ? onMouseUp: undefined}
         data-lazy-src={isLazy ? bgUrl: undefined}
         style={{
             ...style,
