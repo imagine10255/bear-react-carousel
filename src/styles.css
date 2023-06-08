@@ -172,6 +172,10 @@ img.bear-react-carousel__slide-item__image{
     right: 0;
     top: 0;
     bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
 }
 
 div.bear-react-carousel__slide-item__card{

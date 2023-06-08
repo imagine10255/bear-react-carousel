@@ -27,7 +27,7 @@ const BearSlideImage = ({
     onClickAllowTime = 150,
 }: IProps) => {
     let lastTouchEnd = 0;
-    const imageRef = useRef<HTMLImageElement>();
+    const imageRef = useRef<HTMLImageElement>(null);
     const [isLoading, setLoading] = useState(false);
 
 
@@ -39,14 +39,16 @@ const BearSlideImage = ({
     }, [imageUrl, isLazy]);
 
 
-    const onEnterView = useCallback((entries, observer) => {
+    const onEnterView: IntersectionObserverCallback = useCallback((entries, observer) => {
         for (let entry of entries) {
             if (entry.isIntersecting) {
                 setLoading(true);
                 // 監視目標進入畫面
-                const img = entry.target;
-                img.setAttribute('src', img.dataset.lazySrc); // 把值塞回 src
-                img.removeAttribute('data-lazy-src');
+                const img = entry.target as HTMLElement;
+                if(img.dataset.lazySrc){
+                    img.setAttribute('src', img.dataset.lazySrc); // 把值塞回 src
+                    img.removeAttribute('data-lazy-src');
+                }
                 observer.unobserve(img);
             }
         }

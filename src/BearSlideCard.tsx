@@ -26,7 +26,7 @@ const BearSlideCard = ({
     onClickAllowTime = 150,
 }: IProps) => {
     let lastTouchEnd = 0;
-    const imageRef = useRef<HTMLImageElement>();
+    const imageRef = useRef<HTMLImageElement>(null);
     const [isLoading, setLoading] = useState(false);
     const watcher = useRef<IntersectionObserver>();
 
@@ -39,11 +39,11 @@ const BearSlideCard = ({
 
 
 
-    const onEnterView = useCallback((entries, observer) => {
+    const onEnterView: IntersectionObserverCallback = useCallback((entries, observer) => {
         for (let entry of entries) {
             if (entry.isIntersecting) {
                 setLoading(true);
-                const el = entry.target;
+                const el = entry.target as HTMLElement;
 
                 const img = new Image();
                 img.src = el.dataset.lazySrc;
