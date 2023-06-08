@@ -1,6 +1,8 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import CSS from 'csstype';
 import elClassName from './el-class-name';
+import useLazyLoadBg from "./hook/useLazyLoadBg";
+import useLazyLoadImage from "./hook/useLazyLoadImage";
 
 interface IProps {
   className?: string,
@@ -27,32 +29,7 @@ const BearSlideImage = ({
     onClickAllowTime = 150,
 }: IProps) => {
     let lastTouchEnd = 0;
-    const imageRef = useRef<HTMLImageElement>(null);
-    const [isLoading, setLoading] = useState(false);
-
-
-    useEffect(() => {
-        if(isLazy && imageRef.current){
-            const watcher = new window.IntersectionObserver(onEnterView);
-            watcher.observe(imageRef.current); // 開始監視
-        }
-    }, [imageUrl, isLazy]);
-
-
-    const onEnterView: IntersectionObserverCallback = useCallback((entries, observer) => {
-        for (let entry of entries) {
-            if (entry.isIntersecting) {
-                setLoading(true);
-                // 監視目標進入畫面
-                const img = entry.target as HTMLElement;
-                if(img.dataset.lazySrc){
-                    img.setAttribute('src', img.dataset.lazySrc); // 把值塞回 src
-                    img.removeAttribute('data-lazy-src');
-                }
-                observer.unobserve(img);
-            }
-        }
-    }, []);
+    const {imageRef, isLoading} = useLazyLoadImage({isLazy, imageUrl});
 
 
     const onMouseDown = (event: React.MouseEvent<HTMLElement>) => {
@@ -76,7 +53,6 @@ const BearSlideImage = ({
             src={isLazy ? undefined : imageUrl}
             alt={imageAlt}
             draggable="false"
-            onLoad={() => setLoading(false)}
             data-lazy-src={isLazy ? imageUrl: undefined}
             onMouseDown={onClick ? (event) => onMouseDown(event): undefined}
             onMouseUp={onClick ? (event) => onMouseUp(event): undefined}

@@ -1,6 +1,7 @@
 import React, {ReactNode, useCallback, useEffect, useRef, useState} from 'react';
 import CSS from 'csstype';
 import elClassName from './el-class-name';
+import useLazyLoadBg from './hook/useLazyLoadBg';
 
 interface IProps {
   className?: string,
@@ -26,44 +27,13 @@ const BearSlideCard = ({
     onClickAllowTime = 150,
 }: IProps) => {
     let lastTouchEnd = 0;
-    const imageRef = useRef<HTMLImageElement>(null);
-    const [isLoading, setLoading] = useState(false);
-    const watcher = useRef<IntersectionObserver>();
 
-    useEffect(() => {
-        if(isLazy && imageRef.current){
-            watcher.current = new window.IntersectionObserver(onEnterView);
-            watcher.current.observe(imageRef.current); // 開始監視
-        }
-    }, [bgUrl, isLazy]);
-
-
-
-    const onEnterView: IntersectionObserverCallback = useCallback((entries, observer) => {
-        for (let entry of entries) {
-            if (entry.isIntersecting) {
-                setLoading(true);
-                const el = entry.target as HTMLElement;
-
-                const img = new Image();
-                img.src = el.dataset.lazySrc;
-                img.onload = () => {
-                    setLoading(false);
-                };
-
-                el.style.backgroundImage = `url(${img.src})`;
-                el.removeAttribute('data-lazy-src');
-                observer.unobserve(el);
-            }
-        }
-    }, []);
-
+    const {imageRef, isLoading} = useLazyLoadBg({isLazy, imageUrl: bgUrl});
 
     const onMouseDown = (event: React.MouseEvent<HTMLElement>) => {
         event.preventDefault();
         lastTouchEnd = (new Date()).getTime();
     };
-
 
     const onMouseUp = (event: React.MouseEvent<HTMLElement>) => {
         const now = (new Date()).getTime();
