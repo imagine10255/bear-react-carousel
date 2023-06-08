@@ -2,7 +2,7 @@ import React, {ReactNode} from 'react';
 import CSS from 'csstype';
 import elClassName from './el-class-name';
 import useLazyLoadBg from './hook/useLazyLoadBg';
-import useDraggableClick from "./hook/useDraggableClick";
+import useDraggableClick from './hook/useDraggableClick';
 
 interface IProps {
   className?: string,

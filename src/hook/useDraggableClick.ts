@@ -1,11 +1,11 @@
-import { useState, useCallback } from 'react';
+import {useState, useCallback} from 'react';
 
 interface useDraggableClickProps {
     onClick?: () => void,
     onClickAllowTime?: number
 }
 
-const useDraggableClick = ({ onClick, onClickAllowTime = 150 }: useDraggableClickProps) => {
+const useDraggableClick = ({onClick, onClickAllowTime = 150}: useDraggableClickProps) => {
     let lastTouchEnd = 0;
     const [isDragging, setDragging] = useState(false);
 
@@ -27,7 +27,7 @@ const useDraggableClick = ({ onClick, onClickAllowTime = 150 }: useDraggableClic
         setDragging(true);
     }, []);
 
-    return { onMouseDown, onMouseUp, onMouseMove };
-}
+    return {onMouseDown, onMouseUp, onMouseMove};
+};
 
 export default useDraggableClick;
