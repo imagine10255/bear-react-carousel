@@ -22,6 +22,8 @@ import { GridThemeProvider } from 'bear-react-grid';
 import TextAnimationsCarousel from "./sample/TextAnimationsCarousel";
 import SlideImage from "./sample/SlideImage";
 import AutoCard from "./sample/AutoCard";
+import LazyImage from "./sample/LazyImage";
+import LazyCard from "./sample/LazyCard";
 
 
 
@@ -29,6 +31,8 @@ import AutoCard from "./sample/AutoCard";
 enum EExampleCode {
     base = 'base',
     slideImage = 'slideImage',
+    lazyImage = 'lazyImage',
+    lazyCard = 'lazyCard',
     autoCard = 'autoCard',
     autoPlay = 'autoPlay',
     loop = 'loop',
@@ -46,6 +50,8 @@ enum EExampleCode {
 const examples: Record<EExampleCode, () => JSX.Element> = {
     [EExampleCode.base]: Base,
     [EExampleCode.slideImage]: SlideImage,
+    [EExampleCode.lazyImage]: LazyImage,
+    [EExampleCode.lazyCard]: LazyCard,
     [EExampleCode.autoCard]: AutoCard,
     [EExampleCode.autoPlay]: AutoPlay,
     [EExampleCode.loop]: Loop,
@@ -60,7 +66,7 @@ const examples: Record<EExampleCode, () => JSX.Element> = {
 };
 
 function App() {
-    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.autoCard);
+    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.lazyImage);
     const Comp = examples[exampleKey];
 
 

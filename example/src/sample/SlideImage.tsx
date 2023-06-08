@@ -6,9 +6,7 @@ import BearCarousel, {
     IInfo,
     BearSlideImage, ICarouselState
 } from 'bear-react-carousel';
-import {baseImage as images} from '../config/images';
-
-import {Controller} from 'bear-react-carousel';
+import {carImages as images} from '../config/images';
 
 
 
@@ -30,7 +28,7 @@ function SlideImage() {
     const [count, setCount] = useState<number>(0);
     const [slidePreview, setSlidePreview] = useState(1);
 
-    return <div>
+    return <div style={{width: '500px'}}>
         {/*測試依照比例設定容器高度*/}
         {enable && (
             <BearCarousel
@@ -38,10 +36,10 @@ function SlideImage() {
                 // controllerRef={controllerRef}
                 data={bearSlideItemData1}
                 // onChange={setCarouselState}
-                slidesPerView="auto"
+                slidesPerView={1}
                 spaceBetween={5}
                 isCenteredSlides
-                height="200px"
+                // height="200px"
                 // height="200px"
                 isEnableNavButton
                 isEnablePagination

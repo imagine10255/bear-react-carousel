@@ -10,6 +10,7 @@ export default {
     containerInit: 'bear-react-carousel__container-init',
     slideItem: 'bear-react-carousel__slide-item',
     slideItemImage: 'bear-react-carousel__slide-item__image',
+    slideItemImagePreLoad: 'bear-react-carousel__slide-item__image-preload',
     slideItemCard: 'bear-react-carousel__slide-item__card',
     navGroup: 'bear-react-carousel__nav-group',
     navPrevButton: 'bear-react-carousel__nav-prev-button',

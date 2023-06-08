@@ -17,7 +17,7 @@ describe('Base testing', () => {
         navPrevButton: HTMLElement;
 
     const containerSize = 400;
-    const createData = new Array(6).fill('test');
+    const createData = Array.from({length: 6});
     const data = createData.map((row, index) => ({key: index, children: <BearSlideCard>item{index}</BearSlideCard>}));
     const onMount = () => {
         container = screen.getByTestId('bear-carousel-container');

@@ -4,9 +4,9 @@ import BearCarousel, {
     TBearSlideItemDataList,
     elClassName,
     IInfo,
-    ICarouselState
+    BearSlideImage, ICarouselState
 } from 'bear-react-carousel';
-import {baseImage as images} from '../config/images';
+import {carImages as images} from '../config/images';
 
 import {Controller} from 'bear-react-carousel';
 
@@ -17,51 +17,41 @@ import {Controller} from 'bear-react-carousel';
 const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
     return {
         key: row.id,
-        children: <BearSlideCard>
-            <div className="h-100 d-flex"
-                style={{fontSize: '40px', backgroundColor: row.color}}
-            />
-        </BearSlideCard>
+        children: <BearSlideImage imageUrl={row.imageUrl} isLazy/>
     };
 });
 
 
 
 
-function Base() {
+function LazyImage() {
     const [carouselState, setCarouselState] = useState<ICarouselState>();
     const [enable, setEnable] = useState<boolean>(true);
     const [count, setCount] = useState<number>(0);
-    const [controller, setController] = useState<Controller>();
     const [slidePreview, setSlidePreview] = useState(1);
 
-    return <div>
+    return <div style={{width: '500px', paddingTop: '1000px'}}>
         {/*測試依照比例設定容器高度*/}
         {enable && (
             <BearCarousel
                 // style={{width: '400px'}}
-                setController={setController}
+                // controllerRef={controllerRef}
                 data={bearSlideItemData1}
-                onChange={setCarouselState}
                 // onChange={setCarouselState}
-                slidesPerView={slidePreview}
-                // isCenteredSlides={true}
+                slidesPerView={1}
+                spaceBetween={5}
+                isCenteredSlides
                 // height="200px"
-                height={{widthRatio: 21, heightRatio: 9}}
+                // height="200px"
                 isEnableNavButton
                 isEnablePagination
                 // isEnableLoop
                 // isEnableAutoPlay={false}
-
-                isDebug
+                // isDebug
             />)}
 
         <button type="button" onClick={() => setCount(curr => curr += 1)}> count: {count}</button>
         <button type="button" onClick={() => setEnable(curr => !curr)}> enable: {String(enable)}</button>
-
-        {Array.from({length: 5}).map((row, index) => {
-            return <button type="button" onClick={() => controller?.slideToPage(index + 1)}> slideToPage {index +1} </button>
-        })}
 
         <br/>
 
@@ -70,7 +60,6 @@ function Base() {
             <option value={2}>2</option>
             <option value={3}>3</option>
         </select>
-
         <pre>
             {JSON.stringify(carouselState, null, '\t')}
         </pre>
@@ -78,7 +67,7 @@ function Base() {
 
 }
 
-export default Base;
+export default LazyImage;
 
 
 

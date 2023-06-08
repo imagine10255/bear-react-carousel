@@ -17,7 +17,7 @@ describe('Loop mode testing', () => {
         navPrevButton: HTMLElement;
 
     const containerSize = 400;
-    const createData = new Array(6).fill('test');
+    const createData = Array.from({length: 6});
     const data = createData.map((row, index) => ({key: index, children: <BearSlideCard>item{index}</BearSlideCard>}));
     const onMount = () => {
         container = screen.getByTestId('bear-carousel-container');
@@ -80,8 +80,8 @@ describe('Loop mode testing', () => {
         fireEvent.mouseUp(container);
 
         expect(getActiveSlideItem()).toHaveAttribute('data-page','1');
-        expect(getActiveSlideItem().dataset['is-clone']).toBeUndefined()
-        expect(getActiveSlideItem().dataset['match']).toBeUndefined()
+        expect(getActiveSlideItem().dataset['isClone']).toBeUndefined();
+        expect(getActiveSlideItem().dataset['match']).toBeUndefined();
         expect(getActivePageButton()).toHaveAttribute('data-page','1');
     });
 
