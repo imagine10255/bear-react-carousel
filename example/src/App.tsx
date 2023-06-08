@@ -21,6 +21,7 @@ import RenderPagination from './sample/RenderPagination';
 import { GridThemeProvider } from 'bear-react-grid';
 import TextAnimationsCarousel from "./sample/TextAnimationsCarousel";
 import SlideImage from "./sample/SlideImage";
+import AutoCard from "./sample/AutoCard";
 
 
 
@@ -28,6 +29,7 @@ import SlideImage from "./sample/SlideImage";
 enum EExampleCode {
     base = 'base',
     slideImage = 'slideImage',
+    autoCard = 'autoCard',
     autoPlay = 'autoPlay',
     loop = 'loop',
     center = 'center',
@@ -44,6 +46,7 @@ enum EExampleCode {
 const examples: Record<EExampleCode, () => JSX.Element> = {
     [EExampleCode.base]: Base,
     [EExampleCode.slideImage]: SlideImage,
+    [EExampleCode.autoCard]: AutoCard,
     [EExampleCode.autoPlay]: AutoPlay,
     [EExampleCode.loop]: Loop,
     [EExampleCode.center]: Center,
@@ -57,7 +60,7 @@ const examples: Record<EExampleCode, () => JSX.Element> = {
 };
 
 function App() {
-    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.base);
+    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.autoCard);
     const Comp = examples[exampleKey];
 
 

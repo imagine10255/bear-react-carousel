@@ -30,7 +30,7 @@ const TextAnimationsCarousel = () => {
             // isEnableAutoPlay
             isEnableLoop
             isEnableNavButton={false}
-            isEnablePagination
+            // isEnablePagination
             autoPlayTime={5000}
             moveTime={900}
             breakpoints={{

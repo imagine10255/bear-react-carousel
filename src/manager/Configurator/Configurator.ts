@@ -32,6 +32,13 @@ class Configurator {
                 ]
             },
             {
+                // 保護不被項目擠開
+                targetEl: `#${this.carouselId} .${elClassName.content}`,
+                styles: [
+                    `position: ${this.setting.height ? 'absolute': 'static'};`,
+                ]
+            },
+            {
                 targetEl: `#${this.carouselId} .${elClassName.slideItem}`,
                 styles: [
                     `flex: ${this.setting.slidesPerView === 'auto' ? '0 0 auto;-webkit-flex: 0 0 auto;' : `1 0 ${100 / this.setting.slidesPerViewActual}%`};`,
