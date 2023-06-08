@@ -11,22 +11,6 @@ export enum EDevice {
   desktop,
 }
 
-export interface IBearCarouselObj {
-  activeActualIndex: number;
-  activePage: number;
-  info: IInfo,
-}
-
-
-export enum EHorizontal {
-  right= 'right',
-  left = 'left',
-}
-export enum EDirection {
-  vertical= 'vertical',
-  horizontal = 'horizontal',
-}
-
 export type TRenderNavButton = (toPrev: TToPrev, toNext: TToNext) => void
 export type TRenderPagination = (pageTotal: number) => JSX.Element[]
 export type TStateOnChange = (carouselState: ICarouselState) => void
@@ -48,11 +32,9 @@ export interface IBearCarouselProps extends IBreakpointSetting{
   isDebug?: boolean
   isSlideItemMemo?: boolean
   syncCarouselRef?: RefObject<BearCarousel>
-  controllerRef?: RefObject<Controller>
+  setController?: (controller: Controller) => void
   onChange?: TStateOnChange
   onMount?: TOnMount
-  // onElementMove?: (activeActualIndex: number, percentage: number) => void,
-  // onElementDone?: (activeActualIndex: number) => void,
 }
 
 
@@ -62,7 +44,6 @@ export interface ICarouselState {
     total: number
     firstIndex: number
     lastIndex: number
-    activeIndex: number
   }
   // 0為實際一開始的位置(往前為負數), 結束值為最後結束位置
   actual: {

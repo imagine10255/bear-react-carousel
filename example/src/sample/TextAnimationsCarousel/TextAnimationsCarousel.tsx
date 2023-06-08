@@ -23,10 +23,10 @@ const TextAnimationsCarousel = () => {
     });
 
     return <TextAnimationsRoot>
-        return <BearCarousel
+        <BearCarousel
             data={slideItemData}
             slidesPerView={1}
-            staticHeight="400px"
+            height="400px"
             // isEnableAutoPlay
             isEnableLoop
             isEnableNavButton={false}
@@ -35,15 +35,15 @@ const TextAnimationsCarousel = () => {
             moveTime={900}
             breakpoints={{
                 576: {
-                    staticHeight: '400px',
+                    height: '400px',
                     isEnableNavButton: false,
                 },
                 996: {
-                    staticHeight: '500px',
+                    height: '500px',
                     isEnableNavButton: true,
                 },
                 1200: {
-                    staticHeight: '600px',
+                    height: '600px',
                     isEnableNavButton: true,
                 }
             }}

@@ -1,5 +1,11 @@
 import {useRef, useState} from 'react';
-import BearCarousel, {BearSlideCard, TBearSlideItemDataList, elClassName, IInfo} from 'bear-react-carousel';
+import BearCarousel, {
+    BearSlideCard,
+    TBearSlideItemDataList,
+    elClassName,
+    IInfo,
+    ICarouselState
+} from 'bear-react-carousel';
 import {baseImage as images} from '../config/images';
 
 import {Controller} from 'bear-react-carousel';
@@ -25,7 +31,9 @@ const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
 
 
 function AutoPlay() {
-    const [info, setInfo] = useState<IInfo>();
+    const [carouselState, setCarouselState] = useState<ICarouselState>();
+    const [controller, setController] = useState<Controller>();
+
     const [enable, setEnable] = useState<boolean>(true);
     const [count, setCount] = useState<number>(0);
     const controllerRef = useRef<Controller>(null);
@@ -34,9 +42,9 @@ function AutoPlay() {
         {/*測試依照比例設定容器高度*/}
         {enable && (
             <BearCarousel
-                controllerRef={controllerRef}
+                setController={setController}
                 data={bearSlideItemData1}
-                onChange={setInfo}
+                onChange={setCarouselState}
                 isCenteredSlides={true}
                 height="200px"
                 isEnableNavButton
@@ -49,15 +57,10 @@ function AutoPlay() {
 
         <button type="button" onClick={() => setCount(curr => curr += 1)}> count: {count}</button>
         <button type="button" onClick={() => setEnable(curr => !curr)}> enable: {String(enable)}</button>
-        <button type="button" onClick={() => {
-            if(controllerRef.current){
-                controllerRef.current.slideToPage(5);
-            }
-        }}> slideToPage5 </button>
 
         <br/>
         <pre>
-            {JSON.stringify(info, null, '\t')}
+            {JSON.stringify(carouselState, null, '\t')}
         </pre>
     </div>;
 

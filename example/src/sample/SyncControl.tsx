@@ -47,13 +47,11 @@ const bearSlideItemData2: TBearSlideItemDataList = images.map(row => {
 
 
 function SyncControl() {
-    const [info, setInfo] = useState<ICarouselState>();
+    const [carouselState, setCarouselState] = useState<ICarouselState>();
 
     // const [carousel, setCarousel] = useState<IBearCarouselObj>();
     const [enable, setEnable] = useState<boolean>(true);
     const [count, setCount] = useState<number>(0);
-    const textareaRef = useRef<HTMLTextAreaElement>(null);
-    const flexItemRef = useRef<HTMLDivElement>(null);
     const syncCarouselRef = useRef<BearCarousel>(null);
     const sync2CarouselRef = useRef<BearCarousel>(null);
 
@@ -89,7 +87,7 @@ function SyncControl() {
             <BearCarousel
                 ref={sync2CarouselRef}
                 syncCarouselRef={syncCarouselRef}
-                onChange={setInfo}
+                onChange={setCarouselState}
 
                 data={bearSlideItemData1}
                 slidesPerView={1}
@@ -107,7 +105,7 @@ function SyncControl() {
 
         <br/>
         <pre>
-            {JSON.stringify(info, null, '\t')}
+            {JSON.stringify(carouselState, null, '\t')}
         </pre>
 
         <button type="button" onClick={() => setCount(curr => curr += 1)}> count: {count}</button>

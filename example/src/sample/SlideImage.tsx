@@ -4,7 +4,7 @@ import BearCarousel, {
     TBearSlideItemDataList,
     elClassName,
     IInfo,
-    BearSlideImage
+    BearSlideImage, ICarouselState
 } from 'bear-react-carousel';
 import {baseImage as images} from '../config/images';
 
@@ -25,10 +25,9 @@ const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
 
 
 function SlideImage() {
-    const [info, setInfo] = useState<IInfo>();
+    const [carouselState, setCarouselState] = useState<ICarouselState>();
     const [enable, setEnable] = useState<boolean>(true);
     const [count, setCount] = useState<number>(0);
-    const controllerRef = useRef<Controller>(null);
     const [slidePreview, setSlidePreview] = useState(1);
 
     return <div>
@@ -38,7 +37,7 @@ function SlideImage() {
                 // style={{width: '400px'}}
                 // controllerRef={controllerRef}
                 data={bearSlideItemData1}
-                // onChange={setInfo}
+                // onChange={setCarouselState}
                 slidesPerView="auto"
                 spaceBetween={5}
                 isCenteredSlides
@@ -53,11 +52,6 @@ function SlideImage() {
 
         <button type="button" onClick={() => setCount(curr => curr += 1)}> count: {count}</button>
         <button type="button" onClick={() => setEnable(curr => !curr)}> enable: {String(enable)}</button>
-        <button type="button" onClick={() => {
-            if(controllerRef.current){
-                controllerRef.current.slideToPage(5);
-            }
-        }}> slideToPage5 </button>
 
         <br/>
 
@@ -67,7 +61,7 @@ function SlideImage() {
             <option value={3}>3</option>
         </select>
         <pre>
-            {JSON.stringify(info, null, '\t')}
+            {JSON.stringify(carouselState, null, '\t')}
         </pre>
     </div>;
 

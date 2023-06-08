@@ -1,7 +1,13 @@
 import {useRef, useState} from 'react';
 import styled, {css, keyframes} from 'styled-components';
 import {media} from 'bear-react-grid';
-import BearCarousel, {BearSlideCard, TBearSlideItemDataList, elClassName, IInfo} from 'bear-react-carousel';
+import BearCarousel, {
+    BearSlideCard,
+    TBearSlideItemDataList,
+    elClassName,
+    IInfo,
+    ICarouselState
+} from 'bear-react-carousel';
 import {baseImage as images} from '../config/images';
 
 import {Controller} from 'bear-react-carousel';
@@ -27,20 +33,17 @@ const autoPlayTime = 1500;
 
 
 function RenderPagination() {
-    const [info, setInfo] = useState<IInfo>();
+    const [carouselState, setCarouselState] = useState<ICarouselState>();
     const [enable, setEnable] = useState<boolean>(true);
     const [count, setCount] = useState<number>(0);
-    const controllerRef = useRef<Controller>(null);
     const [slidePreview, setSlidePreview] = useState(1);
 
-    // console.log('slidePreview', slidePreview);
     return <CarouselBox>
         {/*測試依照比例設定容器高度*/}
         {enable && (
             <BearCarousel
-                // controllerRef={controllerRef}
                 data={bearSlideItemData1}
-                // onChange={setInfo}
+                onChange={setCarouselState}
                 slidesPerView={slidePreview}
                 isCenteredSlides={true}
                 height="200px"
@@ -64,11 +67,6 @@ function RenderPagination() {
 
         <button type="button" onClick={() => setCount(curr => curr += 1)}> count: {count}</button>
         <button type="button" onClick={() => setEnable(curr => !curr)}> enable: {String(enable)}</button>
-        <button type="button" onClick={() => {
-            if(controllerRef.current){
-                controllerRef.current.slideToPage(5);
-            }
-        }}> slideToPage5 </button>
 
         <br/>
 
@@ -78,7 +76,7 @@ function RenderPagination() {
             <option value={3}>3</option>
         </select>
         <pre>
-            {JSON.stringify(info, null, '\t')}
+            {JSON.stringify(carouselState, null, '\t')}
         </pre>
     </CarouselBox>;
 

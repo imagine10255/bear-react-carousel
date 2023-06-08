@@ -105,7 +105,6 @@ class Stater {
             sourceTotal, // 來源總數
             // 從0開始
             element: {
-                activeIndex: 0,
                 firstIndex: 0,
                 lastIndex: elementTotal - 1,
                 total: elementTotal,

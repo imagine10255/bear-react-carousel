@@ -1,5 +1,11 @@
 import {useRef, useState} from 'react';
-import BearCarousel, {BearSlideCard, TBearSlideItemDataList, elClassName, IInfo} from 'bear-react-carousel';
+import BearCarousel, {
+    BearSlideCard,
+    TBearSlideItemDataList,
+    elClassName,
+    IInfo,
+    ICarouselState
+} from 'bear-react-carousel';
 import {baseImage as images, foodImages} from '../config/images';
 
 import {Controller} from 'bear-react-carousel';
@@ -25,7 +31,7 @@ const bearSlideItemData1: TBearSlideItemDataList = foodImages.map(row => {
 
 
 function Loop() {
-    const [info, setInfo] = useState<IInfo>();
+    const [carouselState, setCarouselState] = useState<ICarouselState>();
     const [enable, setEnable] = useState<boolean>(true);
     const [count, setCount] = useState<number>(0);
     const controllerRef = useRef<Controller>(null);
@@ -37,7 +43,7 @@ function Loop() {
                 // style={{width: '400px'}}
                 // controllerRef={controllerRef}
                 data={bearSlideItemData1}
-                // onChange={setInfo}
+                // onChange={setCarouselState}
                 height="500px"
                 isEnableNavButton
                 isEnablePagination
@@ -55,7 +61,7 @@ function Loop() {
 
         <br/>
         <pre>
-            {JSON.stringify(info, null, '\t')}
+            {JSON.stringify(carouselState, null, '\t')}
         </pre>
     </div>;
 

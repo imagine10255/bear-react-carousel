@@ -127,7 +127,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             this._syncCarousel = new SyncCarousel(this.props.syncCarouselRef);
         }
 
-        this._setControllerRef();
+        this._setController();
         this._elementor.onSlideAnimation();
         this._init();
     }
@@ -195,10 +195,9 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     /**
      * set Controller method
      */
-    private _setControllerRef = () => {
-        if(this.props.controllerRef){
-            const propsRef = this.props.controllerRef as { current: Controller};
-            propsRef.current = this._controller;
+    private _setController = () => {
+        if(this.props.setController){
+            this.props.setController(this._controller);
         }
     };
 
