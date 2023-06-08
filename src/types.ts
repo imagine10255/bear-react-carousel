@@ -33,7 +33,7 @@ export interface IBearCarouselProps extends IBreakpointSetting{
   isSlideItemMemo?: boolean
   syncCarouselRef?: RefObject<BearCarousel>
   setController?: (controller: Controller) => void
-  onChange?: TStateOnChange
+  onSlideChange?: TStateOnChange
   onMount?: TOnMount
 }
 
