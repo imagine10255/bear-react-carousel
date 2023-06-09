@@ -43,7 +43,7 @@ function SlideImage() {
                 // style={{width: '400px'}}
                 // controllerRef={controllerRef}
                 data={bearSlideItemData1}
-                // onChange={setCarouselState}
+                // onSlideChange={setCarouselState}
                 slidesPerView="auto"
                 spaceBetween={5}
                 isEnableNavButton

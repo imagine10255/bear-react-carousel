@@ -17,7 +17,7 @@ import {Controller} from 'bear-react-carousel';
 const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
     return {
         key: row.id,
-        children: <BearSlideCard>
+        children: <BearSlideCard style={{transform: 'translateZ(0)', backfaceVisibility: 'hidden', transitionProperty: 'transform'}}>
             <div className="h-100 d-flex"
                 style={{fontSize: '40px', backgroundColor: row.color}}
             />
@@ -42,15 +42,15 @@ function Base() {
                 // style={{width: '400px'}}
                 setController={setController}
                 data={bearSlideItemData1}
-                onChange={setCarouselState}
-                // onChange={setCarouselState}
+                onSlideChange={setCarouselState}
+                // onSlideChange={setCarouselState}
                 slidesPerView={slidePreview}
                 // isCenteredSlides={true}
-                // height="200px"
-                height={{widthRatio: 21, heightRatio: 9}}
+                height="250px"
+                // height={{widthRatio: 32, heightRatio: 9}}
                 isEnableNavButton
                 isEnablePagination
-                // isEnableLoop
+                isEnableLoop
                 // isEnableAutoPlay={false}
 
                 isDebug

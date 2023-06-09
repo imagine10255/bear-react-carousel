@@ -44,7 +44,7 @@ function AutoPlay() {
             <BearCarousel
                 setController={setController}
                 data={bearSlideItemData1}
-                onChange={setCarouselState}
+                onSlideChange={setCarouselState}
                 isCenteredSlides={true}
                 height="200px"
                 isEnableNavButton

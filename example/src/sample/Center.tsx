@@ -47,7 +47,7 @@ function Center() {
                     // controllerRef={controllerRef}
                     data={bearSlideItemData1}
                     slidesPerView={3}
-                    // onChange={setCarouselState}
+                    // onSlideChange={setCarouselState}
                     height="200px"
                     isEnableNavButton
                     isEnablePagination

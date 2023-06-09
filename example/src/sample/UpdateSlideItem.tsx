@@ -46,7 +46,7 @@ function UpdateSlideItem() {
         {enable && (
             <BearCarousel
                 data={bearSlideItemData1}
-                onChange={setCarouselState}
+                onSlideChange={setCarouselState}
                 slidesPerView={5}
                 isCenteredSlides
                 height="200px"

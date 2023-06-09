@@ -43,7 +43,7 @@ function RenderPagination() {
         {enable && (
             <BearCarousel
                 data={bearSlideItemData1}
-                onChange={setCarouselState}
+                onSlideChange={setCarouselState}
                 slidesPerView={slidePreview}
                 isCenteredSlides={true}
                 height="200px"
@@ -70,7 +70,7 @@ function RenderPagination() {
 
         <br/>
 
-        <select onChange={event => setSlidePreview(Number(event.target.value))}>
+        <select onSlideChange={event => setSlidePreview(Number(event.target.value))}>
             <option value={1}>1</option>
             <option value={2}>2</option>
             <option value={3}>3</option>

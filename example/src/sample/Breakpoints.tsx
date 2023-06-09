@@ -41,7 +41,7 @@ function Breakpoints() {
         {enable && (
             <BearCarousel
                 data={bearSlideItemData1}
-                onChange={setCarouselState}
+                onSlideChange={setCarouselState}
                 // slidesPerView="auto"
                 isCenteredSlides={true}
                 height="200px"

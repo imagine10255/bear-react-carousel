@@ -35,7 +35,7 @@ function SlideImage() {
                 // style={{width: '400px'}}
                 // controllerRef={controllerRef}
                 data={bearSlideItemData1}
-                // onChange={setCarouselState}
+                // onSlideChange={setCarouselState}
                 slidesPerView={1}
                 spaceBetween={5}
                 isCenteredSlides
@@ -53,7 +53,7 @@ function SlideImage() {
 
         <br/>
 
-        <select onChange={event => setSlidePreview(Number(event.target.value))}>
+        <select onSlideChange={event => setSlidePreview(Number(event.target.value))}>
             <option value={1}>1</option>
             <option value={2}>2</option>
             <option value={3}>3</option>
