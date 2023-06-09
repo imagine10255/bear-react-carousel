@@ -22,11 +22,11 @@ const TextCard = ({
     return <BearSlideCard bgUrl={imageUrl}>
         <AnimationsBox position={position}>
             <SubTitle>{subTitle}</SubTitle>
-            <Title>{title}</Title>
-            <Desc>{desc}</Desc>
+            {/*<Title>{title}</Title>*/}
+            {/*<Desc>{desc}</Desc>*/}
             <Flex direction={EDirection.row}>
-                <Button>Shop Now</Button>
-                <Button isOutline>Home Store</Button>
+                {/*<Button>Shop Now</Button>*/}
+                {/*<Button isOutline>Home Store</Button>*/}
             </Flex>
         </AnimationsBox>
 

@@ -12,12 +12,13 @@
     "styled-components": "5.3.9"
   },
   "dependencies": {
+    "@swc/plugin-styled-components": "1.5.67",
     "bear-react-carousel": "link:..",
     "bear-react-grid": "3.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "styled-components": "5.3.9",
-    "@swc/plugin-styled-components": "1.5.67"
+    "swiper": "^9.3.2"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",

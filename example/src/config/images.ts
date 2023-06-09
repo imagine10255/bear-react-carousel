@@ -5,6 +5,8 @@ export const racingImages = [
     {id: 1, name: 'Strawberry', imageUrl: asset('/sample/food/01.jpg')},
     {id: 2, name: 'Honey Cranberry Pie', imageUrl: asset('/sample/food/02.jpg')},
     {id: 3, name: 'Tomato noodles', imageUrl: asset('/sample/food/03.jpg')},
+    {id: 4, name: 'Fish 1', imageUrl: asset('/sample/food/04.jpg')},
+    {id: 5, name: 'Fish 2', imageUrl: asset('/sample/food/05.jpg')},
 ];
 
 
@@ -71,6 +73,22 @@ export const foodImages: IFoodImage[] = [
         title: 'QUALITY MONITORING',
         desc: 'We offer huge variety of execeptionally fresh meat farmed in our personal farm',
         imageUrl: asset('/sample/food/03.jpg'),
+        position: 'left',
+    },
+    {
+        id: 4,
+        subTitle: 'Fish1 & DELIVERY',
+        title: 'QUALITY FISH',
+        desc: 'We offer huge variety of execeptionally fresh meat farmed in our personal farm',
+        imageUrl: asset('/sample/food/04.jpg'),
+        position: 'left',
+    },
+    {
+        id: 5,
+        subTitle: 'Fish2 & DELIVERY',
+        title: 'QUALITY FISH',
+        desc: 'We offer huge variety of execeptionally fresh meat farmed in our personal farm',
+        imageUrl: asset('/sample/food/05.jpg'),
         position: 'left',
     },
 ];
