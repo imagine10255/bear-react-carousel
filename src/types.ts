@@ -56,6 +56,7 @@ export interface ICarouselState {
   page: {
     activePage: number
     pageTotal: number
+    moveCount: number
   }
 }
 

@@ -1,7 +1,7 @@
 import {getMoveDistance, getStartPosition} from './utils';
 
 
-test('get start position', async () => {
+test('get start onSlideChange={, async () => {
     expect(
         getStartPosition(false, {slidesPerView: 1, slidesPerViewActual: 1}, {containerWidth: 200, currItemWidth: 50})
     ).toEqual(0);

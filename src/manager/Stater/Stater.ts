@@ -121,6 +121,7 @@ class Stater {
             page: {
                 activePage: 0,
                 pageTotal: fakeTotalPage,
+                moveCount: 0,
             },
             // 總頁數
             residue: elementTotal % slidesPerGroup,
@@ -143,10 +144,30 @@ class Stater {
 
     };
 
-    setActiveActual = (index: number, page: number) => {
+    setActiveActual = (index: number, page: number, moveCount = 0) => {
         this.actual.activeIndex = index;
         this.page.activePage = page;
+        // this.page.moveCount = moveCount;
         this._eventor.emit('change');
+    };
+
+    setNextPage = () => {
+        // this.setActiveActual(index, page);
+        if(this._info.page.moveCount < 0){
+            this._info.page.moveCount = 0;
+        }
+        this._info.page.moveCount++;
+
+        console.log('this.page.moveCount', this._info.page.moveCount);
+    };
+
+    setPrevPage = () => {
+        // this.setActiveActual(index, page);
+        if(this._info.page.moveCount > 0){
+            this._info.page.moveCount = 0;
+        }
+        this._info.page.moveCount--;
+        console.log('this.page.moveCount', this._info.page.moveCount);
     };
 
 }

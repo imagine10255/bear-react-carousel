@@ -32,6 +32,22 @@ class Configurator {
                 ]
             },
             {
+                targetEl: `#${this._carouselId} .${elClassName.slideItem}[data-order="0"]`,
+                styles: ['order: 0']
+            },
+            {
+                targetEl: `#${this._carouselId} .${elClassName.slideItem}[data-order="1"]`,
+                styles: ['order: 1']
+            },
+            {
+                targetEl: `#${this._carouselId} .${elClassName.slideItem}[data-order="2"]`,
+                styles: ['order: 2']
+            },
+            {
+                targetEl: `#${this._carouselId} .${elClassName.slideItem}[data-order="3"]`,
+                styles: ['order: 3']
+            },
+            {
                 // 保護不被項目擠開
                 targetEl: `#${this.carouselId} .${elClassName.content}`,
                 styles: [

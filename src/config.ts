@@ -1,28 +1,28 @@
 
 // debug log switch
 export const logEnable = {
-    componentDidMount: true,
-    componentWillUnmount: true,
-    shouldComponentUpdate: true,
+    componentDidMount: false,
+    componentWillUnmount: false,
+    shouldComponentUpdate: false,
     dragger: {
-        onMobileTouchStart: true,
-        onMobileTouchMove: true,
-        onMobileTouchEnd: true,
-        onWebMouseStart: true,
-        onWebMouseMove: true,
-        onWebMouseEnd: true,
+        onMobileTouchStart: false,
+        onMobileTouchMove: false,
+        onMobileTouchEnd: false,
+        onWebMouseStart: false,
+        onWebMouseMove: false,
+        onWebMouseEnd: false,
         onDragMove: false,
         onDragEnd: false,
     },
     controller: {
-        onSlideResetToMatchIndex: true,
+        onSlideResetToMatchIndex: false,
     },
     autoPlayer: {
-        play: true,
-        pause: true,
+        play: false,
+        pause: false,
     },
     windowSizer: {
-        onResize: true,
+        onResize: false,
     },
     syncCarousel: {
         onSyncControlMove: false,

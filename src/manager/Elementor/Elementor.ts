@@ -154,22 +154,22 @@ class Elementor {
 
     transform(translateX: number, isUseAnimation = false){
         if(this.containerEl){
-            if(this.isOrder){
-                this.containerEl.style.transform = `translate3d(${-1904}px, 0px, 0px)`;
-                this.containerEl.style.transitionDuration = '0ms';
-                setTimeout(() => {
-                    this.containerEl.style.transform = `translate3d(${-3808}px, 0px, 0px)`;
-                    this.containerEl.style.transitionDuration = `${this._configurator.setting.moveTime}ms`;
-                    console.log('go');
-                }, 0);
-
-
-            }else{
+            // if(this.isOrder){
+            //     this.containerEl.style.transform = `translate3d(${-1904}px, 0px, 0px)`;
+            //     this.containerEl.style.transitionDuration = '0ms';
+            //     setTimeout(() => {
+            //         this.containerEl.style.transform = `translate3d(${-3808}px, 0px, 0px)`;
+            //         this.containerEl.style.transitionDuration = `${this._configurator.setting.moveTime}ms`;
+            //         console.log('go');
+            //     }, 0);
+            //
+            //
+            // }else{
                 this.containerEl.style.transform = `translate3d(${translateX}px, 0px, 0px)`;
                 this.containerEl.style.transitionDuration = isUseAnimation
                     ? `${this._configurator.setting.moveTime}ms`
                     : '0ms';
-            }
+            // }
 
 
         }
@@ -184,25 +184,27 @@ class Elementor {
         console.log('orders',orders);
         itemEls
             .forEach((row, index) => {
-                row.style.order = String(orders.get(index));
+                // row.style.order = String(orders.get(index));
+                row.dataset.order = String(orders.get(index));
             });
     };
 
-    syncActiveState = (activeActualIndex: number, order?: boolean) => {
+    syncActiveState = (activeActualIndex: number, isPageOverflow?: boolean) => {
         const itemEls = this.slideItemEls
             .filter(row => row);
         // this.containerEl.style.transitionDuration = '500ms';
-        const orders = calculateOrder(itemEls.length, activeActualIndex);
+        // const orders = calculateOrder(itemEls.length, activeActualIndex);
 
-        if(order){
-            this.isOrder = true;
-        }
+        // if(isPageOverflow){
+        //     this.isOrder = true;
+        // }
+
 
         // 更改顯示在第幾個 (父元件使用可判定樣式設定)
         itemEls
             .forEach((row, index) => {
-                console.log('order',order, String(index));
-                row.style.order = this.isOrder ? String(orders.get(index)): String(index);
+                // console.log('order',isPageOverflow, String(index));
+                // row.style.order = isPageOverflow ? String(orders.get(index)): String(index);
                 if(checkInRange(index, activeActualIndex, this.slideItemEls.length)){
                     row.setAttribute('data-active', 'true');
                 } else if (row?.dataset.active) {
