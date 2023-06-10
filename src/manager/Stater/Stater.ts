@@ -88,7 +88,8 @@ class Stater {
         const elementTotal = this.formatElement.length;
 
         // clone
-        const cloneBeforeTotal = isEnableLoop ? slidesPerViewActual : 0;
+        // const cloneBeforeTotal = isEnableLoop ? slidesPerViewActual : 0;
+        const cloneBeforeTotal = 0;
         const cloneAfterTotal = cloneBeforeTotal;
 
         // actual

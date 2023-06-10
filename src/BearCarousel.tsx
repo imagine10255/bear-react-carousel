@@ -20,6 +20,7 @@ import Page from './components/Page';
 import {NavNextButton, NavPrevButton} from './components/NavButton';
 import CarouselRoot from './components/CarouselRoot';
 import {logEnable} from './config';
+import {sortDataArray} from './manager/Controller/utils';
 
 
 
@@ -306,6 +307,9 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     private _renderSlideItems = () => {
         const {isDebug} = this.props;
         const {actual, formatElement} = this._stater;
+        // const ordersEls = sortDataArray(this._stater.actual.activeIndex, formatElement);
+
+
         return formatElement.map((row, i) => {
             const isActive = row.actualIndex === actual.activeIndex;
 

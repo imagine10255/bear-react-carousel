@@ -7,6 +7,7 @@ import Elementor from '../Elementor';
 import Eventor from '../Eventor';
 import {logEnable} from '../../config';
 import logger from '../../logger';
+import {act} from "@testing-library/react";
 
 
 class Controller {
@@ -53,13 +54,13 @@ class Controller {
         const {actual, formatElement} = this._stater;
 
         if (formatElement[actual.activeIndex].isClone) {
-            this.slideToActualIndex(formatElement[actual.activeIndex].matchIndex, {isUseAnimation: false});
+            // this.slideToActualIndex(formatElement[actual.activeIndex].matchIndex, {isUseAnimation: false});
         }
     };
 
 
 
-    slideToActualIndex = (slideIndex: number, options?: {isUseAnimation?: boolean, isEmitEvent?: boolean}) => {
+    slideToActualIndex = (slideIndex: number, options?: {isUseAnimation?: boolean, isEmitEvent?: boolean, order?: boolean}) => {
         const isEmitEvent = options?.isEmitEvent ?? true;
         if(isEmitEvent) this._eventor.emit('slideBefore', slideIndex, options?.isUseAnimation);
 
@@ -68,10 +69,13 @@ class Controller {
             this._stater.setActiveActual(slideIndex, formatElement[slideIndex]?.inPage ?? 1);
 
             // 移動EL位置
-            const position = this._elementor.getMoveDistance(slideIndex);
+
+            const position = this._elementor.getMoveDistance(options.order ? 2: slideIndex);
+            console.log('position', slideIndex, options.order, position);
             this._elementor
+                .syncActiveState(slideIndex, options.order)
                 .transform(position, options?.isUseAnimation ?? true)
-                .syncActiveState(slideIndex);
+            ;
         }
 
         if(isEmitEvent) this._eventor.emit('slideAfter', slideIndex, options?.isUseAnimation);
@@ -123,7 +127,13 @@ class Controller {
                 isLoopMode: setting.isEnableLoop,
             }
         )
-            .forEach(action => this.slideToActualIndex(action.index, {isUseAnimation: action.isUseAnimation}));
+            .forEach(action => {
+                this.slideToActualIndex(action.index, {isUseAnimation: action.isUseAnimation, order: action.order});
+                // if(action.order){
+                //     this._elementor.syncOrder(action.index);
+                // }
+
+            });
     };
 
     /**

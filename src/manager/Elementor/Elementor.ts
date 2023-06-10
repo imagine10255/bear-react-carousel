@@ -5,6 +5,7 @@ import {checkInRange, getMoveDistance, getMovePercentage, getStartPosition} from
 import {booleanToDataAttr} from '../../utils';
 import Configurator from '../Configurator';
 import Stater from '../Stater';
+import calculateOrder from '../Controller/utils';
 
 class Elementor {
     _rootRef: RefObject<HTMLDivElement> = createRef();
@@ -17,6 +18,9 @@ class Elementor {
     private _configurator: Configurator;
     private _stater: Stater;
     private _isAnimation = false;
+
+    isOrder = false;
+    isOrderTransfer = 0;
 
 
     constructor(manager: {
@@ -150,30 +154,65 @@ class Elementor {
 
     transform(translateX: number, isUseAnimation = false){
         if(this.containerEl){
-            this.containerEl.style.transform = `translate(${translateX}px, 0px)`;
-            this.containerEl.style.transitionDuration = isUseAnimation
-                ? `${this._configurator.setting.moveTime}ms`
-                : '0ms';
+            if(this.isOrder){
+                this.containerEl.style.transform = `translate3d(${-1904}px, 0px, 0px)`;
+                this.containerEl.style.transitionDuration = '0ms';
+                setTimeout(() => {
+                    this.containerEl.style.transform = `translate3d(${-3808}px, 0px, 0px)`;
+                    this.containerEl.style.transitionDuration = `${this._configurator.setting.moveTime}ms`;
+                    console.log('go');
+                }, 0);
+
+
+            }else{
+                this.containerEl.style.transform = `translate3d(${translateX}px, 0px, 0px)`;
+                this.containerEl.style.transitionDuration = isUseAnimation
+                    ? `${this._configurator.setting.moveTime}ms`
+                    : '0ms';
+            }
+
+
         }
 
         return this;
     }
 
 
+    syncOrder = (activeActualIndex) => {
+        const itemEls = this.slideItemEls;
+        const orders = calculateOrder(itemEls.length, activeActualIndex);
+        console.log('orders',orders);
+        itemEls
+            .forEach((row, index) => {
+                row.style.order = String(orders.get(index));
+            });
+    };
 
-    syncActiveState = (activeActualIndex: number) => {
+    syncActiveState = (activeActualIndex: number, order?: boolean) => {
         const itemEls = this.slideItemEls
             .filter(row => row);
+        // this.containerEl.style.transitionDuration = '500ms';
+        const orders = calculateOrder(itemEls.length, activeActualIndex);
+
+        if(order){
+            this.isOrder = true;
+        }
 
         // 更改顯示在第幾個 (父元件使用可判定樣式設定)
         itemEls
             .forEach((row, index) => {
+                console.log('order',order, String(index));
+                row.style.order = this.isOrder ? String(orders.get(index)): String(index);
                 if(checkInRange(index, activeActualIndex, this.slideItemEls.length)){
                     row.setAttribute('data-active', 'true');
                 } else if (row?.dataset.active) {
                     row.removeAttribute('data-active');
                 }
             });
+
+        // setTimeout(() => {
+        //     this.containerEl.style.transitionDuration = '0ms';
+        // }, 100);
 
         const active = itemEls.find(row => row.dataset.active === 'true');
         const activePage = parseInt(active?.dataset.page);
@@ -199,6 +238,8 @@ class Elementor {
         // 只有一頁
         const pageOnlyOne = this._stater.page.pageTotal === 1;
         this.rootEl?.setAttribute('data-onlyOne',  pageOnlyOne && booleanToDataAttr(true));
+
+        return this;
     };
 
 
