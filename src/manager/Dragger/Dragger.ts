@@ -9,6 +9,7 @@ import Eventor from '../Eventor';
 import {DesktopTouchEvent, MobileTouchEvent} from '../../interface/DragEvent';
 import logger from '../../logger';
 import {logEnable} from '../../config';
+import Controller from "../Controller";
 
 
 /**
@@ -19,6 +20,7 @@ class Dragger {
     private _elementor: Elementor;
     private _locator: Locator;
     private _stater: Stater;
+    private _controller: Controller;
     private _eventor = new Eventor<TEventMap>();
 
 
@@ -26,11 +28,12 @@ class Dragger {
         configurator: Configurator,
         elementor: Elementor,
         stater: Stater,
+        controller: Controller,
     }) {
         this._configurator = manager.configurator;
         this._elementor = manager.elementor;
-        this._elementor = manager.elementor;
         this._stater = manager.stater;
+        this._controller = manager.controller;
         this._locator = new Locator();
     }
 
@@ -164,12 +167,45 @@ class Dragger {
         const {startPosition} = this._locator;
         const {setting} = this._configurator;
 
+        const isMinPx = 0;
+        let oneElWidth = this._elementor.slideItemEls[0].clientWidth;
+        const isMaxPx = -(oneElWidth * this._stater.actual.lastIndex);
+        // console.log('isLastPx',isMinPx, isMaxPx);
+
+        const translateX = calcMoveTranslatePx(startPosition.x, moveX);
+        // console.log('translateX',translateX);
+
+        if(translateX <= isMaxPx){
+            this._elementor.syncOrder(this._stater.actual.activeIndex);
+            this._controller.slideToActualIndex(this._stater.actual.activeIndex, {isUseAnimation: false});
+            // const currEl = this._stater.formatElement.find(row => row.order === 0);
+            const currEl = this._elementor.slideItemEls.find(row => Number(row.dataset.actual) === this._stater.actual.activeIndex);
+
+            const percentage = this._elementor.getMovePercentage(translateX); //TODO: 應該移動到 Positioner
+            const formatPercentage = Math.round(percentage) % this._stater.element.total;
+            // const activeIndex = formatPercentage % 3;
+            // const firstEl = this._stater.formatElement.find(row => row.order === 0);
+            console.log('formatPercentag',percentage, formatPercentage);
+            // console.log('firstEl',firstEl.actualIndex);
+
+            this._elementor.transform(translateX + oneElWidth)
+                .syncActiveState(formatPercentage);
+
+            console.log('oneElWidth');
+            return;
+        }else{
+            oneElWidth = 0;
+        }
+
+
         if (this._elementor.containerEl &&
             setting.isEnableMouseMove &&
             this._elementor.slideItemEls &&
             this._stater.page.pageTotal > 1
         ) {
-            const translateX = calcMoveTranslatePx(startPosition.x, moveX);
+
+
+            // const translateX = calcMoveTranslatePx(startPosition.x, moveX);
             const percentage = this._elementor.getMovePercentage(translateX); //TODO: 應該移動到 Positioner
 
             // 同步控制

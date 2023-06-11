@@ -97,10 +97,16 @@ class Elementor {
      * Move Percentage
      * @param movePx
      */
-    getMovePercentage = (movePx: number) => {
+    getMovePercentage = (movePx: number, startPosition: number = 0) => {
         const {actual} = this._stater;
         const slideCurrWidth = this.slideItemEls[actual.activeIndex].offsetWidth;
-        const startPosition = this._getStartPosition(slideCurrWidth);
+        // console.log('xxxxxx', actual.activeIndex, slideCurrWidth);
+
+        // const startPosition = this._getStartPosition(slideCurrWidth);
+
+        console.log('startPosition',startPosition);
+        // const percentage = getMovePercentage(movePx, startPosition, slideCurrWidth);
+        // const mapIndex = this._stater.formatElement.find(row => row.order === percentage)
         return getMovePercentage(movePx, startPosition, slideCurrWidth);
     };
 

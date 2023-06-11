@@ -11,15 +11,15 @@ export function getStartPosition(
     view: {slidesPerView: number|'auto', slidesPerViewActual: number},
     size: {containerWidth: number, currItemWidth: number},
 ) {
-    if (isCenterMode) {
-        let firstStartPx = 0;
-        if(view.slidesPerView === 'auto'){
-            // containerWidth 計算中間位置
-            firstStartPx = (size.containerWidth / 2) - (size.currItemWidth / 2) ;
-        }
-
-        return firstStartPx + (size.currItemWidth * (view.slidesPerViewActual - 1) / 2);
-    }
+    // if (isCenterMode) {
+    //     let firstStartPx = 0;
+    //     if(view.slidesPerView === 'auto'){
+    //         // containerWidth 計算中間位置
+    //         firstStartPx = (size.containerWidth / 2) - (size.currItemWidth / 2) ;
+    //     }
+    //
+    //     return firstStartPx + (size.currItemWidth * (view.slidesPerViewActual - 1) / 2);
+    // }
     return 0;
 }
 
@@ -58,6 +58,9 @@ export function checkInRange(index, activeActualIndex: number, slideItemTotal: n
         (activeActualIndex >= slideItemTotal && index === (slideItemTotal - 1)) ||
         activeActualIndex === index;
 }
+
+
+
 
 
 
