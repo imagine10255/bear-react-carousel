@@ -9,6 +9,7 @@ interface IProps {
     index: number,
     actualIndex: number
     matchIndex: number
+    maxIndex: number
     sourceIndex: number
     inPage: number
     isActive?: boolean
@@ -22,6 +23,7 @@ const SlideItem = forwardRef<HTMLInputElement, IProps>(({
     actualIndex,
     matchIndex,
     sourceIndex,
+    maxIndex,
     inPage,
     isActive = false,
     isClone = false,
@@ -36,7 +38,7 @@ const SlideItem = forwardRef<HTMLInputElement, IProps>(({
         // data-match={booleanToDataAttr(isClone, matchIndex)}
         data-page={inPage}
         // data-source={sourceIndex}
-        aria-label={`${actualIndex} / 2`}
+        aria-label={`${actualIndex} / ${maxIndex}`}
         data-active={booleanToDataAttr(isActive)}
         // data-is-clone={booleanToDataAttr(isClone)}
     >

@@ -321,6 +321,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                 element={row.element}
                 actualIndex={row.actualIndex}
                 matchIndex={row.matchIndex}
+                maxIndex={this._stater.actual.maxIndex}
                 inPage={row.inPage}
                 sourceIndex={row.sourceIndex}
                 isActive={isActive}
@@ -378,7 +379,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                 setting={this._configurator.setting}
                 actual={this._stater.actual}
                 isDebug={isDebug}
-                extendStyle={this._configurator.style}
+                extendStyle={this._configurator.genStyle(this._stater.formatElement.length)}
                 isEnableGpuRender={this._isEnableGpuRender}
             >
                 {this._stater.isVisibleNavButton && this._renderNavButton()}

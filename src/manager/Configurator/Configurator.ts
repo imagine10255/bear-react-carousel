@@ -23,29 +23,21 @@ class Configurator {
     }
 
 
-    get style() {
+    genStyle(slideTotal: number) {
+
+        const orderStyle = Array.from({length: slideTotal}).map((row, index) => {
+            return {
+                targetEl: `#${this._carouselId} .${elClassName.slideItem}[data-order="${index}"]`,
+                styles: [`order: ${index}`]
+            };
+        });
+
         const styleData = [
             {
                 targetEl: `#${this._carouselId}`,
                 styles: [
                     getHeight(this.setting.height),
                 ]
-            },
-            {
-                targetEl: `#${this._carouselId} .${elClassName.slideItem}[data-order="0"]`,
-                styles: ['order: 0']
-            },
-            {
-                targetEl: `#${this._carouselId} .${elClassName.slideItem}[data-order="1"]`,
-                styles: ['order: 1']
-            },
-            {
-                targetEl: `#${this._carouselId} .${elClassName.slideItem}[data-order="2"]`,
-                styles: ['order: 2']
-            },
-            {
-                targetEl: `#${this._carouselId} .${elClassName.slideItem}[data-order="3"]`,
-                styles: ['order: 3']
             },
             {
                 // 保護不被項目擠開
@@ -65,6 +57,7 @@ class Configurator {
         ];
 
         return styleData
+            .concat(orderStyle)
             .filter(row => typeof row !== 'undefined')
             .map(row => {
                 return `${row.targetEl}{${row.styles.join('')}}`;
