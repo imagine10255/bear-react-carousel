@@ -175,28 +175,37 @@ class Dragger {
         const translateX = calcMoveTranslatePx(startPosition.x, moveX);
         // console.log('translateX',translateX);
 
-        if(translateX <= isMaxPx){
+        if(translateX <= isMaxPx) {
             this._elementor.syncOrder(this._stater.actual.activeIndex);
             this._controller.slideToActualIndex(this._stater.actual.activeIndex, {isUseAnimation: false});
-            // const currEl = this._stater.formatElement.find(row => row.order === 0);
-            const currEl = this._elementor.slideItemEls.find(row => Number(row.dataset.actual) === this._stater.actual.activeIndex);
-
             const percentage = this._elementor.getMovePercentage(translateX); //TODO: 應該移動到 Positioner
             const formatPercentage = Math.round(percentage - 1) % this._stater.element.total;
-            // const activeIndex = formatPercentage % 3;
-            // const firstEl = this._stater.formatElement.find(row => row.order === 0);
-            // console.log('firstEl',firstEl.actualIndex);
-
-            // const currOrder = this._stater.formatElement.find(row => row.actualIndex === this._stater.actual.activeIndex).order;
             const currOrder = this._stater.formatElement.find(row => row.order === formatPercentage);
-            console.log(`============ reset: ${percentage}(${formatPercentage})/order:${currOrder.actualIndex} ============`);
+            console.log(`============ reset next: ${percentage}(${formatPercentage})/order:${currOrder.actualIndex} ============`);
 
 
             this._elementor.transform(translateX + oneElWidth)
                 .syncActiveState(currOrder.actualIndex);
 
-            console.log('oneElWidth');
+            console.log('oneElWidth next');
             return;
+
+        }else if(translateX > isMinPx){
+            this._elementor.syncOrder(this._stater.actual.activeIndex);
+            this._controller.slideToActualIndex(this._stater.actual.activeIndex, {isUseAnimation: false});
+
+            const percentage = this._elementor.getMovePercentage(translateX); //TODO: 應該移動到 Positioner
+            const formatPercentage = Math.round(percentage + 1) % this._stater.element.total;
+            const currOrder = this._stater.formatElement.find(row => row.order === formatPercentage);
+            console.log(`============ reset prev: ${percentage}(${formatPercentage})/order:${currOrder.actualIndex} ============`);
+
+
+            this._elementor.transform(translateX - oneElWidth)
+                .syncActiveState(currOrder.actualIndex);
+
+            console.log('oneElWidth prev');
+            return;
+
         }else{
             const percentage = this._elementor.getMovePercentage(translateX); //TODO: 應該移動到 Positioner
             const formatPercentage = Math.round(percentage) % this._stater.element.total;
