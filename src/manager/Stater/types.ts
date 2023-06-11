@@ -11,4 +11,5 @@ export interface InitData {
     inPage: number;
     isClone: boolean;
     element: React.ReactNode;
+    order: number,
 }

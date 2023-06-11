@@ -181,6 +181,11 @@ class Elementor {
     syncOrder = (activeActualIndex?: number) => {
         const itemEls = this.slideItemEls;
         const orders = activeActualIndex >= 0 ? calculateOrder(itemEls.length, activeActualIndex): undefined;
+
+        this._stater.formatElement.forEach((row, index) => {
+            row.order = orders ? orders.get(index): index;
+        });
+
         itemEls
             .forEach((row, index) => {
                 // row.style.order = String(orders.get(index));

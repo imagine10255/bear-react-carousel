@@ -153,23 +153,23 @@ class Stater {
 
     setNextPage = () => {
         // this.setActiveActual(index, page);
-        if(this._info.page.moveCount < 0){
-            this._info.page.moveCount = 0;
-        }else{
-            this._info.page.moveCount++;
-        }
+        // if(this._info.page.moveCount < 0){
+        //     this._info.page.moveCount = 0;
+        // }else{
+        //     this._info.page.moveCount++;
+        // }
 
-        console.log('this.page.moveCount', this._info.page.moveCount);
+        // console.log('this.page.moveCount', this._info.page.moveCount);
     };
 
     setPrevPage = () => {
         // this.setActiveActual(index, page);
-        if(this._info.page.moveCount > 0){
-            this._info.page.moveCount = 0;
-        }else{
-            this._info.page.moveCount--;
-        }
-        console.log('this.page.moveCount', this._info.page.moveCount);
+        // if(this._info.page.moveCount > 0){
+        //     this._info.page.moveCount = 0;
+        // }else{
+        //     this._info.page.moveCount--;
+        // }
+        // console.log('this.page.moveCount', this._info.page.moveCount);
     };
 
 }

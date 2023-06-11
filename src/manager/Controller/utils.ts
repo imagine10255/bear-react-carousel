@@ -34,24 +34,11 @@ export function getPrevIndex2(
 ): Array<() => void> {
     const {setting} = configurator;
     const {page, actual} = stater;
+    const activeEl = stater.formatElement.find(row => row.actualIndex ===  actual.activeIndex);
+    const minOrder = 0;
+    const isFake = activeEl.order === minOrder;
 
-    // if(activeActual.isClone){
-    // 當移動到的位置 已經是 clone item
-    // return [
-    //     {index: activeActual.matchIndex, isUseAnimation: false},
-    //     {index: activeActual.matchIndex - 1, isUseAnimation: true},
-    // ];
-
-    stater.setPrevPage();
-
-    // const el = elementor.getTargetEl(actual.activeIndex);
-    const el = elementor.slideItemEls.find(row => Number(row.dataset.actual) ===  actual.activeIndex);
-    const isFake = Number(el.dataset.order) === 0;
-
-
-    console.log('page.moveCount',page.moveCount, isFake);
     if (setting.isEnableLoop && isFake) {
-        // 若為Loop(最後一頁移動在不整除的時候, 移動位置需要復歸到第一個)
         console.log('調換順序',stater.element.total);
         return [
             () => {
@@ -59,31 +46,21 @@ export function getPrevIndex2(
                 controller.slideToActualIndex(stater.actual.activeIndex, {isUseAnimation: false});
             },
             () => {
-                // console.log('(stater.actual.activeIndex - 1) % stater.element.total',stater.actual.activeIndex, stater.element.total, (stater.actual.activeIndex - 1) % stater.element.total);
-                // controller.slideToActualIndex(calculatePrevIndex(page.pageTotal, page.moveCount), {isUseAnimation: true});
-                const maxOrder = 0;
-                // const targetPrevIndex = actual.activeIndex === 0 ? stater.actual.maxIndex: actual.activeIndex;
-                // console.log('actual.activeIndex',targetPrevIndex);
-                const target = elementor.getTargetEl(maxOrder);
-
-                controller.slideToActualIndex(Number(target.dataset.actual), {isUseAnimation: true});
+                const target = stater.formatElement.find(row => row.order === minOrder);
+                controller.slideToActualIndex(target.actualIndex, {isUseAnimation: true});
             },
-            // {index: activeActual.actualIndex - info.residue, isUseAnimation: true},
         ];
 
     }else {
-        const currEl = elementor.slideItemEls.find(row => Number(row.dataset.actual) === stater.actual.activeIndex);
-        const prevOrder = Number(currEl.dataset.order) - 1;
-        const prevEl = elementor.slideItemEls.find(row => Number(row.dataset.order) === prevOrder);
+        const activeEl = stater.formatElement.find(row => row.actualIndex === stater.actual.activeIndex);
+        const prevOrder = activeEl.order - 1;
+        const nextEl = stater.formatElement.find(row => row.order === prevOrder);
 
-        console.log('正常往左');
-        // 若在範圍內，正常移動到下一頁
-
+        // 若為Loop(最後一頁移動在不整除的時候, 移動位置需要復歸到第一個)
         return [
-            () => controller.slideToActualIndex(Number(prevEl.dataset.actual), {isUseAnimation: true}),
+            () => controller.slideToActualIndex(nextEl.actualIndex, {isUseAnimation: true}),
         ];
     }
-
     return [];
 }
 
@@ -105,19 +82,10 @@ export function getNextIndex2(
 
     const {setting} = configurator;
     const {page, actual} = stater;
-    // if(activeActual.isClone) {
-    //     // 當移動到的位置 已經是 clone item
-    //     // 要等到動畫結束才可執行，否則會造成畫面閃動
-    //     return [
-    //         {index: activeActual.matchIndex, isUseAnimation: false},
-    //         {index: activeActual.matchIndex + setting.slidesPerGroup, isUseAnimation: true},
-    //     ];
-    stater.setNextPage();
 
-    const el = elementor.slideItemEls.find(row => Number(row.dataset.actual) ===  actual.activeIndex);
+    const activeEl = stater.formatElement.find(row => row.actualIndex ===  actual.activeIndex);
     const maxOrder = stater.actual.maxIndex;
-
-    const isFake = Number(el.dataset.order) === maxOrder;
+    const isFake = activeEl.order === maxOrder;
 
     // const el = elementor.getTargetEl(actual.activeIndex);
     // const isFake = Number(el.dataset.order) === stater.actual.maxIndex;
@@ -136,24 +104,22 @@ export function getNextIndex2(
                 controller.slideToActualIndex(stater.actual.activeIndex, {isUseAnimation: false});
             },
             () => {
-                const target = elementor.getTargetEl(maxOrder);
-
-                controller.slideToActualIndex(Number(target.dataset.actual), {isUseAnimation: true});
-                // controller.slideToActualIndex(calculatePrevIndex(page.pageTotal, page.moveCount), {isUseAnimation: true});
+                const target = stater.formatElement.find(row => row.order === maxOrder);
+                controller.slideToActualIndex(target.actualIndex, {isUseAnimation: true});
             },
         ];
 
     }else {
 
-        const currEl = elementor.slideItemEls.find(row => Number(row.dataset.actual) === stater.actual.activeIndex);
-        const nextOrder = Number(currEl.dataset.order) + 1;
-        const nextEl = elementor.slideItemEls.find(row => Number(row.dataset.order) === nextOrder);
+        const currEl = stater.formatElement.find(row => row.actualIndex === stater.actual.activeIndex);
+        const nextOrder = currEl.order + 1;
+        const nextEl = stater.formatElement.find(row => row.order === nextOrder);
 
 
         console.log('ddd');
         // 若為Loop(最後一頁移動在不整除的時候, 移動位置需要復歸到第一個)
         return [
-            () => controller.slideToActualIndex(Number(nextEl.dataset.actual), {isUseAnimation: true}),
+            () => controller.slideToActualIndex(nextEl.actualIndex, {isUseAnimation: true}),
         ];
     }
 
