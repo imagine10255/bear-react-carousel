@@ -97,7 +97,7 @@ export function getPrevIndex2(
     console.log('page.moveCount',page.moveCount, isFake);
     if (setting.isEnableLoop && isFake) {
         // 若為Loop(最後一頁移動在不整除的時候, 移動位置需要復歸到第一個)
-        console.log('xxx',stater.element.total);
+        console.log('調換順序',stater.element.total);
         return [
             () => {
                 elementor.syncOrder(stater.actual.activeIndex);
@@ -116,10 +116,16 @@ export function getPrevIndex2(
             // {index: activeActual.actualIndex - info.residue, isUseAnimation: true},
         ];
 
-    }else if (setting.slidesPerViewActual > 0) {
+    }else {
+        const currEl = elementor.slideItemEls.find(row => Number(row.dataset.actual) === stater.actual.activeIndex);
+        const prevOrder = Number(currEl.dataset.order) - 1;
+        const prevEl = elementor.slideItemEls.find(row => Number(row.dataset.order) === prevOrder);
+
+        console.log('正常往左');
         // 若在範圍內，正常移動到下一頁
+
         return [
-            () => controller.slideToActualIndex(actual.activeIndex - setting.slidesPerGroup , {isUseAnimation: true}),
+            () => controller.slideToActualIndex(Number(prevEl.dataset.actual), {isUseAnimation: true}),
         ];
     }
 
@@ -242,21 +248,20 @@ export function getNextIndex2(
             },
         ];
 
-    }else if (setting.isEnableLoop && stater.residue > 0) {
+    }else {
+
+        const currEl = elementor.slideItemEls.find(row => Number(row.dataset.actual) === stater.actual.activeIndex);
+        const nextOrder = Number(currEl.dataset.order) + 1;
+        const nextEl = elementor.slideItemEls.find(row => Number(row.dataset.order) === nextOrder);
+
 
         console.log('ddd');
         // 若為Loop(最後一頁移動在不整除的時候, 移動位置需要復歸到第一個)
         return [
-            () => controller.slideToActualIndex(actual.activeIndex + stater.residue, {isUseAnimation: true}),
-        ];
-
-    }else if (setting.slidesPerViewActual < stater.element.total) {
-
-        // 若在範圍內，正常移動到下一頁
-        return [
-            () => controller.slideToActualIndex(actual.activeIndex + setting.slidesPerGroup, {isUseAnimation: true}),
+            () => controller.slideToActualIndex(Number(nextEl.dataset.actual), {isUseAnimation: true}),
         ];
     }
+
 
     return [];
 }
