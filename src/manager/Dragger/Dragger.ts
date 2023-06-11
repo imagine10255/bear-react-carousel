@@ -182,18 +182,26 @@ class Dragger {
             const currEl = this._elementor.slideItemEls.find(row => Number(row.dataset.actual) === this._stater.actual.activeIndex);
 
             const percentage = this._elementor.getMovePercentage(translateX); //TODO: 應該移動到 Positioner
-            const formatPercentage = Math.round(percentage) % this._stater.element.total;
+            const formatPercentage = Math.round(percentage - 1) % this._stater.element.total;
             // const activeIndex = formatPercentage % 3;
             // const firstEl = this._stater.formatElement.find(row => row.order === 0);
-            console.log('formatPercentag',percentage, formatPercentage);
             // console.log('firstEl',firstEl.actualIndex);
 
+            // const currOrder = this._stater.formatElement.find(row => row.actualIndex === this._stater.actual.activeIndex).order;
+            const currOrder = this._stater.formatElement.find(row => row.order === formatPercentage);
+            console.log(`============ reset: ${percentage}(${formatPercentage})/order:${currOrder.actualIndex} ============`);
+
+
             this._elementor.transform(translateX + oneElWidth)
-                .syncActiveState(formatPercentage);
+                .syncActiveState(currOrder.actualIndex);
 
             console.log('oneElWidth');
             return;
         }else{
+            const percentage = this._elementor.getMovePercentage(translateX); //TODO: 應該移動到 Positioner
+            const formatPercentage = Math.round(percentage) % this._stater.element.total;
+
+            console.log(`============ normal: ${percentage}(${formatPercentage}) ============`);
             oneElWidth = 0;
         }
 
