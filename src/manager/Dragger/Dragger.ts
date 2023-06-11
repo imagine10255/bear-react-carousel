@@ -207,11 +207,20 @@ class Dragger {
             return;
 
         }else{
+            // this._elementor.syncOrder(this._stater.actual.activeIndex);
+            // this._controller.slideToActualIndex(this._stater.actual.activeIndex, {isUseAnimation: false});
+
             const percentage = this._elementor.getMovePercentage(translateX); //TODO: 應該移動到 Positioner
             const formatPercentage = Math.round(percentage) % this._stater.element.total;
+            const currOrder = this._stater.formatElement.find(row => row.order === formatPercentage);
+            console.log(`============ reset prev: ${percentage}(${formatPercentage})/order:${currOrder.actualIndex} ============`);
 
-            console.log(`============ normal: ${percentage}(${formatPercentage}) ============`);
-            oneElWidth = 0;
+
+            this._elementor.transform(translateX)
+                .syncActiveState(currOrder.actualIndex);
+
+            console.log('oneElWidth prev');
+            return;
         }
 
 
