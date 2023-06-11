@@ -223,24 +223,24 @@ class Dragger {
             return;
         }
 
-
-        if (this._elementor.containerEl &&
-            setting.isEnableMouseMove &&
-            this._elementor.slideItemEls &&
-            this._stater.page.pageTotal > 1
-        ) {
-
-
-            // const translateX = calcMoveTranslatePx(startPosition.x, moveX);
-            const percentage = this._elementor.getMovePercentage(translateX); //TODO: 應該移動到 Positioner
-
-            // 同步控制
-            this._eventor.emit('dragMove', percentage);
-
-            this._elementor
-                .transform(translateX)
-                .syncActiveState(Math.round(percentage));
-        }
+        //
+        // if (this._elementor.containerEl &&
+        //     setting.isEnableMouseMove &&
+        //     this._elementor.slideItemEls &&
+        //     this._stater.page.pageTotal > 1
+        // ) {
+        //
+        //
+        //     // const translateX = calcMoveTranslatePx(startPosition.x, moveX);
+        //     const percentage = this._elementor.getMovePercentage(translateX); //TODO: 應該移動到 Positioner
+        //
+        //     // 同步控制
+        //     this._eventor.emit('dragMove', percentage);
+        //
+        //     this._elementor
+        //         .transform(translateX)
+        //         .syncActiveState(Math.round(percentage));
+        // }
     }
 
 
