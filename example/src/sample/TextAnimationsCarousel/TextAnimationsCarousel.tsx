@@ -1,7 +1,7 @@
 import React from 'react';
 import BearCarousel, {elClassName, TBearSlideItemDataList} from 'bear-react-carousel';
 import styled from 'styled-components';
-import {foodImages} from '../../config/images';
+import {baseImage, foodImages} from '../../config/images';
 import TextCard, {AnimationsBox} from './_components/TextCard';
 import {asset} from "../../utils";
 
@@ -23,8 +23,11 @@ interface IProps {
 const TextAnimationsCarousel = () => {
 
     // 輪播項目
-    const slideItemData = foodImages.map(row => {
-        return <SwiperSlide className="slide-item"><TextCard {...row}/></SwiperSlide>;
+    const slideItemData = baseImage.map((row, index) => {
+        return <SwiperSlide className="slide-item">
+            <div style={{backgroundColor: row.color, height: '250px', color: '#fff', fontSize: '38px', fontWeight: '400',
+            display: 'flex', justifyContent: 'center', alignItems: 'center'}}>{index}</div>
+        </SwiperSlide>;
         // return {
         //     key: row.id,
         //     children: <TextCard {...row}/>
@@ -34,11 +37,11 @@ const TextAnimationsCarousel = () => {
     return <TextAnimationsRoot>
         <Swiper
             modules={[Navigation, Pagination, Scrollbar, A11y]}
-            slidesPerView={1}
+            slidesPerView={3}
             loop
             navigation
             scrollbar
-            speed={900}
+            speed={500}
             pagination={{ clickable: true }}
             onSlideChange={() => console.log('slide change')}
             onSwiper={(swiper) => console.log(swiper)}
@@ -81,30 +84,30 @@ export default TextAnimationsCarousel;
 const TextAnimationsRoot = styled.div`
   --primary-color: #c4a265;
 
-  .slide-item{
-      ${AnimationsBox}{
-        transform: translateY(80px);
-      }
-
-      &.swiper-slide-active{
-          ${AnimationsBox}{
-               transform: translateY(0);
-               opacity: 1;
-          }
-      }
-      
-      
-      &:before{
-        content: "";
-        background: url('${asset('/sample/food/blackt-will.png')}') center center repeat;
-        z-index: 0;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        opacity: 0.5;
-      }
-  }
+      // .slide-item{
+      //     ${AnimationsBox}{
+      //       transform: translateY(80px);
+      //     }
+      //
+      //     &.swiper-slide-active{
+      //         ${AnimationsBox}{
+      //              transform: translateY(0);
+      //              opacity: 1;
+      //         }
+      //     }
+      //    
+      //    
+      //     &:before{
+      //       content: "";
+      //       background: url('${asset('/sample/food/blackt-will.png')}') center center repeat;
+      //       z-index: 0;
+      //       position: absolute;
+      //       top: 0;
+      //       left: 0;
+      //       width: 100%;
+      //       height: 100%;
+      //       opacity: 0.5;
+      //     }
+      // }
   
 `;
