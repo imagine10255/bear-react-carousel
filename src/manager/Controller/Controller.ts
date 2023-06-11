@@ -50,12 +50,12 @@ class Controller {
      * PS: If the element is isClone then return to the position where it should actually be displayed
      */
     slideResetToMatchIndex = (): void => {
-        if(this._configurator.setting.isDebug && logEnable.controller.onSlideResetToMatchIndex) logger.printInText('[Controller.slideResetToMatchIndex]');
-        const {actual, formatElement} = this._stater;
+        // if(this._configurator.setting.isDebug && logEnable.controller.onSlideResetToMatchIndex) logger.printInText('[Controller.slideResetToMatchIndex]');
+        // const {actual, formatElement} = this._stater;
 
-        if (formatElement[actual.activeIndex].isClone) {
+        // if (formatElement[actual.activeIndex].isClone) {
             // this.slideToActualIndex(formatElement[actual.activeIndex].matchIndex, {isUseAnimation: false});
-        }
+        // }
     };
 
 
@@ -71,10 +71,10 @@ class Controller {
             // 移動EL位置
 
 
-            const position = this._elementor.getMoveDistance(options.order ? 2: slideIndex);
+            const position = this._elementor.getMoveDistance(options?.order ? 2: slideIndex);
             // console.log('position', slideIndex, options.order, position);
             this._elementor
-                .syncActiveState(slideIndex, options.order)
+                .syncActiveState(slideIndex, options?.order)
                 .transform(position, options?.isUseAnimation ?? true)
             ;
         }
@@ -161,7 +161,7 @@ class Controller {
         const activeActual = formatElement[actual.activeIndex];
 
         // 禁止動畫播放中進行重置
-        if(activeActual.isClone && this._elementor.isAnimation){
+        if(this._elementor.isAnimation){
             return;
         }
 

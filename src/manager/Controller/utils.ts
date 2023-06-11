@@ -89,8 +89,13 @@ export function getPrevIndex2(
 
     stater.setPrevPage();
 
+    // const el = elementor.getTargetEl(actual.activeIndex);
+    const el = elementor.slideItemEls.find(row => Number(row.dataset.actual) ===  actual.activeIndex);
+    const isFake = Number(el.dataset.order) === 0;
 
-    if (setting.isEnableLoop && page.moveCount <= 0) {
+
+    console.log('page.moveCount',page.moveCount, isFake);
+    if (setting.isEnableLoop && isFake) {
         // 若為Loop(最後一頁移動在不整除的時候, 移動位置需要復歸到第一個)
         console.log('xxx',stater.element.total);
         return [
@@ -100,7 +105,13 @@ export function getPrevIndex2(
             },
             () => {
                 // console.log('(stater.actual.activeIndex - 1) % stater.element.total',stater.actual.activeIndex, stater.element.total, (stater.actual.activeIndex - 1) % stater.element.total);
-                controller.slideToActualIndex(calculatePrevIndex(page.pageTotal, page.moveCount), {isUseAnimation: true});
+                // controller.slideToActualIndex(calculatePrevIndex(page.pageTotal, page.moveCount), {isUseAnimation: true});
+                const maxOrder = 0;
+                // const targetPrevIndex = actual.activeIndex === 0 ? stater.actual.maxIndex: actual.activeIndex;
+                // console.log('actual.activeIndex',targetPrevIndex);
+                const target = elementor.getTargetEl(maxOrder);
+
+                controller.slideToActualIndex(Number(target.dataset.actual), {isUseAnimation: true});
             },
             // {index: activeActual.actualIndex - info.residue, isUseAnimation: true},
         ];
@@ -202,8 +213,16 @@ export function getNextIndex2(
     //     ];
     stater.setNextPage();
 
+    const el = elementor.slideItemEls.find(row => Number(row.dataset.actual) ===  actual.activeIndex);
+    const maxOrder = stater.actual.maxIndex;
+
+    const isFake = Number(el.dataset.order) === maxOrder;
+
+    // const el = elementor.getTargetEl(actual.activeIndex);
+    // const isFake = Number(el.dataset.order) === stater.actual.maxIndex;
+
     console.log('page.moveCount',page.moveCount);
-    if (setting.isEnableLoop && page.moveCount >= page.pageTotal){
+    if (setting.isEnableLoop && isFake){
         console.log('stater.page.activePage',stater.actual.activeIndex, stater.page.activePage);
         return [
             // {index: isLast - 1, isUseAnimation: false, order: true},
@@ -215,7 +234,12 @@ export function getNextIndex2(
                 elementor.syncOrder(stater.actual.activeIndex);
                 controller.slideToActualIndex(stater.actual.activeIndex, {isUseAnimation: false});
             },
-            () => controller.slideToActualIndex(calculatePrevIndex(page.pageTotal, page.moveCount), {isUseAnimation: true}),
+            () => {
+                const target = elementor.getTargetEl(maxOrder);
+
+                controller.slideToActualIndex(Number(target.dataset.actual), {isUseAnimation: true});
+                // controller.slideToActualIndex(calculatePrevIndex(page.pageTotal, page.moveCount), {isUseAnimation: true});
+            },
         ];
 
     }else if (setting.isEnableLoop && stater.residue > 0) {

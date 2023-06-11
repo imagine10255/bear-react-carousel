@@ -131,6 +131,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         this._setController();
         this._elementor.onSlideAnimation();
         this._init();
+        this._elementor.syncOrder();
     }
 
     componentWillUnmount() {
@@ -241,7 +242,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
      * set OnDragStart emit
      */
     private _onDragStart = () => {
-        this._controller.slideResetToMatchIndex();
+        // this._controller.slideResetToMatchIndex();
         this._autoPlayer.pause();
     };
 

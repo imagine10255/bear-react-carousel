@@ -33,11 +33,12 @@ const SlideItem = forwardRef<HTMLInputElement, IProps>(({
         ref={ref}
         data-testid="bear-carousel-slideItem"
         data-actual={actualIndex}
-        data-match={booleanToDataAttr(isClone, matchIndex)}
+        // data-match={booleanToDataAttr(isClone, matchIndex)}
         data-page={inPage}
-        data-source={sourceIndex}
+        // data-source={sourceIndex}
+        aria-label={`${actualIndex} / 2`}
         data-active={booleanToDataAttr(isActive)}
-        data-is-clone={booleanToDataAttr(isClone)}
+        // data-is-clone={booleanToDataAttr(isClone)}
     >
         {element}
 

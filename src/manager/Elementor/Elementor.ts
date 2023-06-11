@@ -165,10 +165,10 @@ class Elementor {
             //
             //
             // }else{
-                this.containerEl.style.transform = `translate3d(${translateX}px, 0px, 0px)`;
-                this.containerEl.style.transitionDuration = isUseAnimation
-                    ? `${this._configurator.setting.moveTime}ms`
-                    : '0ms';
+            this.containerEl.style.transform = `translate3d(${translateX}px, 0px, 0px)`;
+            this.containerEl.style.transitionDuration = isUseAnimation
+                ? `${this._configurator.setting.moveTime}ms`
+                : '0ms';
             // }
 
 
@@ -178,14 +178,13 @@ class Elementor {
     }
 
 
-    syncOrder = (activeActualIndex) => {
+    syncOrder = (activeActualIndex?: number) => {
         const itemEls = this.slideItemEls;
-        const orders = calculateOrder(itemEls.length, activeActualIndex);
-        console.log('orders',orders);
+        const orders = activeActualIndex >= 0 ? calculateOrder(itemEls.length, activeActualIndex): undefined;
         itemEls
             .forEach((row, index) => {
                 // row.style.order = String(orders.get(index));
-                row.dataset.order = String(orders.get(index));
+                row.dataset.order = orders ? String(orders.get(index)): String(index);
             });
     };
 
@@ -253,6 +252,11 @@ class Elementor {
     animationEnd = () => {
         this._isAnimation = false;
         this.containerEl.removeAttribute('data-animation');
+    };
+    
+    
+    getTargetEl = (index: number) => {
+        return this.slideItemEls.find(row => Number(row.dataset.order) === index);
     };
 }
 
