@@ -1,5 +1,5 @@
 import {TEventMap} from './types';
-import {getNextIndex, getNextIndex2, getPrevIndex, getPrevIndex2, getSlideIndex} from './utils';
+import {getNextIndex2, getPrevIndex2, getSlideIndex} from './utils';
 
 import Configurator from '../Configurator';
 import Stater from '../Stater';
