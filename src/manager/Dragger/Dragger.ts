@@ -186,7 +186,6 @@ class Dragger {
             this._elementor.transform(translateX + oneElWidth)
                 .syncActiveState(currOrder.actualIndex);
 
-            console.log('oneElWidth next');
             return;
 
         }else if(translateX > isMinPx){

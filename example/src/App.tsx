@@ -66,7 +66,7 @@ const examples: Record<EExampleCode, () => JSX.Element> = {
 };
 
 function App() {
-    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.textAnimations);
+    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.autoCard);
     const Comp = examples[exampleKey];
 
 
@@ -75,15 +75,15 @@ function App() {
         <GridThemeProvider gridTheme={gridConfig}>
             <AppRoot className="App">
 
-                {/*<Menu className="d-none d-md-flex">*/}
-                {/*    {Object.keys(examples).map(code => {*/}
-                {/*        return <Button type="button"*/}
-                {/*            key={code}*/}
-                {/*            isActive={code === exampleKey}*/}
-                {/*            onClick={() => setExampleItem(code as EExampleCode)}*/}
-                {/*        >{code}</Button>;*/}
-                {/*    })}*/}
-                {/*</Menu>*/}
+                <Menu className="d-none d-md-flex">
+                    {Object.keys(examples).map(code => {
+                        return <Button type="button"
+                            key={code}
+                            isActive={code === exampleKey}
+                            onClick={() => setExampleItem(code as EExampleCode)}
+                        >{code}</Button>;
+                    })}
+                </Menu>
 
 
                 <Example>

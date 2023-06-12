@@ -19,7 +19,7 @@ const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
         key: row.id,
         children: <BearSlideCard>
             <div className="h-100 d-flex"
-                 style={{fontSize: '40px', height: '200px', width: '200px',backgroundColor: row.color}}
+                style={{fontSize: '40px', height: '200px', width: '200px',backgroundColor: row.color}}
             >
                 {/*<a href="https://bear-react-carousel.github.io" rel="noreferrer" target="_blank">{row.id}</a>*/}
             </div>
