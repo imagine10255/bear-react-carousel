@@ -42,15 +42,15 @@ function Base() {
                 // style={{width: '400px'}}
                 setController={setController}
                 data={bearSlideItemData1}
-                onChange={setCarouselState}
+                onSlideChange={setCarouselState}
                 // onChange={setCarouselState}
-                slidesPerView={slidePreview}
+                slidesPerView={1}
                 // isCenteredSlides={true}
-                // height="200px"
-                height={{widthRatio: 21, heightRatio: 9}}
+                height="200px"
+                // height={{widthRatio: 21, heightRatio: 9}}
                 isEnableNavButton
                 isEnablePagination
-                // isEnableLoop
+                isEnableLoop
                 // isEnableAutoPlay={false}
 
                 isDebug

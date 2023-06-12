@@ -43,7 +43,7 @@ function RenderPagination() {
         {enable && (
             <BearCarousel
                 data={bearSlideItemData1}
-                onChange={setCarouselState}
+                onSlideChange={setCarouselState}
                 slidesPerView={slidePreview}
                 isCenteredSlides={true}
                 height="200px"

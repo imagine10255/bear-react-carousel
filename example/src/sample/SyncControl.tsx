@@ -87,7 +87,7 @@ function SyncControl() {
             <BearCarousel
                 ref={sync2CarouselRef}
                 syncCarouselRef={syncCarouselRef}
-                onChange={setCarouselState}
+                onSlideChange={setCarouselState}
 
                 data={bearSlideItemData1}
                 slidesPerView={1}

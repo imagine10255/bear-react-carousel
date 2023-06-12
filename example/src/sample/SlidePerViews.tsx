@@ -41,7 +41,7 @@ function SlidePerViews() {
         {enable && (
             <BearCarousel
                 data={bearSlideItemData1}
-                onChange={setCarouselState}
+                onSlideChange={setCarouselState}
                 slidesPerView={3}
                 slidesPerGroup={1}
                 height="200px"
