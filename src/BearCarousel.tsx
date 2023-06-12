@@ -132,7 +132,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         this._setController();
         this._elementor.onSlideAnimation();
         this._init();
-        this._elementor.syncOrder();
+        this._elementor.syncOrder(-1);
     }
 
     componentWillUnmount() {

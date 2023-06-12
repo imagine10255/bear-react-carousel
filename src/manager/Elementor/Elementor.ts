@@ -184,9 +184,12 @@ class Elementor {
     }
 
 
-    syncOrder = (activeActualIndex?: number) => {
+    syncOrder = (activeActualIndex?: number, selectIndexOrder?: number, offset = 0) => {
+        console.log('activeActualIndex',activeActualIndex, this._configurator.setting.slidesPerViewActual, selectIndexOrder);
         const itemEls = this.slideItemEls;
-        const orders = activeActualIndex >= 0 ? calculateOrder(itemEls.length, activeActualIndex): undefined;
+        const orders = activeActualIndex >= 0 ? calculateOrder(itemEls.length, activeActualIndex, offset, selectIndexOrder): undefined;
+        // const orders = calculateOrder(itemEls.length, activeActualIndex, offset, selectIndexOrder);
+
 
         this._stater.formatElement.forEach((row, index) => {
             row.order = orders ? orders.get(index): index;
@@ -197,6 +200,7 @@ class Elementor {
                 // row.style.order = String(orders.get(index));
                 row.dataset.order = orders ? String(orders.get(index)): String(index);
             });
+
     };
 
     syncActiveState = (activeActualIndex: number, isPageOverflow?: boolean) => {

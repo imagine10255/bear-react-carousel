@@ -1,4 +1,10 @@
-import calculateOrder, {calculatePrevIndex, getSlideIndex, sortDataArray} from './utils';
+import calculateOrder, {
+    calcSelectCurrIndex,
+    calculatePrevIndex,
+    getPositiveModulo,
+    getSlideIndex,
+    sortDataArray
+} from './utils';
 
 test('get slide index', async () => {
     expect(getSlideIndex(1, 1, 1)).toEqual(1);
@@ -33,33 +39,98 @@ describe('sortDataArray function', () => {
 
 
 describe('calculateOrder function', () => {
-    it('should correctly calculate the order of each item', () => {
-        const total = 4;
 
-        const result0 = calculateOrder(total, 0);
-        expect(result0.get(0)).toBe(2);
-        expect(result0.get(1)).toBe(3);
-        expect(result0.get(2)).toBe(0);
-        expect(result0.get(3)).toBe(1);
 
-        const result1 = calculateOrder(total, 1);
-        expect(result1.get(0)).toBe(1);
-        expect(result1.get(1)).toBe(2);
-        expect(result1.get(2)).toBe(3);
-        expect(result1.get(3)).toBe(0);
-
-        const result2 = calculateOrder(total, 2);
-        expect(result2.get(0)).toBe(0);
-        expect(result2.get(1)).toBe(1);
-        expect(result2.get(2)).toBe(2);
-        expect(result2.get(3)).toBe(3);
-
-        const result3 = calculateOrder(total, 3);
-        expect(result3.get(0)).toBe(3);
-        expect(result3.get(1)).toBe(0);
-        expect(result3.get(2)).toBe(1);
-        expect(result3.get(3)).toBe(2);
+    it('should getPositiveModulo', () => {
+        expect(2).toBe(getPositiveModulo(-2,  4)); // 1
+        expect(3).toBe(getPositiveModulo(-1,  4)); // 1
+        expect(0).toBe(getPositiveModulo(0,  4)); // 1
+        expect(1).toBe(getPositiveModulo(1,  4)); // 1
+        expect(2).toBe(getPositiveModulo(2,  4)); // 1
+        expect(3).toBe(getPositiveModulo(3,  4)); // 1
     });
+
+    it('should calc', () => {
+        const total = 4;
+        const selectIndexOrder = total -1;
+
+        // [1] 0=>2, 1=>3, 2=>0, 3=>1
+        expect(2).toBe(calcSelectCurrIndex(0, 1, total, 0, selectIndexOrder));
+        expect(3).toBe(calcSelectCurrIndex(1, 1, total, 0, selectIndexOrder));
+
+        // [1] 0=>1, 1=>2, 2=>3, 3=>0 偏移1
+        expect(2).toBe(calcSelectCurrIndex(1, 1, total, 1, selectIndexOrder));
+
+        // [1] 0=>0, 1=>1, 2=>2, 3=>3 偏移2
+        expect(1).toBe(calcSelectCurrIndex(1, 1, total, 2, selectIndexOrder));
+
+        // [2] 0=>1, 1=>2, 2=>3, 3=>0
+        expect(1).toBe(calcSelectCurrIndex(0, 2, total,0, selectIndexOrder));
+        expect(2).toBe(calcSelectCurrIndex(1, 2, total, 0, selectIndexOrder));
+
+
+        // [1] 0=>0, 1=>1, 2=>2, 3=>3
+        expect(0).toBe(calcSelectCurrIndex(0, 0, total, 0, 0));
+        expect(1).toBe(calcSelectCurrIndex(1, 0, total, 0, 0));
+
+        // [1] 0=>3, 1=>0, 2=>1, 3=>2
+        expect(0).toBe(calcSelectCurrIndex(0, 0, total, 0, 0));
+        expect(1).toBe(calcSelectCurrIndex(1, 0, total, 0, 0));
+        expect(1).toBe(calcSelectCurrIndex(0, 0, total, - 1, 0));
+    });
+
+
+    it('should calc right nav', () => {
+        const total = 4;
+        const selectIndexOrder = total -1;
+
+        // 往右邊
+        expect(calculateOrder(total, 0, 0, selectIndexOrder)).toEqual(new Map([
+            [0, 3],
+            [1, 0],
+            [2, 1],
+            [3, 2],
+        ]));
+
+        expect(calculateOrder(total, 0, 2, selectIndexOrder)).toEqual(new Map([
+            [0, 1],
+            [1, 2],
+            [2, 3],
+            [3, 0],
+        ]));
+
+        expect(calculateOrder(total, 2, 2, selectIndexOrder)).toEqual(new Map([
+            [0, 3],
+            [1, 0],
+            [2, 1],
+            [3, 2],
+        ]));
+
+    });
+
+    //
+    it('should calc left nav', () => {
+        const total = 4;
+        const selectIndexOrder = total -1;
+
+
+        // 往左邊
+        expect(calculateOrder(total, 0, 0, 0)).toEqual(new Map([
+            [0, 0],
+            [1, 1],
+            [2, 2],
+            [3, 3],
+        ]));
+
+        expect(calculateOrder(total, 0, -1, 0)).toEqual(new Map([
+            [0, 1],
+            [1, 2],
+            [2, 3],
+            [3, 0],
+        ]));
+
+    });
+
 });
 
 
