@@ -114,41 +114,8 @@ class Controller {
 
 
         getNextIndex2(this._stater, this._configurator, this, this._elementor)
-            .forEach(action => {
-                action();
-                // setTimeout(() => {
-                //     this.slideToActualIndex(action.index, {isUseAnimation: action.isUseAnimation, order: action.order});
-                // }, 0);
+            .forEach(action => action());
 
-                // if(action.order){
-                //     this._elementor.syncOrder(action.index);
-                // }
-
-            });
-
-        // getNextIndex(
-        //     activeActual,
-        //     {
-        //         nextPage: nextPage,
-        //         residue: residue,
-        //         pageTotal: page.pageTotal,
-        //         slideTotal: this._stater.formatElement.length,
-        //         isOverflowPage: nextPage > page.pageTotal,
-        //         isOverflowIndex: nextPageFirstIndex > element.lastIndex,
-        //     },
-        //     {
-        //         slidesPerGroup: setting.slidesPerGroup,
-        //         slidesPerViewActual: setting.slidesPerViewActual,
-        //         isLoopMode: setting.isEnableLoop,
-        //     }
-        // )
-        //     .forEach(action => {
-        //         this.slideToActualIndex(action.index, {isUseAnimation: action.isUseAnimation, order: action.order});
-        //         // if(action.order){
-        //         //     this._elementor.syncOrder(action.index);
-        //         // }
-        //
-        //     });
     };
 
     /**
@@ -166,36 +133,8 @@ class Controller {
         }
 
         getPrevIndex2(this._stater, this._configurator, this, this._elementor)
-            .forEach(action => {
-                action();
-                // setTimeout(() => {
-                //     this.slideToActualIndex(action.index, {isUseAnimation: action.isUseAnimation, order: action.order});
-                // }, 0);
+            .forEach(action => action());
 
-                // if(action.order){
-                //     this._elementor.syncOrder(action.index);
-                // }
-
-            });
-
-        //
-        // getPrevIndex(
-        //     activeActual,
-        //     {
-        //         activePage: this._stater.page.activePage,
-        //         residue: residue,
-        //         pageTotal: page.pageTotal,
-        //         slideTotal: this._stater.formatElement.length,
-        //         isOverflowPage: nextPage > page.pageTotal,
-        //         isOverflowIndex: nextPageFirstIndex > element.lastIndex,
-        //     },
-        //     {
-        //         slidesPerGroup: setting.slidesPerGroup,
-        //         slidesPerViewActual: setting.slidesPerViewActual,
-        //         isLoopMode: setting.isEnableLoop,
-        //     }
-        // )
-        //     .forEach(action => this.slideToActualIndex(action.index, {isUseAnimation: action.isUseAnimation}));
 
     };
 

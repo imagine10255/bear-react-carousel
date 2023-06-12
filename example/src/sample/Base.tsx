@@ -44,7 +44,8 @@ function Base() {
                 data={bearSlideItemData1}
                 onSlideChange={setCarouselState}
                 // onSlideChange={setCarouselState}
-                slidesPerView={1}
+                slidesPerView={2}
+                slidesPerGroup={1}
                 // isCenteredSlides={true}
                 height="250px"
                 // height={{widthRatio: 32, heightRatio: 9}}

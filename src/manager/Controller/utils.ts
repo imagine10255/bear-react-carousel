@@ -57,9 +57,13 @@ export function getPrevIndex2(
                 controller.slideToActualIndex(stater.actual.activeIndex, {isUseAnimation: false});
             },
             () => {
-                // 找到第一個
-                const target = stater.formatElement.find(row => row.order === selectOrder);
-                controller.slideToActualIndex(target.actualIndex, {isUseAnimation: true});
+                // 找到上一個
+                const currActive = stater.formatElement.find(row => row.actualIndex === stater.actual.activeIndex);
+                const next = stater.formatElement.find(row => row.order === currActive.order - 1);
+                controller.slideToActualIndex(next.actualIndex, {isUseAnimation: true});
+                //
+                // const target = stater.formatElement.find(row => row.order === selectOrder);
+                // controller.slideToActualIndex(target.actualIndex, {isUseAnimation: true});
             },
         ];
 
@@ -102,13 +106,11 @@ export function getNextIndex2(
 
     const activeEl = stater.formatElement.find(row => row.actualIndex ===  actual.activeIndex);
     const maxOrder = stater.actual.maxIndex;
-    console.log('maxOrder', activeEl.order);
     // const isFake = activeEl.order === maxOrder;
 
     // const el = elementor.getTargetEl(actual.activeIndex);
     // const isFake = Number(el.dataset.order) === stater.actual.maxIndex;
 
-    console.log('page.moveCount',page.moveCount);
     if (setting.isEnableLoop){
         console.log('stater.page.activePage',stater.actual.activeIndex);
         return [
@@ -122,9 +124,10 @@ export function getNextIndex2(
                 controller.slideToActualIndex(stater.actual.activeIndex, {isUseAnimation: false});
             },
             () => {
-            // 找到最後一個
-                const target = stater.formatElement.find(row => row.order === maxOrder);
-                controller.slideToActualIndex(target.actualIndex, {isUseAnimation: true});
+            // 找到下一個
+                const currActive = stater.formatElement.find(row => row.actualIndex === stater.actual.activeIndex);
+                const next = stater.formatElement.find(row => row.order === currActive.order + 1);
+                controller.slideToActualIndex(next.actualIndex, {isUseAnimation: true});
             },
         ];
 

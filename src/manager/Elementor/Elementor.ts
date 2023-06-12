@@ -185,8 +185,8 @@ class Elementor {
 
 
     syncOrder = (activeActualIndex?: number, selectIndexOrder?: number, offset = 0) => {
-        console.log('activeActualIndex',activeActualIndex, this._configurator.setting.slidesPerViewActual, selectIndexOrder);
         const itemEls = this.slideItemEls;
+        console.log('sync', `total: ${itemEls.length}, activeActualIndex: ${activeActualIndex}, offset: ${offset}, selectIndexOrder: ${selectIndexOrder}`);
         const orders = activeActualIndex >= 0 ? calculateOrder(itemEls.length, activeActualIndex, offset, selectIndexOrder): undefined;
         // const orders = calculateOrder(itemEls.length, activeActualIndex, offset, selectIndexOrder);
 
