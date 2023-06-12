@@ -47,6 +47,7 @@ function SlideImage() {
                 slidesPerView="auto"
                 spaceBetween={5}
                 isEnableNavButton
+                isEnableLoop
                 isEnablePagination
                 // isEnableLoop
                 // isEnableAutoPlay={false}

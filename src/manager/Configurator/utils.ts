@@ -61,7 +61,6 @@ export function getMediaSetting(defaultBreakpoint: IBreakpointSetting, breakpoin
     return {
         ...setting,
         slidesPerViewActual: slidesPerViewActual,
-        isEnableLoop: setting.slidesPerView === 'auto' ? false : setting.isEnableLoop,
         slidesPerGroup: setting.slidesPerGroup > slidesPerViewActual ? slidesPerViewActual:anyToNumber(setting.slidesPerGroup, 1), // fix
     };
 }

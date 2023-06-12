@@ -35,13 +35,6 @@ export function getPrevIndex2(
     const {setting} = configurator;
     const {page, actual} = stater;
 
-    const activeEl = stater.formatElement.find(row => row.actualIndex ===  actual.activeIndex);
-    const selectOrder = stater.actual.minIndex;
-    console.log('maxOrder', activeEl.order);
-    // const isFake = activeEl.order === maxOrder;
-
-    // const el = elementor.getTargetEl(actual.activeIndex);
-    // const isFake = Number(el.dataset.order) === stater.actual.maxIndex;
 
     if (setting.isEnableLoop){
         const actualSlidesPerGroup = -configurator.setting.slidesPerGroup;
@@ -101,12 +94,17 @@ export function getNextIndex2(
 
     const {setting} = configurator;
 
-    if (setting.isEnableLoop){
+    // 如果是 auto 模式，則使用寬度自己算
+    const testLoop = true;
+    const oneSlide = elementor.containerEl.offsetWidth / elementor.slideItemEls[0].offsetWidth;
+    const slidesPerViewActual = configurator.setting.slidesPerView === 'auto' ? oneSlide: configurator.setting.slidesPerViewActual;
+
+    if (configurator.setting.isEnableLoop){
         const actualSlidesPerGroup = getActualSlidePerGroup(stater, configurator);
 
         return [
             () => {
-                const rightAdditionalDisplay = configurator.setting.slidesPerViewActual - 1; //額外顯示的部分，1是只選取一個
+                const rightAdditionalDisplay = slidesPerViewActual - 1; //額外顯示的部分，1是只選取一個
                 elementor.syncOrder(stater.actual.activeIndex, stater.actual.maxIndex, actualSlidesPerGroup + rightAdditionalDisplay);
                 controller.slideToActualIndex(stater.actual.activeIndex, {isUseAnimation: false});
             },
@@ -183,7 +181,7 @@ export default function calculateOrder(total: number, selected: number, offset, 
     const orderMap = new Map<number, number>();
     for(let i = 0; i < total; i++){
         const res = calcSelectCurrIndex(i, selected, total, offset, selectIndexOrder);
-        orderMap.set(i, res);
+        orderMap.set(i, Math.trunc(res));
     }
     return orderMap;
 }
