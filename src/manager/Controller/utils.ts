@@ -44,6 +44,8 @@ export function getPrevIndex2(
     // const isFake = Number(el.dataset.order) === stater.actual.maxIndex;
 
     if (setting.isEnableLoop){
+        const actualSlidesPerGroup = -configurator.setting.slidesPerGroup;
+
         return [
             // {index: isLast - 1, isUseAnimation: false, order: true},
             // {index: 0, isUseAnimation: true, order: true},
@@ -52,7 +54,7 @@ export function getPrevIndex2(
             // {index: page.moveCount % page.pageTotal, isUseAnimation: true, order: true},
             () => {
                 // 跟next 不一樣，因為 index 是在最左邊顯示
-                elementor.syncOrder(stater.actual.activeIndex, 0, -configurator.setting.slidesPerGroup);
+                elementor.syncOrder(stater.actual.activeIndex, 0, actualSlidesPerGroup);
                 controller.slideToActualIndex(stater.actual.activeIndex, {isUseAnimation: false});
             },
             () => {
@@ -83,7 +85,6 @@ export function getPrevIndex2(
 }
 
 
-
 /**
  * 取得接下來怎麼做
  * @param stater
@@ -99,24 +100,9 @@ export function getNextIndex2(
 ): Array<() => void> {
 
     const {setting} = configurator;
-    const {page, actual} = stater;
-
-    const activeEl = stater.formatElement.find(row => row.actualIndex ===  actual.activeIndex);
-    const maxOrder = stater.actual.maxIndex;
-    // const isFake = activeEl.order === maxOrder;
-
-    // const el = elementor.getTargetEl(actual.activeIndex);
-    // const isFake = Number(el.dataset.order) === stater.actual.maxIndex;
 
     if (setting.isEnableLoop){
-        console.log('stater.page.activePage',stater.actual.activeIndex);
-
-        const totalSlides = stater.formatElement.length;
-        const slidesPerGroup = configurator.setting.slidesPerGroup;
-        const numCompleteGroups = Math.floor(totalSlides / slidesPerGroup);
-        const numRemainingSlides = totalSlides % slidesPerGroup;
-
-        const actualSlidesPerGroup = numCompleteGroups >= 2 ? slidesPerGroup : numRemainingSlides;
+        const actualSlidesPerGroup = getActualSlidePerGroup(stater, configurator);
 
         return [
             () => {
@@ -221,4 +207,20 @@ export function sortDataArray(selected: number, dataArray: InitData[]): InitData
 
 export function calculatePrevIndex(total: number, prev: number): number {
     return ((prev % total) + total) % total;
+}
+
+
+/**
+ * 取得修正的真實 SlidePerGroup
+ * @param stater
+ * @param configurator
+ */
+function getActualSlidePerGroup(stater: Stater, configurator: Configurator) {
+    const totalSlides = stater.formatElement.length;
+    const slidesPerGroup = configurator.setting.slidesPerGroup;
+    const numCompleteGroups = Math.floor(totalSlides / slidesPerGroup);
+    const numRemainingSlides = totalSlides % slidesPerGroup;
+
+    const actualSlidesPerGroup = numCompleteGroups >= 2 ? slidesPerGroup : numRemainingSlides;
+    return actualSlidesPerGroup;
 }

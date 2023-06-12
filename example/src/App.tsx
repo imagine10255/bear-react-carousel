@@ -66,7 +66,7 @@ const examples: Record<EExampleCode, () => JSX.Element> = {
 };
 
 function App() {
-    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.base);
+    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.textAnimations);
     const Comp = examples[exampleKey];
 
 

@@ -176,13 +176,12 @@ class Dragger {
         // console.log('translateX',translateX);
 
         if(translateX <= isMaxPx) {
-            this._elementor.syncOrder(this._stater.actual.activeIndex);
+            this._elementor.syncOrder(this._stater.actual.activeIndex, this._stater.actual.maxIndex, 1);
             this._controller.slideToActualIndex(this._stater.actual.activeIndex, {isUseAnimation: false});
+
             const percentage = this._elementor.getMovePercentage(translateX); //TODO: 應該移動到 Positioner
             const formatPercentage = Math.round(percentage - 1) % this._stater.element.total;
             const currOrder = this._stater.formatElement.find(row => row.order === formatPercentage);
-            console.log(`============ reset next: ${percentage}(${formatPercentage})/order:${currOrder.actualIndex} ============`);
-
 
             this._elementor.transform(translateX + oneElWidth)
                 .syncActiveState(currOrder.actualIndex);
@@ -191,7 +190,7 @@ class Dragger {
             return;
 
         }else if(translateX > isMinPx){
-            this._elementor.syncOrder(this._stater.actual.activeIndex);
+            this._elementor.syncOrder(this._stater.actual.activeIndex, this._stater.actual.minIndex, -1);
             this._controller.slideToActualIndex(this._stater.actual.activeIndex, {isUseAnimation: false});
 
             const percentage = this._elementor.getMovePercentage(translateX); //TODO: 應該移動到 Positioner
