@@ -110,21 +110,24 @@ export function getNextIndex2(
 
     if (setting.isEnableLoop){
         console.log('stater.page.activePage',stater.actual.activeIndex);
-        return [
-            // {index: isLast - 1, isUseAnimation: false, order: true},
-            // {index: 0, isUseAnimation: true, order: true},
 
-            // 先 set order, 然後在移動到重置點，
-            // {index: page.moveCount % page.pageTotal, isUseAnimation: true, order: true},
+        const totalSlides = stater.formatElement.length;
+        const slidesPerGroup = configurator.setting.slidesPerGroup;
+        const numCompleteGroups = Math.floor(totalSlides / slidesPerGroup);
+        const numRemainingSlides = totalSlides % slidesPerGroup;
+
+        const actualSlidesPerGroup = numCompleteGroups >= 2 ? slidesPerGroup : numRemainingSlides;
+
+        return [
             () => {
                 const rightAdditionalDisplay = configurator.setting.slidesPerViewActual - 1; //額外顯示的部分，1是只選取一個
-                elementor.syncOrder(stater.actual.activeIndex, stater.actual.maxIndex, configurator.setting.slidesPerGroup + rightAdditionalDisplay);
+                elementor.syncOrder(stater.actual.activeIndex, stater.actual.maxIndex, actualSlidesPerGroup + rightAdditionalDisplay);
                 controller.slideToActualIndex(stater.actual.activeIndex, {isUseAnimation: false});
             },
             () => {
-            // 找到下一個
+                // 找到下一個
                 const currActive = stater.formatElement.find(row => row.actualIndex === stater.actual.activeIndex);
-                const nextIndex = (currActive.order + configurator.setting.slidesPerGroup) % stater.formatElement.length;
+                const nextIndex = (currActive.order + actualSlidesPerGroup) % stater.formatElement.length;
                 const next = stater.formatElement.find(row => row.order === nextIndex);
                 controller.slideToActualIndex(next.actualIndex, {isUseAnimation: true});
             },
