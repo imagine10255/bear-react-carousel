@@ -58,11 +58,9 @@ export function getPrevIndex2(
             () => {
                 // 找到上一個
                 const currActive = stater.formatElement.find(row => row.actualIndex === stater.actual.activeIndex);
-                const next = stater.formatElement.find(row => row.order === currActive.order - 1);
+                const nextIndex = (currActive.order - configurator.setting.slidesPerGroup) % stater.formatElement.length;
+                const next = stater.formatElement.find(row => row.order === nextIndex);
                 controller.slideToActualIndex(next.actualIndex, {isUseAnimation: true});
-                //
-                // const target = stater.formatElement.find(row => row.order === selectOrder);
-                // controller.slideToActualIndex(target.actualIndex, {isUseAnimation: true});
             },
         ];
 
@@ -119,13 +117,15 @@ export function getNextIndex2(
             // 先 set order, 然後在移動到重置點，
             // {index: page.moveCount % page.pageTotal, isUseAnimation: true, order: true},
             () => {
-                elementor.syncOrder(stater.actual.activeIndex, stater.actual.maxIndex, configurator.setting.slidesPerViewActual);
+                const rightAdditionalDisplay = configurator.setting.slidesPerViewActual - 1; //額外顯示的部分，1是只選取一個
+                elementor.syncOrder(stater.actual.activeIndex, stater.actual.maxIndex, configurator.setting.slidesPerGroup + rightAdditionalDisplay);
                 controller.slideToActualIndex(stater.actual.activeIndex, {isUseAnimation: false});
             },
             () => {
             // 找到下一個
                 const currActive = stater.formatElement.find(row => row.actualIndex === stater.actual.activeIndex);
-                const next = stater.formatElement.find(row => row.order === currActive.order + 1);
+                const nextIndex = (currActive.order + configurator.setting.slidesPerGroup) % stater.formatElement.length;
+                const next = stater.formatElement.find(row => row.order === nextIndex);
                 controller.slideToActualIndex(next.actualIndex, {isUseAnimation: true});
             },
         ];

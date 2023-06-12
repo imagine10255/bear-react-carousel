@@ -45,13 +45,14 @@ function Base() {
                 onSlideChange={setCarouselState}
                 // onSlideChange={setCarouselState}
                 slidesPerView={3}
-                slidesPerGroup={1}
+                slidesPerGroup={3}
                 // isCenteredSlides={true}
                 height="250px"
                 // height={{widthRatio: 32, heightRatio: 9}}
                 isEnableNavButton
                 isEnablePagination
                 isEnableLoop
+                moveTime={700}
                 // isEnableAutoPlay={false}
 
                 isDebug
