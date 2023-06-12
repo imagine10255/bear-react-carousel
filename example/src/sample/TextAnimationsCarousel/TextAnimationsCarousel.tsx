@@ -1,7 +1,7 @@
 import React from 'react';
-import BearCarousel, {elClassName, TBearSlideItemDataList} from 'bear-react-carousel';
+import BearCarousel, {BearSlideCard, elClassName, TBearSlideItemDataList} from 'bear-react-carousel';
 import styled from 'styled-components';
-import {baseImage, foodImages} from '../../config/images';
+import {baseImage as images, baseImage, foodImages} from '../../config/images';
 import TextCard, {AnimationsBox} from './_components/TextCard';
 import {asset} from "../../utils";
 
@@ -34,19 +34,38 @@ const TextAnimationsCarousel = () => {
         // };
     });
 
+
+
+// 輪播項目1
+    const bearSlideItemData1 = images.map(row => {
+        return <SwiperSlide className="slide-item" style={{width: 'auto'}}>
+            <div className=""
+                 style={{fontSize: '40px', height: '200px', width: '250px',backgroundColor: row.color}}
+            >
+                {/*<a href="https://bear-react-carousel.github.io" rel="noreferrer" target="_blank">{row.id}</a>*/}
+            </div>
+        </SwiperSlide>;
+    });
+
+
+
     return <TextAnimationsRoot>
         <Swiper
             modules={[Navigation, Pagination, Scrollbar, A11y]}
-            slidesPerView={3}
-            loop
+            slidesPerView={"auto"}
+            spaceBetween={30}
+            pagination={{
+                clickable: true,
+            }}
+            className="mySwiper"
+            // loop
             navigation
             scrollbar
             speed={500}
-            pagination={{ clickable: true }}
             onSlideChange={() => console.log('slide change')}
             onSwiper={(swiper) => console.log(swiper)}
         >
-            {slideItemData}
+            {bearSlideItemData1}
         </Swiper>
 
         {/*<BearCarousel*/}
