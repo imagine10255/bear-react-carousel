@@ -43,9 +43,7 @@ export function getPrevIndex2(
     // const el = elementor.getTargetEl(actual.activeIndex);
     // const isFake = Number(el.dataset.order) === stater.actual.maxIndex;
 
-    console.log('page.moveCount',page.moveCount);
     if (setting.isEnableLoop){
-        console.log('stater.page.activePage',stater.actual.activeIndex);
         return [
             // {index: isLast - 1, isUseAnimation: false, order: true},
             // {index: 0, isUseAnimation: true, order: true},
@@ -53,7 +51,8 @@ export function getPrevIndex2(
             // 先 set order, 然後在移動到重置點，
             // {index: page.moveCount % page.pageTotal, isUseAnimation: true, order: true},
             () => {
-                elementor.syncOrder(stater.actual.activeIndex, 0, -configurator.setting.slidesPerViewActual);
+                // 跟next 不一樣，因為 index 是在最左邊顯示
+                elementor.syncOrder(stater.actual.activeIndex, 0, -configurator.setting.slidesPerGroup);
                 controller.slideToActualIndex(stater.actual.activeIndex, {isUseAnimation: false});
             },
             () => {

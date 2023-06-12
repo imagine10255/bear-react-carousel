@@ -71,6 +71,7 @@ describe('calculateOrder function', () => {
 
     });
 
+    // 向左的時候只需要預留1, 不用預留到 group項目 (假設 group = 1 )
     it('should calc left', () => {
         const total = 4;
         const selectIndexOrder = 0;
