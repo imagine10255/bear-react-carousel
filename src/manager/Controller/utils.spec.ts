@@ -86,38 +86,44 @@ describe('calculateOrder function', () => {
     });
 
     it('should calc right nav', () => {
-        const total = 4;
+        const total = 6;
         const selectIndexOrder = total - 1;
 
         // 往右邊
         expect(calculateOrder(total, 0, 0, selectIndexOrder)).toEqual(new Map([
-            [0, 3],
+            [0, 5],
             [1, 0],
             [2, 1],
             [3, 2],
+            [4, 3],
+            [5, 4],
         ]));
 
-        console.log('sync', `total: ${total}, activeActualIndex: ${0}, offset: ${2}, selectIndexOrder: ${selectIndexOrder}`);
+        // console.log('sync', `total: ${total}, activeActualIndex: ${0}, offset: ${2}, selectIndexOrder: ${selectIndexOrder}`);
 
         expect(calculateOrder(total, 0, 2, selectIndexOrder)).toEqual(new Map([
-            [0, 1],
-            [1, 2],
-            [2, 3],
+            [0, 3],
+            [1, 4],
+            [2, 5],
             [3, 0],
+            [4, 1],
+            [5, 2],
         ]));
 
-        // expect(calculateOrder(total, 2, 2, selectIndexOrder)).toEqual(new Map([
-        //     [0, 1],
-        //     [1, 2],
-        //     [2, 3],
-        //     [3, 4],
-        // ]));
+        expect(calculateOrder(total, 0, 3, selectIndexOrder)).toEqual(new Map([
+            [0, 2],
+            [1, 3],
+            [2, 4],
+            [3, 5],
+            [4, 0],
+            [5, 1],
+        ]));
 
     });
 
     //
     it('should calc left nav', () => {
-        const total = 4;
+        const total = 5;
         const selectIndexOrder = total -1;
 
 
@@ -127,13 +133,15 @@ describe('calculateOrder function', () => {
             [1, 1],
             [2, 2],
             [3, 3],
+            [4, 4],
         ]));
 
-        expect(calculateOrder(total, 0, -1, 0)).toEqual(new Map([
-            [0, 1],
-            [1, 2],
-            [2, 3],
-            [3, 0],
+        expect(calculateOrder(total, 0, -3, 0)).toEqual(new Map([
+            [0, 3],
+            [1, 4],
+            [2, 0],
+            [3, 1],
+            [4, 2],
         ]));
 
     });
