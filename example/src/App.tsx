@@ -126,6 +126,7 @@ const Example = styled.div`
   flex-direction: column;
   flex: 1;
   max-width: 100%;
+  width: 0; //避免擠出滾動
 `;
 
 

@@ -19,7 +19,7 @@ const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
         key: row.id,
         children: <BearSlideCard>
             <div className="h-100 d-flex"
-                style={{fontSize: '40px', height: '200px', width: '200px',backgroundColor: row.color}}
+                style={{fontSize: '40px', height: '200px', width: '450px',backgroundColor: row.color}}
             >
                 {/*<a href="https://bear-react-carousel.github.io" rel="noreferrer" target="_blank">{row.id}</a>*/}
             </div>
@@ -36,7 +36,7 @@ function SlideImage() {
     const [enable, setEnable] = useState<boolean>(true);
     const [count, setCount] = useState<number>(0);
 
-    return <div>
+    return <>
         {/*測試依照比例設定容器高度*/}
         {enable && (
             <BearCarousel
@@ -50,16 +50,16 @@ function SlideImage() {
                 isEnablePagination
                 // isEnableLoop
                 // isEnableAutoPlay={false}
-                // isDebug
+                isDebug
             />)}
 
-        <button type="button" onClick={() => setCount(curr => curr += 1)}> count: {count}</button>
-        <button type="button" onClick={() => setEnable(curr => !curr)}> enable: {String(enable)}</button>
+        {/*<button type="button" onClick={() => setCount(curr => curr += 1)}> count: {count}</button>*/}
+        {/*<button type="button" onClick={() => setEnable(curr => !curr)}> enable: {String(enable)}</button>*/}
 
-        <pre>
-            {JSON.stringify(carouselState, null, '\t')}
-        </pre>
-    </div>;
+        {/*<pre>*/}
+        {/*    {JSON.stringify(carouselState, null, '\t')}*/}
+        {/*</pre>*/}
+    </>;
 
 }
 
