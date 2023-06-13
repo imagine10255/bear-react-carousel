@@ -104,7 +104,7 @@ class Elementor {
 
         // const startPosition = this._getStartPosition(slideCurrWidth);
 
-        console.log('startPosition',startPosition);
+        // console.log('startPosition',startPosition);
         // const percentage = getMovePercentage(movePx, startPosition, slideCurrWidth);
         // const mapIndex = this._stater.formatElement.find(row => row.order === percentage)
         return getMovePercentage(movePx, startPosition, slideCurrWidth);
@@ -186,10 +186,11 @@ class Elementor {
 
     syncOrder = (activeActualIndex?: number, selectIndexOrder?: number, offset = 0) => {
         const itemEls = this.slideItemEls;
-        console.log('sync', `total: ${itemEls.length}, activeActualIndex: ${activeActualIndex}, offset: ${offset}, selectIndexOrder: ${selectIndexOrder}`);
+        // console.log('sync', `total: ${itemEls.length}, activeActualIndex: ${activeActualIndex}, offset: ${offset}, selectIndexOrder: ${selectIndexOrder}`);
         const orders = activeActualIndex >= 0 ? calculateOrder(itemEls.length, activeActualIndex, offset, selectIndexOrder): undefined;
         // const orders = calculateOrder(itemEls.length, activeActualIndex, offset, selectIndexOrder);
 
+        console.log(`syncOrder: ${activeActualIndex}`);
 
         this._stater.formatElement.forEach((row, index) => {
             row.order = orders ? orders.get(index): index;
@@ -221,6 +222,7 @@ class Elementor {
                 // row.style.order = isPageOverflow ? String(orders.get(index)): String(index);
                 if(checkInRange(index, activeActualIndex, this.slideItemEls.length)){
                     row.setAttribute('data-active', 'true');
+                    this._stater.actual.activeIndex = index;
                 } else if (row?.dataset.active) {
                     row.removeAttribute('data-active');
                 }

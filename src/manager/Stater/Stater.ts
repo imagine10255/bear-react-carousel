@@ -146,6 +146,7 @@ class Stater {
 
     setActiveActual = (index: number, page: number, moveCount = 0) => {
         this.actual.activeIndex = index;
+        console.log('set activeIndex', this.actual.activeIndex);
         this.page.activePage = page;
         // this.page.moveCount = moveCount;
         this._eventor.emit('change');

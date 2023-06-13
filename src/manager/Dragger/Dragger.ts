@@ -9,7 +9,9 @@ import Eventor from '../Eventor';
 import {DesktopTouchEvent, MobileTouchEvent} from '../../interface/DragEvent';
 import logger from '../../logger';
 import {logEnable} from '../../config';
-import Controller from "../Controller";
+import Controller from '../Controller';
+import {getActualSlidePerGroup} from '../Controller/utils';
+import {EHorizontal} from '../Locator/types';
 
 
 /**
@@ -159,7 +161,7 @@ class Dragger {
 
 
 
-    private _dragMove(moveX: number) {
+    private _dragMove = (moveX: number) => {
         if(this._configurator.setting.isDebug && logEnable.dragger.onDragMove) logger.printInText('[Dragger._dragMove]');
 
         this._elementor.setNonSubjectTouch(false);
@@ -168,58 +170,83 @@ class Dragger {
         const {setting} = this._configurator;
 
         const isMinPx = 0;
-        let oneElWidth = this._elementor.slideItemEls[0].clientWidth;
-        const isMaxPx = -(oneElWidth * this._stater.actual.lastIndex);
+        let oneElWidth = this._elementor.slideItemEls[0].offsetWidth;
         // console.log('isLastPx',isMinPx, isMaxPx);
 
+        // console.log('moveX',moveX);
         const translateX = calcMoveTranslatePx(startPosition.x, moveX);
         // console.log('translateX',translateX);
 
-        if(translateX <= isMaxPx) {
-            this._elementor.syncOrder(this._stater.actual.activeIndex, this._stater.actual.maxIndex, 1);
-            this._controller.slideToActualIndex(this._stater.actual.activeIndex, {isUseAnimation: false});
-
-            const percentage = this._elementor.getMovePercentage(translateX); //TODO: 應該移動到 Positioner
-            const formatPercentage = Math.round(percentage - 1) % this._stater.element.total;
-            const currOrder = this._stater.formatElement.find(row => row.order === formatPercentage);
-
-            this._elementor.transform(translateX + oneElWidth)
-                .syncActiveState(currOrder.actualIndex);
-
-            return;
-
-        }else if(translateX > isMinPx){
-            this._elementor.syncOrder(this._stater.actual.activeIndex, this._stater.actual.minIndex, -1);
-            this._controller.slideToActualIndex(this._stater.actual.activeIndex, {isUseAnimation: false});
-
-            const percentage = this._elementor.getMovePercentage(translateX); //TODO: 應該移動到 Positioner
-            const formatPercentage = Math.round(percentage + 1) % this._stater.element.total;
-            const currOrder = this._stater.formatElement.find(row => row.order === formatPercentage);
-            console.log(`============ reset prev: ${percentage}(${formatPercentage})/order:${currOrder.actualIndex} ============`);
+        const oneSlide = this._elementor.containerEl.clientWidth / oneElWidth;
+        const slidesPerViewActual = this._configurator.setting.slidesPerView === 'auto' ? oneSlide: this._configurator.setting.slidesPerViewActual;
+        console.log('this._stater.actual.activeIndex', this._stater.actual);
 
 
-            this._elementor.transform(translateX - oneElWidth)
-                .syncActiveState(currOrder.actualIndex);
+        const actualSlidesPerGroup = getActualSlidePerGroup(this._stater, this._configurator);
+        const rightAdditionalDisplay = slidesPerViewActual - 1; //額外顯示的部分，1是只選取一個
 
-            console.log('oneElWidth prev');
-            return;
+        const lastOrder = this._elementor.slideItemEls.find(row => Number(row.dataset.actual) === this._stater.actual.maxIndex);
 
-        }else{
-            // this._elementor.syncOrder(this._stater.actual.activeIndex);
-            // this._controller.slideToActualIndex(this._stater.actual.activeIndex, {isUseAnimation: false});
-
-            const percentage = this._elementor.getMovePercentage(translateX); //TODO: 應該移動到 Positioner
-            const formatPercentage = Math.round(percentage) % this._stater.element.total;
-            const currOrder = this._stater.formatElement.find(row => row.order === formatPercentage);
-            console.log(`============ reset prev: ${percentage}(${formatPercentage})/order:${currOrder.actualIndex} ============`);
+        const isMaxPx = -(oneElWidth * (this._stater.actual.maxIndex - rightAdditionalDisplay));
 
 
-            this._elementor.transform(translateX)
-                .syncActiveState(currOrder.actualIndex);
+        // const direct = this._locator.getSlideDirection(moveX);
+        // console.log('rightAdditionalDisplay',`translateX: ${translateX}, isMaxPx: ${isMaxPx}`);
+        // console.log('translateX', `translateX: ${translateX}, isMaxPx: ${isMaxPx}, newTranslateX: ${translateX + oneElWidth}`);
+        // if(translateX <= isMaxPx) {
+        //
+        //     // console.log('檢查順序!', `activeIndex: ${this._stater.actual.activeIndex}, maxIndex: ${this._stater.actual.maxIndex}, offset: ${actualSlidesPerGroup + rightAdditionalDisplay}`);
+        //     this._elementor.syncOrder(this._stater.actual.activeIndex, this._stater.actual.maxIndex, actualSlidesPerGroup + rightAdditionalDisplay);
+        //     // this._controller.slideToActualIndex(this._stater.actual.activeIndex, {isUseAnimation: false});
+        //
+        //     // const activeEl = this._elementor.slideItemEls.find(row => Number(row.dataset.actual) === this._stater.actual.activeIndex);
+        //     // startPosition.x = activeEl.offsetLeft;
+        //     //
+        //     // this._controller.slideToActualIndex(this._stater.actual.activeIndex, {isUseAnimation: false});
+        //     //
+        //     const percentage = this._elementor.getMovePercentage(translateX + oneElWidth); //TODO: 應該移動到 Positioner
+        //     const formatPercentage = Math.round(percentage - 1) % this._stater.element.total;
+        //     const currOrder = this._stater.formatElement.find(row => row.order === formatPercentage);
+        //
+        //
+        //     //
+        //     this._elementor.transform(translateX + oneElWidth);
+        //     this._elementor.syncActiveState(currOrder.actualIndex);
+        //
+        //     return;
+        //
+        // }else if(translateX > isMinPx){
+        //
+        //     this._elementor.syncOrder(this._stater.actual.activeIndex, this._stater.actual.minIndex, -1);
+        //     this._controller.slideToActualIndex(this._stater.actual.activeIndex, {isUseAnimation: false});
+        //
+        //     const percentage = this._elementor.getMovePercentage(translateX); //TODO: 應該移動到 Positioner
+        //     const formatPercentage = Math.round(percentage + 1) % this._stater.element.total;
+        //     const currOrder = this._stater.formatElement.find(row => row.order === formatPercentage);
+        //     // console.log(`============ reset prev: ${percentage}(${formatPercentage})/order:${currOrder.actualIndex} ============`);
+        //
+        //
+        //     this._elementor.transform(translateX - oneElWidth)
+        //         .syncActiveState(currOrder.actualIndex);
+        //
+        //     return;
+        //
+        // }else{
+        // this._elementor.syncOrder(this._stater.actual.activeIndex);
+        // this._controller.slideToActualIndex(this._stater.actual.activeIndex, {isUseAnimation: false});
 
-            console.log('oneElWidth prev');
-            return;
-        }
+        const percentage = this._elementor.getMovePercentage(translateX); //TODO: 應該移動到 Positioner
+        const formatPercentage = Math.round(percentage) % this._stater.element.total;
+        const currOrder = this._stater.formatElement.find(row => row.order === formatPercentage);
+        // console.log(`============ reset prev: ${percentage}(${formatPercentage})/order:${currOrder.actualIndex} ============`);
+
+
+        this._elementor.transform(translateX)
+            .syncActiveState(currOrder.actualIndex);
+
+        // console.log('oneElWidth prev');
+        return;
+        // }
 
         //
         // if (this._elementor.containerEl &&
@@ -239,7 +266,7 @@ class Dragger {
         //         .transform(translateX)
         //         .syncActiveState(Math.round(percentage));
         // }
-    }
+    };
 
 
 
@@ -254,6 +281,7 @@ class Dragger {
             const active = this._elementor.slideItemEls.find(row => row.dataset.active === 'true');
             if(active){
                 const activeSourceIndex = Number(active.dataset.actual);
+                console.log('activeSourceIndex', activeSourceIndex);
                 this._eventor.emit('dragEnd', activeSourceIndex);
             }
         }

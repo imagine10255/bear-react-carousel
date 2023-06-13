@@ -91,11 +91,7 @@ export function getNextIndex2(
     controller: Controller,
     elementor: Elementor,
 ): Array<() => void> {
-
-    const {setting} = configurator;
-
     // 如果是 auto 模式，則使用寬度自己算
-    const testLoop = true;
     const oneSlide = elementor.containerEl.offsetWidth / elementor.slideItemEls[0].offsetWidth;
     const slidesPerViewActual = configurator.setting.slidesPerView === 'auto' ? oneSlide: configurator.setting.slidesPerViewActual;
 
@@ -213,7 +209,7 @@ export function calculatePrevIndex(total: number, prev: number): number {
  * @param stater
  * @param configurator
  */
-function getActualSlidePerGroup(stater: Stater, configurator: Configurator) {
+export function getActualSlidePerGroup(stater: Stater, configurator: Configurator) {
     const totalSlides = stater.formatElement.length;
     const slidesPerGroup = configurator.setting.slidesPerGroup;
     const numCompleteGroups = Math.floor(totalSlides / slidesPerGroup);

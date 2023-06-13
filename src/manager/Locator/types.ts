@@ -1,6 +1,6 @@
-export enum EDirection {
-    vertical= 'vertical',
-    horizontal = 'horizontal',
+export enum EHorizontal {
+    left= 'left',
+    right = 'right',
 }
 
 export interface ITouchStart {

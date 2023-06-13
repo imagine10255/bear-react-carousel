@@ -1,4 +1,3 @@
-import {EDirection} from './types';
 import {getMatrixValue} from '../../utils';
 
 
@@ -22,27 +21,27 @@ export function getSlideAngle(dx: number, dy: number): number {
  *
  * @return 1:向上, 2:向下, 3:向左, 4:向右, 0:未移動
  */
-export function getSlideDirection(startX: number, startY: number, endX: number, endY: number): EDirection|undefined{
-    const dy = startY - endY;
-    const dx = endX - startX;
-
-    // 滑動距離最小範圍
-    if (Math.abs(dx) >= 2 || Math.abs(dy) >= 2) {
-        const angle = getSlideAngle(dx, dy);
-        // 向上
-        if (angle >= 45 && angle < 135) return EDirection.vertical;
-
-        // 向右
-        if (angle >= -45 && angle < 45) return EDirection.horizontal;
-
-        // 向下
-        if (angle >= -135 && angle < -45) return EDirection.vertical;
-
-        // 向左
-        if ((angle >= 135 && angle <= 180) || (angle >= -180 && angle < -135)) return EDirection.horizontal;
-    }
-    return undefined;
-}
+// export function getSlideDirection(startX: number, startY: number, endX: number, endY: number): EDirection|undefined{
+//     const dy = startY - endY;
+//     const dx = endX - startX;
+//
+//     // 滑動距離最小範圍
+//     if (Math.abs(dx) >= 2 || Math.abs(dy) >= 2) {
+//         const angle = getSlideAngle(dx, dy);
+//         // 向上
+//         if (angle >= 45 && angle < 135) return EDirection.vertical;
+//
+//         // 向右
+//         if (angle >= -45 && angle < 45) return EDirection.horizontal;
+//
+//         // 向下
+//         if (angle >= -135 && angle < -45) return EDirection.vertical;
+//
+//         // 向左
+//         if ((angle >= 135 && angle <= 180) || (angle >= -180 && angle < -135)) return EDirection.horizontal;
+//     }
+//     return undefined;
+// }
 
 
 

@@ -44,7 +44,7 @@ function Base() {
                 data={bearSlideItemData1}
                 onSlideChange={setCarouselState}
                 // onSlideChange={setCarouselState}
-                slidesPerView={1}
+                slidesPerView={3}
                 slidesPerGroup={1}
                 // isCenteredSlides={true}
                 height="250px"
@@ -62,7 +62,7 @@ function Base() {
         <button type="button" onClick={() => setEnable(curr => !curr)}> enable: {String(enable)}</button>
 
         {Array.from({length: 5}).map((row, index) => {
-            return <button key={index} type="button" onClick={() => controller?.slideToPage(index + 1)}> slideToPage {index +1} </button>
+            return <button key={index} type="button" onClick={() => controller?.slideToActualIndex(index)}> slideToPage {index} </button>;
         })}
 
         <br/>
