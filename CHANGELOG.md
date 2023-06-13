@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.5-alpha.0](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.4...v4.0.5-alpha.0) (2023-06-13)
+
+
+### Bug Fixes
+
+* data is undefined error ([858bc82](https://github.com/imagine10255/bear-react-carousel/commit/858bc82b449c0f4e8ca31230ddfa8b5566a8bdaa))
+
 ### [4.0.4](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.3...v4.0.4) (2023-06-13)
 
 
