@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.4](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.3...v4.0.4) (2023-06-13)
+
+
+### Bug Fixes
+
+* safari image auto width (add max-width:100%) ([3de4f26](https://github.com/imagine10255/bear-react-carousel/commit/3de4f2607f298d3a2b2826149623112d81543e8a))
+
 ### [4.0.3](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.3-alpha.6...v4.0.3) (2023-06-13)
 
 
