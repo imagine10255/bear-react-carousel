@@ -12,7 +12,7 @@ export enum EDevice {
 }
 
 export type TRenderNavButton = (toPrev: TToPrev, toNext: TToNext) => void
-export type TRenderPagination = (pageTotal: number) => JSX.Element[]
+export type TRenderPagination = (pageTotal: number) => JSX.Element[]|undefined
 export type TStateOnChange = (carouselState: ICarouselState) => void
 export type TOnMount = () => void
 export type TSlideOnClick = () => void
