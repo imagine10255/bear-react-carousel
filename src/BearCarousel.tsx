@@ -159,7 +159,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
         if(isPropsDiff(this.props, nextProps, ['data']) ||
             this.state.windowSize !== nextWindowSize ||
-            this.props.data.length !== nextProps.data.length
+            this.props.data?.length !== nextProps.data?.length
         ){
             this._configurator.init(nextProps.breakpoints, getSetting(nextProps));
             this._stater.init(nextProps.data);
