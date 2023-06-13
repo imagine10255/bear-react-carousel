@@ -19,7 +19,6 @@ import {Controller} from 'bear-react-carousel';
 const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
     return {
         key: row.id,
-        paginationContent: <>{row.color}</>,
         children: <BearSlideCard>
             <div className="h-100 d-flex"
                 style={{fontSize: '40px', backgroundColor: row.color}}

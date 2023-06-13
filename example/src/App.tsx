@@ -24,6 +24,7 @@ import SlideImage from "./sample/SlideImage";
 import AutoCard from "./sample/AutoCard";
 import LazyImage from "./sample/LazyImage";
 import LazyCard from "./sample/LazyCard";
+import AutoImage from "./sample/AutoImage";
 
 
 
@@ -34,6 +35,7 @@ enum EExampleCode {
     lazyImage = 'lazyImage',
     lazyCard = 'lazyCard',
     autoCard = 'autoCard',
+    autoImage = 'autoImage',
     autoPlay = 'autoPlay',
     loop = 'loop',
     center = 'center',
@@ -53,6 +55,7 @@ const examples: Record<EExampleCode, () => JSX.Element> = {
     [EExampleCode.lazyImage]: LazyImage,
     [EExampleCode.lazyCard]: LazyCard,
     [EExampleCode.autoCard]: AutoCard,
+    [EExampleCode.autoImage]: AutoImage,
     [EExampleCode.autoPlay]: AutoPlay,
     [EExampleCode.loop]: Loop,
     [EExampleCode.center]: Center,
@@ -66,7 +69,7 @@ const examples: Record<EExampleCode, () => JSX.Element> = {
 };
 
 function App() {
-    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.base);
+    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.autoImage);
     const Comp = examples[exampleKey];
 
 
