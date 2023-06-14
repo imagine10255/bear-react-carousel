@@ -308,9 +308,10 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         const {actual, formatElement} = this._stater;
         return formatElement.map((row, i) => {
             const isActive = row.actualIndex === actual.activeIndex;
+            const isClone = row.isClone ? '_clone': '';
 
             return <SlideItem
-                key={`bear-carousel_${row.key}`}
+                key={`bear-carousel_slide-item_${row.key}${isClone}`}
                 ref={(el) => this._elementor.setSlideItemRefs(el, i)}
                 element={row.element}
                 actualIndex={row.actualIndex}
