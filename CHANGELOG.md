@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.6-alpha.4](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.6-alpha.3...v4.0.6-alpha.4) (2023-06-14)
+
+
+### Bug Fixes
+
+* slideResetToMatchIndex [actual.activeIndex].isClone undefined ([27c368f](https://github.com/imagine10255/bear-react-carousel/commit/27c368ff3ac5378944e2713387d78d48c8c11def))
+
 ### [4.0.6-alpha.3](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.6-alpha.2...v4.0.6-alpha.3) (2023-06-14)
 
 
