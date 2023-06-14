@@ -178,7 +178,7 @@ img.bear-react-carousel__slide-item__image{
     height: 100%;
 }
 
-div.bear-react-carousel__slide-item__card{
+.bear-react-carousel__slide-item__card{
     width: 100%;
     height: 100%;
     background-repeat: no-repeat;
