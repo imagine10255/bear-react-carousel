@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.6-alpha.2](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.6-alpha.0...v4.0.6-alpha.2) (2023-06-14)
+
+
+### Bug Fixes
+
+* auto slideItem, bg undefined issue ([c9107bc](https://github.com/imagine10255/bear-react-carousel/commit/c9107bce5d2584b1b804677baef5031ac4fc0fb0))
+* auto slideItem, bg undefined issue ([f7e962c](https://github.com/imagine10255/bear-react-carousel/commit/f7e962c969f232a319f937844101861d27d31454))
+
 ### [4.0.6-alpha.1](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.6-alpha.0...v4.0.6-alpha.1) (2023-06-14)
 
 
