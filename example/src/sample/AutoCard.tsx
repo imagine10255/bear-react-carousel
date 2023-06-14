@@ -19,7 +19,7 @@ const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
         key: row.id,
         children: <BearSlideCard>
             <div className="h-100 d-flex"
-                 style={{fontSize: '40px', height: '200px', width: '200px',backgroundColor: row.color}}
+                 style={{fontSize: '40px', height: '200px', width: '250px',backgroundColor: row.color}}
             >
                 {/*<a href="https://bear-react-carousel.github.io" rel="noreferrer" target="_blank">{row.id}</a>*/}
             </div>
@@ -38,23 +38,38 @@ function SlideImage() {
 
     return <div>
         {/*測試依照比例設定容器高度*/}
-        {enable && (
-            <BearCarousel
-                // style={{width: '400px'}}
-                // controllerRef={controllerRef}
-                data={bearSlideItemData1}
-                // onChange={setCarouselState}
-                slidesPerView="auto"
-                spaceBetween={5}
-                isEnableNavButton
-                isEnablePagination
-                // isEnableLoop
-                // isEnableAutoPlay={false}
-                // isDebug
-            />)}
+        <BearCarousel
+            // style={{width: '400px'}}
+            // controllerRef={controllerRef}
+            data={bearSlideItemData1}
+            // onChange={setCarouselState}
+            slidesPerView="auto"
+            isCenteredSlides
+            spaceBetween={5}
+            isEnableNavButton
+            isEnablePagination
+            // isEnableLoop
+            // isEnableAutoPlay={false}
+            isDebug
+        />
 
         <button type="button" onClick={() => setCount(curr => curr += 1)}> count: {count}</button>
         <button type="button" onClick={() => setEnable(curr => !curr)}> enable: {String(enable)}</button>
+
+        <BearCarousel
+            // style={{width: '400px'}}
+            // controllerRef={controllerRef}
+            data={bearSlideItemData1.slice(0, 3)}
+            // onChange={setCarouselState}
+            slidesPerView="auto"
+            isCenteredSlides
+            spaceBetween={5}
+            isEnableNavButton
+            isEnablePagination
+            // isEnableLoop
+            // isEnableAutoPlay={false}
+            isDebug
+        />
 
         <pre>
             {JSON.stringify(carouselState, null, '\t')}

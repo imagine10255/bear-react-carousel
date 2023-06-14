@@ -30,23 +30,23 @@ function SlideImage() {
 
     return <div style={{width: '500px'}}>
         {/*測試依照比例設定容器高度*/}
-        {enable && (
-            <BearCarousel
-                // style={{width: '400px'}}
-                // controllerRef={controllerRef}
-                data={bearSlideItemData1}
-                // onChange={setCarouselState}
-                slidesPerView={1}
-                spaceBetween={5}
-                isCenteredSlides
-                // height="200px"
-                // height="200px"
-                isEnableNavButton
-                isEnablePagination
-                // isEnableLoop
-                // isEnableAutoPlay={false}
-                // isDebug
-            />)}
+        <BearCarousel
+            // style={{width: '400px'}}
+            // controllerRef={controllerRef}
+            data={bearSlideItemData1}
+            // onChange={setCarouselState}
+            slidesPerView={1}
+            spaceBetween={5}
+            isCenteredSlides
+            // height="200px"
+            // height="200px"
+            isEnableNavButton
+            isEnablePagination
+            // isEnableLoop
+            // isEnableAutoPlay={false}
+            // isDebug
+        />
+
 
         <button type="button" onClick={() => setCount(curr => curr += 1)}> count: {count}</button>
         <button type="button" onClick={() => setEnable(curr => !curr)}> enable: {String(enable)}</button>
@@ -58,6 +58,24 @@ function SlideImage() {
             <option value={2}>2</option>
             <option value={3}>3</option>
         </select>
+
+
+        <BearCarousel
+            // style={{width: '400px'}}
+            // controllerRef={controllerRef}
+            data={bearSlideItemData1.slice(0, 3)}
+            // onChange={setCarouselState}
+            slidesPerView={3}
+            spaceBetween={5}
+            isCenteredSlides
+            // height="200px"
+            // height="200px"
+            isEnableNavButton
+            isEnablePagination
+            // isEnableLoop
+            // isEnableAutoPlay={false}
+            // isDebug
+        />
         <pre>
             {JSON.stringify(carouselState, null, '\t')}
         </pre>

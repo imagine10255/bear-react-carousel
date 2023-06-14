@@ -123,7 +123,13 @@ class Elementor {
     getMoveDistance = (slideIndex: number): number => {
         const slideItemEl = this.slideItemEls[slideIndex];
         if (this.slideItemEls[slideIndex]) {
-            return getMoveDistance(slideItemEl.offsetLeft, this._getStartPosition(this.containerEl.offsetWidth / this._configurator.setting.slidesPerViewActual));
+            console.log('this.containerEl.offsetWidth',this.containerEl.offsetWidth, this._configurator.setting.slidesPerViewActual);
+
+            let slideItemWidth = this._configurator.setting.slidesPerViewActual;
+            if(this._configurator.setting.slidesPerView === 'auto' && this.slideItemEls?.length > 0){
+                slideItemWidth = this.slideItemEls[0].offsetWidth;
+            }
+            return getMoveDistance(slideItemEl.offsetLeft, this._getStartPosition(this.containerEl.offsetWidth / slideItemWidth));
         }
 
         return 0;

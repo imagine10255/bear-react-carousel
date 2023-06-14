@@ -69,7 +69,7 @@ const examples: Record<EExampleCode, () => JSX.Element> = {
 };
 
 function App() {
-    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.slidePerViews);
+    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.autoCard);
     const Comp = examples[exampleKey];
 
 
@@ -89,7 +89,7 @@ function App() {
                 </Menu>
 
 
-                <Example>
+                <Example style={{width: 0}}>
                     <Comp/>
                     <LogArea id={elClassName.console}/>
                 </Example>
