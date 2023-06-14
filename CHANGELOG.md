@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.6-alpha.3](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.6-alpha.2...v4.0.6-alpha.3) (2023-06-14)
+
+
+### Bug Fixes
+
+* fix slideItem key name ([a6db706](https://github.com/imagine10255/bear-react-carousel/commit/a6db7061e5439fdc58aa352e932e1ec6ea6ec480))
+
 ### [4.0.6-alpha.2](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.6-alpha.0...v4.0.6-alpha.2) (2023-06-14)
 
 
