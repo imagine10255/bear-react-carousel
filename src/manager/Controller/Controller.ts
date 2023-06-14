@@ -52,7 +52,7 @@ class Controller {
         if(this._configurator.setting.isDebug && logEnable.controller.onSlideResetToMatchIndex) logger.printInText('[Controller.slideResetToMatchIndex]');
         const {actual, formatElement} = this._stater;
 
-        if (formatElement[actual.activeIndex].isClone) {
+        if (formatElement[actual.activeIndex]?.isClone) {
             this.slideToActualIndex(formatElement[actual.activeIndex].matchIndex, {isUseAnimation: false});
         }
     };
