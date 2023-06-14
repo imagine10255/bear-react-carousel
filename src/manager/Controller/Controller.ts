@@ -98,31 +98,7 @@ class Controller {
      * 移動到下一頁
      */
     slideToNextPage = (): void => {
-        const {nextPage, formatElement, page, actual, residue, element, nextPageFirstIndex} = this._stater;
-        const {setting} = this._configurator;
-        const activeActual = formatElement[actual.activeIndex];
-
-        // 禁止動畫播放中進行重置
-        if(activeActual.isClone && this._elementor.isAnimation){
-            return;
-        }
-
-        getNextIndex(
-            activeActual,
-            {
-                nextPage: nextPage,
-                residue: residue,
-                pageTotal: page.pageTotal,
-                slideTotal: this._stater.formatElement.length,
-                isOverflowPage: nextPage > page.pageTotal,
-                isOverflowIndex: nextPageFirstIndex > element.lastIndex,
-            },
-            {
-                slidesPerGroup: setting.slidesPerGroup,
-                slidesPerViewActual: setting.slidesPerViewActual,
-                isLoopMode: setting.isEnableLoop,
-            }
-        )
+        getNextIndex(this._elementor, this._stater, this._configurator)
             .forEach(action => this.slideToActualIndex(action.index, {isUseAnimation: action.isUseAnimation}));
     };
 
@@ -130,32 +106,7 @@ class Controller {
      * go to previous
      */
     slideToPrevPage = (): void => {
-
-        const {nextPage, formatElement, page, actual, residue, element, nextPageFirstIndex} = this._stater;
-        const {setting} = this._configurator;
-        const activeActual = formatElement[actual.activeIndex];
-
-        // 禁止動畫播放中進行重置
-        if(activeActual.isClone && this._elementor.isAnimation){
-            return;
-        }
-
-        getPrevIndex(
-            activeActual,
-            {
-                activePage: this._stater.page.activePage,
-                residue: residue,
-                pageTotal: page.pageTotal,
-                slideTotal: this._stater.formatElement.length,
-                isOverflowPage: nextPage > page.pageTotal,
-                isOverflowIndex: nextPageFirstIndex > element.lastIndex,
-            },
-            {
-                slidesPerGroup: setting.slidesPerGroup,
-                slidesPerViewActual: setting.slidesPerViewActual,
-                isLoopMode: setting.isEnableLoop,
-            }
-        )
+        getPrevIndex(this._elementor, this._stater, this._configurator)
             .forEach(action => this.slideToActualIndex(action.index, {isUseAnimation: action.isUseAnimation}));
 
     };

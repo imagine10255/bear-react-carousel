@@ -1,3 +1,6 @@
+import Stater from '../Stater';
+import Configurator from '../Configurator';
+import Elementor from '../Elementor';
 
 /**
  * 取得目標Index 使用 Page 計算
@@ -12,39 +15,35 @@ export function getSlideIndex(page: number, slidesPerGroup: number, actualFirstI
 
 
 /**
- * 取得下一個 Index
- * @param activeActual
- * @param info
- * @param setting
+ * 取得上一個 Index
+ * @param elementor
+ * @param stater
+ * @param configurator
  */
 export function getPrevIndex(
-    activeActual: { isClone: boolean, matchIndex: number, actualIndex: number },
-    info: {
-        activePage: number
-        pageTotal: number,
-        slideTotal: number,
-        residue: number,
-        isOverflowPage: boolean,
-        isOverflowIndex: boolean,
-    },
-    setting: {
-        slidesPerGroup: number,
-        slidesPerViewActual: number,
-        isLoopMode: boolean,
-    },
+    elementor: Elementor,
+    stater: Stater,
+    configurator: Configurator,
 ): Array<{index: number, isUseAnimation: boolean}> {
+    const activeActual = stater.formatElement[stater.actual.activeIndex];
+    const {setting} = configurator;
 
     if(activeActual.isClone){
+        // 禁止動畫播放中進行重置
+        if(elementor.isAnimation){
+            return [];
+        }
+
         // 當移動到的位置 已經是 clone item
         return [
             {index: activeActual.matchIndex, isUseAnimation: false},
             {index: activeActual.matchIndex - 1, isUseAnimation: true},
         ];
 
-    }else if (setting.isLoopMode && info.activePage === 1 && info.residue > 0) {
+    }else if (setting.isEnableLoop && stater.page.activePage === 1 && stater.residue > 0) {
         // 若為Loop(最後一頁移動在不整除的時候, 移動位置需要復歸到第一個)
         return [
-            {index: activeActual.actualIndex - info.residue, isUseAnimation: true},
+            {index: activeActual.actualIndex - stater.residue, isUseAnimation: true},
         ];
 
     }else if (setting.slidesPerViewActual > 0) {
@@ -61,28 +60,28 @@ export function getPrevIndex(
 
 /**
  * 取得下一個 Index
- * @param activeActual
- * @param info
- * @param setting
+ * @param elementor
+ * @param stater
+ * @param configurator
  */
 export function getNextIndex(
-    activeActual: { isClone: boolean, matchIndex: number, actualIndex: number },
-    info: {
-        nextPage: number,
-        pageTotal: number,
-        slideTotal: number,
-        residue: number,
-        isOverflowPage: boolean,
-        isOverflowIndex: boolean,
-    },
-    setting: {
-        slidesPerGroup: number,
-        slidesPerViewActual: number,
-        isLoopMode: boolean,
-    },
+    elementor: Elementor,
+    stater: Stater,
+    configurator: Configurator
 ): Array<{index: number, isUseAnimation: boolean}> {
 
-    if(activeActual.isClone) {
+    const activeActual = stater.formatElement[stater.actual.activeIndex];
+    const {setting} = configurator;
+
+    const isOverflowPage = stater.nextPage > stater.page.pageTotal;
+    const isOverflowIndex = stater.nextPageFirstIndex > stater.element.lastIndex;
+
+
+    if(activeActual?.isClone) {
+        // 禁止動畫播放中進行重置
+        if(elementor.isAnimation){
+            return [];
+        }
         // 當移動到的位置 已經是 clone item
         // 要等到動畫結束才可執行，否則會造成畫面閃動
         return [
@@ -90,16 +89,21 @@ export function getNextIndex(
             {index: activeActual.matchIndex + setting.slidesPerGroup, isUseAnimation: true},
         ];
 
-    }else if (setting.isLoopMode && info.isOverflowPage && info.residue > 0) {
+    }else if (setting.isEnableLoop && isOverflowPage && stater.residue > 0) {
 
         // 若為Loop(最後一頁移動在不整除的時候, 移動位置需要復歸到第一個)
         return [
-            {index: activeActual.actualIndex + info.residue, isUseAnimation: true},
+            {index: activeActual.actualIndex + stater.residue, isUseAnimation: true},
         ];
 
-    }else if (setting.slidesPerViewActual < info.slideTotal && info.isOverflowIndex === false) {
+    }else if (stater.page.activePage < stater.page.pageTotal && isOverflowIndex === false) {
 
         // 若在範圍內，正常移動到下一頁
+        return [
+            {index: activeActual.actualIndex + setting.slidesPerGroup, isUseAnimation: true}
+        ];
+
+    }else if(setting.isCenteredSlides && stater.page.activePage < stater.page.pageTotal){
         return [
             {index: activeActual.actualIndex + setting.slidesPerGroup, isUseAnimation: true}
         ];

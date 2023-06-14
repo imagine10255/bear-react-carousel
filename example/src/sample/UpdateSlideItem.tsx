@@ -27,10 +27,9 @@ function UpdateSlideItem() {
     const data: TBearSlideItemDataList = baseImage.map(row => {
         return {
             key: row.id,
-            children: <BearSlideCard>
+            children: <BearSlideCard onClick={() => setActiveId(row.id)}>
                 <div className="h-100 d-flex"
                     style={{fontSize: '40px', backgroundColor: row.color, border: row.id === activeId ? '5px solid #bdbdbd' : undefined}}
-                    onClick={() => setActiveId(row.id)}
                 >
                     {/*<a href="https://bear-react-carousel.github.io" rel="noreferrer" target="_blank">{row.id}</a>*/}
                 </div>
@@ -43,20 +42,19 @@ function UpdateSlideItem() {
 
     return <div>
         {/*測試依照比例設定容器高度*/}
-        {enable && (
-            <BearCarousel
-                data={bearSlideItemData1}
-                onSlideChange={setCarouselState}
-                slidesPerView={5}
-                isCenteredSlides
-                height="200px"
-                isEnableNavButton
-                isEnablePagination
-                // isEnableLoop
-                isEnableAutoPlay={false}
-                isDebug
-                isSlideItemMemo
-            />)}
+        <BearCarousel
+            data={bearSlideItemData1}
+            onSlideChange={setCarouselState}
+            slidesPerView={4}
+            isCenteredSlides
+            height="200px"
+            isEnableNavButton
+            isEnablePagination
+            // isEnableLoop
+            isEnableAutoPlay={false}
+            isDebug
+            isSlideItemMemo
+        />
 
         <button type="button" onClick={() => setCount(curr => curr += 1)}> count: {count}</button>
         <button type="button" onClick={() => setEnable(curr => !curr)}> enable: {String(enable)}</button>

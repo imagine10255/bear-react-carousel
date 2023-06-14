@@ -30,7 +30,7 @@ const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
 
 function Base() {
     const [carouselState, setCarouselState] = useState<ICarouselState>();
-    const [enable, setEnable] = useState<boolean>(false);
+    const [enable, setEnable] = useState<boolean>(true);
     const [count, setCount] = useState<number>(0);
     const [controller, setController] = useState<Controller>();
     const [slidePreview, setSlidePreview] = useState(1);

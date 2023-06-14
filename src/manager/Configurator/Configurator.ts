@@ -41,7 +41,7 @@ class Configurator {
             {
                 targetEl: `#${this.carouselId} .${elClassName.slideItem}`,
                 styles: [
-                    `flex: ${this.setting.slidesPerView === 'auto' ? '0 0 auto;-webkit-flex: 0 0 auto;' : `1 0 ${100 / this.setting.slidesPerViewActual}%`};`,
+                    `flex: ${this.setting.slidesPerView === 'auto' ? '0 0 auto;-webkit-flex: 0 0 auto;' : `0 0 ${100 / this.setting.slidesPerViewActual}%`};`,
                     `padding-left: ${this.setting.spaceBetween / 2}px;`,
                     `padding-right: ${this.setting.spaceBetween / 2}px;`,
                 ]
