@@ -25,6 +25,7 @@ import AutoCard from "./sample/AutoCard";
 import LazyImage from "./sample/LazyImage";
 import LazyCard from "./sample/LazyCard";
 import AutoImage from "./sample/AutoImage";
+import CustomNav from './sample/CustomNav';
 
 
 
@@ -46,6 +47,7 @@ enum EExampleCode {
     updateSlideItem = 'updateSlideItem',
     renderPagination = 'renderPagination',
     textAnimations = 'textAnimations',
+    customNav = 'customNav',
 }
 
 
@@ -66,10 +68,11 @@ const examples: Record<EExampleCode, () => JSX.Element> = {
     [EExampleCode.updateSlideItem]: UpdateSlideItem,
     [EExampleCode.renderPagination]: RenderPagination,
     [EExampleCode.textAnimations]: TextAnimationsCarousel,
+    [EExampleCode.customNav]: CustomNav,
 };
 
 function App() {
-    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.autoCard);
+    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.customNav);
     const Comp = examples[exampleKey];
 
 

@@ -11,7 +11,7 @@ export enum EDevice {
   desktop,
 }
 
-export type TRenderNavButton = (toPrev: TToPrev, toNext: TToNext) => void
+export type TRenderNavButton = (toPrev: TToPrev, toNext: TToNext) => ReactNode
 export type TRenderPagination = (pageTotal: number) => JSX.Element[]|undefined
 export type TStateOnChange = (carouselState: ICarouselState) => void
 export type TOnMount = () => void

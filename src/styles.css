@@ -128,8 +128,8 @@
 .bear-react-carousel__root[data-touch="false"] .bear-react-carousel__nav-group{
     pointer-events: none;
 }
-.bear-react-carousel__nav-group[data-first="true"] > .bear-react-carousel__nav-prev-button,
-.bear-react-carousel__nav-group[data-last="true"] > .bear-react-carousel__nav-next-button{
+.bear-react-carousel__root[data-first-page="true"] .bear-react-carousel__nav-prev-button,
+.bear-react-carousel__root[data-last-page="true"] .bear-react-carousel__nav-next-button{
     opacity: 0;
     pointer-events: none;
 }
