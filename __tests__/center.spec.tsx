@@ -56,7 +56,7 @@ describe('Center mode testing', () => {
 
     test('Navigates to third page using next button', async () => {
         // ASSERT
-        expect(container.style.transform).toEqual('translate(133.33333333333334px, 0px)');
+        expect(container.style.transform).toEqual('translate(133px, 0px)');
     });
 
 });

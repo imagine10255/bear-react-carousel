@@ -76,17 +76,8 @@ class Elementor {
      * 取得初始距離
      * @param slideItemWidth
      */
-    private _getStartPosition = (slideItemWidth: number) => {
-        return getStartPosition(this._configurator.setting.isCenteredSlides,
-            {
-                slidesPerView: this._configurator.setting.slidesPerView,
-                slidesPerViewActual: this._configurator.setting.slidesPerViewActual,
-            },
-            {
-                containerWidth: this.rootEl.offsetWidth,
-                currItemWidth: slideItemWidth,
-            }
-        );
+    private _getStartPosition = () => {
+        return getStartPosition(this._configurator, this._stater, this);
     };
 
     /**
@@ -96,7 +87,7 @@ class Elementor {
     getMovePercentage = (movePx: number) => {
         const {actual} = this._stater;
         const slideCurrWidth = this.slideItemEls[actual.activeIndex].offsetWidth;
-        const startPosition = this._getStartPosition(slideCurrWidth);
+        const startPosition = this._getStartPosition();
         return getMovePercentage(movePx, startPosition, slideCurrWidth);
     };
 
@@ -109,7 +100,7 @@ class Elementor {
     getPercentageToMovePx = (percentage: number) => {
         const {actual} = this._stater;
         const slideCurrWidth = this.slideItemEls[actual.activeIndex].offsetWidth;
-        const startPosition = this._getStartPosition(slideCurrWidth);
+        const startPosition = this._getStartPosition();
 
         return -(slideCurrWidth * percentage) + startPosition;
     };
@@ -123,11 +114,7 @@ class Elementor {
     getMoveDistance = (slideIndex: number): number => {
         const slideItemEl = this.slideItemEls[slideIndex];
         if (this.slideItemEls[slideIndex]) {
-            let slideItemWidth = this._configurator.setting.slidesPerViewActual;
-            if(this._configurator.setting.slidesPerView === 'auto' && this.slideItemEls?.length > 0){
-                slideItemWidth = this.slideItemEls[0].offsetWidth;
-            }
-            return getMoveDistance(slideItemEl.offsetLeft, this._getStartPosition(this.containerEl.offsetWidth / slideItemWidth));
+            return getMoveDistance(slideItemEl.offsetLeft, this._getStartPosition());
         }
 
         return 0;

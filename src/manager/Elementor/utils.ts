@@ -1,24 +1,30 @@
 import {decimal2Rounding} from '../../utils';
+import Configurator from '../Configurator';
+import Stater from '../Stater';
+import Elementor from './Elementor';
+
+
 
 /**
  * 取得最起始的位置
- * @param isCenterMode
- * @param view
- * @param size
+ * @param configurator
+ * @param stater
+ * @param elementor
  */
 export function getStartPosition(
-    isCenterMode: boolean,
-    view: {slidesPerView: number|'auto', slidesPerViewActual: number},
-    size: {containerWidth: number, currItemWidth: number},
+    configurator: Configurator,
+    stater: Stater,
+    elementor: Elementor,
 ) {
-    if (isCenterMode) {
+    if (configurator.setting.isCenteredSlides) {
         let firstStartPx = 0;
-        if(view.slidesPerView === 'auto'){
+        const currItemWidth = elementor.slideItemEls[0]?.offsetWidth ?? 0;
+        if(configurator.setting.slidesPerView === 'auto'){
             // containerWidth 計算中間位置
-            firstStartPx = (size.containerWidth / 2) - (size.currItemWidth / 2) ;
+            firstStartPx = (elementor.containerEl.offsetWidth - currItemWidth) / 2;
         }
 
-        return firstStartPx + (size.currItemWidth * (view.slidesPerViewActual - 1) / 2);
+        return firstStartPx + (currItemWidth * (configurator.setting.slidesPerViewActual - 1) / 2);
     }
     return 0;
 }

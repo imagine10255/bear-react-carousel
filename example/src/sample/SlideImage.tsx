@@ -60,22 +60,7 @@ function SlideImage() {
         </select>
 
 
-        <BearCarousel
-            // style={{width: '400px'}}
-            // controllerRef={controllerRef}
-            data={bearSlideItemData1.slice(0, 3)}
-            // onChange={setCarouselState}
-            slidesPerView={3}
-            spaceBetween={5}
-            isCenteredSlides
-            // height="200px"
-            // height="200px"
-            isEnableNavButton
-            isEnablePagination
-            // isEnableLoop
-            // isEnableAutoPlay={false}
-            // isDebug
-        />
+
         <pre>
             {JSON.stringify(carouselState, null, '\t')}
         </pre>

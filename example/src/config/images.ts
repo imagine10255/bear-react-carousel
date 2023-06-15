@@ -19,6 +19,9 @@ export const baseImage = [
     {id: 6, color: 'black',imageUrl: asset('/sample/cat/vertical-01.jpg')},
     {id: 7, color: 'yellow',imageUrl: asset('/sample/cat/vertical-02.jpg')},
     {id: 8, color: 'purple',imageUrl: asset('/sample/cat/vertical-03.jpg')},
+    {id: 9, color: 'purple',imageUrl: asset('/sample/cat/vertical-03.jpg')},
+    {id: 10, color: 'purple',imageUrl: asset('/sample/cat/vertical-03.jpg')},
+    {id: 11, color: 'purple',imageUrl: asset('/sample/cat/vertical-03.jpg')},
 ];
 
 

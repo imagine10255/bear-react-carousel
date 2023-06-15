@@ -1,20 +1,40 @@
 import {getMoveDistance, getStartPosition} from './utils';
 
 
-test('get start position', async () => {
-    expect(
-        getStartPosition(false, {slidesPerView: 1, slidesPerViewActual: 1}, {containerWidth: 200, currItemWidth: 50})
-    ).toEqual(0);
+describe('getStartPosition function', () => {
+    let mockConfigurator;
+    let mockStater;
+    let mockElementor;
 
-    expect(
-        getStartPosition(true, {slidesPerView: 3, slidesPerViewActual: 2}, {containerWidth: 200, currItemWidth: 50})
-    ).toEqual(25);
+    beforeEach(() => {
+        // 模擬依賴對象
+        mockConfigurator = {
+            setting: {
+                isCenteredSlides: false,
+                slidesPerView: 'auto',
+                slidesPerViewActual: 1,
+            },
+        };
 
-    expect(
-        getStartPosition(true, {slidesPerView: 3, slidesPerViewActual: 3}, {containerWidth: 200, currItemWidth: 50})
-    ).toEqual(50);
+        mockStater = {}; // 如果你的函數中未使用到 Stater，可以不提供模擬對象。
+
+        mockElementor = {
+            slideItemEls: [{offsetWidth: 400}],
+            containerEl: {offsetWidth: 1000},
+        };
+    });
+
+    it('should return 0 when isCenteredSlides is false', () => {
+        const position = getStartPosition(mockConfigurator, mockStater, mockElementor);
+        expect(position).toBe(0);
+    });
+
+    it('should calculate position correctly when isCenteredSlides is true', () => {
+        mockConfigurator.setting.isCenteredSlides = true;
+        const position = getStartPosition(mockConfigurator, mockStater, mockElementor);
+        expect(position).toBe(300);
+    });
 });
-
 
 
 test('get move distance', async () => {
