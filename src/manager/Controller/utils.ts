@@ -76,7 +76,6 @@ export function getNextIndex(
     const isOverflowPage = stater.nextPage > stater.page.pageTotal;
     const isOverflowIndex = stater.nextPageFirstIndex > stater.element.lastIndex;
 
-
     if(activeActual?.isClone) {
         // 禁止動畫播放中進行重置
         if(elementor.isAnimation){
@@ -96,7 +95,7 @@ export function getNextIndex(
             {index: activeActual.actualIndex + stater.residue, isUseAnimation: true},
         ];
 
-    }else if (stater.page.activePage < stater.page.pageTotal && isOverflowIndex === false) {
+    }else if (stater.actual.activeIndex <= stater.actual.maxIndex && isOverflowIndex === false) {
 
         // 若在範圍內，正常移動到下一頁
         return [

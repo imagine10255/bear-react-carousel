@@ -67,6 +67,8 @@ describe('Loop mode testing', () => {
 
         // ACT
         await userEvent.click(lastPage);
+        expect(getActiveSlideItem()).toHaveAttribute('data-page','6');
+
         await userEvent.click(navNextButton);
 
         // ASSERT
