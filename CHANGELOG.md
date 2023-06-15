@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.7-alpha.0](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.6...v4.0.7-alpha.0) (2023-06-15)
+
+
+### Bug Fixes
+
+* auto mode center calc fail ([443a4b0](https://github.com/imagine10255/bear-react-carousel/commit/443a4b05f338d7176488d69bee08bd878b2c521f))
+* slide to next page rule fail ([3081e94](https://github.com/imagine10255/bear-react-carousel/commit/3081e94e75727bc4c20188bbc5df52f7b599163a))
+
 ### [4.0.6](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.6-alpha.5...v4.0.6) (2023-06-14)
 
 ### [4.0.6-alpha.5](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.6-alpha.4...v4.0.6-alpha.5) (2023-06-14)
