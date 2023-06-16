@@ -1,6 +1,6 @@
 {
   "name": "bear-react-carousel",
-  "version": "4.0.8-alpha.0",
+  "version": "4.0.8-alpha.1",
   "description": "Most modern mobile touch slider with hardware accelerated transitions for ReactJS",
   "keywords": [
     "react",
@@ -42,7 +42,7 @@
     "test": "jest",
     "test:coverage": "jest --coverage",
     "gitlog": "git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cblueby %an %Cgreen(%cr)%Creset'",
-    "release": "jest && standard-version --release-as"
+    "release": "jest & standard-version --release-as"
   },
   "dependencies": {
     "react": "^18.x",
