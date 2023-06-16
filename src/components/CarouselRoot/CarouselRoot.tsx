@@ -43,7 +43,7 @@ const CarouselRoot = forwardRef<HTMLDivElement, IProps>(({
         data-gpu-render={booleanToDataAttr(isEnableGpuRender)}
         data-per-view-auto={booleanToDataAttr(setting.slidesPerView === 'auto')}
         data-mouse-move={setting.isEnableMouseMove}
-        data-actual={[actual.minIndex, actual.firstIndex, actual.lastIndex, actual.maxIndex].join(',')}
+        // data-actual={[actual.minIndex, actual.firstIndex, actual.lastIndex, actual.maxIndex].join(' / ')}
         data-debug={booleanToDataAttr(isDebug)}
     >
         <style scoped dangerouslySetInnerHTML={{__html: extendStyle}}/>

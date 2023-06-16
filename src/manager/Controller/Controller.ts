@@ -58,23 +58,28 @@ class Controller {
     };
 
 
-
+    /**
+     * 包含 Clone 的 Index
+     * @param slideIndex
+     * @param options
+     */
     slideToActualIndex = (slideIndex: number, options?: {isUseAnimation?: boolean, isEmitEvent?: boolean}) => {
         const isEmitEvent = options?.isEmitEvent ?? true;
         if(isEmitEvent) this._eventor.emit('slideBefore', slideIndex, options?.isUseAnimation);
 
-        if (this._stater.checkActualIndexInRange(slideIndex)) {
-            const {formatElement} = this._stater;
-            this._stater.setActiveActual(slideIndex, formatElement[slideIndex]?.inPage ?? 1);
+        // 轉成範圍內的 Index
+        const inRangeIndex = this._stater.getInRangeIndex(slideIndex);
 
-            // 移動EL位置
-            const position = this._elementor.getMoveDistance(slideIndex);
-            this._elementor
-                .transform(position, options?.isUseAnimation ?? true)
-                .syncActiveState(slideIndex);
-        }
+        const {formatElement} = this._stater;
+        this._stater.setActiveActual(inRangeIndex, formatElement[inRangeIndex]?.inPage ?? 1);
 
-        if(isEmitEvent) this._eventor.emit('slideAfter', slideIndex, options?.isUseAnimation);
+        // 移動EL位置
+        const position = this._elementor.getMoveDistance(inRangeIndex);
+        this._elementor
+            .transform(position, options?.isUseAnimation ?? true)
+            .syncActiveState(inRangeIndex);
+
+        if(isEmitEvent) this._eventor.emit('slideAfter', inRangeIndex, options?.isUseAnimation);
     };
 
     /**

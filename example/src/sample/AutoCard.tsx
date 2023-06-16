@@ -54,7 +54,7 @@ function SlideImage() {
             data={bearSlideItemData1}
             // onChange={setCarouselState}
             slidesPerView="auto"
-            isCenteredSlides
+            // isCenteredSlides
             spaceBetween={5}
             isEnableNavButton
             isEnablePagination

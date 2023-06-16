@@ -107,7 +107,7 @@ function CustomNav() {
             // // height={{widthRatio: 21, heightRatio: 9}}
             // isEnableNavButton
             // isEnablePagination
-            isEnableLoop
+            // isEnableLoop
             renderNavButton={(toPrev, toNext) => {
                 return <div className={elClassName.navGroup}>
                     <button type="button" className={elClassName.navPrevButton} onClick={toPrev}>
@@ -123,8 +123,8 @@ function CustomNav() {
             isDebug
         />
 
-        {Array.from({length: 5}).map((row, index) => {
-            return <button key={index} type="button" onClick={() => controller?.slideToPage(index + 1)}> slideToPage {index +1} </button>;
+        {bearSlideItemData2.map((row, index) => {
+            return <button key={index} type="button" onClick={() => controller?.slideToActualIndex(index + 1)}> slideToPage {index +1} </button>;
         })}
 
         <br/>

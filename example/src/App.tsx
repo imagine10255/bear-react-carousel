@@ -72,7 +72,7 @@ const examples: Record<EExampleCode, () => JSX.Element> = {
 };
 
 function App() {
-    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.customNav);
+    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.slidePerViews);
     const Comp = examples[exampleKey];
 
 

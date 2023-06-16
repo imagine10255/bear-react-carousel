@@ -54,24 +54,3 @@ export function getMoveDistance(slideOffsetLeft: number, startPosition: number):
 }
 
 
-/**
- * 判斷是否在範圍內
- * @param index 目前Index
- * @param activeActualIndex 即時的Index
- * @param stater
- */
-export function checkInRange(index: number, activeActualIndex: number, stater: Stater): boolean{
-    // 第一筆 或 最後一筆
-    if(index < stater.actual.minIndex || index > stater.actual.maxIndex){
-        return false;
-    }
-    // 其他情況(不讓頁尾露出空白)
-    if(activeActualIndex > stater.actual.moveLastIndex &&
-        index === stater.actual.moveLastIndex){
-        return true;
-    }
-    return index === activeActualIndex;
-}
-
-
-

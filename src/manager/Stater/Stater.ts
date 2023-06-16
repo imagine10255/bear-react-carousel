@@ -1,7 +1,7 @@
 import {TEventMap, InitData} from './types';
 import {IInfo, TBearSlideItemDataList} from '../../types';
-import {initDataList} from './utils';
-import {getNextPageFirstIndex, checkActualIndexInRange} from './utils';
+import {getInRangeIndex, initDataList} from './utils';
+import {getNextPageFirstIndex} from './utils';
 import Configurator from '../Configurator';
 import Eventor from '../Eventor';
 
@@ -73,9 +73,8 @@ class Stater {
      * 確認是否超出範圍
      * @param index
      */
-    checkActualIndexInRange = (index: number) => {
-        const {minIndex, maxIndex} = this.actual;
-        return checkActualIndexInRange(index, {minIndex, maxIndex});
+    getInRangeIndex = (index: number): number => {
+        return getInRangeIndex(index, this, this._configurator);
     };
 
 
@@ -97,7 +96,12 @@ class Stater {
         // calc fake total
         let fakeTotalPage = Math.ceil(sourceTotal / slidesPerGroup);
 
-        if(!isEnableLoop && slidesPerView !== 'auto' && !isCenteredSlides){
+        // @TODO: 設定跟 Stater.utils.getInRangeIndex 相同
+        if(!(isEnableLoop ||
+            isCenteredSlides ||
+            slidesPerView === 'auto' ||
+            !Number.isInteger(slidesPerView)
+        )){
             fakeTotalPage = fakeTotalPage - (slidesPerView - slidesPerGroup);
         }
 

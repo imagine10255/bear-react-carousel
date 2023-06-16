@@ -1,4 +1,4 @@
-import {checkInRange, getMoveDistance, getStartPosition} from './utils';
+import {getMoveDistance, getStartPosition} from './utils';
 
 
 describe('getStartPosition function', () => {
@@ -42,43 +42,3 @@ test('get move distance', async () => {
 });
 
 
-
-describe('checkInRange function', () => {
-    let stater;
-
-    beforeEach(() => {
-        // Initialize your Stater object before each test
-        stater = {
-            actual: {
-                minIndex: 0,
-                maxIndex: 10,
-                moveLastIndex: 5
-            }
-        };
-    });
-
-    test('Should return false when index is less than minIndex', () => {
-        const result = checkInRange(-1, 5, stater);
-        expect(result).toBeFalsy();
-    });
-
-    test('Should return false when index is more than maxIndex', () => {
-        const result = checkInRange(11, 5, stater);
-        expect(result).toBeFalsy();
-    });
-
-    test('Should return true when activeActualIndex is more than moveLastIndex and index is equal to moveLastIndex', () => {
-        const result = checkInRange(5, 6, stater);
-        expect(result).toBeTruthy();
-    });
-
-    test('Should return true when index is equal to activeActualIndex', () => {
-        const result = checkInRange(5, 5, stater);
-        expect(result).toBeTruthy();
-    });
-
-    test('Should return false when index is not equal to activeActualIndex and not the edge case', () => {
-        const result = checkInRange(3, 5, stater);
-        expect(result).toBeFalsy();
-    });
-});

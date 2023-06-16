@@ -1,5 +1,7 @@
 import {TSlidesPerView} from '../../types';
 import {InitData} from './types';
+import Stater from './Stater';
+import Configurator from '../Configurator';
 
 /**
  * 初始化資料
@@ -20,6 +22,7 @@ export function initDataList(sourceList: Array<any> = [], slidesPerView: TSlides
         const cloneStart = (sourceList.length - formatSlidesPerView);
         for (const [cloneIndex, row] of sourceList.slice(-formatSlidesPerView).entries()) {
             formatList[index] = {
+                key: `${row.key}_clone`,
                 actualIndex: index,
                 matchIndex: formatSlidesPerView + cloneStart + index,
                 sourceIndex: (sourceList.length - 1) - cloneIndex,
@@ -88,10 +91,31 @@ export function getNextPageFirstIndex(isCenterMode: boolean, activeActualIndex: 
 
 
 /**
- * 檢查是否在範圍內
+ * 取得範圍內 Index
  * @param slideIndex
- * @param range
+ * @param stater
+ * @param configurator
  */
-export function checkActualIndexInRange(slideIndex: number, range: {minIndex: number, maxIndex: number}): boolean {
-    return slideIndex <= range.maxIndex && slideIndex >= range.minIndex;
+export function getInRangeIndex(slideIndex: number, stater: Stater, configurator: Configurator): number {
+    // 其他情況(不讓頁尾露出空白)，排除掉 isCenteredSlides 或 isEnableLoop 或 auto(無法計算結尾)
+    if(!(configurator.setting.isEnableLoop ||
+            configurator.setting.isCenteredSlides ||
+            configurator.setting.slidesPerView === 'auto' ||
+            !Number.isInteger(configurator.setting.slidesPerView)
+    ) &&
+        slideIndex >= stater.actual.moveLastIndex){
+        return stater.actual.moveLastIndex;
+    }
+
+    if(slideIndex <= stater.actual.minIndex){
+        return stater.actual.minIndex;
+    }
+    if(slideIndex >= stater.actual.maxIndex){
+        return stater.actual.maxIndex;
+    }
+
+    return slideIndex;
 }
+
+
+

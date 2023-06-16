@@ -102,6 +102,11 @@ export function getNextIndex(
             {index: activeActual.actualIndex + setting.slidesPerGroup, isUseAnimation: true}
         ];
 
+    }else if(!isOverflowPage){
+        return [
+            {index: activeActual.actualIndex + setting.slidesPerGroup, isUseAnimation: true}
+        ];
+
     }else if(setting.isCenteredSlides && stater.page.activePage < stater.page.pageTotal){
         return [
             {index: activeActual.actualIndex + setting.slidesPerGroup, isUseAnimation: true}

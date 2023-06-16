@@ -1,7 +1,7 @@
 import {createRef, RefObject} from 'react';
 import {IMultiRefObject} from './types';
 
-import {checkInRange, getMoveDistance, getMovePercentage, getStartPosition} from './utils';
+import {getMoveDistance, getMovePercentage, getStartPosition} from './utils';
 import {booleanToDataAttr} from '../../utils';
 import Configurator from '../Configurator';
 import Stater from '../Stater';
@@ -157,9 +157,10 @@ class Elementor {
             .filter(row => row);
 
         // 更改顯示在第幾個 (父元件使用可判定樣式設定)
+        const inRangeIndex = this._stater.getInRangeIndex(activeActualIndex);
         itemEls
             .forEach((row, index) => {
-                if(checkInRange(index, activeActualIndex, this._stater)){
+                if(index === inRangeIndex){
                     row.setAttribute('data-active', 'true');
                 } else if (row?.dataset.active) {
                     row.removeAttribute('data-active');
