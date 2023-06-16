@@ -110,7 +110,7 @@ class Controller {
         const {setting} = this._configurator;
         page = page > this._stater.page.total ? this._stater.page.total: page;
 
-        const slideIndex = getSlideIndex(page, setting.slidesPerGroup, 0);
+        const slideIndex = getSlideIndex(page, setting.slidesPerGroup);
         this.slideToSourceIndex(slideIndex, {isUseAnimation});
     }
 
