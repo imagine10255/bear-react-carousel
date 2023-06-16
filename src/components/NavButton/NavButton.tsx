@@ -1,7 +1,5 @@
-import {forwardRef, useCallback} from 'react';
-import elClassName from '../../el-class-name';
-import {ArrowIcon} from '../../Icon';
 import * as React from 'react';
+import elClassName from '../../el-class-name';
 
 
 interface IProps {
@@ -22,9 +20,7 @@ const NavButton = ({
         className={className}
         onClick={onClick}
     >
-        <div className={elClassName.navIcon}>
-            <ArrowIcon/>
-        </div>
+        <div className={elClassName.navIcon}/>
     </button>;
 };
 
@@ -36,13 +32,13 @@ interface IPropsButton {
 export const NavNextButton = ({
     onClick,
 }: IPropsButton) => {
-    return <NavButton onClick={onClick} className={elClassName.navNextButton} testId="bear-carousel-navNextButton"/>;
+    return <NavButton onClick={onClick} className={[elClassName.navButton, elClassName.navNextButton].join(' ')} testId="bear-carousel-navNextButton"/>;
 };
 
 export const NavPrevButton = ({
     onClick,
 }: IPropsButton) => {
-    return <NavButton onClick={onClick} className={elClassName.navPrevButton} testId="bear-carousel-navPrevButton"/>;
+    return <NavButton onClick={onClick} className={[elClassName.navButton, elClassName.navPrevButton].join(' ')} testId="bear-carousel-navPrevButton"/>;
 };
 
 

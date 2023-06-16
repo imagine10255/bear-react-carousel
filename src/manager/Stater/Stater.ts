@@ -115,7 +115,8 @@ class Stater {
                 minIndex: actualIndex.min,
                 maxIndex: actualIndex.max,
                 firstIndex: Math.ceil(cloneBeforeTotal),
-                lastIndex: Math.ceil(sourceTotal + cloneAfterTotal - 1)
+                lastIndex: Math.ceil(sourceTotal + cloneAfterTotal - 1),
+                moveLastIndex: actualIndex.max - (this._configurator.setting.slidesPerViewActual - 1),
             },
             page: {
                 activePage: 0,

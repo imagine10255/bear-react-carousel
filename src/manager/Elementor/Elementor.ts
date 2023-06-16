@@ -159,7 +159,7 @@ class Elementor {
         // 更改顯示在第幾個 (父元件使用可判定樣式設定)
         itemEls
             .forEach((row, index) => {
-                if(checkInRange(index, activeActualIndex, this.slideItemEls.length)){
+                if(checkInRange(index, activeActualIndex, this._stater)){
                     row.setAttribute('data-active', 'true');
                 } else if (row?.dataset.active) {
                     row.removeAttribute('data-active');
@@ -186,10 +186,10 @@ class Elementor {
         if(this._stater.isVisibleNavButton && !this._configurator.setting.isEnableLoop){
             this.rootEl?.removeAttribute('data-first-page');
             this.rootEl?.removeAttribute('data-last-page');
-            if(activePage === 1){
+            if(activePage <= 1){
                 this.rootEl?.setAttribute('data-first-page', 'true');
             }
-            if(booleanToDataAttr(activePage === this._stater.page.pageTotal)){
+            if(booleanToDataAttr(activePage >= this._stater.page.pageTotal)){
                 this.rootEl?.setAttribute('data-last-page',  'true');
             }
         }

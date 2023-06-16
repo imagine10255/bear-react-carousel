@@ -13,6 +13,7 @@ export default {
     slideItemImagePreLoad: 'bear-react-carousel__slide-item__image-preload',
     slideItemCard: 'bear-react-carousel__slide-item__card',
     navGroup: 'bear-react-carousel__nav-group',
+    navButton: 'bear-react-carousel__nav-button',
     navPrevButton: 'bear-react-carousel__nav-prev-button',
     navNextButton: 'bear-react-carousel__nav-next-button',
     navIcon: 'bear-react-carousel__nav-icon',

@@ -192,10 +192,8 @@ class Dragger {
 
         if(this._elementor.slideItemEls){
             const active = this._elementor.slideItemEls.find(row => row.dataset.active === 'true');
-            if(active){
-                const activeSourceIndex = Number(active.dataset.actual);
-                this._eventor.emit('dragEnd', activeSourceIndex);
-            }
+            const activeSourceIndex = Number(active?.dataset.actual ?? 0);
+            this._eventor.emit('dragEnd', activeSourceIndex);
         }
 
     };

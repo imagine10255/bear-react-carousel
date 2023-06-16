@@ -52,6 +52,7 @@ export interface ICarouselState {
     maxIndex: number
     firstIndex: number
     lastIndex: number
+    moveLastIndex: number
   }
   page: {
     activePage: number

@@ -40,12 +40,9 @@
     "lint:fix": "eslint ./src --fix",
     "cz": "git-cz",
     "test": "jest",
+    "test:coverage": "jest --coverage",
     "gitlog": "git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cblueby %an %Cgreen(%cr)%Creset'",
-    "release": "standard-version --release-as",
-    "release:major": "standard-version -r major",
-    "release:minor": "standard-version -r minor",
-    "release:patch": "standard-version -r patch",
-    "release:alpha": "standard-version --prerelease alpha"
+    "release": "jest && standard-version --release-as"
   },
   "dependencies": {
     "react": "^18.x",

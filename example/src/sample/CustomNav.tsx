@@ -4,11 +4,12 @@ import BearCarousel, {
     TBearSlideItemDataList,
     elClassName,
     IInfo,
-    ICarouselState
+    ICarouselState, IBearCarouselProps
 } from 'bear-react-carousel';
 import {baseImage as images} from '../config/images';
 
 import {Controller} from 'bear-react-carousel';
+
 
 
 
@@ -19,13 +20,35 @@ const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
         key: row.id,
         children: <BearSlideCard>
             <div className="h-100 d-flex"
-                style={{fontSize: '40px', backgroundColor: row.color}}
+                 style={{fontSize: '40px', backgroundColor: row.color}}
             />
         </BearSlideCard>
     };
 });
 
 
+// 輪播項目1
+const bearSlideItemData2: TBearSlideItemDataList = images.map(row => {
+    return {
+        key: row.id,
+        children: <BearSlideCard>
+            <div className="h-100 d-flex"
+                 style={{fontSize: '40px', width: '200px', backgroundColor: row.color}}
+            />
+        </BearSlideCard>
+    };
+});
+
+
+// 共用輪播設定
+const carouselConfig: IBearCarouselProps = {
+    slidesPerView: 4,
+    slidesPerGroup: 1,
+    isEnableMouseMove: true,
+    isEnableNavButton: true,
+    height: '96px',
+    isEnableLoop: false,
+};
 
 
 function CustomNav() {
@@ -36,17 +59,6 @@ function CustomNav() {
     const [slidePreview, setSlidePreview] = useState(1);
 
 
-    // 輪播項目1
-    const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
-        return {
-            key: row.id,
-            children: <BearSlideCard>
-                <div className="h-100 d-flex"
-                    style={{fontSize: '40px', backgroundColor: row.color}}
-                />
-            </BearSlideCard>
-        };
-    });
     
     return <div>
         {/*測試依照比例設定容器高度*/}
@@ -66,10 +78,10 @@ function CustomNav() {
             renderNavButton={(toPrev, toNext) => {
                 return <div className={elClassName.navGroup}>
                     <button type="button" className={elClassName.navPrevButton} onClick={toPrev}>
-                        arrow-right
+                        {'く'}
                     </button>
                     <button type="button" className={elClassName.navNextButton} onClick={toNext}>
-                        arrow-left
+                        {'く'}
                     </button>
                 </div>
             }}
@@ -80,6 +92,36 @@ function CustomNav() {
 
         <button type="button" onClick={() => setCount(curr => curr += 1)}> count: {count}</button>
         <button type="button" onClick={() => setEnable(curr => !curr)}> enable: {String(enable)}</button>
+
+
+        <BearCarousel
+            {...carouselConfig}
+            // style={{width: '400px'}}
+            setController={setController}
+            data={enable ? bearSlideItemData2: undefined}
+            onSlideChange={setCarouselState}
+            // onChange={setCarouselState}
+            // slidesPerView="auto"
+            // // isCenteredSlides={true}
+            // height="200px"
+            // // height={{widthRatio: 21, heightRatio: 9}}
+            // isEnableNavButton
+            // isEnablePagination
+            isEnableLoop
+            renderNavButton={(toPrev, toNext) => {
+                return <div className={elClassName.navGroup}>
+                    <button type="button" className={elClassName.navPrevButton} onClick={toPrev}>
+                        {'く'}
+                    </button>
+                    <button type="button" className={elClassName.navNextButton} onClick={toNext}>
+                        {'く'}
+                    </button>
+                </div>
+            }}
+            // isEnableAutoPlay={false}
+
+            isDebug
+        />
 
         {Array.from({length: 5}).map((row, index) => {
             return <button key={index} type="button" onClick={() => controller?.slideToPage(index + 1)}> slideToPage {index +1} </button>;
