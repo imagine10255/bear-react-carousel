@@ -42,7 +42,7 @@
     "test": "jest",
     "test:coverage": "jest --coverage",
     "gitlog": "git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cblueby %an %Cgreen(%cr)%Creset'",
-    "release": "jest & standard-version --release-as"
+    "release": "standard-version --release-as"
   },
   "dependencies": {
     "react": "^18.x",
