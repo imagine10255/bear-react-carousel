@@ -124,7 +124,7 @@ function CustomNav() {
         />
 
         {bearSlideItemData2.map((row, index) => {
-            return <button key={index} type="button" onClick={() => controller?.slideToActualIndex(index + 1)}> slideToPage {index +1} </button>;
+            return <button key={index} type="button" onClick={() => controller?.slideToSourceIndex(index + 1)}> slideToPage {index +1} </button>;
         })}
 
         <br/>

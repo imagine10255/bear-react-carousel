@@ -35,13 +35,13 @@ class SyncCarousel {
     syncControlDone = (targetIndex: number) => {
         if(this._configurator?.setting.isDebug && logEnable.syncCarousel.onSyncControlDone) logger.printInText('[SyncCarousel.syncControlDone]');
 
-        this._controller?.slideToActualIndex(targetIndex);
+        this._controller?.slideToSourceIndex(targetIndex);
     };
 
-    slideToActualIndex = (slideIndex: number, isUseAnimation = true) => {
-        if(this._configurator?.setting.isDebug && logEnable.syncCarousel.onSlideToActualIndex) logger.printInText('[SyncCarousel.slideToActualIndex]');
+    slideToSourceIndex = (slideIndex: number, isUseAnimation = true) => {
+        if(this._configurator?.setting.isDebug && logEnable.syncCarousel.onslideToSourceIndex) logger.printInText('[SyncCarousel.slideToSourceIndex]');
 
-        this._controller?.slideToActualIndex(slideIndex, {isUseAnimation, isEmitEvent: false});
+        this._controller?.slideToSourceIndex(slideIndex, {isUseAnimation, isEmitEvent: false});
     };
 
 }

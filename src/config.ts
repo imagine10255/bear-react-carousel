@@ -27,6 +27,6 @@ export const logEnable = {
     syncCarousel: {
         onSyncControlMove: false,
         onSyncControlDone: false,
-        onSlideToActualIndex: false,
+        onslideToSourceIndex: false,
     }
 };

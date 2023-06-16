@@ -24,15 +24,15 @@ class Stater {
 
     get nextPageFirstIndex(): number{
         const {setting} = this._configurator;
-        return getNextPageFirstIndex(setting.isCenteredSlides, this.actual.activeIndex, setting.slidesPerGroup, setting.slidesPerViewActual);
+        return getNextPageFirstIndex(setting.isCenteredSlides, this.virtual.activeIndex, setting.slidesPerGroup, setting.slidesPerViewActual);
     }
 
     get prevPage(): number{
         return this._info?.page.activePage - 1;
     }
 
-    get actual() {
-        return this._info?.actual;
+    get virtual() {
+        return this._info?.virtual;
     }
 
     get page() {
@@ -43,8 +43,8 @@ class Stater {
         return this._formatElement;
     }
 
-    get element() {
-        return this._info?.element;
+    get source() {
+        return this._info?.source;
     }
 
     get residue() {
@@ -96,35 +96,33 @@ class Stater {
         // calc fake total
         let fakeTotalPage = Math.ceil(sourceTotal / slidesPerGroup);
 
-        // @TODO: 設定跟 Stater.utils.getInRangeIndex 相同
-        if(!(isEnableLoop ||
+        const isPriorPosition = !(isEnableLoop ||
             isCenteredSlides ||
             slidesPerView === 'auto' ||
             !Number.isInteger(slidesPerView)
-        )){
+        );
+
+        // @TODO: 設定跟 Stater.utils.getInRangeIndex 相同
+        if(isPriorPosition){
             fakeTotalPage = fakeTotalPage - (slidesPerView - slidesPerGroup);
         }
 
         this._info = {
-            sourceTotal, // 來源總數
             // 從0開始
-            element: {
-                firstIndex: 0,
-                lastIndex: elementTotal - 1,
-                total: elementTotal,
+            source: {
+                activeIndex: 0,
+                lastIndex: sourceTotal - 1,
+                total: sourceTotal,
             },
             // 0為實際一開始的位置(往前為負數), 結束值為最後結束位置
-            actual: {
+            virtual: {
                 activeIndex: 0,
-                minIndex: actualIndex.min,
-                maxIndex: actualIndex.max,
-                firstIndex: Math.ceil(cloneBeforeTotal),
-                lastIndex: Math.ceil(sourceTotal + cloneAfterTotal - 1),
-                moveLastIndex: actualIndex.max - (this._configurator.setting.slidesPerViewActual - 1),
+                lastIndex: isPriorPosition? Math.ceil(actualIndex.max - (this._configurator.setting.slidesPerViewActual - 1)): actualIndex.max,
+                total: this._formatElement.length,
             },
             page: {
                 activePage: 0,
-                pageTotal: fakeTotalPage,
+                total: fakeTotalPage,
             },
             // 總頁數
             residue: elementTotal % slidesPerGroup,
@@ -143,12 +141,13 @@ class Stater {
             isEnableLoop
         );
 
-        return this.element;
+        // return this.element;
 
     };
 
     setActiveActual = (index: number, page: number) => {
-        this.actual.activeIndex = index;
+        this.source.activeIndex = this.formatElement[index]?.sourceIndex ?? 0;
+        this.virtual.activeIndex = index;
         this.page.activePage = page;
         this._eventor.emit('change');
     };

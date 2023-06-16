@@ -85,8 +85,7 @@ class Elementor {
      * @param movePx
      */
     getMovePercentage = (movePx: number) => {
-        const {actual} = this._stater;
-        const slideCurrWidth = this.slideItemEls[actual.activeIndex].offsetWidth;
+        const slideCurrWidth = this.slideItemEls[this._stater.virtual.activeIndex].offsetWidth;
         const startPosition = this._getStartPosition();
         return getMovePercentage(movePx, startPosition, slideCurrWidth);
     };
@@ -98,8 +97,7 @@ class Elementor {
      * @param percentage
      */
     getPercentageToMovePx = (percentage: number) => {
-        const {actual} = this._stater;
-        const slideCurrWidth = this.slideItemEls[actual.activeIndex].offsetWidth;
+        const slideCurrWidth = this.slideItemEls[this._stater.virtual.activeIndex].offsetWidth;
         const startPosition = this._getStartPosition();
 
         return -(slideCurrWidth * percentage) + startPosition;
@@ -190,14 +188,14 @@ class Elementor {
             if(activePage <= 1){
                 this.rootEl?.setAttribute('data-first-page', 'true');
             }
-            if(booleanToDataAttr(activePage >= this._stater.page.pageTotal)){
+            if(booleanToDataAttr(activePage >= this._stater.page.total)){
                 this.rootEl?.setAttribute('data-last-page',  'true');
             }
         }
 
 
         // 只有一頁
-        const pageOnlyOne = this._stater.page.pageTotal === 1;
+        const pageOnlyOne = this._stater.page.total === 1;
         this.rootEl?.setAttribute('data-onlyOne',  pageOnlyOne && booleanToDataAttr(true));
     };
 

@@ -167,7 +167,7 @@ class Dragger {
         if (this._elementor.containerEl &&
             setting.isEnableMouseMove &&
             this._elementor.slideItemEls &&
-            this._stater.page.pageTotal > 1
+            this._stater.page.total > 1
         ) {
             const translateX = calcMoveTranslatePx(startPosition.x, moveX);
             const percentage = this._elementor.getMovePercentage(translateX); //TODO: 應該移動到 Positioner
@@ -192,10 +192,8 @@ class Dragger {
 
         if(this._elementor.slideItemEls){
             const active = this._elementor.slideItemEls.find(row => row.dataset.active === 'true');
-            const activeSourceIndex = Number(active?.dataset.actual ?? 0);
-            this._eventor.emit('dragEnd', activeSourceIndex);
+            this._eventor.emit('dragEnd', Number(active?.dataset.virtual ?? 0));
         }
-
     };
 
 

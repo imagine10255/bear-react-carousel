@@ -40,28 +40,30 @@ export interface IBearCarouselProps extends IBreakpointSetting{
 
 
 export interface ICarouselState {
-  element: {
-    total: number
-    firstIndex: number
-    lastIndex: number
-  }
-  // 0為實際一開始的位置(往前為負數), 結束值為最後結束位置
-  actual: {
+  // element: {
+  //   total: number
+  //   firstIndex: number
+  //   lastIndex: number
+  // }
+  // 額外整理過的資訊
+  virtual: {
     activeIndex: number
-    minIndex: number
-    maxIndex: number
-    firstIndex: number
     lastIndex: number
-    moveLastIndex: number
+    total: number
+  }
+  // 原始資料的資訊
+  source: {
+    activeIndex: number
+    lastIndex: number
+    total: number
   }
   page: {
     activePage: number
-    pageTotal: number
+    total: number
   }
 }
 
 export interface IInfo extends ICarouselState{
-  sourceTotal: number // 來源總數
   residue: number
   isVisiblePagination: boolean
   isVisibleNavButton: boolean

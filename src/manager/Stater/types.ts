@@ -5,7 +5,7 @@ export type TEventMap = {
 
 export interface InitData {
     key: string;
-    actualIndex: number;
+    virtualIndex: number;
     matchIndex: number;
     sourceIndex?: number;
     inPage: number;

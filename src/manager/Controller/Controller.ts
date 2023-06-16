@@ -50,10 +50,10 @@ class Controller {
      */
     slideResetToMatchIndex = (): void => {
         if(this._configurator.setting.isDebug && logEnable.controller.onSlideResetToMatchIndex) logger.printInText('[Controller.slideResetToMatchIndex]');
-        const {actual, formatElement} = this._stater;
+        const {virtual, formatElement} = this._stater;
 
-        if (formatElement[actual.activeIndex]?.isClone) {
-            this.slideToActualIndex(formatElement[actual.activeIndex].matchIndex, {isUseAnimation: false});
+        if (formatElement[virtual.activeIndex]?.isClone) {
+            this.slideToVirtualIndex(formatElement[virtual.activeIndex].matchIndex, {isUseAnimation: false});
         }
     };
 
@@ -63,7 +63,24 @@ class Controller {
      * @param slideIndex
      * @param options
      */
-    slideToActualIndex = (slideIndex: number, options?: {isUseAnimation?: boolean, isEmitEvent?: boolean}) => {
+    slideToSourceIndex = (slideIndex: number, options?: {isUseAnimation?: boolean, isEmitEvent?: boolean}) => {
+        const isEmitEvent = options?.isEmitEvent ?? true;
+        if(isEmitEvent) this._eventor.emit('slideBefore', slideIndex, options?.isUseAnimation);
+
+        // 轉成範圍內的 Index
+        const selected = this._stater.formatElement.find(row => row.sourceIndex === slideIndex && !row.isClone);
+        if(selected){
+            this.slideToVirtualIndex(selected.virtualIndex, options);
+        }
+    };
+
+
+    /**
+     * 包含 Clone 的 Index
+     * @param slideIndex
+     * @param options
+     */
+    slideToVirtualIndex = (slideIndex: number, options?: {isUseAnimation?: boolean, isEmitEvent?: boolean}) => {
         const isEmitEvent = options?.isEmitEvent ?? true;
         if(isEmitEvent) this._eventor.emit('slideBefore', slideIndex, options?.isUseAnimation);
 
@@ -91,12 +108,10 @@ class Controller {
      */
     slideToPage(page: number, isUseAnimation = true){
         const {setting} = this._configurator;
-        const {actual} = this._stater;
+        page = page > this._stater.page.total ? this._stater.page.total: page;
 
-        page = page > this._stater.page.pageTotal ? this._stater.page.pageTotal: page;
-
-        const slideIndex = getSlideIndex(page, setting.slidesPerGroup, actual.firstIndex);
-        this.slideToActualIndex(slideIndex, {isUseAnimation});
+        const slideIndex = getSlideIndex(page, setting.slidesPerGroup, 0);
+        this.slideToSourceIndex(slideIndex, {isUseAnimation});
     }
 
     /**
@@ -104,7 +119,7 @@ class Controller {
      */
     slideToNextPage = (): void => {
         getNextIndex(this._elementor, this._stater, this._configurator)
-            .forEach(action => this.slideToActualIndex(action.index, {isUseAnimation: action.isUseAnimation}));
+            .forEach(action => this.slideToVirtualIndex(action.index, {isUseAnimation: action.isUseAnimation}));
     };
 
     /**
@@ -112,7 +127,7 @@ class Controller {
      */
     slideToPrevPage = (): void => {
         getPrevIndex(this._elementor, this._stater, this._configurator)
-            .forEach(action => this.slideToActualIndex(action.index, {isUseAnimation: action.isUseAnimation}));
+            .forEach(action => this.slideToVirtualIndex(action.index, {isUseAnimation: action.isUseAnimation}));
 
     };
 

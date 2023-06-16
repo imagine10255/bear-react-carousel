@@ -23,9 +23,9 @@ export function initDataList(sourceList: Array<any> = [], slidesPerView: TSlides
         for (const [cloneIndex, row] of sourceList.slice(-formatSlidesPerView).entries()) {
             formatList[index] = {
                 key: `${row.key}_clone`,
-                actualIndex: index,
+                virtualIndex: index,
                 matchIndex: formatSlidesPerView + cloneStart + index,
-                sourceIndex: (sourceList.length - 1) - cloneIndex,
+                sourceIndex: cloneStart + cloneIndex,
                 inPage: lastPage,
                 isClone: true,
                 element: row.children,
@@ -39,7 +39,7 @@ export function initDataList(sourceList: Array<any> = [], slidesPerView: TSlides
     for (const [sourceIndex, row] of sourceList.entries()) {
         formatList[index] = {
             key: String(row.key),
-            actualIndex: index,
+            virtualIndex: index,
             matchIndex: index,
             sourceIndex: sourceIndex,
             inPage: Math.ceil((pageFirstIndex + 1) / slidesPerGroup),
@@ -56,7 +56,7 @@ export function initDataList(sourceList: Array<any> = [], slidesPerView: TSlides
         for (const [cloneIndex, row] of sourceList.slice(0, formatSlidesPerView).entries()) {
             formatList[index] = {
                 key: `${row.key}_clone`,
-                actualIndex: index,
+                virtualIndex: index,
                 matchIndex: matchFirstIndex,
                 sourceIndex: cloneIndex,
                 inPage: 1,
@@ -97,21 +97,14 @@ export function getNextPageFirstIndex(isCenterMode: boolean, activeActualIndex: 
  * @param configurator
  */
 export function getInRangeIndex(slideIndex: number, stater: Stater, configurator: Configurator): number {
-    // 其他情況(不讓頁尾露出空白)，排除掉 isCenteredSlides 或 isEnableLoop 或 auto(無法計算結尾)
-    if(!(configurator.setting.isEnableLoop ||
-            configurator.setting.isCenteredSlides ||
-            configurator.setting.slidesPerView === 'auto' ||
-            !Number.isInteger(configurator.setting.slidesPerView)
-    ) &&
-        slideIndex >= stater.actual.moveLastIndex){
-        return stater.actual.moveLastIndex;
+
+    if(slideIndex >= stater.virtual.lastIndex){
+        // 其他情況(不讓頁尾露出空白)
+        return stater.virtual.lastIndex;
     }
 
-    if(slideIndex <= stater.actual.minIndex){
-        return stater.actual.minIndex;
-    }
-    if(slideIndex >= stater.actual.maxIndex){
-        return stater.actual.maxIndex;
+    if(slideIndex <= 0){
+        return 0;
     }
 
     return slideIndex;

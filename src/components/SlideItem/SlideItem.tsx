@@ -7,7 +7,7 @@ import {booleanToDataAttr} from '../../utils';
 interface IProps {
     element: React.ReactNode,
     index: number,
-    actualIndex: number
+    virtualIndex: number
     matchIndex: number
     sourceIndex: number
     inPage: number
@@ -19,7 +19,7 @@ interface IProps {
 const SlideItem = forwardRef<HTMLInputElement, IProps>(({
     element,
     index,
-    actualIndex,
+    virtualIndex,
     matchIndex,
     sourceIndex,
     inPage,
@@ -32,7 +32,7 @@ const SlideItem = forwardRef<HTMLInputElement, IProps>(({
         className={elClassName.slideItem}
         ref={ref}
         data-testid="bear-carousel-slideItem"
-        data-actual={actualIndex}
+        data-virtual={virtualIndex}
         data-match={booleanToDataAttr(isClone, matchIndex)}
         data-page={inPage}
         data-source={sourceIndex}

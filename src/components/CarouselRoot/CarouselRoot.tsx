@@ -9,12 +9,6 @@ interface IProps {
     style: CSS.Properties
     className: string
     id: string,
-    actual: {
-        minIndex: number
-        firstIndex: number
-        lastIndex: number
-        maxIndex: number
-    }
     setting: ISetting
     children: JSX.Element[]
     extendStyle?: string
@@ -27,7 +21,6 @@ const CarouselRoot = forwardRef<HTMLDivElement, IProps>(({
     style,
     className,
     setting,
-    actual,
     isDebug= false,
     extendStyle,
     isEnableGpuRender = true,
