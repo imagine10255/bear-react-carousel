@@ -122,7 +122,7 @@ class Stater {
             },
             page: {
                 activePage: 0,
-                total: fakeTotalPage,
+                total: fakeTotalPage > 0 ? fakeTotalPage : 1,
             },
             // 總頁數
             residue: elementTotal % slidesPerGroup,

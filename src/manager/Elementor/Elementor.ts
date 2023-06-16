@@ -180,23 +180,20 @@ class Elementor {
         }
 
 
+        const pageOnlyOne = this._stater.page.total === 1;
+        const notPage = this._stater.virtual.total < this._configurator.setting.slidesPerView;
 
         // 提供是否為第一頁/最後一頁的判斷屬性
         if(this._stater.isVisibleNavButton && !this._configurator.setting.isEnableLoop){
             this.rootEl?.removeAttribute('data-first-page');
             this.rootEl?.removeAttribute('data-last-page');
-            if(activePage <= 1){
+            if(activePage <= 1 || pageOnlyOne || notPage){
                 this.rootEl?.setAttribute('data-first-page', 'true');
             }
-            if(booleanToDataAttr(activePage >= this._stater.page.total)){
+            if(activePage >= this._stater.page.total || pageOnlyOne || notPage){
                 this.rootEl?.setAttribute('data-last-page',  'true');
             }
         }
-
-
-        // 只有一頁
-        const pageOnlyOne = this._stater.page.total === 1;
-        this.rootEl?.setAttribute('data-onlyOne',  pageOnlyOne && booleanToDataAttr(true));
     };
 
 

@@ -110,9 +110,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
         if (this._elementor) {
             // Move to the correct position for the first time
-            if(this._stater.page.total > 0){
-                this._controller.slideToPage(this.props.defaultActivePage ?? 1, false);
-            }
+            this._controller.slideToPage(1, false);
 
             this._windowSizer.onResize(this._onResize);
             this._autoPlayer.onTimeout(this._onAutoPlay);
@@ -130,6 +128,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         this._setController();
         this._elementor.onSlideAnimation();
         this._init();
+
     }
 
     componentWillUnmount() {

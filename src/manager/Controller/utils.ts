@@ -6,10 +6,10 @@ import Elementor from '../Elementor';
  * 取得目標Index 使用 Page 計算
  * @param page
  * @param slidesPerGroup
- * @param actualFirstIndex
  */
-export function getSlideIndex(page: number, slidesPerGroup: number, actualFirstIndex: number): number {
-    return ((page - 1) * slidesPerGroup) + 1 + (actualFirstIndex - 1);
+export function getSlideIndex(page: number, slidesPerGroup: number): number {
+    return (page - 1) * slidesPerGroup;
+    // return ((page - 1) * slidesPerGroup) + 1 + (actualFirstIndex - 1);
 }
 
 
@@ -28,29 +28,39 @@ export function getPrevIndex(
     const activeActual = stater.formatElement[stater.virtual.activeIndex];
     const {setting} = configurator;
 
-    if(activeActual.isClone){
-        // 禁止動畫播放中進行重置
-        if(elementor.isAnimation){
-            return [];
+    if(activeActual){
+        if(setting.isEnableLoop){
+            if(activeActual.isClone) {
+                // 禁止動畫播放中進行重置
+                if (elementor.isAnimation) {
+                    return [];
+                }
+
+                // 當移動到的位置 已經是 clone item
+                return [
+                    {index: activeActual.matchIndex, isUseAnimation: false},
+                    {index: activeActual.matchIndex - 1, isUseAnimation: true},
+                ];
+            }
+
+            if(stater.residue > 0) {
+                // 若為Loop(最後一頁移動在不整除的時候, 移動位置需要復歸到第一個)
+                return [
+                    {index: activeActual.virtualIndex - stater.residue, isUseAnimation: true},
+                ];
+            }
+            return [
+                {index: activeActual.virtualIndex - setting.slidesPerGroup, isUseAnimation: true},
+            ];
         }
 
-        // 當移動到的位置 已經是 clone item
-        return [
-            {index: activeActual.matchIndex, isUseAnimation: false},
-            {index: activeActual.matchIndex - 1, isUseAnimation: true},
-        ];
 
-    }else if (setting.isEnableLoop && stater.page.activePage === 1 && stater.residue > 0) {
-        // 若為Loop(最後一頁移動在不整除的時候, 移動位置需要復歸到第一個)
-        return [
-            {index: activeActual.virtualIndex - stater.residue, isUseAnimation: true},
-        ];
-
-    }else if (setting.slidesPerViewActual > 0) {
-        // 若在範圍內，正常移動到下一頁
-        return [
-            {index: activeActual.virtualIndex - setting.slidesPerGroup, isUseAnimation: true}
-        ];
+        if (stater.virtual.activeIndex > 0) {
+            // 若在範圍內，正常移動到上一頁
+            return [
+                {index: activeActual.virtualIndex - setting.slidesPerGroup, isUseAnimation: true}
+            ];
+        }
     }
 
     return [];
@@ -74,45 +84,41 @@ export function getNextIndex(
     const {setting} = configurator;
 
 
-    if(setting.isEnableLoop) {
-        if (activeActual?.isClone) {
-            // 禁止動畫播放中進行重置
-            if (elementor.isAnimation) {
-                return [];
+    if(activeActual){
+        if(setting.isEnableLoop) {
+            if (activeActual?.isClone) {
+                // 禁止動畫播放中進行重置
+                if (elementor.isAnimation) {
+                    return [];
+                }
+                // 當移動到的位置 已經是 clone item
+                // 要等到動畫結束才可執行，否則會造成畫面閃動
+                return [
+                    {index: activeActual.matchIndex, isUseAnimation: false},
+                    {index: activeActual.matchIndex + setting.slidesPerGroup, isUseAnimation: true},
+                ];
             }
-            // 當移動到的位置 已經是 clone item
-            // 要等到動畫結束才可執行，否則會造成畫面閃動
+
+            if (stater.residue > 0) {
+                // 若為Loop(最後一頁移動在不整除的時候, 移動位置需要復歸到第一個)
+                return [
+                    {index: activeActual.virtualIndex + stater.residue, isUseAnimation: true},
+                ];
+            }
             return [
-                {index: activeActual.matchIndex, isUseAnimation: false},
-                {index: activeActual.matchIndex + setting.slidesPerGroup, isUseAnimation: true},
+                {index: activeActual.virtualIndex + setting.slidesPerGroup, isUseAnimation: true},
             ];
         }
 
-        if (stater.residue > 0) {
-            // 若為Loop(最後一頁移動在不整除的時候, 移動位置需要復歸到第一個)
+        if (stater.virtual.activeIndex <= stater.virtual.lastIndex) {
+            // 若在範圍內，正常移動到下一頁
             return [
-                {index: activeActual.virtualIndex + stater.residue, isUseAnimation: true},
+                {index: activeActual.virtualIndex + setting.slidesPerGroup, isUseAnimation: true}
             ];
+
         }
-        return [
-            {index: activeActual.virtualIndex + setting.slidesPerGroup, isUseAnimation: true},
-        ];
     }
 
-
-    if(setting.isCenteredSlides ) {
-        return [
-            {index: activeActual.virtualIndex + setting.slidesPerGroup, isUseAnimation: true}
-        ];
-    }
-
-    if (stater.virtual.activeIndex <= stater.virtual.lastIndex) {
-        // 若在範圍內，正常移動到下一頁
-        return [
-            {index: activeActual.virtualIndex + setting.slidesPerGroup, isUseAnimation: true}
-        ];
-
-    }
 
 
     return [];

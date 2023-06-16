@@ -49,10 +49,6 @@
     z-index: 10;
 }
 
-.bear-react-carousel__root[data-onlyOne="true"] .bear-react-carousel__pagination-group,
-.bear-react-carousel__root[data-onlyOne="true"] .bear-react-carousel__nav-group {
-    display: none;
-}
 .bear-react-carousel__root[data-touch="false"] .bear-react-carousel__pagination-group{
     pointer-events: none;
 }
@@ -105,7 +101,6 @@
     background-color: rgba(255, 255, 255, .5);
     border-radius: 99em;
     opacity: .6;
-    transition: .4s opacity;
     color: #fff;
     border: none;
     outline: none;
@@ -129,6 +124,7 @@
 .bear-react-carousel__root[data-touch="false"] .bear-react-carousel__nav-group{
     pointer-events: none;
 }
+.bear-react-carousel__root[data-first-page="true"][data-last-page="true"] .bear-react-carousel__pagination-group,
 .bear-react-carousel__root[data-first-page="true"] .bear-react-carousel__nav-prev-button,
 .bear-react-carousel__root[data-last-page="true"] .bear-react-carousel__nav-next-button{
     opacity: 0;

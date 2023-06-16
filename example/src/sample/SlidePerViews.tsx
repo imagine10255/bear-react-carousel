@@ -39,12 +39,14 @@ function SlidePerViews() {
     const [controller2, setController2] = useState<Controller>();
     const [controller3, setController3] = useState<Controller>();
     const [controller4, setController4] = useState<Controller>();
+    const [controller5, setController5] = useState<Controller>();
 
     const [carouselState0, setCarouselState0] = useState<ICarouselState>();
     const [carouselState1, setCarouselState1] = useState<ICarouselState>();
     const [carouselState2, setCarouselState2] = useState<ICarouselState>();
     const [carouselState3, setCarouselState3] = useState<ICarouselState>();
     const [carouselState4, setCarouselState4] = useState<ICarouselState>();
+    const [carouselState5, setCarouselState5] = useState<ICarouselState>();
 
     const stat = [
         {carouselState: carouselState0, setCarouselState: setCarouselState0, controller: controller0, setController: setController0},
@@ -52,6 +54,7 @@ function SlidePerViews() {
         {carouselState: carouselState2, setCarouselState: setCarouselState2, controller: controller2, setController: setController2},
         {carouselState: carouselState3, setCarouselState: setCarouselState3, controller: controller3, setController: setController3},
         {carouselState: carouselState4, setCarouselState: setCarouselState4, controller: controller4, setController: setController4},
+        {carouselState: carouselState5, setCarouselState: setCarouselState5, controller: controller5, setController: setController5},
     ];
 
 
@@ -68,6 +71,7 @@ function SlidePerViews() {
         {slidesPerView: 1},
         {slidesPerView: 1.3},
         {slidesPerView: 4},
+        {slidesPerView: 4, data: enable ? bearSlideItemData1.slice(0, 2): undefined,},
         {slidesPerView: 4, isEnableLoop: true},
         {slidesPerView: 3, isCenteredSlides: true},
         {slidesPerView: 3, isCenteredSlides: true, isEnableLoop: true},
@@ -80,7 +84,7 @@ function SlidePerViews() {
 
 
         {configList.map((config, idx) => {
-            return <div className="mb-4">
+            return <div className="mb-4" key={`carousel_example_${idx}`}>
 
                 {JSON.stringify(config)}
 
@@ -89,7 +93,6 @@ function SlidePerViews() {
                     {...config}
                     setController={stat[idx]?.setController}
                     onSlideChange={stat[idx]?.setCarouselState}
-                    // setController={setController}
                 />
 
                 <div>slideToSourceIndex</div>
