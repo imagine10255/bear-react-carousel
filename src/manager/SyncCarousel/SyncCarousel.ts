@@ -39,7 +39,7 @@ class SyncCarousel {
     };
 
     slideToSourceIndex = (slideIndex: number, isUseAnimation = true) => {
-        if(this._configurator?.setting.isDebug && logEnable.syncCarousel.onslideToSourceIndex) logger.printInText('[SyncCarousel.slideToSourceIndex]');
+        if(this._configurator?.setting.isDebug && logEnable.syncCarousel.onSlideToSourceIndex) logger.printInText('[SyncCarousel.slideToSourceIndex]');
 
         this._controller?.slideToSourceIndex(slideIndex, {isUseAnimation, isEmitEvent: false});
     };
