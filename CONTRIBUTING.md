@@ -2,7 +2,7 @@
 
 Swiper loves to welcome your contributions. There are several ways to help out:
 
-- Create an [issue](https://github.com/nolimits4web/swiper/issues) on GitHub, if you have found a bug
+- Create an [issue](https://github.com/imagine10255/bear-react-carousel/issues) on GitHub, if you have found a bug
 - Write test cases or provide examples for open bug issues
 - Write patches for open bug/feature issues
 
@@ -12,7 +12,7 @@ chance of keeping on top of things.
 ## Getting Started
 
 - Make sure you have a [GitHub account](https://github.com/signup/free).
-- Submit an [issue](https://github.com/nolimits4web/swiper/issues), assuming one does not already exist.
+- Submit an [issue](https://github.com/imagine10255/bear-react-carousel/issues), assuming one does not already exist.
   - Clearly describe the issue including steps to reproduce when it is a bug.
   - Make sure you fill in the earliest version that you know has the issue.
 - Fork the repository on GitHub.
@@ -23,7 +23,7 @@ chance of keeping on top of things.
   - This is usually the master branch.
   - Only target release branches if you are certain your fix must be on that
     branch.
-  - To quickly create a topic branch based on master; `git branch master/my_contribution master` then checkout the new branch with `git checkout master/my_contribution`. Better avoid working directly on the
+  - To quickly create a topic branch based on master; `git branch main/my_contribution main` then checkout the new branch with `git checkout main/my_contribution`. Better avoid working directly on the
     `master` branch, to avoid conflicts if you pull in updates from origin.
 - Make commits of logical units.
 - Check for unnecessary whitespace with `git diff --check` before committing.
