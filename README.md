@@ -11,15 +11,15 @@
 [![NPM](https://img.shields.io/npm/v/bear-react-carousel.svg?style=for-the-badge)](https://www.npmjs.com/package/bear-react-carousel)
 [![npm downloads](https://img.shields.io/npm/dm/bear-react-carousel.svg?style=for-the-badge)](https://www.npmjs.com/package/bear-react-carousel)
 [![npm](https://img.shields.io/npm/dt/bear-react-carousel.svg?style=for-the-badge)](https://www.npmjs.com/package/bear-react-carousel)
-[![npm](https://img.shields.io/npm/l/bear-react-carousel?style=for-the-badge)](https://github.com/bear-react-carousel/bear-react-carousel/blob/master/LICENSE)
+[![npm](https://img.shields.io/npm/l/bear-react-carousel?style=for-the-badge)](https://github.com/imagine10255/bear-react-carousel/blob/main/LICENSE)
 
 </div>
 
 <p align="center">
-  <a href="https://bear-react-carousel.github.io/docs/getting-started">Get started</a> | 
-  <a href="https://bear-react-carousel.github.io/docs/category/components">Component</a> |
-  <a href="https://bear-react-carousel.github.io/docs/category/examples">Examples</a> |
-  <a href="https://bear-react-carousel.github.io/docs/props-try">Prop Try</a>
+  <a href="https://react-carousel.bearests.com/docs/getting-started">Get started</a> | 
+  <a href="https://react-carousel.bearests.com/docs/category/components">Component</a> |
+  <a href="https://react-carousel.bearests.com/docs/category/examples">Examples</a> |
+  <a href="https://react-carousel.bearests.com/docs/props-try">Prop Try</a>
 </p>
 
 ## Features
