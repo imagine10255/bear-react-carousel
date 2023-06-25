@@ -74,6 +74,9 @@ export interface IBearSlideItemData {
 }
 export type TBearSlideItemDataList = IBearSlideItemData[];
 
+export type heightUnit = 'px' | '%' | 'em' | 'rem' | 'vh';
+export type THeightUnitSize = `${number}${heightUnit}`;
+
 export interface IAspectRatio {
   widthRatio: number
   heightRatio: number
@@ -83,7 +86,7 @@ export interface IAspectRatio {
 export interface IBreakpointSetting {
   slidesPerView?: TSlidesPerView
   slidesPerGroup?: number
-  height?: IAspectRatio|string,
+  height?: IAspectRatio|THeightUnitSize,
   spaceBetween?: number
   isCenteredSlides?: boolean
   isEnableLoop?: boolean

@@ -24,12 +24,11 @@ class Configurator {
 
 
     get style() {
+        const rootHeight = getHeight(this.setting.height);
         const styleData = [
             {
                 targetEl: `#${this._carouselId}`,
-                styles: [
-                    getHeight(this.setting.height),
-                ]
+                styles: rootHeight,
             },
             {
                 // 保護不被項目擠開
@@ -49,8 +48,8 @@ class Configurator {
         ];
 
         return styleData
-            .filter(row => typeof row !== 'undefined')
-            .map(row => {
+            .filter(row => typeof row.styles !== 'undefined')
+            ?.map(row => {
                 return `${row.targetEl}{${row.styles.join('')}}`;
             }).join('\r\n');
     }

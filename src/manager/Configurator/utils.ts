@@ -66,12 +66,15 @@ export function getMediaSetting(defaultBreakpoint: IBreakpointSetting, breakpoin
 }
 
 
-export function getHeight(height: IAspectRatio|string) {
+export function getHeight(height: IBreakpointSetting['height']) {
     if(typeof height === 'string'){
-        return `height: ${height};`;
+        return [`height: ${height};`];
     }
-    if(typeof height?.widthRatio !== 'undefined'){
-        return `aspect-ratio: ${height.widthRatio} / ${height.heightRatio};`;
+    if(typeof height?.widthRatio !== 'undefined' && typeof height?.heightRatio !== 'undefined'){
+        return [
+            `aspect-ratio: ${height.widthRatio} / ${height.heightRatio};`,
+            'height: auto;',
+        ];
     }
-    return 'height: inherit;';
+    return undefined;
 }
