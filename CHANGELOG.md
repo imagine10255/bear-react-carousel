@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.9-aplha.0](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.8...v4.0.9-aplha.0) (2023-06-25)
+
+
+### Features
+
+* if an aspect height is specified, override the root height with 'auto' to ensure proper expansion of the root. ([7aa08ac](https://github.com/imagine10255/bear-react-carousel/commit/7aa08aca30dfa3b82d6fd2a08c334283852d3d41))
+
 ### [4.0.8](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.8-alpha.3...v4.0.8) (2023-06-17)
 
 
