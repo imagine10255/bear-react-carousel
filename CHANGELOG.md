@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.9-aplha.1](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.9-aplha.0...v4.0.9-aplha.1) (2023-06-26)
+
+
+### Bug Fixes
+
+* nextjs issue(Module not found: Package path . is not exported from package) ([30b587f](https://github.com/imagine10255/bear-react-carousel/commit/30b587f2e002f76396c658551df73344450ad69f))
+
 ### [4.0.9-aplha.0](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.8...v4.0.9-aplha.0) (2023-06-25)
 
 
