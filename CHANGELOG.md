@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.9](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.9-aplha.1...v4.0.9) (2023-07-02)
+
 ### [4.0.9-aplha.1](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.9-aplha.0...v4.0.9-aplha.1) (2023-06-26)
 
 
