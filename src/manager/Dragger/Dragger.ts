@@ -29,7 +29,6 @@ class Dragger {
     }) {
         this._configurator = manager.configurator;
         this._elementor = manager.elementor;
-        this._elementor = manager.elementor;
         this._stater = manager.stater;
         this._locator = new Locator();
     }
@@ -75,8 +74,8 @@ class Dragger {
         const {containerEl} = this._elementor;
         if (containerEl) {
             this._locator.touchStart(new MobileTouchEvent(event), containerEl);
-            containerEl.addEventListener('touchmove', this._onMobileTouchMove, false);
-            containerEl.addEventListener('touchend', this._onMobileTouchEnd, false);
+            window.addEventListener('touchmove', this._onMobileTouchMove, false);
+            window.addEventListener('touchend', this._onMobileTouchEnd, false);
         }
     };
 
@@ -119,9 +118,8 @@ class Dragger {
         const {containerEl} = this._elementor;
         if (containerEl) {
             this._locator.touchStart(new DesktopTouchEvent(event), containerEl);
-            this._elementor.rootEl?.addEventListener('mouseleave', this._onWebMouseEnd, false);
-            containerEl.addEventListener('mousemove', this._onWebMouseMove, false);
-            containerEl.addEventListener('mouseup', this._onWebMouseEnd, false);
+            window.addEventListener('mousemove', this._onWebMouseMove, false);
+            window.addEventListener('mouseup', this._onWebMouseEnd, false);
         }
 
     };
@@ -147,9 +145,8 @@ class Dragger {
         event.preventDefault();
         if(this._configurator.setting.isDebug && logEnable.dragger.onWebMouseEnd) logger.printInText('[Dragger._onWebMouseEnd]');
 
-        this._elementor.rootEl?.removeEventListener('mouseleave', this._onWebMouseEnd, false);
-        this._elementor.containerEl?.removeEventListener('mousemove', this._onWebMouseMove, false);
-        this._elementor.containerEl?.removeEventListener('mouseup', this._onWebMouseEnd, false);
+        window.removeEventListener('mousemove', this._onWebMouseMove, false);
+        window.removeEventListener('mouseup', this._onWebMouseEnd, false);
         this._dragEnd();
     };
 
