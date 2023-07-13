@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.10-alpha.0](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.9...v4.0.10-alpha.0) (2023-07-13)
+
+
+### Features
+
+* modify dragger move event containerEl to window ([8a75986](https://github.com/imagine10255/bear-react-carousel/commit/8a75986a80bb1ff1a9f795e053c0adad107f39dd))
+
 ### [4.0.9](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.9-aplha.1...v4.0.9) (2023-07-02)
 
 ### [4.0.9-aplha.1](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.9-aplha.0...v4.0.9-aplha.1) (2023-06-26)
