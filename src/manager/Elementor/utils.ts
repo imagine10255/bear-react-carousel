@@ -42,6 +42,14 @@ export function getMovePercentage(movePx: number, startPosition: number, slideCu
     return decimal2Rounding(-newMoveX / slideCurrWidth);
 }
 
+/**
+ * 從進度取得第幾個項目
+ * @param percentage
+ */
+export function getIndexByPercentage(percentage: number): number{
+    return Math.floor(percentage);
+}
+
 
 
 /**

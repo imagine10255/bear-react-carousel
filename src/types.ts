@@ -95,6 +95,11 @@ export interface IBreakpointSetting {
   isEnableNavButton?: boolean
   isEnableMouseMove?: boolean
   isEnableAutoPlay?: boolean
+  moveEffect?: {
+    transformY?: number,
+    moveTime?: string,
+  }
+  effectFn?: (el: HTMLElement, percentage: number) => void
 }
 export interface IBreakpointSettingActual extends IBreakpointSetting {
   slidesPerViewActual: TSlidesPerViewActual
