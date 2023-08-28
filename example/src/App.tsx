@@ -26,6 +26,7 @@ import LazyImage from "./sample/LazyImage";
 import LazyCard from "./sample/LazyCard";
 import AutoImage from "./sample/AutoImage";
 import CustomNav from './sample/CustomNav';
+import Effect from './sample/Effect';
 
 
 
@@ -48,6 +49,7 @@ enum EExampleCode {
     renderPagination = 'renderPagination',
     textAnimations = 'textAnimations',
     customNav = 'customNav',
+    moveEffect = 'moveEffect',
 }
 
 
@@ -69,10 +71,11 @@ const examples: Record<EExampleCode, () => JSX.Element> = {
     [EExampleCode.renderPagination]: RenderPagination,
     [EExampleCode.textAnimations]: TextAnimationsCarousel,
     [EExampleCode.customNav]: CustomNav,
+    [EExampleCode.moveEffect]: Effect,
 };
 
 function App() {
-    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.slidePerViews);
+    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.moveEffect);
     const Comp = examples[exampleKey];
 
 

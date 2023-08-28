@@ -43,6 +43,14 @@ class Configurator {
                     `flex: ${this.setting.slidesPerView === 'auto' ? '0 0 auto;-webkit-flex: 0 0 auto;' : `0 0 ${100 / this.setting.slidesPerViewActual}%`};`,
                     `padding-left: ${this.setting.spaceBetween / 2}px;`,
                     `padding-right: ${this.setting.spaceBetween / 2}px;`,
+                    `transition: ${this.setting.moveEffect?.transformY ? `transform ${this.setting.moveEffect.moveTime ?? '.5s'}`: ''};`,
+                    'transform: translate(0, 0);',
+                ]
+            },
+            {
+                targetEl: `#${this.carouselId} .${elClassName.slideItem}[data-active="true"]`,
+                styles: [
+                    `transform: translate(0, -${this.setting.moveEffect?.transformY}px);`,
                 ]
             }
         ];
