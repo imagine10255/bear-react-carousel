@@ -83,6 +83,11 @@ export interface IAspectRatio {
   addStaticHeight?: string
 }
 
+interface IMoveEffect {
+  transformY?: number,
+  moveTime?: string,
+}
+
 export interface IBreakpointSetting {
   slidesPerView?: TSlidesPerView
   slidesPerGroup?: number
@@ -95,10 +100,7 @@ export interface IBreakpointSetting {
   isEnableNavButton?: boolean
   isEnableMouseMove?: boolean
   isEnableAutoPlay?: boolean
-  moveEffect?: {
-    transformY?: number,
-    moveTime?: string,
-  }
+  moveEffect?: IMoveEffect
   effectFn?: (el: HTMLElement, percentage: number) => void
 }
 export interface IBreakpointSettingActual extends IBreakpointSetting {
