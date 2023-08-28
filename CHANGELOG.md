@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.10-alpha.1](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.10-alpha.0...v4.0.10-alpha.1) (2023-08-28)
+
+
+### Features
+
+* add move effect transformY ([3e75850](https://github.com/imagine10255/bear-react-carousel/commit/3e75850a5130fd997918b21b2d7567db59bb38d8))
+
 ### [4.0.10-alpha.0](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.9...v4.0.10-alpha.0) (2023-07-13)
 
 
