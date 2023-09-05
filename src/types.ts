@@ -69,7 +69,6 @@ export interface IInfo extends ICarouselState{
 }
 export interface IBearSlideItemData {
   key: string|number
-  onClick?: TSlideOnClick
   children: ReactNode
 }
 export type TBearSlideItemDataList = IBearSlideItemData[];
