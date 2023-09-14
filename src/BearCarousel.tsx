@@ -36,8 +36,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         data: undefined,
         slidesPerView: 1,
         slidesPerGroup: 1, // 不可為小數
-        initStartPlayTime: 500,
-        moveTime: 500,
         breakpoints: {},
         isCenteredSlides: false,
         isEnableLoop: false,
@@ -48,7 +46,9 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         isEnableAutoPlay: false,
         isDebug: false,
         spaceBetween: 0,
+        moveTime: 500,
         autoPlayTime: 5000,
+        initStartPlayTime: 1500,
         defaultActivePage: 1,
         isSlideItemMemo: false,
     };
