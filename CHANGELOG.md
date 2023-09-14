@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.10](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.10-alpha.3...v4.0.10) (2023-09-14)
+
+
+### Features
+
+* move props sort ([5c8c4b8](https://github.com/imagine10255/bear-react-carousel/commit/5c8c4b8ebe46a7d538a00644529f0c18bb95b700))
+
 ### [4.0.10-alpha.3](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.10-alpha.2...v4.0.10-alpha.3) (2023-09-14)
 
 
