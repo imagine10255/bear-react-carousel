@@ -74,8 +74,8 @@ class Dragger {
         const {containerEl} = this._elementor;
         if (containerEl) {
             this._locator.touchStart(new MobileTouchEvent(event), containerEl);
-            window.addEventListener('touchmove', this._onMobileTouchMove, false);
-            window.addEventListener('touchend', this._onMobileTouchEnd, false);
+            window.addEventListener('touchmove', this._onMobileTouchMove, {passive: false});
+            window.addEventListener('touchend', this._onMobileTouchEnd, {passive: false});
         }
     };
 
@@ -102,8 +102,8 @@ class Dragger {
     private _onMobileTouchEnd = (event: TouchEvent): void => {
         if(this._configurator.setting.isDebug && logEnable.dragger.onMobileTouchEnd) logger.printInText('[Dragger._onMobileTouchEnd]');
 
-        this._elementor.containerEl?.removeEventListener('touchmove', this._onMobileTouchMove, false);
-        this._elementor.containerEl?.removeEventListener('touchend', this._onMobileTouchEnd, false);
+        window.removeEventListener('touchmove', this._onMobileTouchMove, false);
+        window.removeEventListener('touchend', this._onMobileTouchEnd, false);
         this._dragEnd();
     };
 
