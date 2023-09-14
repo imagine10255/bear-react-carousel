@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.10-alpha.2](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.10-alpha.1...v4.0.10-alpha.2) (2023-09-14)
+
+
+### Features
+
+* add initStartPlayTime props, in first start ([985c854](https://github.com/imagine10255/bear-react-carousel/commit/985c8540a83dbd918803cccd030dd112ca893048))
+
+
+### Bug Fixes
+
+* delete IBearSlideItemData onClick type ([32ef378](https://github.com/imagine10255/bear-react-carousel/commit/32ef3789f7b3478fe427643829b780a2d0cab02d))
+* fix mobile touch move event issue ([ea5b198](https://github.com/imagine10255/bear-react-carousel/commit/ea5b1983aebca86407040d9b79671ddad5a8ac9a))
+
 ### [4.0.10-alpha.1](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.10-alpha.0...v4.0.10-alpha.1) (2023-08-28)
 
 
