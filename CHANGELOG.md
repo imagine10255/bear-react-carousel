@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.10-alpha.3](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.10-alpha.2...v4.0.10-alpha.3) (2023-09-14)
+
+
+### Features
+
+* add sync control has move effect ([53f7d58](https://github.com/imagine10255/bear-react-carousel/commit/53f7d58569ba67c43f0fcf48cdca52296f4a60d0))
+* modify effect move not use active ([c4a5e0b](https://github.com/imagine10255/bear-react-carousel/commit/c4a5e0b81dd9a9d2bb772afb43acbdd2398e3307))
+
 ### [4.0.10-alpha.2](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.10-alpha.1...v4.0.10-alpha.2) (2023-09-14)
 
 
