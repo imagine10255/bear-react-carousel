@@ -69,7 +69,7 @@ class Dragger {
      */
     private _onMobileTouchStart = (event: TouchEvent): void => {
         if(this._configurator.setting.isDebug && logEnable.dragger.onMobileTouchStart) logger.printInText('[Dragger._onMobileTouchStart]');
-        this._eventor.emit('dragStart');
+        this._eventor.emit('dragStart', event);
 
         const {containerEl} = this._elementor;
         if (containerEl) {
@@ -113,7 +113,7 @@ class Dragger {
      */
     private _onWebMouseStart = (event: MouseEvent): void => {
         if(this._configurator.setting.isDebug && logEnable.dragger.onWebMouseStart) logger.printInText('[Dragger._onWebMouseStart]');
-        this._eventor.emit('dragStart');
+        this._eventor.emit('dragStart', event);
 
         const {containerEl} = this._elementor;
         if (containerEl) {

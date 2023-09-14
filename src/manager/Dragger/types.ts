@@ -1,5 +1,6 @@
+
 export type TEventMap = {
-    dragStart?: () => void;
+    dragStart?: (event: MouseEvent|TouchEvent) => void;
     dragMove?: (percentage: number) => void;
     dragEnd?: (activeSourceIndex: number) => void;
 };

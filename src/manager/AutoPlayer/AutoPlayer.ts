@@ -27,7 +27,6 @@ class AutoPlayer {
         window.addEventListener('focus', this.play, false);
         window.addEventListener('blur', this.pause, false);
 
-        console.log('this._configurator.setting.initStartPlayTime', this._configurator.setting.initStartPlayTime ?? 0);
         this._initTimer = setTimeout(this.play, this._configurator.setting.initStartPlayTime ?? 0);
         this._eventor.on('timeout', callback);
     };

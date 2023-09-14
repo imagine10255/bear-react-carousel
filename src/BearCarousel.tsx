@@ -253,8 +253,12 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     /**
      * set OnDragStart emit
      */
-    private _onDragStart = () => {
+    private _onDragStart = (event: MouseEvent|TouchEvent) => {
         this._controller.slideResetToMatchIndex();
+
+        // 同步控制
+        this._syncCarousel?.syncControlStart(event);
+
         this._autoPlayer.pause();
     };
 
@@ -282,7 +286,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
      * @param percentage
      */
     private _onDragMove = (percentage: number) => {
-        this._syncCarousel?.syncControlMove(percentage);
+        // this._syncCarousel?.syncControlMove(percentage);
 
         // 移動效果
         if(this.props.moveEffect && percentage >= 0){

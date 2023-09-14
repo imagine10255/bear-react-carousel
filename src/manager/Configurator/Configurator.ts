@@ -25,6 +25,7 @@ class Configurator {
 
     get style() {
         const rootHeight = getHeight(this.setting.height);
+        console.log('this.setting.moveEffect?.transformY', this.setting.moveEffect?.transformY);
         const styleData = [
             {
                 targetEl: `#${this._carouselId}`,
