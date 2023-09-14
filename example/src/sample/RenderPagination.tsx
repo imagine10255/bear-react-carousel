@@ -128,7 +128,7 @@ const CarouselBox = styled.div`
             }
             
     
-            &[data-active="true"]:after {
+            &[data-active]:after {
                 animation-iteration-count: 1;
                 animation: ${progress} ${autoPlayTime}ms linear infinite;
             }

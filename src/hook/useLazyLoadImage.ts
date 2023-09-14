@@ -23,7 +23,7 @@ const useLazyLoadBg = ({isLazy, imageUrl}: IUseLazyLoadProps) => {
                 setLoading(true);
                 // 監視目標進入畫面
                 const img = entry.target as HTMLImageElement;
-                if(img.dataset.lazySrc){
+                if(img.dataset.lazySrc === ''){
                     img.onload = () => setLoading(false);
                     img.setAttribute('src', img.dataset.lazySrc); // 把值塞回 src
                     img.removeAttribute('data-lazy-src');

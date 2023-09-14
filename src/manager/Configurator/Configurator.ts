@@ -47,12 +47,6 @@ class Configurator {
                     'transform: translate(0, 0);',
                 ]
             },
-            {
-                targetEl: `#${this.carouselId} .${elClassName.slideItem}[data-active="true"]`,
-                styles: [
-                    `transform: translate(0, -${this.setting.moveEffect?.transformY}px);`,
-                ]
-            }
         ];
 
         return styleData

@@ -189,7 +189,7 @@ class Dragger {
         this._elementor.setNonSubjectTouch(true);
 
         if(this._elementor.slideItemEls){
-            const active = this._elementor.slideItemEls.find(row => row.dataset.active === 'true');
+            const active = this._elementor.slideItemEls.find(row => row.dataset.active === '');
             this._eventor.emit('dragEnd', Number(active?.dataset.virtual ?? 0));
         }
     };

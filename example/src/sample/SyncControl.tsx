@@ -75,6 +75,7 @@ function SyncControl() {
                 height="200px"
                 moveEffect={{
                     transformY: 80,
+                    moveTime: '300ms',
                 }}
                 // spaceBetween={20}
                 isEnableNavButton
@@ -127,7 +128,7 @@ const Box = styled.div`
   display: flex;
   margin: 0 auto;
 
-  .${elClassName.slideItem}:not([data-active="true"]){
+  .${elClassName.slideItem}:not([data-active]){
     opacity: .1;
     -webkit-transform: scale3d(0.8, 0.8, 1);
     transform: scale3d(0.8, 0.8, 1);

@@ -55,13 +55,13 @@ describe('Auto play testing', () => {
     test('Auto navigates to next page after one second', async () => {
         // Act
         act(() => jest.advanceTimersByTime(autoPlayTime));
+        expect(getActiveSlideItem()).toHaveAttribute('data-page','1');
+
+        act(() => jest.advanceTimersByTime(autoPlayTime));
         expect(getActiveSlideItem()).toHaveAttribute('data-page','2');
 
         act(() => jest.advanceTimersByTime(autoPlayTime));
         expect(getActiveSlideItem()).toHaveAttribute('data-page','3');
-
-        act(() => jest.advanceTimersByTime(autoPlayTime));
-        expect(getActiveSlideItem()).toHaveAttribute('data-page','4');
 
     });
 

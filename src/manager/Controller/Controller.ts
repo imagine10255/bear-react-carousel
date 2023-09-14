@@ -94,8 +94,9 @@ class Controller {
         const position = this._elementor.getMoveDistance(inRangeIndex);
         this._elementor
             .transform(position, options?.isUseAnimation ?? true)
-            .resetMoveEffect()
+            .moveEffect(slideIndex, true)
             .syncActiveState(inRangeIndex);
+
 
         if(isEmitEvent) this._eventor.emit('slideAfter', inRangeIndex, options?.isUseAnimation);
     };

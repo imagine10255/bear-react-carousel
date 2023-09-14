@@ -127,7 +127,7 @@ export function isDataKeyDff(data: TBearSlideItemDataList, nextData: TBearSlideI
 
 
 
-export function booleanToDataAttr(isTrue: boolean, returnValue: number|string|boolean = true): string|undefined{
+export function booleanToDataAttr(isTrue: boolean, returnValue: number|string|boolean = ''): string|undefined{
     if(isTrue){
         return String(returnValue);
     }

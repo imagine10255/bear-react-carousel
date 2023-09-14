@@ -73,7 +73,7 @@ describe('Loop mode testing', () => {
 
         // ASSERT
         expect(getActiveSlideItem()).toHaveAttribute('data-page','1');
-        expect(getActiveSlideItem()).toHaveAttribute('data-is-clone','true');
+        expect(getActiveSlideItem()).toHaveAttribute('data-is-clone','');
         expect(getActiveSlideItem()).toHaveAttribute('data-match','1');
         expect(getActivePageButton()).toHaveAttribute('data-page','1');
 

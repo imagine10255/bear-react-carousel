@@ -49,11 +49,11 @@
     z-index: 10;
 }
 
-.bear-react-carousel__root[data-touch="false"] .bear-react-carousel__pagination-group{
+.bear-react-carousel__root:not([data-touch]) .bear-react-carousel__pagination-group{
     pointer-events: none;
 }
 
-.bear-react-carousel__pagination-group:not([data-page-content="true"]) .bear-react-carousel__pagination-button{
+.bear-react-carousel__pagination-group:not([data-page-content]) .bear-react-carousel__pagination-button{
     width: .5rem;
     height: .5rem;
     border-radius: 7px;
@@ -63,7 +63,7 @@
     transition: width 0.3s, background-color 0.3s;
     margin: 0 6px;
 }
-.bear-react-carousel__pagination-group:not([data-page-content="true"]) .bear-react-carousel__pagination-button[data-active]{
+.bear-react-carousel__pagination-group:not([data-page-content]) .bear-react-carousel__pagination-button[data-active]{
     background-color: var(--primary-color, #00a3e0);
 }
 
@@ -121,12 +121,12 @@
     height: 40px;
 }
 
-.bear-react-carousel__root[data-touch="false"] .bear-react-carousel__nav-group{
+.bear-react-carousel__root:not([data-touch]) .bear-react-carousel__nav-group{
     pointer-events: none;
 }
-.bear-react-carousel__root[data-first-page="true"][data-last-page="true"] .bear-react-carousel__pagination-group,
-.bear-react-carousel__root[data-first-page="true"] .bear-react-carousel__nav-prev-button,
-.bear-react-carousel__root[data-last-page="true"] .bear-react-carousel__nav-next-button{
+.bear-react-carousel__root[data-first-page][data-last-page] .bear-react-carousel__pagination-group,
+.bear-react-carousel__root[data-first-page] .bear-react-carousel__nav-prev-button,
+.bear-react-carousel__root[data-last-page] .bear-react-carousel__nav-next-button{
     opacity: 0;
     pointer-events: none;
 }
@@ -234,14 +234,14 @@
 }
 
 
-.bear-react-carousel__root[data-gpu-render=true] .bear-react-carousel__container{
+.bear-react-carousel__root[data-gpu-render] .bear-react-carousel__container{
     will-change: transform;
 }
 
-.bear-react-carousel__root[data-mouse-move="true"] .bear-react-carousel__container{
+.bear-react-carousel__root[data-mouse-move] .bear-react-carousel__container{
     cursor: pointer;
 }
-.bear-react-carousel__root[data-debug="true"] .bear-react-carousel__slide-item[data-active="true"]{
+.bear-react-carousel__root[data-debug] .bear-react-carousel__slide-item[data-active]{
     border: 1px solid #f64f4f;
 }
 
@@ -250,7 +250,7 @@
 }
 
 
-.bear-react-carousel__root[data-debug="true"] .bear-react-carousel__content:before {
+.bear-react-carousel__root[data-debug] .bear-react-carousel__content:before {
     content: '';
     position: absolute;
     left: calc(50%);

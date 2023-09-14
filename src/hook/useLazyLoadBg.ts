@@ -24,7 +24,7 @@ const useLazyLoadBg = ({isLazy, imageUrl}: IUseLazyLoadProps) => {
                 const el = entry.target as HTMLDivElement;
 
                 const img = new Image();
-                if(el.dataset.lazySrc){
+                if(el.dataset.lazySrc === ''){
                     img.src = el.dataset.lazySrc;
                     img.onload = () => setLoading(false);
 

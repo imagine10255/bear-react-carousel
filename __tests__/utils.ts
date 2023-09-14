@@ -12,5 +12,5 @@ export function setContainerSize(element: HTMLElement, size: number) {
 
 
 export function getActiveElement(elements: HTMLElement[]) {
-    return elements.find(el => el.dataset.active === 'true');
+    return elements.find(el => el.dataset.active === '');
 }

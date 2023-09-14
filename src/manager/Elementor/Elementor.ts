@@ -123,7 +123,11 @@ class Elementor {
      * @param isEnable
      */
     setNonSubjectTouch = (isEnable: boolean) => {
-        this.rootEl.setAttribute('data-touch', String(isEnable));
+        if(isEnable){
+            this.rootEl.dataset.touch = '';
+        }else{
+            this.rootEl.removeAttribute('data-touch');
+        }
     };
 
 
@@ -164,8 +168,9 @@ class Elementor {
     /**
      * 移動效果
      * @param percentage
+     * @param isUseAnimation
      */
-    moveEffect(percentage: number){
+    moveEffect(percentage: number, isUseAnimation = false){
         const {moveEffect} = this._configurator.setting;
 
         if(moveEffect && percentage >= 0){
@@ -176,14 +181,13 @@ class Elementor {
                     const prevIndex = index - 1;
 
                     if (percentage >= nextIndex) {
-                        this._effectFn(el, 0);
+                        this._effectFn(el, index - percentage + 1, isUseAnimation);
 
                     } else if (percentage >= index) {
-                        this._effectFn(el, index + 1 - percentage);
+                        this._effectFn(el, index + 1 - percentage, isUseAnimation);
 
-                    } else if (percentage >= prevIndex) {
-                        this._effectFn(el, percentage - index + 1);
-
+                    } else{
+                        this._effectFn(el,  percentage - index + 1, isUseAnimation);
                     }
                 }
                 index += 1;
@@ -197,11 +201,12 @@ class Elementor {
      * 移動效果
      * @param el
      * @param percentage
+     * @param isUseAnimation
      */
-    private _effectFn = (el: HTMLElement, percentage: number) => {
+    private _effectFn = (el: HTMLElement, percentage: number, isUseAnimation = false) => {
         if(this._configurator.setting.moveEffect?.transformY){
             el.style.transform = `translate(0px, ${-this._configurator.setting.moveEffect?.transformY * percentage}px)`;
-            el.style.transition = 'none';
+            el.style.transition = isUseAnimation ? `${this._configurator.setting.moveEffect?.moveTime ?? '.3s'} transform`:'none';
         }
     };
 
@@ -216,21 +221,21 @@ class Elementor {
         itemEls
             .forEach((row, index) => {
                 if(index === inRangeIndex){
-                    row.setAttribute('data-active', 'true');
-                } else if (row?.dataset.active) {
+                    row.setAttribute('data-active', '');
+                } else if (row?.dataset.active === '') {
                     row.removeAttribute('data-active');
                 }
             });
 
-        const active = itemEls.find(row => row.dataset.active === 'true');
+        const active = itemEls.find(row => row.dataset.active === '');
         const activePage = parseInt(active?.dataset.page);
 
         // 更改顯示在第幾頁的樣式 (父元件使用可判定樣式設定)
         if (this._stater.isVisiblePagination && this._stater.page.activePage > 0) {
             this.pageEls.forEach((row, index) => {
                 if (activePage === index + 1) {
-                    row.setAttribute('data-active', 'true');
-                } else if(row?.dataset.active) {
+                    row.setAttribute('data-active', '');
+                } else if(row?.dataset.active === '') {
                     row.removeAttribute('data-active');
                 }
             });
@@ -245,10 +250,10 @@ class Elementor {
             this.rootEl?.removeAttribute('data-first-page');
             this.rootEl?.removeAttribute('data-last-page');
             if(activePage <= 1 || pageOnlyOne || notPage){
-                this.rootEl?.setAttribute('data-first-page', 'true');
+                this.rootEl?.setAttribute('data-first-page', '');
             }
             if(activePage >= this._stater.page.total || pageOnlyOne || notPage){
-                this.rootEl?.setAttribute('data-last-page',  'true');
+                this.rootEl?.setAttribute('data-last-page',  '');
             }
         }
     };
@@ -256,7 +261,7 @@ class Elementor {
 
     animationStart = () => {
         this._isAnimation = true;
-        this.containerEl.dataset.animation = 'true';
+        this.containerEl.dataset.animation = '';
     };
 
     animationEnd = () => {
