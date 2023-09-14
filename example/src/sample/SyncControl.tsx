@@ -73,6 +73,9 @@ function SyncControl() {
                 isCenteredSlides
 
                 height="200px"
+                moveEffect={{
+                    transformY: 80,
+                }}
                 // spaceBetween={20}
                 isEnableNavButton
                 isEnablePagination

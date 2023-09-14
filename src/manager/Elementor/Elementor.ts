@@ -2,7 +2,6 @@ import {createRef, RefObject} from 'react';
 import {IMultiRefObject} from './types';
 
 import {getMoveDistance, getMovePercentage, getStartPosition} from './utils';
-import {booleanToDataAttr} from '../../utils';
 import Configurator from '../Configurator';
 import Stater from '../Stater';
 
@@ -147,6 +146,64 @@ class Elementor {
 
         return this;
     }
+
+
+    /**
+     * 關閉移動效果
+     */
+    resetMoveEffect(){
+        if(this._configurator.setting.moveEffect){
+            for(const el of this.slideItemEls){
+                el.style.transform = '';
+                el.style.transition = '';
+            }
+        }
+        return this;
+    }
+
+    /**
+     * 移動效果
+     * @param percentage
+     */
+    moveEffect(percentage: number){
+        const {moveEffect} = this._configurator.setting;
+
+        if(moveEffect && percentage >= 0){
+            let index = 0;
+            for(const el of this.slideItemEls){
+                if(el){
+                    const nextIndex = index + 1;
+                    const prevIndex = index - 1;
+
+                    if (percentage >= nextIndex) {
+                        this._effectFn(el, 0);
+
+                    } else if (percentage >= index) {
+                        this._effectFn(el, index + 1 - percentage);
+
+                    } else if (percentage >= prevIndex) {
+                        this._effectFn(el, percentage - index + 1);
+
+                    }
+                }
+                index += 1;
+            }
+        }
+        return this;
+    }
+
+
+    /**
+     * 移動效果
+     * @param el
+     * @param percentage
+     */
+    private _effectFn = (el: HTMLElement, percentage: number) => {
+        if(this._configurator.setting.moveEffect?.transformY){
+            el.style.transform = `translate(0px, ${-this._configurator.setting.moveEffect?.transformY * percentage}px)`;
+            el.style.transition = 'none';
+        }
+    };
 
 
 

@@ -238,19 +238,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
 
     /**
-     * 移動效果
-     * @param el
-     * @param percentage
-     */
-    private _effectFn = (el: HTMLElement, percentage: number) => {
-        if(this._configurator.setting.moveEffect?.transformY){
-            el.style.transform = `translate(0px, ${-this._configurator.setting.moveEffect?.transformY * percentage}px)`;
-            el.style.transition = 'none';
-        }
-    };
-
-
-    /**
      * set OnDragStart emit
      */
     private _onDragStart = () => {
@@ -265,13 +252,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     private _onDragEnd = (activeSourceIndex: number) => {
         this._controller?.slideToVirtualIndex(activeSourceIndex);
 
-        // 關閉移動效果
-        if(this._configurator.setting.moveEffect){
-            for(const el of this._elementor.slideItemEls){
-                el.style.transform = '';
-                el.style.transition = '';
-            }
-        }
+        // 同步結束
+        this._syncCarousel?.syncControlDone(activeSourceIndex);
 
     };
 
@@ -283,29 +265,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
      */
     private _onDragMove = (percentage: number) => {
         this._syncCarousel?.syncControlMove(percentage);
-
-        // 移動效果
-        if(this.props.moveEffect && percentage >= 0){
-            let index = 0;
-            for(const el of this._elementor.slideItemEls){
-                if(el){
-                    const nextIndex = index + 1;
-                    const prevIndex = index - 1;
-
-                    if (percentage >= nextIndex) {
-                        this._effectFn(el, 0);
-
-                    } else if (percentage >= index) {
-                        this._effectFn(el, index + 1 - percentage);
-
-                    } else if (percentage >= prevIndex) {
-                        this._effectFn(el, percentage - index + 1);
-
-                    }
-                }
-                index += 1;
-            }
-        }
     };
 
 

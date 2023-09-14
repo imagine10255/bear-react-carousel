@@ -174,6 +174,7 @@ class Dragger {
 
             this._elementor
                 .transform(translateX)
+                .moveEffect(percentage)
                 .syncActiveState(Math.round(percentage));
         }
     }

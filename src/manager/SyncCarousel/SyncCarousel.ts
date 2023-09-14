@@ -28,7 +28,10 @@ class SyncCarousel {
         if(this._elementor){
             // 將進度比例換算成 movePx
             const moveX = this._elementor.getPercentageToMovePx(percentage);
-            this._elementor.transform(moveX);
+            this._elementor
+                .transform(moveX)
+                .moveEffect(percentage)
+                .syncActiveState(Math.round(percentage));
         }
     };
 
@@ -36,6 +39,11 @@ class SyncCarousel {
         if(this._configurator?.setting.isDebug && logEnable.syncCarousel.onSyncControlDone) logger.printInText('[SyncCarousel.syncControlDone]');
 
         this._controller?.slideToSourceIndex(targetIndex);
+
+        // 關閉移動效果
+        // this._elementor
+        //     .resetMoveEffect();
+
     };
 
     slideToSourceIndex = (slideIndex: number, isUseAnimation = true) => {
