@@ -20,7 +20,7 @@ const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
         key: row.id,
         children: <BearSlideCard>
             <div className="h-100 d-flex"
-                 style={{fontSize: '40px', backgroundColor: row.color}}
+                style={{fontSize: '40px', backgroundColor: row.color}}
             />
         </BearSlideCard>
     };
@@ -33,7 +33,7 @@ const bearSlideItemData2: TBearSlideItemDataList = images.map(row => {
         key: row.id,
         children: <BearSlideCard>
             <div className="h-100 d-flex"
-                 style={{fontSize: '40px', width: '200px', backgroundColor: row.color}}
+                style={{fontSize: '40px', width: '200px', backgroundColor: row.color}}
             />
         </BearSlideCard>
     };
@@ -67,7 +67,7 @@ function CustomNav() {
             setController={setController}
             data={enable ? bearSlideItemData1: undefined}
             onSlideChange={setCarouselState}
-            // onChange={setCarouselState}
+            // onSlideChange={setCarouselState}
             slidesPerView={1}
             // isCenteredSlides={true}
             height="200px"
@@ -83,7 +83,7 @@ function CustomNav() {
                     <button type="button" className={elClassName.navNextButton} onClick={toNext}>
                         {'く'}
                     </button>
-                </div>
+                </div>;
             }}
             // isEnableAutoPlay={false}
 
@@ -100,7 +100,7 @@ function CustomNav() {
             setController={setController}
             data={enable ? bearSlideItemData2: undefined}
             onSlideChange={setCarouselState}
-            // onChange={setCarouselState}
+            // onSlideChange={setCarouselState}
             // slidesPerView="auto"
             // // isCenteredSlides={true}
             // height="200px"
@@ -116,7 +116,7 @@ function CustomNav() {
                     <button type="button" className={elClassName.navNextButton} onClick={toNext}>
                         {'く'}
                     </button>
-                </div>
+                </div>;
             }}
             // isEnableAutoPlay={false}
 

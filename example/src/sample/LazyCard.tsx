@@ -37,7 +37,7 @@ function LazyCard() {
                 // style={{width: '400px'}}
                 // controllerRef={controllerRef}
                 data={bearSlideItemData1}
-                // onChange={setCarouselState}
+                // onSlideChange={setCarouselState}
                 slidesPerView={1}
                 spaceBetween={5}
                 isCenteredSlides

@@ -27,6 +27,7 @@ export interface IBearCarouselProps extends IBreakpointSetting{
   data?: TBearSlideItemDataList
   moveTime?: number
   autoPlayTime?: number
+  initStartPlayTime?: number
   breakpoints?: IPropsBreakpoints
   isDebug?: boolean
   isSlideItemMemo?: boolean

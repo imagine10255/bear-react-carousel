@@ -52,7 +52,7 @@ function SlideImage() {
             // style={{width: '400px'}}
             // controllerRef={controllerRef}
             data={bearSlideItemData1}
-            // onChange={setCarouselState}
+            // onSlideChange={setCarouselState}
             slidesPerView="auto"
             // isCenteredSlides
             spaceBetween={5}
@@ -70,7 +70,7 @@ function SlideImage() {
             // style={{width: '400px'}}
             // controllerRef={controllerRef}
             data={bearSlideItemData1.slice(0, 3)}
-            // onChange={setCarouselState}
+            // onSlideChange={setCarouselState}
             slidesPerView="auto"
             isCenteredSlides
             spaceBetween={5}
@@ -86,7 +86,7 @@ function SlideImage() {
             // style={{width: '400px'}}
             // controllerRef={controllerRef}
             data={bearSlideItemData2.slice(0, 3)}
-            // onChange={setCarouselState}
+            // onSlideChange={setCarouselState}
             slidesPerView={3}
             spaceBetween={5}
             isCenteredSlides

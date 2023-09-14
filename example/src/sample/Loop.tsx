@@ -43,7 +43,7 @@ function Loop() {
                 // style={{width: '400px'}}
                 // controllerRef={controllerRef}
                 data={bearSlideItemData1}
-                // onChange={setCarouselState}
+                // onSlideChange={setCarouselState}
                 height="500px"
                 isEnableNavButton
                 isEnablePagination

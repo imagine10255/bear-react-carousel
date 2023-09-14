@@ -55,7 +55,7 @@ function Base() {
             setController={setController}
             data={enable ? bearSlideItemData1: undefined}
             onSlideChange={setCarouselState}
-            // onChange={setCarouselState}
+            // onSlideChange={setCarouselState}
             slidesPerView={1}
             // isCenteredSlides={true}
             height="200px"

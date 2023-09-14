@@ -10,6 +10,7 @@ import logger from '../../logger';
 class AutoPlayer {
     private _configurator: Configurator;
     private _timer: NodeJS.Timeout;
+    private _initTimer: NodeJS.Timeout;
     private _eventor = new Eventor<TEventMap>();
 
     get isPlaying(){
@@ -26,7 +27,8 @@ class AutoPlayer {
         window.addEventListener('focus', this.play, false);
         window.addEventListener('blur', this.pause, false);
 
-        this.play();
+        console.log('this._configurator.setting.initStartPlayTime', this._configurator.setting.initStartPlayTime ?? 0);
+        this._initTimer = setTimeout(this.play, this._configurator.setting.initStartPlayTime ?? 0);
         this._eventor.on('timeout', callback);
     };
 
@@ -58,7 +60,9 @@ class AutoPlayer {
         if(this._configurator.setting.isDebug && logEnable.autoPlayer.play) logger.printInText('[AutoPlayer.pause]');
 
         clearInterval(this._timer);
+        clearInterval(this._initTimer);
         this._timer = null;
+        this._initTimer = null;
     };
 }
 

@@ -5,5 +5,6 @@ export interface ISetting extends IBreakpointSetting {
     moveTime?: number,
     defaultActivePage?: number,
     autoPlayTime?: number,
+    initStartPlayTime?: number,
     isDebug?: boolean,
 }

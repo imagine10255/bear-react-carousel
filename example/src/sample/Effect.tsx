@@ -62,7 +62,7 @@ function Effect() {
             setController={setController}
             data={enable ? bearSlideItemData1: undefined}
             onSlideChange={setCarouselState}
-            // onChange={setCarouselState}
+            // onSlideChange={setCarouselState}
             slidesPerView={3}
             isCenteredSlides={true}
             height="200px"
