@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.12](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.11...v4.0.12) (2023-09-15)
+
+
+### Features
+
+* move the isLazy and renderLazyPreloader props from BearSlideCard and BearSlideImage to BearCarousel. ([2f291a7](https://github.com/imagine10255/bear-react-carousel/commit/2f291a7a56262e57f309c0b29cab572f9e563a94))
+
 ### [4.0.11](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.10...v4.0.11) (2023-09-15)
 
 
