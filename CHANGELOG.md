@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.13](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.12...v4.0.13) (2023-09-15)
+
+
+### Bug Fixes
+
+* fix isLazy card ([e36d663](https://github.com/imagine10255/bear-react-carousel/commit/e36d6639d2d17896bdf157f91907fd213adb0aae))
+
 ### [4.0.12](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.11...v4.0.12) (2023-09-15)
 
 
