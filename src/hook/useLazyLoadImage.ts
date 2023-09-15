@@ -33,8 +33,8 @@ const useLazyLoadImage = ({isLazy, imageUrl}: IUseLazyLoadProps) => {
         for (let entry of entries) {
             if (entry.isIntersecting) {
                 // 監視目標進入畫面
-                const img = entry.target as HTMLImageElement;
 
+                const img = entry.target as HTMLImageElement;
                 if(status === ELoadStatus.ready){
                     setStatus(ELoadStatus.loading);
 

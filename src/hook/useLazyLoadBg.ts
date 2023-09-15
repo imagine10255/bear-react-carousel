@@ -39,12 +39,15 @@ const useLazyLoadBg = ({isLazy, imageUrl}: IUseLazyLoadProps) => {
             if (entry.isIntersecting) {
                 const el = entry.target as HTMLDivElement;
 
-                const img = new Image();
                 if(status === ELoadStatus.ready){
+                    const img = new Image();
                     setStatus(ELoadStatus.loading);
 
                     img.src = el.dataset.lazySrc;
-                    img.onload = () => setStatus(ELoadStatus.done);
+                    img.onload = () => {
+                        setStatus(ELoadStatus.done);
+                        setDoneImageUrl(img.src);
+                    };
                     img.onerror = () => setStatus(ELoadStatus.fail);
                 }
                 observer.unobserve(el);
