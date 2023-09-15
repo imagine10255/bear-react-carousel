@@ -1,16 +1,15 @@
 import React, {ReactNode} from 'react';
 import CSS from 'csstype';
 import elClassName from './el-class-name';
-import useLazyLoadBg from './hook/useLazyLoadBg';
+import useLazyLoadBg, {ELoadStatus} from './hook/useLazyLoadBg';
 import useDraggableClick from './hook/useDraggableClick';
+import {useSlide} from './components/SlideProvider';
 
 interface IProps {
   className?: string,
   style?: CSS.Properties,
   bgUrl?: string,
   bgSize?: '100%'|'cover',
-  isLazy?: boolean,
-  preloader?: JSX.Element,
   children?: ReactNode,
   onClick?: () => void,
   onClickAllowTime?: number,
@@ -21,29 +20,30 @@ const BearSlideCard = ({
     style,
     bgUrl,
     bgSize,
-    isLazy = false,
-    preloader = <div>loading...</div>,
     children,
     onClick,
     onClickAllowTime = 150,
 }: IProps) => {
-    const {imageRef, isLoading} = useLazyLoadBg({isLazy, imageUrl: bgUrl});
+    const slide = useSlide();
+    const {imageRef, status, doneImageUrl} = useLazyLoadBg({isLazy: slide.isLazy, imageUrl: bgUrl});
     const {onMouseDown, onMouseUp} = useDraggableClick({onClick, onClickAllowTime});
+
+    const imageUrl = slide.isLazy ? doneImageUrl: bgUrl;
 
     return <div
         ref={imageRef}
         className={[className, elClassName.slideItemCard].join(' ').trim()}
         onMouseDown={onClick ? onMouseDown: undefined}
         onMouseUp={onClick ? onMouseUp: undefined}
-        data-lazy-src={isLazy ? bgUrl: undefined}
+        data-lazy-src={slide.isLazy && status !== ELoadStatus.done ? bgUrl: undefined}
         style={{
             ...style,
-            backgroundImage: isLazy && bgUrl ? undefined: bgUrl ?`url(${bgUrl})`: undefined,
+            backgroundImage: (!slide.isLazy && imageUrl) ? `url(${imageUrl})` :undefined,
             backgroundSize: bgSize,
         }}
     >
-        {isLazy && isLoading ? <div className={elClassName.slideItemImagePreLoad}>
-            {preloader}
+        {slide.isLazy && status === ELoadStatus.loading ? <div className={elClassName.slideItemImagePreLoad}>
+            {slide.renderLazyPreloader()}
         </div>: children}
     </div>;
 

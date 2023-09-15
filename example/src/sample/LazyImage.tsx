@@ -17,7 +17,7 @@ import {Controller} from 'bear-react-carousel';
 const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
     return {
         key: row.id,
-        children: <BearSlideImage imageUrl={row.imageUrl} isLazy/>
+        children: <BearSlideImage imageUrl={row.imageUrl}/>
     };
 });
 
@@ -48,6 +48,7 @@ function LazyImage() {
                 // isEnableLoop
                 // isEnableAutoPlay={false}
                 // isDebug
+                isLazy
             />)}
 
         <button type="button" onClick={() => setCount(curr => curr += 1)}> count: {count}</button>

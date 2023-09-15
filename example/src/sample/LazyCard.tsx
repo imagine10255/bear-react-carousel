@@ -17,7 +17,7 @@ import {Controller} from 'bear-react-carousel';
 const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
     return {
         key: row.id,
-        children: <BearSlideCard bgUrl={row.imageUrl} isLazy/>
+        children: <BearSlideCard bgUrl={row.imageUrl}/>
     };
 });
 
@@ -45,6 +45,7 @@ function LazyCard() {
                 height="200px"
                 isEnableNavButton
                 isEnablePagination
+                isLazy
                 // isEnableLoop
                 // isEnableAutoPlay={false}
                 // isDebug

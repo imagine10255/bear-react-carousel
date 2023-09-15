@@ -2,14 +2,14 @@ import CSS from 'csstype';
 import elClassName from './el-class-name';
 import useLazyLoadImage from './hook/useLazyLoadImage';
 import useDraggableClick from './hook/useDraggableClick';
+import {useSlide} from './components/SlideProvider';
+import {ELoadStatus} from './hook/useLazyLoadBg';
 
 interface IProps {
   className?: string,
   style?: CSS.Properties,
   imageUrl: string,
   imageAlt?: string,
-  isLazy?: boolean,
-  preloader?: JSX.Element,
   alt?: string,
   onClick?: () => void,
   onClickAllowTime?: number
@@ -20,28 +20,28 @@ const BearSlideImage = ({
     style,
     imageUrl,
     imageAlt,
-    isLazy = false,
-    preloader = <div>loading...</div>,
     onClick,
     onClickAllowTime = 150,
 }: IProps) => {
-    const {imageRef, isLoading} = useLazyLoadImage({isLazy, imageUrl});
+    const slide = useSlide();
+    const {imageRef, status} = useLazyLoadImage({isLazy: slide.isLazy, imageUrl});
     const {onMouseDown, onMouseUp} = useDraggableClick({onClick, onClickAllowTime});
+
 
     return <>
         <img
             ref={imageRef}
             style={style}
             className={[className, elClassName.slideItemImage].join(' ').trim()}
-            src={isLazy ? undefined : imageUrl}
+            src={(!slide.isLazy && imageUrl) ? imageUrl :undefined}
             alt={imageAlt}
             draggable="false"
-            data-lazy-src={isLazy ? imageUrl: undefined}
+            data-lazy-src={slide.isLazy && status !== ELoadStatus.done ? imageUrl: undefined}
             onMouseDown={onClick ? onMouseDown: undefined}
             onMouseUp={onClick ? onMouseUp: undefined}
         />
-        {isLazy && isLoading && <div className={elClassName.slideItemImagePreLoad}>
-            {preloader}
+        {slide.isLazy && status === ELoadStatus.loading && <div className={elClassName.slideItemImagePreLoad}>
+            {slide.renderLazyPreloader()}
         </div>}
     </>;
 };

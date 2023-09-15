@@ -5,9 +5,26 @@ interface IUseLazyLoadProps {
     imageUrl: string,
 }
 
+export enum ELoadStatus {
+    ready,
+    loading,
+    done,
+    fail,
+}
+
+/**
+ * 攬加載背景圖片
+ *
+ * 背景圖片會造成二次加載，因為透過 new Image 加載一次,
+ * 成功後再給予 style background image 再次加載
+ * 這部分只能透過瀏覽器的緩存來避免第二次
+ * @param isLazy
+ * @param imageUrl
+ */
 const useLazyLoadBg = ({isLazy, imageUrl}: IUseLazyLoadProps) => {
     const imageRef = useRef<HTMLDivElement>(null);
-    const [isLoading, setLoading] = useState(false);
+    const [status, setStatus] = useState<ELoadStatus>(ELoadStatus.ready);
+    const [doneImageUrl, setDoneImageUrl] = useState<string>(undefined);
     const watcher = useRef<IntersectionObserver>();
 
     useEffect(() => {
@@ -20,23 +37,22 @@ const useLazyLoadBg = ({isLazy, imageUrl}: IUseLazyLoadProps) => {
     const onEnterView: IntersectionObserverCallback = useCallback((entries, observer) => {
         for (let entry of entries) {
             if (entry.isIntersecting) {
-                setLoading(true);
                 const el = entry.target as HTMLDivElement;
 
                 const img = new Image();
-                if(el.dataset.lazySrc === ''){
-                    img.src = el.dataset.lazySrc;
-                    img.onload = () => setLoading(false);
+                if(status === ELoadStatus.ready){
+                    setStatus(ELoadStatus.loading);
 
-                    el.style.backgroundImage = `url(${img.src})`;
-                    el.removeAttribute('data-lazy-src');
+                    img.src = el.dataset.lazySrc;
+                    img.onload = () => setStatus(ELoadStatus.done);
+                    img.onerror = () => setStatus(ELoadStatus.fail);
                 }
                 observer.unobserve(el);
             }
         }
-    }, []);
+    }, [status]);
 
-    return {imageRef, isLoading};
+    return {imageRef, status, doneImageUrl};
 };
 
 export default useLazyLoadBg;

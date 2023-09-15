@@ -17,6 +17,7 @@ import SyncCarousel from './manager/SyncCarousel';
 
 import WindowSize from './components/WindowSize';
 import Page from './components/Page';
+import {SlideProvider} from './components/SlideProvider/SlideProvider';
 import {NavNextButton, NavPrevButton} from './components/NavButton';
 import CarouselRoot from './components/CarouselRoot';
 import {logEnable} from './config';
@@ -369,7 +370,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     };
 
     render(){
-        const {style, className, isDebug} = this.props;
+        const {style, className, isDebug, isLazy, renderLazyPreloader} = this.props;
         return (
             <CarouselRoot
                 id={this._configurator.carouselId}
@@ -385,7 +386,12 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
                 <div className={elClassName.content}>
                     <div ref={this._elementor._containerRef} className={elClassName.container} data-testid="bear-carousel-container">
-                        {this._renderSlideItems()}
+                        <SlideProvider
+                            isLazy={isLazy}
+                            renderLazyPreloader={!!renderLazyPreloader ? renderLazyPreloader: () => <div>loading...</div>}
+                        >
+                            {this._renderSlideItems()}
+                        </SlideProvider>
                     </div>
                 </div>
 
