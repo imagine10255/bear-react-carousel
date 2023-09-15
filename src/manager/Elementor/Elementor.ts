@@ -119,14 +119,15 @@ class Elementor {
 
 
     /**
+     * 設定是否移動中
      * 加上狀態讓其他元素不會影響滑動
      * @param isEnable
      */
-    setNonSubjectTouch = (isEnable: boolean) => {
+    setTouching = (isEnable: boolean) => {
         if(isEnable){
-            this.rootEl.dataset.touch = '';
+            this.rootEl.dataset.touching = '';
         }else{
-            this.rootEl.removeAttribute('data-touch');
+            this.rootEl.removeAttribute('data-touching');
         }
     };
 

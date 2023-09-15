@@ -156,7 +156,7 @@ class Dragger {
     private _dragMove(moveX: number) {
         if(this._configurator.setting.isDebug && logEnable.dragger.onDragMove) logger.printInText('[Dragger._dragMove]');
 
-        this._elementor.setNonSubjectTouch(false);
+        this._elementor.setTouching(true);
 
         const {startPosition} = this._locator;
         const {setting} = this._configurator;
@@ -186,7 +186,7 @@ class Dragger {
      */
     private _dragEnd = (): void => {
         if(this._configurator.setting.isDebug && logEnable.dragger.onDragEnd) logger.printInText('[Dragger._dragEnd]');
-        this._elementor.setNonSubjectTouch(true);
+        this._elementor.setTouching(false);
 
         if(this._elementor.slideItemEls){
             const active = this._elementor.slideItemEls.find(row => row.dataset.active === '');

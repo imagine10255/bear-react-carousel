@@ -49,7 +49,7 @@
     z-index: 10;
 }
 
-.bear-react-carousel__root:not([data-touch]) .bear-react-carousel__pagination-group{
+.bear-react-carousel__root[data-touching] .bear-react-carousel__pagination-group{
     pointer-events: none;
 }
 
@@ -121,7 +121,7 @@
     height: 40px;
 }
 
-.bear-react-carousel__root:not([data-touch]) .bear-react-carousel__nav-group{
+.bear-react-carousel__root[data-touching] .bear-react-carousel__nav-group{
     pointer-events: none;
 }
 .bear-react-carousel__root[data-first-page][data-last-page] .bear-react-carousel__pagination-group,
