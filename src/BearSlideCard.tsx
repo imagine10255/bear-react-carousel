@@ -38,7 +38,7 @@ const BearSlideCard = ({
         data-lazy-src={isLazy ? bgUrl: undefined}
         style={{
             ...style,
-            backgroundImage: isLazy && bgUrl ? undefined: `url(${bgUrl})`,
+            backgroundImage: isLazy && bgUrl ? undefined: bgUrl ?`url(${bgUrl})`: undefined,
             backgroundSize: bgSize,
         }}
     >
