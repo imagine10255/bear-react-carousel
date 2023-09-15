@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.11](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.10...v4.0.11) (2023-09-15)
+
+
+### Bug Fixes
+
+* fix data-touch to data-touching ([c3db4fe](https://github.com/imagine10255/bear-react-carousel/commit/c3db4fec5bad561c3a370b30072d72847ca2cd23))
+* fix moveEffect init isUseAnimation ([06b17bf](https://github.com/imagine10255/bear-react-carousel/commit/06b17bf8317940fee04dabffe265a9808c8e7d89))
+* fix slide card lazy bg ([89f27f3](https://github.com/imagine10255/bear-react-carousel/commit/89f27f37bf689aeb642afdf79b061abb9d14251d))
+
 ### [4.0.10](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.10-alpha.3...v4.0.10) (2023-09-14)
 
 
