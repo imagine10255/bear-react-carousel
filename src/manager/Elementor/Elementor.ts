@@ -154,19 +154,6 @@ class Elementor {
 
 
     /**
-     * 關閉移動效果
-     */
-    resetMoveEffect(){
-        if(this._configurator.setting.moveEffect){
-            for(const el of this.slideItemEls){
-                el.style.transform = '';
-                el.style.transition = '';
-            }
-        }
-        return this;
-    }
-
-    /**
      * 移動效果
      * @param percentage
      * @param isUseAnimation

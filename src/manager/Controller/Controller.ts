@@ -94,7 +94,7 @@ class Controller {
         const position = this._elementor.getMoveDistance(inRangeIndex);
         this._elementor
             .transform(position, options?.isUseAnimation ?? true)
-            .moveEffect(slideIndex, true)
+            .moveEffect(slideIndex, options?.isUseAnimation ?? true)
             .syncActiveState(inRangeIndex);
 
 
