@@ -88,7 +88,7 @@ There is also a codesandbox template that you can fork and play with it:
 
 Use Nextjs example
 
-[![Edit react-editext-template](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/bear-react-carousel-nextjs-6jqj2o)
+[![Edit react-editext-template](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/bear-react-carousel-nextjs-6jqj2o?welcome=true)
 
 
 
