@@ -1,6 +1,6 @@
 <div align="center">
         <a href="https://bear-react-carousel.github.io" title="Bear Carousel Logo - Most modern mobile touch slider with hardware accelerated transitions for ReactJS">
-            <img src="https://github.com/imagine10255/bear-react-carousel/blob/main/logo.png" alt="Bear Carousel Logo - Most modern mobile touch slider with hardware accelerated transitions for ReactJS" />
+            <img src="https://github.com/imagine10255/bear-react-carousel/blob/main/logo.png" alt="Bear React Carousel Logo - Most modern mobile touch slider with hardware accelerated transitions for ReactJS" />
         </a>
 </div>
 
