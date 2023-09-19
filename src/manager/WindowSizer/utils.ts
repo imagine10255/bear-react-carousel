@@ -4,7 +4,7 @@
  * @param innerWidth
  * @param breakpointSizes
  */
-export function getSizeByRange(innerWidth: number, breakpointSizes: number[]): number{
+export function getSizeByRange(innerWidth: number = 0, breakpointSizes: number[]): number{
     const filterArray = breakpointSizes
         .filter(size => size <= innerWidth)
         .sort((a, b) => Number(b) - Number(a));

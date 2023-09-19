@@ -1,4 +1,11 @@
-import {IAspectRatio, IBearCarouselProps, IBreakpointSetting, IBreakpointSettingActual, IPropsBreakpoints} from '../../types';
+import {
+    IAspectRatio,
+    IBearCarouselProps,
+    IBreakpointSetting,
+    IBreakpointSettingActual,
+    IPropsBreakpoints,
+    GlobalWindow
+} from '../../types';
 import {ISetting} from './types';
 import {anyToNumber, getSizeByRange} from '../../utils';
 
@@ -43,11 +50,12 @@ export function getPaddingBySize(aspectRatio: IAspectRatio, slidesPerView: numbe
 
 /**
  * 取得響應式設定
- * @param setting
+ * @param defaultBreakpoint
  * @param breakpoints
+ * @param win
  */
-export function getMediaSetting(defaultBreakpoint: IBreakpointSetting, breakpoints: IPropsBreakpoints): IBreakpointSettingActual {
-    const selectSize = getSizeByRange(window.innerWidth, Object.keys(breakpoints).map(Number));
+export function getMediaSetting(defaultBreakpoint: IBreakpointSetting, breakpoints: IPropsBreakpoints, win?: GlobalWindow): IBreakpointSettingActual {
+    const selectSize = getSizeByRange(win?.innerWidth, Object.keys(breakpoints).map(Number));
     let setting = defaultBreakpoint;
     if(selectSize > 0){
         setting = Object.assign(defaultBreakpoint ?? {}, breakpoints[selectSize]);

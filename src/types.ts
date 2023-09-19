@@ -16,7 +16,7 @@ export type TRenderPagination = (pageTotal: number) => JSX.Element[]|undefined
 export type TRenderLazyPreloader = () => JSX.Element|undefined
 export type TStateOnChange = (carouselState: ICarouselState) => void
 export type TOnMount = () => void
-
+export type GlobalWindow = Window & typeof globalThis
 
 
 export interface IBearCarouselProps extends IBreakpointSetting{

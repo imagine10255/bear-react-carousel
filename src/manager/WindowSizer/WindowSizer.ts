@@ -2,7 +2,7 @@ import {getSizeByRange} from './utils';
 import {TEventMap} from './types';
 
 import Eventor from '../Eventor';
-import {EDevice, IPropsBreakpoints} from '../../types';
+import {EDevice, IPropsBreakpoints, GlobalWindow} from '../../types';
 import {checkIsDesktop, checkIsMobile} from '../../utils';
 import {logEnable} from '../../config';
 import logger from '../../logger';
@@ -20,7 +20,7 @@ class WindowSizer {
     private _size: number;
     private _device: EDevice;
     private _eventManager = new Eventor<TEventMap>();
-    private _window: Window & typeof globalThis;
+    private _window: GlobalWindow;
 
     get size() {
         return this._size;
@@ -31,7 +31,7 @@ class WindowSizer {
 
     constructor(inject: {
         breakpoints: IPropsBreakpoints,
-        win: Window & typeof globalThis
+        win: GlobalWindow
         configurator: Configurator,
     }) {
         this._breakpoints = inject.breakpoints;
@@ -47,12 +47,12 @@ class WindowSizer {
         } else if (checkIsDesktop()) {
             return EDevice.desktop;
         } else {
-            throw new Error('Unable to detect device type');
+            return EDevice.desktop; // default
         }
     };
 
     private _setSize = () => {
-        this._size = getSizeByRange(window.innerWidth, Object.keys(this._breakpoints).map(Number));
+        this._size = getSizeByRange(this._window?.innerWidth, Object.keys(this._breakpoints).map(Number));
     };
 
     private _emitResize = () => {

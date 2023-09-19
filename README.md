@@ -45,6 +45,7 @@
 - Support auto play and init start play time
 - Support keyboard control slide index
 - Support lazy load image
+- Support Nextjs13 (v4.0.14+)
 
 
 

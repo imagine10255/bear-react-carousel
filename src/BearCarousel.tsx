@@ -71,10 +71,10 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         // this._device = checkIsMobile() ? EDevice.mobile : EDevice.desktop;
 
         const setting = getSetting(props);
-        this._configurator = new Configurator(props.breakpoints, setting);
+        this._configurator = new Configurator(props.breakpoints, setting, globalThis.window);
         this._windowSizer = new WindowSizer({
             breakpoints: props.breakpoints,
-            win: window,
+            win: globalThis.window,
             configurator: this._configurator,
         });
         this._stater = new Stater(this._configurator, props.data);

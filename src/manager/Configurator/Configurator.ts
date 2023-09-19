@@ -1,7 +1,7 @@
 import {ulid} from 'ulid';
 import {getHeight, getMediaSetting} from './utils';
 import {ISetting} from './types';
-import {IPropsBreakpoints} from '../../types';
+import {IPropsBreakpoints, GlobalWindow} from '../../types';
 import elClassName from '../../el-class-name';
 
 
@@ -10,7 +10,7 @@ class Configurator {
     private _setting: ISetting;
     private _carouselId = `bear-react-carousel_${ulid().toLowerCase()}`;
 
-    constructor(breakpoint: IPropsBreakpoints, options?: ISetting) {
+    constructor(breakpoint: IPropsBreakpoints, options?: ISetting, win?: GlobalWindow) {
         this.init(breakpoint, options);
     }
 
@@ -55,8 +55,8 @@ class Configurator {
     }
 
 
-    init = (responsiveBreakpoints: IPropsBreakpoints, options?: ISetting) => {
-        this._setting = getMediaSetting(options, responsiveBreakpoints);
+    init = (responsiveBreakpoints: IPropsBreakpoints, options?: ISetting, win?: GlobalWindow) => {
+        this._setting = getMediaSetting(options, responsiveBreakpoints, win);
     };
 }
 
