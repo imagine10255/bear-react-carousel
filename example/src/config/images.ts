@@ -92,10 +92,10 @@ export const diffImages = [
 ];
 
 export const carImages = [
-    {id: 1, imageUrl: asset('/sample/racing/01.jpg')},
-    {id: 2, imageUrl: asset('/sample/racing/02.jpg')},
-    {id: 3, imageUrl: asset('/sample/racing/03.jpg')},
-    {id: 4, imageUrl: asset('/sample/racing/04.jpg')},
-    {id: 5, imageUrl: asset('/sample/racing/05.jpg')},
+    {id: 1, imageUrl: asset('/sample/racing/01.webp')},
+    {id: 2, imageUrl: asset('/sample/racing/02.webp')},
+    {id: 3, imageUrl: asset('/sample/racing/03.webp')},
+    {id: 4, imageUrl: asset('/sample/racing/04.webp')},
+    {id: 5, imageUrl: asset('/sample/racing/05.webp')},
 ];
 
