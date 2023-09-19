@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.14](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.13...v4.0.14) (2023-09-19)
+
+
+### Features
+
+* support Nextjs13 (add GlobalTHis) ([e7ef5be](https://github.com/imagine10255/bear-react-carousel/commit/e7ef5be08a2f54b2d9175a371764c82c88a0934c))
+
 ### [4.0.13](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.12...v4.0.13) (2023-09-15)
 
 
