@@ -75,7 +75,7 @@ const examples: Record<EExampleCode, () => JSX.Element> = {
 };
 
 function App() {
-    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.lazyCard);
+    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.renderPagination);
     const Comp = examples[exampleKey];
 
 

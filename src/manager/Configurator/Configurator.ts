@@ -9,8 +9,10 @@ import elClassName from '../../el-class-name';
 class Configurator {
     private _setting: ISetting;
     private _carouselId = `bear-react-carousel_${ulid().toLowerCase()}`;
+    private _window: GlobalWindow;
 
     constructor(breakpoint: IPropsBreakpoints, options?: ISetting, win?: GlobalWindow) {
+        this._window = win;
         this.init(breakpoint, options);
     }
 
@@ -56,8 +58,8 @@ class Configurator {
     }
 
 
-    init = (responsiveBreakpoints: IPropsBreakpoints, options?: ISetting, win?: GlobalWindow) => {
-        this._setting = getMediaSetting(options, responsiveBreakpoints, win);
+    init = (responsiveBreakpoints: IPropsBreakpoints, options?: ISetting) => {
+        this._setting = getMediaSetting(options, responsiveBreakpoints, this._window);
     };
 }
 

@@ -9,6 +9,11 @@ import {
 import {ISetting} from './types';
 import {anyToNumber, getSizeByRange} from '../../utils';
 
+
+/**
+ * 取得設定
+ * @param props
+ */
 export function getSetting(props: IBearCarouselProps): ISetting {
     return {
         slidesPerView: props.slidesPerView,
@@ -28,7 +33,7 @@ export function getSetting(props: IBearCarouselProps): ISetting {
         moveEffect: props.moveEffect,
         isDebug: props.isDebug
     };
-};
+}
 
 
 
@@ -66,6 +71,7 @@ export function getMediaSetting(defaultBreakpoint: IBreakpointSetting, breakpoin
     //     setting.isEnableLoop = false;
     // }
 
+    console.log('setting', setting);
     const slidesPerViewActual = setting.slidesPerView === 'auto' ? 1: anyToNumber(setting.slidesPerView , 1);
     return {
         ...setting,
