@@ -1,21 +1,9 @@
-/**
- * bootstrap grid setting
- *
- * 單位值參考
- * row.padding === col.padding === container.padding
- *
- * 更改格數
- * import grid from "config/grid";
- *
- * <GridThemeProvider gridTheme={{
- *     ...grid,
- *     gridColumns: 35,
- *     gridGutterWidth: 3,
- * }}>
- */
+import {IGridSetting} from 'bear-react-grid';
 
-export default {
-    gridGutterWidth: 10,
+
+const gridTheme: IGridSetting = {
+    spacer: '1rem',
+    gutter: '.625rem',
     gridColumns: 24,
     gridBreakpoints: {
         xs: 0,
@@ -30,13 +18,8 @@ export default {
         md: 720,
         lg: 960,
         xl: 1140,
-        xxl: 1540,
+        xxl: 1141,
     },
-    gridGutterWidthMedia: {
-        sm: 10,
-        md: 10,
-        lg: 10,
-        xl: 10,
-        xxl: 10,
-    }
 };
+
+export default gridTheme;

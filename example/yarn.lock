@@ -418,14 +418,10 @@ babel-plugin-syntax-jsx@^6.18.0:
   version "0.0.0"
   uid ""
 
-bear-react-grid@3.0.3:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/bear-react-grid/-/bear-react-grid-3.0.3.tgz#aca32571c07f9ce58e5eb45d38ba867c875d2390"
-  integrity sha512-m6Kj8aKRYSXVRbFBCNyvS0frt1zHiVyxTipDS7tINVe2fYgeXg38NHyeyb4skn1CGn7b7Ft18s/4Sr/twMFedQ==
-  dependencies:
-    react "^18.x"
-    react-dom "^18.x"
-    styled-components "^5.3.x"
+bear-react-grid@5.0.3-alpha.3:
+  version "5.0.3-alpha.3"
+  resolved "https://registry.yarnpkg.com/bear-react-grid/-/bear-react-grid-5.0.3-alpha.3.tgz#cad8da2b9e70d2f797f5dde9f47b035bd4f158c9"
+  integrity sha512-a9uAFpwab6TIXFPHrJKthpmtmHUk7JU+HdnXG46hhmoWpTDByGf1RxawhIU3REJyz/MGKX60iqvoS8Z1o07qCA==
 
 camelize@^1.0.0:
   version "1.0.1"
@@ -614,7 +610,7 @@ postcss@^8.4.21:
     picocolors "^1.0.0"
     source-map-js "^1.0.2"
 
-react-dom@^18.2.0, react-dom@^18.x:
+react-dom@^18.2.0:
   version "18.2.0"
   resolved "https://registry.npmjs.org/react-dom/-/react-dom-18.2.0.tgz"
   integrity sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==
@@ -627,7 +623,7 @@ react-is@^16.7.0:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
-react@^18.2.0, react@^18.x:
+react@^18.2.0:
   version "18.2.0"
   resolved "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==
@@ -667,7 +663,7 @@ source-map-js@^1.0.2:
   resolved "https://registry.npmjs.org/source-map-js/-/source-map-js-1.0.2.tgz"
   integrity sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==
 
-styled-components@5.3.9, styled-components@^5.3.x:
+styled-components@5.3.9:
   version "5.3.9"
   resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-5.3.9.tgz#641af2a8bb89904de708c71b439caa9633e8f0ba"
   integrity sha512-Aj3kb13B75DQBo2oRwRa/APdB5rSmwUfN5exyarpX+x/tlM/rwZA2vVk2vQgVSP6WKaZJHWwiFrzgHt+CLtB4A==
@@ -704,11 +700,6 @@ typescript@^4.9.3:
   version "4.9.5"
   resolved "https://registry.npmjs.org/typescript/-/typescript-4.9.5.tgz"
   integrity sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==
-
-ulid@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/ulid/-/ulid-2.3.0.tgz#93063522771a9774121a84d126ecd3eb9804071f"
-  integrity sha512-keqHubrlpvT6G2wH0OEfSW4mquYRcbe/J8NMmveoQOjUqmo+hXtO+ORCpWhdbZ7k72UtY61BL7haGxW6enBnjw==
 
 vite@^4.2.0:
   version "4.2.1"

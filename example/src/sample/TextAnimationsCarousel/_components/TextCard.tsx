@@ -1,5 +1,5 @@
 import {BearSlideCard} from 'bear-react-carousel';
-import {EDirection, Flex, media} from 'bear-react-grid';
+import {media} from 'bear-react-grid';
 import React from 'react';
 import styled, {css} from 'styled-components';
 
@@ -24,10 +24,10 @@ const TextCard = ({
             <SubTitle>{subTitle}</SubTitle>
             <Title>{title}</Title>
             <Desc>{desc}</Desc>
-            <Flex direction={EDirection.row}>
+            <div className="d-flex">
                 <Button>Shop Now</Button>
                 <Button isOutline>Home Store</Button>
-            </Flex>
+            </div>
         </AnimationsBox>
 
     </BearSlideCard>;
