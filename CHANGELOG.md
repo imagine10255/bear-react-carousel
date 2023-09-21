@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.15](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.15-alpha.2...v4.0.15) (2023-09-21)
+
+
+### Bug Fixes
+
+* close getMediaSetting console.log ([0a276d2](https://github.com/imagine10255/bear-react-carousel/commit/0a276d2a6f9538d4a6cf8b9a2911625c96f95a73))
+
 ### [4.0.15-alpha.2](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.15-alpha.1...v4.0.15-alpha.2) (2023-09-21)
 
 
