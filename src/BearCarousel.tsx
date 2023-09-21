@@ -33,7 +33,7 @@ interface IState {
 
 
 class BearCarousel extends React.Component<IBearCarouselProps, IState> {
-    static defaultProps = {
+    static defaultProps: IBearCarouselProps = {
         data: undefined,
         slidesPerView: 1,
         slidesPerGroup: 1, // 不可為小數
@@ -50,7 +50,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         moveTime: 500,
         autoPlayTime: 5000,
         initStartPlayTime: 1500,
-        defaultActivePage: 1,
         isSlideItemMemo: false,
     };
     _isEnableGpuRender = checkIsDesktop();
@@ -158,7 +157,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
         const {windowSize: nextWindowSize} = nextState;
 
-        if(isPropsDiff(this.props, nextProps, ['data']) ||
+        if(isPropsDiff(this.props, nextProps, ['data', 'moveEffect']) ||
             this.state.windowSize !== nextWindowSize ||
             this.props.data?.length !== nextProps.data?.length
         ){

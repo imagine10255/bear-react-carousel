@@ -1,4 +1,4 @@
-import {ReactNode, RefObject} from 'react';
+import {ReactNode, RefObject, CSSProperties} from 'react';
 import * as CSS from 'csstype';
 import BearCarousel from './BearCarousel';
 import Controller from './manager/Controller';
@@ -85,9 +85,18 @@ export interface IAspectRatio {
   addStaticHeight?: string
 }
 
+
+export interface IPercentageInfo {
+  calcPercentage: number,
+  percentage: number,
+  index: number
+}
+export type TMoveEffectFn = (percentageInfo: IPercentageInfo) => CSSProperties;
+
+
 interface IMoveEffect {
-  transformY?: number,
   moveTime?: string,
+  moveFn?: TMoveEffectFn,
 }
 
 export interface IBreakpointSetting {
@@ -115,7 +124,6 @@ export interface IPropsBreakpoints {
 
 export type TToPrev = () => void
 export type TToNext = () => void
-
 
 
 

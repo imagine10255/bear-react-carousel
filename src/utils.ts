@@ -103,15 +103,17 @@ export function getLoopResetIndex(activeActualIndex: number, residue: number): n
 
 
 
+type ObjectKeys<T> = Array<keyof T>;
 
-
-
+export function getObjectKeys<T>(props: T): ObjectKeys<T> {
+    return Object.keys(props) as ObjectKeys<T>;
+}
 
 export function isPropsDiff(props: IBearCarouselProps, nextProps: IBearCarouselProps, exclude: string[]) {
-    const filterProps = Object.keys(props)
-        .filter(key => typeof props[key] !== 'function' && !exclude.includes(key))
+    const filterProps = getObjectKeys(props)
+        .filter((key) => typeof props[key] !== 'function' && !exclude.includes(key))
         .map(key => props[key]);
-    const nextFilterProps = Object.keys(nextProps)
+    const nextFilterProps = getObjectKeys(nextProps)
         .filter(key => typeof nextProps[key] !== 'function' && !exclude.includes(key))
         .map(key => nextProps[key]);
 

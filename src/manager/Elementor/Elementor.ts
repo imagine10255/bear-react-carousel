@@ -4,6 +4,8 @@ import {IMultiRefObject} from './types';
 import {getMoveDistance, getMovePercentage, getStartPosition} from './utils';
 import Configurator from '../Configurator';
 import Stater from '../Stater';
+import {IPercentageInfo} from '../../types';
+import {getObjectKeys} from '../../utils';
 
 class Elementor {
     _rootRef: RefObject<HTMLDivElement> = createRef();
@@ -159,24 +161,34 @@ class Elementor {
      * @param isUseAnimation
      */
     moveEffect(percentage: number, isUseAnimation = false){
-        const {moveEffect} = this._configurator.setting;
-
-        if(moveEffect && percentage >= 0){
+        const {moveEffect, slidesPerView, isCenteredSlides} = this._configurator.setting;
+        if(typeof slidesPerView === 'number' && moveEffect?.moveFn){
             let index = 0;
             for(const el of this.slideItemEls){
                 if(el){
-                    const nextIndex = index + 1;
-                    const prevIndex = index - 1;
+                    // 離場的進度 (因為是 center, 所以需要 除以2)
+                    const fadeoutProcess = isCenteredSlides ? Math.floor(slidesPerView / 2) + 1 : slidesPerView;
 
-                    if (percentage >= nextIndex) {
-                        this._effectFn(el, index - percentage + 1, isUseAnimation);
+                    // 目前進度
+                    const currActiveIs0Process = percentage - index;
 
-                    } else if (percentage >= index) {
-                        this._effectFn(el, index + 1 - percentage, isUseAnimation);
+                    // 如果到達1就要下降
+                    const calcPercentage = currActiveIs0Process >= 0 ?
+                        (fadeoutProcess - currActiveIs0Process) / fadeoutProcess:
+                        (fadeoutProcess + currActiveIs0Process) / fadeoutProcess
+                    ;
 
-                    } else{
-                        this._effectFn(el,  percentage - index + 1, isUseAnimation);
-                    }
+                    // debug
+                    // if(index === 1){
+                    //     console.log('currActiveIs0Process', currActiveIs0Process, calcP);
+                    // }
+
+                    // 離場
+                    this._effectFn(el, {
+                        calcPercentage,
+                        percentage: currActiveIs0Process,
+                        index,
+                    }, isUseAnimation);
                 }
                 index += 1;
             }
@@ -188,13 +200,25 @@ class Elementor {
     /**
      * 移動效果
      * @param el
-     * @param percentage
+     * @param percentageInfo
      * @param isUseAnimation
      */
-    private _effectFn = (el: HTMLElement, percentage: number, isUseAnimation = false) => {
-        if(this._configurator.setting.moveEffect?.transformY){
-            el.style.transform = `translate(0px, ${-this._configurator.setting.moveEffect?.transformY * percentage}px)`;
-            el.style.transition = isUseAnimation ? `${this._configurator.setting.moveEffect?.moveTime ?? '.3s'} transform`:'none';
+    private _effectFn = (el: HTMLElement, percentageInfo: IPercentageInfo, isUseAnimation = false) => {
+        if(this._configurator.setting.moveEffect?.moveFn){
+            const moveStyles = this._configurator.setting.moveEffect.moveFn(percentageInfo);
+            if(moveStyles){
+                getObjectKeys(moveStyles).forEach(rowStyleKey => {
+                    // @ts-ignore
+                    el.style[rowStyleKey] = moveStyles[rowStyleKey];
+                });
+                if(isUseAnimation){
+                    el.style.transition = Object.keys(moveStyles).map(rowStyleKey => {
+                        return `${this._configurator.setting.moveEffect?.moveTime ?? '.3s'} ${rowStyleKey}`;
+                    }).join(', ');
+                }else{
+                    el.style.transition = 'none';
+                }
+            }
         }
     };
 
