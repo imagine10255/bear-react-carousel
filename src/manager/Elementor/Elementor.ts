@@ -5,6 +5,7 @@ import {getMoveDistance, getMovePercentage, getStartPosition} from './utils';
 import Configurator from '../Configurator';
 import Stater from '../Stater';
 import {IPercentageInfo} from '../../types';
+import {getObjectKeys} from '../../utils';
 
 class Elementor {
     _rootRef: RefObject<HTMLDivElement> = createRef();
@@ -206,7 +207,8 @@ class Elementor {
         if(this._configurator.setting.moveEffect?.moveFn){
             const moveStyles = this._configurator.setting.moveEffect.moveFn(percentageInfo);
             if(moveStyles){
-                Object.keys(moveStyles).forEach(rowStyleKey => {
+                getObjectKeys(moveStyles).forEach(rowStyleKey => {
+                    // @ts-ignore
                     el.style[rowStyleKey] = moveStyles[rowStyleKey];
                 });
                 if(isUseAnimation){
