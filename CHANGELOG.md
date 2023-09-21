@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.15-alpha.2](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.15-alpha.1...v4.0.15-alpha.2) (2023-09-21)
+
+
+### Features
+
+* modify moveEffect change use custom fn ([2c840fc](https://github.com/imagine10255/bear-react-carousel/commit/2c840fc313422cfc03b637e446efc6175e8449b9))
+* modify tsconfig noImplicitAny: false => true ([0ff8855](https://github.com/imagine10255/bear-react-carousel/commit/0ff88559d2e6b0a76235610045fd3a0b33e637d9))
+
 ### [4.0.15-alpha.1](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.15-alpha.0...v4.0.15-alpha.1) (2023-09-20)
 
 
