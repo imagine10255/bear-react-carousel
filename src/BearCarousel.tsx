@@ -158,7 +158,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
         const {windowSize: nextWindowSize} = nextState;
 
-        if(isPropsDiff(this.props, nextProps, ['data']) ||
+        if(isPropsDiff(this.props, nextProps, ['data', 'moveEffect']) ||
             this.state.windowSize !== nextWindowSize ||
             this.props.data?.length !== nextProps.data?.length
         ){

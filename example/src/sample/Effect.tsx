@@ -8,8 +8,8 @@ import BearCarousel, {
 } from 'bear-react-carousel';
 import {baseImage as images} from '../config/images';
 
-import {Controller} from 'bear-react-carousel';
-import {IBreakpointSetting} from '../../../src';
+import {Controller, moveEffectFn, TMoveEffectFn} from 'bear-react-carousel';
+
 
 
 
@@ -50,10 +50,18 @@ function Effect() {
     });
 
 
-    const handleOnPercentage: IBreakpointSetting['effectFn'] = (el, percentage) => {
-        el.style.transform = `translate(0px, ${-50 * percentage}px)`;
-        el.style.transition = 'none';
+    // const handleOnPercentage: IBreakpointSetting['effectFn'] = (el, percentage) => {
+    //     el.style.transform = `translate(0px, ${-50 * percentage}px)`;
+    //     el.style.transition = 'none';
+    // };
+    const customMoveEffectFn: TMoveEffectFn = (percentageInfo) => {
+        const transformY = 80;
+        return {
+            transform: `translate(0px, ${-transformY * (percentageInfo.calcPercentage - 1)}px)`,
+            opacity: percentageInfo.calcPercentage,
+        };
     };
+
     
     return <div>
         {/*測試依照比例設定容器高度*/}
@@ -63,16 +71,22 @@ function Effect() {
             data={enable ? bearSlideItemData1: undefined}
             onSlideChange={setCarouselState}
             // onSlideChange={setCarouselState}
-            slidesPerView={3}
+            slidesPerView={5}
             isCenteredSlides={true}
             height="200px"
             // height={{widthRatio: 21, heightRatio: 9}}
             isEnableNavButton
+            // renderPagination={(pageTotal) => {
+            //     return [
+            //         <div>sad</div>
+            //     ];
+            // }}
             isEnablePagination
             // isEnableLoop
             // isEnableAutoPlay={false}
             moveEffect={{
-                transformY: 80,
+                moveFn: customMoveEffectFn,
+                // moveFn: moveEffectFn.transformY(80),
             }}
             // effectFn={handleOnPercentage}
 

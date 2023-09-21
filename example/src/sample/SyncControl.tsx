@@ -1,6 +1,6 @@
 import {useCallback, useRef, useState} from 'react';
 import styled from 'styled-components';
-import BearCarousel, {BearSlideCard, ICarouselState, TBearSlideItemDataList, elClassName, IInfo} from 'bear-react-carousel';
+import BearCarousel, {BearSlideCard, ICarouselState, TBearSlideItemDataList, moveEffectFn, IInfo} from 'bear-react-carousel';
 import {baseImage as images} from '../config/images';
 
 
@@ -74,7 +74,7 @@ function SyncControl() {
 
                 height="200px"
                 moveEffect={{
-                    transformY: 80,
+                    moveFn: moveEffectFn.rotate(),
                     moveTime: '300ms',
                 }}
                 // spaceBetween={20}
@@ -128,14 +128,6 @@ const Box = styled.div`
   display: flex;
   margin: 0 auto;
 
-  .${elClassName.slideItem}:not([data-active]){
-    opacity: .1;
-    -webkit-transform: scale3d(0.8, 0.8, 1);
-    transform: scale3d(0.8, 0.8, 1);
-    -webkit-transition: all 0.3s ease-in-out;
-    -moz-transition: all 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out;
-  }
 `;
 
 
