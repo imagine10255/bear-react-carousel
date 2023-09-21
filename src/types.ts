@@ -1,4 +1,4 @@
-import {ReactNode, RefObject, CSSProperties} from 'react';
+import {RefObject, CSSProperties} from 'react';
 import * as CSS from 'csstype';
 import BearCarousel from './BearCarousel';
 import Controller from './manager/Controller';
@@ -11,7 +11,7 @@ export enum EDevice {
   desktop,
 }
 
-export type TRenderNavButton = (toPrev: TToPrev, toNext: TToNext) => ReactNode
+export type TRenderNavButton = (toPrev: TToPrev, toNext: TToNext) => JSX.Element
 export type TRenderPagination = (pageTotal: number) => JSX.Element[]|undefined
 export type TRenderLazyPreloader = () => JSX.Element|undefined
 export type TStateOnChange = (carouselState: ICarouselState) => void
@@ -72,7 +72,7 @@ export interface IInfo extends ICarouselState{
 }
 export interface IBearSlideItemData {
   key: string|number
-  children: ReactNode
+  children: JSX.Element
 }
 export type TBearSlideItemDataList = IBearSlideItemData[];
 
