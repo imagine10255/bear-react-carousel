@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.17-alpha.0](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.16...v4.0.17-alpha.0) (2023-10-07)
+
+
+### Bug Fixes
+
+* modify breakpointSizes size check <= to < ([0e598ce](https://github.com/imagine10255/bear-react-carousel/commit/0e598ce3a570d2acce998551bc1d4531f11f4d32))
+
 ### [4.0.16](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.16-alpha.0...v4.0.16) (2023-09-21)
 
 ### [4.0.16-alpha.0](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.15...v4.0.16-alpha.0) (2023-09-21)
