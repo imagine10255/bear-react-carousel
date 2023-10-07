@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.17-alpha.1](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.17-alpha.0...v4.0.17-alpha.1) (2023-10-07)
+
+
+### Bug Fixes
+
+* modify height is auto, position issue ([3a5ed10](https://github.com/imagine10255/bear-react-carousel/commit/3a5ed10c06eca2d65751419b5d5d0c45c91b0493))
+
 ### [4.0.17-alpha.0](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.16...v4.0.17-alpha.0) (2023-10-07)
 
 
