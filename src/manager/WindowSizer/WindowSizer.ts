@@ -1,9 +1,8 @@
-import {getSizeByRange} from './utils';
 import {TEventMap} from './types';
 
 import Eventor from '../Eventor';
 import {EDevice, IPropsBreakpoints, GlobalWindow} from '../../types';
-import {checkIsDesktop, checkIsMobile} from '../../utils';
+import {checkIsDesktop, checkIsMobile, getSizeByRange} from '../../utils';
 import {logEnable} from '../../config';
 import logger from '../../logger';
 import Configurator from '../Configurator';

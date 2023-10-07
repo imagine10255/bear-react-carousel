@@ -77,7 +77,7 @@ export interface IBearSlideItemData {
 export type TBearSlideItemDataList = IBearSlideItemData[];
 
 export type heightUnit = 'px' | '%' | 'em' | 'rem' | 'vh';
-export type THeightUnitSize = `${number}${heightUnit}`;
+export type THeightUnitSize = 'auto'|`${number}${heightUnit}`;
 
 export interface IAspectRatio {
   widthRatio: number
