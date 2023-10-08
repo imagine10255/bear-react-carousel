@@ -26,6 +26,7 @@ class Configurator {
 
 
     get style() {
+        const isAutoHeight = typeof this.setting.height === 'undefined' || this.setting.height === 'auto';
         const rootHeight = getHeight(this.setting.height);
         const styleData = [
             {
@@ -36,7 +37,7 @@ class Configurator {
                 // 保護不被項目擠開
                 targetEl: `#${this.carouselId} .${elClassName.content}`,
                 styles: [
-                    `position: ${this.setting.height ? 'absolute': 'static'};`,
+                    `position: ${isAutoHeight ? 'static': 'absolute'};`,
                 ]
             },
             {
