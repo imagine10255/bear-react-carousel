@@ -27,6 +27,7 @@ import LazyCard from "./sample/LazyCard";
 import AutoImage from "./sample/AutoImage";
 import CustomNav from './sample/CustomNav';
 import Effect from './sample/Effect';
+import Effect2 from './sample/Effect2';
 
 
 
@@ -50,6 +51,7 @@ enum EExampleCode {
     textAnimations = 'textAnimations',
     customNav = 'customNav',
     moveEffect = 'moveEffect',
+    moveEffect2 = 'moveEffect2',
 }
 
 
@@ -72,10 +74,11 @@ const examples: Record<EExampleCode, () => JSX.Element> = {
     [EExampleCode.textAnimations]: TextAnimationsCarousel,
     [EExampleCode.customNav]: CustomNav,
     [EExampleCode.moveEffect]: Effect,
+    [EExampleCode.moveEffect2]: Effect2,
 };
 
 function App() {
-    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.base);
+    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.moveEffect2);
     const Comp = examples[exampleKey];
 
 

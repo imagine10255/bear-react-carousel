@@ -14,7 +14,7 @@ export enum EDevice {
 export type TRenderNavButton = (toPrev: TToPrev, toNext: TToNext) => JSX.Element
 export type TRenderPagination = (pageTotal: number) => JSX.Element[]|undefined
 export type TRenderLazyPreloader = () => JSX.Element|undefined
-export type TStateOnChange = (carouselState: ICarouselState) => void
+export type TOnSlideChange = (carouselState: ICarouselState) => void
 export type TOnMount = () => void
 export type GlobalWindow = Window & typeof globalThis
 
@@ -35,7 +35,7 @@ export interface IBearCarouselProps extends IBreakpointSetting{
   renderLazyPreloader?: TRenderLazyPreloader
   syncCarouselRef?: RefObject<BearCarousel>
   setController?: (controller: Controller) => void
-  onSlideChange?: TStateOnChange
+  onSlideChange?: TOnSlideChange
   onMount?: TOnMount
 }
 

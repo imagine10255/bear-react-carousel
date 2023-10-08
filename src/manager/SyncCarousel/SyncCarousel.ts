@@ -39,11 +39,6 @@ class SyncCarousel {
         if(this._configurator?.setting.isDebug && logEnable.syncCarousel.onSyncControlDone) logger.printInText('[SyncCarousel.syncControlDone]');
 
         this._controller?.slideToVirtualIndex(targetIndex);
-
-        // 關閉移動效果
-        // this._elementor
-        //     .resetMoveEffect();
-
     };
 
     slideToSourceIndex = (slideIndex: number, isUseAnimation = true) => {
