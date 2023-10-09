@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.17-alpha.2](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.17-alpha.1...v4.0.17-alpha.2) (2023-10-09)
+
+
+### Bug Fixes
+
+* the same problem with the copied react key occurs when there are insufficient projects ([86dd346](https://github.com/imagine10255/bear-react-carousel/commit/86dd346b7f34eaf80e9657df2129b16dc3cd1a5f))
+
 ### [4.0.17-alpha.1](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.17-alpha.0...v4.0.17-alpha.1) (2023-10-07)
 
 
