@@ -2,14 +2,14 @@ import {forwardRef, CSSProperties} from 'react';
 import elClassName from '../../el-class-name';
 import {booleanToDataAttr} from '../../utils';
 import CSS from 'csstype';
-import {ISetting} from '../../manager/Configurator/types';
+import {ISetting} from '../../types';
 
 
 interface IProps {
     style: CSS.Properties
     className: string
     setting: ISetting
-    children: JSX.Element[]
+    children?: JSX.Element[]
     extendStyle?: CSSProperties
     isDebug?: boolean
     isEnableGpuRender?: boolean

@@ -6,7 +6,7 @@ import {
     IPropsBreakpoints,
     GlobalWindow
 } from '../../types';
-import {ISetting} from './types';
+import {ISetting} from '../../types';
 import {anyToNumber, getSizeByRange} from '../../utils';
 
 

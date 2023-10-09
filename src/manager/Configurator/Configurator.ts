@@ -1,6 +1,6 @@
 import {CSSProperties} from 'react';
 import {getHeight, getMediaSetting} from './utils';
-import {ISetting} from './types';
+import {ISetting} from '../../types';
 import {IPropsBreakpoints, GlobalWindow} from '../../types';
 
 
