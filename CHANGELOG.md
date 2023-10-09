@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.17-alpha.4](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.17-alpha.3...v4.0.17-alpha.4) (2023-10-09)
+
+
+### Bug Fixes
+
+* modify ssr render calc fail, use not check window ([8ddb378](https://github.com/imagine10255/bear-react-carousel/commit/8ddb37821a68cee4d5241e26c0397bdbf52d3aba))
+
 ### [4.0.17-alpha.3](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.17-alpha.2...v4.0.17-alpha.3) (2023-10-09)
 
 
