@@ -28,6 +28,7 @@ import AutoImage from "./sample/AutoImage";
 import CustomNav from './sample/CustomNav';
 import Effect from './sample/Effect';
 import Effect2 from './sample/Effect2';
+import Breakpoints2 from './sample/Breakpoints2';
 
 
 
@@ -43,6 +44,7 @@ enum EExampleCode {
     loop = 'loop',
     center = 'center',
     breakpoints = 'breakpoints',
+    breakpoints2 = 'breakpoints2',
     slidePerViews = 'slidePerViews',
     slidePerGroup = 'slidePerGroup',
     syncController = 'syncController',
@@ -66,6 +68,7 @@ const examples: Record<EExampleCode, () => JSX.Element> = {
     [EExampleCode.loop]: Loop,
     [EExampleCode.center]: Center,
     [EExampleCode.breakpoints]: Breakpoints,
+    [EExampleCode.breakpoints2]: Breakpoints2,
     [EExampleCode.slidePerViews]: SlidePerViews,
     [EExampleCode.slidePerGroup]: SlidePerGroup,
     [EExampleCode.syncController]: SyncControl,
@@ -78,7 +81,7 @@ const examples: Record<EExampleCode, () => JSX.Element> = {
 };
 
 function App() {
-    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.moveEffect2);
+    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.breakpoints2);
     const Comp = examples[exampleKey];
 
 

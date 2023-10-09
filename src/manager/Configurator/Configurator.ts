@@ -12,6 +12,7 @@ class Configurator {
     private _window: GlobalWindow;
 
     constructor(breakpoint: IPropsBreakpoints, options?: ISetting, win?: GlobalWindow) {
+        console.log('Configurator constructor', this.carouselId);
         this._window = win;
         this.init(breakpoint, options);
     }
@@ -30,7 +31,7 @@ class Configurator {
         const rootHeight = getHeight(this.setting.height);
         const styleData = [
             {
-                targetEl: `#${this._carouselId}`,
+                targetEl: `#${this.carouselId}`,
                 styles: rootHeight,
             },
             {

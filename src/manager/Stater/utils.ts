@@ -22,7 +22,7 @@ export function initDataList(sourceList: Array<any> = [], slidesPerView: TSlides
         const cloneStart = (sourceList.length - formatSlidesPerView);
         for (const [cloneIndex, row] of sourceList.slice(-formatSlidesPerView).entries()) {
             formatList[index] = {
-                key: `${row.key}_clone`,
+                key: `${row.key}_clone_before`,
                 virtualIndex: index,
                 matchIndex: formatSlidesPerView + cloneStart + index,
                 sourceIndex: cloneStart + cloneIndex,
@@ -55,7 +55,7 @@ export function initDataList(sourceList: Array<any> = [], slidesPerView: TSlides
 
         for (const [cloneIndex, row] of sourceList.slice(0, formatSlidesPerView).entries()) {
             formatList[index] = {
-                key: `${row.key}_clone`,
+                key: `${row.key}_clone_after`,
                 virtualIndex: index,
                 matchIndex: matchFirstIndex,
                 sourceIndex: cloneIndex,

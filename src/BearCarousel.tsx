@@ -21,6 +21,7 @@ import {SlideProvider} from './components/SlideProvider/SlideProvider';
 import {NavNextButton, NavPrevButton} from './components/NavButton';
 import CarouselRoot from './components/CarouselRoot';
 import {logEnable} from './config';
+import {ulid} from 'ulid';
 
 
 
@@ -63,6 +64,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     _autoPlayer: AutoPlayer;
     _dragger: Dragger;
     _syncCarousel: SyncCarousel;
+    _carouselId = `test_bear-react-carousel_${ulid().toLowerCase()}`;
 
 
     constructor(props: IBearCarouselProps) {
