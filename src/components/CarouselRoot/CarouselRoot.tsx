@@ -1,4 +1,4 @@
-import {forwardRef} from 'react';
+import {forwardRef, CSSProperties} from 'react';
 import elClassName from '../../el-class-name';
 import {booleanToDataAttr} from '../../utils';
 import CSS from 'csstype';
@@ -8,16 +8,14 @@ import {ISetting} from '../../manager/Configurator/types';
 interface IProps {
     style: CSS.Properties
     className: string
-    id: string,
     setting: ISetting
     children: JSX.Element[]
-    extendStyle?: string
+    extendStyle?: CSSProperties
     isDebug?: boolean
     isEnableGpuRender?: boolean
 }
 
 const CarouselRoot = forwardRef<HTMLDivElement, IProps>(({
-    id,
     style,
     className,
     setting,
@@ -29,9 +27,11 @@ const CarouselRoot = forwardRef<HTMLDivElement, IProps>(({
 
     return <div
         ref={ref}
-        id={id}
         data-testid="bear-carousel"
-        style={style}
+        style={{
+            ...style,
+            ...extendStyle,
+        }}
         className={[className, elClassName.root].join(' ').trim()}
         data-gpu-render={booleanToDataAttr(isEnableGpuRender)}
         data-per-view-auto={booleanToDataAttr(setting.slidesPerView === 'auto')}
@@ -39,7 +39,6 @@ const CarouselRoot = forwardRef<HTMLDivElement, IProps>(({
         // data-actual={[actual.minIndex, actual.firstIndex, actual.lastIndex, actual.maxIndex].join(' / ')}
         data-debug={booleanToDataAttr(isDebug)}
     >
-        <style scoped dangerouslySetInnerHTML={{__html: extendStyle}}/>
         {children}
     </div>;
 });

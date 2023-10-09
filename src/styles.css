@@ -1,6 +1,11 @@
 .bear-react-carousel__root{
     width: 100%;
+    position: relative;
+    height: var(--carousel-height, inherit);
+    aspect-ratio: var(--carousel-aspect-ratio);
+    user-select: none;
 }
+
 
 .bear-react-carousel__test-number{
     position: absolute;
@@ -166,6 +171,11 @@
     transition-property: transform;
     position: relative;
     overflow: hidden;
+
+    flex: 0 0 auto;
+    width: var(--carousel-slide-width);
+    padding-left: calc(var(--carousel-space-between) / 2);
+    padding-right: calc(var(--carousel-space-between) / 2);
 }
 
 .bear-react-carousel__slide-item__image{
@@ -221,17 +231,10 @@
     z-index: 1;
 
     overflow: hidden;
+    position: var(--carousel-content-position);
 }
 
 
-.bear-react-carousel__root{
-    position: relative;
-    height: inherit;
-    user-select: none;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-}
 
 
 .bear-react-carousel__root[data-gpu-render] .bear-react-carousel__container{

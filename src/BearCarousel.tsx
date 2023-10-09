@@ -374,7 +374,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         const {style, className, isDebug, isLazy, renderLazyPreloader} = this.props;
         return (
             <CarouselRoot
-                id={this._configurator.carouselId}
                 ref={this._elementor._rootRef}
                 style={style}
                 className={className}

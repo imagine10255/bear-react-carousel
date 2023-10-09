@@ -86,13 +86,13 @@ export function getHeight(height: IBreakpointSetting['height']) {
         if(height === 'auto'){
             return undefined;
         }
-        return [`height: ${height};`];
+        return {height};
 
     }else if(typeof height?.widthRatio !== 'undefined' && typeof height?.heightRatio !== 'undefined'){
-        return [
-            `aspect-ratio: ${height.widthRatio} / ${height.heightRatio};`,
-            'height: auto;',
-        ];
+        return {
+            aspectRatio: `${height.widthRatio} / ${height.heightRatio};`,
+            height: 'auto'
+        };
     }
     return undefined;
 }
