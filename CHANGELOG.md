@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.17-alpha.3](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.17-alpha.2...v4.0.17-alpha.3) (2023-10-09)
+
+
+### Bug Fixes
+
+* modify carousel id change to css var ([9b438c3](https://github.com/imagine10255/bear-react-carousel/commit/9b438c3e95121f720d7c49f3cabaf7e49f082837))
+
 ### [4.0.17-alpha.2](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.17-alpha.1...v4.0.17-alpha.2) (2023-10-09)
 
 
