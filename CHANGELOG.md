@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.17-alpha.7](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.17-alpha.6...v4.0.17-alpha.7) (2023-10-10)
+
+
+### Features
+
+* modify sync carousel single change to multi ([9f09279](https://github.com/imagine10255/bear-react-carousel/commit/9f092799a31c01e6ffab5233e0a09b7439c9e585))
+
+
+### Bug Fixes
+
+* modify lazyLoadImage check imageUrl miss ([95625c6](https://github.com/imagine10255/bear-react-carousel/commit/95625c6e4558dcc6f5b81650e439979026db8eb9))
+
 ### [4.0.17-alpha.6](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.17-alpha.5...v4.0.17-alpha.6) (2023-10-10)
 
 ### [4.0.17-alpha.5](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.17-alpha.4...v4.0.17-alpha.5) (2023-10-10)
