@@ -12,7 +12,7 @@ import Configurator from '../Configurator';
  */
 export function initDataList(sourceList: Array<any> = [], slidesPerView: TSlidesPerView = 1, slidesPerGroup = 1, isLoop= false): InitData[] {
     const formatList = [];
-    const isClone = isLoop && typeof window !== 'undefined';
+    const isClone = isLoop;
     let index = 0;
     const formatSlidesPerView = slidesPerView === 'auto' ? 0: Math.ceil(slidesPerView);
     const lastPage = (sourceList.length / slidesPerGroup) - (slidesPerGroup - formatSlidesPerView);

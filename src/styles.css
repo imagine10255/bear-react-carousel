@@ -211,13 +211,13 @@
     position: relative;
     display: flex;
     flex-direction: row;
-    visibility: hidden; /* 避免瞬間移動, 故移動完才改為顯示 */
+    /*visibility: hidden; !* 避免瞬間移動, 故移動完才改為顯示 *!*/
     height: inherit;
     transition-timing-function: ease;
 }
-.bear-react-carousel__container.bear-react-carousel__container-init{
-    visibility: initial;
-}
+/*.bear-react-carousel__container.bear-react-carousel__container-init{*/
+/*    visibility: initial;*/
+/*}*/
 
 
 

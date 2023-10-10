@@ -3,26 +3,26 @@ import {getNextIndex, getPrevIndex, getSlideIndex} from './utils';
 
 import Configurator from '../Configurator';
 import Stater from '../Stater';
-import Elementor from '../Elementor';
 import Eventor from '../Eventor';
 import {logEnable} from '../../config';
 import logger from '../../logger';
+import ElState from '../Elementor/ElState';
 
 
 class Controller {
     private readonly _configurator: Configurator;
     private readonly _stater: Stater;
-    private readonly _elementor: Elementor;
+    private readonly _elState: ElState;
     private _eventor = new Eventor<TEventMap>();
 
     constructor(manager: {
         configurator: Configurator,
         stater: Stater,
-        elementor: Elementor,
+        elState: ElState,
     }) {
         this._configurator = manager.configurator;
         this._stater = manager.stater;
-        this._elementor = manager.elementor;
+        this._elState = manager.elState;
     }
 
     onSlideBefore = (callback: TEventMap['slideBefore']) => {
@@ -67,7 +67,7 @@ class Controller {
         const isEmitEvent = options?.isEmitEvent ?? true;
         if(isEmitEvent) this._eventor.emit('slideBefore', slideIndex, options?.isUseAnimation);
 
-        // 轉成範圍內的 Index
+        // 轉成範圍內的 Index //@Check
         const selected = this._stater.formatElement.find(row => row.sourceIndex === slideIndex && !row.isClone);
         if(selected){
             this.slideToVirtualIndex(selected.virtualIndex, options);
@@ -91,8 +91,8 @@ class Controller {
         this._stater.setActiveActual(inRangeIndex, formatElement[inRangeIndex]?.inPage ?? 1);
 
         // 移動EL位置
-        const position = this._elementor.getMoveDistance(inRangeIndex);
-        this._elementor
+        const position = this._elState.getMoveDistance(inRangeIndex);
+        this._elState
             .transform(position, options?.isUseAnimation ?? true)
             .moveEffect(slideIndex, options?.isUseAnimation ?? true)
             .syncActiveState(inRangeIndex);
@@ -110,7 +110,7 @@ class Controller {
      */
     slideToPage(page: number, isUseAnimation = true){
         const {setting} = this._configurator;
-        page = page > this._stater.page.total ? this._stater.page.total: page;
+        page = page > this._stater.page?.total ? this._stater.page?.total: page;
 
         const slideIndex = getSlideIndex(page, setting.slidesPerGroup);
         this.slideToSourceIndex(slideIndex, {isUseAnimation});
@@ -120,7 +120,7 @@ class Controller {
      * 移動到下一頁
      */
     slideToNextPage = (): void => {
-        getNextIndex(this._elementor, this._stater, this._configurator)
+        getNextIndex(this._elState, this._stater, this._configurator)
             .forEach(action => this.slideToVirtualIndex(action.index, {isUseAnimation: action.isUseAnimation}));
     };
 
@@ -128,7 +128,7 @@ class Controller {
      * go to previous
      */
     slideToPrevPage = (): void => {
-        getPrevIndex(this._elementor, this._stater, this._configurator)
+        getPrevIndex(this._elState, this._stater, this._configurator)
             .forEach(action => this.slideToVirtualIndex(action.index, {isUseAnimation: action.isUseAnimation}));
 
     };

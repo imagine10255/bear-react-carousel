@@ -21,11 +21,13 @@ import {SlideProvider} from './components/SlideProvider/SlideProvider';
 import {NavNextButton, NavPrevButton} from './components/NavButton';
 import CarouselRoot from './components/CarouselRoot';
 import {logEnable} from './config';
+import ElState from './manager/Elementor/ElState';
 
 
 
 interface IState {
-  windowSize: number,
+  windowSize: number
+  isClientReady: boolean
 }
 
 
@@ -53,12 +55,13 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         isSlideItemMemo: false,
     };
     _isEnableGpuRender = checkIsDesktop();
-    state = {windowSize: 0};
+    state = {windowSize: 0, isClientReady: false};
 
     _stater: Stater;
     _configurator: Configurator;
     _windowSizer: WindowSizer;
     _elementor: Elementor;
+    _elState: ElState;
     _controller: Controller;
     _autoPlayer: AutoPlayer;
     _dragger: Dragger;
@@ -69,28 +72,46 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         super(props);
         // this._device = checkIsMobile() ? EDevice.mobile : EDevice.desktop;
 
-        const setting = getSetting(props);
-        this._configurator = new Configurator(props.breakpoints, setting, globalThis.window);
+        this._elementor = new Elementor({
+            configurator: this._configurator,
+            stater: this._stater
+        });
+    }
+
+
+    componentDidMount() {
+        if(this.props.isDebug && logEnable.componentDidMount) logger.printInText('[componentDidMount]');
+        const {breakpoints, onMount} = this.props;
+
+
+        const setting = getSetting(this.props);
+        this._configurator = new Configurator(this.props.breakpoints, setting, globalThis.window);
         this._windowSizer = new WindowSizer({
-            breakpoints: props.breakpoints,
+            breakpoints,
             win: globalThis.window,
             configurator: this._configurator,
         });
-        this._stater = new Stater(this._configurator, props.data);
-        this._elementor = new Elementor({
+        this._stater = new Stater(this._configurator, this.props.data);
+
+
+        this._stater.onChange(this._onChange);
+
+        this._elState = new ElState({
             configurator: this._configurator,
+            elementor: this._elementor,
             stater: this._stater
         });
 
         this._controller = new Controller({
             configurator: this._configurator,
             stater: this._stater,
-            elementor: this._elementor,
+            elState: this._elState,
         });
 
         this._dragger = new Dragger({
             configurator: this._configurator,
             elementor: this._elementor,
+            elState: this._elState,
             stater: this._stater,
         });
 
@@ -98,52 +119,47 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             configurator: this._configurator,
         });
 
-        this._stater.onChange(this._onChange);
-        this.state = {windowSize: this._windowSizer.size};
-    }
+        // Move to the correct position for the first time
+        this._controller.slideToPage(1, false);
 
+        this._windowSizer.onResize(this._onResize);
+        this._autoPlayer.onTimeout(this._onAutoPlay);
 
-    componentDidMount() {
-        if(this.props.isDebug && logEnable.componentDidMount) logger.printInText('[componentDidMount]');
+        this._dragger.onDragStart(this._onDragStart);
+        this._dragger.onDragMove(this._onDragMove);
+        this._dragger.onDragEnd(this._onDragEnd);
 
-        if(this.props.onMount) this.props.onMount();
+        this._controller.onSlideBefore(this._onSlideBefore);
+        this._controller.onSlideAfter(this._onSlideAfter);
 
-
-        if (this._elementor) {
-            // Move to the correct position for the first time
-            this._controller.slideToPage(1, false);
-
-            this._windowSizer.onResize(this._onResize);
-            this._autoPlayer.onTimeout(this._onAutoPlay);
-
-            this._dragger.onDragStart(this._onDragStart);
-            this._dragger.onDragMove(this._onDragMove);
-            this._dragger.onDragEnd(this._onDragEnd);
-
-            this._controller.onSlideBefore(this._onSlideBefore);
-            this._controller.onSlideAfter(this._onSlideAfter);
-
-            this._syncCarousel = new SyncCarousel(this.props.syncCarouselRef);
-        }
-
+        this._syncCarousel = new SyncCarousel(this.props.syncCarouselRef);
         this._setController();
-        this._elementor.onSlideAnimation();
+        this._elState.onSlideAnimation();
         this._init();
+
+        if(onMount) onMount();
 
     }
 
     componentWillUnmount() {
         if(this.props.isDebug && logEnable.componentWillUnmount) logger.printInText('[componentWillUnmount]');
         this._windowSizer.offResize(this._onResize);
-        this._autoPlayer.offTimeout(this._onAutoPlay);
-        this._dragger.offDragStart(this._onDragStart);
-        this._dragger.offDragMove(this._onDragMove);
-        this._dragger.offDragEnd(this._onDragEnd);
 
-        this._controller.offSlideBefore(this._onSlideBefore);
-        this._controller.offSlideAfter(this._onSlideAfter);
+        this._autoPlayer?.offTimeout(this._onAutoPlay);
+        if(this._dragger){
+            this._dragger.offDragStart(this._onDragStart);
+            this._dragger.offDragMove(this._onDragMove);
+            this._dragger.offDragEnd(this._onDragEnd);
+        }
 
-        this._elementor.offSlideAnimation();
+        if(this._controller){
+            this._controller.offSlideBefore(this._onSlideBefore);
+            this._controller.offSlideAfter(this._onSlideAfter);
+        }
+
+        if(this._elState){
+            this._elState.offSlideAnimation();
+        }
         this._stater.offChange(this._onChange);
     }
 
@@ -155,10 +171,12 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     shouldComponentUpdate(nextProps: IBearCarouselProps, nextState: IState) {
         if(this._configurator.setting.isDebug && logEnable.shouldComponentUpdate) logger.printInText('[shouldComponentUpdate]');
 
-        const {windowSize: nextWindowSize} = nextState;
+        const {windowSize: nextWindowSize, isClientReady} = nextState;
+
 
         if(isPropsDiff(this.props, nextProps, ['data', 'moveEffect']) ||
             this.state.windowSize !== nextWindowSize ||
+            this.state.isClientReady !== isClientReady ||
             this.props.data?.length !== nextProps.data?.length
         ){
             this._configurator.init(nextProps.breakpoints, getSetting(nextProps));
@@ -190,6 +208,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                 className.add(elClassName.containerInit);
             }
         }
+        this.setState({isClientReady: true});
     };
 
     /**
@@ -205,8 +224,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     /**
      *
      * set OnAutoPlay emit
-     * @param index
-     * @param isUseAnimation
      */
     private _onAutoPlay = () => {
         this._controller.slideToNextPage();
@@ -217,8 +234,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     /**
      *
      * set OnSlideBefore emit
-     * @param index
-     * @param isUseAnimation
      */
     private _onSlideBefore = () => {
         this._autoPlayer.pause();
@@ -371,21 +386,20 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     render(){
         const {style, className, isDebug, isLazy, renderLazyPreloader} = this.props;
 
-        if(!window){
-            return null;
-        }
-
+        // if(!this.state.isClientReady){
+        //     return null;
+        // }
         return (
             <CarouselRoot
                 ref={this._elementor._rootRef}
                 style={style}
                 className={className}
-                setting={this._configurator.setting}
+                setting={this._configurator?.setting}
                 isDebug={isDebug}
-                extendStyle={this._configurator.style}
-                isEnableGpuRender={this._isEnableGpuRender}
+                extendStyle={this._configurator?.style}
+                isEnableGpuRender={globalThis.window && this._isEnableGpuRender}
             >
-                {this._stater.isVisibleNavButton && this._renderNavButton()}
+                {this.state.isClientReady && this._stater.isVisibleNavButton && this._renderNavButton()}
 
                 <div className={elClassName.content}>
                     <div ref={this._elementor._containerRef} className={elClassName.container} data-testid="bear-carousel-container">
@@ -393,14 +407,16 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                             isLazy={isLazy}
                             renderLazyPreloader={!!renderLazyPreloader ? renderLazyPreloader: () => <div>loading...</div>}
                         >
-                            {this._renderSlideItems()}
+                            {this.state.isClientReady && this._renderSlideItems()}
                         </SlideProvider>
                     </div>
                 </div>
 
-                {this._stater.isVisiblePagination && this._renderPagination()}
+                {this.state.isClientReady && <>
+                    {this._stater.isVisiblePagination && this._renderPagination()}
+                    {isDebug && <WindowSize size={this._windowSizer.size}/>}
+                </>}
 
-                {isDebug && <WindowSize size={this._windowSizer.size}/>}
             </CarouselRoot>
         );
     }

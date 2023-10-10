@@ -11,7 +11,7 @@ class SyncCarousel {
     }
 
     get _elementor(){
-        return this._carouselRef?.current?._elementor;
+        return this._carouselRef?.current?._elState;
     }
 
     get _configurator(){
