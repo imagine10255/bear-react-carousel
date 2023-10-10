@@ -29,6 +29,7 @@ import CustomNav from './sample/CustomNav';
 import Effect from './sample/Effect';
 import Effect2 from './sample/Effect2';
 import Breakpoints2 from './sample/Breakpoints2';
+import EffectSetIndex from './sample/EffectSetIndex';
 
 
 
@@ -54,6 +55,7 @@ enum EExampleCode {
     customNav = 'customNav',
     moveEffect = 'moveEffect',
     moveEffect2 = 'moveEffect2',
+    effectSetIndex = 'effectSetIndex',
 }
 
 
@@ -78,10 +80,11 @@ const examples: Record<EExampleCode, () => JSX.Element> = {
     [EExampleCode.customNav]: CustomNav,
     [EExampleCode.moveEffect]: Effect,
     [EExampleCode.moveEffect2]: Effect2,
+    [EExampleCode.effectSetIndex]: EffectSetIndex,
 };
 
 function App() {
-    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.breakpoints2);
+    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.effectSetIndex);
     const Comp = examples[exampleKey];
 
 

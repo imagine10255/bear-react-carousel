@@ -119,9 +119,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             configurator: this._configurator,
         });
 
-        // Move to the correct position for the first time
-        this._controller.slideToPage(1, false);
-
         this._windowSizer.onResize(this._onResize);
         this._autoPlayer.onTimeout(this._onAutoPlay);
 
@@ -174,9 +171,12 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         const {windowSize: nextWindowSize, isClientReady} = nextState;
 
 
+        if(this.state.isClientReady !== isClientReady){
+            return true;
+        }
+
         if(isPropsDiff(this.props, nextProps, ['data', 'moveEffect']) ||
             this.state.windowSize !== nextWindowSize ||
-            this.state.isClientReady !== isClientReady ||
             this.props.data?.length !== nextProps.data?.length
         ){
             this._configurator.init(nextProps.breakpoints, getSetting(nextProps));
@@ -202,13 +202,9 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     }
 
     private _init = () => {
-        if (this._elementor.containerEl) {
-            const className = this._elementor.containerEl.classList;
-            if(!className.contains(elClassName.containerInit)){
-                className.add(elClassName.containerInit);
-            }
-        }
-        this.setState({isClientReady: true});
+        this.setState({isClientReady: true}, () => {
+            this._controller.slideToPage(1, false);
+        });
     };
 
     /**

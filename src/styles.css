@@ -65,7 +65,6 @@
     background-color: #bdbdbd;
     opacity: 0.6;
     box-shadow: 3px 3px 9px 0 rgb(189 189 189 / 12%);
-    transition: width 0.3s, background-color 0.3s;
     margin: 0 6px;
 }
 .bear-react-carousel__pagination-group:not([data-page-content]) .bear-react-carousel__pagination-button[data-active]{
@@ -211,13 +210,9 @@
     position: relative;
     display: flex;
     flex-direction: row;
-    /*visibility: hidden; !* 避免瞬間移動, 故移動完才改為顯示 *!*/
     height: inherit;
     transition-timing-function: ease;
 }
-/*.bear-react-carousel__container.bear-react-carousel__container-init{*/
-/*    visibility: initial;*/
-/*}*/
 
 
 
