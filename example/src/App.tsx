@@ -9,6 +9,7 @@ import {elClassName} from 'bear-react-carousel';
 
 // import Base from './sample/Base';
 import SyncControl from './sample/SyncControl';
+import SyncControl2 from './sample/SyncControl2';
 import Breakpoints from './sample/Breakpoints';
 import Base from './sample/Base';
 import SlidePerViews from './sample/SlidePerViews';
@@ -49,6 +50,7 @@ enum EExampleCode {
     slidePerViews = 'slidePerViews',
     slidePerGroup = 'slidePerGroup',
     syncController = 'syncController',
+    syncController2 = 'syncController2',
     updateSlideItem = 'updateSlideItem',
     renderPagination = 'renderPagination',
     textAnimations = 'textAnimations',
@@ -74,6 +76,7 @@ const examples: Record<EExampleCode, () => JSX.Element> = {
     [EExampleCode.slidePerViews]: SlidePerViews,
     [EExampleCode.slidePerGroup]: SlidePerGroup,
     [EExampleCode.syncController]: SyncControl,
+    [EExampleCode.syncController2]: SyncControl2,
     [EExampleCode.updateSlideItem]: UpdateSlideItem,
     [EExampleCode.renderPagination]: RenderPagination,
     [EExampleCode.textAnimations]: TextAnimationsCarousel,
@@ -84,7 +87,7 @@ const examples: Record<EExampleCode, () => JSX.Element> = {
 };
 
 function App() {
-    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.effectSetIndex);
+    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.lazyCard);
     const Comp = examples[exampleKey];
 
 

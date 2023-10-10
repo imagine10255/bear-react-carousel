@@ -65,7 +65,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     _controller: Controller;
     _autoPlayer: AutoPlayer;
     _dragger: Dragger;
-    _syncCarousel: SyncCarousel;
+    _syncCarousels: SyncCarousel[];
 
 
     constructor(props: IBearCarouselProps) {
@@ -81,17 +81,17 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
     componentDidMount() {
         if(this.props.isDebug && logEnable.componentDidMount) logger.printInText('[componentDidMount]');
-        const {breakpoints, onMount} = this.props;
+        const {data, breakpoints, onMount, syncCarouselRefs} = this.props;
 
 
         const setting = getSetting(this.props);
-        this._configurator = new Configurator(this.props.breakpoints, setting, globalThis.window);
+        this._configurator = new Configurator(breakpoints, setting, globalThis.window);
         this._windowSizer = new WindowSizer({
             breakpoints,
             win: globalThis.window,
             configurator: this._configurator,
         });
-        this._stater = new Stater(this._configurator, this.props.data);
+        this._stater = new Stater(this._configurator, data);
 
 
         this._stater.onChange(this._onChange);
@@ -129,7 +129,9 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         this._controller.onSlideBefore(this._onSlideBefore);
         this._controller.onSlideAfter(this._onSlideAfter);
 
-        this._syncCarousel = new SyncCarousel(this.props.syncCarouselRef);
+        if(syncCarouselRefs){
+            this._syncCarousels = syncCarouselRefs.map(row => new SyncCarousel(row));
+        }
         this._setController();
         this._elState.onSlideAnimation();
         this._init();
@@ -243,7 +245,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
      * @param isUseAnimation
      */
     private _onSlideAfter = (index: number, isUseAnimation: boolean) => {
-        this._syncCarousel?.slideToSourceIndex(index, isUseAnimation);
+        this._syncCarousels?.forEach(syncRef => syncRef.slideToSourceIndex(index, isUseAnimation));
         this._autoPlayer.play();
     };
 
@@ -264,7 +266,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         this._controller?.slideToVirtualIndex(activeSourceIndex);
 
         // 同步結束
-        this._syncCarousel?.syncControlDone(activeSourceIndex);
+        this._syncCarousels?.forEach(syncRow => syncRow?.syncControlDone(activeSourceIndex));
 
     };
 
@@ -275,7 +277,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
      * @param percentage
      */
     private _onDragMove = (percentage: number) => {
-        this._syncCarousel?.syncControlMove(percentage);
+        this._syncCarousels?.forEach(syncRow => syncRow?.syncControlMove(percentage));
     };
 
 
