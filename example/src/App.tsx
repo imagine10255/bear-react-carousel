@@ -87,7 +87,7 @@ const examples: Record<EExampleCode, () => JSX.Element> = {
 };
 
 function App() {
-    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.lazyCard);
+    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.updateSlideItem);
     const Comp = examples[exampleKey];
 
 

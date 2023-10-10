@@ -170,17 +170,17 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     shouldComponentUpdate(nextProps: IBearCarouselProps, nextState: IState) {
         if(this._configurator.setting.isDebug && logEnable.shouldComponentUpdate) logger.printInText('[shouldComponentUpdate]');
 
+        const {windowSize, isClientReady: isNextClientReady} = this.state;
         const {windowSize: nextWindowSize, isClientReady} = nextState;
-
+        const {data, ...otherProps} = this.props;
+        const {data: nextData, ...otherNextProps} = nextProps;
 
         if(this.state.isClientReady !== isClientReady){
             return true;
         }
 
-        if(isPropsDiff(this.props, nextProps, ['data', 'moveEffect']) ||
-            this.state.windowSize !== nextWindowSize ||
-            this.props.data?.length !== nextProps.data?.length
-        ){
+        // 需要重新計算的部分 (page info..), 因項目數量不同, 位置需規0
+        if(data.length !== nextData.length){
             this._configurator.init(nextProps.breakpoints, getSetting(nextProps));
             this._stater.init(nextProps.data);
             setTimeout(() => {
@@ -190,12 +190,24 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             return true;
         }
 
-        if(nextProps.isSlideItemMemo && this.props.data !== nextProps.data){
-            this._stater.updateData(nextProps.data);
+        // 需要重新計算的部分 (page info..), 顯示方式異動, 但位置保持
+        if(windowSize !== nextWindowSize ||
+            isPropsDiff(otherProps, otherNextProps, ['moveEffect'])
+        ){
+            const activeIndex = this._stater.source.activeIndex;
+            this._configurator.init(nextProps.breakpoints, getSetting(nextProps));
+            this._stater.init(nextProps.data);
+            setTimeout(() => {
+                this._controller.slideToSourceIndex(activeIndex, {isUseAnimation: false});
+            }, 0);
+
             return true;
         }
 
-        if(isDataKeyDff(this.props.data, nextProps.data)){
+        // 只需要更新資料內容的部分 (不進行資料深比對)
+        if((nextProps.isSlideItemMemo && data !== nextData) ||
+            isDataKeyDff(this.props.data, nextProps.data)
+        ){
             this._stater.updateData(nextProps.data);
             return true;
         }
@@ -295,7 +307,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         if(args.windowSize !== this.state.windowSize){
             this.setState({windowSize: args.windowSize});
         }else{
-            this._controller.slideToPage(1, false);
+            const activeIndex = this._stater.source.activeIndex;
+            this._controller.slideToSourceIndex(activeIndex, {isUseAnimation: false});
         }
     };
 
