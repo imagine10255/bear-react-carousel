@@ -28,7 +28,7 @@ const useLazyLoadBg = ({isLazy, imageUrl}: IUseLazyLoadProps) => {
     const watcher = useRef<IntersectionObserver>();
 
     useEffect(() => {
-        if(isLazy && imageRef.current){
+        if(isLazy && imageRef.current && imageUrl){
             watcher.current = new window.IntersectionObserver(onEnterView);
             watcher.current.observe(imageRef.current); // Start watching
         }

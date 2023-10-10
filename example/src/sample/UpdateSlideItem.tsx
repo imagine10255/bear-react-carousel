@@ -54,6 +54,13 @@ function UpdateSlideItem() {
             isEnableAutoPlay={false}
             isDebug
             isSlideItemMemo
+            breakpoints={{
+                992: {
+                    slidesPerView: 3,
+                    slidesPerGroup: 3,
+                    isCenteredSlides: false,
+                }
+            }}
         />
 
         <button type="button" onClick={() => setCount(curr => curr += 1)}> count: {count}</button>

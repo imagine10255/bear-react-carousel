@@ -33,7 +33,7 @@ export interface IBearCarouselProps extends IBreakpointSetting{
   isSlideItemMemo?: boolean
   isLazy?: boolean
   renderLazyPreloader?: TRenderLazyPreloader
-  syncCarouselRef?: RefObject<BearCarousel>
+  syncCarouselRefs?: RefObject<BearCarousel>[]
   setController?: (controller: Controller) => void
   onSlideChange?: TOnSlideChange
   onMount?: TOnMount
@@ -128,3 +128,10 @@ export type TToNext = () => void
 
 
 
+export interface ISetting extends IBreakpointSetting {
+  slidesPerViewActual?: TSlidesPerViewActual
+  moveTime?: number,
+  autoPlayTime?: number,
+  initStartPlayTime?: number,
+  isDebug?: boolean,
+}

@@ -2,6 +2,43 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.17-alpha.7](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.17-alpha.6...v4.0.17-alpha.7) (2023-10-10)
+
+
+### Features
+
+* modify sync carousel single change to multi ([9f09279](https://github.com/imagine10255/bear-react-carousel/commit/9f092799a31c01e6ffab5233e0a09b7439c9e585))
+
+
+### Bug Fixes
+
+* modify lazyLoadImage check imageUrl miss ([95625c6](https://github.com/imagine10255/bear-react-carousel/commit/95625c6e4558dcc6f5b81650e439979026db8eb9))
+
+### [4.0.17-alpha.6](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.17-alpha.5...v4.0.17-alpha.6) (2023-10-10)
+
+### [4.0.17-alpha.5](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.17-alpha.4...v4.0.17-alpha.5) (2023-10-10)
+
+### [4.0.17-alpha.4](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.17-alpha.3...v4.0.17-alpha.4) (2023-10-09)
+
+
+### Bug Fixes
+
+* modify ssr render calc fail, use not check window ([8ddb378](https://github.com/imagine10255/bear-react-carousel/commit/8ddb37821a68cee4d5241e26c0397bdbf52d3aba))
+
+### [4.0.17-alpha.3](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.17-alpha.2...v4.0.17-alpha.3) (2023-10-09)
+
+
+### Bug Fixes
+
+* modify carousel id change to css var ([9b438c3](https://github.com/imagine10255/bear-react-carousel/commit/9b438c3e95121f720d7c49f3cabaf7e49f082837))
+
+### [4.0.17-alpha.2](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.17-alpha.1...v4.0.17-alpha.2) (2023-10-09)
+
+
+### Bug Fixes
+
+* the same problem with the copied react key occurs when there are insufficient projects ([86dd346](https://github.com/imagine10255/bear-react-carousel/commit/86dd346b7f34eaf80e9657df2129b16dc3cd1a5f))
+
 ### [4.0.17-alpha.1](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.17-alpha.0...v4.0.17-alpha.1) (2023-10-07)
 
 

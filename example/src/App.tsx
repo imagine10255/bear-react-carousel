@@ -9,6 +9,7 @@ import {elClassName} from 'bear-react-carousel';
 
 // import Base from './sample/Base';
 import SyncControl from './sample/SyncControl';
+import SyncControl2 from './sample/SyncControl2';
 import Breakpoints from './sample/Breakpoints';
 import Base from './sample/Base';
 import SlidePerViews from './sample/SlidePerViews';
@@ -28,6 +29,8 @@ import AutoImage from "./sample/AutoImage";
 import CustomNav from './sample/CustomNav';
 import Effect from './sample/Effect';
 import Effect2 from './sample/Effect2';
+import Breakpoints2 from './sample/Breakpoints2';
+import EffectSetIndex from './sample/EffectSetIndex';
 
 
 
@@ -43,15 +46,18 @@ enum EExampleCode {
     loop = 'loop',
     center = 'center',
     breakpoints = 'breakpoints',
+    breakpoints2 = 'breakpoints2',
     slidePerViews = 'slidePerViews',
     slidePerGroup = 'slidePerGroup',
     syncController = 'syncController',
+    syncController2 = 'syncController2',
     updateSlideItem = 'updateSlideItem',
     renderPagination = 'renderPagination',
     textAnimations = 'textAnimations',
     customNav = 'customNav',
     moveEffect = 'moveEffect',
     moveEffect2 = 'moveEffect2',
+    effectSetIndex = 'effectSetIndex',
 }
 
 
@@ -66,19 +72,22 @@ const examples: Record<EExampleCode, () => JSX.Element> = {
     [EExampleCode.loop]: Loop,
     [EExampleCode.center]: Center,
     [EExampleCode.breakpoints]: Breakpoints,
+    [EExampleCode.breakpoints2]: Breakpoints2,
     [EExampleCode.slidePerViews]: SlidePerViews,
     [EExampleCode.slidePerGroup]: SlidePerGroup,
     [EExampleCode.syncController]: SyncControl,
+    [EExampleCode.syncController2]: SyncControl2,
     [EExampleCode.updateSlideItem]: UpdateSlideItem,
     [EExampleCode.renderPagination]: RenderPagination,
     [EExampleCode.textAnimations]: TextAnimationsCarousel,
     [EExampleCode.customNav]: CustomNav,
     [EExampleCode.moveEffect]: Effect,
     [EExampleCode.moveEffect2]: Effect2,
+    [EExampleCode.effectSetIndex]: EffectSetIndex,
 };
 
 function App() {
-    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.moveEffect2);
+    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.updateSlideItem);
     const Comp = examples[exampleKey];
 
 

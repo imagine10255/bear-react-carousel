@@ -1,6 +1,6 @@
 import Stater from '../Stater';
 import Configurator from '../Configurator';
-import Elementor from '../Elementor';
+import ElState from '../Elementor/ElState';
 
 /**
  * 取得目標Index 使用 Page 計算
@@ -16,12 +16,12 @@ export function getSlideIndex(page: number, slidesPerGroup: number): number {
 
 /**
  * 取得上一個 Index
- * @param elementor
+ * @param elState
  * @param stater
  * @param configurator
  */
 export function getPrevIndex(
-    elementor: Elementor,
+    elState: ElState,
     stater: Stater,
     configurator: Configurator,
 ): Array<{index: number, isUseAnimation: boolean}> {
@@ -32,7 +32,7 @@ export function getPrevIndex(
         if(setting.isEnableLoop){
             if(activeActual.isClone) {
                 // 禁止動畫播放中進行重置
-                if (elementor.isAnimation) {
+                if (elState.isAnimation) {
                     return [];
                 }
 
@@ -70,12 +70,12 @@ export function getPrevIndex(
 
 /**
  * 取得下一個 Index
- * @param elementor
+ * @param elState
  * @param stater
  * @param configurator
  */
 export function getNextIndex(
-    elementor: Elementor,
+    elState: ElState,
     stater: Stater,
     configurator: Configurator
 ): Array<{index: number, isUseAnimation: boolean}> {
@@ -88,7 +88,7 @@ export function getNextIndex(
         if(setting.isEnableLoop) {
             if (activeActual?.isClone) {
                 // 禁止動畫播放中進行重置
-                if (elementor.isAnimation) {
+                if (elState.isAnimation) {
                     return [];
                 }
                 // 當移動到的位置 已經是 clone item

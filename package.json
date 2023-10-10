@@ -1,6 +1,6 @@
 {
   "name": "bear-react-carousel",
-  "version": "4.0.17-alpha.1",
+  "version": "4.0.17-alpha.7",
   "description": "Most modern mobile touch slider with hardware accelerated transitions for ReactJS",
   "keywords": [
     "react",
@@ -46,8 +46,7 @@
   },
   "peerDependencies": {
     "react": "^18.x",
-    "react-dom": "^18.x",
-    "ulid": "^2.3.x"
+    "react-dom": "^18.x"
   },
   "devDependencies": {
     "@swc/jest": "^0.2.26",
@@ -62,7 +61,6 @@
     "@vitejs/plugin-react-swc": "^3.0.0",
     "react": "^18.x",
     "react-dom": "^18.x",
-    "ulid": "^2.3.x",
     "classnames": "^2.3.2",
     "cz-git": "^1.6.1",
     "eslint": "^8.37.0",

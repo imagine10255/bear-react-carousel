@@ -140,9 +140,6 @@ class Stater {
             slidesPerGroup,
             isEnableLoop
         );
-
-        // return this.element;
-
     };
 
     setActiveActual = (index: number, page: number) => {

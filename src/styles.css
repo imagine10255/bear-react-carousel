@@ -1,6 +1,11 @@
 .bear-react-carousel__root{
     width: 100%;
+    position: relative;
+    height: var(--carousel-height, inherit);
+    aspect-ratio: var(--carousel-aspect-ratio);
+    user-select: none;
 }
+
 
 .bear-react-carousel__test-number{
     position: absolute;
@@ -60,7 +65,6 @@
     background-color: #bdbdbd;
     opacity: 0.6;
     box-shadow: 3px 3px 9px 0 rgb(189 189 189 / 12%);
-    transition: width 0.3s, background-color 0.3s;
     margin: 0 6px;
 }
 .bear-react-carousel__pagination-group:not([data-page-content]) .bear-react-carousel__pagination-button[data-active]{
@@ -166,6 +170,11 @@
     transition-property: transform;
     position: relative;
     overflow: hidden;
+
+    flex: 0 0 auto;
+    width: var(--carousel-slide-width);
+    padding-left: calc(var(--carousel-space-between) / 2);
+    padding-right: calc(var(--carousel-space-between) / 2);
 }
 
 .bear-react-carousel__slide-item__image{
@@ -201,12 +210,8 @@
     position: relative;
     display: flex;
     flex-direction: row;
-    visibility: hidden; /* 避免瞬間移動, 故移動完才改為顯示 */
     height: inherit;
     transition-timing-function: ease;
-}
-.bear-react-carousel__container.bear-react-carousel__container-init{
-    visibility: initial;
 }
 
 
@@ -221,17 +226,10 @@
     z-index: 1;
 
     overflow: hidden;
+    position: var(--carousel-content-position);
 }
 
 
-.bear-react-carousel__root{
-    position: relative;
-    height: inherit;
-    user-select: none;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-}
 
 
 .bear-react-carousel__root[data-gpu-render] .bear-react-carousel__container{
