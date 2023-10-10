@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.17](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.17-alpha.7...v4.0.17) (2023-10-10)
+
+
+### Features
+
+* add resize and update re-render keep curr index position ([34aa4e2](https://github.com/imagine10255/bear-react-carousel/commit/34aa4e29710ae7c376fe665ca5c7899097a2cb44))
+
 ### [4.0.17-alpha.7](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.17-alpha.6...v4.0.17-alpha.7) (2023-10-10)
 
 
