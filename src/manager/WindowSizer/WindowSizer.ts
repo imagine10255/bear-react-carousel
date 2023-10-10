@@ -62,12 +62,18 @@ class WindowSizer {
     };
 
     onResize = (callBack: TEventMap['resize']) => {
-        this._window.addEventListener(resizeEvent[this._device], this._emitResize, false);
+        if(this._device === EDevice.mobile){
+            this._window.addEventListener(resizeEvent[EDevice.mobile], this._emitResize, false);
+        }
+        this._window.addEventListener(resizeEvent[EDevice.desktop], this._emitResize, false);
         this._eventManager.on('resize', callBack);
     };
 
     offResize = (callBack: TEventMap['resize']) => {
-        this._window.removeEventListener(resizeEvent[this._device], this._emitResize, false);
+        if(this._device === EDevice.mobile){
+            this._window.removeEventListener(resizeEvent[EDevice.mobile], this._emitResize, false);
+        }
+        this._window.removeEventListener(resizeEvent[EDevice.desktop], this._emitResize, false);
         this._eventManager.off('resize', callBack);
     };
 }

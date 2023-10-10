@@ -30,7 +30,7 @@ function LazyImage() {
     const [count, setCount] = useState<number>(0);
     const [slidePreview, setSlidePreview] = useState(1);
 
-    return <div style={{width: '500px', paddingTop: '1000px'}}>
+    return <div style={{width: '100%', paddingTop: '0'}}>
         {/*測試依照比例設定容器高度*/}
         {enable && (
             <BearCarousel
@@ -38,17 +38,24 @@ function LazyImage() {
                 // controllerRef={controllerRef}
                 data={bearSlideItemData1}
                 // onSlideChange={setCarouselState}
-                slidesPerView={1}
-                spaceBetween={5}
-                isCenteredSlides
-                // height="200px"
+                slidesPerView={3}
+                // spaceBetween={5}
+                // isCenteredSlides
+                // height="auto"
                 // height="200px"
                 isEnableNavButton
                 isEnablePagination
-                // isEnableLoop
+                isEnableLoop
                 // isEnableAutoPlay={false}
                 // isDebug
                 isLazy
+
+                // height="auto"
+                // slidesPerView={3}
+                // isEnableNavButton={false}
+                // isEnablePagination
+                // isEnableLoop
+                // isLazy
             />)}
 
         <button type="button" onClick={() => setCount(curr => curr += 1)}> count: {count}</button>

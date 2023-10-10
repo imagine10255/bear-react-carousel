@@ -74,14 +74,15 @@ function Breakpoints2() {
                 slidesPerView={1}
                 slidesPerGroup={1}
 
-                isEnableNavButton
+                isEnableNavButton={false}
                 isEnablePagination
                 isEnableLoop
                 breakpoints={{
                     [gridTheme.gridBreakpoints.md]: {
                         slidesPerView: 3,
                         slidesPerGroup: 1,
-                        isEnablePagination: false
+                        isEnablePagination: false,
+                        isEnableNavButton: true,
                     }
                 }}
 
