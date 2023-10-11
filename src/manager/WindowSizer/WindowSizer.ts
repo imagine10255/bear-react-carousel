@@ -20,6 +20,7 @@ class WindowSizer {
     private _device: EDevice;
     private _eventManager = new Eventor<TEventMap>();
     private _window: GlobalWindow;
+    private _currWidth: number;
 
     get size() {
         return this._size;
@@ -38,6 +39,7 @@ class WindowSizer {
         this._window = inject.win;
         this._device = this._detectDevice();
         this._setSize();
+        this._currWidth = this._window.innerWidth;
     }
 
     private _detectDevice = (): EDevice => {
@@ -56,6 +58,12 @@ class WindowSizer {
 
     private _emitResize = () => {
         if(this._configurator.setting.isDebug && logEnable.windowSizer.onResize) logger.printInText('[WindowSizer.onResize]');
+
+        if(this._currWidth !== this._window.innerWidth){
+            this._currWidth = this._window.innerWidth;
+        }else{
+            return;
+        }
 
         this._setSize();
         this._eventManager.emit('resize', {windowSize: this._size});

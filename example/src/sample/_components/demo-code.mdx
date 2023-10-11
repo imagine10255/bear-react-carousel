@@ -1,0 +1,90 @@
+```tsx
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import BearCarousel, {TMoveEffectFn, TBearSlideItemDataList, BearSlideCard, elClassName, Controller, TOnSlideChange} from 'bear-react-carousel';
+
+const DemoPreview = () => {
+    const carouselMainRef = useRef<BearCarousel>(null);
+    const carouselMetaRef = useRef<BearCarousel>(null);
+    const carouselLineRef = useRef<BearCarousel>(null);
+    const [carouselMainController, setMainController] = useState<Controller>();
+    const [currLevel, setCurrLevel] = useState<{lv: number,count: number}|undefined>();
+
+    useEffect(() => {
+        carouselMainController?.slideToPage(5, false);
+    }, [carouselMainController]);
+
+     const customMoveEffectFn: TMoveEffectFn = useCallback((percentageInfo) => {
+        const transformY = 40;
+        return {
+            transform: `translate(0px, ${-transformY * (percentageInfo.calcPercentage - 1)}px)`,
+        };
+    }, []);
+
+    const customMoveEffectFn2: TMoveEffectFn = useCallback((percentageInfo) => {
+        const transformY = -19;
+        return {
+            transform: `translate(0px, ${-transformY * (percentageInfo.calcPercentage - 1)}px)`,
+        };
+    }, []);
+
+
+    const handleSlideChange: TOnSlideChange = useCallback((state) => {
+        const curr = dataList.find((row, index) => index === state.virtual.activeIndex);
+        if(curr){
+            setCurrLevel({lv: curr.lv, count: curr.count});
+        }
+
+    }, []);
+
+    return <div>
+        {/* Main */}
+        <BearCarousel
+            ref={carouselMainRef}
+            syncCarouselRefs={[carouselMetaRef]}
+            onSlideChange={handleSlideChange}
+            setController={setMainController}
+            style={{paddingTop: '20px'}}
+            data={renderSlideData()}
+            slidesPerView={1.2}
+            spaceBetween={20}
+            isCenteredSlides={true}
+            isEnableNavButton={false}
+            isEnablePagination={false}
+            moveEffect={{
+                moveFn: customMoveEffectFn,
+            }}
+        />
+
+        {/* Meta */}
+        <BearCarousel
+            ref={carouselMetaRef}
+            data={renderMetaData()}
+            height="auto"
+            slidesPerView={3}
+            isCenteredSlides={true}
+            isEnableNavButton={false}
+            isEnablePagination={false}
+            isEnableMouseMove={false}
+            moveEffect={{
+                moveFn: customMoveEffectFn2,
+            }}
+        />
+
+        {/* Line */}
+        <BearCarousel
+            ref={carouselLineRef}
+            data={renderLineData()}
+            height="auto"
+            slidesPerView={3}
+            isCenteredSlides={true}
+            isEnableNavButton={false}
+            isEnablePagination={false}
+            isEnableMouseMove={false}
+        />
+    </div>;
+};
+
+export default DemoPreview;
+
+
+```

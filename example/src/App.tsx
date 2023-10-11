@@ -87,7 +87,7 @@ const examples: Record<EExampleCode, () => JSX.Element> = {
 };
 
 function App() {
-    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.lazyImage);
+    const [exampleKey, setExampleItem] = useState<EExampleCode>(EExampleCode.syncController2);
     const Comp = examples[exampleKey];
 
 
