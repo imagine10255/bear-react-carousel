@@ -198,7 +198,7 @@ const DemoPreview = () => {
             <BearCarousel
                 ref={carouselMetaRef}
                 data={metaData}
-                height="60px"
+                height="70px"
                 slidesPerView={3}
                 isCenteredSlides={true}
                 isEnableNavButton={false}
