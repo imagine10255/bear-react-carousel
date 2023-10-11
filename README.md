@@ -16,10 +16,10 @@
 </div>
 
 <p align="center">
-  <a href="https://bear-react-carousel.github.io/docs/getting-started">Get started</a> | 
-  <a href="https://bear-react-carousel.github.io/docs/category/components">Component</a> |
-  <a href="https://bear-react-carousel.github.io/docs/category/examples">Examples</a> |
-  <a href="https://bear-react-carousel.github.io/docs/props-try">Prop Try</a>
+  <a href="https://bear-react-carousel.pages.dev/docs/getting-started">Get started</a> | 
+  <a href="https://bear-react-carousel.pages.dev/docs/category/components">Component</a> |
+  <a href="https://bear-react-carousel.pages.dev/docs/category/examples">Examples</a> |
+  <a href="https://bear-react-carousel.pages.dev/docs/props-try">Prop Try</a>
 </p>
 
 ## Features
@@ -30,7 +30,7 @@
 - Number of times to avoid re-renders by key in carousel items or switch memo cache
 - There is no need to set the style of the project, Bear React Carousel directly provides the components of your project, you only need to set the image URL and form an array, and put it in the data parameter.
 - The size of the carousel, the height of the outer container is based, and the item container follows the size of the outer container
-- The loop mode uses the cloning method to fill in the blanks at the beginning and end during cycling (If you try to change the order in the loop mode, you will encounter many [issues](https://bear-react-carousel.github.io/blog/Swiper%20carousel%20loop))
+- The loop mode uses the cloning method to fill in the blanks at the beginning and end during cycling (If you try to change the order in the loop mode, you will encounter many [issues](https://bear-react-carousel.pages.dev/blogSwiper%20carousel%20loop))
 - The onClick event inside the SlideItem will not be triggered during sliding, thereby avoiding potential user experience issues
 
 ## Supports
