@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.18-alpha.1](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.18-alpha.0...v4.0.18-alpha.1) (2023-10-11)
+
+
+### Bug Fixes
+
+* modify mobile resize, swiping triggers problems ([4ac7442](https://github.com/imagine10255/bear-react-carousel/commit/4ac7442b02c0afd927a350f6de2584946fa8d109))
+
 ### [4.0.18-alpha.0](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.17...v4.0.18-alpha.0) (2023-10-10)
 
 
