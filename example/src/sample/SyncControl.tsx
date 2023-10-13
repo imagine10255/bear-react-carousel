@@ -24,7 +24,7 @@ const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
             <div className="h-100 d-flex"
                 style={{fontSize: '40px', backgroundColor: row.color}}
             >
-                {/*<a href="https://bear-react-carousel.github.io" rel="noreferrer" target="_blank">{row.id}</a>*/}
+                {/*<a href="https://bear-react-carousel.pages.dev/" rel="noreferrer" target="_blank">{row.id}</a>*/}
             </div>
         </BearSlideCard>
     };
@@ -38,7 +38,7 @@ const bearSlideItemData2: TBearSlideItemDataList = images.map(row => {
             <div className="h-100 d-flex"
                 style={{fontSize: '40px', width: '200px', height: '200px', backgroundColor: row.color}}
             >
-                {/*<a href="https://bear-react-carousel.github.io" rel="noreferrer" target="_blank">{row.id}</a>*/}
+                {/*<a href="https://bear-react-carousel.pages.dev/" rel="noreferrer" target="_blank">{row.id}</a>*/}
             </div>
         </BearSlideCard>
     };

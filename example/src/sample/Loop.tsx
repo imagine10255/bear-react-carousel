@@ -21,7 +21,7 @@ const bearSlideItemData1: TBearSlideItemDataList = foodImages.map(row => {
             <div className="h-100 d-flex"
                 style={{fontSize: '40px', backgroundImage: `url(${row.imageUrl})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat'}}
             >
-                {/*<a href="https://bear-react-carousel.github.io" rel="noreferrer" target="_blank">{row.id}</a>*/}
+                {/*<a href="https://bear-react-carousel.pages.dev/" rel="noreferrer" target="_blank">{row.id}</a>*/}
             </div>
         </BearSlideCard>
     };

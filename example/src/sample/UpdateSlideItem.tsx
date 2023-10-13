@@ -31,7 +31,7 @@ function UpdateSlideItem() {
                 <div className="h-100 d-flex"
                     style={{fontSize: '40px', backgroundColor: row.color, border: row.id === activeId ? '5px solid #bdbdbd' : undefined}}
                 >
-                    {/*<a href="https://bear-react-carousel.github.io" rel="noreferrer" target="_blank">{row.id}</a>*/}
+                    {/*<a href="https://bear-react-carousel.pages.dev/" rel="noreferrer" target="_blank">{row.id}</a>*/}
                 </div>
             </BearSlideCard>
         };
