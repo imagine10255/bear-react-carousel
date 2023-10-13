@@ -1,12 +1,14 @@
-<div align="center">
-        <a href="https://bear-react-carousel.pages.dev/" title="Bear Carousel Logo - Most modern mobile touch slider with hardware accelerated transitions for ReactJS">
-            <img src="https://github.com/imagine10255/bear-react-carousel/blob/main/logo.png" alt="Bear React Carousel Logo - Most modern mobile touch slider with hardware accelerated transitions for ReactJS" />
-        </a>
-</div>
+# Bear React Carousel
+
+<a href="https://bear-react-carousel.pages.dev/" title="Bear Carousel Logo - Most modern slider with hardware accelerated transitions for ReactJS">
+    <img src="https://bear-react-carousel.pages.dev/img/banner.webp" alt="Bear React Carousel Logo - Most modern slider with hardware accelerated transitions for ReactJS" />
+</a>
+
+<p align="center">
+    Most modern slider with hardware accelerated transitions for ReactJS
+</p>
 
 <div align="center">
-
-
 
 [![NPM](https://img.shields.io/npm/v/bear-react-carousel.svg?style=for-the-badge)](https://www.npmjs.com/package/bear-react-carousel)
 [![npm downloads](https://img.shields.io/npm/dm/bear-react-carousel.svg?style=for-the-badge)](https://www.npmjs.com/package/bear-react-carousel)
@@ -15,12 +17,16 @@
 
 </div>
 
-<p align="center">
-  <a href="https://bear-react-carousel.pages.dev/docs/getting-started">Get started</a> | 
-  <a href="https://bear-react-carousel.pages.dev/docs/category/components">Component</a> |
-  <a href="https://bear-react-carousel.pages.dev/docs/category/examples">Examples</a> |
-  <a href="https://bear-react-carousel.pages.dev/docs/props-try">Prop Try</a>
-</p>
+## Documentation
+
+- [Getting Started](https://bear-react-carousel.pages.dev/docs/getting-started)
+- [Faq](https://bear-react-carousel.pages.dev/docs/category/faqs)
+- [Prop Try](https://bear-react-carousel.pages.dev/docs/props-try)
+- [ClassNames](https://bear-react-carousel.pages.dev/docs/class-names)
+- [Components](https://bear-react-carousel.pages.dev/docs/category/components)
+- [Features](https://bear-react-carousel.pages.dev/docs/category/feature)
+- [Examples](https://bear-react-carousel.pages.dev/docs/category/examples)
+
 
 ## Features
 
@@ -49,7 +55,7 @@
 
 
 
-### Install
+### Installation
 
 ```bash
 yarn add bear-react-carousel
