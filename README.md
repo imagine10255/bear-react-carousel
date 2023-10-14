@@ -1,7 +1,7 @@
 # Bear React Carousel
 
-<a href="https://bear-react-carousel.pages.dev/" title="Bear Carousel Logo - Most modern slider with hardware accelerated transitions for ReactJS">
-    <img src="https://bear-react-carousel.pages.dev/img/banner.webp" alt="Bear React Carousel Logo - Most modern slider with hardware accelerated transitions for ReactJS" />
+<a href="https://bear-react-carousel.pages.dev/" title="Bear React Carousel - Most modern slider with hardware accelerated transitions for ReactJS">
+    <img src="https://bear-react-carousel.pages.dev/img/banner.webp" alt="Bear React Carousel Logo" />
 </a>
 
 <p align="center">
