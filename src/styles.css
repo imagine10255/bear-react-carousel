@@ -58,7 +58,7 @@
     pointer-events: none;
 }
 
-.bear-react-carousel__pagination-group:not([data-page-content]) .bear-react-carousel__pagination-button{
+.bear-react-carousel__pagination-group .bear-react-carousel__pagination-button{
     width: .5rem;
     height: .5rem;
     border-radius: 7px;
@@ -67,7 +67,7 @@
     box-shadow: 3px 3px 9px 0 rgb(189 189 189 / 12%);
     margin: 0 6px;
 }
-.bear-react-carousel__pagination-group:not([data-page-content]) .bear-react-carousel__pagination-button[data-active]{
+.bear-react-carousel__pagination-group .bear-react-carousel__pagination-button[data-active]{
     background-color: var(--primary-color, #00a3e0);
 }
 

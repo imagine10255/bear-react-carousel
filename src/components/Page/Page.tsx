@@ -1,4 +1,5 @@
 import {forwardRef, useCallback} from 'react';
+import clsx from 'clsx';
 import elClassName from '../../el-class-name';
 import {booleanToDataAttr} from '../../utils';
 
@@ -17,12 +18,17 @@ const Page = forwardRef<HTMLDivElement, IProps>(({
     pageContent
 }, ref) => {
 
+    const isPageContent = !!pageContent;
+
     const handleSlideToPage = useCallback(() => {
         onSlideToPage(page);
     }, [page]);
 
     return <div
-        className={elClassName.paginationButton}
+        className={clsx({
+            [elClassName.paginationButton]: !isPageContent,
+            [elClassName.paginationContent]: isPageContent
+        })}
         ref={ref}
         role='button'
         onClick={handleSlideToPage}
@@ -30,11 +36,7 @@ const Page = forwardRef<HTMLDivElement, IProps>(({
         data-active={booleanToDataAttr(isActive)}
         data-page={page}
     >
-        {pageContent && (
-            <div className={elClassName.paginationContent}>
-                {pageContent}
-            </div>
-        )}
+        {pageContent}
     </div>;
 });
 

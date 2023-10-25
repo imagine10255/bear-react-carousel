@@ -61,7 +61,7 @@
     "@vitejs/plugin-react-swc": "^3.0.0",
     "react": "^18.x",
     "react-dom": "^18.x",
-    "classnames": "^2.3.2",
+    "clsx": "2.0.0",
     "cz-git": "^1.6.1",
     "eslint": "^8.37.0",
     "eslint-config-react-app": "^7.0.1",

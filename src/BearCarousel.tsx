@@ -381,7 +381,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                     onSlideToPage={(page) => this._controller.slideToPage(page)}
                     page={index + 1}
                     isActive={page.activePage === index + 1}
-                    pageContent={isEnablePageContent && pageContent[index]}
+                    pageContent={isEnablePageContent && typeof pageContent !== 'undefined' && pageContent[index]}
                 />;
             });
 
