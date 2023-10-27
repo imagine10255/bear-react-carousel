@@ -15,7 +15,7 @@ import {carImages as images} from '../config/images';
 const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
     return {
         key: row.id,
-        children: <BearSlideImage imageUrl={row.imageUrl} onClick={() => console.log('xxx')}/>
+        children: <BearSlideImage imageUrl={row.imageUrl} imageSize="contain" onClick={() => console.log('xxx')}/>
     };
 });
 

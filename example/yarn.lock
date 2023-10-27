@@ -418,10 +418,10 @@ babel-plugin-syntax-jsx@^6.18.0:
   version "0.0.0"
   uid ""
 
-bear-react-grid@5.0.5:
-  version "5.0.5"
-  resolved "https://registry.yarnpkg.com/bear-react-grid/-/bear-react-grid-5.0.5.tgz#d1a1a9dac608b1ed316523f840db649cd0478a98"
-  integrity sha512-asrULvoVIRrtXRqWNaa7fbZy9WYtAhG47UqCeSZtyVdwoTObYIc847beWVSelqUn3N/ffWcyMgic5hyMi4NiCw==
+bear-react-grid@5.0.10-alpha.2:
+  version "5.0.10-alpha.2"
+  resolved "https://registry.yarnpkg.com/bear-react-grid/-/bear-react-grid-5.0.10-alpha.2.tgz#0788f90d23d90fe88992f116635e1cb9329a293a"
+  integrity sha512-sql6HOijgJczRt5T1/BYwKvs3ReGZvPYv+f5YsJ3I+vC+n/ITkSTVDnKV5RNB2x+DHA5s5kIYl5n8c4/FqpenQ==
 
 camelize@^1.0.0:
   version "1.0.1"

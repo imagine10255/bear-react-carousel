@@ -17,9 +17,9 @@ const LvAboutWrapper = ({
 
             <Title>Level {level} benefits</Title>
 
-            <Grid columns="repeat(4, 1fr)">
+            <Grid col="repeat(4, 1fr)">
                 {Array.from({length: count}).map((row, index) => {
-                    return <Item key={`LvAbout_${index}`} columns={1} gap="5px" className="justify-content-center">
+                    return <Item key={`LvAbout_${index}`} col={1} gap="5px" className="justify-content-center">
                         <Avatar/>
                         <p className="text-center">...</p>
                     </Item>;

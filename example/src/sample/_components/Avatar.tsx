@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import {Grid, GridCol, Flex, Container} from 'bear-react-grid';
+import {Grid, GridCol, Flex, Container, auto} from 'bear-react-grid';
 import React from 'react';
 
 interface IProps extends FCProps {
@@ -11,10 +11,10 @@ const Avatar = ({
 }: IProps) => {
     return <AvatarRoot>
         <Container className="h-inherit">
-            <Grid rowGap="5px" columnGap="10px" className="justify-content-start h-inherit">
+            <Grid col={auto(2)} className="justify-content-start h-inherit gap-2">
                 <img src="/img/build-anything/avatar.jpg" className="rounded-circle h-inherit" alt="Bruce Lee"/>
-                <Flex className="flex-column justify-content-center text-left" gap="5px">
-                    <Flex gap="8px">
+                <Flex className="flex-column justify-content-center text-left gap-2">
+                    <Flex className="gap-2">
                         <Name>Imagine Chiu</Name>
                         <Level>LV5</Level>
                     </Flex>

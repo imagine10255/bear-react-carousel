@@ -3,16 +3,11 @@ import {Container, Grid} from 'bear-react-grid';
 import Icons from './Icons';
 import React from 'react';
 
-interface IProps extends FCProps {
 
-}
-
-const NavWrapper = ({
-    className,
-}: IProps) => {
-    return <NavWrapperRoot className={className}>
+const NavWrapper = () => {
+    return <NavWrapperRoot>
         <Container>
-            <Grid columns="auto 1fr auto" className="text-center align-items-center py-4">
+            <Grid col="auto 1fr auto" className="text-center align-items-center py-4">
                 <Icons.Arrow/>
                 <NavTitle>Tier benefits</NavTitle>
                 <div>Rule</div>

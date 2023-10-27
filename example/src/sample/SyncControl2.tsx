@@ -146,7 +146,7 @@ const DemoPreview = () => {
             return {
                 key: row.id,
                 children: <BearSlideCard>
-                    <LevelCard columns={1} rowGap="10px" style={{backgroundColor: row.bg}} className="align-content-start">
+                    <LevelCard col={1} rowGap="10px" style={{backgroundColor: row.bg}} className="align-content-start">
                         {row.status && <CurrLv>
                             {row.status === 'Locked' && <Icons.Locked/>}
                             <span>{row.status}</span>
@@ -234,7 +234,7 @@ const DemoPreview = () => {
 
 
 
-    return <CardRoot columns={minmax('300px', '500px')} gap="0px">
+    return <CardRoot col={minmax('300px', '500px')} gap="0px">
         <Phone>
             <NavWrapper/>
             <Avatar/>

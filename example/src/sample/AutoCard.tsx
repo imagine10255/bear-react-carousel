@@ -18,9 +18,9 @@ import {carImages} from '../config/images';
 const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
     return {
         key: row.id,
-        children: <BearSlideCard>
+        children: <BearSlideCard bgSize="100%">
             <div className="h-100 d-flex"
-                 style={{fontSize: '40px', height: '200px', width: '250px',backgroundColor: row.color}}
+                style={{fontSize: '40px', height: '200px', width: '250px',backgroundColor: row.color}}
             >
                 {/*<a href="https://bear-react-carousel.pages.dev/" rel="noreferrer" target="_blank">{row.id}</a>*/}
             </div>
@@ -52,6 +52,7 @@ function SlideImage() {
             // style={{width: '400px'}}
             // controllerRef={controllerRef}
             data={bearSlideItemData1}
+            height="200px"
             // onSlideChange={setCarouselState}
             slidesPerView="auto"
             // isCenteredSlides
