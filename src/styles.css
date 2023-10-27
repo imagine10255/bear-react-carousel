@@ -183,6 +183,13 @@
     width: 100%; /* fix lazy image */
 }
 
+.bear-react-carousel__slide-item__image-contain{
+    object-fit: contain;
+}
+.bear-react-carousel__slide-item__image-cover{
+    object-fit: cover;
+}
+
 .bear-react-carousel__slide-item__image-preload{
     position: absolute;
     left: 0;
@@ -200,9 +207,16 @@
     height: 100%;
     background-repeat: no-repeat;
     background-position: center;
+}
+.bear-react-carousel__slide-item__card-contain{
+    background-size: contain;
+}
+.bear-react-carousel__slide-item__card-cover{
     background-size: cover;
 }
-
+.bear-react-carousel__slide-item__card-100{
+    background-size: 100%;
+}
 
 
 

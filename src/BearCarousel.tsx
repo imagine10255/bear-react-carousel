@@ -31,9 +31,9 @@ interface IState {
 }
 
 
-
-
-
+/**
+ * Carousel Component
+ */
 class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     static defaultProps: IBearCarouselProps = {
         data: undefined,

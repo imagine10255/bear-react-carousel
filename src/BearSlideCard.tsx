@@ -1,5 +1,6 @@
 import React, {ReactNode} from 'react';
 import CSS from 'csstype';
+import clsx from 'clsx';
 import elClassName from './el-class-name';
 import useLazyLoadBg, {ELoadStatus} from './hook/useLazyLoadBg';
 import useDraggableClick from './hook/useDraggableClick';
@@ -9,17 +10,29 @@ interface IProps {
   className?: string,
   style?: CSS.Properties,
   bgUrl?: string,
-  bgSize?: '100%'|'cover',
+  bgSize?: '100%'|'cover'|'contain',
   children?: ReactNode,
   onClick?: () => void,
   onClickAllowTime?: number,
 }
 
+
+/**
+ * Slide Data - Card Component
+ *
+ * @param className
+ * @param style
+ * @param bgUrl
+ * @param bgSize
+ * @param children
+ * @param onClick
+ * @param onClickAllowTime
+ */
 const BearSlideCard = ({
     className,
     style,
     bgUrl,
-    bgSize,
+    bgSize = 'cover',
     children,
     onClick,
     onClickAllowTime = 150,
@@ -32,14 +45,17 @@ const BearSlideCard = ({
 
     return <div
         ref={imageRef}
-        className={[className, elClassName.slideItemCard].join(' ').trim()}
+        className={clsx(className, elClassName.slideItemCard, {
+            [elClassName.slideItemCardCover]: bgSize === 'cover',
+            [elClassName.slideItemCardContain]: bgSize === 'contain',
+            [elClassName.slideItemCard100]: bgSize === '100%',
+        })}
         onMouseDown={onClick ? onMouseDown: undefined}
         onMouseUp={onClick ? onMouseUp: undefined}
         data-lazy-src={slide.isLazy && status !== ELoadStatus.done ? bgUrl: undefined}
         style={{
             ...style,
             backgroundImage: imageUrl ? `url(${imageUrl})` :undefined,
-            backgroundSize: bgSize,
         }}
     >
         {slide.isLazy && status === ELoadStatus.loading ? <div className={elClassName.slideItemImagePreLoad}>

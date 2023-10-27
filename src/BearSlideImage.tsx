@@ -1,4 +1,5 @@
 import CSS from 'csstype';
+import clsx from 'clsx';
 import elClassName from './el-class-name';
 import useLazyLoadImage from './hook/useLazyLoadImage';
 import useDraggableClick from './hook/useDraggableClick';
@@ -10,16 +11,30 @@ interface IProps {
   style?: CSS.Properties,
   imageUrl: string,
   imageAlt?: string,
+  imageSize?: 'cover'|'contain',
   alt?: string,
   onClick?: () => void,
   onClickAllowTime?: number
 }
 
+
+/**
+ * Slide Data - Image Component
+ *
+ * @param className
+ * @param style
+ * @param imageUrl
+ * @param imageAlt
+ * @param imageSize
+ * @param onClick
+ * @param onClickAllowTime
+ */
 const BearSlideImage = ({
     className,
     style,
     imageUrl,
     imageAlt,
+    imageSize,
     onClick,
     onClickAllowTime = 150,
 }: IProps) => {
@@ -32,7 +47,10 @@ const BearSlideImage = ({
         <img
             ref={imageRef}
             style={style}
-            className={[className, elClassName.slideItemImage].join(' ').trim()}
+            className={clsx(className, elClassName.slideItemImage, {
+                [elClassName.slideItemImageCover]: imageSize === 'cover',
+                [elClassName.slideItemImageContain]: imageSize === 'contain',
+            })}
             src={(!slide.isLazy && imageUrl) ? imageUrl :undefined}
             alt={imageAlt}
             draggable="false"
