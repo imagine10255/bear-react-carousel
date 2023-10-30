@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.19](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.19-alpha.1...v4.0.19) (2023-10-30)
+
+
+### Bug Fixes
+
+* modify bearCard bgSize style to className, bearImage add imageSize props ([5d3709d](https://github.com/imagine10255/bear-react-carousel/commit/5d3709d4d601c759438f4138b0783492db05ad30))
+
 ### [4.0.19-alpha.1](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.19-alpha.0...v4.0.19-alpha.1) (2023-10-27)
 
 
