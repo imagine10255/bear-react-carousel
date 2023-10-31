@@ -11,7 +11,7 @@ interface IProps {
   style?: CSS.Properties,
   imageUrl: string,
   imageAlt?: string,
-  imageSize?: 'cover'|'contain',
+  imageSize?: 'cover'|'contain'|'none',
   alt?: string,
   onClick?: () => void,
   onClickAllowTime?: number
@@ -50,6 +50,7 @@ const BearSlideImage = ({
             className={clsx(className, elClassName.slideItemImage, {
                 [elClassName.slideItemImageCover]: imageSize === 'cover',
                 [elClassName.slideItemImageContain]: imageSize === 'contain',
+                [elClassName.slideItemImageContain]: imageSize === 'none',
             })}
             src={(!slide.isLazy && imageUrl) ? imageUrl :undefined}
             alt={imageAlt}

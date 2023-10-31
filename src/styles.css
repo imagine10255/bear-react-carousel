@@ -189,6 +189,9 @@
 .bear-react-carousel__slide-item__image-cover{
     object-fit: cover;
 }
+.bear-react-carousel__slide-item__image-none{
+    object-fit: none;
+}
 
 .bear-react-carousel__slide-item__image-preload{
     position: absolute;
