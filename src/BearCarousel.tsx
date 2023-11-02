@@ -180,7 +180,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         }
 
         // 需要重新計算的部分 (page info..), 因項目數量不同, 位置需規0
-        if(data.length !== nextData.length){
+        if(data?.length !== nextData?.length){
             this._configurator.init(nextProps.breakpoints, getSetting(nextProps));
             this._stater.init(nextProps.data);
             setTimeout(() => {
