@@ -46,9 +46,9 @@ const BearSlideCard = ({
     return <div
         ref={imageRef}
         className={clsx(className, elClassName.slideItemCard, {
+            [elClassName.slideItemCard100]: bgSize === '100%',
             [elClassName.slideItemCardCover]: bgSize === 'cover',
             [elClassName.slideItemCardContain]: bgSize === 'contain',
-            [elClassName.slideItemCard100]: bgSize === '100%',
         })}
         onMouseDown={onClick ? onMouseDown: undefined}
         onMouseUp={onClick ? onMouseUp: undefined}

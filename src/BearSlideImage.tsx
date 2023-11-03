@@ -48,9 +48,9 @@ const BearSlideImage = ({
             ref={imageRef}
             style={style}
             className={clsx(className, elClassName.slideItemImage, {
+                [elClassName.slideItemImageNone]: imageSize === 'none',
                 [elClassName.slideItemImageCover]: imageSize === 'cover',
                 [elClassName.slideItemImageContain]: imageSize === 'contain',
-                [elClassName.slideItemImageContain]: imageSize === 'none',
             })}
             src={(!slide.isLazy && imageUrl) ? imageUrl :undefined}
             alt={imageAlt}
