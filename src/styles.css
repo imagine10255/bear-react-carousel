@@ -189,6 +189,9 @@
 .bear-react-carousel__slide-item__image-cover{
     object-fit: cover;
 }
+.bear-react-carousel__slide-item__image-scale-down{
+    object-fit: scale-down;
+}
 .bear-react-carousel__slide-item__image-none{
     object-fit: none;
 }

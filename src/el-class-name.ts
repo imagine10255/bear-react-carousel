@@ -12,6 +12,7 @@ export default {
     slideItemImage: 'bear-react-carousel__slide-item__image',
     slideItemImageCover: 'bear-react-carousel__slide-item__image-cover',
     slideItemImageContain: 'bear-react-carousel__slide-item__image-contain',
+    slideItemImageScaleDown: 'bear-react-carousel__slide-item__image-scale-down',
     slideItemImageNone: 'bear-react-carousel__slide-item__image-none',
     slideItemImagePreLoad: 'bear-react-carousel__slide-item__image-preload',
     slideItemCard: 'bear-react-carousel__slide-item__card',
