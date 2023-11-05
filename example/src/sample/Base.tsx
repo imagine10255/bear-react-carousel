@@ -58,8 +58,8 @@ function Base() {
             // onSlideChange={setCarouselState}
             slidesPerView={1}
             // isCenteredSlides={true}
-            height="200px"
-            // height={{widthRatio: 21, heightRatio: 9}}
+            // height="200px"
+            height={{widthRatio: 21, heightRatio: 9}}
             isEnableNavButton
             isEnablePagination
             isEnableLoop

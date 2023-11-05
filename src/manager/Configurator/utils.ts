@@ -90,7 +90,7 @@ export function getHeight(height: IBreakpointSetting['height']) {
 
     }else if(typeof height?.widthRatio !== 'undefined' && typeof height?.heightRatio !== 'undefined'){
         return {
-            aspectRatio: `${height.widthRatio} / ${height.heightRatio};`,
+            aspectRatio: `${height.widthRatio} / ${height.heightRatio}`,
             height: 'auto'
         };
     }
