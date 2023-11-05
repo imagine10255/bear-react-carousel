@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.21-alpha.3](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.21-alpha.2...v4.0.21-alpha.3) (2023-11-05)
+
+
+### Bug Fixes
+
+* modify an issue where there are too many ";" symbols in the height proportional mode, causing the style to fail. ([701e003](https://github.com/imagine10255/bear-react-carousel/commit/701e003e3cd12f83553d66cfc502548df3ffd4ed))
+
 ### [4.0.21-alpha.2](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.21-alpha.1...v4.0.21-alpha.2) (2023-11-03)
 
 
