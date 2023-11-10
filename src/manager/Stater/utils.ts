@@ -94,9 +94,8 @@ export function getNextPageFirstIndex(isCenterMode: boolean, activeActualIndex: 
  * 取得範圍內 Index
  * @param slideIndex
  * @param stater
- * @param configurator
  */
-export function getInRangeIndex(slideIndex: number, stater: Stater, configurator: Configurator): number {
+export function getInRangeIndex(slideIndex: number, stater: Stater): number {
 
     if(slideIndex >= stater.virtual.lastIndex){
         // 其他情況(不讓頁尾露出空白)

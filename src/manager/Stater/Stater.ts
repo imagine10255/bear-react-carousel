@@ -74,7 +74,7 @@ class Stater {
      * @param index
      */
     getInRangeIndex = (index: number): number => {
-        return getInRangeIndex(index, this, this._configurator);
+        return getInRangeIndex(index, this);
     };
 
 
