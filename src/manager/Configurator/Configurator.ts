@@ -30,7 +30,6 @@ class Configurator {
             '--carousel-slide-width': this.setting.slidesPerView === 'auto' ? 'auto' : `${100 / this.setting.slidesPerViewActual}%`,
         } as CSSProperties;
 
-        console.log('styleVars', styleVars);
         return styleVars;
     }
 
