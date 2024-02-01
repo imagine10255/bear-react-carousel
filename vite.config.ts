@@ -5,6 +5,7 @@ import * as path from 'node:path';
 import {visualizer} from 'rollup-plugin-visualizer';
 import eslint from 'vite-plugin-eslint';
 
+
 // https://vitejs.dev/config/
 export default defineConfig({
     plugins: [
@@ -16,7 +17,6 @@ export default defineConfig({
         visualizer() as Plugin,
     ],
     build: {
-        minify: process.env.NODE_ENV === 'production',
         sourcemap: process.env.NODE_ENV !== 'production',
         lib: {
             entry: path.resolve(__dirname, 'src/index.ts'),

@@ -36,7 +36,7 @@ export function anyToNumber(value: any, defaultValue = 0): number {
  * @param innerWidth
  * @param breakpointSizes
  */
-export function getSizeByRange(innerWidth: number = 0, breakpointSizes: number[]): number{
+export function getSizeByRange(innerWidth: number = 0, breakpointSizes: number[] = []): number{
     const filterArray = breakpointSizes
         .filter(size => size < innerWidth)
         .sort((a, b) => Number(b) - Number(a));
@@ -103,24 +103,28 @@ export function getLoopResetIndex(activeActualIndex: number, residue: number): n
 
 
 
-type ObjectKeys<T> = Array<keyof T>;
 
-export function getObjectKeys<T>(props: T): ObjectKeys<T> {
-    return Object.keys(props) as ObjectKeys<T>;
+/**
+ * Object.keys 型別增強
+ * @param object
+ */
+export function objectKeys<T extends object>(object: T): Array<keyof T> {
+    return Object.keys(object) as Array<keyof T>;
 }
 
+
 export function isPropsDiff(props: IBearCarouselProps, nextProps: IBearCarouselProps, exclude: string[]) {
-    const filterProps = getObjectKeys(props)
+    const filterProps = objectKeys(props)
         .filter((key) => typeof props[key] !== 'function' && !exclude.includes(key))
         .map(key => props[key]);
-    const nextFilterProps = getObjectKeys(nextProps)
+    const nextFilterProps = objectKeys(nextProps)
         .filter(key => typeof nextProps[key] !== 'function' && !exclude.includes(key))
         .map(key => nextProps[key]);
 
     return deepCompare(filterProps, nextFilterProps) === false;
 }
 
-export function isDataKeyDff(data: TBearSlideItemDataList, nextData: TBearSlideItemDataList) {
+export function isDataKeyDff(data?: TBearSlideItemDataList, nextData?: TBearSlideItemDataList) {
     const oldKey = data?.map((row) => row.key).join('_');
     const nextKey = nextData?.map((row) => row.key).join('_');
 

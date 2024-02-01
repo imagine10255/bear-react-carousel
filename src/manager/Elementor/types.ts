@@ -1,4 +1,4 @@
 
 export interface IMultiRefObject<T> {
-    current: T;
+    current: T | null;
 }

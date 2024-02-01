@@ -13,9 +13,22 @@ class Stater {
     private _eventor = new Eventor<TEventMap>();
 
 
-    constructor(setter: Configurator, data: TBearSlideItemDataList) {
+    constructor(setter: Configurator, data?: TBearSlideItemDataList) {
         this._configurator = setter;
-        this.init(data);
+        this._info = this.init(data);
+
+        const {slidesPerViewActual, slidesPerGroup, isEnableLoop} = this._configurator.setting;
+        this._formatElement = initDataList(
+            data,
+            slidesPerViewActual,
+            slidesPerGroup,
+            isEnableLoop
+        );
+
+    }
+
+    set info(info: IInfo){
+        this._eventor.emit('change');
     }
 
     get nextPage(): number{
@@ -24,7 +37,7 @@ class Stater {
 
     get nextPageFirstIndex(): number{
         const {setting} = this._configurator;
-        return getNextPageFirstIndex(setting.isCenteredSlides, this.virtual.activeIndex, setting.slidesPerGroup, setting.slidesPerViewActual);
+        return getNextPageFirstIndex(setting.isCenteredSlides ?? false, this.virtual.activeIndex, setting.slidesPerGroup, setting.slidesPerViewActual);
     }
 
     get prevPage(): number{
@@ -78,7 +91,7 @@ class Stater {
     };
 
 
-    init = (slideData: TBearSlideItemDataList = []) => {
+    init = (slideData: TBearSlideItemDataList = []): IInfo => {
         const {slidesPerView, slidesPerViewActual, slidesPerGroup, isCenteredSlides, isEnablePagination, isEnableNavButton, isEnableLoop} = this._configurator.setting;
 
         let sourceTotal = slideData.length;
@@ -87,8 +100,8 @@ class Stater {
         const elementTotal = this.formatElement.length;
 
         // clone
-        const cloneBeforeTotal = isEnableLoop ? slidesPerViewActual : 0;
-        const cloneAfterTotal = cloneBeforeTotal;
+        // const cloneBeforeTotal = isEnableLoop ? slidesPerViewActual : 0;
+        // const cloneAfterTotal = cloneBeforeTotal;
 
         // actual
         const actualIndex = {min: 0, max: elementTotal - 1};
@@ -107,7 +120,10 @@ class Stater {
             fakeTotalPage = fakeTotalPage - (slidesPerView - slidesPerGroup);
         }
 
-        this._info = {
+
+        // this._eventor.emit('change');
+
+        return {
             // 從0開始
             source: {
                 activeIndex: 0,
@@ -126,10 +142,9 @@ class Stater {
             },
             // 總頁數
             residue: elementTotal % slidesPerGroup,
-            isVisiblePagination: isEnablePagination && this.formatElement.length > 0,
-            isVisibleNavButton: isEnableNavButton && this.formatElement.length > 0
+            isVisiblePagination: !!(isEnablePagination && this.formatElement.length > 0),
+            isVisibleNavButton: !!(isEnableNavButton && this.formatElement.length > 0),
         };
-        this._eventor.emit('change');
     };
 
     updateData = (slideData: TBearSlideItemDataList = []) => {

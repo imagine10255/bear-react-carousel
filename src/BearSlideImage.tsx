@@ -39,7 +39,7 @@ const BearSlideImage = ({
     onClickAllowTime = 150,
 }: IProps) => {
     const slide = useSlide();
-    const {imageRef, status} = useLazyLoadImage({isLazy: slide.isLazy, imageUrl});
+    const {imageRef, status} = useLazyLoadImage({isLazy: slide.isLazy ?? false, imageUrl});
     const {onMouseDown, onMouseUp} = useDraggableClick({onClick, onClickAllowTime});
 
 

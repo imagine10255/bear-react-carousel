@@ -13,6 +13,7 @@ import ElState from '../Elementor/ElState';
 
 
 /**
+ * 托動控制器
  * unmount 跟 blur 都需要 停止計時器
  */
 class Dragger {
@@ -99,8 +100,10 @@ class Dragger {
         event.preventDefault();
         if(this._configurator.setting.isDebug && logEnable.dragger.onMobileTouchMove) logger.printInText('[Dragger._onMobileTouchMove]');
 
-        const movePx = this._locator.touchMove(new MobileTouchEvent(event), this._elementor.containerEl);
-        this._dragMove(movePx);
+        if(this._elementor.containerEl){
+            const movePx = this._locator.touchMove(new MobileTouchEvent(event), this._elementor.containerEl);
+            this._dragMove(movePx);
+        }
     };
 
     /**
@@ -143,8 +146,10 @@ class Dragger {
         event.preventDefault();
         if(this._configurator.setting.isDebug && logEnable.dragger.onWebMouseMove) logger.printInText('[Dragger._onWebMouseMove]');
 
-        const movePx = this._locator.touchMove(new DesktopTouchEvent(event), this._elementor.containerEl);
-        this._dragMove(movePx);
+        if(this._elementor.containerEl){
+            const movePx = this._locator.touchMove(new DesktopTouchEvent(event), this._elementor.containerEl);
+            this._dragMove(movePx);
+        }
     };
 
     /**

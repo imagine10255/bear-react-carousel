@@ -4,10 +4,10 @@ import {
     IBreakpointSetting,
     IBreakpointSettingActual,
     IPropsBreakpoints,
-    GlobalWindow
+    GlobalWindow, TSlidesPerView
 } from '../../types';
 import {ISetting} from '../../types';
-import {anyToNumber, getSizeByRange} from '../../utils';
+import {anyToNumber, getSizeByRange, objectKeys} from '../../utils';
 
 
 /**
@@ -18,6 +18,7 @@ export function getSetting(props: IBearCarouselProps): ISetting {
     return {
         slidesPerView: props.slidesPerView,
         slidesPerGroup: props.slidesPerGroup,
+        slidesPerViewActual: 0,
         height: props.height,
         spaceBetween: props.spaceBetween,
         isCenteredSlides: props.isCenteredSlides,
@@ -55,15 +56,24 @@ export function getPaddingBySize(aspectRatio: IAspectRatio, slidesPerView: numbe
 
 /**
  * 取得響應式設定
- * @param defaultBreakpoint
- * @param breakpoints
- * @param win
+ * @param options
  */
-export function getMediaSetting(defaultBreakpoint: IBreakpointSetting, breakpoints: IPropsBreakpoints, win?: GlobalWindow): IBreakpointSettingActual {
-    const selectSize = getSizeByRange(win?.innerWidth, Object.keys(breakpoints).map(Number));
-    let setting = defaultBreakpoint;
-    if(selectSize > 0){
-        setting = Object.assign(defaultBreakpoint ?? {}, breakpoints[selectSize]);
+export function getMediaSetting(options?: {
+    defaultBreakpoint?: IBreakpointSetting,
+    breakpoints?: IPropsBreakpoints,
+    win?: GlobalWindow
+}): IBreakpointSettingActual {
+    const breakpoints = options?.breakpoints;
+    const win = options?.win;
+    const defaultBreakpoint = options?.defaultBreakpoint;
+
+    const selectSize = (breakpoints && win) ? getSizeByRange(win?.innerWidth, objectKeys(breakpoints).map(Number)): 0;
+    let setting = defaultBreakpoint ?? {
+        slidesPerView: 1,
+        slidesPerGroup: 1,
+    };
+    if(breakpoints && selectSize > 0){
+        setting = Object.assign(setting, breakpoints[selectSize]) as IBreakpointSetting;
     }
 
     // 若顯示項目大於來源項目, 則關閉Loop

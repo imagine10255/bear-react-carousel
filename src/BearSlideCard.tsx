@@ -2,9 +2,9 @@ import React, {ReactNode} from 'react';
 import CSS from 'csstype';
 import clsx from 'clsx';
 import elClassName from './el-class-name';
-// import useLazyLoadBg, {ELoadStatus} from './hook/useLazyLoadBg';
 import useDraggableClick from './hook/useDraggableClick';
-// import {useSlide} from './components/SlideProvider';
+import {useSlide} from './components/SlideProvider';
+import useLazyLoadBg, {ELoadStatus} from './hook/useLazyLoadBg';
 
 interface IProps {
   className?: string,
@@ -37,15 +37,14 @@ const BearSlideCard = ({
     onClick,
     onClickAllowTime = 150,
 }: IProps) => {
-    // const slide = useSlide();
-    // const {imageRef, status, doneImageUrl} = useLazyLoadBg({isLazy: slide.isLazy, imageUrl: bgUrl});
+    const slide = useSlide();
+    const {imageRef, status, doneImageUrl} = useLazyLoadBg({isLazy: slide.isLazy, imageUrl: bgUrl});
     const {onMouseDown, onMouseUp} = useDraggableClick({onClick, onClickAllowTime});
 
-    // const imageUrl = slide.isLazy ? doneImageUrl: bgUrl;
-    const imageUrl = bgUrl;
+    const imageUrl = slide.isLazy ? doneImageUrl: bgUrl;
 
     return <div
-        // ref={imageRef}
+        ref={imageRef}
         className={clsx(className, elClassName.slideItemCard, {
             [elClassName.slideItemCard100]: bgSize === '100%',
             [elClassName.slideItemCardCover]: bgSize === 'cover',
@@ -53,16 +52,15 @@ const BearSlideCard = ({
         })}
         onMouseDown={onClick ? onMouseDown: undefined}
         onMouseUp={onClick ? onMouseUp: undefined}
-        // data-lazy-src={slide.isLazy && status !== ELoadStatus.done ? bgUrl: undefined}
+        data-lazy-src={slide.isLazy && status !== ELoadStatus.done ? bgUrl: undefined}
         style={{
             ...style,
             backgroundImage: imageUrl ? `url(${imageUrl})` :undefined,
         }}
     >
-        {children}
-        {/*{slide.isLazy && status === ELoadStatus.loading ? <div className={elClassName.slideItemImagePreLoad}>*/}
-        {/*    {slide.renderLazyPreloader()}*/}
-        {/*</div>: children}*/}
+        {slide.isLazy && status === ELoadStatus.loading ? <div className={elClassName.slideItemImagePreLoad}>
+            {slide.renderLazyPreloader()}
+        </div>: children}
     </div>;
 
 };

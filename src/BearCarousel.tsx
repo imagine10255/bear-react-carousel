@@ -55,23 +55,33 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         isSlideItemMemo: false,
     };
     _isEnableGpuRender = checkIsDesktop();
-    state = {windowSize: 0, isClientReady: false};
+    state: IState = {windowSize: 0, isClientReady: false};
 
-    _stater: Stater;
-    _configurator: Configurator;
-    _windowSizer: WindowSizer;
     _elementor: Elementor;
-    _elState: ElState;
-    _controller: Controller;
-    _autoPlayer: AutoPlayer;
-    _dragger: Dragger;
-    _syncCarousels: SyncCarousel[];
+    _stater: Stater;
+    _configurator?: Configurator;
+    _windowSizer?: WindowSizer;
+    _elState?: ElState;
+    _controller?: Controller;
+    _autoPlayer?: AutoPlayer;
+    _dragger?: Dragger;
+    _syncCarousels?: SyncCarousel[];
 
 
     constructor(props: IBearCarouselProps) {
         super(props);
         // this._device = checkIsMobile() ? EDevice.mobile : EDevice.desktop;
 
+        const {data, breakpoints, onMount, syncCarouselRefs} = props;
+        const setting = getSetting(this.props);
+
+        this._configurator = new Configurator({
+            breakpoints,
+            defaultBreakpoint: setting,
+            win: globalThis.window
+        });
+
+        this._stater = new Stater(this._configurator, data);
         this._elementor = new Elementor({
             configurator: this._configurator,
             stater: this._stater
@@ -84,14 +94,15 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         const {data, breakpoints, onMount, syncCarouselRefs} = this.props;
 
 
-        const setting = getSetting(this.props);
-        this._configurator = new Configurator(breakpoints, setting, globalThis.window);
+        if(!this._configurator){
+            return;
+        }
+
         this._windowSizer = new WindowSizer({
             breakpoints,
             win: globalThis.window,
             configurator: this._configurator,
         });
-        this._stater = new Stater(this._configurator, data);
 
 
         this._stater.onChange(this._onChange);
@@ -142,7 +153,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
     componentWillUnmount() {
         if(this.props.isDebug && logEnable.componentWillUnmount) logger.printInText('[componentWillUnmount]');
-        this._windowSizer.offResize(this._onResize);
+        this._windowSizer?.offResize(this._onResize);
 
         this._autoPlayer?.offTimeout(this._onAutoPlay);
         if(this._dragger){
@@ -159,7 +170,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         if(this._elState){
             this._elState.offSlideAnimation();
         }
-        this._stater.offChange(this._onChange);
+        this._stater?.offChange(this._onChange);
     }
 
     /***
@@ -168,7 +179,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
    * @param nextState
    */
     shouldComponentUpdate(nextProps: IBearCarouselProps, nextState: IState) {
-        if(this._configurator.setting.isDebug && logEnable.shouldComponentUpdate) logger.printInText('[shouldComponentUpdate]');
+        if(this._configurator?.setting.isDebug && logEnable.shouldComponentUpdate) logger.printInText('[shouldComponentUpdate]');
 
         const {windowSize, isClientReady: isNextClientReady} = this.state;
         const {windowSize: nextWindowSize, isClientReady} = nextState;
@@ -181,10 +192,14 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
         // 需要重新計算的部分 (page info..), 因項目數量不同, 位置需規0
         if(data?.length !== nextData?.length){
-            this._configurator.init(nextProps.breakpoints, getSetting(nextProps));
-            this._stater.init(nextProps.data);
+            this._configurator?.init({
+                defaultBreakpoint: getSetting(nextProps),
+                breakpoints: nextProps.breakpoints,
+            });
+            this._stater?.init(nextProps.data);
+
             setTimeout(() => {
-                this._controller.slideToPage(1, false);
+                this._controller?.slideToPage(1, false);
             }, 0);
 
             return true;
@@ -194,11 +209,14 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         if(windowSize !== nextWindowSize ||
             isPropsDiff(otherProps, otherNextProps, ['moveEffect'])
         ){
-            const activeIndex = this._stater.source.activeIndex;
-            this._configurator.init(nextProps.breakpoints, getSetting(nextProps));
-            this._stater.init(nextProps.data);
+            const activeIndex = this._stater?.source.activeIndex;
+            this._configurator?.init({
+                defaultBreakpoint: getSetting(nextProps),
+                breakpoints: nextProps.breakpoints,
+            });
+            this._stater?.init(nextProps.data);
             setTimeout(() => {
-                this._controller.slideToSourceIndex(activeIndex, {isUseAnimation: false});
+                this._controller?.slideToSourceIndex(activeIndex ?? 0, {isUseAnimation: false});
             }, 0);
 
             return true;
@@ -208,7 +226,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         if((nextProps.isSlideItemMemo && data !== nextData) ||
             isDataKeyDff(this.props.data, nextProps.data)
         ){
-            this._stater.updateData(nextProps.data);
+            this._stater?.updateData(nextProps.data);
             return true;
         }
 
@@ -217,7 +235,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
     private _init = () => {
         this.setState({isClientReady: true}, () => {
-            this._controller.slideToPage(1, false);
+            this._controller?.slideToPage(1, false);
         });
     };
 
@@ -225,7 +243,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
      * set Controller method
      */
     private _setController = () => {
-        if(this.props.setController){
+        if(this.props.setController && this._controller){
             this.props.setController(this._controller);
         }
     };
@@ -236,7 +254,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
      * set OnAutoPlay emit
      */
     private _onAutoPlay = () => {
-        this._controller.slideToNextPage();
+        this._controller?.slideToNextPage();
     };
 
 
@@ -246,7 +264,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
      * set OnSlideBefore emit
      */
     private _onSlideBefore = () => {
-        this._autoPlayer.pause();
+        this._autoPlayer?.pause();
     };
 
 
@@ -256,9 +274,9 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
      * @param index
      * @param isUseAnimation
      */
-    private _onSlideAfter = (index: number, isUseAnimation: boolean) => {
+    private _onSlideAfter = (index: number, isUseAnimation?: boolean) => {
         this._syncCarousels?.forEach(syncRef => syncRef.slideToSourceIndex(index, isUseAnimation));
-        this._autoPlayer.play();
+        this._autoPlayer?.play();
     };
 
 
@@ -266,8 +284,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
      * set OnDragStart emit
      */
     private _onDragStart = () => {
-        this._controller.slideResetToMatchIndex();
-        this._autoPlayer.pause();
+        this._controller?.slideResetToMatchIndex();
+        this._autoPlayer?.pause();
     };
 
     /**
@@ -297,7 +315,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
    * set OnChange emit
    */
     private _onChange = () => {
-        if(this.props.onSlideChange){
+        if(this.props.onSlideChange && this._stater){
             const {source, virtual, page} = this._stater;
             this.props.onSlideChange({source, virtual, page});
         }
@@ -307,8 +325,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         if(args.windowSize !== this.state.windowSize){
             this.setState({windowSize: args.windowSize});
         }else{
-            const activeIndex = this._stater.source.activeIndex;
-            this._controller.slideToSourceIndex(activeIndex, {isUseAnimation: false});
+            const activeIndex = this._stater?.source.activeIndex;
+            this._controller?.slideToSourceIndex(activeIndex, {isUseAnimation: false});
         }
     };
 
@@ -318,18 +336,18 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     private _renderNavButton = () => {
         const {renderNavButton} = this.props;
 
-        if (typeof renderNavButton !== 'undefined') {
+        if (typeof renderNavButton !== 'undefined' && this._controller) {
             return <>
                 {renderNavButton(this._controller.slideToPrevPage, this._controller.slideToNextPage)}
             </>;
         }
 
         return (<div
-            ref={this._elementor._navGroupRef}
+            ref={this._elementor?._navGroupRef}
             className={elClassName.navGroup}
         >
-            <NavPrevButton onClick={this._controller.slideToPrevPage}/>
-            <NavNextButton onClick={this._controller.slideToNextPage}/>
+            <NavPrevButton onClick={this._controller?.slideToPrevPage}/>
+            <NavNextButton onClick={this._controller?.slideToNextPage}/>
         </div>);
     };
 
@@ -339,17 +357,18 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
      */
     private _renderSlideItems = () => {
         const {isDebug} = this.props;
-        const {virtual, formatElement} = this._stater;
-        return formatElement.map((row, i) => {
-            const isActive = row.virtualIndex === virtual.activeIndex;
+        const virtual = this._stater?.virtual;
+        const formatElement = this._stater?.formatElement;
+        return formatElement?.map((row, i) => {
+            const isActive = row.virtualIndex === virtual?.activeIndex;
             return <SlideItem
                 key={`bear-carousel_slide-item_${row.key}`}
-                ref={(el) => this._elementor.setSlideItemRefs(el, i)}
+                ref={(el) => el && this._elementor?.setSlideItemRefs(el, i)}
                 element={row.element}
                 virtualIndex={row.virtualIndex}
                 matchIndex={row.matchIndex}
                 inPage={row.inPage}
-                sourceIndex={row.sourceIndex}
+                sourceIndex={row.sourceIndex ?? 0}
                 isActive={isActive}
                 isClone={row.isClone}
                 isDebug={isDebug}
@@ -364,30 +383,30 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
      */
     private _renderPagination = () => {
         const {renderPagination} = this.props;
-        const {page} = this._stater;
-        const {isEnablePageContent} = this._configurator.setting;
+        const page = this._stater?.page;
+        const isEnablePageContent = this._configurator?.setting?.isEnablePageContent;
 
-        let pageContent: JSX.Element[];
+        let pageContent: JSX.Element[]|undefined;
         const isPageContent = typeof renderPagination !== 'undefined';
         if (isPageContent) {
-            pageContent = renderPagination(this._stater.page.total);
+            pageContent = renderPagination(this._stater?.page?.total ?? 0);
         }
 
-        const pageElement = Array.from({length: page.total})
+        const pageElement = Array.from({length: page?.total ?? 0})
             .map((row, index) => {
                 return <Page
                     key={`page_${index}`}
-                    ref={(el) => this._elementor.setPageRefs(el, index)}
-                    onSlideToPage={(page) => this._controller.slideToPage(page)}
+                    ref={(el) => el && this._elementor?.setPageRefs(el, index)}
+                    onSlideToPage={(page) => this._controller?.slideToPage(page)}
                     page={index + 1}
-                    isActive={page.activePage === index + 1}
+                    isActive={page?.activePage === index + 1}
                     pageContent={isEnablePageContent && typeof pageContent !== 'undefined' && pageContent[index]}
                 />;
             });
 
         return <div
-            ref={this._elementor._pageGroupRef}
-            data-page-content={booleanToDataAttr(isEnablePageContent)}
+            ref={this._elementor?._pageGroupRef}
+            data-page-content={booleanToDataAttr(isEnablePageContent ?? false)}
             className={elClassName.paginationGroup}
         >
             {pageElement}
@@ -397,12 +416,13 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     render(){
         const {style, className, isDebug, isLazy, renderLazyPreloader} = this.props;
 
+        const isClientReady = this.state.isClientReady;
         // if(!this.state.isClientReady){
         //     return null;
         // }
         return (
             <CarouselRoot
-                ref={this._elementor._rootRef}
+                ref={this._elementor?._rootRef}
                 style={style}
                 className={className}
                 setting={this._configurator?.setting}
@@ -410,10 +430,10 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                 extendStyle={this._configurator?.style}
                 isEnableGpuRender={globalThis.window && this._isEnableGpuRender}
             >
-                {this.state.isClientReady && this._stater.isVisibleNavButton && this._renderNavButton()}
+                {this.state.isClientReady && this._stater?.isVisibleNavButton && this._renderNavButton()}
 
                 <div className={elClassName.content}>
-                    <div ref={this._elementor._containerRef} className={elClassName.container} data-testid="bear-carousel-container">
+                    <div ref={this._elementor?._containerRef} className={elClassName.container} data-testid="bear-carousel-container">
                         <SlideProvider
                             isLazy={isLazy}
                             renderLazyPreloader={!!renderLazyPreloader ? renderLazyPreloader: () => <div>loading...</div>}
@@ -423,9 +443,10 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                     </div>
                 </div>
 
+
                 {this.state.isClientReady && <>
-                    {this._stater.isVisiblePagination && this._renderPagination()}
-                    {isDebug && <WindowSize size={this._windowSizer.size}/>}
+                    {this._stater?.isVisiblePagination && this._renderPagination()}
+                    {(isDebug && this._windowSizer)&& <WindowSize size={this._windowSizer.size}/>}
                 </>}
 
             </CarouselRoot>

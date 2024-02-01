@@ -65,7 +65,7 @@ class Controller {
      */
     slideToSourceIndex = (slideIndex: number, options?: {isUseAnimation?: boolean, isEmitEvent?: boolean}) => {
         const isEmitEvent = options?.isEmitEvent ?? true;
-        if(isEmitEvent) this._eventor.emit('slideBefore', slideIndex, options?.isUseAnimation);
+        if(isEmitEvent) this._eventor.emit('slideBefore', slideIndex, options?.isUseAnimation ?? false);
 
         // 轉成範圍內的 Index //@Check
         const selected = this._stater.formatElement.find(row => row.sourceIndex === slideIndex && !row.isClone);
@@ -82,7 +82,7 @@ class Controller {
      */
     slideToVirtualIndex = (slideIndex: number, options?: {isUseAnimation?: boolean, isEmitEvent?: boolean}) => {
         const isEmitEvent = options?.isEmitEvent ?? true;
-        if(isEmitEvent) this._eventor.emit('slideBefore', slideIndex, options?.isUseAnimation);
+        if(isEmitEvent) this._eventor.emit('slideBefore', slideIndex, options?.isUseAnimation ?? false);
 
         // 轉成範圍內的 Index
         const inRangeIndex = this._stater.getInRangeIndex(slideIndex);
