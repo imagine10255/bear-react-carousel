@@ -6,9 +6,9 @@
     "react",
     "typescript",
     "flexbox",
-    "styled-component",
-    "Bootstrap",
-    "carousel-system"
+    "slider",
+    "carousel",
+    "swiper"
   ],
   "private": false,
   "license": "MIT",
@@ -40,6 +40,7 @@
     "lint:fix": "eslint ./src --fix",
     "cz": "git-cz",
     "test": "jest",
+    "test:coverage": "jest --coverage",
     "gitlog": "git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cblueby %an %Cgreen(%cr)%Creset'",
     "release": "standard-version --release-as",
     "release:major": "standard-version -r major",
@@ -53,6 +54,9 @@
     "clsx": "2.x"
   },
   "devDependencies": {
+    "@swc/jest": "0.2.26",
+    "@testing-library/jest-dom": "5.16.5",
+    "@testing-library/user-event": "14.4.3",
     "@testing-library/dom": "9.3.3",
     "@testing-library/react": "14.0.0",
     "@types/jest": "29.5.0",
