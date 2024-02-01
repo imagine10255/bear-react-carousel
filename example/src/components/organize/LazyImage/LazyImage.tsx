@@ -1,49 +1,59 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import BearCarousel, {
     TBearSlideItemDataList,
     BearSlideImage, ICarouselState
 } from 'bear-react-carousel';
-import {carImages as images} from '@/config/images';
+import {carImages as images, ICarImage} from '@/config/images';
 
 
 
 
 
-// 輪播項目1
-const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
-    return {
-        key: row.id,
-        children: <BearSlideImage imageUrl={row.imageUrl}/>
-    };
-});
 
 
 
 
 function LazyImage() {
+    const [data, setData] = useState<ICarImage[]|undefined>(undefined);
     const [carouselState, setCarouselState] = useState<ICarouselState>();
     const [enable, setEnable] = useState<boolean>(true);
     const [count, setCount] = useState<number>(0);
     const [slidePreview, setSlidePreview] = useState(1);
 
+
+    useEffect(() => {
+        setData(images);
+    }, []);
+
+
+    // 輪播項目1
+    const bearSlideItemData1: TBearSlideItemDataList|undefined = data?.map(row => {
+        return {
+            key: row.id,
+            children: <BearSlideImage
+                imageUrl={row.imageUrl}
+                imageSize="cover"
+            />
+        };
+    });
+
+
+
     return <div style={{width: '100%', paddingTop: '0'}}>
         {/*測試依照比例設定容器高度*/}
         {enable && (
             <BearCarousel
-                // style={{width: '400px'}}
-                // controllerRef={controllerRef}
                 data={bearSlideItemData1}
-                // onSlideChange={setCarouselState}
-                slidesPerView={3}
-                // spaceBetween={5}
-                // isCenteredSlides
-                // height="auto"
-                // height="200px"
-                isEnableNavButton
-                isEnablePagination
+                slidesPerView={1}
+                slidesPerGroup={1}
+                isEnablePagination={false}
+                isEnableNavButton={false}
                 isEnableLoop
-                // isEnableAutoPlay={false}
-                // isDebug
+                // height="150px"
+                spaceBetween={14}
+                autoPlayTime={1200}
+                isEnableAutoPlay
+                // renderLazyPreloader={() => <Loader/>}
                 isLazy
 
                 // height="auto"

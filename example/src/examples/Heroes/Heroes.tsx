@@ -7,6 +7,7 @@ import Loop from '@/components/organize/Loop';
 import AutoCard from '@/components/organize/AutoCard';
 import JuejinVip from '@/components/organize/JuejinVip';
 import W99Vip from '@/components/organize/W99Vip';
+import LazyImage from '@/components/organize/LazyImage';
 
 interface IProps extends FCProps {
 
@@ -119,16 +120,31 @@ const Heroes = ({
     };
 
 
+    const renderLazyImage = () => {
+        return <Flex col="column" className="px-4 py-5 my-5 gap-2 text-center">
+            <h1>Sync Control</h1>
+            <Col col={12} lg={6} className="mx-auto">
+                <p className="mb-4">Mock W99 Vip member</p>
+
+                <Grid col={1} className="g-3 justify-content-center">
+                    <LazyImage/>
+                </Grid>
+            </Col>
+        </Flex>;
+    };
+
+
 
     return <HeroesRoot className={className}>
 
-        {renderBase()}
-        {renderAutoPlay()}
-        {renderLoop()}
-        {renderAutoImage()}
-        {renderAutoCard()}
-        {renderJuejinVip()}
-        {renderW99Vip()}
+        {/*{renderBase()}*/}
+        {/*{renderAutoPlay()}*/}
+        {/*{renderLoop()}*/}
+        {/*{renderAutoImage()}*/}
+        {/*{renderAutoCard()}*/}
+        {/*{renderJuejinVip()}*/}
+        {/*{renderW99Vip()}*/}
+        {renderLazyImage()}
 
         <GlobalCSS/>
     </HeroesRoot>;

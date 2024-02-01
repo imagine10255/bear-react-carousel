@@ -181,12 +181,12 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     shouldComponentUpdate(nextProps: IBearCarouselProps, nextState: IState) {
         if(this._configurator?.setting.isDebug && logEnable.shouldComponentUpdate) logger.printInText('[shouldComponentUpdate]');
 
-        const {windowSize, isClientReady: isNextClientReady} = this.state;
-        const {windowSize: nextWindowSize, isClientReady} = nextState;
+        const {windowSize, isClientReady} = this.state;
+        const {windowSize: nextWindowSize, isClientReady: isNextClientReady} = nextState;
         const {data, ...otherProps} = this.props;
         const {data: nextData, ...otherNextProps} = nextProps;
 
-        if(this.state.isClientReady !== isClientReady){
+        if(isNextClientReady !== isClientReady){
             return true;
         }
 
@@ -196,7 +196,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                 defaultBreakpoint: getSetting(nextProps),
                 breakpoints: nextProps.breakpoints,
             });
-            this._stater?.init(nextProps.data);
+            this._stater?.reset(nextProps.data);
 
             setTimeout(() => {
                 this._controller?.slideToPage(1, false);
@@ -214,7 +214,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                 defaultBreakpoint: getSetting(nextProps),
                 breakpoints: nextProps.breakpoints,
             });
-            this._stater?.init(nextProps.data);
+            this._stater?.reset(nextProps.data);
             setTimeout(() => {
                 this._controller?.slideToSourceIndex(activeIndex ?? 0, {isUseAnimation: false});
             }, 0);

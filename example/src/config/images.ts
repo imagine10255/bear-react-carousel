@@ -1,6 +1,5 @@
 import {asset} from '../utils';
 
-
 export const racingImages = [
     {id: 1, name: 'Strawberry', imageUrl: asset('/sample/food/01.jpg')},
     {id: 2, name: 'Honey Cranberry Pie', imageUrl: asset('/sample/food/02.jpg')},
@@ -91,7 +90,15 @@ export const diffImages = [
     {id: 9, imageUrl: asset('/sample/cat/05.jpg')},
 ];
 
-export const carImages = [
+
+
+export interface ICarImage {
+    id: number
+    imageUrl: string
+}
+
+
+export const carImages: ICarImage[] = [
     {id: 1, imageUrl: asset('/sample/racing/01.webp')},
     {id: 2, imageUrl: asset('/sample/racing/02.webp')},
     {id: 3, imageUrl: asset('/sample/racing/03.webp')},

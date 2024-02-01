@@ -15,7 +15,7 @@ class Stater {
 
     constructor(setter: Configurator, data?: TBearSlideItemDataList) {
         this._configurator = setter;
-        this._info = this.init(data);
+        this._info = this.formatInfo(data);
 
         const {slidesPerViewActual, slidesPerGroup, isEnableLoop} = this._configurator.setting;
         this._formatElement = initDataList(
@@ -25,11 +25,9 @@ class Stater {
             isEnableLoop
         );
 
-    }
-
-    set info(info: IInfo){
         this._eventor.emit('change');
     }
+
 
     get nextPage(): number{
         return this._info.page.activePage + 1;
@@ -72,6 +70,10 @@ class Stater {
         return this._info?.isVisiblePagination;
     }
 
+    reset = (slideData: TBearSlideItemDataList = []) => {
+        this._info = this.formatInfo(slideData);
+        this._eventor.emit('change');
+    };
 
     onChange = (callback: TEventMap['change']) => {
         this._eventor.on('change', callback);
@@ -91,7 +93,7 @@ class Stater {
     };
 
 
-    init = (slideData: TBearSlideItemDataList = []): IInfo => {
+    formatInfo = (slideData: TBearSlideItemDataList = []): IInfo => {
         const {slidesPerView, slidesPerViewActual, slidesPerGroup, isCenteredSlides, isEnablePagination, isEnableNavButton, isEnableLoop} = this._configurator.setting;
 
         let sourceTotal = slideData.length;
