@@ -2,9 +2,9 @@ import React, {ReactNode} from 'react';
 import CSS from 'csstype';
 import clsx from 'clsx';
 import elClassName from './el-class-name';
-import useLazyLoadBg, {ELoadStatus} from './hook/useLazyLoadBg';
 import useDraggableClick from './hook/useDraggableClick';
 import {useSlide} from './components/SlideProvider';
+import useLazyLoadBg, {ELoadStatus} from './hook/useLazyLoadBg';
 
 interface IProps {
   className?: string,

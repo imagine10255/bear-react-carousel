@@ -12,7 +12,7 @@ interface IProps extends IState{
  /** ---------------------------------------*/
 interface IState {
     isLazy?: boolean,
-    renderLazyPreloader?: TRenderLazyPreloader,
+    renderLazyPreloader: TRenderLazyPreloader,
 }
 
 /** -----------------------------------------

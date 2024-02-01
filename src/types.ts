@@ -100,8 +100,8 @@ interface IMoveEffect {
 }
 
 export interface IBreakpointSetting {
-  slidesPerView?: TSlidesPerView
-  slidesPerGroup?: number
+  slidesPerView: TSlidesPerView
+  slidesPerGroup: number
   height?: IAspectRatio|THeightUnitSize,
   spaceBetween?: number
   isCenteredSlides?: boolean
@@ -129,7 +129,7 @@ export type TToNext = () => void
 
 
 export interface ISetting extends IBreakpointSetting {
-  slidesPerViewActual?: TSlidesPerViewActual
+  slidesPerViewActual: TSlidesPerViewActual
   moveTime?: number,
   autoPlayTime?: number,
   initStartPlayTime?: number,

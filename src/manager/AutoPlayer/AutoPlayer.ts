@@ -9,8 +9,8 @@ import logger from '../../logger';
  */
 class AutoPlayer {
     private _configurator: Configurator;
-    private _timer: NodeJS.Timeout;
-    private _initTimer: NodeJS.Timeout;
+    private _timer?: NodeJS.Timeout|null = null;
+    private _initTimer?: NodeJS.Timeout|null = null;
     private _eventor = new Eventor<TEventMap>();
 
     get isPlaying(){
@@ -47,7 +47,7 @@ class AutoPlayer {
         const {setting} = this._configurator;
         if(setting.isDebug && logEnable.autoPlayer.play) logger.printInText('[AutoPlayer.play]');
 
-        if(!this.isPlaying && setting.isEnableAutoPlay && setting.autoPlayTime > 0){
+        if(!this.isPlaying && setting.isEnableAutoPlay && (setting?.autoPlayTime ?? 0) > 0){
 
             this._timer = setInterval(() => {
                 this._eventor.emit('timeout');
@@ -58,10 +58,14 @@ class AutoPlayer {
     pause = () => {
         if(this._configurator.setting.isDebug && logEnable.autoPlayer.play) logger.printInText('[AutoPlayer.pause]');
 
-        clearInterval(this._timer);
-        clearInterval(this._initTimer);
-        this._timer = null;
-        this._initTimer = null;
+        if(this._timer){
+            clearInterval(this._timer);
+            this._timer = null;
+        }
+        if(this._initTimer){
+            clearInterval(this._initTimer);
+            this._initTimer = null;
+        }
     };
 }
 

@@ -10,7 +10,7 @@ class Eventor<T extends Record<string, (...args: any[]) => void>> {
     }
 
     off<K extends keyof T>(eventName: K, callback?: T[K]) {
-        if (this.events.has(eventName)) {
+        if (this.events.has(eventName) && callback) {
             const callbacks = this.events.get(eventName)!;
             const idx = callbacks.indexOf(callback);
             if (idx >= 0) {

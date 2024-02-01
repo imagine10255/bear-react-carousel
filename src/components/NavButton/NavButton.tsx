@@ -5,7 +5,7 @@ import elClassName from '../../el-class-name';
 interface IProps {
     className?: string,
     testId?: string,
-    onClick: () => void
+    onClick?: () => void
 }
 
 const NavButton = ({
@@ -26,7 +26,7 @@ const NavButton = ({
 
 
 interface IPropsButton {
-    onClick: () => void
+    onClick?: () => void
 }
 
 export const NavNextButton = ({

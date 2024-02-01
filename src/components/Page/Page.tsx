@@ -1,4 +1,4 @@
-import {forwardRef, useCallback} from 'react';
+import {forwardRef, useCallback, ReactNode} from 'react';
 import clsx from 'clsx';
 import elClassName from '../../el-class-name';
 import {booleanToDataAttr} from '../../utils';
@@ -8,7 +8,7 @@ interface IProps {
     page: number,
     isActive?: boolean
     onSlideToPage: (page: number) => void
-    pageContent?: JSX.Element
+    pageContent?: ReactNode
 }
 
 const Page = forwardRef<HTMLDivElement, IProps>(({

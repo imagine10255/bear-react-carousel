@@ -3,7 +3,7 @@ import {getMoveDistance, getMovePercentage, getStartPosition} from './utils';
 import Configurator from '../Configurator';
 import Stater from '../Stater';
 import {IPercentageInfo} from '../../types';
-import {getObjectKeys} from '../../utils';
+import {objectKeys} from '../../utils';
 import Elementor from './Elementor';
 
 class ElState {
@@ -37,14 +37,14 @@ class ElState {
 
 
     onSlideAnimation = () => {
-        this._elementor.containerEl.addEventListener('transitionstart', this.animationStart, false);
-        this._elementor.containerEl.addEventListener('transitionend', this.animationEnd, false);
+        this._elementor.containerEl?.addEventListener('transitionstart', this.animationStart, false);
+        this._elementor.containerEl?.addEventListener('transitionend', this.animationEnd, false);
 
     };
 
     offSlideAnimation = () => {
-        this._elementor.containerEl.removeEventListener('transitionstart', this.animationStart, false);
-        this._elementor.containerEl.removeEventListener('transitionend', this.animationEnd, false);
+        this._elementor.containerEl?.removeEventListener('transitionstart', this.animationStart, false);
+        this._elementor.containerEl?.removeEventListener('transitionend', this.animationEnd, false);
     };
 
 
@@ -60,7 +60,7 @@ class ElState {
      * @param movePx
      */
     getMovePercentage = (movePx: number) => {
-        const slideCurrWidth = this._elementor.slideItemEls[this._stater.virtual.activeIndex].offsetWidth;
+        const slideCurrWidth = (this._elementor.slideItemEls && this._elementor.slideItemEls[this._stater.virtual.activeIndex].offsetWidth) ?? 0;
         const startPosition = this._getStartPosition();
         return getMovePercentage(movePx, startPosition, slideCurrWidth);
     };
@@ -72,7 +72,7 @@ class ElState {
      * @param percentage
      */
     getPercentageToMovePx = (percentage: number) => {
-        const slideCurrWidth = this._elementor.slideItemEls[this._stater.virtual.activeIndex].offsetWidth;
+        const slideCurrWidth = (this._elementor.slideItemEls && this._elementor.slideItemEls[this._stater.virtual.activeIndex].offsetWidth) ?? 0;
         const startPosition = this._getStartPosition();
 
         return -(slideCurrWidth * percentage) + startPosition;
@@ -85,8 +85,8 @@ class ElState {
      * @param slideIndex
      */
     getMoveDistance = (slideIndex: number): number => {
-        const slideItemEl = this._elementor.slideItemEls[slideIndex];
-        if (this._elementor.slideItemEls[slideIndex]) {
+        if (this._elementor.slideItemEls && this._elementor.slideItemEls[slideIndex]) {
+            const slideItemEl = this._elementor.slideItemEls[slideIndex];
             return getMoveDistance(slideItemEl.offsetLeft, this._getStartPosition());
         }
 
@@ -101,9 +101,13 @@ class ElState {
      */
     setTouching = (isEnable: boolean) => {
         if(isEnable){
-            this._elementor.rootEl.dataset.touching = '';
+            if(this._elementor.rootEl){
+                this._elementor.rootEl.dataset.touching = '';
+            }
         }else{
-            this._elementor.rootEl.removeAttribute('data-touching');
+            if(this._elementor.rootEl) {
+                this._elementor.rootEl.removeAttribute('data-touching');
+            }
         }
     };
 
@@ -131,34 +135,37 @@ class ElState {
         const {moveEffect, slidesPerView, isCenteredSlides} = this._configurator.setting;
         if(typeof slidesPerView === 'number' && moveEffect?.moveFn){
             let index = 0;
-            for(const el of this._elementor.slideItemEls){
-                if(el){
-                    // 離場的進度 (因為是 center, 所以需要 除以2)
-                    const fadeoutProcess = isCenteredSlides ? Math.floor(slidesPerView / 2) + 1 : slidesPerView;
+            if(this._elementor.slideItemEls){
+                for(const el of this._elementor.slideItemEls){
+                    if(el){
+                        // 離場的進度 (因為是 center, 所以需要 除以2)
+                        const fadeoutProcess = isCenteredSlides ? Math.floor(slidesPerView / 2) + 1 : slidesPerView;
 
-                    // 目前進度
-                    const currActiveIs0Process = percentage - index;
+                        // 目前進度
+                        const currActiveIs0Process = percentage - index;
 
-                    // 如果到達1就要下降
-                    const calcPercentage = currActiveIs0Process >= 0 ?
-                        (fadeoutProcess - currActiveIs0Process) / fadeoutProcess:
-                        (fadeoutProcess + currActiveIs0Process) / fadeoutProcess
-                    ;
+                        // 如果到達1就要下降
+                        const calcPercentage = currActiveIs0Process >= 0 ?
+                            (fadeoutProcess - currActiveIs0Process) / fadeoutProcess:
+                            (fadeoutProcess + currActiveIs0Process) / fadeoutProcess
+                        ;
 
-                    // debug
-                    // if(index === 1){
-                    //     console.log('currActiveIs0Process', currActiveIs0Process, calcP);
-                    // }
+                        // debug
+                        // if(index === 1){
+                        //     console.log('currActiveIs0Process', currActiveIs0Process, calcP);
+                        // }
 
-                    // 離場
-                    this._effectFn(el, {
-                        calcPercentage,
-                        percentage: currActiveIs0Process,
-                        index,
-                    }, isUseAnimation);
+                        // 離場
+                        this._effectFn(el, {
+                            calcPercentage,
+                            percentage: currActiveIs0Process,
+                            index,
+                        }, isUseAnimation);
+                    }
+                    index += 1;
                 }
-                index += 1;
             }
+
         }
         return this;
     }
@@ -174,7 +181,7 @@ class ElState {
         if(this._configurator.setting.moveEffect?.moveFn){
             const moveStyles = this._configurator.setting.moveEffect.moveFn(percentageInfo);
             if(moveStyles){
-                getObjectKeys(moveStyles).forEach(rowStyleKey => {
+                objectKeys(moveStyles).forEach(rowStyleKey => {
                     // @ts-ignore
                     el.style[rowStyleKey] = moveStyles[rowStyleKey];
                 });
@@ -193,12 +200,12 @@ class ElState {
 
     syncActiveState = (activeActualIndex: number) => {
         const itemEls = this._elementor.slideItemEls
-            .filter(row => row);
+            ?.filter(row => row);
 
         // 更改顯示在第幾個 (父元件使用可判定樣式設定)
         const inRangeIndex = this._stater.getInRangeIndex(activeActualIndex);
         itemEls
-            .forEach((row, index) => {
+            ?.forEach((row, index) => {
                 if(index === inRangeIndex){
                     row.setAttribute('data-active', '');
                 } else if (row?.dataset.active === '') {
@@ -206,12 +213,12 @@ class ElState {
                 }
             });
 
-        const active = itemEls.find(row => row.dataset.active === '');
-        const activePage = parseInt(active?.dataset.page);
+        const active = itemEls?.find(row => row.dataset.active === '');
+        const activePage = active?.dataset.page ? parseInt(active.dataset.page): 0;
 
         // 更改顯示在第幾頁的樣式 (父元件使用可判定樣式設定)
         if (this._stater.isVisiblePagination && this._stater.page.activePage > 0) {
-            this._elementor.pageEls.forEach((row, index) => {
+            this._elementor.pageEls?.forEach((row, index) => {
                 if (activePage === index + 1) {
                     row.setAttribute('data-active', '');
                 } else if(row?.dataset.active === '') {
@@ -240,12 +247,17 @@ class ElState {
 
     animationStart = () => {
         this._isAnimation = true;
-        this._elementor.containerEl.dataset.animation = '';
+        if(this._elementor.containerEl){
+            this._elementor.containerEl.dataset.animation = '';
+        }
     };
 
     animationEnd = () => {
         this._isAnimation = false;
-        this._elementor.containerEl.removeAttribute('data-animation');
+
+        if(this._elementor.containerEl) {
+            this._elementor.containerEl.removeAttribute('data-animation');
+        }
     };
 }
 

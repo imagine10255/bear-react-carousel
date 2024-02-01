@@ -4,6 +4,7 @@ import {IMultiRefObject} from './types';
 import Configurator from '../Configurator';
 import Stater from '../Stater';
 
+
 class Elementor {
     _rootRef: RefObject<HTMLDivElement> = createRef();
     _containerRef: RefObject<HTMLDivElement> = createRef();
@@ -41,10 +42,14 @@ class Elementor {
 
 
     setSlideItemRefs(el: HTMLDivElement, index: number){
-        this._slideItemRefs.current[index] = el;
+        if (this._slideItemRefs.current) {
+            this._slideItemRefs.current[index] = el;
+        }
     }
     setPageRefs(el: HTMLDivElement, index: number){
-        this._pageRefs.current[index] = el;
+        if (this._pageRefs.current) {
+            this._pageRefs.current[index] = el;
+        }
     }
 }
 

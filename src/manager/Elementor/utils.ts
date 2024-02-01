@@ -18,8 +18,8 @@ export function getStartPosition(
 ) {
     if (configurator.setting.isCenteredSlides) {
         let firstStartPx = 0;
-        const currItemWidth = elementor.slideItemEls[0]?.offsetWidth ?? 0;
-        if(configurator.setting.slidesPerView === 'auto'){
+        const currItemWidth = (elementor.slideItemEls && elementor.slideItemEls[0]?.offsetWidth) ?? 0;
+        if(elementor.containerEl && configurator.setting.slidesPerView === 'auto' ){
             // containerWidth 計算中間位置
             firstStartPx = (elementor.containerEl.offsetWidth - currItemWidth) / 2;
         }

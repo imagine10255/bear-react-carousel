@@ -4,28 +4,39 @@ import {ISetting} from '../../types';
 import {IPropsBreakpoints, GlobalWindow} from '../../types';
 
 
-
+/**
+ * 設定者
+ */
 class Configurator {
     private _setting: ISetting;
-    private _window: GlobalWindow;
+    private _window?: GlobalWindow;
 
-    constructor(breakpoint: IPropsBreakpoints, options?: ISetting, win?: GlobalWindow) {
-        this._window = win;
-        this.init(breakpoint, options);
+    constructor(inject: {
+        breakpoints?: IPropsBreakpoints,
+        defaultBreakpoint?: ISetting,
+        win?: GlobalWindow
+    }) {
+        this._window = inject.win;
+        this._setting = getMediaSetting(inject);
+
     }
 
     get setting() {
         return this._setting;
     }
 
+    get isAutoHeight(){
+        return typeof this.setting.height === 'undefined' || this.setting.height === 'auto';
+    }
+    get rootHeight(){
+        return getHeight(this.setting.height);
+    }
 
     get style() {
-        const isAutoHeight = typeof this.setting.height === 'undefined' || this.setting.height === 'auto';
-        const rootHeight = getHeight(this.setting.height);
         const styleVars = {
-            '--carousel-height': rootHeight?.height,
-            '--carousel-aspect-ratio': rootHeight?.aspectRatio,
-            '--carousel-content-position': isAutoHeight ? 'static': 'absolute', // 保護不被項目擠開
+            '--carousel-height': this.rootHeight?.height,
+            '--carousel-aspect-ratio': this.rootHeight?.aspectRatio,
+            '--carousel-content-position': this.isAutoHeight ? 'static': 'absolute', // 保護不被項目擠開
             '--carousel-space-between': `${this.setting.spaceBetween}px`,
             '--carousel-slide-width': this.setting.slidesPerView === 'auto' ? 'auto' : `${100 / this.setting.slidesPerViewActual}%`,
         } as CSSProperties;
@@ -34,8 +45,12 @@ class Configurator {
     }
 
 
-    init = (responsiveBreakpoints: IPropsBreakpoints, options?: ISetting) => {
-        this._setting = getMediaSetting(options, responsiveBreakpoints, this._window);
+    init = (options: {breakpoints?: IPropsBreakpoints, defaultBreakpoint?: ISetting}) => {
+        this._setting = getMediaSetting({
+            defaultBreakpoint: options.defaultBreakpoint,
+            breakpoints: options.breakpoints,
+            win: this._window
+        });
     };
 }
 

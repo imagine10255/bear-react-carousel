@@ -2,7 +2,7 @@ import {TEventMap} from './types';
 
 import Eventor from '../Eventor';
 import {EDevice, IPropsBreakpoints, GlobalWindow} from '../../types';
-import {checkIsDesktop, checkIsMobile, getSizeByRange} from '../../utils';
+import {checkIsDesktop, checkIsMobile, getSizeByRange, objectKeys} from '../../utils';
 import {logEnable} from '../../config';
 import logger from '../../logger';
 import Configurator from '../Configurator';
@@ -14,7 +14,7 @@ const resizeEvent: Record<EDevice, string> = {
 };
 
 class WindowSizer {
-    private _breakpoints: IPropsBreakpoints;
+    private _breakpoints?: IPropsBreakpoints;
     private _configurator: Configurator;
     private _size: number;
     private _device: EDevice;
@@ -30,7 +30,7 @@ class WindowSizer {
     }
 
     constructor(inject: {
-        breakpoints: IPropsBreakpoints,
+        breakpoints?: IPropsBreakpoints,
         win: GlobalWindow
         configurator: Configurator,
     }) {
@@ -38,7 +38,7 @@ class WindowSizer {
         this._configurator = inject.configurator;
         this._window = inject.win;
         this._device = this._detectDevice();
-        this._setSize();
+        this._size = this._setSize();
         this._currWidth = this._window.innerWidth;
     }
 
@@ -53,7 +53,7 @@ class WindowSizer {
     };
 
     private _setSize = () => {
-        this._size = getSizeByRange(this._window?.innerWidth, Object.keys(this._breakpoints).map(Number));
+        return getSizeByRange(this._window.innerWidth, this._breakpoints ? objectKeys(this._breakpoints).map(Number): undefined);
     };
 
     private _emitResize = () => {
@@ -61,11 +61,9 @@ class WindowSizer {
 
         if(this._currWidth !== this._window.innerWidth){
             this._currWidth = this._window.innerWidth;
-        }else{
-            return;
         }
 
-        this._setSize();
+        this._size = this._setSize();
         this._eventManager.emit('resize', {windowSize: this._size});
     };
 

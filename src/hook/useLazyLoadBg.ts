@@ -1,8 +1,8 @@
 import {useEffect, useState, useRef, useCallback} from 'react';
 
 interface IUseLazyLoadProps {
-    isLazy: boolean,
-    imageUrl: string,
+    isLazy?: boolean,
+    imageUrl?: string,
 }
 
 export enum ELoadStatus {
@@ -24,7 +24,7 @@ export enum ELoadStatus {
 const useLazyLoadBg = ({isLazy, imageUrl}: IUseLazyLoadProps) => {
     const imageRef = useRef<HTMLDivElement>(null);
     const [status, setStatus] = useState<ELoadStatus>(ELoadStatus.ready);
-    const [doneImageUrl, setDoneImageUrl] = useState<string>(undefined);
+    const [doneImageUrl, setDoneImageUrl] = useState<string|undefined>(undefined);
     const watcher = useRef<IntersectionObserver>();
 
     useEffect(() => {
@@ -43,12 +43,15 @@ const useLazyLoadBg = ({isLazy, imageUrl}: IUseLazyLoadProps) => {
                     const img = new Image();
                     setStatus(ELoadStatus.loading);
 
-                    img.src = el.dataset.lazySrc;
-                    img.onload = () => {
-                        setStatus(ELoadStatus.done);
-                        setDoneImageUrl(img.src);
-                    };
-                    img.onerror = () => setStatus(ELoadStatus.fail);
+                    if(el.dataset.lazySrc){
+                        img.src = el.dataset.lazySrc;
+                        img.onload = () => {
+                            setStatus(ELoadStatus.done);
+                            setDoneImageUrl(img.src);
+                        };
+                        img.onerror = () => setStatus(ELoadStatus.fail);
+                    }
+
                 }
                 observer.unobserve(el);
             }

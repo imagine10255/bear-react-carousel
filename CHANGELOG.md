@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.23](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.22...v4.0.23) (2024-02-01)
+
+
+### Bug Fixes
+
+* modify jest ([0978a30](https://github.com/imagine10255/bear-react-carousel/commit/0978a305a6ab38efca7fdc110944f63ef1abc83b))
+
+### [4.0.22](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.22-test.0...v4.0.22) (2024-02-01)
+
+### [4.0.22-test.0](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.21...v4.0.22-test.0) (2024-01-26)
+
 ### [4.0.21](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.21-alpha.3...v4.0.21) (2023-11-10)
 
 
