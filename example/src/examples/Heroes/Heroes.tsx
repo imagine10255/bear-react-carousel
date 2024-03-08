@@ -137,14 +137,14 @@ const Heroes = ({
 
     return <HeroesRoot className={className}>
 
-        {/*{renderBase()}*/}
+        {renderBase()}
         {/*{renderAutoPlay()}*/}
         {/*{renderLoop()}*/}
         {/*{renderAutoImage()}*/}
         {/*{renderAutoCard()}*/}
         {/*{renderJuejinVip()}*/}
         {/*{renderW99Vip()}*/}
-        {renderLazyImage()}
+        {/*{renderLazyImage()}*/}
 
         <GlobalCSS/>
     </HeroesRoot>;

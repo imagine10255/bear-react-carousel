@@ -84,7 +84,16 @@ class Dragger {
 
         const {containerEl} = this._elementor;
         if (containerEl) {
+
+            // 移動到開始位置 避免跳動
             this._locator.touchStart(new MobileTouchEvent(event), containerEl);
+            const {startPosition} = this._locator;
+            const movePx = this._locator.touchMove(new MobileTouchEvent(event), containerEl);
+            const translateX = calcMoveTranslatePx(startPosition.x, movePx);
+            this._elState
+                .transform(translateX, false);
+
+            // 設定移動 與 結束事件
             window.addEventListener('touchmove', this._onMobileTouchMove, {passive: false});
             window.addEventListener('touchend', this._onMobileTouchEnd, {passive: false});
         }
@@ -130,7 +139,15 @@ class Dragger {
 
         const {containerEl} = this._elementor;
         if (containerEl) {
+
+            // 移動到開始位置 避免跳動
             this._locator.touchStart(new DesktopTouchEvent(event), containerEl);
+            const {startPosition} = this._locator;
+            const translateX = calcMoveTranslatePx(startPosition.x, event.clientX);
+            this._elState
+                .transform(translateX, false);
+
+            // 設定移動 與 結束事件
             window.addEventListener('mousemove', this._onWebMouseMove, false);
             window.addEventListener('mouseup', this._onWebMouseEnd, false);
         }

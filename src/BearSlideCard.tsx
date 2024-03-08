@@ -2,7 +2,6 @@ import React, {ReactNode} from 'react';
 import CSS from 'csstype';
 import clsx from 'clsx';
 import elClassName from './el-class-name';
-import useDraggableClick from './hook/useDraggableClick';
 import {useSlide} from './components/SlideProvider';
 import useLazyLoadBg, {ELoadStatus} from './hook/useLazyLoadBg';
 
@@ -13,7 +12,6 @@ interface IProps {
   bgSize?: '100%'|'cover'|'contain',
   children?: ReactNode,
   onClick?: () => void,
-  onClickAllowTime?: number,
 }
 
 
@@ -26,7 +24,6 @@ interface IProps {
  * @param bgSize
  * @param children
  * @param onClick
- * @param onClickAllowTime
  */
 const BearSlideCard = ({
     className,
@@ -35,11 +32,9 @@ const BearSlideCard = ({
     bgSize = 'cover',
     children,
     onClick,
-    onClickAllowTime = 150,
 }: IProps) => {
     const slide = useSlide();
     const {imageRef, status, doneImageUrl} = useLazyLoadBg({isLazy: slide.isLazy, imageUrl: bgUrl});
-    const {onMouseDown, onMouseUp} = useDraggableClick({onClick, onClickAllowTime});
 
     const imageUrl = slide.isLazy ? doneImageUrl: bgUrl;
 
@@ -50,8 +45,7 @@ const BearSlideCard = ({
             [elClassName.slideItemCardCover]: bgSize === 'cover',
             [elClassName.slideItemCardContain]: bgSize === 'contain',
         })}
-        onMouseDown={onClick ? onMouseDown: undefined}
-        onMouseUp={onClick ? onMouseUp: undefined}
+        onClick={onClick}
         data-lazy-src={slide.isLazy && status !== ELoadStatus.done ? bgUrl: undefined}
         style={{
             ...style,

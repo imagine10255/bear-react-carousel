@@ -416,7 +416,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     render(){
         const {style, className, isDebug, isLazy, renderLazyPreloader} = this.props;
 
-        const isClientReady = this.state.isClientReady;
+        // const isClientReady = this.state.isClientReady;
         // if(!this.state.isClientReady){
         //     return null;
         // }

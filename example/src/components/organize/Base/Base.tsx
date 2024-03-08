@@ -35,7 +35,9 @@ function Base() {
     const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
         return {
             key: row.id,
-            children: <BearSlideCard>
+            children: <BearSlideCard
+                onClick={() => alert('click!')}
+            >
                 <Flex col="column" className="p-4 gap-2"
                     style={{fontSize: '40px', height: '200px', backgroundColor: row.color}}
                 >

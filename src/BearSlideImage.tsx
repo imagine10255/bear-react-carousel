@@ -2,7 +2,6 @@ import CSS from 'csstype';
 import clsx from 'clsx';
 import elClassName from './el-class-name';
 import useLazyLoadImage from './hook/useLazyLoadImage';
-import useDraggableClick from './hook/useDraggableClick';
 import {useSlide} from './components/SlideProvider';
 import {ELoadStatus} from './hook/useLazyLoadBg';
 
@@ -14,7 +13,6 @@ interface IProps {
   imageSize?: 'none'|'cover'|'contain'|'scaleDown',
   alt?: string,
   onClick?: () => void,
-  onClickAllowTime?: number
 }
 
 
@@ -27,7 +25,6 @@ interface IProps {
  * @param imageAlt
  * @param imageSize
  * @param onClick
- * @param onClickAllowTime
  */
 const BearSlideImage = ({
     className,
@@ -36,11 +33,9 @@ const BearSlideImage = ({
     imageAlt,
     imageSize,
     onClick,
-    onClickAllowTime = 150,
 }: IProps) => {
     const slide = useSlide();
     const {imageRef, status} = useLazyLoadImage({isLazy: slide.isLazy ?? false, imageUrl});
-    const {onMouseDown, onMouseUp} = useDraggableClick({onClick, onClickAllowTime});
 
 
     return <>
@@ -57,8 +52,7 @@ const BearSlideImage = ({
             alt={imageAlt}
             draggable="false"
             data-lazy-src={slide.isLazy && status !== ELoadStatus.done ? imageUrl: undefined}
-            onMouseDown={onClick ? onMouseDown: undefined}
-            onMouseUp={onClick ? onMouseUp: undefined}
+            onClick={onClick}
         />
         {slide.isLazy && status === ELoadStatus.loading && <div className={elClassName.slideItemImagePreLoad}>
             {slide.renderLazyPreloader()}

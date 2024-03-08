@@ -54,8 +54,12 @@
     z-index: 10;
 }
 
-.bear-react-carousel__root[data-touching] .bear-react-carousel__pagination-group{
+.bear-react-carousel__root[data-touching] .bear-react-carousel__pagination-group,
+.bear-react-carousel__root[data-touching] .bear-react-carousel__slide-item{
     pointer-events: none;
+}
+.bear-react-carousel__root[data-gpu-render][data-touching] .bear-react-carousel__container{
+    will-change: transform;
 }
 
 .bear-react-carousel__pagination-group .bear-react-carousel__pagination-button{
@@ -236,6 +240,8 @@
 
 
 
+
+
 .bear-react-carousel__content{
     top: 0;
     right: 0;
@@ -251,9 +257,6 @@
 
 
 
-.bear-react-carousel__root[data-gpu-render] .bear-react-carousel__container{
-    will-change: transform;
-}
 
 .bear-react-carousel__root[data-mouse-move] .bear-react-carousel__container{
     cursor: pointer;
