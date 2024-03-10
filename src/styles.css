@@ -180,8 +180,8 @@
 .bear-react-carousel__slide-item__image{
     max-width: 100%;
     max-height: 100%;
-    width: auto; /* fix lazy image */
-    height: auto;
+    width: 100%; /* fix object-fit */
+    height: 100%;
 }
 
 .bear-react-carousel__slide-item__image-contain{
