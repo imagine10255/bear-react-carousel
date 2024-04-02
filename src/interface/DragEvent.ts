@@ -56,4 +56,31 @@ export class DesktopTouchEvent implements DragEvent{
 
 
 
+/**
+ * 桌面瀏覽器觸控事件
+ */
+export class PointerTouchEvent implements DragEvent{
+    // _containerEl: HTMLElement;
+    _event: PointerEvent;
+
+    get x(){
+        // const {x} = getTranslateParams(this._containerEl);
+        // return this._event.clientX - x;
+        return this._event.pageX;
+    }
+
+    get endX(){
+        return this._event.pageX;
+    }
+    get endY(){
+        return this._event.pageY;
+    }
+
+    constructor(event: PointerEvent) {
+        this._event = event;
+    }
+}
+
+
+
 
