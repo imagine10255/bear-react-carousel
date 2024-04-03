@@ -6,7 +6,7 @@ import Elementor from '../Elementor';
 import Locator from '../Locator';
 import Stater from '../Stater';
 import Eventor from '../Eventor';
-import {DesktopTouchEvent, MobileTouchEvent} from '../../interface/DragEvent';
+import {PointerTouchEvent} from '../../interface/DragEvent';
 import logger from '../../logger';
 import {logEnable} from '../../config';
 import ElState from '../Elementor/ElState';
@@ -41,8 +41,7 @@ class Dragger {
 
     onDragStart = (callBack?: TEventMap['dragStart']) => {
         if(this._elementor.containerEl){
-            this._elementor.containerEl.addEventListener('touchstart', this._onMobileTouchStart, {passive: false});
-            this._elementor.containerEl.addEventListener('mousedown', this._onWebMouseStart, {passive: false});
+            this._elementor.containerEl.addEventListener('pointerdown', this._onWebMouseStart, {passive: false});
         }
 
         this._eventor.on('dragStart', callBack);
@@ -58,8 +57,7 @@ class Dragger {
 
     offDragStart = (callBack?: TEventMap['dragStart']) => {
         if(this._elementor.containerEl){
-            this._elementor.containerEl.removeEventListener('touchstart', this._onMobileTouchStart, {passive: false} as any);
-            this._elementor.containerEl.removeEventListener('mousedown', this._onWebMouseStart, {passive: false} as any);
+            this._elementor.containerEl.removeEventListener('pointerdown', this._onWebMouseStart, {passive: false} as any);
         }
 
         this._eventor.off('dragStart', callBack);
@@ -75,65 +73,11 @@ class Dragger {
 
 
     /**
-     * mobile phone finger press start
-     * @param event
-     */
-    private _onMobileTouchStart = (event: TouchEvent): void => {
-        if(this._configurator.setting.isDebug && logEnable.dragger.onMobileTouchStart) logger.printInText('[Dragger._onMobileTouchStart]');
-        this._eventor.emit('dragStart');
-
-        const {containerEl} = this._elementor;
-        if (containerEl) {
-
-            // 移動到開始位置 避免跳動
-            this._locator.touchStart(new MobileTouchEvent(event), containerEl);
-            const {startPosition} = this._locator;
-            const movePx = this._locator.touchMove(new MobileTouchEvent(event), containerEl);
-            const translateX = calcMoveTranslatePx(startPosition.x, movePx);
-            this._elState
-                .transform(translateX, false);
-
-            // 設定移動 與 結束事件
-            window.addEventListener('touchmove', this._onMobileTouchMove, {passive: false});
-            window.addEventListener('touchend', this._onMobileTouchEnd, {passive: false});
-        }
-    };
-
-
-
-    /**
-     * Mobile phone finger press and move
-     * @param event
-     */
-    private _onMobileTouchMove = (event: TouchEvent): void => {
-        event.preventDefault();
-        if(this._configurator.setting.isDebug && logEnable.dragger.onMobileTouchMove) logger.printInText('[Dragger._onMobileTouchMove]');
-
-        if(this._elementor.containerEl){
-            const movePx = this._locator.touchMove(new MobileTouchEvent(event), this._elementor.containerEl);
-            this._dragMove(movePx);
-        }
-    };
-
-    /**
-     * Mobile phone finger press to end
-     * @param event
-     *
-     * PS: Add event.preventDefault(); will affect the mobile phone click onClick event
-     */
-    private _onMobileTouchEnd = (event: TouchEvent): void => {
-        if(this._configurator.setting.isDebug && logEnable.dragger.onMobileTouchEnd) logger.printInText('[Dragger._onMobileTouchEnd]');
-
-        window.removeEventListener('touchmove', this._onMobileTouchMove, false);
-        window.removeEventListener('touchend', this._onMobileTouchEnd, false);
-        this._dragEnd();
-    };
-
-    /**
      * Web mouse click
      * @param event
      */
-    private _onWebMouseStart = (event: MouseEvent): void => {
+    private _onWebMouseStart = (event: PointerEvent): void => {
+        event.preventDefault();
         if(this._configurator.setting.isDebug && logEnable.dragger.onWebMouseStart) logger.printInText('[Dragger._onWebMouseStart]');
         this._eventor.emit('dragStart');
 
@@ -141,15 +85,16 @@ class Dragger {
         if (containerEl) {
 
             // 移動到開始位置 避免跳動
-            this._locator.touchStart(new DesktopTouchEvent(event), containerEl);
+            this._locator.touchStart(new PointerTouchEvent(event), containerEl);
             const {startPosition} = this._locator;
             const translateX = calcMoveTranslatePx(startPosition.x, event.clientX);
             this._elState
                 .transform(translateX, false);
 
             // 設定移動 與 結束事件
-            window.addEventListener('mousemove', this._onWebMouseMove, false);
-            window.addEventListener('mouseup', this._onWebMouseEnd, false);
+            window.addEventListener('pointermove', this._onWebMouseMove, false);
+            window.addEventListener('pointerup', this._onWebMouseEnd, false);
+            window.addEventListener('pointercancel', this._onWebMouseEnd, false);
         }
 
     };
@@ -159,12 +104,13 @@ class Dragger {
      * Web mouse movement
      * @param event
      */
-    private _onWebMouseMove = (event: MouseEvent):void => {
+    private _onWebMouseMove = (event: PointerEvent):void => {
         event.preventDefault();
         if(this._configurator.setting.isDebug && logEnable.dragger.onWebMouseMove) logger.printInText('[Dragger._onWebMouseMove]');
 
         if(this._elementor.containerEl){
-            const movePx = this._locator.touchMove(new DesktopTouchEvent(event), this._elementor.containerEl);
+            this._elementor.containerEl.setPointerCapture(event.pointerId);
+            const movePx = this._locator.touchMove(new PointerTouchEvent(event), this._elementor.containerEl);
             this._dragMove(movePx);
         }
     };
@@ -173,12 +119,13 @@ class Dragger {
      * web mouse release
      * @param event
      */
-    private _onWebMouseEnd = (event: MouseEvent):void => {
+    private _onWebMouseEnd = (event: PointerEvent):void => {
         event.preventDefault();
         if(this._configurator.setting.isDebug && logEnable.dragger.onWebMouseEnd) logger.printInText('[Dragger._onWebMouseEnd]');
 
-        window.removeEventListener('mousemove', this._onWebMouseMove, false);
-        window.removeEventListener('mouseup', this._onWebMouseEnd, false);
+        window.removeEventListener('pointermove', this._onWebMouseMove, false);
+        window.removeEventListener('pointerup', this._onWebMouseEnd, false);
+        window.removeEventListener('pointercancel', this._onWebMouseEnd, false);
         this._dragEnd();
     };
 

@@ -235,6 +235,8 @@
     flex-direction: row;
     height: inherit;
     transition-timing-function: ease;
+
+    touch-action: pan-y; /* fix mobile pointermove event target pointercancel */
 }
 
 
