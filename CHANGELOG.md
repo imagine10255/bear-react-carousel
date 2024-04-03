@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.27-alpha.0](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.26...v4.0.27-alpha.0) (2024-04-03)
+
+
+### Bug Fixes
+
+* scroll on touch screen devices does not work ([7320284](https://github.com/imagine10255/bear-react-carousel/commit/7320284705c42b5db11fc9f4480c5f5b16eba270))
+
 ### [4.0.26](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.26-alpha.0...v4.0.26) (2024-03-10)
 
 ### [4.0.26-alpha.0](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.25...v4.0.26-alpha.0) (2024-03-10)
