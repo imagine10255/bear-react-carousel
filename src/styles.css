@@ -215,7 +215,7 @@
     background-repeat: no-repeat;
     background-position: center;
 
-    container-type: inline-size; /* fix height auto */
+    container-type: normal; /* fix height & width auto */
 }
 .bear-react-carousel__slide-item__card-contain{
     background-size: contain;
