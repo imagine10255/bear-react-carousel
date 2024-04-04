@@ -99,6 +99,20 @@ Use Nextjs example
 
 
 
+## Test for project
+
+bear-react-carousel lib in root
+
+```bash
+$ yarn build && cp -R ./dist ../bear-react-carousel-doc/node_modules/bear-react-carousel/
+```
+
+bear-react-carousel-doc lib in root
+
+```bash
+$ rm -rf ./node_modules/.cache && yarn dev
+```
+
 ### License
 
 MIT © [imagine10255](https://github.com/imagine10255)

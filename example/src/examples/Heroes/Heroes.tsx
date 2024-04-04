@@ -8,6 +8,7 @@ import AutoCard from '@/components/organize/AutoCard';
 import JuejinVip from '@/components/organize/JuejinVip';
 import W99Vip from '@/components/organize/W99Vip';
 import LazyImage from '@/components/organize/LazyImage';
+import Paginate from '@/components/organize/Paginate';
 
 interface IProps extends FCProps {
 
@@ -43,6 +44,19 @@ const Heroes = ({
 
                 <Grid col={1} className="g-3 justify-content-center">
                     <AutoPlay/>
+                </Grid>
+            </Col>
+        </Flex>;
+    };
+
+    const renderPaginate = () => {
+        return <Flex col="column" className="px-4 py-5 my-5 gap-2 text-center">
+            <h1>Paginate</h1>
+            <Col col={12} lg={6} className="mx-auto">
+                <p className="mb-4">Auto play after 1.5s</p>
+
+                <Grid col={1} className="g-3 justify-content-center">
+                    <Paginate/>
                 </Grid>
             </Col>
         </Flex>;
@@ -139,6 +153,7 @@ const Heroes = ({
 
         {renderBase()}
         {/*{renderAutoPlay()}*/}
+        {/*{renderPaginate()}*/}
         {/*{renderLoop()}*/}
         {/*{renderAutoImage()}*/}
         {/*{renderAutoCard()}*/}
