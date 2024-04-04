@@ -169,7 +169,8 @@ class Dragger {
 
         if(this._elementor.slideItemEls){
             const active = this._elementor.slideItemEls.find(row => row.dataset.active === '');
-            this._eventor.emit('dragEnd', Number(active?.dataset.virtual ?? 0));
+            const activeVirtual = active?.dataset.virtual ?? this._stater.virtual?.activeIndex ?? 0;
+            this._eventor.emit('dragEnd', Number(activeVirtual));
         }
     };
 

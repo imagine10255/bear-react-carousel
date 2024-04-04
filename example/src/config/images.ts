@@ -104,5 +104,6 @@ export const carImages: ICarImage[] = [
     {id: 3, imageUrl: asset('/sample/racing/03.webp')},
     {id: 4, imageUrl: asset('/sample/racing/04.webp')},
     {id: 5, imageUrl: asset('/sample/racing/05.webp')},
+    {id: 6, imageUrl: asset('/sample/racing/06.webp')},
 ];
 

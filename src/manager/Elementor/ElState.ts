@@ -206,22 +206,22 @@ class ElState {
         const inRangeIndex = this._stater.getInRangeIndex(activeActualIndex);
         itemEls
             ?.forEach((row, index) => {
-                if(index === inRangeIndex){
+                if(Number(row?.dataset.virtual) === inRangeIndex){
                     row.setAttribute('data-active', '');
-                } else if (row?.dataset.active === '') {
+                } else if (typeof row?.dataset.active !== 'undefined') {
                     row.removeAttribute('data-active');
                 }
             });
 
-        const active = itemEls?.find(row => row.dataset.active === '');
-        const activePage = active?.dataset.page ? parseInt(active.dataset.page): 0;
+
+        const activePage = this._stater.page.activePage;
 
         // 更改顯示在第幾頁的樣式 (父元件使用可判定樣式設定)
         if (this._stater.isVisiblePagination && this._stater.page.activePage > 0) {
             this._elementor.pageEls?.forEach((row, index) => {
                 if (activePage === index + 1) {
                     row.setAttribute('data-active', '');
-                } else if(row?.dataset.active === '') {
+                } else if(typeof row?.dataset.active !== 'undefined') {
                     row.removeAttribute('data-active');
                 }
             });
@@ -231,10 +231,15 @@ class ElState {
         const pageOnlyOne = this._stater.page.total === 1;
         const notPage = this._stater.virtual.total < this._configurator.setting.slidesPerView;
 
+        // 重置先判斷是否存在
+        if(typeof this._elementor.rootEl?.dataset.firstPage !== 'undefined'){
+            this._elementor.rootEl?.removeAttribute('data-first-page');
+        }
+        if(typeof this._elementor.rootEl?.dataset.lastPage !== 'undefined'){
+            this._elementor.rootEl?.removeAttribute('data-last-page');
+        }
         // 提供是否為第一頁/最後一頁的判斷屬性
         if(this._stater.isVisibleNavButton && !this._configurator.setting.isEnableLoop){
-            this._elementor.rootEl?.removeAttribute('data-first-page');
-            this._elementor.rootEl?.removeAttribute('data-last-page');
             if(activePage <= 1 || pageOnlyOne || notPage){
                 this._elementor.rootEl?.setAttribute('data-first-page', '');
             }
