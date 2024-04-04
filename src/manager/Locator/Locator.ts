@@ -20,12 +20,16 @@ class Locator {
     }
 
     public touchStart = (dropEvent: DragEvent, containerEl: HTMLDivElement) => {
-        const {x} = getTranslateParams(containerEl);
+        const {x, y} = getTranslateParams(containerEl);
         this._startPosition.x = dropEvent.x - x;
+        this._startPosition.y = dropEvent.y - y;
     };
 
     public touchMove = (dropEvent: DragEvent, containerEl: HTMLDivElement) => {
-        return containerEl.offsetLeft + dropEvent.x;
+        return {
+            x: containerEl.offsetLeft + dropEvent.x,
+            y: containerEl.offsetTop + dropEvent.y,
+        };
     };
 }
 

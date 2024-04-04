@@ -1,5 +1,6 @@
 export interface DragEvent {
     x: number,
+    y: number,
     endX: number, // 從文檔（即整個網頁）的左上角開始，到觸摸點的水平（x軸）距離。這個值包括了當前頁面已滾動的距離。即使頁面滾動，這個值也會隨著變化。
     endY: number,
 }
@@ -14,6 +15,9 @@ export class PointerTouchEvent implements DragEvent{
 
     get x(){
         return this._event.clientX;
+    }
+    get y(){
+        return this._event.clientY;
     }
 
     get endX(){

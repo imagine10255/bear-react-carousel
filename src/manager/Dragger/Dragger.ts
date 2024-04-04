@@ -111,7 +111,12 @@ class Dragger {
         if(this._elementor.containerEl){
             this._elementor.containerEl.setPointerCapture(event.pointerId);
             const movePx = this._locator.touchMove(new PointerTouchEvent(event), this._elementor.containerEl);
-            this._dragMove(movePx);
+
+            // 拖動中判斷 (避免觸發 click)
+            if (Math.abs(event.pageX - this._locator.startPosition.x) > 10) {
+                this._elState.setTouching(true);
+            }
+            this._dragMove(movePx.x);
         }
     };
 
@@ -135,7 +140,8 @@ class Dragger {
     private _dragMove(moveX: number) {
         if(this._configurator.setting.isDebug && logEnable.dragger.onDragMove) logger.printInText('[Dragger._dragMove]');
 
-        this._elState.setTouching(true);
+
+
 
         const {startPosition} = this._locator;
         const {setting} = this._configurator;
