@@ -40,8 +40,12 @@ class Dragger {
 
 
     onDragStart = (callBack?: TEventMap['dragStart']) => {
-        if(this._elementor.containerEl){
-            this._elementor.containerEl.addEventListener('pointerdown', this._onWebMouseStart, {passive: false});
+        const {containerEl} = this._elementor;
+        if(containerEl){
+            containerEl.ondragstart = () => false;
+            containerEl.addEventListener('pointerdown', this._onWebMouseStart, false);
+            // document.addEventListener('pointercancel', this._onWebMouseEnd, false);
+            // document.onpointercancel = () => false;
         }
 
         this._eventor.on('dragStart', callBack);
@@ -56,8 +60,11 @@ class Dragger {
     };
 
     offDragStart = (callBack?: TEventMap['dragStart']) => {
-        if(this._elementor.containerEl){
-            this._elementor.containerEl.removeEventListener('pointerdown', this._onWebMouseStart, {passive: false} as any);
+        const {containerEl} = this._elementor;
+        if(containerEl){
+            containerEl.removeEventListener('pointerdown', this._onWebMouseStart, {passive: false} as any);
+            containerEl.removeEventListener('pointercancel', this._onWebMouseEnd, false);
+
         }
 
         this._eventor.off('dragStart', callBack);
@@ -83,6 +90,10 @@ class Dragger {
 
         const {containerEl} = this._elementor;
         if (containerEl) {
+            // if (containerEl.hasPointerCapture(event.pointerId)) {
+            containerEl.releasePointerCapture(event.pointerId);
+            // }
+            // containerEl.setPointerCapture(event.pointerId);
 
             // 移動到開始位置 避免跳動
             this._locator.touchStart(new PointerTouchEvent(event), containerEl);
@@ -92,9 +103,8 @@ class Dragger {
                 .transform(translateX, false);
 
             // 設定移動 與 結束事件
-            window.addEventListener('pointermove', this._onWebMouseMove, false);
-            window.addEventListener('pointerup', this._onWebMouseEnd, false);
-            window.addEventListener('pointercancel', this._onWebMouseEnd, false);
+            containerEl.addEventListener('pointermove', this._onWebMouseMove, false);
+            containerEl.addEventListener('pointerup', this._onWebMouseEnd, false);
         }
 
     };
@@ -107,14 +117,13 @@ class Dragger {
     private _onWebMouseMove = (event: PointerEvent):void => {
         event.preventDefault();
         if(this._configurator.setting.isDebug && logEnable.dragger.onWebMouseMove) logger.printInText('[Dragger._onWebMouseMove]');
+        this._elState.setTouching(true);
 
         if(this._elementor.containerEl){
-            this._elementor.containerEl.setPointerCapture(event.pointerId);
             const movePx = this._locator.touchMove(new PointerTouchEvent(event), this._elementor.containerEl);
 
             // 拖動中判斷 (避免觸發 click)
             if (Math.abs(event.pageX - this._locator.startPosition.x) > 10) {
-                this._elState.setTouching(true);
             }
             this._dragMove(movePx.x);
         }
@@ -128,9 +137,11 @@ class Dragger {
         event.preventDefault();
         if(this._configurator.setting.isDebug && logEnable.dragger.onWebMouseEnd) logger.printInText('[Dragger._onWebMouseEnd]');
 
-        window.removeEventListener('pointermove', this._onWebMouseMove, false);
-        window.removeEventListener('pointerup', this._onWebMouseEnd, false);
-        window.removeEventListener('pointercancel', this._onWebMouseEnd, false);
+        const {containerEl} = this._elementor;
+        if(containerEl){
+            containerEl.removeEventListener('pointermove', this._onWebMouseMove, false);
+            containerEl.removeEventListener('pointerup', this._onWebMouseEnd, false);
+        }
         this._dragEnd();
     };
 

@@ -4,6 +4,7 @@
     height: var(--carousel-height, inherit);
     aspect-ratio: var(--carousel-aspect-ratio);
     user-select: none;
+    touch-action: pan-y; /* fix mobile pointermove event target pointercancel */
 }
 
 
@@ -241,7 +242,6 @@
     height: inherit;
     transition-timing-function: ease;
 
-    touch-action: pan-y; /* fix mobile pointermove event target pointercancel */
 }
 
 
