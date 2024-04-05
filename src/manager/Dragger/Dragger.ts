@@ -23,6 +23,7 @@ class Dragger {
     private _locator: Locator;
     private _stater: Stater;
     private _eventor = new Eventor<TEventMap>();
+    private _pointerDown = false;
 
 
     constructor(manager: {
@@ -42,7 +43,7 @@ class Dragger {
     onDragStart = (callBack?: TEventMap['dragStart']) => {
         if(this._elementor.containerEl){
             this._elementor.containerEl.addEventListener('touchstart', this._onMobileTouchStart, {passive: false});
-            this._elementor.containerEl.addEventListener('mousedown', this._onWebMouseStart, {passive: false});
+            // this._elementor.containerEl.addEventListener('mousedown', this._onWebMouseStart, {passive: false});
         }
 
         this._eventor.on('dragStart', callBack);
@@ -80,22 +81,30 @@ class Dragger {
      */
     private _onMobileTouchStart = (event: TouchEvent): void => {
         if(this._configurator.setting.isDebug && logEnable.dragger.onMobileTouchStart) logger.printInText('[Dragger._onMobileTouchStart]');
-        this._eventor.emit('dragStart');
+        // @ts-ignore
+        const ignoreSiema = ['TEXTAREA', 'OPTION', 'INPUT', 'SELECT'].indexOf(event.target.nodeName) !== -1;
+        if (ignoreSiema) {
+            return;
+        }
+        event.stopPropagation();
 
+
+        this._eventor.emit('dragStart');
         const {containerEl} = this._elementor;
         if (containerEl) {
 
             // 移動到開始位置 避免跳動
             this._locator.touchStart(new MobileTouchEvent(event), containerEl);
             const {startPosition} = this._locator;
-            const movePx = this._locator.touchMove(new MobileTouchEvent(event), containerEl);
-            const translateX = calcMoveTranslatePx(startPosition.x, movePx);
-            this._elState
-                .transform(translateX, false);
+            // const movePx = this._locator.touchMove(new MobileTouchEvent(event), containerEl);
+            // const translateX = calcMoveTranslatePx(startPosition.x, movePx);
+            // this._elState
+            //     .transform(translateX, false);
 
             // 設定移動 與 結束事件
-            window.addEventListener('touchmove', this._onMobileTouchMove, {passive: false});
-            window.addEventListener('touchend', this._onMobileTouchEnd, {passive: false});
+
+            document.addEventListener('touchmove', this._onMobileTouchMove, {passive: false});
+            document.addEventListener('touchend', this._onMobileTouchEnd, {passive: false});
         }
     };
 
@@ -106,10 +115,15 @@ class Dragger {
      * @param event
      */
     private _onMobileTouchMove = (event: TouchEvent): void => {
-        event.preventDefault();
-        if(this._configurator.setting.isDebug && logEnable.dragger.onMobileTouchMove) logger.printInText('[Dragger._onMobileTouchMove]');
+        event.stopPropagation();
 
-        if(this._elementor.containerEl){
+        if(this._configurator.setting.isDebug && logEnable.dragger.onMobileTouchMove) logger.printInText('[Dragger._onMobileTouchMove]');
+        if (this._locator._letItGo === null) {
+            this._locator._letItGo = Math.abs(this._locator.startPosition.pageY - event.touches[0].pageY) < Math.abs(this._locator._startPosition.pageX - event.touches[0].pageX);
+            console.log('this._locator._letItGo', this._locator._letItGo);
+        }
+        if(this._elementor.containerEl && this._locator._letItGo){
+            event.preventDefault();
             const movePx = this._locator.touchMove(new MobileTouchEvent(event), this._elementor.containerEl);
             this._dragMove(movePx);
         }
@@ -123,9 +137,14 @@ class Dragger {
      */
     private _onMobileTouchEnd = (event: TouchEvent): void => {
         if(this._configurator.setting.isDebug && logEnable.dragger.onMobileTouchEnd) logger.printInText('[Dragger._onMobileTouchEnd]');
+        event.stopPropagation();
 
-        window.removeEventListener('touchmove', this._onMobileTouchMove, false);
-        window.removeEventListener('touchend', this._onMobileTouchEnd, false);
+        this._locator._letItGo = null;
+        const {containerEl} = this._elementor;
+        if(containerEl){
+            document.removeEventListener('touchmove', this._onMobileTouchMove, false);
+            document.removeEventListener('touchend', this._onMobileTouchEnd, false);
+        }
         this._dragEnd();
     };
 
@@ -199,15 +218,19 @@ class Dragger {
             this._stater.page.total > 1
         ) {
             const translateX = calcMoveTranslatePx(startPosition.x, moveX);
-            const percentage = this._elState.getMovePercentage(translateX); //TODO: 應該移動到 Positioner
+            const percentage = this._elState.getMovePercentage(moveX); //TODO: 應該移動到 Positioner
 
             // 同步控制
-            this._eventor.emit('dragMove', percentage);
+            // this._eventor.emit('dragMove', percentage);
 
             this._elState
-                .transform(translateX)
+                .transform(moveX)
                 .moveEffect(percentage)
                 .syncActiveState(Math.round(percentage));
+            // this._elState
+            //     .transform(translateX)
+            //     .moveEffect(percentage)
+            //     .syncActiveState(Math.round(percentage));
         }
     }
 

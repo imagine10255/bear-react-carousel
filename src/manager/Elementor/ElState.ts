@@ -204,6 +204,7 @@ class ElState {
 
         // 更改顯示在第幾個 (父元件使用可判定樣式設定)
         const inRangeIndex = this._stater.getInRangeIndex(activeActualIndex);
+        console.log('inRangeIndex', activeActualIndex);
         itemEls
             ?.forEach((row, index) => {
                 if(index === inRangeIndex){

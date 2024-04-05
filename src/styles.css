@@ -57,6 +57,8 @@
 .bear-react-carousel__root[data-touching] .bear-react-carousel__pagination-group,
 .bear-react-carousel__root[data-touching] .bear-react-carousel__slide-item{
     pointer-events: none;
+    touch-action: pan-y;
+
 }
 .bear-react-carousel__root[data-gpu-render][data-touching] .bear-react-carousel__container{
     will-change: transform;
@@ -235,6 +237,7 @@
     flex-direction: row;
     height: inherit;
     transition-timing-function: ease;
+
 }
 
 
