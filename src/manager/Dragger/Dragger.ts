@@ -81,8 +81,9 @@ class Dragger {
         if(this._configurator.setting.isDebug && logEnable.dragger.onWebMouseStart) logger.printInText('[Dragger._onWebMouseStart]');
         this._eventor.emit('dragStart');
 
+
         const {containerEl} = this._elementor;
-        if (containerEl) {
+        if (containerEl){
 
             // 移動到開始位置 避免跳動
             this._locator.touchStart(new PointerTouchEvent(event), containerEl);
@@ -92,9 +93,9 @@ class Dragger {
                 .transform(translateX, false);
 
             // 設定移動 與 結束事件
-            window.addEventListener('pointermove', this._onWebMouseMove, false);
-            window.addEventListener('pointerup', this._onWebMouseEnd, false);
-            window.addEventListener('pointercancel', this._onWebMouseEnd, false);
+            document.addEventListener('pointermove', this._onWebMouseMove, false);
+            document.addEventListener('pointerup', this._onWebMouseEnd, false);
+            document.addEventListener('pointercancel', this._onWebMouseEnd, false);
         }
 
     };
@@ -108,7 +109,12 @@ class Dragger {
         event.preventDefault();
         if(this._configurator.setting.isDebug && logEnable.dragger.onWebMouseMove) logger.printInText('[Dragger._onWebMouseMove]');
 
-        if(this._elementor.containerEl){
+        if (!this._locator._letItGo) {
+            this._locator._letItGo = Math.abs(this._locator.startPosition.y - event.y) < Math.abs(this._locator._startPosition.x - event.x);
+            console.log('this._locator._letItGo', this._locator._letItGo);
+        }
+
+        if(this._elementor.containerEl && this._locator._letItGo){
             this._elementor.containerEl.setPointerCapture(event.pointerId);
             const movePx = this._locator.touchMove(new PointerTouchEvent(event), this._elementor.containerEl);
 
@@ -128,9 +134,13 @@ class Dragger {
         event.preventDefault();
         if(this._configurator.setting.isDebug && logEnable.dragger.onWebMouseEnd) logger.printInText('[Dragger._onWebMouseEnd]');
 
-        window.removeEventListener('pointermove', this._onWebMouseMove, false);
-        window.removeEventListener('pointerup', this._onWebMouseEnd, false);
-        window.removeEventListener('pointercancel', this._onWebMouseEnd, false);
+        const {containerEl} = this._elementor;
+        if(containerEl){
+            document.removeEventListener('pointermove', this._onWebMouseMove, false);
+            document.removeEventListener('pointerup', this._onWebMouseEnd, false);
+            document.removeEventListener('pointercancel', this._onWebMouseEnd, false);
+        }
+
         this._dragEnd();
     };
 
@@ -158,9 +168,9 @@ class Dragger {
             this._eventor.emit('dragMove', percentage);
 
             this._elState
-                .transform(translateX)
-                .moveEffect(percentage)
-                .syncActiveState(Math.round(percentage));
+                .transform(translateX);
+            // .moveEffect(percentage)
+            // .syncActiveState(Math.round(percentage));
         }
     }
 

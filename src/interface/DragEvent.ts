@@ -21,7 +21,7 @@ export class PointerTouchEvent implements DragEvent{
     }
 
     get endX(){
-        return this._event.clientX;
+        return this._event.pageX;
     }
     get endY(){
         return this._event.pageY;
