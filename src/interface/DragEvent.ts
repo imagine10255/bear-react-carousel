@@ -14,14 +14,14 @@ export class MobileTouchEvent implements DragEvent{
     get x(){
         // const {x} = getTranslateParams(this._containerEl);
         // return this._event.targetTouches[0].pageX - x;
-        return this._event.targetTouches[0].pageX ?? 0;
+        return this._event.targetTouches[0].clientX ?? 0;
     }
 
     get endX(){
-        return this._event.targetTouches[0].clientX ?? 0;
+        return this._event.touches[0].pageX ?? 0;
     }
     get endY(){
-        return this._event.targetTouches[0].pageY ?? 0;
+        return this._event.touches[0].pageY ?? 0;
     }
 
     constructor(event: TouchEvent) {
