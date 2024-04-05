@@ -6,10 +6,12 @@ import Elementor from '../Elementor';
 import Locator from '../Locator';
 import Stater from '../Stater';
 import Eventor from '../Eventor';
-import {PointerTouchEvent} from '../../interface/DragEvent';
+import {MobileTouchEvent, PointerTouchEvent} from '../../interface/DragEvent';
 import logger from '../../logger';
 import {logEnable} from '../../config';
 import ElState from '../Elementor/ElState';
+import {checkIsMobile} from '../../utils';
+import {checkLetItGo} from "../Stater/utils";
 
 
 /**
@@ -23,7 +25,6 @@ class Dragger {
     private _locator: Locator;
     private _stater: Stater;
     private _eventor = new Eventor<TEventMap>();
-
 
     constructor(manager: {
         configurator: Configurator,
@@ -41,7 +42,11 @@ class Dragger {
 
     onDragStart = (callBack?: TEventMap['dragStart']) => {
         if(this._elementor.containerEl){
-            this._elementor.containerEl.addEventListener('pointerdown', this._onWebMouseStart, {passive: false});
+            if(checkIsMobile()){
+                this._elementor.containerEl.addEventListener('touchstart', this._onMobileTouchStart, {passive: false});
+            }else{
+                this._elementor.containerEl.addEventListener('pointerdown', this._onWebMouseStart, {passive: false} as any);
+            }
         }
 
         this._eventor.on('dragStart', callBack);
@@ -57,7 +62,11 @@ class Dragger {
 
     offDragStart = (callBack?: TEventMap['dragStart']) => {
         if(this._elementor.containerEl){
-            this._elementor.containerEl.removeEventListener('pointerdown', this._onWebMouseStart, {passive: false} as any);
+            if(checkIsMobile()) {
+                this._elementor.containerEl.removeEventListener('touchstart', this._onMobileTouchStart, {passive: false} as any);
+            }else{
+                this._elementor.containerEl.removeEventListener('pointerdown', this._onWebMouseStart, {passive: false} as any);
+            }
         }
 
         this._eventor.off('dragStart', callBack);
@@ -70,6 +79,82 @@ class Dragger {
     offDragEnd = (callBack?: TEventMap['dragEnd']) => {
         this._eventor.off('dragEnd', callBack);
     };
+
+
+
+
+
+    /**
+     * mobile phone finger press start
+     * @param event
+     */
+    private _onMobileTouchStart = (event: TouchEvent): void => {
+        if(this._configurator.setting.isDebug && logEnable.dragger.onMobileTouchStart) logger.printInText('[Dragger._onMobileTouchStart]');
+
+        event.stopPropagation();
+
+
+        this._eventor.emit('dragStart');
+        const {containerEl} = this._elementor;
+        if (containerEl) {
+
+            // 移動到開始位置 避免跳動
+            this._locator.touchStart(new MobileTouchEvent(event), containerEl);
+
+            // 設定移動 與 結束事件
+            document.addEventListener('touchmove', this._onMobileTouchMove, {passive: false});
+            document.addEventListener('touchend', this._onMobileTouchEnd, {passive: false});
+        }
+    };
+
+
+
+    /**
+     * Mobile phone finger press and move
+     * @param event
+     */
+    private _onMobileTouchMove = (event: TouchEvent): void => {
+        event.stopPropagation();
+
+        const touchEvent = new MobileTouchEvent(event);
+        if(this._configurator.setting.isDebug && logEnable.dragger.onMobileTouchMove) logger.printInText('[Dragger._onMobileTouchMove]');
+        if (!this._locator._letItGo) {
+            this._locator._letItGo = checkLetItGo({
+                x: this._locator.startPosition.pageX,
+                y: this._locator.startPosition.pageY,
+            },{
+                x: touchEvent.pageX,
+                y: touchEvent.pageY
+            });
+        }
+        if(this._elementor.containerEl && this._locator._letItGo){
+            event.preventDefault();
+            const movePx = this._locator.touchMove(touchEvent, this._elementor.containerEl);
+            this._dragMove(movePx.x);
+        }
+    };
+
+    /**
+     * Mobile phone finger press to end
+     * @param event
+     *
+     * PS: Add event.preventDefault(); will affect the mobile phone click onClick event
+     */
+    private _onMobileTouchEnd = (event: TouchEvent): void => {
+        if(this._configurator.setting.isDebug && logEnable.dragger.onMobileTouchEnd) logger.printInText('[Dragger._onMobileTouchEnd]');
+        event.stopPropagation();
+
+        this._locator._letItGo = false;
+        const {containerEl} = this._elementor;
+        if(containerEl){
+            document.removeEventListener('touchmove', this._onMobileTouchMove, false);
+            document.removeEventListener('touchend', this._onMobileTouchEnd, false);
+        }
+        this._dragEnd();
+    };
+
+
+
 
 
     /**
@@ -141,9 +226,6 @@ class Dragger {
         if(this._configurator.setting.isDebug && logEnable.dragger.onDragMove) logger.printInText('[Dragger._dragMove]');
 
 
-
-
-        const {startPosition} = this._locator;
         const {setting} = this._configurator;
 
         if (this._elementor.containerEl &&
@@ -151,14 +233,13 @@ class Dragger {
             this._elementor.slideItemEls &&
             this._stater.page.total > 1
         ) {
-            const translateX = calcMoveTranslatePx(startPosition.x, moveX);
-            const percentage = this._elState.getMovePercentage(translateX); //TODO: 應該移動到 Positioner
+            const percentage = this._elState.getMovePercentage(moveX); //TODO: 應該移動到 Positioner
 
             // 同步控制
             this._eventor.emit('dragMove', percentage);
 
             this._elState
-                .transform(translateX)
+                .transform(moveX)
                 .moveEffect(percentage)
                 .syncActiveState(Math.round(percentage));
         }

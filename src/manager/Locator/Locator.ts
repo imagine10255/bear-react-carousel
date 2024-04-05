@@ -14,6 +14,7 @@ const defaultPosition: ITouchStart = {
  */
 class Locator {
     _startPosition = defaultPosition;
+    _letItGo: boolean = false;
 
     get startPosition(){
         return this._startPosition;
@@ -23,13 +24,26 @@ class Locator {
         const {x, y} = getTranslateParams(containerEl);
         this._startPosition.x = dropEvent.x - x;
         this._startPosition.y = dropEvent.y - y;
+
+        this._startPosition.pageX = dropEvent.pageX;
+        this._startPosition.pageY = dropEvent.pageY;
     };
 
     public touchMove = (dropEvent: DragEvent, containerEl: HTMLDivElement) => {
+        const startX = this._startPosition.x;
+        const moveX = dropEvent.x;
+
+        const startY = this._startPosition.y;
+        const moveY = dropEvent.y;
         return {
-            x: containerEl.offsetLeft + dropEvent.x,
-            y: containerEl.offsetTop + dropEvent.y,
+            x: moveX - startX,
+            y: moveY - startY,
+
         };
+        // return {
+        //     x: containerEl.offsetLeft + dropEvent.x,
+        //     y: containerEl.offsetTop + dropEvent.y,
+        // };
     };
 }
 
