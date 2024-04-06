@@ -327,7 +327,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     private _onResize = (args: {windowSize: number}) => {
         if(args.windowSize !== this.state.windowSize){
             this.setState({windowSize: args.windowSize});
-        }else{
             const activeIndex = this._stater?.source.activeIndex;
             this._controller?.slideToSourceIndex(activeIndex, {isUseAnimation: false});
         }

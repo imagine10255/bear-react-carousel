@@ -11,7 +11,7 @@ import logger from '../../logger';
 import {logEnable} from '../../config';
 import ElState from '../Elementor/ElState';
 import {checkIsMobile} from '../../utils';
-import {checkLetItGo} from "../Stater/utils";
+import {checkLetItGo} from '../Stater/utils';
 
 
 /**
@@ -131,7 +131,9 @@ class Dragger {
             });
         }
 
-        if(this._elementor.containerEl && this._locator._letItGo){
+
+
+        if(this._elementor.containerEl){
             event.preventDefault(); // 開始滑動禁止捲動BodyScroll
             const movePx = this._locator.touchMove(touchEvent, this._elementor.containerEl);
             this._dragMove(movePx.x);
@@ -147,7 +149,6 @@ class Dragger {
     private _onMobileTouchEnd = (event: TouchEvent): void => {
         if(this._configurator.setting.isDebug && logEnable.dragger.onMobileTouchEnd) logger.printInText('[Dragger._onMobileTouchEnd]');
         event.stopPropagation();
-        console.log('_onWebMouseEnd');
 
         this._locator._letItGo = null;
         const {containerEl} = this._elementor;
@@ -237,12 +238,12 @@ class Dragger {
             const percentage = this._elState.getMovePercentage(moveX); //TODO: 應該移動到 Positioner
 
             // 同步控制
-            // this._eventor.emit('dragMove', percentage);
+            this._eventor.emit('dragMove', percentage);
 
             this._elState
-                .transform(moveX);
-                // .moveEffect(percentage)
-                // .syncActiveState(Math.round(percentage));
+                .transform(moveX)
+                .moveEffect(percentage)
+                .syncActiveState(Math.round(percentage));
         }
     }
 

@@ -94,8 +94,7 @@ class Controller {
 
         // 移動EL位置
         const position = this._elState.getMoveDistance(inRangeIndex);
-        
-        console.log('slideToVirtualIndex');
+
         this._elState
             .transform(position, options?.isUseAnimation ?? true)
             .moveEffect(slideIndex, options?.isUseAnimation ?? true)
