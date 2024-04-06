@@ -4,8 +4,9 @@ export enum EDirection {
 }
 
 export interface ITouchStart {
-    pageX: number,
-    pageY: number,
-    x: number,
-    y: number,
+    pageX: number
+    pageY: number
+    x: number
+    y: number
+    timeStamp: number|null
 }

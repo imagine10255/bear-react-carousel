@@ -1,8 +1,8 @@
 export interface DragEvent {
-    pageX: number,
-    pageY: number,
+    pageX: number
+    pageY: number
 
-
+    timeStamp: number | null
 }
 
 
@@ -17,6 +17,9 @@ export class MobileTouchEvent implements DragEvent{
     }
     get pageY(){
         return this._event.touches[0].pageY ?? 0;
+    }
+    get timeStamp(){
+        return this._event.timeStamp;
     }
 
     constructor(event: TouchEvent) {
@@ -35,6 +38,10 @@ export class PointerTouchEvent implements DragEvent{
     }
     get pageY(){
         return this._event.pageY;
+    }
+
+    get timeStamp(){
+        return this._event.timeStamp;
     }
 
     constructor(event: PointerEvent) {

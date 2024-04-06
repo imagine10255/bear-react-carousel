@@ -57,13 +57,14 @@ function Base() {
             onSlideChange={setCarouselState}
             // onSlideChange={setCarouselState}
             slidesPerView={1}
-            isCenteredSlides
+            // slidesPerGroup={2}
+            // isCenteredSlides
             // height="200px"
             height="auto"
             // height={{widthRatio: 21, heightRatio: 9}}
-            // isEnableNavButton
+            isEnableNavButton
             // isEnablePagination
-            // isEnableLoop
+            isEnableLoop
             // isEnableAutoPlay={false}
 
             isDebug

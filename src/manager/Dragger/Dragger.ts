@@ -250,6 +250,23 @@ class Dragger {
         if(this._configurator.setting.isDebug && logEnable.dragger.onDragEnd) logger.printInText('[Dragger._dragEnd]');
         this._elState.setTouching(false);
 
+        const startEndMove = this._locator._endPosition.pageX - this._locator._startPosition.pageX;
+
+        if (this._locator._startPosition.timeStamp !== null && this._locator._endPosition.timeStamp !== null) {
+            const timeDifference = this._locator._endPosition.timeStamp - this._locator._startPosition.timeStamp;
+
+            // 時間內移動多少距離 就到上下一個
+            if(timeDifference < 500){
+                if(startEndMove > 40) {
+                    this._eventor.emit('dragEnd', this._stater.prevPageFirstIndex);
+                    return;
+                }else if(startEndMove < -40) {
+                    this._eventor.emit('dragEnd', this._stater.nextPageFirstIndex);
+                    return;
+                }
+            }
+        }
+
         if(this._elementor.slideItemEls){
             const active = this._elementor.slideItemEls.find(row => row.dataset.active === '');
             const activeVirtual = active?.dataset.virtual ?? this._stater.virtual?.activeIndex ?? 0;

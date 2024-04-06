@@ -1,6 +1,6 @@
 import {TEventMap, InitData} from './types';
 import {IInfo, TBearSlideItemDataList} from '../../types';
-import {getInRangeIndex, initDataList} from './utils';
+import {getInRangeIndex, getPrevPageFirstIndex, initDataList} from './utils';
 import {getNextPageFirstIndex} from './utils';
 import Configurator from '../Configurator';
 import Eventor from '../Eventor';
@@ -40,6 +40,11 @@ class Stater {
 
     get prevPage(): number{
         return this._info?.page.activePage - 1;
+    }
+
+    get prevPageFirstIndex(): number{
+        const {setting} = this._configurator;
+        return getPrevPageFirstIndex(setting.isCenteredSlides ?? false, this.virtual.activeIndex, setting.slidesPerGroup, setting.slidesPerViewActual);
     }
 
     get virtual() {

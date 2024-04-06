@@ -88,6 +88,22 @@ export function getNextPageFirstIndex(isCenterMode: boolean, activeActualIndex: 
 
 }
 
+/**
+ * 取得上一頁的 Index
+ * @param isCenterMode
+ * @param activeActualIndex
+ * @param slidesPerGroup
+ * @param slidesPerViewActual
+ */
+export function getPrevPageFirstIndex(isCenterMode: boolean, activeActualIndex: number, slidesPerGroup: number, slidesPerViewActual: number){
+    if (isCenterMode) {
+        return activeActualIndex - slidesPerGroup;
+    }
+    // Avoid trailing whitespace
+    return activeActualIndex - slidesPerViewActual;
+
+}
+
 
 
 /**
