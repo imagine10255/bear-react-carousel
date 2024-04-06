@@ -151,13 +151,13 @@ const Heroes = ({
 
     return <HeroesRoot className={className}>
 
-        {renderBase()}
+        {/*{renderBase()}*/}
         {/*{renderAutoPlay()}*/}
         {/*{renderPaginate()}*/}
         {/*{renderLoop()}*/}
         {/*{renderAutoImage()}*/}
         {/*{renderAutoCard()}*/}
-        {/*{renderJuejinVip()}*/}
+        {renderJuejinVip()}
         {/*{renderW99Vip()}*/}
         {/*{renderLazyImage()}*/}
 

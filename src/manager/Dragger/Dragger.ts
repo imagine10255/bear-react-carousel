@@ -87,6 +87,7 @@ class Dragger {
      */
     private _onMobileTouchStart = (event: TouchEvent): void => {
         if(this._configurator.setting.isDebug && logEnable.dragger.onMobileTouchStart) logger.printInText('[Dragger._onMobileTouchStart]');
+        this._elState.setTouching(true);
 
         event.stopPropagation();
 
@@ -127,7 +128,7 @@ class Dragger {
 
 
 
-        if(this._elementor.containerEl){
+        if(this._elementor.containerEl && this._locator._letItGo){
             event.preventDefault(); // 開始滑動禁止捲動BodyScroll
             const movePx = this._locator.touchMove(touchEvent, this._elementor.containerEl);
             this._dragMove(movePx.x);
@@ -164,6 +165,7 @@ class Dragger {
     private _onWebMouseStart = (event: PointerEvent): void => {
         event.preventDefault();
         if(this._configurator.setting.isDebug && logEnable.dragger.onWebMouseStart) logger.printInText('[Dragger._onWebMouseStart]');
+        this._elState.setTouching(true);
         this._eventor.emit('dragStart');
 
         const {containerEl} = this._elementor;
