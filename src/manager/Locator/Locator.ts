@@ -21,25 +21,12 @@ class Locator {
     }
 
     public touchStart = (dropEvent: DragEvent, containerEl: HTMLDivElement) => {
-        const {x, y} = getTranslateParams(containerEl);
-        this._startPosition.x = dropEvent.pageX - x;
-        this._startPosition.y = dropEvent.pageY - y;
-
-        this._startPosition.pageX = dropEvent.pageX;
-        this._startPosition.pageY = dropEvent.pageY;
+        const {x} = getTranslateParams(containerEl);
+        this._startPosition.x = dropEvent.x - x;
     };
 
     public touchMove = (dropEvent: DragEvent, containerEl: HTMLDivElement) => {
-        const startX = this._startPosition.x;
-        const moveX = dropEvent.pageX;
-
-        const startY = this._startPosition.y;
-        const moveY = dropEvent.pageY;
-        return {
-            x: moveX - startX,
-            y: moveY - startY,
-
-        };
+        return containerEl.offsetLeft + dropEvent.x;
     };
 }
 

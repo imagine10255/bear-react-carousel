@@ -62,13 +62,6 @@
     will-change: transform;
 }
 
-.bear-react-carousel__root[data-per-view-auto] .bear-react-carousel__slide-item__card{
-    container-type: normal;
-}
-.bear-react-carousel__root .bear-react-carousel__slide-item__card{
-    container-type: inline-size; /* fix height & width auto */
-}
-
 .bear-react-carousel__pagination-group .bear-react-carousel__pagination-button{
     width: .5rem;
     height: .5rem;
@@ -175,7 +168,7 @@
     transition-property: transform;
     position: relative;
     overflow: hidden;
-
+    /*container-type: inline-size;*/
 
     flex: 0 0 auto;
     width: var(--carousel-slide-width);
@@ -221,6 +214,8 @@
     height: 100%;
     background-repeat: no-repeat;
     background-position: center;
+
+    container-type: inline-size; /* fix height auto */
 }
 .bear-react-carousel__slide-item__card-contain{
     background-size: contain;
@@ -240,8 +235,6 @@
     flex-direction: row;
     height: inherit;
     transition-timing-function: ease;
-
-    touch-action: pan-y; /* fix mobile pointermove event target pointercancel */
 }
 
 

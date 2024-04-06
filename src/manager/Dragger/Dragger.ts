@@ -6,12 +6,11 @@ import Elementor from '../Elementor';
 import Locator from '../Locator';
 import Stater from '../Stater';
 import Eventor from '../Eventor';
-import {MobileTouchEvent, PointerTouchEvent} from '../../interface/DragEvent';
+import {DesktopTouchEvent, MobileTouchEvent} from '../../interface/DragEvent';
 import logger from '../../logger';
 import {logEnable} from '../../config';
 import ElState from '../Elementor/ElState';
-import {checkIsMobile} from '../../utils';
-import {checkLetItGo} from '../Stater/utils';
+import {checkLetItGo} from "../Stater/utils";
 
 
 /**
@@ -25,6 +24,7 @@ class Dragger {
     private _locator: Locator;
     private _stater: Stater;
     private _eventor = new Eventor<TEventMap>();
+
 
     constructor(manager: {
         configurator: Configurator,
@@ -42,11 +42,8 @@ class Dragger {
 
     onDragStart = (callBack?: TEventMap['dragStart']) => {
         if(this._elementor.containerEl){
-            if(checkIsMobile()){
-                this._elementor.containerEl.addEventListener('touchstart', this._onMobileTouchStart, {passive: false});
-            }else{
-                this._elementor.containerEl.addEventListener('pointerdown', this._onWebMouseStart, {passive: false} as any);
-            }
+            this._elementor.containerEl.addEventListener('touchstart', this._onMobileTouchStart, {passive: false});
+            // this._elementor.containerEl.addEventListener('mousedown', this._onWebMouseStart, {passive: false});
         }
 
         this._eventor.on('dragStart', callBack);
@@ -62,11 +59,8 @@ class Dragger {
 
     offDragStart = (callBack?: TEventMap['dragStart']) => {
         if(this._elementor.containerEl){
-            if(checkIsMobile()) {
-                this._elementor.containerEl.removeEventListener('touchstart', this._onMobileTouchStart, {passive: false} as any);
-            }else{
-                this._elementor.containerEl.removeEventListener('pointerdown', this._onWebMouseStart, {passive: false} as any);
-            }
+            this._elementor.containerEl.removeEventListener('touchstart', this._onMobileTouchStart, {passive: false} as any);
+            // this._elementor.containerEl.removeEventListener('mousedown', this._onWebMouseStart, {passive: false} as any);
         }
 
         this._eventor.off('dragStart', callBack);
@@ -91,17 +85,24 @@ class Dragger {
         event.stopPropagation();
 
         this._eventor.emit('dragStart');
+
         const {containerEl} = this._elementor;
         if (containerEl) {
 
             // 移動到開始位置 避免跳動
             this._locator.touchStart(new MobileTouchEvent(event), containerEl);
+            // const {startPosition} = this._locator;
+            // const movePx = this._locator.touchMove(new MobileTouchEvent(event), containerEl);
+            // const translateX = calcMoveTranslatePx(startPosition.x, movePx);
+            // this._elState
+            //     .transform(translateX, false);
 
             // 設定移動 與 結束事件
-            document.addEventListener('touchmove', this._onMobileTouchMove, {passive: false});
-            document.addEventListener('touchend', this._onMobileTouchEnd, {passive: false});
+            window.addEventListener('touchmove', this._onMobileTouchMove, {passive: false});
+            window.addEventListener('touchend', this._onMobileTouchEnd, {passive: false});
         }
     };
+
 
 
     /**
@@ -120,17 +121,15 @@ class Dragger {
                 x: this._locator.startPosition.pageX,
                 y: this._locator.startPosition.pageY,
             },{
-                x: touchEvent.pageX,
-                y: touchEvent.pageY
+                x: touchEvent.x,
+                y: touchEvent.endY
             });
         }
 
-
-
         if(this._elementor.containerEl){
-            event.preventDefault(); // 開始滑動禁止捲動BodyScroll
+            event.preventDefault();
             const movePx = this._locator.touchMove(touchEvent, this._elementor.containerEl);
-            this._dragMove(movePx.x);
+            this._dragMove(movePx);
         }
     };
 
@@ -142,10 +141,10 @@ class Dragger {
      */
     private _onMobileTouchEnd = (event: TouchEvent): void => {
         if(this._configurator.setting.isDebug && logEnable.dragger.onMobileTouchEnd) logger.printInText('[Dragger._onMobileTouchEnd]');
-        event.stopPropagation();
 
         this._locator._letItGo = null;
         const {containerEl} = this._elementor;
+
         if(containerEl){
             document.removeEventListener('touchmove', this._onMobileTouchMove, false);
             document.removeEventListener('touchend', this._onMobileTouchEnd, false);
@@ -153,16 +152,11 @@ class Dragger {
         this._dragEnd();
     };
 
-
-
-
-
     /**
      * Web mouse click
      * @param event
      */
-    private _onWebMouseStart = (event: PointerEvent): void => {
-        event.preventDefault();
+    private _onWebMouseStart = (event: MouseEvent): void => {
         if(this._configurator.setting.isDebug && logEnable.dragger.onWebMouseStart) logger.printInText('[Dragger._onWebMouseStart]');
         this._eventor.emit('dragStart');
 
@@ -170,16 +164,15 @@ class Dragger {
         if (containerEl) {
 
             // 移動到開始位置 避免跳動
-            this._locator.touchStart(new PointerTouchEvent(event), containerEl);
+            this._locator.touchStart(new DesktopTouchEvent(event), containerEl);
             const {startPosition} = this._locator;
             const translateX = calcMoveTranslatePx(startPosition.x, event.clientX);
             this._elState
                 .transform(translateX, false);
 
             // 設定移動 與 結束事件
-            document.addEventListener('pointermove', this._onWebMouseMove, false);
-            document.addEventListener('pointerup', this._onWebMouseEnd, false);
-            document.addEventListener('pointercancel', this._onWebMouseEnd, false);
+            window.addEventListener('mousemove', this._onWebMouseMove, false);
+            window.addEventListener('mouseup', this._onWebMouseEnd, false);
         }
 
     };
@@ -189,15 +182,13 @@ class Dragger {
      * Web mouse movement
      * @param event
      */
-    private _onWebMouseMove = (event: PointerEvent):void => {
+    private _onWebMouseMove = (event: MouseEvent):void => {
         event.preventDefault();
         if(this._configurator.setting.isDebug && logEnable.dragger.onWebMouseMove) logger.printInText('[Dragger._onWebMouseMove]');
 
         if(this._elementor.containerEl){
-            this._elementor.containerEl.setPointerCapture(event.pointerId);
-            const movePx = this._locator.touchMove(new PointerTouchEvent(event), this._elementor.containerEl);
-
-            this._dragMove(movePx.x);
+            const movePx = this._locator.touchMove(new DesktopTouchEvent(event), this._elementor.containerEl);
+            this._dragMove(movePx);
         }
     };
 
@@ -205,13 +196,12 @@ class Dragger {
      * web mouse release
      * @param event
      */
-    private _onWebMouseEnd = (event: PointerEvent):void => {
+    private _onWebMouseEnd = (event: MouseEvent):void => {
         event.preventDefault();
         if(this._configurator.setting.isDebug && logEnable.dragger.onWebMouseEnd) logger.printInText('[Dragger._onWebMouseEnd]');
 
-        document.removeEventListener('pointermove', this._onWebMouseMove, false);
-        document.removeEventListener('pointerup', this._onWebMouseEnd, false);
-        document.removeEventListener('pointercancel', this._onWebMouseEnd, false);
+        window.removeEventListener('mousemove', this._onWebMouseMove, false);
+        window.removeEventListener('mouseup', this._onWebMouseEnd, false);
         this._dragEnd();
     };
 
@@ -221,6 +211,9 @@ class Dragger {
     private _dragMove(moveX: number) {
         if(this._configurator.setting.isDebug && logEnable.dragger.onDragMove) logger.printInText('[Dragger._dragMove]');
 
+        // this._elState.setTouching(true);
+
+        const {startPosition} = this._locator;
         const {setting} = this._configurator;
 
         if (this._elementor.containerEl &&
@@ -228,13 +221,14 @@ class Dragger {
             this._elementor.slideItemEls &&
             this._stater.page.total > 1
         ) {
-            const percentage = this._elState.getMovePercentage(moveX); //TODO: 應該移動到 Positioner
+            const translateX = calcMoveTranslatePx(startPosition.x, moveX);
+            const percentage = this._elState.getMovePercentage(translateX); //TODO: 應該移動到 Positioner
 
             // 同步控制
             this._eventor.emit('dragMove', percentage);
 
             this._elState
-                .transform(moveX)
+                .transform(translateX)
                 .moveEffect(percentage)
                 .syncActiveState(Math.round(percentage));
         }
@@ -251,8 +245,7 @@ class Dragger {
 
         if(this._elementor.slideItemEls){
             const active = this._elementor.slideItemEls.find(row => row.dataset.active === '');
-            const activeVirtual = active?.dataset.virtual ?? this._stater.virtual?.activeIndex ?? 0;
-            this._eventor.emit('dragEnd', Number(activeVirtual));
+            this._eventor.emit('dragEnd', Number(active?.dataset.virtual ?? 0));
         }
     };
 
