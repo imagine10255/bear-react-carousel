@@ -59,12 +59,14 @@ class WindowSizer {
     private _emitResize = () => {
         if(this._configurator.setting.isDebug && logEnable.windowSizer.onResize) logger.printInText('[WindowSizer.onResize]');
 
+        // 尺寸不同才觸發
         if(this._currWidth !== this._window.innerWidth){
             this._currWidth = this._window.innerWidth;
+
+            this._size = this._setSize();
+            this._eventManager.emit('resize', {windowSize: this._size});
         }
 
-        this._size = this._setSize();
-        this._eventManager.emit('resize', {windowSize: this._size});
     };
 
     onResize = (callBack: TEventMap['resize']) => {

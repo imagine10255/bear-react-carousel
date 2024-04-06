@@ -88,7 +88,6 @@ class Dragger {
     private _onMobileTouchStart = (event: TouchEvent): void => {
         if(this._configurator.setting.isDebug && logEnable.dragger.onMobileTouchStart) logger.printInText('[Dragger._onMobileTouchStart]');
         this._elState.setTouching(true);
-
         event.stopPropagation();
 
         this._eventor.emit('dragStart');
