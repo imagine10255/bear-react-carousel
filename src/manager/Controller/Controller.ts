@@ -92,11 +92,11 @@ class Controller {
 
         // 移動EL位置
         const position = this._elState.getMoveDistance(inRangeIndex);
+
         this._elState
             .transform(position, options?.isUseAnimation ?? true)
             .moveEffect(slideIndex, options?.isUseAnimation ?? true)
             .syncActiveState(inRangeIndex);
-
 
         if(isEmitEvent) this._eventor.emit('slideAfter', inRangeIndex, options?.isUseAnimation);
     };

@@ -110,4 +110,13 @@ export function getInRangeIndex(slideIndex: number, stater: Stater): number {
 }
 
 
-
+/**
+ * 檢查是否斜角移動
+ * @param start
+ * @param end
+ */
+export function checkLetItGo(start: {x: number, y: number}, end: {x: number, y: number}){
+    const y = Math.abs(start.y - end.y);
+    const x = Math.abs(start.x - end.x);
+    return y < x;
+}
