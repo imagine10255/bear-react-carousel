@@ -115,6 +115,7 @@ class ElState {
 
 
     transform(translateX: number, isUseAnimation = false){
+        // console.log('translateX', translateX);
         if(this._elementor.containerEl){
             this._elementor.containerEl.style.transform = `translate(${translateX}px, 0px)`;
             this._elementor.containerEl.style.transitionDuration = isUseAnimation

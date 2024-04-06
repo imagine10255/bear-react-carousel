@@ -98,6 +98,7 @@ class Dragger {
         const {containerEl} = this._elementor;
         if (containerEl) {
 
+            console.log('start!!!!!');
             // 移動到開始位置 避免跳動
             this._locator.touchStart(new MobileTouchEvent(event), containerEl);
 
@@ -118,7 +119,9 @@ class Dragger {
 
         const touchEvent = new MobileTouchEvent(event);
         if(this._configurator.setting.isDebug && logEnable.dragger.onMobileTouchMove) logger.printInText('[Dragger._onMobileTouchMove]');
-        if (!this._locator._letItGo) {
+
+        // 判斷是否手勢斜移，如果斜移禁止滑動
+        if (this._locator._letItGo === null) {
             this._locator._letItGo = checkLetItGo({
                 x: this._locator.startPosition.pageX,
                 y: this._locator.startPosition.pageY,
@@ -127,8 +130,9 @@ class Dragger {
                 y: touchEvent.pageY
             });
         }
+
         if(this._elementor.containerEl && this._locator._letItGo){
-            event.preventDefault();
+            event.preventDefault(); // 開始滑動禁止捲動BodyScroll
             const movePx = this._locator.touchMove(touchEvent, this._elementor.containerEl);
             this._dragMove(movePx.x);
         }
@@ -143,8 +147,9 @@ class Dragger {
     private _onMobileTouchEnd = (event: TouchEvent): void => {
         if(this._configurator.setting.isDebug && logEnable.dragger.onMobileTouchEnd) logger.printInText('[Dragger._onMobileTouchEnd]');
         event.stopPropagation();
+        console.log('_onWebMouseEnd');
 
-        this._locator._letItGo = false;
+        this._locator._letItGo = null;
         const {containerEl} = this._elementor;
         if(containerEl){
             document.removeEventListener('touchmove', this._onMobileTouchMove, false);
@@ -177,9 +182,9 @@ class Dragger {
                 .transform(translateX, false);
 
             // 設定移動 與 結束事件
-            window.addEventListener('pointermove', this._onWebMouseMove, false);
-            window.addEventListener('pointerup', this._onWebMouseEnd, false);
-            window.addEventListener('pointercancel', this._onWebMouseEnd, false);
+            document.addEventListener('pointermove', this._onWebMouseMove, false);
+            document.addEventListener('pointerup', this._onWebMouseEnd, false);
+            document.addEventListener('pointercancel', this._onWebMouseEnd, false);
         }
 
     };
@@ -197,10 +202,6 @@ class Dragger {
             this._elementor.containerEl.setPointerCapture(event.pointerId);
             const movePx = this._locator.touchMove(new PointerTouchEvent(event), this._elementor.containerEl);
 
-            // 拖動中判斷 (避免觸發 click)
-            if (Math.abs(event.pageX - this._locator.startPosition.x) > 10) {
-                this._elState.setTouching(true);
-            }
             this._dragMove(movePx.x);
         }
     };
@@ -213,9 +214,9 @@ class Dragger {
         event.preventDefault();
         if(this._configurator.setting.isDebug && logEnable.dragger.onWebMouseEnd) logger.printInText('[Dragger._onWebMouseEnd]');
 
-        window.removeEventListener('pointermove', this._onWebMouseMove, false);
-        window.removeEventListener('pointerup', this._onWebMouseEnd, false);
-        window.removeEventListener('pointercancel', this._onWebMouseEnd, false);
+        document.removeEventListener('pointermove', this._onWebMouseMove, false);
+        document.removeEventListener('pointerup', this._onWebMouseEnd, false);
+        document.removeEventListener('pointercancel', this._onWebMouseEnd, false);
         this._dragEnd();
     };
 
@@ -236,12 +237,12 @@ class Dragger {
             const percentage = this._elState.getMovePercentage(moveX); //TODO: 應該移動到 Positioner
 
             // 同步控制
-            this._eventor.emit('dragMove', percentage);
+            // this._eventor.emit('dragMove', percentage);
 
             this._elState
-                .transform(moveX)
-                .moveEffect(percentage)
-                .syncActiveState(Math.round(percentage));
+                .transform(moveX);
+                // .moveEffect(percentage)
+                // .syncActiveState(Math.round(percentage));
         }
     }
 

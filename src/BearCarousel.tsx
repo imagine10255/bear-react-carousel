@@ -199,6 +199,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             this._stater?.reset(nextProps.data);
 
             setTimeout(() => {
+                console.log('setTimeout11!!');
                 this._controller?.slideToPage(1, false);
             }, 0);
 
@@ -215,7 +216,9 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                 breakpoints: nextProps.breakpoints,
             });
             this._stater?.reset(nextProps.data);
+
             setTimeout(() => {
+                console.log('setTimeout222!!');
                 this._controller?.slideToSourceIndex(activeIndex ?? 0, {isUseAnimation: false});
             }, 0);
 

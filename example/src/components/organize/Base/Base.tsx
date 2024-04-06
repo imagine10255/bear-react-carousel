@@ -66,7 +66,7 @@ function Base() {
             // isEnableLoop
             // isEnableAutoPlay={false}
 
-            isDebug
+            isDebug={false}
         />
 
         {/*<CustomButton type="button" onClick={() => setCount(curr => curr += 1)}> count: {count}</CustomButton>*/}

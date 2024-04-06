@@ -52,6 +52,7 @@ class Controller {
         if(this._configurator.setting.isDebug && logEnable.controller.onSlideResetToMatchIndex) logger.printInText('[Controller.slideResetToMatchIndex]');
         const {virtual, formatElement} = this._stater;
 
+        console.log('slideResetToMatchIndex');
         if (formatElement[virtual.activeIndex]?.isClone) {
             this.slideToVirtualIndex(formatElement[virtual.activeIndex].matchIndex, {isUseAnimation: false});
         }
@@ -67,6 +68,7 @@ class Controller {
         const isEmitEvent = options?.isEmitEvent ?? true;
         if(isEmitEvent) this._eventor.emit('slideBefore', slideIndex, options?.isUseAnimation ?? false);
 
+        console.log('slideToSourceIndex');
         // 轉成範圍內的 Index //@Check
         const selected = this._stater.formatElement.find(row => row.sourceIndex === slideIndex && !row.isClone);
         if(selected){
@@ -92,6 +94,8 @@ class Controller {
 
         // 移動EL位置
         const position = this._elState.getMoveDistance(inRangeIndex);
+        
+        console.log('slideToVirtualIndex');
         this._elState
             .transform(position, options?.isUseAnimation ?? true)
             .moveEffect(slideIndex, options?.isUseAnimation ?? true)
