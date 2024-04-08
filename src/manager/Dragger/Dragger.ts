@@ -25,6 +25,8 @@ class Dragger {
     private _locator: Locator;
     private _stater: Stater;
     private _eventor = new Eventor<TEventMap>();
+    private _moveTime = 350; // 幾秒內滑動代表切換上下頁
+    private _moveDistancePx = 40; // 距離幾Px外滑動代表切換上下頁
 
     constructor(manager: {
         configurator: Configurator,
@@ -252,15 +254,15 @@ class Dragger {
 
         const startEndMove = this._locator._endPosition.pageX - this._locator._startPosition.pageX;
 
-        if (this._locator._startPosition.timeStamp !== null && this._locator._endPosition.timeStamp !== null) {
-            const timeDifference = this._locator._endPosition.timeStamp - this._locator._startPosition.timeStamp;
+        if (this._locator._startPosition.timeStamp !== null) {
+            const timeDifference = Math.abs(Date.now() - this._locator._startPosition.timeStamp);
 
             // 時間內移動多少距離 就到上下一個
-            if(timeDifference < 500){
-                if(startEndMove > 40) {
+            if(timeDifference < this._moveTime){
+                if(startEndMove > this._moveDistancePx) {
                     this._eventor.emit('dragEnd', this._stater.prevPageFirstIndex);
                     return;
-                }else if(startEndMove < -40) {
+                }else if(startEndMove < -this._moveDistancePx) {
                     this._eventor.emit('dragEnd', this._stater.nextPageFirstIndex);
                     return;
                 }

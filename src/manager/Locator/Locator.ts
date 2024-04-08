@@ -14,7 +14,7 @@ const defaultEndPosition: ITouchStart = {
     pageY: 0,
     x: 0,
     y: 0,
-    timeStamp: null
+    timeStamp: null // 不使用, 直接 End 使用 Date.now()
 };
 
 /**
@@ -37,7 +37,7 @@ class Locator {
         this._startPosition.pageX = dropEvent.pageX;
         this._startPosition.pageY = dropEvent.pageY;
 
-        this._startPosition.timeStamp = dropEvent.timeStamp;
+        this._startPosition.timeStamp = Date.now();
     };
 
     public touchMove = (dropEvent: DragEvent, containerEl: HTMLDivElement) => {
@@ -46,8 +46,6 @@ class Locator {
 
         const startY = this._startPosition.y;
         this._endPosition.pageY = dropEvent.pageY;
-
-        this._endPosition.timeStamp = dropEvent.timeStamp;
 
         return {
             x: this._endPosition.pageX - startX,
