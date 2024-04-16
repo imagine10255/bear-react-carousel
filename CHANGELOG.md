@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.0.29-alpha.0](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.28...v4.0.29-alpha.0) (2024-04-16)
+
+
+### Bug Fixes
+
+* Correction: The carousel is changed to determine the sliding distance to determine whether to go up or down the page. ([b6b7bd2](https://github.com/imagine10255/bear-react-carousel/commit/b6b7bd25a49040d40785a11d4269c6736478cc9f))
+
 ### [4.0.28](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.28-alpha.0...v4.0.28) (2024-04-10)
 
 ### [4.0.28-alpha.0](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.27...v4.0.28-alpha.0) (2024-04-08)
