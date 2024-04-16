@@ -1,5 +1,11 @@
-import {useRef, useState} from 'react';
-import BearCarousel, {BearSlideCard, TBearSlideItemDataList, ICarouselState, Controller} from 'bear-react-carousel';
+import {useCallback, useRef, useState} from 'react';
+import BearCarousel, {
+    BearSlideCard,
+    TBearSlideItemDataList,
+    ICarouselState,
+    Controller,
+    TOnSlideChange
+} from 'bear-react-carousel';
 import {baseImage as images} from '@/config/images';
 
 import styled from 'styled-components';
@@ -31,6 +37,15 @@ function Base() {
     const [slidePreview, setSlidePreview] = useState(1);
 
 
+    const handleOnSlideChange: TOnSlideChange = useCallback((carouselState) => {
+        // const el = document.getElementsByClassName('detail_modal_scroll');
+        console.log('xxx', carouselState);
+        // if(el && el[carouselState.virtual.activeIndex]){
+        //     el[carouselState.virtual.activeIndex].scrollTo(0, 0);
+        // }
+    }, []);
+
+
     // 輪播項目1
     const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
         return {
@@ -54,7 +69,8 @@ function Base() {
             // style={{width: '400px'}}
             // setController={setController}
             data={enable ? bearSlideItemData1: undefined}
-            onSlideChange={setCarouselState}
+            // onSlideChange={setCarouselState}
+            onSlideChange={handleOnSlideChange}
             // onSlideChange={setCarouselState}
             slidesPerView={1}
             // slidesPerGroup={2}

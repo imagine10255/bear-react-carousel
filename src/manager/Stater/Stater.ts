@@ -165,10 +165,13 @@ class Stater {
     };
 
     setActiveActual = (index: number, page: number) => {
-        this.source.activeIndex = this.formatElement[index]?.sourceIndex ?? 0;
-        this.virtual.activeIndex = index;
-        this.page.activePage = page;
-        this._eventor.emit('change');
+        if(this.virtual.activeIndex !== index){
+            this.source.activeIndex = this.formatElement[index]?.sourceIndex ?? 0;
+            this.virtual.activeIndex = index;
+            this.page.activePage = page;
+
+            this._eventor.emit('change');
+        }
     };
 
 }
