@@ -198,12 +198,12 @@ class ElState {
 
 
 
-    syncActiveState = (activeActualIndex: number) => {
+    syncActiveState = () => {
         const itemEls = this._elementor.slideItemEls
             ?.filter(row => row);
 
         // 更改顯示在第幾個 (父元件使用可判定樣式設定)
-        const inRangeIndex = this._stater.getInRangeIndex(activeActualIndex);
+        const inRangeIndex = this._stater.getInRangeIndex(this._stater.virtual?.activeIndex);
         itemEls
             ?.forEach((row, index) => {
                 if(Number(row?.dataset.virtual) === inRangeIndex){

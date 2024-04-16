@@ -1,4 +1,4 @@
-import {ITouchStart} from './types';
+import {ITouchEnd, ITouchStart} from './types';
 import {getTranslateParams} from './utils';
 import {DragEvent} from '../../interface/DragEvent';
 
@@ -9,12 +9,14 @@ const defaultStartPosition: ITouchStart = {
     y: 0,
     timeStamp: null
 };
-const defaultEndPosition: ITouchStart = {
+const defaultEndPosition: ITouchEnd = {
     pageX: 0,
     pageY: 0,
     x: 0,
     y: 0,
-    timeStamp: null // 不使用, 直接 End 使用 Date.now()
+    timeStamp: null, // 不使用, 直接 End 使用 Date.now()
+    moveX: 0,
+    moveY: 0,
 };
 
 /**
@@ -38,6 +40,17 @@ class Locator {
         this._startPosition.pageY = dropEvent.pageY;
 
         this._startPosition.timeStamp = Date.now();
+
+
+        this._endPosition = {
+            timeStamp: null,
+            pageX: dropEvent.pageX,
+            pageY: dropEvent.pageY,
+            x: x,
+            y: y,
+            moveX: 0,
+            moveY: 0,
+        };
     };
 
     public touchMove = (dropEvent: DragEvent, containerEl: HTMLDivElement) => {
@@ -46,10 +59,12 @@ class Locator {
 
         const startY = this._startPosition.y;
         this._endPosition.pageY = dropEvent.pageY;
+        this._endPosition.moveX = this._endPosition.pageX - startX;
+        this._endPosition.moveY = this._endPosition.pageY - startY;
 
         return {
-            x: this._endPosition.pageX - startX,
-            y: this._endPosition.pageY - startY,
+            x: this._endPosition.moveX,
+            y: this._endPosition.moveY,
         };
     };
 }

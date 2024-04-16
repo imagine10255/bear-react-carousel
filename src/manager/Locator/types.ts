@@ -10,3 +10,7 @@ export interface ITouchStart {
     y: number
     timeStamp: number|null
 }
+export interface ITouchEnd extends ITouchStart{
+    moveX: number
+    moveY: number
+}

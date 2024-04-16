@@ -47,6 +47,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         isEnableNavButton: false,
         isEnableMouseMove: true,
         isEnableAutoPlay: false,
+        movePercentage: 0.33,
         isDebug: false,
         spaceBetween: 0,
         moveTime: 500,

@@ -96,7 +96,7 @@ class Controller {
         this._elState
             .transform(position, options?.isUseAnimation ?? true)
             .moveEffect(slideIndex, options?.isUseAnimation ?? true)
-            .syncActiveState(inRangeIndex);
+            .syncActiveState();
 
         if(isEmitEvent) this._eventor.emit('slideAfter', inRangeIndex, options?.isUseAnimation);
     };

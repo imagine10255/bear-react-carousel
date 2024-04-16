@@ -31,7 +31,7 @@ class SyncCarousel {
             this._elementor
                 .transform(moveX)
                 .moveEffect(percentage)
-                .syncActiveState(Math.round(percentage));
+                .syncActiveState();
         }
     };
 

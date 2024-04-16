@@ -25,8 +25,7 @@ class Dragger {
     private _locator: Locator;
     private _stater: Stater;
     private _eventor = new Eventor<TEventMap>();
-    private _moveTime = 350; // 幾秒內滑動代表切換上下頁
-    private _moveDistancePx = 40; // 距離幾Px外滑動代表切換上下頁
+    private _moveMinDistancePx = 50; // 最少滑動多少距離Px才檢查比例切換上下頁
 
     constructor(manager: {
         configurator: Configurator,
@@ -89,7 +88,6 @@ class Dragger {
      */
     private _onMobileTouchStart = (event: TouchEvent): void => {
         if(this._configurator.setting.isDebug && logEnable.dragger.onMobileTouchStart) logger.printInText('[Dragger._onMobileTouchStart]');
-        this._elState.setTouching(true);
         event.stopPropagation();
 
         this._eventor.emit('dragStart');
@@ -239,7 +237,7 @@ class Dragger {
             this._elState
                 .transform(moveX)
                 .moveEffect(percentage)
-                .syncActiveState(Math.round(percentage));
+                .syncActiveState();
         }
     }
 
@@ -252,20 +250,18 @@ class Dragger {
         if(this._configurator.setting.isDebug && logEnable.dragger.onDragEnd) logger.printInText('[Dragger._dragEnd]');
         this._elState.setTouching(false);
 
-        const startEndMove = this._locator._endPosition.pageX - this._locator._startPosition.pageX;
+        const startEndMoveX = this._locator._endPosition.pageX - this._locator._startPosition.pageX;
 
-        if (this._locator._startPosition.timeStamp !== null) {
-            const timeDifference = Math.abs(Date.now() - this._locator._startPosition.timeStamp);
+        const percentage = this._elState.getMovePercentage(this._locator._endPosition.moveX);
+        const s = percentage - this._stater.virtual?.activeIndex;
 
-            // 時間內移動多少距離 就到上下一個
-            if(timeDifference < this._moveTime){
-                if(startEndMove > this._moveDistancePx) {
-                    this._eventor.emit('dragEnd', this._stater.prevPageFirstIndex);
-                    return;
-                }else if(startEndMove < -this._moveDistancePx) {
-                    this._eventor.emit('dragEnd', this._stater.nextPageFirstIndex);
-                    return;
-                }
+        if(Math.abs(s) >= (this._configurator.setting.movePercentage ?? 0.33)){
+            if(startEndMoveX > this._moveMinDistancePx){
+                this._eventor.emit('dragEnd', this._stater.prevPageFirstIndex);
+                return;
+            }else if(startEndMoveX < -this._moveMinDistancePx){
+                this._eventor.emit('dragEnd', this._stater.nextPageFirstIndex);
+                return;
             }
         }
 
