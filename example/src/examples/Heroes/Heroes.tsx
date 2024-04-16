@@ -9,6 +9,7 @@ import JuejinVip from '@/components/organize/JuejinVip';
 import W99Vip from '@/components/organize/W99Vip';
 import LazyImage from '@/components/organize/LazyImage';
 import Paginate from '@/components/organize/Paginate';
+import Modal from "@/components/organize/Modal";
 
 interface IProps extends FCProps {
 
@@ -148,10 +149,24 @@ const Heroes = ({
     };
 
 
+    const renderModal = () => {
+        return <Flex col="column" className="px-4 py-5 my-5 gap-2 text-center">
+            <h1>Sync Control</h1>
+            <Col col={12} lg={6} className="mx-auto">
+                <p className="mb-4">Mock W99 Vip member</p>
+
+                <Grid col={1} className="g-3 justify-content-center">
+                    <Modal/>
+                </Grid>
+            </Col>
+        </Flex>;
+    };
+
+
 
     return <HeroesRoot className={className}>
 
-        {renderBase()}
+        {/*{renderBase()}*/}
         {/*{renderAutoPlay()}*/}
         {/*{renderPaginate()}*/}
         {/*{renderLoop()}*/}
@@ -160,6 +175,7 @@ const Heroes = ({
         {/*{renderJuejinVip()}*/}
         {/*{renderW99Vip()}*/}
         {/*{renderLazyImage()}*/}
+        {renderModal()}
 
         <GlobalCSS/>
     </HeroesRoot>;

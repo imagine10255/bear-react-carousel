@@ -111,6 +111,7 @@ export interface IBreakpointSetting {
   isEnableNavButton?: boolean
   isEnableMouseMove?: boolean
   isEnableAutoPlay?: boolean
+  isEnableTimeDrag?: boolean
   moveEffect?: IMoveEffect
   effectFn?: (el: HTMLElement, percentage: number) => void
 }

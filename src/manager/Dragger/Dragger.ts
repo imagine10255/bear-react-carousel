@@ -26,7 +26,7 @@ class Dragger {
     private _stater: Stater;
     private _eventor = new Eventor<TEventMap>();
     private _moveTime = 350; // 幾秒內滑動代表切換上下頁
-    private _moveDistancePx = 40; // 距離幾Px外滑動代表切換上下頁
+    private _moveDistancePx = 50; // 距離幾Px外滑動代表切換上下頁
 
     constructor(manager: {
         configurator: Configurator,
@@ -89,7 +89,7 @@ class Dragger {
      */
     private _onMobileTouchStart = (event: TouchEvent): void => {
         if(this._configurator.setting.isDebug && logEnable.dragger.onMobileTouchStart) logger.printInText('[Dragger._onMobileTouchStart]');
-        this._elState.setTouching(true);
+        // this._elState.setTouching(true);
         event.stopPropagation();
 
         this._eventor.emit('dragStart');
@@ -250,11 +250,12 @@ class Dragger {
      */
     private _dragEnd = (): void => {
         if(this._configurator.setting.isDebug && logEnable.dragger.onDragEnd) logger.printInText('[Dragger._dragEnd]');
-        this._elState.setTouching(false);
+        // this._elState.setTouching(false);
 
         const startEndMove = this._locator._endPosition.pageX - this._locator._startPosition.pageX;
 
-        if (this._locator._startPosition.timeStamp !== null) {
+
+        if (this._configurator.setting.isEnableTimeDrag && this._locator._startPosition.timeStamp !== null) {
             const timeDifference = Math.abs(Date.now() - this._locator._startPosition.timeStamp);
 
             // 時間內移動多少距離 就到上下一個
