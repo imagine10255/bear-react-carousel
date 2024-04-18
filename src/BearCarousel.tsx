@@ -92,7 +92,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
     componentDidMount() {
         if(this.props.isDebug && logEnable.componentDidMount) logger.printInText('[componentDidMount]');
-        const {data, breakpoints, onMount, syncCarouselRefs} = this.props;
+        const {breakpoints, onMount, syncCarouselRefs} = this.props;
 
 
         if(!this._configurator){

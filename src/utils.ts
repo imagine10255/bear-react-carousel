@@ -141,4 +141,25 @@ export function booleanToDataAttr(isTrue: boolean, returnValue: number|string|bo
 }
 
 
+export function getNextIndexByPercentage(percentage: number, checkMovePercentage: number): number{
+    const a = percentage % 1;
+    const b = Math.floor(percentage);
+    if(a >= checkMovePercentage){
+        return b + 1;
+    }
+    return b;
+}
+
+
+export function getPrevIndexByPercentage(percentage: number, checkMovePercentage: number): number{
+    const a = percentage % 1;
+    const b = Math.floor(percentage);
+    let c = b + 1;
+    if(a <= (1 - checkMovePercentage)){
+        c = b;
+    }
+    return c < 0 ? 0 : c;
+}
+
+
 

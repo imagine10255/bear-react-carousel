@@ -10,8 +10,8 @@ import {MobileTouchEvent, PointerTouchEvent} from '../../interface/DragEvent';
 import logger from '../../logger';
 import {logEnable} from '../../config';
 import ElState from '../Elementor/ElState';
-import {checkIsMobile} from '../../utils';
-import {checkLetItGo} from '../Stater/utils';
+import {checkIsMobile, getNextIndexByPercentage, getPrevIndexByPercentage} from '../../utils';
+import {checkLetItGo, getInRangeIndex} from '../Stater/utils';
 
 
 /**
@@ -164,7 +164,6 @@ class Dragger {
     private _onWebMouseStart = (event: PointerEvent): void => {
         event.preventDefault();
         if(this._configurator.setting.isDebug && logEnable.dragger.onWebMouseStart) logger.printInText('[Dragger._onWebMouseStart]');
-        this._elState.setTouching(true);
         this._eventor.emit('dragStart');
 
         const {containerEl} = this._elementor;
@@ -193,6 +192,8 @@ class Dragger {
     private _onWebMouseMove = (event: PointerEvent):void => {
         event.preventDefault();
         if(this._configurator.setting.isDebug && logEnable.dragger.onWebMouseMove) logger.printInText('[Dragger._onWebMouseMove]');
+
+        this._elState.setTouching(true);
 
         if(this._elementor.containerEl){
             this._elementor.containerEl.setPointerCapture(event.pointerId);
@@ -250,26 +251,20 @@ class Dragger {
         if(this._configurator.setting.isDebug && logEnable.dragger.onDragEnd) logger.printInText('[Dragger._dragEnd]');
         this._elState.setTouching(false);
 
+        const percentage = this._elState.getMovePercentage(this._locator._endPosition.moveX);
         const startEndMoveX = this._locator._endPosition.pageX - this._locator._startPosition.pageX;
 
-        const percentage = this._elState.getMovePercentage(this._locator._endPosition.moveX);
-        const s = percentage - this._stater.virtual?.activeIndex;
-
-        if(Math.abs(s) >= (this._configurator.setting.movePercentage ?? 0.33)){
-            if(startEndMoveX > this._moveMinDistancePx){
-                this._eventor.emit('dragEnd', this._stater.prevPageFirstIndex);
-                return;
-            }else if(startEndMoveX < -this._moveMinDistancePx){
-                this._eventor.emit('dragEnd', this._stater.nextPageFirstIndex);
-                return;
-            }
+        const movePercentage = this._configurator.setting.movePercentage ?? 0.33;
+        if(startEndMoveX > 0){
+            const activeIndex = getInRangeIndex(getPrevIndexByPercentage(percentage, movePercentage), this._stater);
+            this._eventor.emit('dragEnd', activeIndex);
+        }else if(startEndMoveX < 0){
+            const activeIndex = getInRangeIndex(getNextIndexByPercentage(percentage, movePercentage), this._stater);
+            this._eventor.emit('dragEnd', activeIndex);
+        }else{
+            this._eventor.emit('dragEnd', this._stater.virtual?.activeIndex);
         }
 
-        if(this._elementor.slideItemEls){
-            const active = this._elementor.slideItemEls.find(row => row.dataset.active === '');
-            const activeVirtual = active?.dataset.virtual ?? this._stater.virtual?.activeIndex ?? 0;
-            this._eventor.emit('dragEnd', Number(activeVirtual));
-        }
     };
 
 
