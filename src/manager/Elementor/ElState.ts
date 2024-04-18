@@ -60,9 +60,55 @@ class ElState {
      * @param movePx
      */
     getMovePercentage = (movePx: number) => {
-        const slideCurrWidth = (this._elementor.slideItemEls && this._elementor.slideItemEls[this._stater.virtual.activeIndex].offsetWidth) ?? 0;
-        const startPosition = this._getStartPosition();
-        return getMovePercentage(movePx, startPosition, slideCurrWidth);
+        if(this._elementor.slideItemEls === null || this._elementor.containerEl === null){
+            return 0;
+        }
+
+        const containerWidth = this._elementor.containerEl.offsetWidth;
+
+
+        const fixMovePx = movePx * -1; // 改為向右為負, 向左為正
+        const lastIndex = this._elementor.slideItemEls.length - 1;
+
+
+        // 取得每個項目的位置
+        const positionList = this._elementor.slideItemEls?.map((row, index) => {
+            const fillStartPx = this._configurator.setting.isCenteredSlides ? (containerWidth - row.offsetWidth) / 2: 0;
+
+            const fillOffsetLeft = row.offsetLeft - fillStartPx;
+            const offsetRight = (row.offsetLeft + row.offsetWidth);
+
+            return {
+                index,
+                offsetLeft: row.offsetLeft,
+                fillOffsetLeft,
+                offsetRight,
+                offsetWidth: row.offsetWidth,
+                fillStartPx,
+            };
+        });
+
+
+        const active = positionList.find((row) => {
+
+            if(row.index === lastIndex && fixMovePx >= row.offsetRight){
+                // 超過最後一個 就等於最後一個
+                return true;
+            }else if(row.index === 0 && fixMovePx <= row.offsetLeft){
+                // 小於第一個 就等於第一個
+                return true;
+            }else if(fixMovePx >= row.offsetLeft && fixMovePx < row.offsetRight){
+                return true;
+            }
+
+            return false;
+        });
+
+        if(active){
+            const pro = getMovePercentage(fixMovePx, active.fillOffsetLeft, active.offsetWidth);
+            return active.index + pro;
+        }
+        return 0;
     };
 
 
@@ -151,8 +197,8 @@ class ElState {
                         ;
 
                         // debug
-                        // if(index === 1){
-                        //     console.log('currActiveIs0Process', currActiveIs0Process, calcP);
+                        // if(index === 0){
+                        //     console.log('currActiveIs0Process', currActiveIs0Process, currActiveIs0Process);
                         // }
 
                         // 離場

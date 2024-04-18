@@ -1,4 +1,4 @@
-import {RefObject, CSSProperties} from 'react';
+import {RefObject, CSSProperties, ReactNode} from 'react';
 import * as CSS from 'csstype';
 import BearCarousel from './BearCarousel';
 import Controller from './manager/Controller';
@@ -30,7 +30,7 @@ export interface IBearCarouselProps extends IBreakpointSetting{
   initStartPlayTime?: number
   breakpoints?: IPropsBreakpoints
   isDebug?: boolean
-  isSlideItemMemo?: boolean
+  // isSlideItemMemo?: boolean
   isLazy?: boolean
   renderLazyPreloader?: TRenderLazyPreloader
   syncCarouselRefs?: RefObject<BearCarousel>[]
@@ -72,9 +72,11 @@ export interface IInfo extends ICarouselState{
 }
 export interface IBearSlideItemData {
   key: string|number
-  children: JSX.Element
+  children: ReactNode
 }
-export type TBearSlideItemDataList = IBearSlideItemData[];
+
+
+export type TBearSlideItemDataList = ReactNode[];
 
 export type heightUnit = 'px' | '%' | 'em' | 'rem' | 'vh';
 export type THeightUnitSize = 'auto'|`${number}${heightUnit}`;

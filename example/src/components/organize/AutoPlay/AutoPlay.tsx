@@ -10,18 +10,15 @@ import sample from '@/config/sample';
 
 // 輪播項目1
 const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
-    return {
-        key: row.id,
-        children: <BearSlideCard>
-            <Flex col="column" className="p-4 gap-2 h-100"
-                style={{fontSize: '40px', backgroundColor: row.color}}
-            >
-                <h2>{sample.title}</h2>
-                <p>{sample.desc}</p>
-                {/*<a href="https://bear-react-carousel.pages.dev/" rel="noreferrer" target="_blank">{row.id}</a>*/}
-            </Flex>
-        </BearSlideCard>
-    };
+    return <BearSlideCard key={row.id}>
+        <Flex col="column" className="p-4 gap-2 h-100"
+            style={{fontSize: '40px', backgroundColor: row.color}}
+        >
+            <h2>{sample.title}</h2>
+            <p>{sample.desc}</p>
+            {/*<a href="https://bear-react-carousel.pages.dev/" rel="noreferrer" target="_blank">{row.id}</a>*/}
+        </Flex>
+    </BearSlideCard>;
 });
 
 

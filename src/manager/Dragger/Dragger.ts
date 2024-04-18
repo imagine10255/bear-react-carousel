@@ -193,7 +193,12 @@ class Dragger {
         event.preventDefault();
         if(this._configurator.setting.isDebug && logEnable.dragger.onWebMouseMove) logger.printInText('[Dragger._onWebMouseMove]');
 
-        this._elState.setTouching(true);
+
+        // 判斷距離是否影響 onClick
+        const startEndMoveX = this._locator._endPosition.pageX - this._locator._startPosition.pageX;
+        if(Math.abs(startEndMoveX) > this._moveMinDistancePx) {
+            this._elState.setTouching(true);
+        }
 
         if(this._elementor.containerEl){
             this._elementor.containerEl.setPointerCapture(event.pointerId);

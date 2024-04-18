@@ -124,12 +124,12 @@ export function isPropsDiff(props: IBearCarouselProps, nextProps: IBearCarouselP
     return deepCompare(filterProps, nextFilterProps) === false;
 }
 
-export function isDataKeyDff(data?: TBearSlideItemDataList, nextData?: TBearSlideItemDataList) {
-    const oldKey = data?.map((row) => row.key).join('_');
-    const nextKey = nextData?.map((row) => row.key).join('_');
-
-    return oldKey !== nextKey;
-};
+// export function isDataKeyDff(data?: TBearSlideItemDataList, nextData?: TBearSlideItemDataList) {
+//     const oldKey = data?.map((row) => row.key).join('_');
+//     const nextKey = nextData?.map((row) => row.key).join('_');
+//
+//     return oldKey !== nextKey;
+// };
 
 
 

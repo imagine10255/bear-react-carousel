@@ -15,16 +15,13 @@ import {Controller} from 'bear-react-carousel';
 
 // 輪播項目1
 const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
-    return {
-        key: row.id,
-        children: <BearSlideCard>
-            <div className="h-100 d-flex"
-                style={{fontSize: '40px', backgroundColor: row.color}}
-            >
-                {/*<a href="https://bear-react-carousel.pages.dev/" rel="noreferrer" target="_blank">{row.id}</a>*/}
-            </div>
-        </BearSlideCard>
-    };
+    return <BearSlideCard>
+        <div className="h-100 d-flex"
+            style={{fontSize: '40px', backgroundColor: row.color}}
+        >
+            {/*<a href="https://bear-react-carousel.pages.dev/" rel="noreferrer" target="_blank">{row.id}</a>*/}
+        </div>
+    </BearSlideCard>;
 });
 
 

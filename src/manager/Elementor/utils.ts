@@ -34,12 +34,12 @@ export function getStartPosition(
 /**
  * 取得移動進度佔比
  * @param movePx
- * @param startPosition
- * @param slideCurrWidth
+ * @param elOffsetLeft
+ * @param elOffsetWidth
  */
-export function getMovePercentage(movePx: number, startPosition: number, slideCurrWidth: number): number{
-    const newMoveX = movePx - startPosition;
-    return decimal2Rounding(-newMoveX / slideCurrWidth);
+export function getMovePercentage(movePx: number, elOffsetLeft: number, elOffsetWidth: number): number{
+    const newMoveX = movePx - elOffsetLeft;
+    return decimal2Rounding(newMoveX / elOffsetWidth);
 }
 
 /**
