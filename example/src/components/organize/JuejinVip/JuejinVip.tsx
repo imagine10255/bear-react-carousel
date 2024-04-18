@@ -2,7 +2,15 @@ import styled from 'styled-components';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {Grid, Flex, minmax} from 'bear-react-grid';
 import Icons from './_components/Icons';
-import BearCarousel, {TMoveEffectFn, TBearSlideItemDataList, BearSlideCard, elClassName, Controller, TOnSlideChange} from 'bear-react-carousel';
+import BearCarousel, {
+    TMoveEffectFn,
+    TBearSlideItemDataList,
+    BearSlideCard,
+    elClassName,
+    Controller,
+    TOnSlideChange,
+    ICarouselState
+} from 'bear-react-carousel';
 import Phone from './_components/Phone';
 import Avatar from './_components/Avatar';
 import Progress from './_components/Progress';
@@ -112,7 +120,7 @@ const JuejinVip = () => {
 
 
     useEffect(() => {
-        carouselMainController?.slideToPage(5, false);
+        carouselMainController?.slideToPage(1, false);
     }, [carouselMainController]);
 
     const customMoveEffectFn: TMoveEffectFn = useCallback((percentageInfo) => {
@@ -143,27 +151,24 @@ const JuejinVip = () => {
     const renderSlideData = useCallback(() => {
 
         const data: TBearSlideItemDataList = dataList.map(row => {
-            return {
-                key: row.id,
-                children: <BearSlideCard>
-                    <LevelCard col={1} style={{backgroundColor: row.bg}} className="align-content-start row-gap-5">
-                        {row.status && <CurrLv>
-                            {row.status === 'Locked' && <Icons.Locked/>}
-                            <span>{row.status}</span>
-                        </CurrLv>}
+            return <BearSlideCard key={row.id}>
+                <LevelCard col={1} style={{backgroundColor: row.bg}} className="align-content-start row-gap-5">
+                    {row.status && <CurrLv>
+                        {row.status === 'Locked' && <Icons.Locked/>}
+                        <span>{row.status}</span>
+                    </CurrLv>}
 
 
-                        <Flex className="gap-5">
-                            <Level>LV.{row.lv}</Level>
-                            <Value>{row.value} Experience</Value>
-                        </Flex>
+                    <Flex className="gap-5">
+                        <Level>LV.{row.lv}</Level>
+                        <Value>{row.value} Experience</Value>
+                    </Flex>
 
-                        <Desc>{row.desc}</Desc>
+                    <Desc>{row.desc}</Desc>
 
-                        <Progress value={row.progressRate}/>
-                    </LevelCard>
-                </BearSlideCard>
-            };
+                    <Progress value={row.progressRate}/>
+                </LevelCard>
+            </BearSlideCard>;
         });
 
         return data;
@@ -172,25 +177,18 @@ const JuejinVip = () => {
 
     const renderMeta = useCallback(() => {
         const metaData: TBearSlideItemDataList = dataList.map(row => {
-            return {
-                key: row.id,
-                children: <BearSlideCard>
-                    <MetaCard>
-                        <MetaLv>LV.{row.lv}</MetaLv>
-                        <Do/>
-                    </MetaCard>
-
-                </BearSlideCard>
-            };
+            return <BearSlideCard key={row.id}>
+                <MetaCard>
+                    <MetaLv>LV.{row.lv}</MetaLv>
+                    <Do/>
+                </MetaCard>
+            </BearSlideCard>;
         });
 
         const lineData: TBearSlideItemDataList = dataList.map(row => {
-            return {
-                key: row.id,
-                children: <BearSlideCard className="position-relative">
-                    <Line/>
-                </BearSlideCard>
-            };
+            return <BearSlideCard key={row.id} className="position-relative">
+                <Line/>
+            </BearSlideCard>;
         });
 
 

@@ -15,13 +15,11 @@ import styled from 'styled-components';
 
 // 輪播項目1
 const bearSlideItemData1: TBearSlideItemDataList|undefined = carImages?.map(row => {
-    return {
-        key: row.id,
-        children: <BearSlideImage
-            imageUrl={row.imageUrl}
-            imageSize="cover"
-        />
-    };
+    return <BearSlideImage
+        key={row.id}
+        imageUrl={row.imageUrl}
+        imageSize="cover"
+    />;
 });
 
 
@@ -47,8 +45,8 @@ function Paginate() {
                 data={bearSlideItemData1}
                 onSlideChange={setCarouselState}
                 height="200px"
-                slidesPerView={2}
-                slidesPerGroup={2}
+                slidesPerView={1}
+                slidesPerGroup={1}
                 isEnableNavButton
                 isEnablePagination
                 isEnableLoop={isEnableLoop}

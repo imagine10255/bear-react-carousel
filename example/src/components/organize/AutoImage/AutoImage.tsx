@@ -9,10 +9,7 @@ import {baseImage as images} from '@/config/images';
 
 // 輪播項目1
 const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
-    return {
-        key: row.id,
-        children: <BearSlideImage imageUrl={row.imageUrl}/>
-    };
+    return <BearSlideImage key={row.id} imageUrl={row.imageUrl}/>;
 });
 
 

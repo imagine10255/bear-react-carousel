@@ -34,12 +34,9 @@ function Breakpoints2() {
         ];
 
         const bearSlideItemData: TBearSlideItemDataList = dataList.map(row => {
-            return {
-                key: row.id,
-                children: <BearSlideCard>
-                    <Photo src={row.imageUrl} alt={row.desc}/>
-                </BearSlideCard>
-            };
+            return <BearSlideCard key={row.id}>
+                <Photo src={row.imageUrl} alt={row.desc}/>
+            </BearSlideCard>
         });
         return bearSlideItemData;
     }, []);

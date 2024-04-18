@@ -151,8 +151,8 @@ class ElState {
                         ;
 
                         // debug
-                        // if(index === 1){
-                        //     console.log('currActiveIs0Process', currActiveIs0Process, calcP);
+                        // if(index === 0){
+                        //     console.log('currActiveIs0Process', currActiveIs0Process, currActiveIs0Process);
                         // }
 
                         // 離場

@@ -124,12 +124,12 @@ export function isPropsDiff(props: IBearCarouselProps, nextProps: IBearCarouselP
     return deepCompare(filterProps, nextFilterProps) === false;
 }
 
-export function isDataKeyDff(data?: TBearSlideItemDataList, nextData?: TBearSlideItemDataList) {
-    const oldKey = data?.map((row) => row.key).join('_');
-    const nextKey = nextData?.map((row) => row.key).join('_');
-
-    return oldKey !== nextKey;
-};
+// export function isDataKeyDff(data?: TBearSlideItemDataList, nextData?: TBearSlideItemDataList) {
+//     const oldKey = data?.map((row) => row.key).join('_');
+//     const nextKey = nextData?.map((row) => row.key).join('_');
+//
+//     return oldKey !== nextKey;
+// };
 
 
 
@@ -138,6 +138,27 @@ export function booleanToDataAttr(isTrue: boolean, returnValue: number|string|bo
         return String(returnValue);
     }
     return undefined;
+}
+
+
+export function getNextIndexByPercentage(percentage: number, checkMovePercentage: number): number{
+    const a = percentage % 1;
+    const b = Math.floor(percentage);
+    if(a >= checkMovePercentage){
+        return b + 1;
+    }
+    return b;
+}
+
+
+export function getPrevIndexByPercentage(percentage: number, checkMovePercentage: number): number{
+    const a = percentage % 1;
+    const b = Math.floor(percentage);
+    let c = b + 1;
+    if(a <= (1 - checkMovePercentage)){
+        c = b;
+    }
+    return c < 0 ? 0 : c;
 }
 
 

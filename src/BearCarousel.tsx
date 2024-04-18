@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {booleanToDataAttr, checkIsDesktop, isDataKeyDff, isPropsDiff} from './utils';
+import {booleanToDataAttr, checkIsDesktop, isPropsDiff} from './utils';
 import logger from './logger';
 import {IBearCarouselProps} from './types';
 import elClassName from './el-class-name';
@@ -53,7 +53,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         moveTime: 500,
         autoPlayTime: 5000,
         initStartPlayTime: 1500,
-        isSlideItemMemo: false,
     };
     _isEnableGpuRender = checkIsDesktop();
     state: IState = {windowSize: 0, isClientReady: false};
@@ -92,7 +91,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 
     componentDidMount() {
         if(this.props.isDebug && logEnable.componentDidMount) logger.printInText('[componentDidMount]');
-        const {data, breakpoints, onMount, syncCarouselRefs} = this.props;
+        const {breakpoints, onMount, syncCarouselRefs} = this.props;
 
 
         if(!this._configurator){
@@ -224,9 +223,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         }
 
         // 只需要更新資料內容的部分 (不進行資料深比對)
-        if((nextProps.isSlideItemMemo && data !== nextData) ||
-            isDataKeyDff(this.props.data, nextProps.data)
-        ){
+        if(data !== nextData){
             this._stater?.updateData(nextProps.data);
             return true;
         }

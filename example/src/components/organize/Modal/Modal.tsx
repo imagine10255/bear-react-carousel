@@ -3,23 +3,9 @@ import BearCarousel, {BearSlideCard, TBearSlideItemDataList, ICarouselState, Con
 import {baseImage as images} from '@/config/images';
 
 import styled, {createGlobalStyle} from 'styled-components';
-import {Flex} from 'bear-react-grid';
 import sample from '@/config/sample';
 import ScrollView from '@/components/organize/Modal/ScrollView';
 
-
-
-// 輪播項目1
-const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
-    return {
-        key: row.id,
-        children: <BearSlideCard>
-            <div className="h-100 d-flex"
-                style={{fontSize: '40px', backgroundColor: row.color}}
-            />
-        </BearSlideCard>
-    };
-});
 
 
 
@@ -27,39 +13,43 @@ const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
 function Modal() {
     const [carouselState, setCarouselState] = useState<ICarouselState>();
     const [enable, setEnable] = useState<boolean>(true);
-    const [count, setCount] = useState<number>(0);
-    const [controller, setController] = useState<Controller>();
-    const [slidePreview, setSlidePreview] = useState(1);
 
 
     // 輪播項目1
     const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
-        return {
-            key: row.id,
-            children: <BearSlideCard>
-                <ScrollView className="d-flex flex-column h-100" style={{fontSize: '40px', height: '200px', backgroundColor: row.color}}>
-                    <h2>{sample.title}</h2>
-                    <p>
-                        {sample.desc}
-                        {sample.desc}
-                        {sample.desc}
-                        {sample.desc}
-                        {sample.desc}
-                        {sample.desc}
-                        {sample.desc}
-                        {sample.desc}
-                        {sample.desc}
-                        {sample.desc}
-                        {sample.desc}
-                        {sample.desc}
-                        {sample.desc}
+        return <BearSlideCard key={row.id}>
+            <ScrollView className="d-flex flex-column h-100" style={{fontSize: '40px', height: '200px', backgroundColor: row.color}}>
+                <h2>{sample.title}</h2>
+                <p>
+                    {sample.desc}
+                    {sample.desc}
+                    {sample.desc}
+                    {sample.desc}
+                    {sample.desc}
+                    {sample.desc}
+                    {sample.desc}
+                    {sample.desc}
+                    {sample.desc}
+                    {sample.desc}
+                    {sample.desc}
+                    {sample.desc}
+                    {sample.desc}
+                    {sample.desc}
+                    {sample.desc}
+                    {sample.desc}
+                    {sample.desc}
+                    {sample.desc}
+                    {sample.desc}
+                    {sample.desc}
+                    {sample.desc}
+                    {sample.desc}
+                    {sample.desc}
+                    {sample.desc}
+                    {sample.desc}
+                </p>
+            </ScrollView>
 
-
-                    </p>
-                </ScrollView>
-
-            </BearSlideCard>
-        };
+        </BearSlideCard>;
     });
 
     return <ModalRoot>
@@ -105,7 +95,7 @@ function Modal() {
         {/*    {JSON.stringify(carouselState, null, '\t')}*/}
         {/*</Pre>*/}
 
-        <GlobalRoot/>
+        {/*<GlobalRoot/>*/}
     </ModalRoot>;
 
 }

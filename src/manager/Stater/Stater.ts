@@ -144,7 +144,7 @@ class Stater {
                 total: this._formatElement.length,
             },
             page: {
-                activePage: 0,
+                activePage: 1,
                 total: fakeTotalPage > 0 ? fakeTotalPage : 1,
             },
             // 總頁數

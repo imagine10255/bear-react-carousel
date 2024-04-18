@@ -16,14 +16,11 @@ import sample from '@/config/sample';
 
 // 輪播項目1
 const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
-    return {
-        key: row.id,
-        children: <BearSlideCard>
-            <div className="h-100 d-flex"
-                style={{fontSize: '40px', backgroundColor: row.color}}
-            />
-        </BearSlideCard>
-    };
+    return <BearSlideCard key={row.id}>
+        <div className="h-100 d-flex"
+            style={{fontSize: '40px', backgroundColor: row.color}}
+        />
+    </BearSlideCard>;
 });
 
 
@@ -48,19 +45,17 @@ function Base() {
 
     // 輪播項目1
     const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
-        return {
-            key: row.id,
-            children: <BearSlideCard
-                onClick={() => alert('click!')}
+        return <BearSlideCard
+            key={row.id}
+            onClick={() => alert('click!')}
+        >
+            <Flex col="column" className="p-4 gap-2"
+                style={{fontSize: '40px', height: '200px', backgroundColor: row.color}}
             >
-                <Flex col="column" className="p-4 gap-2"
-                    style={{fontSize: '40px', height: '200px', backgroundColor: row.color}}
-                >
-                    <h2>{sample.title}</h2>
-                    <p>{sample.desc}</p>
-                </Flex>
-            </BearSlideCard>
-        };
+                <h2>{sample.title}</h2>
+                <p>{sample.desc}</p>
+            </Flex>
+        </BearSlideCard>;
     });
 
     return <BaseRoot>

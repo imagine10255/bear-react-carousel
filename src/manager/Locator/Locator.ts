@@ -48,8 +48,8 @@ class Locator {
             pageY: dropEvent.pageY,
             x: x,
             y: y,
-            moveX: 0,
-            moveY: 0,
+            moveX: this._startPosition.pageX - this._startPosition.x,
+            moveY: this._startPosition.pageY - this._startPosition.y,
         };
     };
 

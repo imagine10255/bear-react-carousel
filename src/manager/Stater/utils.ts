@@ -1,7 +1,6 @@
-import {TSlidesPerView} from '../../types';
+import {TBearSlideItemDataList, TSlidesPerView} from '../../types';
 import {InitData} from './types';
 import Stater from './Stater';
-import Configurator from '../Configurator';
 
 /**
  * 初始化資料
@@ -10,25 +9,26 @@ import Configurator from '../Configurator';
  * @param slidesPerGroup
  * @param isLoop
  */
-export function initDataList(sourceList: Array<any> = [], slidesPerView: TSlidesPerView = 1, slidesPerGroup = 1, isLoop= false): InitData[] {
+export function initDataList(sourceList: TBearSlideItemDataList = [], slidesPerView: TSlidesPerView = 1, slidesPerGroup = 1, isLoop= false): InitData[] {
     const formatList = [];
     const isClone = isLoop;
     let index = 0;
-    const formatSlidesPerView = slidesPerView === 'auto' ? 0: Math.ceil(slidesPerView);
+    const cloneRatio = 1.5;
+    const formatSlidesPerView = slidesPerView === 'auto' ? 0: Math.ceil(slidesPerView * cloneRatio);
     const lastPage = (sourceList.length / slidesPerGroup) - (slidesPerGroup - formatSlidesPerView);
 
     if (isClone) {
         // 複製最後面, 放在最前面
         const cloneStart = (sourceList.length - formatSlidesPerView);
-        for (const [cloneIndex, row] of sourceList.slice(-formatSlidesPerView).entries()) {
+        for (const [cloneIndex, element] of sourceList.slice(-formatSlidesPerView).entries()) {
             formatList[index] = {
-                key: `${row.key}_clone_before`,
+                key: `clone_before_${cloneIndex}`,
                 virtualIndex: index,
                 matchIndex: formatSlidesPerView + cloneStart + index,
                 sourceIndex: cloneStart + cloneIndex,
                 inPage: lastPage,
                 isClone: true,
-                element: row.children,
+                element,
             };
             index += 1;
         }
@@ -36,15 +36,15 @@ export function initDataList(sourceList: Array<any> = [], slidesPerView: TSlides
 
     let matchFirstIndex = index;
     let pageFirstIndex = 0;
-    for (const [sourceIndex, row] of sourceList.entries()) {
+    for (const [sourceIndex, element] of sourceList.entries()) {
         formatList[index] = {
-            key: String(row.key),
+            key: `source_${sourceIndex}`,
             virtualIndex: index,
             matchIndex: index,
             sourceIndex: sourceIndex,
             inPage: Math.ceil((pageFirstIndex + 1) / slidesPerGroup),
             isClone: false,
-            element: row.children,
+            element,
         };
         index += 1;
         pageFirstIndex += 1;
@@ -53,15 +53,15 @@ export function initDataList(sourceList: Array<any> = [], slidesPerView: TSlides
     if (isClone) {
         // 複製前面的(需顯示總數) 放在最後面
 
-        for (const [cloneIndex, row] of sourceList.slice(0, formatSlidesPerView).entries()) {
+        for (const [cloneIndex, element] of sourceList.slice(0, formatSlidesPerView).entries()) {
             formatList[index] = {
-                key: `${row.key}_clone_after`,
+                key: `clone_after_${cloneIndex}`,
                 virtualIndex: index,
                 matchIndex: matchFirstIndex,
                 sourceIndex: cloneIndex,
                 inPage: 1,
                 isClone: true,
-                element: row.children,
+                element,
             };
             index += 1;
             matchFirstIndex += 1;
@@ -96,11 +96,14 @@ export function getNextPageFirstIndex(isCenterMode: boolean, activeActualIndex: 
  * @param slidesPerViewActual
  */
 export function getPrevPageFirstIndex(isCenterMode: boolean, activeActualIndex: number, slidesPerGroup: number, slidesPerViewActual: number){
+
     if (isCenterMode) {
-        return activeActualIndex - slidesPerGroup;
+        const resIndex = activeActualIndex - slidesPerGroup;
+        return resIndex < 0 ? 0: resIndex;
     }
     // Avoid trailing whitespace
-    return activeActualIndex - slidesPerViewActual;
+    const resIndex = activeActualIndex - slidesPerViewActual;
+    return resIndex < 0 ? 0: resIndex;
 
 }
 
