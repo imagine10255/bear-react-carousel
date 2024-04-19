@@ -64,6 +64,7 @@ function Base() {
             // style={{width: '400px'}}
             // setController={setController}
             data={enable ? bearSlideItemData1: undefined}
+            // data={undefined}
             // onSlideChange={setCarouselState}
             onSlideChange={handleOnSlideChange}
             // onSlideChange={setCarouselState}

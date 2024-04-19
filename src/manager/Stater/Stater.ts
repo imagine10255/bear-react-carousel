@@ -4,6 +4,7 @@ import {getInRangeIndex, getPrevPageFirstIndex, initDataList} from './utils';
 import {getNextPageFirstIndex} from './utils';
 import Configurator from '../Configurator';
 import Eventor from '../Eventor';
+import {checkDataFormat} from "../../utils";
 
 
 class Stater {
@@ -18,6 +19,14 @@ class Stater {
         this._info = this.formatInfo(data);
 
         const {slidesPerViewActual, slidesPerGroup, isEnableLoop} = this._configurator.setting;
+
+
+        if(!checkDataFormat(data)){
+            throw new Error(`[bear-react-carousel] Data format error: must be ReactNode[] not Array<{key: string, children: ReactNode}>\n
+  Please read the 5.x upgrade guide: https://bear-react-carousel.pages.dev/docs/faqs/migration-to-5
+`);
+        }
+
         this._formatElement = initDataList(
             data,
             slidesPerViewActual,

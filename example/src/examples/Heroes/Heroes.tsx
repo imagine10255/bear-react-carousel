@@ -26,7 +26,7 @@ const Heroes = ({
 }: IProps) => {
 
     const data = [
-        // {id: 1, name: 'Base', desc: 'Base carousel', example: Base},
+        {id: 1, name: 'Base', desc: 'Base carousel', example: Base},
         // {id: 2, name: 'Auto Play', desc: 'Auto play after 1.5s', example: Base},
         // {id: 3, name: 'Paginate', desc: 'Paginate group', example: Paginate},
         // {id: 4, name: 'Auto image size', desc: 'Auto image size', example: AutoImage},
@@ -40,7 +40,7 @@ const Heroes = ({
         // {id: 12, name: 'Update SlideItem', desc: 'Update state', example: UpdateSlideItem},
         // {id: 13, name: 'Slide PerGroup', desc: 'Slide PerGroup', example: SlidePerGroup},
         // {id: 14, name: 'ServiceCarousel', desc: 'Slide PerGroup', example: ServiceCarousel},
-        {id: 15, name: 'Center', desc: 'Center Slide', example: Center},
+        // {id: 15, name: 'Center', desc: 'Center Slide', example: Center},
     ];
 
 

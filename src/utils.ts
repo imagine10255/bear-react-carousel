@@ -1,5 +1,6 @@
 import {IBearCarouselProps, TBearSlideItemDataList} from './types';
 import deepCompare from './deepCompare';
+import React, {ReactNode} from 'react';
 
 /**
  * 判斷是否為手機裝置
@@ -162,4 +163,15 @@ export function getPrevIndexByPercentage(percentage: number, checkMovePercentage
 }
 
 
-
+/**
+ * 檢查是否為正確的資料格式
+ * @param data
+ */
+export function checkDataFormat(data?: ReactNode[]){
+    if(!data){
+        return true;
+    }
+    return Array.isArray(data) &&
+        data.length > 0 &&
+        React.isValidElement(data[0]);
+}

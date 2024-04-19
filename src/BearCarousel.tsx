@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {booleanToDataAttr, checkIsDesktop, isPropsDiff} from './utils';
+import {booleanToDataAttr, checkDataFormat, checkIsDesktop, isPropsDiff} from './utils';
 import logger from './logger';
 import {IBearCarouselProps} from './types';
 import elClassName from './el-class-name';
@@ -56,6 +56,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     };
     _isEnableGpuRender = checkIsDesktop();
     state: IState = {windowSize: 0, isClientReady: false};
+    _isError: boolean = false;
 
     _elementor: Elementor;
     _stater: Stater;
@@ -81,11 +82,22 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             win: globalThis.window
         });
 
-        this._stater = new Stater(this._configurator, data);
+        try{
+            this._stater = new Stater(this._configurator, data);
+        }catch (e){
+            this._stater = new Stater(this._configurator, undefined);
+
+            if(e instanceof Error){
+                this._isError = true;
+                console.error(e.message);
+            }
+        }
+
         this._elementor = new Elementor({
             configurator: this._configurator,
             stater: this._stater
         });
+
     }
 
 
@@ -94,6 +106,9 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         const {breakpoints, onMount, syncCarouselRefs} = this.props;
 
 
+        if(this._isError){
+            return;
+        }
         if(!this._configurator){
             return;
         }
@@ -418,6 +433,10 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         // if(!this.state.isClientReady){
         //     return null;
         // }
+
+        if(this._isError){
+            return;
+        }
         return (
             <CarouselRoot
                 ref={this._elementor?._rootRef}
