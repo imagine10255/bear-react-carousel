@@ -4,7 +4,7 @@ import {getInRangeIndex, getPrevPageFirstIndex, initDataList} from './utils';
 import {getNextPageFirstIndex} from './utils';
 import Configurator from '../Configurator';
 import Eventor from '../Eventor';
-import {checkDataFormat} from "../../utils";
+import {checkDataFormat} from '../../utils';
 
 
 class Stater {

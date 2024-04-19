@@ -16,7 +16,10 @@ interface IProps {
     levelName: string
     totalAmount: number
     month: number
+    isUseOld?: boolean
 }
+
+
 
 /**
  * VipLevelCard
@@ -26,24 +29,26 @@ const VipCard = ({
     levelName,
     totalAmount,
     month,
+    isUseOld = false
 }: IProps) => {
 
     return (
         <VipCardRoot>
             <StarGroup>
                 {Array.from({length: level}).map((row, index) => {
-                    return <StarImage src={asset('/images/w99_vip/star.svg')} key={`star_${level}_${index}`}/>;
+                    return <StarImage src={isUseOld ? asset('/images/w99_vip/old/star.svg'):
+                        asset('/images/w99_vip/star.svg')} key={`star_${level}_${index}`}/>;
                 })}
             </StarGroup>
 
             <Flex col="column" className="gap-1">
                 <Flex className="gap-2 align-items-center">
-                    <LevelIconImage src={asset('/images/w99_vip/crown.svg')}/>
+                    <LevelIconImage src={isUseOld ? asset('/images/w99_vip/old/crown.svg'): asset('/images/w99_vip/crown.svg')}/>
                     <LevelName>{levelName}</LevelName>
                 </Flex>
 
                 <Flex className="gap-2 align-items-center">
-                    <LevelIconImage src={asset('/images/w99_vip/lightning.svg')} style={{height: '40px'}}/>
+                    <LevelIconImage src={isUseOld ? asset('/images/w99_vip/old/lightning.svg'): asset('/images/w99_vip/lightning.svg')} style={{height: '40px'}}/>
                     <LevelName>
                         <TotalAmount>
                             {formatCurrency(totalAmount)}
@@ -55,7 +60,7 @@ const VipCard = ({
                 </Flex>
 
                 <Flex className="gap-2 align-items-center">
-                    <LevelIconImage src={asset('/images/w99_vip/heart.svg')}/>
+                    <LevelIconImage src={isUseOld ? asset('/images/w99_vip/old/heart.svg'): asset('/images/w99_vip/heart.svg')}/>
                     <LevelDesc>保級有效投注要求{month}個月</LevelDesc>
                 </Flex>
             </Flex>

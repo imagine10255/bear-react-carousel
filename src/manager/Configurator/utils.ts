@@ -32,7 +32,8 @@ export function getSetting(props: IBearCarouselProps): ISetting {
         autoPlayTime: props.autoPlayTime,
         initStartPlayTime: props.initStartPlayTime,
         moveEffect: props.moveEffect,
-        isDebug: props.isDebug
+        isDebug: props.isDebug,
+        isEnableGPURender: props.isEnableGPURender,
     };
 }
 

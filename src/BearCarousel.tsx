@@ -53,8 +53,8 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         moveTime: 500,
         autoPlayTime: 5000,
         initStartPlayTime: 1500,
+        isEnableGPURender: false,
     };
-    _isEnableGpuRender = checkIsDesktop();
     state: IState = {windowSize: 0, isClientReady: false};
     _isError: boolean = false;
 
@@ -439,7 +439,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     };
 
     render(){
-        const {style, className, isDebug, isLazy, renderLazyPreloader} = this.props;
+        const {style, className, isDebug, isLazy, renderLazyPreloader, isEnableGPURender} = this.props;
 
         // const isClientReady = this.state.isClientReady;
         // if(!this.state.isClientReady){
@@ -457,7 +457,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                 setting={this._configurator?.setting}
                 isDebug={isDebug}
                 extendStyle={this._configurator?.style}
-                isEnableGpuRender={globalThis.window && this._isEnableGpuRender}
+                isEnableGpuRender={isEnableGPURender}
             >
                 {this.state.isClientReady && this._stater?.isVisibleNavButton && this._renderNavButton()}
 

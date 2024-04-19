@@ -34,6 +34,7 @@ export interface IBearCarouselProps extends IBreakpointSetting{
   isDebug?: boolean
   // isSlideItemMemo?: boolean
   isLazy?: boolean
+  isEnableGPURender?: boolean
   renderLazyPreloader?: TRenderLazyPreloader
   syncCarouselRefs?: RefObject<BearCarousel>[]
   setController?: (controller: Controller) => void
@@ -141,5 +142,6 @@ export interface ISetting extends IBreakpointSetting {
   moveTime?: number,
   autoPlayTime?: number,
   initStartPlayTime?: number,
+  isEnableGPURender?: boolean,
   isDebug?: boolean,
 }

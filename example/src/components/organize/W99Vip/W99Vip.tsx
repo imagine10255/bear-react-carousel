@@ -165,6 +165,7 @@ function VipLevelCarousel({
                     levelName={row.name}
                     totalAmount={row.minValidBet}
                     month={row.keepLevelDurationMonths}
+                    isUseOld={false}
                 />
             </BearSlideCard>;
         });
@@ -202,6 +203,7 @@ function VipLevelCarousel({
                 spaceBetween={20}
                 height="auto"
                 // height="200px"
+                isEnableGPURender={false}
                 data={carouselData()}
                 onSlideChange={handleSlideChange}
                 // isSlideItemMemo
