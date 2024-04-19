@@ -151,6 +151,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         this._dragger.onDragStart(this._onDragStart);
         this._dragger.onDragMove(this._onDragMove);
         this._dragger.onDragEnd(this._onDragEnd);
+        this._elState.onAnimationEnd(this._onAnimationEnd);
 
         this._controller.onSlideBefore(this._onSlideBefore);
         this._controller.onSlideAfter(this._onSlideAfter);
@@ -311,6 +312,17 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         // 同步結束
         this._syncCarousels?.forEach(syncRow => syncRow?.syncControlDone(activeSourceIndex));
 
+    };
+
+
+
+    /**
+     * set OnAnimationEnd emit
+     */
+    private _onAnimationEnd = (starer: Stater, elementor: Elementor) => {
+        if(this.props.onAnimationEnd){
+            this.props.onAnimationEnd(starer, elementor);
+        }
     };
 
 

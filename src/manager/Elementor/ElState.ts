@@ -5,6 +5,8 @@ import Stater from '../Stater';
 import {IPercentageInfo} from '../../types';
 import {objectKeys} from '../../utils';
 import Elementor from './Elementor';
+import {TEventMap} from './types';
+import Eventor from '../Eventor';
 
 class ElState {
     _elementor: Elementor;
@@ -12,6 +14,7 @@ class ElState {
     private _configurator: Configurator;
     private _stater: Stater;
     private _isAnimation = false;
+    private _eventor = new Eventor<TEventMap>();
 
 
     constructor(manager: {
@@ -34,6 +37,9 @@ class ElState {
     }
 
 
+    onAnimationEnd = (callBack?: TEventMap['animationEnd']) => {
+        this._eventor.on('animationEnd', callBack);
+    };
 
 
     onSlideAnimation = () => {
@@ -309,6 +315,7 @@ class ElState {
         if(this._elementor.containerEl) {
             this._elementor.containerEl.removeAttribute('data-animation');
         }
+        this._eventor.emit('animationEnd', this._stater, this._elementor);
     };
 }
 
