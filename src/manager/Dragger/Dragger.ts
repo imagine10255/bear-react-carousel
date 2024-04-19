@@ -253,8 +253,7 @@ class Dragger {
 
             this._elState
                 .transform(moveX)
-                .moveEffect(percentage)
-                .syncActiveState();
+                .moveEffect(percentage);
         }
     }
 

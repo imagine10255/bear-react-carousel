@@ -14,17 +14,18 @@ export function initDataList(sourceList: TBearSlideItemDataList = [], slidesPerV
     const isClone = isLoop;
     let index = 0;
     const cloneRatio = 1.5;
-    const formatSlidesPerView = slidesPerView === 'auto' ? 0: Math.ceil(slidesPerView * cloneRatio);
+    const formatSlidesPerView = slidesPerView === 'auto' ? 0: Math.ceil(slidesPerView);
+    const cloneCount = slidesPerView === 'auto' ? 0: Math.ceil(slidesPerView * cloneRatio);
     const lastPage = (sourceList.length / slidesPerGroup) - (slidesPerGroup - formatSlidesPerView);
 
     if (isClone) {
         // 複製最後面, 放在最前面
-        const cloneStart = (sourceList.length - formatSlidesPerView);
-        for (const [cloneIndex, element] of sourceList.slice(-formatSlidesPerView).entries()) {
+        const cloneStart = (sourceList.length - cloneCount);
+        for (const [cloneIndex, element] of sourceList.slice(-cloneCount).entries()) {
             formatList[index] = {
                 key: `clone_before_${cloneIndex}`,
                 virtualIndex: index,
-                matchIndex: formatSlidesPerView + cloneStart + index,
+                matchIndex: cloneCount + cloneStart + index,
                 sourceIndex: cloneStart + cloneIndex,
                 inPage: lastPage,
                 isClone: true,
@@ -53,7 +54,7 @@ export function initDataList(sourceList: TBearSlideItemDataList = [], slidesPerV
     if (isClone) {
         // 複製前面的(需顯示總數) 放在最後面
 
-        for (const [cloneIndex, element] of sourceList.slice(0, formatSlidesPerView).entries()) {
+        for (const [cloneIndex, element] of sourceList.slice(0, cloneCount).entries()) {
             formatList[index] = {
                 key: `clone_after_${cloneIndex}`,
                 virtualIndex: index,

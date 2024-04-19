@@ -30,8 +30,7 @@ class SyncCarousel {
             const moveX = this._elementor.getPercentageToMovePx(percentage);
             this._elementor
                 .transform(moveX)
-                .moveEffect(percentage)
-                .syncActiveState();
+                .moveEffect(percentage);
         }
     };
 
