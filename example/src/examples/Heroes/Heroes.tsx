@@ -27,9 +27,9 @@ const Heroes = ({
 
     const data = [
         {id: 1, name: 'Base', desc: 'Base carousel', example: Base},
-        {id: 2, name: 'Auto Play', desc: 'Auto play after 1.5s', example: Base},
-        {id: 3, name: 'Paginate', desc: 'Paginate group', example: Paginate},
-        {id: 4, name: 'Auto image size', desc: 'Auto image size', example: AutoImage},
+        // {id: 2, name: 'Auto Play', desc: 'Auto play after 1.5s', example: Base},
+        // {id: 3, name: 'Paginate', desc: 'Paginate group', example: Paginate},
+        // {id: 4, name: 'Auto image size', desc: 'Auto image size', example: AutoImage},
         // {id: 5, name: 'Auto card size', desc: 'Auto card size', example: AutoCard},
         // {id: 6, name: 'Loop', desc: 'Loop slide card', example: Loop},
         // {id: 7, name: 'Sync Control 1', desc: 'Mock 掘金 Vip member', example: JuejinVip},

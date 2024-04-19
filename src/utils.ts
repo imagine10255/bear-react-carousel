@@ -168,10 +168,18 @@ export function getPrevIndexByPercentage(percentage: number, checkMovePercentage
  * @param data
  */
 export function checkDataFormat(data?: ReactNode[]){
-    if(!data){
+    if(data === null){
+        return false;
+    }
+    if(typeof data === 'undefined'){
         return true;
     }
-    return Array.isArray(data) &&
-        data.length > 0 &&
-        React.isValidElement(data[0]);
+    if(!Array.isArray(data)){
+        return false;
+    }
+    if(data.length === 0){
+        return true;
+    }
+
+    return React.isValidElement(data[0]);
 }
