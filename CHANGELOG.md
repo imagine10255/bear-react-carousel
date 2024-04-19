@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.0.0-alpha.3](https://github.com/imagine10255/bear-react-carousel/compare/v5.0.0-alpha.2...v5.0.0-alpha.3) (2024-04-19)
+
+
+### Features
+
+* Change gpurender to manual control, and decide according to the complexity of the layer where the card content is placed. ([6764992](https://github.com/imagine10255/bear-react-carousel/commit/6764992cc70dc19f33671ac3483964d1e8e65f6c))
+
 ## [5.0.0-alpha.2](https://github.com/imagine10255/bear-react-carousel/compare/v5.0.0-alpha.1...v5.0.0-alpha.2) (2024-04-19)
 
 
