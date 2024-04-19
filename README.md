@@ -73,7 +73,10 @@ const images = [
 ];
     
 const data: TBearSlideItemDataList|undefined = images.map(row => {
-    return <BearSlideImage imageUrl={row.imageUrl}/>;
+    return <BearSlideImage
+        key={row.id}
+        imageUrl={row.imageUrl}
+    />;
 });
 
 export const CustomBanner = () => {
