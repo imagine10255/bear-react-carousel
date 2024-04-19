@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.0.0-alpha.2](https://github.com/imagine10255/bear-react-carousel/compare/v5.0.0-alpha.1...v5.0.0-alpha.2) (2024-04-19)
+
+
+### Bug Fixes
+
+* checkDataFormat add empty array ignore ([cd295c8](https://github.com/imagine10255/bear-react-carousel/commit/cd295c8499bf03177a7961cb6656931a783dd9a7))
+
 ## [5.0.0-alpha.1](https://github.com/imagine10255/bear-react-carousel/compare/v5.0.0-alpha.0...v5.0.0-alpha.1) (2024-04-19)
 
 ### [4.0.30](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.30-alpha.0...v4.0.30) (2024-04-18)
