@@ -33,7 +33,6 @@
 - Use React + Flexbox directly, not javascript in secondary development into React
 - Easier to use
 - Use Flexbox instead of adding inline Style to carousel items
-- Number of times to avoid re-renders by key in carousel items or switch memo cache
 - There is no need to set the style of the project, Bear React Carousel directly provides the components of your project, you only need to set the image URL and form an array, and put it in the data parameter.
 - The size of the carousel, the height of the outer container is based, and the item container follows the size of the outer container
 - The loop mode uses the cloning method to fill in the blanks at the beginning and end during cycling (If you try to change the order in the loop mode, you will encounter many [issues](https://bear-react-carousel.pages.dev/blog/Swiper%20carousel%20loop))
@@ -73,12 +72,8 @@ const images = [
     {id: 3, imageUrl: "https://dummyimage.com/900x400/dee2e6/6c757d.jpg"},
 ];
     
-const data: TBearSlideItemDataList = images.map(row => {
-    return {
-        key: row.id,
-        // BearSlideImage or BearSlideCard
-        children: <BearSlideImage imageUrl={row.imageUrl}/>
-    };
+const data: TBearSlideItemDataList|undefined = images.map(row => {
+    return <BearSlideImage imageUrl={row.imageUrl}/>;
 });
 
 export const CustomBanner = () => {
