@@ -1,25 +1,10 @@
 import {useRef, useState} from 'react';
-import BearCarousel, {BearSlideCard, TBearSlideItemDataList, ICarouselState, Controller} from 'bear-react-carousel';
+import BearCarousel, {BearSlideCard, TBearSlideItemDataList, ICarouselState, Controller, TOnAnimationEnd} from 'bear-react-carousel';
 import {baseImage as images} from '@/config/images';
 
 import styled, {createGlobalStyle} from 'styled-components';
-import {Flex} from 'bear-react-grid';
 import sample from '@/config/sample';
-import ScrollView from '@/components/organize/Modal/ScrollView';
 
-
-
-// 輪播項目1
-const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
-    return {
-        key: row.id,
-        children: <BearSlideCard>
-            <div className="h-100 d-flex"
-                style={{fontSize: '40px', backgroundColor: row.color}}
-            />
-        </BearSlideCard>
-    };
-});
 
 
 
@@ -27,39 +12,24 @@ const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
 function Modal() {
     const [carouselState, setCarouselState] = useState<ICarouselState>();
     const [enable, setEnable] = useState<boolean>(true);
-    const [count, setCount] = useState<number>(0);
-    const [controller, setController] = useState<Controller>();
-    const [slidePreview, setSlidePreview] = useState(1);
 
+
+    const handleOnAnimationEnd: TOnAnimationEnd = (carouselState, elementor) => {
+        console.log('stater', carouselState.virtual.prevActiveIndex);
+
+        const preIndex = carouselState.virtual.prevActiveIndex;
+
+        elementor._slideItemRefs.current[preIndex].firstChild.scrollTo({top: 0});
+    };
 
     // 輪播項目1
     const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
-        return {
-            key: row.id,
-            children: <BearSlideCard>
-                <ScrollView className="d-flex flex-column h-100" style={{fontSize: '40px', height: '200px', backgroundColor: row.color}}>
-                    <h2>{sample.title}</h2>
-                    <p>
-                        {sample.desc}
-                        {sample.desc}
-                        {sample.desc}
-                        {sample.desc}
-                        {sample.desc}
-                        {sample.desc}
-                        {sample.desc}
-                        {sample.desc}
-                        {sample.desc}
-                        {sample.desc}
-                        {sample.desc}
-                        {sample.desc}
-                        {sample.desc}
-
-
-                    </p>
-                </ScrollView>
-
-            </BearSlideCard>
-        };
+        return <BearSlideScrollViewCard key={row.id} style={{fontSize: '40px', backgroundColor: row.color}}>
+            <h2>{sample.title}</h2>
+            {Array.from({length: 80}).map((fill, idx) => {
+                return <p key={idx}>{sample.desc}-{idx}</p>;
+            })}
+        </BearSlideScrollViewCard>;
     });
 
     return <ModalRoot>
@@ -69,12 +39,12 @@ function Modal() {
             // setController={setController}
             data={enable ? bearSlideItemData1: undefined}
             onSlideChange={setCarouselState}
+            onAnimationEnd={handleOnAnimationEnd}
             // onSlideChange={setCarouselState}
             slidesPerView={1}
             // slidesPerGroup={2}
             // isCenteredSlides
-            // height="200px"
-            height="100%"
+            height="500px"
 
             // height={{widthRatio: 21, heightRatio: 9}}
             isEnableNavButton
@@ -112,6 +82,21 @@ function Modal() {
 
 export default Modal;
 
+
+const BearSlideScrollViewCard = styled(BearSlideCard)`
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+
+    *{
+        -webkit-overflow-scrolling: touch;
+    }
+
+    flex: 1 1 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+`;
 
 
 const GlobalRoot = createGlobalStyle`

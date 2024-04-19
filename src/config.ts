@@ -11,6 +11,7 @@ export const logEnable = {
         onWebMouseStart: true,
         onWebMouseMove: true,
         onWebMouseEnd: true,
+        onDragStart: false,
         onDragMove: false,
         onDragEnd: false,
     },

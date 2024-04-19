@@ -12,16 +12,13 @@ import {baseImage as images} from '@/config/images';
 
 // 輪播項目1
 const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
-    return {
-        key: row.id,
-        children: <BearSlideCard>
-            <div className="h-100 d-flex"
-                style={{fontSize: '40px', backgroundColor: row.color}}
-            >
-                {/*<a href="https://bear-react-carousel.pages.dev/" rel="noreferrer" target="_blank">{row.id}</a>*/}
-            </div>
-        </BearSlideCard>
-    };
+    return <BearSlideCard key={row.id}>
+        <div className="h-100 d-flex"
+            style={{fontSize: '40px', backgroundColor: row.color}}
+        >
+            {/*<a href="https://bear-react-carousel.pages.dev/" rel="noreferrer" target="_blank">{row.id}</a>*/}
+        </div>
+    </BearSlideCard>;
 });
 
 
@@ -36,22 +33,19 @@ function Center() {
     return <div>
         {/*測試依照比例設定容器高度*/}
         {enable && (
-            <div
-                style={{width: '400px'}}
-            >
-                <BearCarousel
-                    // style={{width: '400px'}}
-                    // controllerRef={controllerRef}
-                    data={bearSlideItemData1}
-                    slidesPerView={3}
-                    // onSlideChange={setCarouselState}
-                    height="200px"
-                    isEnableNavButton
-                    isEnablePagination
-                    isCenteredSlides
-                    isDebug
-                />
-            </div>)}
+            <BearCarousel
+                // style={{width: '400px'}}
+                // controllerRef={controllerRef}
+                data={bearSlideItemData1}
+                slidesPerView={3}
+                // onSlideChange={setCarouselState}
+                height="200px"
+                isEnableNavButton
+                isEnablePagination
+                isCenteredSlides
+                isDebug
+            />
+        )}
 
 
         {/*<button type="button" onClick={() => setCount(curr => curr += 1)}> count: {count}</button>*/}

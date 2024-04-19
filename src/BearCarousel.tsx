@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {booleanToDataAttr, checkIsDesktop, isDataKeyDff, isPropsDiff} from './utils';
+import {booleanToDataAttr, checkDataFormat, checkIsDesktop, isPropsDiff} from './utils';
 import logger from './logger';
 import {IBearCarouselProps} from './types';
 import elClassName from './el-class-name';
@@ -53,10 +53,10 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         moveTime: 500,
         autoPlayTime: 5000,
         initStartPlayTime: 1500,
-        isSlideItemMemo: false,
+        isEnableGPURender: false,
     };
-    _isEnableGpuRender = checkIsDesktop();
     state: IState = {windowSize: 0, isClientReady: false};
+    _isError: boolean = false;
 
     _elementor: Elementor;
     _stater: Stater;
@@ -82,11 +82,22 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             win: globalThis.window
         });
 
-        this._stater = new Stater(this._configurator, data);
+        try{
+            this._stater = new Stater(this._configurator, data);
+        }catch (e){
+            this._stater = new Stater(this._configurator, undefined);
+
+            if(e instanceof Error){
+                this._isError = true;
+                console.error(e.message);
+            }
+        }
+
         this._elementor = new Elementor({
             configurator: this._configurator,
             stater: this._stater
         });
+
     }
 
 
@@ -95,6 +106,9 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         const {breakpoints, onMount, syncCarouselRefs} = this.props;
 
 
+        if(this._isError){
+            return;
+        }
         if(!this._configurator){
             return;
         }
@@ -137,6 +151,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         this._dragger.onDragStart(this._onDragStart);
         this._dragger.onDragMove(this._onDragMove);
         this._dragger.onDragEnd(this._onDragEnd);
+        this._elState.onAnimationEnd(this._onAnimationEnd);
 
         this._controller.onSlideBefore(this._onSlideBefore);
         this._controller.onSlideAfter(this._onSlideAfter);
@@ -224,9 +239,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         }
 
         // 只需要更新資料內容的部分 (不進行資料深比對)
-        if((nextProps.isSlideItemMemo && data !== nextData) ||
-            isDataKeyDff(this.props.data, nextProps.data)
-        ){
+        if(data !== nextData){
             this._stater?.updateData(nextProps.data);
             return true;
         }
@@ -299,6 +312,17 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         // 同步結束
         this._syncCarousels?.forEach(syncRow => syncRow?.syncControlDone(activeSourceIndex));
 
+    };
+
+
+
+    /**
+     * set OnAnimationEnd emit
+     */
+    private _onAnimationEnd = (starer: Stater, elementor: Elementor) => {
+        if(this.props.onAnimationEnd){
+            this.props.onAnimationEnd(starer, elementor);
+        }
     };
 
 
@@ -415,12 +439,16 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     };
 
     render(){
-        const {style, className, isDebug, isLazy, renderLazyPreloader} = this.props;
+        const {style, className, isDebug, isLazy, renderLazyPreloader, isEnableGPURender} = this.props;
 
         // const isClientReady = this.state.isClientReady;
         // if(!this.state.isClientReady){
         //     return null;
         // }
+
+        if(this._isError){
+            return;
+        }
         return (
             <CarouselRoot
                 ref={this._elementor?._rootRef}
@@ -429,7 +457,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                 setting={this._configurator?.setting}
                 isDebug={isDebug}
                 extendStyle={this._configurator?.style}
-                isEnableGpuRender={globalThis.window && this._isEnableGpuRender}
+                isEnableGpuRender={isEnableGPURender}
             >
                 {this.state.isClientReady && this._stater?.isVisibleNavButton && this._renderNavButton()}
 

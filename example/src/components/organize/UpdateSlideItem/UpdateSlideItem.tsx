@@ -25,25 +25,26 @@ function UpdateSlideItem() {
 
 
     const data: TBearSlideItemDataList = baseImage.map(row => {
-        return {
-            key: row.id,
-            children: <BearSlideCard onClick={() => setActiveId(row.id)}>
-                <div className="h-100 d-flex"
-                    style={{fontSize: '40px', backgroundColor: row.color, border: row.id === activeId ? '5px solid #bdbdbd' : undefined}}
-                >
-                    {/*<a href="https://bear-react-carousel.pages.dev/" rel="noreferrer" target="_blank">{row.id}</a>*/}
-                </div>
-            </BearSlideCard>
-        };
+        return <BearSlideCard
+            key={row.id}
+            onClick={() => setActiveId(row.id)}
+        >
+            <div className="h-100 d-flex"
+                style={{fontSize: '40px', backgroundColor: row.color, border: row.id === activeId ? '5px solid #bdbdbd' : undefined}}
+            >
+                {/*<a href="https://bear-react-carousel.pages.dev/" rel="noreferrer" target="_blank">{row.id}</a>*/}
+            </div>
+        </BearSlideCard>;
     });
 
     // 輪播項目1
-    const bearSlideItemData1 = useMemo(() => data, [activeId]);
+    // const bearSlideItemData1 = useMemo(() => data, [activeId]);
 
     return <div>
+        activeId: {activeId}
         {/*測試依照比例設定容器高度*/}
         <BearCarousel
-            data={bearSlideItemData1}
+            data={data}
             onSlideChange={setCarouselState}
             slidesPerView={4}
             isCenteredSlides
@@ -53,7 +54,7 @@ function UpdateSlideItem() {
             // isEnableLoop
             isEnableAutoPlay={false}
             isDebug
-            isSlideItemMemo
+            // isSlideItemMemo
             breakpoints={{
                 992: {
                     slidesPerView: 3,

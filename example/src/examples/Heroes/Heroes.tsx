@@ -10,6 +10,12 @@ import W99Vip from '@/components/organize/W99Vip';
 import LazyImage from '@/components/organize/LazyImage';
 import Paginate from '@/components/organize/Paginate';
 import Modal from '@/components/organize/Modal';
+import Card from "@/components/atoms/Card";
+import Breakpoints from "@/components/organize/Breakpoints";
+import UpdateSlideItem from "@/components/organize/UpdateSlideItem";
+import SlidePerGroup from "@/components/organize/SlidePerGroup";
+import ServiceCarousel from "@/components/organize/ServiceCarousel/ServiceCarousel";
+import Center from "@/components/organize/Center";
 
 interface IProps extends FCProps {
 
@@ -19,163 +25,39 @@ const Heroes = ({
     className,
 }: IProps) => {
 
-
-
-    const renderBase = () => {
-        return <Flex col="column" className="px-4 py-5 my-5 gap-2 text-center">
-            <img className="d-block mx-auto mb-4" src="https://getbootstrap.com/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="72"
-                height="57"/>
-            <h1>Base</h1>
-            <Col col={12} lg={6} className="mx-auto">
-                <p className="mb-4">Base carousel</p>
-
-                <Grid col={1} className="g-3 justify-content-center">
-                    <Base/>
-                </Grid>
-            </Col>
-        </Flex>;
-    };
-
-
-    const renderAutoPlay = () => {
-        return <Flex col="column" className="px-4 py-5 my-5 gap-2 text-center">
-            <h1>Auto Play</h1>
-            <Col col={12} lg={6} className="mx-auto">
-                <p className="mb-4">Auto play after 1.5s</p>
-
-                <Grid col={1} className="g-3 justify-content-center">
-                    <AutoPlay/>
-                </Grid>
-            </Col>
-        </Flex>;
-    };
-
-    const renderPaginate = () => {
-        return <Flex col="column" className="px-4 py-5 my-5 gap-2 text-center">
-            <h1>Paginate</h1>
-            <Col col={12} lg={6} className="mx-auto">
-                <p className="mb-4">Auto play after 1.5s</p>
-
-                <Grid col={1} className="g-3 justify-content-center">
-                    <Paginate/>
-                </Grid>
-            </Col>
-        </Flex>;
-    };
-
-
-    const renderAutoImage = () => {
-        return <Flex col="column" className="px-4 py-5 my-5 gap-2 text-center">
-            <h1>Auto image size</h1>
-            <Col col={12} lg={6} className="mx-auto">
-                <p className="mb-4">Auto image size</p>
-
-                <Grid col={1} className="g-3 justify-content-center">
-                    <AutoImage/>
-                </Grid>
-            </Col>
-        </Flex>;
-    };
-
-
-    const renderAutoCard = () => {
-        return <Flex col="column" className="px-4 py-5 my-5 gap-2 text-center">
-            <h1>Auto card size</h1>
-            <Col col={12} lg={6} className="mx-auto">
-                <p className="mb-4">Auto card size</p>
-
-                <Grid col={1} className="g-3 justify-content-center">
-                    <AutoCard/>
-                </Grid>
-            </Col>
-        </Flex>;
-    };
-
-
-    const renderLoop = () => {
-        return <Flex col="column" className="px-4 py-5 my-5 gap-2 text-center">
-            <h1>Loop</h1>
-            <Col col={12} lg={6} className="mx-auto">
-                <p className="mb-4">Loop slide card</p>
-
-                <Grid col={1} className="g-3 justify-content-center">
-                    <Loop/>
-                </Grid>
-            </Col>
-        </Flex>;
-    };
+    const data = [
+        // {id: 1, name: 'Base', desc: 'Base carousel', example: Base},
+        // {id: 2, name: 'Auto Play', desc: 'Auto play after 1.5s', example: Base},
+        // {id: 3, name: 'Paginate', desc: 'Paginate group', example: Paginate},
+        // {id: 4, name: 'Auto image size', desc: 'Auto image size', example: AutoImage},
+        // {id: 5, name: 'Auto card size', desc: 'Auto card size', example: AutoCard},
+        // {id: 6, name: 'Loop', desc: 'Loop slide card', example: Loop},
+        // {id: 7, name: 'Sync Control 1', desc: 'Mock 掘金 Vip member', example: JuejinVip},
+        {id: 8, name: 'Sync Control 2', desc: 'Mock W99 Vip member', example: W99Vip},
+        // {id: 9, name: 'Lazy Image', desc: 'Lazy slide image ', example: LazyImage},
+        // {id: 10, name: 'Modal scroll', desc: 'css fixed card scroll', example: Modal},
+        // {id: 11, name: 'Breakpoints', desc: 'RWD Setting', example: Breakpoints},
+        // {id: 12, name: 'Update SlideItem', desc: 'Update state', example: UpdateSlideItem},
+        // {id: 13, name: 'Slide PerGroup', desc: 'Slide PerGroup', example: SlidePerGroup},
+        // {id: 14, name: 'ServiceCarousel', desc: 'Slide PerGroup', example: ServiceCarousel},
+        // {id: 15, name: 'Center', desc: 'Center Slide', example: Center},
+    ];
 
 
 
-    const renderJuejinVip = () => {
-        return <Flex col="column" className="px-4 py-5 my-5 gap-2 text-center">
-            <h1>Sync Control</h1>
-            <Col col={12} lg={6} className="mx-auto">
-                <p className="mb-4">Mock 掘金 Vip member</p>
 
-                <Grid col={1} className="g-3 justify-content-center">
-                    <JuejinVip/>
-                </Grid>
-            </Col>
-        </Flex>;
-    };
-
-
-    const renderW99Vip = () => {
-        return <Flex col="column" className="px-4 py-5 my-5 gap-2 text-center">
-            <h1>Sync Control</h1>
-            <Col col={12} lg={6} className="mx-auto">
-                <p className="mb-4">Mock W99 Vip member</p>
-
-                <Grid col={1} className="g-3 justify-content-center">
-                    <W99Vip/>
-                </Grid>
-            </Col>
-        </Flex>;
-    };
-
-
-    const renderLazyImage = () => {
-        return <Flex col="column" className="px-4 py-5 my-5 gap-2 text-center">
-            <h1>Sync Control</h1>
-            <Col col={12} lg={6} className="mx-auto">
-                <p className="mb-4">Mock W99 Vip member</p>
-
-                <Grid col={1} className="g-3 justify-content-center">
-                    <LazyImage/>
-                </Grid>
-            </Col>
-        </Flex>;
-    };
-
-
-    const renderModal = () => {
-        return <Flex col="column" className="px-4 py-5 my-5 gap-2 text-center">
-            <h1>Sync Control</h1>
-            <Col col={12} lg={6} className="mx-auto">
-                <p className="mb-4">Mock W99 Vip member</p>
-
-                <Grid col={1} className="g-3 justify-content-center">
-                    <Modal/>
-                </Grid>
-            </Col>
-        </Flex>;
-    };
 
 
 
     return <HeroesRoot className={className}>
 
-        {renderBase()}
-        {/*{renderAutoPlay()}*/}
-        {/*{renderPaginate()}*/}
-        {/*{renderLoop()}*/}
-        {/*{renderAutoImage()}*/}
-        {/*{renderAutoCard()}*/}
-        {/*{renderJuejinVip()}*/}
-        {/*{renderW99Vip()}*/}
-        {/*{renderLazyImage()}*/}
-        {/*{renderModal()}*/}
+        {data.map(row => {
+            const ExampleEl = row.example;
+
+            return <Card key={row.id} name={row.name} desc={row.desc}>
+                <ExampleEl/>
+            </Card>;
+        })}
 
         <GlobalCSS/>
     </HeroesRoot>;

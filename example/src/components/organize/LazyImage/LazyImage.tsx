@@ -28,13 +28,10 @@ function LazyImage() {
 
     // 輪播項目1
     const bearSlideItemData1: TBearSlideItemDataList|undefined = data?.map(row => {
-        return {
-            key: row.id,
-            children: <BearSlideImage
-                imageUrl={row.imageUrl}
-                imageSize="cover"
-            />
-        };
+        return <BearSlideImage
+            imageUrl={row.imageUrl}
+            imageSize="cover"
+        />;
     });
 
 

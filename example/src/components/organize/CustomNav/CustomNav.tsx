@@ -16,27 +16,21 @@ import {baseImage as images} from '@/config/images';
 
 // 輪播項目1
 const bearSlideItemData1: TBearSlideItemDataList = images.map(row => {
-    return {
-        key: row.id,
-        children: <BearSlideCard>
-            <div className="h-100 d-flex"
-                style={{fontSize: '40px', backgroundColor: row.color}}
-            />
-        </BearSlideCard>
-    };
+    return <BearSlideCard key={row.id}>
+        <div className="h-100 d-flex"
+            style={{fontSize: '40px', backgroundColor: row.color}}
+        />
+    </BearSlideCard>;
 });
 
 
 // 輪播項目1
 const bearSlideItemData2: TBearSlideItemDataList = images.map(row => {
-    return {
-        key: row.id,
-        children: <BearSlideCard>
-            <div className="h-100 d-flex"
-                style={{fontSize: '40px', width: '200px', backgroundColor: row.color}}
-            />
-        </BearSlideCard>
-    };
+    return <BearSlideCard key={row.id}>
+        <div className="h-100 d-flex"
+            style={{fontSize: '40px', width: '200px', backgroundColor: row.color}}
+        />
+    </BearSlideCard>;
 });
 
 

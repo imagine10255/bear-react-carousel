@@ -90,6 +90,7 @@ class Dragger {
         if(this._configurator.setting.isDebug && logEnable.dragger.onMobileTouchStart) logger.printInText('[Dragger._onMobileTouchStart]');
         event.stopPropagation();
 
+        this._dragStart();
         this._eventor.emit('dragStart');
         const {containerEl} = this._elementor;
         if (containerEl) {
@@ -164,7 +165,10 @@ class Dragger {
     private _onWebMouseStart = (event: PointerEvent): void => {
         event.preventDefault();
         if(this._configurator.setting.isDebug && logEnable.dragger.onWebMouseStart) logger.printInText('[Dragger._onWebMouseStart]');
+
+        this._dragStart();
         this._eventor.emit('dragStart');
+
 
         const {containerEl} = this._elementor;
         if (containerEl) {
@@ -193,7 +197,12 @@ class Dragger {
         event.preventDefault();
         if(this._configurator.setting.isDebug && logEnable.dragger.onWebMouseMove) logger.printInText('[Dragger._onWebMouseMove]');
 
-        this._elState.setTouching(true);
+
+        // 判斷距離是否影響 onClick (只有桌面做開關)
+        const startEndMoveX = this._locator._endPosition.pageX - this._locator._startPosition.pageX;
+        if(Math.abs(startEndMoveX) > this._moveMinDistancePx) {
+            this._elState.setTouching(true);
+        }
 
         if(this._elementor.containerEl){
             this._elementor.containerEl.setPointerCapture(event.pointerId);
@@ -209,6 +218,8 @@ class Dragger {
      */
     private _onWebMouseEnd = (event: PointerEvent):void => {
         event.preventDefault();
+        this._elState.setTouching(false); // 只有桌面做開關
+
         if(this._configurator.setting.isDebug && logEnable.dragger.onWebMouseEnd) logger.printInText('[Dragger._onWebMouseEnd]');
 
         document.removeEventListener('pointermove', this._onWebMouseMove, false);
@@ -219,6 +230,11 @@ class Dragger {
 
 
 
+
+    private _dragStart() {
+        if(this._configurator.setting.isDebug && logEnable.dragger.onDragStart) logger.printInText('[Dragger._dragStart]');
+
+    }
 
     private _dragMove(moveX: number) {
         if(this._configurator.setting.isDebug && logEnable.dragger.onDragMove) logger.printInText('[Dragger._dragMove]');
@@ -249,7 +265,6 @@ class Dragger {
      */
     private _dragEnd = (): void => {
         if(this._configurator.setting.isDebug && logEnable.dragger.onDragEnd) logger.printInText('[Dragger._dragEnd]');
-        this._elState.setTouching(false);
 
         const percentage = this._elState.getMovePercentage(this._locator._endPosition.moveX);
         const startEndMoveX = this._locator._endPosition.pageX - this._locator._startPosition.pageX;

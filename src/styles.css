@@ -58,7 +58,7 @@
 .bear-react-carousel__root[data-touching] .bear-react-carousel__slide-item{
     pointer-events: none;
 }
-.bear-react-carousel__root[data-gpu-render][data-touching] .bear-react-carousel__container{
+.bear-react-carousel__root[data-gpu-render] .bear-react-carousel__container{
     will-change: transform;
 }
 

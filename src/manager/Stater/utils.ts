@@ -20,7 +20,7 @@ export function initDataList(sourceList: TBearSlideItemDataList = [], slidesPerV
     if (isClone) {
         // 複製最後面, 放在最前面
         const cloneStart = (sourceList.length - formatSlidesPerView);
-        for (const [cloneIndex, row] of sourceList.slice(-formatSlidesPerView).entries()) {
+        for (const [cloneIndex, element] of sourceList.slice(-formatSlidesPerView).entries()) {
             formatList[index] = {
                 key: `clone_before_${cloneIndex}`,
                 virtualIndex: index,
@@ -28,7 +28,7 @@ export function initDataList(sourceList: TBearSlideItemDataList = [], slidesPerV
                 sourceIndex: cloneStart + cloneIndex,
                 inPage: lastPage,
                 isClone: true,
-                element: row.children,
+                element,
             };
             index += 1;
         }
@@ -36,7 +36,7 @@ export function initDataList(sourceList: TBearSlideItemDataList = [], slidesPerV
 
     let matchFirstIndex = index;
     let pageFirstIndex = 0;
-    for (const [sourceIndex, row] of sourceList.entries()) {
+    for (const [sourceIndex, element] of sourceList.entries()) {
         formatList[index] = {
             key: `source_${sourceIndex}`,
             virtualIndex: index,
@@ -44,7 +44,7 @@ export function initDataList(sourceList: TBearSlideItemDataList = [], slidesPerV
             sourceIndex: sourceIndex,
             inPage: Math.ceil((pageFirstIndex + 1) / slidesPerGroup),
             isClone: false,
-            element: row.children,
+            element,
         };
         index += 1;
         pageFirstIndex += 1;
@@ -53,7 +53,7 @@ export function initDataList(sourceList: TBearSlideItemDataList = [], slidesPerV
     if (isClone) {
         // 複製前面的(需顯示總數) 放在最後面
 
-        for (const [cloneIndex, row] of sourceList.slice(0, formatSlidesPerView).entries()) {
+        for (const [cloneIndex, element] of sourceList.slice(0, formatSlidesPerView).entries()) {
             formatList[index] = {
                 key: `clone_after_${cloneIndex}`,
                 virtualIndex: index,
@@ -61,7 +61,7 @@ export function initDataList(sourceList: TBearSlideItemDataList = [], slidesPerV
                 sourceIndex: cloneIndex,
                 inPage: 1,
                 isClone: true,
-                element: row.children,
+                element,
             };
             index += 1;
             matchFirstIndex += 1;

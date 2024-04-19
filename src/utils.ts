@@ -1,5 +1,6 @@
 import {IBearCarouselProps, TBearSlideItemDataList} from './types';
 import deepCompare from './deepCompare';
+import React, {ReactNode} from 'react';
 
 /**
  * 判斷是否為手機裝置
@@ -124,12 +125,12 @@ export function isPropsDiff(props: IBearCarouselProps, nextProps: IBearCarouselP
     return deepCompare(filterProps, nextFilterProps) === false;
 }
 
-export function isDataKeyDff(data?: TBearSlideItemDataList, nextData?: TBearSlideItemDataList) {
-    const oldKey = data?.map((row) => row.key).join('_');
-    const nextKey = nextData?.map((row) => row.key).join('_');
-
-    return oldKey !== nextKey;
-};
+// export function isDataKeyDff(data?: TBearSlideItemDataList, nextData?: TBearSlideItemDataList) {
+//     const oldKey = data?.map((row) => row.key).join('_');
+//     const nextKey = nextData?.map((row) => row.key).join('_');
+//
+//     return oldKey !== nextKey;
+// };
 
 
 
@@ -162,4 +163,23 @@ export function getPrevIndexByPercentage(percentage: number, checkMovePercentage
 }
 
 
+/**
+ * 檢查是否為正確的資料格式
+ * @param data
+ */
+export function checkDataFormat(data?: ReactNode[]){
+    if(data === null){
+        return false;
+    }
+    if(typeof data === 'undefined'){
+        return true;
+    }
+    if(!Array.isArray(data)){
+        return false;
+    }
+    if(data.length === 0){
+        return true;
+    }
 
+    return React.isValidElement(data[0]);
+}

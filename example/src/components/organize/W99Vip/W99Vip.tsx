@@ -157,21 +157,17 @@ function VipLevelCarousel({
     }, [controller]);
 
 
-    const carouselData = (): TBearSlideItemDataList => {
+    const carouselData = (): TBearSlideItemDataList|undefined => {
         return data?.map((row, index) => {
-            return {
-                key: `rule_${row.id}`,
-                children: (
-                    <BearSlideCard>
-                        <VipCard
-                            level={index + 1}
-                            levelName={row.name}
-                            totalAmount={row.minValidBet}
-                            month={row.keepLevelDurationMonths}
-                        />
-                    </BearSlideCard>
-                )
-            };
+            return <BearSlideCard key={index}>
+                <VipCard
+                    level={index + 1}
+                    levelName={row.name}
+                    totalAmount={row.minValidBet}
+                    month={row.keepLevelDurationMonths}
+                    isUseOld={false}
+                />
+            </BearSlideCard>;
         });
 
     };
@@ -207,9 +203,10 @@ function VipLevelCarousel({
                 spaceBetween={20}
                 height="auto"
                 // height="200px"
+                isEnableGPURender={false}
                 data={carouselData()}
                 onSlideChange={handleSlideChange}
-                isSlideItemMemo
+                // isSlideItemMemo
                 // renderNavButton={(toPrev, toNext) => {
                 //     return <div className={elClassName.navGroup}>
                 //         <button className={elClassName.navPrevButton} type="button" onClick={toPrev}>

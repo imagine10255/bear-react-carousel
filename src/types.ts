@@ -1,7 +1,8 @@
-import {RefObject, CSSProperties} from 'react';
+import {RefObject, CSSProperties, ReactNode} from 'react';
 import * as CSS from 'csstype';
 import BearCarousel from './BearCarousel';
 import Controller from './manager/Controller';
+import Elementor from './manager/Elementor';
 
 export type TSlidesPerView = number|'auto'
 export type TSlidesPerViewActual = number
@@ -15,6 +16,7 @@ export type TRenderNavButton = (toPrev: TToPrev, toNext: TToNext) => JSX.Element
 export type TRenderPagination = (pageTotal: number) => JSX.Element[]|undefined
 export type TRenderLazyPreloader = () => JSX.Element|undefined
 export type TOnSlideChange = (carouselState: ICarouselState) => void
+export type TOnAnimationEnd = (carouselState: ICarouselState, elementor: Elementor) => void
 export type TOnMount = () => void
 export type GlobalWindow = Window & typeof globalThis
 
@@ -30,12 +32,14 @@ export interface IBearCarouselProps extends IBreakpointSetting{
   initStartPlayTime?: number
   breakpoints?: IPropsBreakpoints
   isDebug?: boolean
-  isSlideItemMemo?: boolean
+  // isSlideItemMemo?: boolean
   isLazy?: boolean
+  isEnableGPURender?: boolean
   renderLazyPreloader?: TRenderLazyPreloader
   syncCarouselRefs?: RefObject<BearCarousel>[]
   setController?: (controller: Controller) => void
   onSlideChange?: TOnSlideChange
+  onAnimationEnd?: TOnAnimationEnd
   onMount?: TOnMount
 }
 
@@ -50,12 +54,14 @@ export interface ICarouselState {
   // 額外整理過的資訊
   virtual: {
     activeIndex: number
+    prevActiveIndex: number
     lastIndex: number
     total: number
   }
   // 原始資料的資訊
   source: {
     activeIndex: number
+    prevActiveIndex: number
     lastIndex: number
     total: number
   }
@@ -72,9 +78,11 @@ export interface IInfo extends ICarouselState{
 }
 export interface IBearSlideItemData {
   key: string|number
-  children: JSX.Element
+  children: ReactNode
 }
-export type TBearSlideItemDataList = IBearSlideItemData[];
+
+
+export type TBearSlideItemDataList = ReactNode[];
 
 export type heightUnit = 'px' | '%' | 'em' | 'rem' | 'vh';
 export type THeightUnitSize = 'auto'|`${number}${heightUnit}`;
@@ -134,5 +142,6 @@ export interface ISetting extends IBreakpointSetting {
   moveTime?: number,
   autoPlayTime?: number,
   initStartPlayTime?: number,
+  isEnableGPURender?: boolean,
   isDebug?: boolean,
 }

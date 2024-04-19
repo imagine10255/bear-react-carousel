@@ -4,6 +4,7 @@ import {getInRangeIndex, getPrevPageFirstIndex, initDataList} from './utils';
 import {getNextPageFirstIndex} from './utils';
 import Configurator from '../Configurator';
 import Eventor from '../Eventor';
+import {checkDataFormat} from '../../utils';
 
 
 class Stater {
@@ -18,6 +19,14 @@ class Stater {
         this._info = this.formatInfo(data);
 
         const {slidesPerViewActual, slidesPerGroup, isEnableLoop} = this._configurator.setting;
+
+
+        if(!checkDataFormat(data)){
+            throw new Error(`[bear-react-carousel] Data format error: must be ReactNode[] not Array<{key: string, children: ReactNode}>\n
+  Please read the 5.x upgrade guide: https://bear-react-carousel.pages.dev/docs/faqs/migration-to-5
+`);
+        }
+
         this._formatElement = initDataList(
             data,
             slidesPerViewActual,
@@ -134,12 +143,14 @@ class Stater {
             // 從0開始
             source: {
                 activeIndex: 0,
+                prevActiveIndex: 0,
                 lastIndex: sourceTotal - 1,
                 total: sourceTotal,
             },
             // 0為實際一開始的位置(往前為負數), 結束值為最後結束位置
             virtual: {
                 activeIndex: 0,
+                prevActiveIndex: 0,
                 lastIndex: isPriorPosition? Math.ceil(actualIndex.max - (this._configurator.setting.slidesPerViewActual - 1)): actualIndex.max,
                 total: this._formatElement.length,
             },
@@ -166,8 +177,12 @@ class Stater {
 
     setActiveActual = (index: number, page: number) => {
         if(this.virtual.activeIndex !== index){
+            this.source.prevActiveIndex = this.formatElement[this.virtual.activeIndex]?.sourceIndex ?? 0;
             this.source.activeIndex = this.formatElement[index]?.sourceIndex ?? 0;
+
+            this.virtual.prevActiveIndex = this.virtual.activeIndex;
             this.virtual.activeIndex = index;
+
             this.page.activePage = page;
 
             this._eventor.emit('change');

@@ -13,10 +13,7 @@ import sample from '@/config/sample';
 
 // 輪播項目2
 const bearSlideItemData2: TBearSlideItemDataList = carImages.map(row => {
-    return {
-        key: row.id,
-        children: <BearSlideImage imageUrl={row.imageUrl} onClick={() => console.log('xxx')}/>
-    };
+    return <BearSlideImage  key={row.id} imageUrl={row.imageUrl} onClick={() => console.log('xxx')}/>;
 });
 
 

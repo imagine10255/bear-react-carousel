@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.0.0](https://github.com/imagine10255/bear-react-carousel/compare/v5.0.0-alpha.3...v5.0.0) (2024-04-19)
+
+## [5.0.0-alpha.3](https://github.com/imagine10255/bear-react-carousel/compare/v5.0.0-alpha.2...v5.0.0-alpha.3) (2024-04-19)
+
+
+### Features
+
+* Change gpurender to manual control, and decide according to the complexity of the layer where the card content is placed. ([6764992](https://github.com/imagine10255/bear-react-carousel/commit/6764992cc70dc19f33671ac3483964d1e8e65f6c))
+
+## [5.0.0-alpha.2](https://github.com/imagine10255/bear-react-carousel/compare/v5.0.0-alpha.1...v5.0.0-alpha.2) (2024-04-19)
+
+
+### Bug Fixes
+
+* checkDataFormat add empty array ignore ([cd295c8](https://github.com/imagine10255/bear-react-carousel/commit/cd295c8499bf03177a7961cb6656931a783dd9a7))
+
+## [5.0.0-alpha.1](https://github.com/imagine10255/bear-react-carousel/compare/v5.0.0-alpha.0...v5.0.0-alpha.1) (2024-04-19)
+
 ### [4.0.30](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.30-alpha.0...v4.0.30) (2024-04-18)
 
 ### [4.0.30-alpha.0](https://github.com/imagine10255/bear-react-carousel/compare/v4.0.29...v4.0.30-alpha.0) (2024-04-18)
