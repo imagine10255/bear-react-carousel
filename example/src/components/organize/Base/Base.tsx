@@ -74,6 +74,7 @@ function Base() {
             // slidesPerGroup={2}
             // isCenteredSlides
             // height="200px"
+            movePercentage={.1}
             height="auto"
             // height={{widthRatio: 21, heightRatio: 9}}
             isEnableNavButton

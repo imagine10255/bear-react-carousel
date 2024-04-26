@@ -29,6 +29,7 @@ export function getSetting(props: IBearCarouselProps): ISetting {
         isEnableAutoPlay: props.isEnableAutoPlay,
         isEnableLoop: props.isEnableLoop,
         moveTime: props.moveTime,
+        movePercentage: props.movePercentage,
         autoPlayTime: props.autoPlayTime,
         initStartPlayTime: props.initStartPlayTime,
         moveEffect: props.moveEffect,

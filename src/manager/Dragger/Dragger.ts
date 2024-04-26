@@ -268,7 +268,7 @@ class Dragger {
         const percentage = this._elState.getMovePercentage(this._locator._endPosition.moveX);
         const startEndMoveX = this._locator._endPosition.pageX - this._locator._startPosition.pageX;
 
-        const movePercentage = this._configurator.setting.movePercentage ?? 0.33;
+        const movePercentage = this._configurator.setting.movePercentage ?? 0.1;
         if(startEndMoveX > 0){
             const activeIndex = getInRangeIndex(getPrevIndexByPercentage(percentage, movePercentage), this._stater);
             this._eventor.emit('dragEnd', activeIndex);
