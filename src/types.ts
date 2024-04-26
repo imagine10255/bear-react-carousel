@@ -90,7 +90,6 @@ export type THeightUnitSize = 'auto'|`${number}${heightUnit}`;
 export interface IAspectRatio {
   widthRatio: number
   heightRatio: number
-  addStaticHeight?: string
 }
 
 

@@ -41,19 +41,7 @@ export function getSetting(props: IBearCarouselProps): ISetting {
 
 
 
-/**
- * 依照尺寸取得比例
- * @param aspectRatio
- * @param slidesPerView
- */
-export function getPaddingBySize(aspectRatio: IAspectRatio, slidesPerView: number): string {
-    const calc = (100 * (aspectRatio.heightRatio / aspectRatio.widthRatio) / slidesPerView).toFixed(2);
 
-    if(aspectRatio.addStaticHeight){
-        return `calc(${calc}% + ${aspectRatio.addStaticHeight})`;
-    }
-    return `${calc}%`;
-}
 
 
 /**
