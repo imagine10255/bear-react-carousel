@@ -49,9 +49,11 @@
     "release:alpha": "standard-version --prerelease alpha"
   },
   "peerDependencies": {
-    "clsx": "2.x",
     "react": "18.x",
     "react-dom": "18.x"
+  },
+  "dependencies": {
+    "clsx": "2.1.1"
   },
   "devDependencies": {
     "@swc/jest": "0.2.26",
@@ -64,7 +66,6 @@
     "@types/react": "18.x",
     "@types/react-dom": "18.x",
     "@vitejs/plugin-react-swc": "3.4.0",
-    "clsx": "2.1.0",
     "cz-git": "^1.9.0",
     "eslint": "8.37.0",
     "eslint-config-react-app": "7.0.1",
