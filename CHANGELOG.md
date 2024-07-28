@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.1.0-alpha.0](https://github.com/imagine10255/bear-react-carousel/compare/v5.0.1...v5.1.0-alpha.0) (2024-07-28)
+
+
+### Features
+
+* remove props aspectRatio > addStaticHeight ([4e19836](https://github.com/imagine10255/bear-react-carousel/commit/4e198369db019933a2e7f122f1315cb93e4cfa8b))
+
 ### [5.0.1](https://github.com/imagine10255/bear-react-carousel/compare/v5.0.1-alpha.0...v5.0.1) (2024-04-26)
 
 
