@@ -10,13 +10,14 @@ import W99Vip from '@/components/organize/W99Vip';
 import LazyImage from '@/components/organize/LazyImage';
 import Paginate from '@/components/organize/Paginate';
 import Modal from '@/components/organize/Modal';
-import Card from "@/components/atoms/Card";
-import Breakpoints from "@/components/organize/Breakpoints";
-import UpdateSlideItem from "@/components/organize/UpdateSlideItem";
-import SlidePerGroup from "@/components/organize/SlidePerGroup";
-import ServiceCarousel from "@/components/organize/ServiceCarousel/ServiceCarousel";
-import Center from "@/components/organize/Center";
-import SlideCard from "@/components/organize/SlideCard";
+import Card from '@/components/atoms/Card';
+import Breakpoints from '@/components/organize/Breakpoints';
+import UpdateSlideItem from '@/components/organize/UpdateSlideItem';
+import SlidePerGroup from '@/components/organize/SlidePerGroup';
+import ServiceCarousel from '@/components/organize/ServiceCarousel/ServiceCarousel';
+import Center from '@/components/organize/Center';
+import SlideCard from '@/components/organize/SlideCard';
+import SlideChange from '@/components/organize/SlideChange';
 
 interface IProps extends FCProps {
 
@@ -27,7 +28,7 @@ const Heroes = ({
 }: IProps) => {
 
     const data = [
-        {id: 1, name: 'Base', desc: 'Base carousel', example: Base},
+        // {id: 1, name: 'Base', desc: 'Base carousel', example: Base},
         // {id: 2, name: 'Auto Play', desc: 'Auto play after 1.5s', example: Base},
         // {id: 3, name: 'Paginate', desc: 'Paginate group', example: Paginate},
         // {id: 4, name: 'Auto image size', desc: 'Auto image size', example: AutoImage},
@@ -42,6 +43,7 @@ const Heroes = ({
         // {id: 14, name: 'ServiceCarousel', desc: 'Slide PerGroup', example: ServiceCarousel},
         // {id: 15, name: 'Center', desc: 'Center Slide', example: Center},
         // {id: 16, name: 'SlideCard', desc: 'SlideCard Slide', example: SlideCard},
+        {id: 16, name: 'onSlideChange', desc: 'SlideCard Slide', example: SlideChange},
 
 
         // {id: 10, name: 'Modal scroll', desc: 'css fixed card scroll', example: Modal},
