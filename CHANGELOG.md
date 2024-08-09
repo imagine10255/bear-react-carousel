@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.1.1-alpha.0](https://github.com/imagine10255/bear-react-carousel/compare/v5.1.0...v5.1.1-alpha.0) (2024-08-09)
+
+
+### Bug Fixes
+
+* SlideChange State getting empty data at the beginning ([1e1d4c9](https://github.com/imagine10255/bear-react-carousel/commit/1e1d4c92ebc4c021aad341fcec02184de4c21d61))
+
 ## [5.1.0](https://github.com/imagine10255/bear-react-carousel/compare/v5.1.0-alpha.0...v5.1.0) (2024-07-30)
 
 ## [5.1.0-alpha.0](https://github.com/imagine10255/bear-react-carousel/compare/v5.0.1...v5.1.0-alpha.0) (2024-07-28)
