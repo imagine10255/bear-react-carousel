@@ -19,7 +19,9 @@ function Modal() {
 
         const preIndex = carouselState.virtual.prevActiveIndex;
 
-        elementor._slideItemRefs.current[preIndex].firstChild.scrollTo({top: 0});
+        if(elementor._slideItemRefs.current){
+            (elementor._slideItemRefs.current[preIndex].firstChild as HTMLElement)?.scrollTo({top: 0});
+        }
     };
 
     // 輪播項目1

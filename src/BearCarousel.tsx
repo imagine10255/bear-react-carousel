@@ -250,6 +250,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     private _init = () => {
         this.setState({isClientReady: true}, () => {
             this._controller?.slideToPage(1, false);
+            this._onChange();
         });
     };
 
