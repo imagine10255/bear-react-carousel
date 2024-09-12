@@ -6,6 +6,10 @@
     user-select: none;
 }
 
+.bear-react-carousel__root img{
+    -webkit-user-drag: none;
+}
+
 
 .bear-react-carousel__test-number{
     position: absolute;
