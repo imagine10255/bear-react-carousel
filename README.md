@@ -99,7 +99,7 @@ Use Nextjs example
 
 There is also a example that you can play with it:
 
-[![Play react-editext-example](https://raw.githubusercontent.com/acrool/acrool-react-datepicker/main/play-in-example-button.svg)](https://acrool-react-datepicker.pages.dev)
+[![Play react-editext-example](https://raw.githubusercontent.com/imagine10255/bear-react-carousel/main/play-in-example-button.svg)](https://bear-react-carousel-storybook.pages.dev)
 
 
 
