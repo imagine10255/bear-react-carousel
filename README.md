@@ -26,6 +26,7 @@
 - [Components](https://bear-react-carousel.pages.dev/docs/category/components)
 - [Features](https://bear-react-carousel.pages.dev/docs/category/feature)
 - [Examples](https://bear-react-carousel.pages.dev/docs/category/examples)
+- [Storybook](https://bear-react-carousel-storybook.pages.dev)
 
 
 ## Features
