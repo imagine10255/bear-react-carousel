@@ -13,8 +13,7 @@
     "pages:deploy": "NODE_VERSION=18 yarn build-storybook && wrangler pages deploy ./storybook-static --project-name=bear-react-carousel-storybook --branch main"
   },
   "resolutions": {
-    "styled-components": "5.3.9",
-    "framer-motion": "11.11.8"
+    "styled-components": "5.3.9"
   },
   "dependencies": {
     "@acrool/js-utils": "^3.2.12",
@@ -38,7 +37,6 @@
     "@types/styled-components": "^5.1.26",
     "@vitejs/plugin-react-swc": "^3.0.0",
     "dom-to-image": "^2.6.0",
-    "framer-motion": "link:../node_modules/framer-motion",
     "react": "link:../node_modules/react",
     "react-dom": "link:../node_modules/react-dom",
     "sass": "^1.77.1",

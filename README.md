@@ -97,19 +97,11 @@ Use Nextjs example
 
 
 
-## Test for project
+There is also a example that you can play with it:
 
-bear-react-carousel lib in root
+[![Play react-editext-example](https://raw.githubusercontent.com/acrool/acrool-react-datepicker/main/play-in-example-button.svg)](https://acrool-react-datepicker.pages.dev)
 
-```bash
-$ yarn build && cp -R ./dist ../bear-react-carousel-doc/node_modules/bear-react-carousel/
-```
 
-bear-react-carousel-doc lib in root
-
-```bash
-$ rm -rf ./node_modules/.cache && yarn dev
-```
 
 ### License
 

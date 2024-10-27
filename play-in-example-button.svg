@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="165" height="32" viewBox="0 0 165 32" fill="none">
+<rect width="165" height="32" rx="4" fill="#E3FF73"/>
+<rect x="0.5" y="0.5" width="164" height="31" rx="3.5" stroke="black" stroke-opacity="0.1"/>
+<line x1="31.5" y1="2.18557e-08" x2="31.5" y2="32" stroke="black" stroke-opacity="0.1"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M10 10L23 10V23H10V10ZM21.6705 11.3295V21.6705H11.3295V11.3295H21.6705Z" fill="#191919"/>
+<text x="44.5" y="22" font-size="14" fill="#000" font-family="system-ui, sans-serif" >Play Storybook</text>
+</svg>
