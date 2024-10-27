@@ -164,6 +164,8 @@ class Dragger {
      */
     private _onWebMouseStart = (event: PointerEvent): void => {
         event.preventDefault();
+        if(event.button !== 0) return;
+
         if(this._configurator.setting.isDebug && logEnable.dragger.onWebMouseStart) logger.printInText('[Dragger._onWebMouseStart]');
 
         this._dragStart();
