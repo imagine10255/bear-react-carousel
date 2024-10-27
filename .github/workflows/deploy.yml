@@ -36,13 +36,7 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Build Storybook
-        run: yarn build-storybook
-
-      - name: Install Wrangler
-        run: yarn global add wrangler
-
-      - name: Deploy to Cloudflare Pages
-        run: wrangler pages deploy ./storybook-static --project-name=bear-react-carousel-storybook --branch main
+      - name: Build Storybook & Deploy to Cloudflare Pages
+        run: yarn pages:deploy
         env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+            CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
