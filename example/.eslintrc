@@ -1,0 +1,54 @@
+{
+    "plugins": [
+        "simple-import-sort"
+    ],
+    "extends": [
+        "react-app",
+        "react-app/jest"
+    ],
+    "rules": {
+        "quotes": [
+            "warn",
+            "single"
+        ],
+        "simple-import-sort/imports": "warn",
+        "semi": [
+            "warn",
+            "always"
+        ],
+        "indent": [
+            "warn",
+            4
+        ],
+        "array-callback-return": "off",
+        "object-curly-spacing": [
+            "warn",
+            "never"
+        ],
+        "import/first": "off",
+        "import/no-anonymous-default-export": "off",
+        "react-hooks/exhaustive-deps": "off",
+        "no-useless-escape": "off",
+        "react/jsx-boolean-value": "warn",
+        "@typescript-eslint/no-unused-vars": "off",
+        "react/no-unescaped-entities": "off",
+        "@typescript-eslint/member-delimiter-style": ["warn", {
+            "multiline": {
+                "delimiter": "comma",
+                "requireLast": true
+            },
+            "singleline": {
+                "delimiter": "comma",
+                "requireLast": false
+            },
+            "overrides": {
+                "interface": {
+                    "multiline": {
+                        "delimiter": "none",
+                        "requireLast": false
+                    }
+                }
+            }
+        }]
+    }
+}
