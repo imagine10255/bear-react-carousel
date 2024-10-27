@@ -48,7 +48,7 @@ const meta = {
             {...args}
         />;
     },
-} satisfies Meta;
+} satisfies Meta<typeof BearCarousel>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

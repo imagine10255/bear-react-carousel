@@ -2,39 +2,14 @@ import {BearSlideCard, TBearSlideItemDataList } from "bear-react-carousel";
 import {asset} from '../utils';
 import {generatorArray} from "@acrool/js-utils/array";
 
-export const racingImages = [
-    {id: 1, name: 'Strawberry', imageUrl: asset('/sample/food/01.jpg')},
-    {id: 2, name: 'Honey Cranberry Pie', imageUrl: asset('/sample/food/02.jpg')},
-    {id: 3, name: 'Tomato noodles', imageUrl: asset('/sample/food/03.jpg')},
-];
-
-
-
 
 export const baseImage = generatorArray(14, 'cat').map((key, idx) => {
    return {
        id: key,
-       imageUrl: asset(`/sample/${idx + 1}.jpg`)
+       imageUrl: asset(`/images/sample/${idx + 1}.jpg`)
    };
 });
 
-
-export const catImages = [
-    {id: 1, imageUrl: asset('/sample/cat/01.jpg')},
-    {id: 2, imageUrl: asset('/sample/cat/02.jpg')},
-    {id: 3, imageUrl: asset('/sample/cat/03.jpg')},
-    {id: 4, imageUrl: asset('/sample/cat/04.jpg')},
-    {id: 5, imageUrl: asset('/sample/cat/05.jpg')},
-];
-
-
-export const preViewImage = [
-    {id: 1, name: 'CleanShot 2022-10-20 at 12.02.47@2x.png', size: '256.21KB', createdAt: '2022-10-20 12:00:00', imageUrl: 'https://image.kr8851.com/uploads/product-goods/2022/10/26/3910809/8.jpg?v=1026215633'},
-    {id: 2, name: 'CleanShot 2022-10-22 at 12.22.47@2x.png', size: '10.21KB', createdAt: '2022-10-22 23:00:10', imageUrl: asset('/sample/cat/02.jpg')},
-    {id: 3, name: 'CleanShot 2022-10-23 at 12.23.47@2x.png', size: '26.01KB', createdAt: '2022-10-23 11:00:30', imageUrl: asset('/sample/cat/03.jpg')},
-    {id: 4, name: 'CleanShot 2022-10-24 at 12.11.47@2x.png', size: '226.21KB', createdAt: '2022-10-24 22:33:00', imageUrl: asset('/sample/cat/04.jpg')},
-    {id: 5, name: 'CleanShot 2022-10-26 at 12.22.47@2x.png', size: '2MB', createdAt: '2022-10-26 08:12:20', imageUrl: asset('/sample/cat/05.jpg')},
-];
 
 
 export interface IFoodImage {
@@ -70,36 +45,6 @@ export const foodImages: IFoodImage[] = [
         imageUrl: asset('/sample/food/03.jpg'),
         position: 'left',
     },
-];
-
-
-export const diffImages = [
-    {id: 1, imageUrl: asset('/sample/cat/vertical-01.jpg')},
-    {id: 2, imageUrl: asset('/sample/cat/01.jpg')},
-    {id: 3, imageUrl: asset('/sample/cat/02.jpg')},
-    {id: 4, imageUrl: asset('/sample/cat/vertical-02.jpg')},
-    {id: 5, imageUrl: asset('/sample/cat/03.jpg')},
-    {id: 6, imageUrl: asset('/sample/cat/vertical-03.jpg')},
-    {id: 7, imageUrl: asset('/sample/cat/04.jpg')},
-    {id: 8, imageUrl: asset('/sample/cat/vertical-04.jpg')},
-    {id: 9, imageUrl: asset('/sample/cat/05.jpg')},
-];
-
-
-
-export interface ICarImage {
-    id: number
-    imageUrl: string
-}
-
-
-export const carImages: ICarImage[] = [
-    {id: 1, imageUrl: asset('/sample/racing/01.webp')},
-    {id: 2, imageUrl: asset('/sample/racing/02.webp')},
-    {id: 3, imageUrl: asset('/sample/racing/03.webp')},
-    {id: 4, imageUrl: asset('/sample/racing/04.webp')},
-    {id: 5, imageUrl: asset('/sample/racing/05.webp')},
-    {id: 6, imageUrl: asset('/sample/racing/06.webp')},
 ];
 
 

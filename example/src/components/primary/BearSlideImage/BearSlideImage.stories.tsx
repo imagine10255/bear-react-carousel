@@ -42,7 +42,7 @@ const meta = {
             data={bearSlideItemData1}
         />;
     },
-} satisfies Meta;
+} satisfies Meta<typeof BearSlideImage>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
