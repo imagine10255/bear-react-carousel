@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.1.3](https://github.com/imagine10255/bear-react-carousel/compare/v5.1.3-alpha.0...v5.1.3) (2024-10-27)
+
 ### [5.1.3-alpha.0](https://github.com/imagine10255/bear-react-carousel/compare/v5.1.2...v5.1.3-alpha.0) (2024-10-10)
 
 ### [5.1.2](https://github.com/imagine10255/bear-react-carousel/compare/v5.1.2-alpha.0...v5.1.2) (2024-09-12)

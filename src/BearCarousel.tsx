@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {booleanToDataAttr, checkDataFormat, checkIsDesktop, isPropsDiff} from './utils';
+import {booleanToDataAttr, isPropsDiff} from './utils';
 import logger from './logger';
 import {IBearCarouselProps} from './types';
 import elClassName from './el-class-name';
