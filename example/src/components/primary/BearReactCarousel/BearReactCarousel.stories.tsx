@@ -2,12 +2,10 @@ import { Flex } from '@acrool/react-grid';
 import type {Meta, StoryObj} from '@storybook/react';
 import BearCarousel, {
     BearSlideCard,
-    TBearSlideItemDataList,
-    ICarouselState,
-    Controller,
-    TOnSlideChange, elClassName
+    elClassName
 } from 'bear-react-carousel';
 import {baseImage, bearSlideItemData1} from "../../data";
+import {IAspectRatio} from "../../../../../src";
 
 
 const meta = {
@@ -64,11 +62,36 @@ export const WithDebug: Story = {
         isDebug: true,
     }
 };
+export const WithStaticHeight: Story = {
+    args: {
+        slidesPerView: 1,
+        height: '240px',
+    }
+};
+export const WithAspectRatio: Story = {
+    args: {
+        slidesPerView: 1,
+        height: {
+            widthRatio: 2,
+            heightRatio: 1,
+        }
+    }
+};
 export const WithSlidesPerView: Story = {
     args: {
         slidesPerView: 3,
     }
 };
+
+export const WithSlidesPerViewAuto: Story = {
+    args: {
+        slidesPerView: 'auto',
+        data: baseImage.map(row => {
+            return <BearSlideCard key={row.id} bgUrl={row.imageUrl} style={{width: '200px', height: '400px'}}/>;
+        }),
+    }
+};
+
 export const WithSlidesPerGroup: Story = {
     args: {
         isEnableNavButton: true,
