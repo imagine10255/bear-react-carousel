@@ -127,8 +127,7 @@ class Stater {
 
         const isPriorPosition = !(isEnableLoop ||
             isCenteredSlides ||
-            slidesPerView === 'auto' ||
-            !Number.isInteger(slidesPerView)
+            slidesPerView === 'auto'
         );
 
         // @TODO: 設定跟 Stater.utils.getInRangeIndex 相同
