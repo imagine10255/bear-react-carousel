@@ -121,6 +121,14 @@ export const WithSlidesPerGroup: Story = {
     }
 };
 
+export const WithSlidesPerGroupHalf: Story = {
+    args: {
+        isEnableNavButton: true,
+        slidesPerView: 3.2,
+        slidesPerGroup: 3.2,
+    }
+};
+
 export const WithNav: Story = {
     args: {
         isEnableNavButton: true,

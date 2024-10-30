@@ -14,10 +14,11 @@ export function initDataList(sourceList: TBearSlideItemDataList = [], slidesPerV
     const isClone = isLoop;
     let index = 0;
     const cloneRatio = 1.5;
-    const formatSlidesPerView = slidesPerView === 'auto' ? 0: Math.ceil(slidesPerView);
+    const formatSlidesPerView = slidesPerView === 'auto' ? 0: Math.floor(slidesPerView);
+    const formatSlidesPerGroup = Math.floor(slidesPerGroup);
     const cloneCount = slidesPerView === 'auto' ? 0: Math.ceil(slidesPerView * cloneRatio);
     const totalItem = sourceList.length;
-    const lastPage = (totalItem / slidesPerGroup) - (slidesPerGroup - formatSlidesPerView);
+    const lastPage = (totalItem / formatSlidesPerGroup) - (formatSlidesPerGroup - formatSlidesPerView);
 
     if (isClone) {
         // 複製最後面, 放在最前面
@@ -29,7 +30,7 @@ export function initDataList(sourceList: TBearSlideItemDataList = [], slidesPerV
                 matchIndex: cloneCount + cloneStart + index,
                 sourceIndex: cloneStart + cloneIndex,
                 inPage: lastPage,
-                inPageIndex: index % slidesPerGroup,
+                inPageIndex: cloneIndex % formatSlidesPerGroup,
                 isClone: true,
                 element,
             };
@@ -41,17 +42,18 @@ export function initDataList(sourceList: TBearSlideItemDataList = [], slidesPerV
     let pageFirstIndex = 0;
 
     for (const [sourceIndex, element] of sourceList.entries()) {
-        const inPage = Math.ceil((pageFirstIndex + 1) / slidesPerGroup);
-        const isLastOver = (sourceIndex + 1) + slidesPerGroup > totalItem;
+        const inPage = Math.ceil((pageFirstIndex + 1) / formatSlidesPerGroup);
+        const isLastOver = (sourceIndex + 1) + formatSlidesPerGroup > totalItem;
         const checkInPage = isLastOver ? Math.ceil(lastPage): inPage;
-        const inPageIndex = isLastOver ? (index + 1) % slidesPerGroup: index % slidesPerGroup;
+        const inPageIndex = isLastOver ? (index + 1) % formatSlidesPerGroup: index % formatSlidesPerGroup;
+
         formatList[index] = {
             key: `source_${sourceIndex}`,
             virtualIndex: index,
             matchIndex: index,
             sourceIndex: sourceIndex,
             inPage: checkInPage,
-            inPageIndex: inPageIndex,
+            inPageIndex,
             isClone: false,
             element,
         };
@@ -69,7 +71,7 @@ export function initDataList(sourceList: TBearSlideItemDataList = [], slidesPerV
                 matchIndex: matchFirstIndex,
                 sourceIndex: cloneIndex,
                 inPage: 1,
-                inPageIndex: index / slidesPerGroup,
+                inPageIndex: cloneIndex % formatSlidesPerGroup,
                 isClone: true,
                 element,
             };
@@ -134,8 +136,7 @@ export function getInRangeIndex(slideIndex: number, stater: Stater): number {
     if(slideIndex <= 0){
         return 0;
     }
-
-    return slideIndex;
+    return Math.floor(slideIndex);
 }
 
 

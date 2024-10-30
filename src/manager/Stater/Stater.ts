@@ -180,7 +180,7 @@ class Stater {
         if(this.virtual.activeIndex !== index){
             this.source.prevActiveIndex = this.formatElement[this.virtual.activeIndex]?.sourceIndex ?? 0;
             this.source.activeIndex = this.formatElement[index]?.sourceIndex ?? 0;
-            this.source.activeInPageIndex = this.formatElement[index]?.inPageIndex ?? 0;
+            this.source.activeInPageIndex = Math.ceil(this.formatElement[index]?.inPageIndex ?? 0);
 
             this.virtual.prevActiveIndex = this.virtual.activeIndex;
             this.virtual.activeIndex = index;
