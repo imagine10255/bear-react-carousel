@@ -148,7 +148,7 @@
 .bear-react-carousel__root[data-first-page] .bear-react-carousel__nav-prev-button,
 .bear-react-carousel__root[data-last-page] .bear-react-carousel__nav-next-button{
     opacity: 0;
-    pointer-events: none;
+    /*pointer-events: none; 避免連續點消失後點到背後 */
 }
 
 .bear-react-carousel__nav-group > .bear-react-carousel__nav-prev-button{

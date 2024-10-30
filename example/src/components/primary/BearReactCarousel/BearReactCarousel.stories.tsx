@@ -80,6 +80,7 @@ export const WithAspectRatio: Story = {
 export const WithSlidesPerView: Story = {
     args: {
         slidesPerView: 3,
+        isEnableNavButton: true,
     }
 };
 
@@ -89,6 +90,26 @@ export const WithSlidesPerViewAuto: Story = {
         data: baseImage.map(row => {
             return <BearSlideCard key={row.id} bgUrl={row.imageUrl} style={{width: '200px', height: '400px'}}/>;
         }),
+    }
+};
+
+
+
+export const WithHalf: Story = {
+    args: {
+        slidesPerView: 3.2,
+        spaceBetween: 5,
+        isEnableNavButton: true,
+    }
+};
+
+
+export const WithCenteredHalf: Story = {
+    args: {
+        isCenteredSlides: true,
+        slidesPerView: 1.2,
+        spaceBetween: 5,
+        isEnableNavButton: true,
     }
 };
 
@@ -162,15 +183,6 @@ export const WithLazy: Story = {
     }
 };
 
-
-export const WithCenteredHalf: Story = {
-    args: {
-        isCenteredSlides: true,
-        slidesPerView: 1.2,
-        spaceBetween: 5,
-        isEnableNavButton: true,
-    }
-};
 
 
 export const WithBreakpoints: Story = {
