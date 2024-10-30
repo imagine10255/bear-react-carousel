@@ -142,6 +142,7 @@ class Stater {
             // 從0開始
             source: {
                 activeIndex: 0,
+                activeInPageIndex: 0,
                 prevActiveIndex: 0,
                 lastIndex: sourceTotal - 1,
                 total: sourceTotal,
@@ -154,6 +155,7 @@ class Stater {
                 total: this._formatElement.length,
             },
             page: {
+                limit: this._configurator.setting.slidesPerGroup,
                 activePage: 1,
                 total: fakeTotalPage > 0 ? fakeTotalPage : 1,
             },
@@ -178,6 +180,7 @@ class Stater {
         if(this.virtual.activeIndex !== index){
             this.source.prevActiveIndex = this.formatElement[this.virtual.activeIndex]?.sourceIndex ?? 0;
             this.source.activeIndex = this.formatElement[index]?.sourceIndex ?? 0;
+            this.source.activeInPageIndex = this.formatElement[index]?.inPageIndex ?? 0;
 
             this.virtual.prevActiveIndex = this.virtual.activeIndex;
             this.virtual.activeIndex = index;

@@ -61,11 +61,13 @@ export interface ICarouselState {
   // 原始資料的資訊
   source: {
     activeIndex: number
+    activeInPageIndex: number
     prevActiveIndex: number
     lastIndex: number
     total: number
   }
   page: {
+    limit: number
     activePage: number
     total: number
   }

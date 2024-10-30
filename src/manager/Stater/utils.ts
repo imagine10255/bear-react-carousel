@@ -16,7 +16,8 @@ export function initDataList(sourceList: TBearSlideItemDataList = [], slidesPerV
     const cloneRatio = 1.5;
     const formatSlidesPerView = slidesPerView === 'auto' ? 0: Math.ceil(slidesPerView);
     const cloneCount = slidesPerView === 'auto' ? 0: Math.ceil(slidesPerView * cloneRatio);
-    const lastPage = (sourceList.length / slidesPerGroup) - (slidesPerGroup - formatSlidesPerView);
+    const totalItem = sourceList.length;
+    const lastPage = (totalItem / slidesPerGroup) - (slidesPerGroup - formatSlidesPerView);
 
     if (isClone) {
         // 複製最後面, 放在最前面
@@ -28,6 +29,7 @@ export function initDataList(sourceList: TBearSlideItemDataList = [], slidesPerV
                 matchIndex: cloneCount + cloneStart + index,
                 sourceIndex: cloneStart + cloneIndex,
                 inPage: lastPage,
+                inPageIndex: index % slidesPerGroup,
                 isClone: true,
                 element,
             };
@@ -37,13 +39,19 @@ export function initDataList(sourceList: TBearSlideItemDataList = [], slidesPerV
 
     let matchFirstIndex = index;
     let pageFirstIndex = 0;
+
     for (const [sourceIndex, element] of sourceList.entries()) {
+        const inPage = Math.ceil((pageFirstIndex + 1) / slidesPerGroup);
+        const isLastOver = (sourceIndex + 1) + slidesPerGroup > totalItem;
+        const checkInPage = isLastOver ? Math.ceil(lastPage): inPage;
+        const inPageIndex = isLastOver ? (index + 1) % slidesPerGroup: index % slidesPerGroup;
         formatList[index] = {
             key: `source_${sourceIndex}`,
             virtualIndex: index,
             matchIndex: index,
             sourceIndex: sourceIndex,
-            inPage: Math.ceil((pageFirstIndex + 1) / slidesPerGroup),
+            inPage: checkInPage,
+            inPageIndex: inPageIndex,
             isClone: false,
             element,
         };
@@ -61,6 +69,7 @@ export function initDataList(sourceList: TBearSlideItemDataList = [], slidesPerV
                 matchIndex: matchFirstIndex,
                 sourceIndex: cloneIndex,
                 inPage: 1,
+                inPageIndex: index / slidesPerGroup,
                 isClone: true,
                 element,
             };

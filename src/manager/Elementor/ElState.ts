@@ -267,6 +267,8 @@ class ElState {
 
 
         const activePage = this._stater.page.activePage;
+        const isFirstPage = (activePage === 1 && this._stater.source.activeInPageIndex === 0);
+        const isLastPage = (activePage >= this._stater.page.total && this._stater.source.activeInPageIndex === 0);
 
         // 更改顯示在第幾頁的樣式 (父元件使用可判定樣式設定)
         if (this._stater.isVisiblePagination && this._stater.page.activePage > 0) {
@@ -292,10 +294,10 @@ class ElState {
         }
         // 提供是否為第一頁/最後一頁的判斷屬性
         if(this._stater.isVisibleNavButton && !this._configurator.setting.isEnableLoop){
-            if(activePage <= 1 || pageOnlyOne || notPage){
+            if(isFirstPage || pageOnlyOne || notPage){
                 this._elementor.rootEl?.setAttribute('data-first-page', '');
             }
-            if(activePage >= this._stater.page.total || pageOnlyOne || notPage){
+            if(isLastPage || pageOnlyOne || notPage){
                 this._elementor.rootEl?.setAttribute('data-last-page',  '');
             }
         }

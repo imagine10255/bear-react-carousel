@@ -8,6 +8,7 @@ export interface InitData {
     virtualIndex: number;
     matchIndex: number;
     sourceIndex?: number;
+    inPageIndex: number;
     inPage: number;
     isClone: boolean;
     element: React.ReactNode;
