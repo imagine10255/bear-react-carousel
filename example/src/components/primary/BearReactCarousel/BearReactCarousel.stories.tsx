@@ -4,8 +4,7 @@ import BearCarousel, {
     BearSlideCard,
     elClassName
 } from 'bear-react-carousel';
-import {baseImage, bearSlideItemData1} from "../../data";
-import {IAspectRatio} from "../../../../../src";
+import {baseImage, generatorBearSlideCardData, generatorBearSlideImageData} from "../../data";
 
 
 const meta = {
@@ -23,7 +22,7 @@ const meta = {
     tags: ['autodocs'],
     argTypes: {},
     args: {
-        data: bearSlideItemData1,
+        data: generatorBearSlideCardData(),
         spaceBetween: 0,
         slidesPerView: 1,
         slidesPerGroup: 1,
@@ -185,11 +184,6 @@ export const WithCustomPagination: Story = {
         }}
 };
 
-export const WithLazy: Story = {
-    args: {
-        isLazy: true,
-    }
-};
 
 
 
@@ -207,3 +201,16 @@ export const WithBreakpoints: Story = {
 };
 
 
+export const WithLazyBySlideCard: Story = {
+    args: {
+        isLazy: true,
+    }
+};
+
+export const WithLazyBySlideImage: Story = {
+    args: {
+        isLazy: true,
+        height: 'auto',
+        data: generatorBearSlideImageData(),
+    }
+};

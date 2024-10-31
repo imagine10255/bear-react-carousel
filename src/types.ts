@@ -138,6 +138,27 @@ export type TToNext = () => void
 
 
 
+export interface IBearSlideCardProps {
+    className?: string,
+    style?: CSS.Properties,
+    bgUrl?: string,
+    bgSize?: '100%'|'cover'|'contain',
+    children?: ReactNode,
+    onClick?: () => void,
+}
+
+export interface IBearSlideImageProps {
+    className?: string,
+    style?: CSS.Properties,
+    imageUrl: string,
+    imageAlt?: string,
+    imageSize?: 'none'|'cover'|'contain'|'scaleDown',
+    alt?: string,
+    onClick?: () => void,
+}
+
+
+
 export interface ISetting extends IBreakpointSetting {
   slidesPerViewActual: TSlidesPerViewActual
   moveTime?: number,
