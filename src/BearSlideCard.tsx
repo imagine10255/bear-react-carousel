@@ -3,16 +3,9 @@ import CSS from 'csstype';
 import clsx from 'clsx';
 import elClassName from './el-class-name';
 import {useSlide} from './components/SlideProvider';
-import useLazyLoadBg, {ELoadStatus} from './hook/useLazyLoadBg';
+import useLazyLoadBackground from './hooks/useLazyLoadBackground';
+import {IBearSlideCardProps} from './types';
 
-interface IProps {
-  className?: string,
-  style?: CSS.Properties,
-  bgUrl?: string,
-  bgSize?: '100%'|'cover'|'contain',
-  children?: ReactNode,
-  onClick?: () => void,
-}
 
 
 /**
@@ -32,11 +25,24 @@ const BearSlideCard = ({
     bgSize = 'cover',
     children,
     onClick,
-}: IProps) => {
+}: IBearSlideCardProps) => {
     const slide = useSlide();
-    const {imageRef, status, doneImageUrl} = useLazyLoadBg({isLazy: slide.isLazy, imageUrl: bgUrl});
+    const {imageRef, isPending, isFetching} = useLazyLoadBackground({
+        enabled: slide.isLazy,
+        imageUrl: bgUrl
+    });
 
-    const imageUrl = slide.isLazy ? doneImageUrl: bgUrl;
+
+    /**
+     * 取得ImgBg變數
+     */
+    const getImgBgImageCSSVar = () => {
+        if(bgUrl && !slide.isLazy){
+            return `url("${bgUrl}")`;
+        }
+        return undefined;
+    };
+
 
     return <div
         ref={imageRef}
@@ -46,13 +52,13 @@ const BearSlideCard = ({
             [elClassName.slideItemCardContain]: bgSize === 'contain',
         })}
         onClick={onClick}
-        data-lazy-src={slide.isLazy && status !== ELoadStatus.done ? bgUrl: undefined}
+        data-lazy-src={slide.isLazy && isPending ? bgUrl: undefined}
         style={{
             ...style,
-            backgroundImage: imageUrl ? `url(${imageUrl})` :undefined,
-        }}
+            '--slide-card-image': getImgBgImageCSSVar(),
+        } as CSS.Properties}
     >
-        {slide.isLazy && status === ELoadStatus.loading ? <div className={elClassName.slideItemImagePreLoad}>
+        {isFetching ? <div className={elClassName.slideItemImagePreLoad}>
             {slide.renderLazyPreloader()}
         </div>: children}
     </div>;

@@ -1,38 +1,38 @@
 import type {Meta, StoryObj} from '@storybook/react';
 import BearCarousel, {
     TBearSlideItemDataList,
-    BearSlideImage
+    BearSlideCard
 } from 'bear-react-carousel';
-import {generatorBearSlideImageData} from "../../data";
+import {generatorBearSlideCardData, generatorBearSlideImageData} from "../../data";
 
 
 const meta = {
-    title: 'Primary/BearSlideImage',
-    component: BearSlideImage,
+    title: 'Primary/BearSlideCard',
+    component: BearSlideCard,
     parameters: {
         layout: 'centered',
         actions: {argTypesRegex: '^on.*'},
         docs: {
             description: {
-                component: 'Slide item component use img html tag'
+                component: 'Slide item component use div css background-image'
             },
         },
     },
     tags: ['autodocs'],
     argTypes: {},
     args: {
-        imageAlt: 'cat',
-        imageSize: 'none' //'none'|'cover'|'contain'|'scaleDown',
+        bgSize: '100%' // '100%'|'cover'|'contain'
     },
     render: function Render(args) {
 
-        const bearSlideItemData1: TBearSlideItemDataList = generatorBearSlideImageData(args);
+        const bearSlideItemData1: TBearSlideItemDataList = generatorBearSlideCardData(args);
 
         return <BearCarousel
             data={bearSlideItemData1}
+            height="300px"
         />;
     },
-} satisfies Meta<typeof BearSlideImage>;
+} satisfies Meta<typeof BearSlideCard>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -46,16 +46,11 @@ export const Primary: Story = {
 };
 export const WithCover: Story = {
     args: {
-        imageSize: 'cover'
+        bgSize: 'cover'
     }
 };
 export const WithContain: Story = {
     args: {
-        imageSize: 'contain'
-    }
-};
-export const WithScaleDown: Story = {
-    args: {
-        imageSize: 'scaleDown'
+        bgSize: 'contain'
     }
 };

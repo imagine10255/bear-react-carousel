@@ -1,4 +1,10 @@
-import {BearSlideCard, TBearSlideItemDataList } from "bear-react-carousel";
+import {
+    BearSlideCard,
+    BearSlideImage,
+    TBearSlideItemDataList,
+    IBearSlideImageProps,
+    IBearSlideCardProps
+} from "bear-react-carousel";
 import {asset} from '../utils';
 import {generatorArray} from "@acrool/js-utils/array";
 
@@ -54,3 +60,25 @@ export const foodImages: IFoodImage[] = [
 export const bearSlideItemData1: TBearSlideItemDataList = baseImage.map(row => {
     return <BearSlideCard key={row.id} bgUrl={row.imageUrl}/>;
 });
+
+
+export const generatorBearSlideCardData = (args?: IBearSlideCardProps): TBearSlideItemDataList => {
+    return baseImage.map(row => {
+        return <BearSlideCard
+            {...args}
+            key={row.id}
+            bgUrl={row.imageUrl}
+        />;
+    });
+}
+
+
+export const generatorBearSlideImageData = (args?: IBearSlideImageProps): TBearSlideItemDataList => {
+    return baseImage.map(row => {
+        return <BearSlideImage
+            {...args}
+            key={row.id}
+            imageUrl={row.imageUrl}
+        />;
+    });
+}
