@@ -87,7 +87,7 @@ export interface IBearSlideItemData {
 export type TBearSlideItemDataList = ReactNode[];
 
 export type heightUnit = 'px' | '%' | 'em' | 'rem' | 'vh';
-export type THeightUnitSize = 'auto'|`${number}${heightUnit}`;
+export type THeightUnitSize = 'auto'|number|`${number}${heightUnit}`;
 
 export interface IAspectRatio {
   widthRatio: number

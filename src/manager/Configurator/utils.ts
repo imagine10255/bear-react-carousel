@@ -80,9 +80,17 @@ export function getMediaSetting(options?: {
     };
 }
 
-
+/**
+ * 取得高度設定
+ * @param height
+ */
 export function getHeight(height: IBreakpointSetting['height']) {
-    if(typeof height === 'string'){
+    if(typeof height === 'number'){
+        return {
+            height: `${height}px`,
+        };
+
+    }else if(typeof height === 'string'){
         if(height === 'auto'){
             return undefined;
         }
