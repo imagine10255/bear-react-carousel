@@ -67,6 +67,12 @@ export const WithStaticHeight: Story = {
         height: '240px',
     }
 };
+export const WithStaticHeightByNumber: Story = {
+    args: {
+        slidesPerView: 1,
+        height: 240,
+    }
+};
 export const WithAspectRatio: Story = {
     args: {
         slidesPerView: 1,
