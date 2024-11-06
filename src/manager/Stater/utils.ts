@@ -45,7 +45,7 @@ export function initDataList(sourceList: TBearSlideItemDataList = [], slidesPerV
         const inPage = Math.ceil((pageFirstIndex + 1) / formatSlidesPerGroup);
         const isLastOver = (sourceIndex + 1) + formatSlidesPerGroup > totalItem;
         const checkInPage = isLastOver ? Math.ceil(lastPage): inPage;
-        const inPageIndex = isLastOver ? (index + 1) % formatSlidesPerGroup: index % formatSlidesPerGroup;
+        const inPageIndex = isLastOver ? 0: index % formatSlidesPerGroup;
 
         formatList[index] = {
             key: `source_${sourceIndex}`,
