@@ -67,6 +67,27 @@ export const WithStaticHeight: Story = {
         height: '240px',
     }
 };
+export const WithAutoHeight: Story = {
+    args: {
+        slidesPerView: 1,
+        height: 'auto',
+        data: baseImage.map((row, idx) => {
+            return <BearSlideCard key={row.id}>
+                {Array.from({length: idx+1}).map((rRow, rIdx) => {
+                    return <div key={rIdx}>{rIdx}</div>;
+                })}
+            </BearSlideCard>
+        }),
+    },
+    render: function Render(args) {
+        return <div>
+            <BearCarousel
+                {...args}
+            />
+            <div>Test</div>
+        </div>;
+    },
+};
 export const WithStaticHeightByNumber: Story = {
     args: {
         slidesPerView: 1,

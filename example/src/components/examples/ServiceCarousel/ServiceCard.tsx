@@ -87,10 +87,10 @@ const ServiceCardRoot = styled.div<{
 
     border: 1px solid transparent;
 
-    :before{
+    &:before{
       content: '';
       position: absolute;
-      background-image: url(asset("/images/service_carousel/union.svg"));
+      background-image: url(${asset("/images/service_carousel/union.svg")});
       background-size: cover;
       background-repeat: no-repeat;
       width: 100%;
@@ -111,7 +111,7 @@ const ServiceCardRoot = styled.div<{
       color: transparent;
     }
 
-    :before{
+    &:before{
       opacity: 1;
     }
   `}

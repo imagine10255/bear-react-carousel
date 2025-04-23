@@ -18,13 +18,14 @@ function UpdateSlideItem() {
     const [activeId, setActiveId] = useState<string>('1');
 
     const bearSlideItemData1: TBearSlideItemDataList = baseImage.map(row => {
+        console.log('activeId', activeId);
         return <BearSlideCard
             key={row.id}
             bgUrl={row.imageUrl}
             style={{
-                width: '200px',
-                height: '200px',
-                border: row.id === activeId ? '5px solid #bdbdbd' : undefined
+                // width: '200px',
+                // height: '200px',
+                border: row.id === activeId ? '5px solid yellow' : undefined
         }}
             onClick={() => setActiveId(row.id)}
         />;
@@ -32,7 +33,7 @@ function UpdateSlideItem() {
 
 
     return <div>
-        activeId: {activeId}
+        click card active id: {activeId}
         {/*測試依照比例設定容器高度*/}
         <BearCarousel
             data={bearSlideItemData1}

@@ -82,7 +82,7 @@ const ServiceCarouselRoot = styled.div`
                   color: #fff;
                 }
                 ${MyServiceCard}{
-                  :before{
+                  &:before{
                     opacity: 0;
                   }
                  }
@@ -91,7 +91,7 @@ const ServiceCarouselRoot = styled.div`
                  .text{
                   color: transparent;
                 }
-                  :before{
+                  &:before{
                     opacity: 1;
                   }
           }

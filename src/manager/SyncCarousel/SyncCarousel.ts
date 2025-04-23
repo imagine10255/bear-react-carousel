@@ -4,9 +4,9 @@ import {logEnable} from '../../config';
 import logger from '../../logger';
 
 class SyncCarousel {
-    private readonly _carouselRef: RefObject<BearCarousel>;
+    private readonly _carouselRef: RefObject<BearCarousel|null>;
 
-    constructor(carouselRef: RefObject<BearCarousel>) {
+    constructor(carouselRef: RefObject<BearCarousel|null>) {
         this._carouselRef = carouselRef;
     }
 

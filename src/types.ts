@@ -1,4 +1,4 @@
-import {RefObject, CSSProperties, ReactNode} from 'react';
+import {RefObject, CSSProperties, ReactNode, JSX} from 'react';
 import * as CSS from 'csstype';
 import BearCarousel from './BearCarousel';
 import Controller from './manager/Controller';
@@ -36,7 +36,7 @@ export interface IBearCarouselProps extends IBreakpointSetting{
   isLazy?: boolean
   isEnableGPURender?: boolean
   renderLazyPreloader?: TRenderLazyPreloader
-  syncCarouselRefs?: RefObject<BearCarousel>[]
+  syncCarouselRefs?: RefObject<BearCarousel|null>[]
   setController?: (controller: Controller) => void
   onSlideChange?: TOnSlideChange
   onAnimationEnd?: TOnAnimationEnd

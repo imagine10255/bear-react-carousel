@@ -1,4 +1,4 @@
-import {useCallback, useRef, useState} from 'react';
+import {useRef, useState} from 'react';
 import styled from 'styled-components';
 import BearCarousel, {BearSlideCard, ICarouselState, TBearSlideItemDataList, moveEffectFn, IInfo} from 'bear-react-carousel';
 import {baseImage} from "../../data";
@@ -13,8 +13,7 @@ const bearSlideItemData1: TBearSlideItemDataList = baseImage.map(row => {
 
 // 輪播項目2
 const bearSlideItemData2: TBearSlideItemDataList = baseImage.map(row => {
-            return <BearSlideCard key={row.id} bgUrl={row.imageUrl} style={{width: '200px', height: '200px'}}/>;
-
+    return <BearSlideCard key={row.id} bgUrl={row.imageUrl}/>;
 });
 
 

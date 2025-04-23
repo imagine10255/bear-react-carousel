@@ -174,7 +174,7 @@ const W99VipRoot = styled.div`
         align-items: center;
         justify-content: center;
 
-        :hover {
+        &:hover {
             background: rgba(78, 148, 103, 0.10);
 
 

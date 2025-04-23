@@ -72,7 +72,7 @@ const Camera = styled.div`
   right: calc(50% - calc(var(--notch-width) * 0.5));
   margin-right: calc(var(--pad) * 0.333);
 
-  :before{
+  &:before{
     content: "";
     height: 33.3%;
     aspect-ratio: 1;
@@ -104,7 +104,7 @@ const Button = styled.div`
   border-top-left-radius: 2px;
   border-bottom-left-radius: 2px;
 
-  :nth-child(1){
+  &:nth-child(1){
     height: 30px;
     margin-bottom: 5px;
   }
@@ -183,7 +183,7 @@ const Notch = styled.div`
   //transform-origin: top;
 
 
-  :before{
+  &:before{
     content: "";
     position: absolute;
     inset: 0;
@@ -218,7 +218,7 @@ const ScreenContainer = styled.div`
   align-items: center;
   gap: calc(var(--pad) * 2);
 
-  :before{
+  &:before{
     content: "";
     position: absolute;
     z-index: 2;
@@ -280,7 +280,7 @@ const PhoneRoot = styled.div`
   //opacity: 0;
   margin: auto;
 
-  :before{
+  &:before{
     content: "";
     position: absolute;
     top: var(--border-radius);

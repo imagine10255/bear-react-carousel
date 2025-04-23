@@ -389,7 +389,11 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             const isActive = row.virtualIndex === virtual?.activeIndex;
             return <SlideItem
                 key={`bear-carousel_slide-item_${row.key}`}
-                ref={(el) => el && this._elementor?.setSlideItemRefs(el, i)}
+                ref={(el) => {
+                    if(el){
+                        this._elementor?.setSlideItemRefs(el, i);
+                    }
+                }}
                 element={row.element}
                 virtualIndex={row.virtualIndex}
                 matchIndex={row.matchIndex}
@@ -412,7 +416,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         const page = this._stater?.page;
         const isEnablePageContent = this._configurator?.setting?.isEnablePageContent;
 
-        let pageContent: JSX.Element[]|undefined;
+        let pageContent: React.JSX.Element[]|undefined;
         const isPageContent = typeof renderPagination !== 'undefined';
         if (isPageContent) {
             pageContent = renderPagination(this._stater?.page?.total ?? 0);
@@ -422,7 +426,11 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
             .map((row, index) => {
                 return <Page
                     key={`page_${index}`}
-                    ref={(el) => el && this._elementor?.setPageRefs(el, index)}
+                    ref={(el) => {
+                        if(el){
+                            this._elementor?.setPageRefs(el, index);
+                        }
+                    }}
                     onSlideToPage={(page) => this._controller?.slideToPage(page)}
                     page={index + 1}
                     isActive={page?.activePage === index + 1}

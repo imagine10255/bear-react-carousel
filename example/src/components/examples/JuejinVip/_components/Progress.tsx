@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import {FCProps} from "@acrool/react-grid";
 
 interface IProps extends FCProps {
     value: number

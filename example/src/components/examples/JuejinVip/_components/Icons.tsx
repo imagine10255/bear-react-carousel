@@ -1,4 +1,5 @@
 import React from 'react';
+import {FCProps} from "@acrool/react-grid";
 
 interface IProps extends FCProps {
 

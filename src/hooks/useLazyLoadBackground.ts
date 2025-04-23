@@ -21,7 +21,7 @@ const useLazyLoadBackground = ({
     imageUrl,
 }: IUseLazyLoadProps) => {
     const imageRef = useRef<HTMLDivElement>(null);
-    const watcher = useRef<IntersectionObserver>();
+    const watcher = useRef<IntersectionObserver>(null);
     const [isPending, startTransition] = useTransition();
     const [isFetching, setFetching] = useState<boolean>(false);
 

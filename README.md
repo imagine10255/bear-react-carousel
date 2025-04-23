@@ -17,6 +17,9 @@
 
 </div>
 
+`^5.2.0 support react >=18.0.0 <20.0.0`
+
+
 ## Documentation
 
 - [Getting Started](https://bear-react-carousel.pages.dev/docs/getting-started)

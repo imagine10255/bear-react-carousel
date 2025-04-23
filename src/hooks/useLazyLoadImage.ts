@@ -17,7 +17,7 @@ const useLazyLoadImage = ({
     imageUrl,
 }: IUseLazyLoadProps) => {
     const imageRef = useRef<HTMLImageElement>(null);
-    const watcher = useRef<IntersectionObserver>();
+    const watcher = useRef<IntersectionObserver>(null);
     const [isPending, startTransition] = useTransition();
     const [isFetching, setFetching] = useState<boolean>(false);
 
