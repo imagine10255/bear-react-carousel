@@ -20,6 +20,7 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "browser": "./dist/bear-react-carousel.es.js",
       "import": "./dist/bear-react-carousel.es.js"
     },
