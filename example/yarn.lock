@@ -10,12 +10,9 @@
     big.js "^7.0.1"
     dayjs "^1.x"
 
-"@acrool/react-carousel@5.3.0":
-  version "5.3.0"
-  resolved "https://registry.yarnpkg.com/@acrool/react-carousel/-/react-carousel-5.3.0.tgz#c5859ac4a2cdec20a5766e38a07a602f8f98002e"
-  integrity sha512-/SqtXPTtw9Lt1Gs3mVtoq7wL0GwQ0bhtphQfeHQTx4zMicLodwEkbhqKjUYtFrTRti49lTiIpGBkBH39U0XVKg==
-  dependencies:
-    clsx "2.1.1"
+"@acrool/react-carousel@link:..":
+  version "0.0.0"
+  uid ""
 
 "@acrool/react-grid@^6.0.5":
   version "6.0.5"
@@ -2804,22 +2801,30 @@ react-docgen@^7.0.0:
     resolve "^1.22.1"
     strip-indent "^4.0.0"
 
-react-dom@19.1.0, "react-dom@^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0":
+"react-dom@^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0":
   version "19.1.0"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-19.1.0.tgz#133558deca37fa1d682708df8904b25186793623"
   integrity sha512-Xs1hdnE+DyKgeHJeJznQmYMIBG3TKIHJJT95Q58nHLSrElKlGQqDTR2HQ9fx5CN/Gk6Vh/kupBTDLU11/nDk/g==
   dependencies:
     scheduler "^0.26.0"
 
+"react-dom@link:../node_modules/react-dom":
+  version "0.0.0"
+  uid ""
+
 react-is@^17.0.1:
   version "17.0.2"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.2.tgz#e691d4a8e9c789365655539ab372762b0efb54f0"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
-react@19.1.0, "react@^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0":
+"react@^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0":
   version "19.1.0"
   resolved "https://registry.yarnpkg.com/react/-/react-19.1.0.tgz#926864b6c48da7627f004795d6cce50e90793b75"
   integrity sha512-FS+XFBNvn3GTAWq26joslQgWNoFu08F4kl0J4CgdNKADkdSGXQyTCnKteIAJy96Br6YbpEU1LSzV5dYtjMkMDg==
+
+"react@link:../node_modules/react":
+  version "0.0.0"
+  uid ""
 
 readdirp@^4.0.1:
   version "4.1.2"
