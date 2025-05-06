@@ -2,9 +2,9 @@ import * as React from 'react';
 import '@testing-library/jest-dom';
 import {cleanup, render, screen} from '@testing-library/react';
 
-import BearCarousel from '../src/BearCarousel';
+import AcroolCarousel from '../src/AcroolCarousel';
 import {getActiveElement, setSlideItemsSizes, setContainerSize} from './utils';
-import BearSlideCard from "../src/BearSlideCard";
+import AcroolSlideCard from "../src/AcroolSlideCard";
 
 
 
@@ -17,13 +17,13 @@ describe('Center mode testing', () => {
 
 
     const createData = Array.from({length: 6});
-    const data = createData.map((row, index) => ({key: index, children: <BearSlideCard>item{index}</BearSlideCard>}));
+    const data = createData.map((row, index) => ({key: index, children: <AcroolSlideCard>item{index}</AcroolSlideCard>}));
     const onMount = () => {
-        container = screen.getByTestId('bear-carousel-container');
-        slideItems = screen.getAllByTestId('bear-carousel-slideItem');
-        pageButtons = screen.getAllByTestId('bear-carousel-page-button');
-        navNextButton = screen.getByTestId('bear-carousel-navNextButton');
-        navPrevButton = screen.getByTestId('bear-carousel-navPrevButton');
+        container = screen.getByTestId('acrool-carousel-container');
+        slideItems = screen.getAllByTestId('acrool-carousel-slideItem');
+        pageButtons = screen.getAllByTestId('acrool-carousel-page-button');
+        navNextButton = screen.getByTestId('acrool-carousel-navNextButton');
+        navPrevButton = screen.getByTestId('acrool-carousel-navPrevButton');
 
         setContainerSize(container, 400);
         setSlideItemsSizes(slideItems, Math.floor(400 / 3));
@@ -31,7 +31,7 @@ describe('Center mode testing', () => {
 
 
     beforeEach(() => {
-        render(<BearCarousel
+        render(<AcroolCarousel
             onMount={onMount}
             data={data}
             isEnableNavButton

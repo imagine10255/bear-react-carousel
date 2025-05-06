@@ -1,12 +1,12 @@
 import {useState} from 'react';
-import BearCarousel, {BearSlideCard, TBearSlideItemDataList, ICarouselState, Controller, TOnAnimationEnd} from '@acrool/react-carousel';
+import AcroolCarousel, {AcroolSlideCard, TAcroolSlideItemDataList, ICarouselState, Controller, TOnAnimationEnd} from '@acrool/react-carousel';
 
 import styled, {createGlobalStyle} from 'styled-components';
 import {baseImage} from "../../data";
 
 
 const sample = {
-     title: 'Bear React Carousel',
+     title: 'Acrool React Carousel',
     desc: 'Most modern slider for ReactJS',
 }
 
@@ -30,14 +30,14 @@ function Modal() {
 
 
     // 輪播項目1
-    const bearSlideItemData1: TBearSlideItemDataList = baseImage.map(row => {
-        return <BearSlideScrollViewCard key={row.id}>
+    const acroolSlideItemData1: TAcroolSlideItemDataList = baseImage.map(row => {
+        return <AcroolSlideScrollViewCard key={row.id}>
             <img src={row.imageUrl} alt={row.id}/>
             <h2>{sample.title}</h2>
             {Array.from({length: 80}).map((fill, idx) => {
                 return <p key={idx}>{sample.desc}-{idx}</p>;
             })}
-        </BearSlideScrollViewCard>;
+        </AcroolSlideScrollViewCard>;
     });
 
 
@@ -45,8 +45,8 @@ function Modal() {
 
     return <ModalRoot>
         {/*測試依照比例設定容器高度*/}
-        <BearCarousel
-            data={enable ? bearSlideItemData1: undefined}
+        <AcroolCarousel
+            data={enable ? acroolSlideItemData1: undefined}
             onSlideChange={setCarouselState}
             onAnimationEnd={handleOnAnimationEnd}
             slidesPerView={1}
@@ -66,7 +66,7 @@ function Modal() {
 export default Modal;
 
 
-const BearSlideScrollViewCard = styled(BearSlideCard)`
+const AcroolSlideScrollViewCard = styled(AcroolSlideCard)`
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
 

@@ -1,7 +1,7 @@
 import * as CSS from 'csstype';
 import {CSSProperties, JSX,ReactNode, RefObject} from 'react';
 
-import BearCarousel from './BearCarousel';
+import AcroolCarousel from './AcroolCarousel';
 import Controller from './manager/Controller';
 import Elementor from './manager/Elementor';
 
@@ -22,12 +22,12 @@ export type TOnMount = () => void
 export type GlobalWindow = Window & typeof globalThis
 
 
-export interface IBearCarouselProps extends IBreakpointSetting{
+export interface IAcroolCarouselProps extends IBreakpointSetting{
   style?: CSS.Properties
   className?: string
   renderNavButton?: TRenderNavButton
   renderPagination?: TRenderPagination
-  data?: TBearSlideItemDataList
+  data?: TAcroolSlideItemDataList
   moveTime?: number
   autoPlayTime?: number
   initStartPlayTime?: number
@@ -37,7 +37,7 @@ export interface IBearCarouselProps extends IBreakpointSetting{
   isLazy?: boolean
   isEnableGPURender?: boolean
   renderLazyPreloader?: TRenderLazyPreloader
-  syncCarouselRefs?: RefObject<BearCarousel|null>[]
+  syncCarouselRefs?: RefObject<AcroolCarousel|null>[]
   setController?: (controller: Controller) => void
   onSlideChange?: TOnSlideChange
   onAnimationEnd?: TOnAnimationEnd
@@ -79,13 +79,13 @@ export interface IInfo extends ICarouselState{
   isVisiblePagination: boolean
   isVisibleNavButton: boolean
 }
-export interface IBearSlideItemData {
+export interface IAcroolSlideItemData {
   key: string|number
   children: ReactNode
 }
 
 
-export type TBearSlideItemDataList = ReactNode[];
+export type TAcroolSlideItemDataList = ReactNode[];
 
 export type heightUnit = 'px' | '%' | 'em' | 'rem' | 'vh';
 export type THeightUnitSize = 'auto'|number|`${number}${heightUnit}`;
@@ -139,7 +139,7 @@ export type TToNext = () => void
 
 
 
-export interface IBearSlideCardProps {
+export interface IAcroolSlideCardProps {
     className?: string
     style?: CSS.Properties
     bgUrl?: string
@@ -148,7 +148,7 @@ export interface IBearSlideCardProps {
     onClick?: () => void
 }
 
-export interface IBearSlideImageProps {
+export interface IAcroolSlideImageProps {
     className?: string
     style?: CSS.Properties
     imageUrl: string

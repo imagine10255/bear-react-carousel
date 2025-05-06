@@ -1,7 +1,7 @@
 import {useRef, useState} from 'react';
-import BearCarousel, {
-    BearSlideCard,
-    TBearSlideItemDataList,
+import AcroolCarousel, {
+    AcroolSlideCard,
+    TAcroolSlideItemDataList,
     elClassName,
     IInfo,
     ICarouselState,
@@ -15,8 +15,8 @@ import {baseImage} from "../../data";
 
 
 // 輪播項目1
-const bearSlideItemData1: TBearSlideItemDataList = baseImage.map(row => {
-            return <BearSlideCard key={row.id} bgUrl={row.imageUrl} style={{width: '200px', height: '200px'}}/>;
+const acroolSlideItemData1: TAcroolSlideItemDataList = baseImage.map(row => {
+            return <AcroolSlideCard key={row.id} bgUrl={row.imageUrl} style={{width: '200px', height: '200px'}}/>;
 
 });
 
@@ -46,10 +46,10 @@ function Effect2() {
 
     return <div style={{width: '375px'}}>
         {/*測試依照比例設定容器高度*/}
-        <BearCarousel
+        <AcroolCarousel
             // style={{width: '400px'}}
             setController={setController}
-            data={enable ? bearSlideItemData1: undefined}
+            data={enable ? acroolSlideItemData1: undefined}
             onSlideChange={setCarouselState}
             // onSlideChange={setCarouselState}
             slidesPerView={1.5}

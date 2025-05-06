@@ -1,8 +1,8 @@
-import BearCarousel, {
-    BearSlideCard,
+import AcroolCarousel, {
+    AcroolSlideCard,
     Controller,
     elClassName,
-    TBearSlideItemDataList, TOnSlideChange, ICarouselState
+    TAcroolSlideItemDataList, TOnSlideChange, ICarouselState
 } from '@acrool/react-carousel';
 import {Flex} from '@acrool/react-grid';
 import React, {useCallback, useEffect, useState} from 'react';
@@ -38,9 +38,9 @@ function X99VIP({
     }, [controller]);
 
 
-    const carouselData = (): TBearSlideItemDataList|undefined => {
+    const carouselData = (): TAcroolSlideItemDataList|undefined => {
         return data.map((row, index) => {
-            return <BearSlideCard key={index}>
+            return <AcroolSlideCard key={index}>
                 <VipCard
                     level={index + 1}
                     levelName={row.name}
@@ -48,7 +48,7 @@ function X99VIP({
                     month={row.keepLevelDurationMonths}
                     isUseOld={false} // 測試渲染卡頓的圖
                 />
-            </BearSlideCard>;
+            </AcroolSlideCard>;
         });
 
     };
@@ -75,7 +75,7 @@ function X99VIP({
         </Content>
 
         <LevelWrapper>
-            <BearCarousel
+            <AcroolCarousel
                 setController={setController}
                 isCenteredSlides
                 isEnableNavButton

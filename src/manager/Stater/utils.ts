@@ -1,4 +1,4 @@
-import {TBearSlideItemDataList, TSlidesPerView} from '../../types';
+import {TAcroolSlideItemDataList, TSlidesPerView} from '../../types';
 import Stater from './Stater';
 import {InitData} from './types';
 
@@ -9,7 +9,7 @@ import {InitData} from './types';
  * @param slidesPerGroup
  * @param isLoop
  */
-export function initDataList(sourceList: TBearSlideItemDataList = [], slidesPerView: TSlidesPerView = 1, slidesPerGroup = 1, isLoop= false): InitData[] {
+export function initDataList(sourceList: TAcroolSlideItemDataList = [], slidesPerView: TSlidesPerView = 1, slidesPerGroup = 1, isLoop= false): InitData[] {
     const formatList = [];
     const isClone = isLoop;
     let index = 0;

@@ -1,11 +1,12 @@
-import * as React from 'react';
 import '@testing-library/jest-dom';
-import userEvent from '@testing-library/user-event';
-import {act, cleanup, render, screen, waitFor} from '@testing-library/react';
 
-import BearCarousel from '../src/BearCarousel';
-import {getActiveElement, setSlideItemsSizes, setContainerSize} from './utils';
-import BearSlideCard from "../src/BearSlideCard";
+import {act, cleanup, render, screen} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import * as React from 'react';
+
+import AcroolCarousel from '../src/AcroolCarousel';
+import AcroolSlideCard from '../src/AcroolSlideCard';
+import {getActiveElement, setContainerSize,setSlideItemsSizes} from './utils';
 
 
 
@@ -22,18 +23,18 @@ describe('Auto play testing', () => {
 
         const containerSize = 400;
         const createData = Array.from({length: 6});
-        const data = createData.map((row, index) => ({key: index, children: <BearSlideCard>item{index}</BearSlideCard>}));
+        const data = createData.map((row, index) => ({key: index, children: <AcroolSlideCard>item{index}</AcroolSlideCard>}));
         const onMount = () => {
-            container = screen.getByTestId('bear-carousel-container');
-            slideItems = screen.getAllByTestId('bear-carousel-slideItem');
-            navNextButton = screen.getByTestId('bear-carousel-navNextButton');
-            navPrevButton = screen.getByTestId('bear-carousel-navPrevButton');
+            container = screen.getByTestId('acrool-carousel-container');
+            slideItems = screen.getAllByTestId('acrool-carousel-slideItem');
+            navNextButton = screen.getByTestId('acrool-carousel-navNextButton');
+            navPrevButton = screen.getByTestId('acrool-carousel-navPrevButton');
 
             setContainerSize(container, containerSize);
             setSlideItemsSizes(slideItems, Math.floor(containerSize));
         };
 
-        render(<BearCarousel
+        render(<AcroolCarousel
             onMount={onMount}
             data={data}
             isEnableNavButton

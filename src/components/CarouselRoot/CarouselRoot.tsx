@@ -28,7 +28,7 @@ const CarouselRoot = forwardRef<HTMLDivElement, IProps>(({
 
     return <div
         ref={ref}
-        data-testid="bear-carousel"
+        data-testid="acrool-carousel"
         style={{
             ...style,
             ...extendStyle,

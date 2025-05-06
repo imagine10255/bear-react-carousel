@@ -1,9 +1,9 @@
-import BearCarousel, {
-    BearSlideCard,
+import AcroolCarousel, {
+    AcroolSlideCard,
     Controller,     elClassName,
     ICarouselState,
     IInfo,
-    moveEffectFn,     TBearSlideItemDataList,
+    moveEffectFn,     TAcroolSlideItemDataList,
     TMoveEffectFn
 } from '@acrool/react-carousel';
 import {useRef, useState} from 'react';
@@ -26,8 +26,8 @@ function SportMenus() {
 
 
     // 輪播項目1
-    const bearSlideItemData1: TBearSlideItemDataList = baseImage.map(row => {
-        return <BearSlideCard key={row.id} bgUrl={row.imageUrl} style={{width: '200px', height: '200px'}}/>;
+    const acroolSlideItemData1: TAcroolSlideItemDataList = baseImage.map(row => {
+        return <AcroolSlideCard key={row.id} bgUrl={row.imageUrl} style={{width: '200px', height: '200px'}}/>;
     });
 
 
@@ -46,10 +46,10 @@ function SportMenus() {
 
     return <div>
         {/*測試依照比例設定容器高度*/}
-        <BearCarousel
+        <AcroolCarousel
             // style={{width: '400px'}}
             setController={setController}
-            data={enable ? bearSlideItemData1: undefined}
+            data={enable ? acroolSlideItemData1: undefined}
             onSlideChange={setCarouselState}
             // onSlideChange={setCarouselState}
             slidesPerView={5}

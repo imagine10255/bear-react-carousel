@@ -1,19 +1,19 @@
 import {useRef, useState} from 'react';
 import styled from 'styled-components';
-import BearCarousel, {BearSlideCard, ICarouselState, TBearSlideItemDataList, moveEffectFn, IInfo} from '@acrool/react-carousel';
+import AcroolCarousel, {AcroolSlideCard, ICarouselState, TAcroolSlideItemDataList, moveEffectFn, IInfo} from '@acrool/react-carousel';
 import {baseImage} from "../../data";
 
 
 
 
 // 輪播項目1
-const bearSlideItemData1: TBearSlideItemDataList = baseImage.map(row => {
-    return <BearSlideCard bgUrl={row.imageUrl}/>;
+const acroolSlideItemData1: TAcroolSlideItemDataList = baseImage.map(row => {
+    return <AcroolSlideCard bgUrl={row.imageUrl}/>;
 });
 
 // 輪播項目2
-const bearSlideItemData2: TBearSlideItemDataList = baseImage.map(row => {
-    return <BearSlideCard key={row.id} bgUrl={row.imageUrl}/>;
+const acroolSlideItemData2: TAcroolSlideItemDataList = baseImage.map(row => {
+    return <AcroolSlideCard key={row.id} bgUrl={row.imageUrl}/>;
 });
 
 
@@ -21,11 +21,11 @@ const bearSlideItemData2: TBearSlideItemDataList = baseImage.map(row => {
 const SyncControl = () => {
     const [carouselState, setCarouselState] = useState<ICarouselState>();
 
-    // const [carousel, setCarousel] = useState<IBearCarouselObj>();
+    // const [carousel, setCarousel] = useState<IAcroolCarouselObj>();
     const [enable, setEnable] = useState<boolean>(true);
     const [count, setCount] = useState<number>(0);
-    const syncCarouselRef = useRef<BearCarousel>(null);
-    const sync2CarouselRef = useRef<BearCarousel>(null);
+    const syncCarouselRef = useRef<AcroolCarousel>(null);
+    const sync2CarouselRef = useRef<AcroolCarousel>(null);
 
     const slideRef = useRef<HTMLInputElement>(null);
 
@@ -36,11 +36,11 @@ const SyncControl = () => {
 
         {/*測試同步*/}
         <Box>
-            <BearCarousel
+            <AcroolCarousel
                 ref={syncCarouselRef}
                 syncCarouselRefs={[sync2CarouselRef]}
 
-                data={bearSlideItemData2}
+                data={acroolSlideItemData2}
                 slidesPerView={3}
                 isCenteredSlides
 
@@ -60,12 +60,12 @@ const SyncControl = () => {
 
 
         <Box2>
-            <BearCarousel
+            <AcroolCarousel
                 ref={sync2CarouselRef}
                 syncCarouselRefs={[syncCarouselRef]}
                 onSlideChange={setCarouselState}
 
-                data={bearSlideItemData1}
+                data={acroolSlideItemData1}
                 slidesPerView={1}
                 isCenteredSlides
                 height="200px"

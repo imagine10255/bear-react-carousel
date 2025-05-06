@@ -3,8 +3,8 @@ import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 import {cleanup, fireEvent, render, screen} from '@testing-library/react';
 
-import BearCarousel from '../src/BearCarousel';
-import BearSlideCard from '../src/BearSlideCard';
+import AcroolCarousel from '../src/AcroolCarousel';
+import AcroolSlideCard from '../src/AcroolSlideCard';
 import {getActiveElement, setContainerSize, setSlideItemsSizes} from './utils';
 
 
@@ -18,19 +18,19 @@ describe('Base testing', () => {
 
     const containerSize = 400;
     const createData = Array.from({length: 6});
-    const data = createData.map((row, index) => ({key: index, children: <BearSlideCard>item{index}</BearSlideCard>}));
+    const data = createData.map((row, index) => ({key: index, children: <AcroolSlideCard>item{index}</AcroolSlideCard>}));
     const onMount = () => {
-        container = screen.getByTestId('bear-carousel-container');
-        slideItems = screen.getAllByTestId('bear-carousel-slideItem');
-        pageButtons = screen.getAllByTestId('bear-carousel-page-button');
-        navNextButton = screen.getByTestId('bear-carousel-navNextButton');
-        navPrevButton = screen.getByTestId('bear-carousel-navPrevButton');
+        container = screen.getByTestId('acrool-carousel-container');
+        slideItems = screen.getAllByTestId('acrool-carousel-slideItem');
+        pageButtons = screen.getAllByTestId('acrool-carousel-page-button');
+        navNextButton = screen.getByTestId('acrool-carousel-navNextButton');
+        navPrevButton = screen.getByTestId('acrool-carousel-navPrevButton');
         setContainerSize(container, containerSize);
         setSlideItemsSizes(slideItems, containerSize);
     };
-    
+
     beforeEach(() => {
-        render(<BearCarousel
+        render(<AcroolCarousel
             onMount={onMount}
             data={data}
             isEnableNavButton
@@ -51,8 +51,8 @@ describe('Base testing', () => {
         return getActiveElement(pageButtons);
     }
 
-    test('Bear Carousel is in the document', () => {
-        const rootElement = screen.getByTestId('bear-carousel');
+    test('Acrool Carousel is in the document', () => {
+        const rootElement = screen.getByTestId('acrool-carousel');
         expect(rootElement).toBeInTheDocument();
     });
 

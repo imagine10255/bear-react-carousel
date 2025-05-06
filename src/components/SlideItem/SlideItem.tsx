@@ -32,7 +32,7 @@ const SlideItem = forwardRef<HTMLInputElement, IProps>(({
     return <div
         className={elClassName.slideItem}
         ref={ref}
-        data-testid="bear-carousel-slideItem"
+        data-testid="acrool-carousel-slideItem"
         data-virtual={virtualIndex}
         data-match={booleanToDataAttr(isClone, matchIndex)}
         data-page={inPage}

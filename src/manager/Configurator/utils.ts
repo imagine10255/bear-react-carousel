@@ -1,6 +1,6 @@
 import {
-    GlobalWindow,     IAspectRatio,
-    IBearCarouselProps,
+    GlobalWindow,         IAcroolCarouselProps,
+    IAspectRatio,
     IBreakpointSetting,
     IBreakpointSettingActual,
     IPropsBreakpoints,
@@ -14,7 +14,7 @@ import {anyToNumber, getSizeByRange, objectKeys} from '../../utils';
  * 取得設定
  * @param props
  */
-export function getSetting(props: IBearCarouselProps): ISetting {
+export function getSetting(props: IAcroolCarouselProps): ISetting {
     return {
         slidesPerView: props.slidesPerView,
         slidesPerGroup: props.slidesPerGroup,

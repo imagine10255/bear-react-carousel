@@ -33,13 +33,13 @@ interface IPropsButton {
 export const NavNextButton = ({
     onClick,
 }: IPropsButton) => {
-    return <NavButton onClick={onClick} className={[elClassName.navButton, elClassName.navNextButton].join(' ')} testId="bear-carousel-navNextButton"/>;
+    return <NavButton onClick={onClick} className={[elClassName.navButton, elClassName.navNextButton].join(' ')} testId="acrool-carousel-navNextButton"/>;
 };
 
 export const NavPrevButton = ({
     onClick,
 }: IPropsButton) => {
-    return <NavButton onClick={onClick} className={[elClassName.navButton, elClassName.navPrevButton].join(' ')} testId="bear-carousel-navPrevButton"/>;
+    return <NavButton onClick={onClick} className={[elClassName.navButton, elClassName.navPrevButton].join(' ')} testId="acrool-carousel-navPrevButton"/>;
 };
 
 

@@ -17,7 +17,7 @@ test('test Slide item render', async () => {
     />);
 
     // ACT
-    const element = screen.getByTestId('bear-carousel-slideItem');
+    const element = screen.getByTestId('acrool-carousel-slideItem');
 
     // ASSERT
     expect(element).toBeInTheDocument();

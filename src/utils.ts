@@ -1,7 +1,7 @@
 import React, {ReactNode} from 'react';
 
 import deepCompare from './deepCompare';
-import {IBearCarouselProps, TBearSlideItemDataList} from './types';
+import {IAcroolCarouselProps, TAcroolSlideItemDataList} from './types';
 
 /**
  * 判斷是否為手機裝置
@@ -115,7 +115,7 @@ export function objectKeys<T extends object>(object: T): Array<keyof T> {
 }
 
 
-export function isPropsDiff(props: IBearCarouselProps, nextProps: IBearCarouselProps, exclude: string[]) {
+export function isPropsDiff(props: IAcroolCarouselProps, nextProps: IAcroolCarouselProps, exclude: string[]) {
     const filterProps = objectKeys(props)
         .filter((key) => typeof props[key] !== 'function' && !exclude.includes(key))
         .map(key => props[key]);
@@ -126,7 +126,7 @@ export function isPropsDiff(props: IBearCarouselProps, nextProps: IBearCarouselP
     return deepCompare(filterProps, nextFilterProps) === false;
 }
 
-// export function isDataKeyDff(data?: TBearSlideItemDataList, nextData?: TBearSlideItemDataList) {
+// export function isDataKeyDff(data?: TAcroolSlideItemDataList, nextData?: TAcroolSlideItemDataList) {
 //     const oldKey = data?.map((row) => row.key).join('_');
 //     const nextKey = nextData?.map((row) => row.key).join('_');
 //

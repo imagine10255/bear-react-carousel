@@ -33,7 +33,7 @@ const Page = forwardRef<HTMLDivElement, IProps>(({
         ref={ref}
         role='button'
         onClick={handleSlideToPage}
-        data-testid="bear-carousel-page-button"
+        data-testid="acrool-carousel-page-button"
         data-active={booleanToDataAttr(isActive)}
         data-page={page}
     >

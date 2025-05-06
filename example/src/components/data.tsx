@@ -1,30 +1,30 @@
+import {generatorArray} from '@acrool/js-utils/array';
 import {
-    BearSlideCard,
-    BearSlideImage,
-    TBearSlideItemDataList,
-    IBearSlideImageProps,
-    IBearSlideCardProps
-} from "@acrool/react-carousel";
+    AcroolSlideCard,
+    AcroolSlideImage,
+    IAcroolSlideCardProps,
+    IAcroolSlideImageProps,
+    TAcroolSlideItemDataList} from '@acrool/react-carousel';
+
 import {asset} from '../utils';
-import {generatorArray} from "@acrool/js-utils/array";
 
 
 export const baseImage = generatorArray(14, 'cat').map((key, idx) => {
-   return {
-       id: key,
-       imageUrl: asset(`/images/sample/${idx + 1}.jpg`)
-   };
+    return {
+        id: key,
+        imageUrl: asset(`/images/sample/${idx + 1}.jpg`)
+    };
 });
 
 
 
 export interface IFoodImage {
-    id: number,
-    subTitle: string,
-    title: string,
-    desc: string,
-    imageUrl: string,
-    position: 'left'|'right',
+    id: number
+    subTitle: string
+    title: string
+    desc: string
+    imageUrl: string
+    position: 'left'|'right'
 }
 export const foodImages: IFoodImage[] = [
     {
@@ -57,28 +57,28 @@ export const foodImages: IFoodImage[] = [
 
 
 
-export const bearSlideItemData1: TBearSlideItemDataList = baseImage.map(row => {
-    return <BearSlideCard key={row.id} bgUrl={row.imageUrl}/>;
+export const acroolSlideItemData1: TAcroolSlideItemDataList = baseImage.map(row => {
+    return <AcroolSlideCard key={row.id} bgUrl={row.imageUrl}/>;
 });
 
 
-export const generatorBearSlideCardData = (args?: IBearSlideCardProps): TBearSlideItemDataList => {
+export const generatorAcroolSlideCardData = (args?: IAcroolSlideCardProps): TAcroolSlideItemDataList => {
     return baseImage.map(row => {
-        return <BearSlideCard
+        return <AcroolSlideCard
             {...args}
             key={row.id}
             bgUrl={row.imageUrl}
         />;
     });
-}
+};
 
 
-export const generatorBearSlideImageData = (args?: IBearSlideImageProps): TBearSlideItemDataList => {
+export const generatorAcroolSlideImageData = (args?: IAcroolSlideImageProps): TAcroolSlideItemDataList => {
     return baseImage.map(row => {
-        return <BearSlideImage
+        return <AcroolSlideImage
             {...args}
             key={row.id}
             imageUrl={row.imageUrl}
         />;
     });
-}
+};

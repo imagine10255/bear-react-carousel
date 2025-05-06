@@ -16,7 +16,7 @@ test('test page render', async () => {
     />);
 
     // ACT
-    const element = screen.getByTestId('bear-carousel-page-button');
+    const element = screen.getByTestId('acrool-carousel-page-button');
 
     await userEvent.click(element);
 

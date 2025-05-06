@@ -11,8 +11,8 @@ const meta = {
     },
     argTypes: {},
     args: {
-        name: 'Bear React Carousel',
-        repositoryUrl: 'https://github.com/imagine10255/@acrool/react-carousel',
+        name: 'Acrool React Carousel',
+        repositoryUrl: 'https://github.com/acrool/acrool-react-carousel',
     },
 } satisfies Meta<typeof Banner>;
 
