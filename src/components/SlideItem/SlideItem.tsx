@@ -1,12 +1,13 @@
 import {forwardRef} from 'react';
+
 import elClassName from '../../el-class-name';
 import {CloneIcon} from '../../Icon';
 import {booleanToDataAttr} from '../../utils';
 
 
 interface IProps {
-    element: React.ReactNode,
-    index: number,
+    element: React.ReactNode
+    index: number
     virtualIndex: number
     matchIndex: number
     sourceIndex: number

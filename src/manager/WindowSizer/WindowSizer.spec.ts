@@ -1,8 +1,8 @@
-import Eventor from '../Eventor';
 import {EDevice, IPropsBreakpoints} from '../../types';
+import Configurator from '../Configurator';
+import Eventor from '../Eventor';
 import {TEventMap} from './types';
 import WindowSizer from './WindowSizer';
-import Configurator from '../Configurator';
 
 describe('WindowSizer', () => {
     let mockWindow: Window & typeof globalThis;

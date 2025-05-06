@@ -2,7 +2,7 @@ import type {Meta, StoryObj} from '@storybook/react';
 import BearCarousel, {
     TBearSlideItemDataList,
     BearSlideCard
-} from 'bear-react-carousel';
+} from '@acrool/react-carousel';
 import {generatorBearSlideCardData, generatorBearSlideImageData} from "../../data";
 
 

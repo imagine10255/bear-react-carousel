@@ -1,4 +1,4 @@
-import {useEffect, useState, useRef, useCallback, useTransition} from 'react';
+import {useCallback, useEffect, useRef, useState, useTransition} from 'react';
 
 interface IUseLazyLoadProps {
     enabled?: boolean

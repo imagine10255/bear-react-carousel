@@ -1,8 +1,8 @@
+import {logEnable} from '../../config';
+import logger from '../../logger';
 import Configurator from '../Configurator';
 import Eventor from '../Eventor';
 import {TEventMap} from './types';
-import {logEnable} from '../../config';
-import logger from '../../logger';
 
 /**
  * unmount 跟 blur 都需要 停止計時器

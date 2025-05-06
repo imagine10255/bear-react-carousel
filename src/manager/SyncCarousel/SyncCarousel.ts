@@ -1,4 +1,5 @@
 import {RefObject} from 'react';
+
 import BearCarousel from '../../BearCarousel';
 import {logEnable} from '../../config';
 import logger from '../../logger';

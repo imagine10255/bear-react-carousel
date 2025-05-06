@@ -3,7 +3,7 @@ import type {Meta, StoryObj} from '@storybook/react';
 import BearCarousel, {
     BearSlideCard,
     elClassName
-} from 'bear-react-carousel';
+} from '@acrool/react-carousel';
 import {baseImage, generatorBearSlideCardData, generatorBearSlideImageData} from "../../data";
 
 

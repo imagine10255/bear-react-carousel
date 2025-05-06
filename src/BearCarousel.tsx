@@ -1,27 +1,27 @@
-import * as React from 'react';
-import {booleanToDataAttr, isPropsDiff} from './utils';
-import logger from './logger';
-import {IBearCarouselProps} from './types';
-import elClassName from './el-class-name';
 import './styles.css';
 
-import Configurator, {getSetting} from './manager/Configurator';
-import WindowSizer from './manager/WindowSizer';
-import Stater from './manager/Stater';
-import SlideItem from './components/SlideItem';
-import Elementor from './manager/Elementor';
-import Controller from './manager/Controller';
-import AutoPlayer from './manager/AutoPlayer';
-import Dragger from './manager/Dragger';
-import SyncCarousel from './manager/SyncCarousel';
+import * as React from 'react';
 
-import WindowSize from './components/WindowSize';
-import Page from './components/Page';
-import {SlideProvider} from './components/SlideProvider/SlideProvider';
-import {NavNextButton, NavPrevButton} from './components/NavButton';
 import CarouselRoot from './components/CarouselRoot';
+import {NavNextButton, NavPrevButton} from './components/NavButton';
+import Page from './components/Page';
+import SlideItem from './components/SlideItem';
+import {SlideProvider} from './components/SlideProvider/SlideProvider';
+import WindowSize from './components/WindowSize';
 import {logEnable} from './config';
+import elClassName from './el-class-name';
+import logger from './logger';
+import AutoPlayer from './manager/AutoPlayer';
+import Configurator, {getSetting} from './manager/Configurator';
+import Controller from './manager/Controller';
+import Dragger from './manager/Dragger';
+import Elementor from './manager/Elementor';
 import ElState from './manager/Elementor/ElState';
+import Stater from './manager/Stater';
+import SyncCarousel from './manager/SyncCarousel';
+import WindowSizer from './manager/WindowSizer';
+import {IBearCarouselProps} from './types';
+import {booleanToDataAttr, isPropsDiff} from './utils';
 
 
 

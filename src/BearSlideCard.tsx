@@ -1,8 +1,9 @@
-import React, {ReactNode} from 'react';
-import CSS from 'csstype';
 import clsx from 'clsx';
-import elClassName from './el-class-name';
+import CSS from 'csstype';
+import React, {ReactNode} from 'react';
+
 import {useSlide} from './components/SlideProvider';
+import elClassName from './el-class-name';
 import useLazyLoadBackground from './hooks/useLazyLoadBackground';
 import {IBearSlideCardProps} from './types';
 

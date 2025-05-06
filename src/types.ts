@@ -1,5 +1,6 @@
-import {RefObject, CSSProperties, ReactNode, JSX} from 'react';
 import * as CSS from 'csstype';
+import {CSSProperties, JSX,ReactNode, RefObject} from 'react';
+
 import BearCarousel from './BearCarousel';
 import Controller from './manager/Controller';
 import Elementor from './manager/Elementor';
@@ -53,23 +54,23 @@ export interface ICarouselState {
   // }
   // 額外整理過的資訊
   virtual: {
-    activeIndex: number
-    prevActiveIndex: number
-    lastIndex: number
-    total: number
+    activeIndex: number,
+    prevActiveIndex: number,
+    lastIndex: number,
+    total: number,
   }
   // 原始資料的資訊
   source: {
-    activeIndex: number
-    activeInPageIndex: number
-    prevActiveIndex: number
-    lastIndex: number
-    total: number
+    activeIndex: number,
+    activeInPageIndex: number,
+    prevActiveIndex: number,
+    lastIndex: number,
+    total: number,
   }
   page: {
-    limit: number
-    activePage: number
-    total: number
+    limit: number,
+    activePage: number,
+    total: number,
   }
 }
 
@@ -96,22 +97,22 @@ export interface IAspectRatio {
 
 
 export interface IPercentageInfo {
-  calcPercentage: number,
-  percentage: number,
+  calcPercentage: number
+  percentage: number
   index: number
 }
 export type TMoveEffectFn = (percentageInfo: IPercentageInfo) => CSSProperties;
 
 
 interface IMoveEffect {
-  moveTime?: string,
-  moveFn?: TMoveEffectFn,
+  moveTime?: string
+  moveFn?: TMoveEffectFn
 }
 
 export interface IBreakpointSetting {
   slidesPerView: TSlidesPerView
   slidesPerGroup: number
-  height?: IAspectRatio|THeightUnitSize,
+  height?: IAspectRatio|THeightUnitSize
   spaceBetween?: number
   isCenteredSlides?: boolean
   isEnableLoop?: boolean
@@ -139,31 +140,31 @@ export type TToNext = () => void
 
 
 export interface IBearSlideCardProps {
-    className?: string,
-    style?: CSS.Properties,
-    bgUrl?: string,
-    bgSize?: '100%'|'cover'|'contain',
-    children?: ReactNode,
-    onClick?: () => void,
+    className?: string
+    style?: CSS.Properties
+    bgUrl?: string
+    bgSize?: '100%'|'cover'|'contain'
+    children?: ReactNode
+    onClick?: () => void
 }
 
 export interface IBearSlideImageProps {
-    className?: string,
-    style?: CSS.Properties,
-    imageUrl: string,
-    imageAlt?: string,
-    imageSize?: 'none'|'cover'|'contain'|'scaleDown',
-    alt?: string,
-    onClick?: () => void,
+    className?: string
+    style?: CSS.Properties
+    imageUrl: string
+    imageAlt?: string
+    imageSize?: 'none'|'cover'|'contain'|'scaleDown'
+    alt?: string
+    onClick?: () => void
 }
 
 
 
 export interface ISetting extends IBreakpointSetting {
   slidesPerViewActual: TSlidesPerViewActual
-  moveTime?: number,
-  autoPlayTime?: number,
-  initStartPlayTime?: number,
-  isEnableGPURender?: boolean,
-  isDebug?: boolean,
+  moveTime?: number
+  autoPlayTime?: number
+  initStartPlayTime?: number
+  isEnableGPURender?: boolean
+  isDebug?: boolean
 }

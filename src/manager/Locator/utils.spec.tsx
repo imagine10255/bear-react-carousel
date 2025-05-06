@@ -1,6 +1,7 @@
 import {render} from '@testing-library/react';
-import {getTranslateParams, getSlideDirection, getSlideAngle} from './utils';
+
 import {EDirection} from './types';
+import {getSlideAngle,getSlideDirection, getTranslateParams} from './utils';
 
 test('get padding by ratio', async () => {
     expect(getSlideDirection(0, 0, 10, 10)).toEqual(EDirection.horizontal);

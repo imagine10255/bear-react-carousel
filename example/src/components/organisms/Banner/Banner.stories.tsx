@@ -12,7 +12,7 @@ const meta = {
     argTypes: {},
     args: {
         name: 'Bear React Carousel',
-        repositoryUrl: 'https://github.com/imagine10255/bear-react-carousel',
+        repositoryUrl: 'https://github.com/imagine10255/@acrool/react-carousel',
     },
 } satisfies Meta<typeof Banner>;
 

@@ -1,10 +1,11 @@
 import * as React from 'react';
+
 import elClassName from '../../el-class-name';
 
 
 interface IProps {
-    className?: string,
-    testId?: string,
+    className?: string
+    testId?: string
     onClick?: () => void
 }
 

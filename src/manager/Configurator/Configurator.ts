@@ -1,7 +1,8 @@
 import {CSSProperties} from 'react';
-import {getHeight, getMediaSetting} from './utils';
+
 import {ISetting} from '../../types';
-import {IPropsBreakpoints, GlobalWindow} from '../../types';
+import {GlobalWindow,IPropsBreakpoints} from '../../types';
+import {getHeight, getMediaSetting} from './utils';
 
 
 /**
@@ -14,7 +15,7 @@ class Configurator {
     constructor(inject: {
         breakpoints?: IPropsBreakpoints,
         defaultBreakpoint?: ISetting,
-        win?: GlobalWindow
+        win?: GlobalWindow,
     }) {
         this._window = inject.win;
         this._setting = getMediaSetting(inject);

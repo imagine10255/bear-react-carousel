@@ -1,8 +1,8 @@
 import {createRef, RefObject} from 'react';
-import {IMultiRefObject} from './types';
 
 import Configurator from '../Configurator';
 import Stater from '../Stater';
+import {IMultiRefObject} from './types';
 
 
 class Elementor {

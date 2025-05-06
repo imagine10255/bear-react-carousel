@@ -1,6 +1,7 @@
-import {IBearCarouselProps, TBearSlideItemDataList} from './types';
-import deepCompare from './deepCompare';
 import React, {ReactNode} from 'react';
+
+import deepCompare from './deepCompare';
+import {IBearCarouselProps, TBearSlideItemDataList} from './types';
 
 /**
  * 判斷是否為手機裝置

@@ -3,7 +3,7 @@ import BearCarousel, {
     BearSlideCard,
     TBearSlideItemDataList,
     ICarouselState
-} from 'bear-react-carousel';
+} from '@acrool/react-carousel';
 import {baseImage} from "../../data";
 
 

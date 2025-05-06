@@ -1,4 +1,4 @@
-import BearCarousel, {BearSlideCard, elClassName, ICarouselState, TBearSlideItemDataList} from 'bear-react-carousel';
+import BearCarousel, {BearSlideCard, elClassName, ICarouselState, TBearSlideItemDataList} from '@acrool/react-carousel';
 import {media, defaultGridTheme, FCProps} from '@acrool/react-grid';
 import {useState} from 'react';
 import styled from 'styled-components';

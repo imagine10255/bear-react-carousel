@@ -1,12 +1,12 @@
 
-import {getMoveDistance, getMovePercentage, getStartPosition} from './utils';
-import Configurator from '../Configurator';
-import Stater from '../Stater';
 import {IPercentageInfo} from '../../types';
 import {objectKeys} from '../../utils';
+import Configurator from '../Configurator';
+import Eventor from '../Eventor';
+import Stater from '../Stater';
 import Elementor from './Elementor';
 import {TEventMap} from './types';
-import Eventor from '../Eventor';
+import {getMoveDistance, getMovePercentage, getStartPosition} from './utils';
 
 class ElState {
     _elementor: Elementor;
@@ -283,7 +283,7 @@ class ElState {
 
 
         const pageOnlyOne = this._stater.page.total === 1;
-        const notPage = this._stater.virtual.total < this._configurator.setting.slidesPerView;
+        const notPage = typeof this._configurator.setting.slidesPerView === 'number' && this._stater.virtual.total < this._configurator.setting.slidesPerView;
 
         // 重置先判斷是否存在
         if(typeof this._elementor.rootEl?.dataset.firstPage !== 'undefined'){

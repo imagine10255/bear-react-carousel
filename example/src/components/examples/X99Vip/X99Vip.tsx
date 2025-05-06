@@ -3,7 +3,7 @@ import BearCarousel, {
     Controller,
     elClassName,
     TBearSlideItemDataList, TOnSlideChange, ICarouselState
-} from 'bear-react-carousel';
+} from '@acrool/react-carousel';
 import {Flex} from '@acrool/react-grid';
 import React, {useCallback, useEffect, useState} from 'react';
 import styled from 'styled-components';

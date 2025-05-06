@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom';
-import {decimal2Rounding, getMatrixValue, getSizeByRange, getLastIndex, getNextPage, getLoopResetIndex, checkIsDesktop, checkIsMobile} from './utils';
+
+import {checkIsDesktop, checkIsMobile,decimal2Rounding, getLastIndex, getLoopResetIndex, getMatrixValue, getNextPage, getSizeByRange} from './utils';
 
 
 test('get matrix value', async () => {

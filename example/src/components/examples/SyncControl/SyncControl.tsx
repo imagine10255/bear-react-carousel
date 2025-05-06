@@ -1,6 +1,6 @@
 import {useRef, useState} from 'react';
 import styled from 'styled-components';
-import BearCarousel, {BearSlideCard, ICarouselState, TBearSlideItemDataList, moveEffectFn, IInfo} from 'bear-react-carousel';
+import BearCarousel, {BearSlideCard, ICarouselState, TBearSlideItemDataList, moveEffectFn, IInfo} from '@acrool/react-carousel';
 import {baseImage} from "../../data";
 
 

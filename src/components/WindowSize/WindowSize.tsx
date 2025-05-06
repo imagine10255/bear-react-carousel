@@ -1,7 +1,7 @@
 import elClassName from '../../el-class-name';
 
 interface IProps {
-    size: number,
+    size: number
 }
 
 /**

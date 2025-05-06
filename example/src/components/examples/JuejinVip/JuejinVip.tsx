@@ -10,7 +10,7 @@ import BearCarousel, {
     Controller,
     TOnSlideChange,
     ICarouselState
-} from 'bear-react-carousel';
+} from '@acrool/react-carousel';
 import Phone from './_components/Phone';
 import Avatar from './_components/Avatar';
 import Progress from './_components/Progress';

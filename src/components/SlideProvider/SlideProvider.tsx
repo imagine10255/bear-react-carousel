@@ -1,8 +1,9 @@
-import {ReactNode, useContext, createContext} from 'react';
+import {createContext,ReactNode, useContext} from 'react';
+
 import {TRenderLazyPreloader} from '../../types';
 
 interface IProps extends IState{
-    children: ReactNode,
+    children: ReactNode
 }
 
 
@@ -11,8 +12,8 @@ interface IProps extends IState{
  |               Interface                   |
  /** ---------------------------------------*/
 interface IState {
-    isLazy?: boolean,
-    renderLazyPreloader: TRenderLazyPreloader,
+    isLazy?: boolean
+    renderLazyPreloader: TRenderLazyPreloader
 }
 
 /** -----------------------------------------
@@ -32,7 +33,7 @@ export const useSlide = () => useContext(SlideContext);
 
 
 interface IProps extends IState{
-    children: ReactNode,
+    children: ReactNode
 }
 
 /**

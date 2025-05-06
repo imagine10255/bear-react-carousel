@@ -4,7 +4,7 @@ import {
     TBearSlideItemDataList,
     IBearSlideImageProps,
     IBearSlideCardProps
-} from "bear-react-carousel";
+} from "@acrool/react-carousel";
 import {asset} from '../utils';
 import {generatorArray} from "@acrool/js-utils/array";
 

@@ -1,5 +1,5 @@
-import {getHeight} from './utils';
 import {IAspectRatio, THeightUnitSize} from '../../types';
+import {getHeight} from './utils';
 
 
 

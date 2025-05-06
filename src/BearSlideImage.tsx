@@ -1,8 +1,9 @@
-import CSS from 'csstype';
 import clsx from 'clsx';
+import CSS from 'csstype';
+
+import {useSlide} from './components/SlideProvider';
 import elClassName from './el-class-name';
 import useLazyLoadImage from './hooks/useLazyLoadImage';
-import {useSlide} from './components/SlideProvider';
 import {IBearSlideImageProps} from './types';
 
 

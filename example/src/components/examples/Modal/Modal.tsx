@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import BearCarousel, {BearSlideCard, TBearSlideItemDataList, ICarouselState, Controller, TOnAnimationEnd} from 'bear-react-carousel';
+import BearCarousel, {BearSlideCard, TBearSlideItemDataList, ICarouselState, Controller, TOnAnimationEnd} from '@acrool/react-carousel';
 
 import styled, {createGlobalStyle} from 'styled-components';
 import {baseImage} from "../../data";

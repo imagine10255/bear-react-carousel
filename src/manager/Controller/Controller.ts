@@ -1,12 +1,11 @@
-import {TEventMap} from './types';
-import {getNextIndex, getPrevIndex, getSlideIndex} from './utils';
-
-import Configurator from '../Configurator';
-import Stater from '../Stater';
-import Eventor from '../Eventor';
 import {logEnable} from '../../config';
 import logger from '../../logger';
+import Configurator from '../Configurator';
 import ElState from '../Elementor/ElState';
+import Eventor from '../Eventor';
+import Stater from '../Stater';
+import {TEventMap} from './types';
+import {getNextIndex, getPrevIndex, getSlideIndex} from './utils';
 
 
 class Controller {

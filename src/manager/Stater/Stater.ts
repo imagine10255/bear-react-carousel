@@ -1,10 +1,10 @@
-import {TEventMap, InitData} from './types';
 import {IInfo, TBearSlideItemDataList} from '../../types';
-import {getInRangeIndex, getPrevPageFirstIndex, initDataList} from './utils';
-import {getNextPageFirstIndex} from './utils';
+import {checkDataFormat} from '../../utils';
 import Configurator from '../Configurator';
 import Eventor from '../Eventor';
-import {checkDataFormat} from '../../utils';
+import {InitData,TEventMap} from './types';
+import {getInRangeIndex, getPrevPageFirstIndex, initDataList} from './utils';
+import {getNextPageFirstIndex} from './utils';
 
 
 class Stater {

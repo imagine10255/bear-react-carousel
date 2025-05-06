@@ -1,6 +1,6 @@
 import {TBearSlideItemDataList, TSlidesPerView} from '../../types';
-import {InitData} from './types';
 import Stater from './Stater';
+import {InitData} from './types';
 
 /**
  * 初始化資料
