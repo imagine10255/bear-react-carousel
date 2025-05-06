@@ -1,15 +1,15 @@
-import { Flex } from '@acrool/react-grid';
-import type {Meta, StoryObj} from '@storybook/react';
-import BearCarousel, {
-    BearSlideCard,
+import AcroolCarousel, {
+    AcroolSlideCard,
     elClassName
-} from 'bear-react-carousel';
-import {baseImage, generatorBearSlideCardData, generatorBearSlideImageData} from "../../data";
+} from '@acrool/react-carousel';
+import type {Meta, StoryObj} from '@storybook/react';
+
+import {baseImage, generatorAcroolSlideCardData, generatorAcroolSlideImageData} from '../../data';
 
 
 const meta = {
-    title: 'Primary/BearCarousel',
-    component: BearCarousel,
+    title: 'Primary/AcroolCarousel',
+    component: AcroolCarousel,
     parameters: {
         layout: 'centered',
         actions: {argTypesRegex: '^on.*'},
@@ -22,7 +22,8 @@ const meta = {
     tags: ['autodocs'],
     argTypes: {},
     args: {
-        data: generatorBearSlideCardData(),
+        isDebug: false,
+        data: generatorAcroolSlideCardData(),
         spaceBetween: 0,
         slidesPerView: 1,
         slidesPerGroup: 1,
@@ -38,14 +39,13 @@ const meta = {
         isEnablePagination: false,
         isLazy: false,
         isCenteredSlides: false,
-        isDebug: false,
     },
     render: function Render(args) {
-        return <BearCarousel
+        return <AcroolCarousel
             {...args}
         />;
     },
-} satisfies Meta<typeof BearCarousel>;
+} satisfies Meta<typeof AcroolCarousel>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -72,16 +72,16 @@ export const WithAutoHeight: Story = {
         slidesPerView: 1,
         height: 'auto',
         data: baseImage.map((row, idx) => {
-            return <BearSlideCard key={row.id}>
+            return <AcroolSlideCard key={row.id}>
                 {Array.from({length: idx+1}).map((rRow, rIdx) => {
                     return <div key={rIdx}>{rIdx}</div>;
                 })}
-            </BearSlideCard>
+            </AcroolSlideCard>;
         }),
     },
     render: function Render(args) {
         return <div>
-            <BearCarousel
+            <AcroolCarousel
                 {...args}
             />
             <div>Test</div>
@@ -114,7 +114,7 @@ export const WithSlidesPerViewAuto: Story = {
     args: {
         slidesPerView: 'auto',
         data: baseImage.map(row => {
-            return <BearSlideCard key={row.id} bgUrl={row.imageUrl} style={{width: '200px', height: '400px'}}/>;
+            return <AcroolSlideCard key={row.id} bgUrl={row.imageUrl} style={{width: '200px', height: '400px'}}/>;
         }),
     }
 };
@@ -182,6 +182,7 @@ export const WithCustomNav: Story = {
 export const WithLoop: Story = {
     args: {
         isEnableLoop: true,
+        isEnableNavButton: true,
     }
 };
 
@@ -238,6 +239,6 @@ export const WithLazyBySlideImage: Story = {
     args: {
         isLazy: true,
         height: 'auto',
-        data: generatorBearSlideImageData(),
+        data: generatorAcroolSlideImageData(),
     }
 };

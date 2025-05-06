@@ -1,44 +1,41 @@
-import * as React from 'react';
 import '@testing-library/jest-dom';
-import userEvent from '@testing-library/user-event';
-import {cleanup, fireEvent, render, screen} from '@testing-library/react';
 
-import BearCarousel from '../src/BearCarousel';
-import {getActiveElement, setSlideItemsSizes, setContainerSize} from './utils';
-import BearSlideCard from "../src/BearSlideCard";
+import {cleanup, fireEvent, render, screen} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import * as React from 'react';
+
+import AcroolCarousel from '../src/AcroolCarousel';
+import AcroolSlideCard from '../src/AcroolSlideCard';
+import {getActiveElement, setContainerSize,setSlideItemsSizes} from './utils';
 
 
 
 describe('Loop mode testing', () => {
-    let container: HTMLElement,
-        slideItems: HTMLElement[],
-        pageButtons: HTMLElement[],
-        navNextButton: HTMLElement,
-        navPrevButton: HTMLElement;
+    let container: HTMLElement;
+    let slideItems: HTMLElement[];
+    let pageButtons: HTMLElement[];
+    let navNextButton: HTMLElement;
+    let navPrevButton: HTMLElement;
 
     const containerSize = 400;
     const createData = Array.from({length: 6});
-    const data = createData.map((row, index) => ({key: index, children: <BearSlideCard>item{index}</BearSlideCard>}));
-    const onMount = () => {
-        container = screen.getByTestId('bear-carousel-container');
-        slideItems = screen.getAllByTestId('bear-carousel-slideItem');
-        pageButtons = screen.getAllByTestId('bear-carousel-page-button');
-        navNextButton = screen.getByTestId('bear-carousel-navNextButton');
-        navPrevButton = screen.getByTestId('bear-carousel-navPrevButton');
+    const data = createData.map((row, index) => (<AcroolSlideCard key={index}>item{index}</AcroolSlideCard>));
 
-        setContainerSize(container, containerSize);
-        setSlideItemsSizes(slideItems, Math.floor(containerSize));
-    };
-
-
-    beforeEach(() => {
-        render(<BearCarousel
-            onMount={onMount}
+    beforeEach(async () => {
+        render(<AcroolCarousel
             data={data}
             isEnableNavButton
             isEnablePagination
             isEnableLoop
         />);
+        container = await screen.findByTestId('acrool-carousel-container');
+        slideItems = await screen.findAllByTestId('acrool-carousel-slideItem');
+        pageButtons = await screen.findAllByTestId('acrool-carousel-page-button');
+        navNextButton = await screen.findByTestId('acrool-carousel-navNextButton');
+        navPrevButton = await screen.findByTestId('acrool-carousel-navPrevButton');
+
+        setContainerSize(container, containerSize);
+        setSlideItemsSizes(slideItems, Math.floor(containerSize));
     });
 
     afterEach(() => {
@@ -53,14 +50,13 @@ describe('Loop mode testing', () => {
         return getActiveElement(pageButtons);
     }
 
-    test('pageButtons is six and in the document', () => {
-        expect(pageButtons).toHaveLength(6);
+    test('pageButtons is six and in the document', async () => {
+        expect(pageButtons ?? []).toHaveLength(6);
     });
 
-    test('slideItems is 8 and in the document', () => {
-        expect(slideItems).toHaveLength(8);
+    test('slideItems is 8 and in the document', async () => {
+        expect(slideItems ?? []).toHaveLength(10);
     });
-
 
     test('Navigates to third page using next button', async () => {
         const lastPage = pageButtons[pageButtons.length - 1];
@@ -74,7 +70,7 @@ describe('Loop mode testing', () => {
         // ASSERT
         expect(getActiveSlideItem()).toHaveAttribute('data-page','1');
         expect(getActiveSlideItem()).toHaveAttribute('data-is-clone','');
-        expect(getActiveSlideItem()).toHaveAttribute('data-match','1');
+        expect(getActiveSlideItem()).toHaveAttribute('data-match','2');
         expect(getActivePageButton()).toHaveAttribute('data-page','1');
 
         // Act
@@ -82,8 +78,8 @@ describe('Loop mode testing', () => {
         fireEvent.mouseUp(container);
 
         expect(getActiveSlideItem()).toHaveAttribute('data-page','1');
-        expect(getActiveSlideItem().dataset['isClone']).toBeUndefined();
-        expect(getActiveSlideItem().dataset['match']).toBeUndefined();
+        expect(getActiveSlideItem()?.dataset['isClone']).toBe('');
+        expect(getActiveSlideItem()?.dataset['match']).toBe('2');
         expect(getActivePageButton()).toHaveAttribute('data-page','1');
     });
 

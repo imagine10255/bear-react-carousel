@@ -14,7 +14,7 @@ const baseStyles = [
  * @param watchData 需要印出的訊息
  */
 function messageConsole(title: string, styles: any, watchData?: any) {
-    // eslint-disable-next-line no-console
+     
     console.log(`%c ${title}`, styles, watchData);
 }
 

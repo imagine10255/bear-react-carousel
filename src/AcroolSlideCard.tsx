@@ -1,10 +1,11 @@
-import React, {ReactNode} from 'react';
-import CSS from 'csstype';
 import clsx from 'clsx';
-import elClassName from './el-class-name';
+import CSS from 'csstype';
+import React, {ReactNode} from 'react';
+
 import {useSlide} from './components/SlideProvider';
+import elClassName from './el-class-name';
 import useLazyLoadBackground from './hooks/useLazyLoadBackground';
-import {IBearSlideCardProps} from './types';
+import {IAcroolSlideCardProps} from './types';
 
 
 
@@ -18,14 +19,14 @@ import {IBearSlideCardProps} from './types';
  * @param children
  * @param onClick
  */
-const BearSlideCard = ({
+const AcroolSlideCard = ({
     className,
     style,
     bgUrl,
     bgSize = 'cover',
     children,
     onClick,
-}: IBearSlideCardProps) => {
+}: IAcroolSlideCardProps) => {
     const slide = useSlide();
     const {imageRef, isPending, isFetching} = useLazyLoadBackground({
         enabled: slide.isLazy,
@@ -67,4 +68,4 @@ const BearSlideCard = ({
 
 
 
-export default BearSlideCard;
+export default AcroolSlideCard;

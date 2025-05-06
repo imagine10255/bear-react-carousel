@@ -1,4 +1,4 @@
 
 export type TEventMap = {
-    resize: (args: {windowSize: number}) => void;
+    resize: (args: {windowSize: number}) => void,
 };

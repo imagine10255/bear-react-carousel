@@ -2,4 +2,4 @@ Describe the big picture of your changes here to communicate to the maintainers 
 
 The best way to propose a feature is to open an issue first and discuss your ideas there before implementing them.
 
-Always follow the [contribution guidelines](https://github.com/imagine10255/bear-react-carousel/blob/master/CONTRIBUTING.md) when submitting a pull request.
+Always follow the [contribution guidelines](https://github.com/acrool/acrool-react-carousel/blob/master/CONTRIBUTING.md) when submitting a pull request.

@@ -1,6 +1,7 @@
-import {IBearCarouselProps, TBearSlideItemDataList} from './types';
-import deepCompare from './deepCompare';
 import React, {ReactNode} from 'react';
+
+import deepCompare from './deepCompare';
+import {IAcroolCarouselProps, TAcroolSlideItemDataList} from './types';
 
 /**
  * 判斷是否為手機裝置
@@ -39,7 +40,7 @@ export function anyToNumber(value: any, defaultValue = 0): number {
  */
 export function getSizeByRange(innerWidth: number = 0, breakpointSizes: number[] = []): number{
     const filterArray = breakpointSizes
-        .filter(size => size < innerWidth)
+        .filter(size => size <= innerWidth)
         .sort((a, b) => Number(b) - Number(a));
 
     if (filterArray.length > 0) return filterArray[0];
@@ -114,7 +115,7 @@ export function objectKeys<T extends object>(object: T): Array<keyof T> {
 }
 
 
-export function isPropsDiff(props: IBearCarouselProps, nextProps: IBearCarouselProps, exclude: string[]) {
+export function isPropsDiff(props: IAcroolCarouselProps, nextProps: IAcroolCarouselProps, exclude: string[]) {
     const filterProps = objectKeys(props)
         .filter((key) => typeof props[key] !== 'function' && !exclude.includes(key))
         .map(key => props[key]);
@@ -125,7 +126,7 @@ export function isPropsDiff(props: IBearCarouselProps, nextProps: IBearCarouselP
     return deepCompare(filterProps, nextFilterProps) === false;
 }
 
-// export function isDataKeyDff(data?: TBearSlideItemDataList, nextData?: TBearSlideItemDataList) {
+// export function isDataKeyDff(data?: TAcroolSlideItemDataList, nextData?: TAcroolSlideItemDataList) {
 //     const oldKey = data?.map((row) => row.key).join('_');
 //     const nextKey = nextData?.map((row) => row.key).join('_');
 //

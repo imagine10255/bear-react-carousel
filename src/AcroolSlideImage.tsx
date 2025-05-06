@@ -1,9 +1,10 @@
-import CSS from 'csstype';
 import clsx from 'clsx';
+import CSS from 'csstype';
+
+import {useSlide} from './components/SlideProvider';
 import elClassName from './el-class-name';
 import useLazyLoadImage from './hooks/useLazyLoadImage';
-import {useSlide} from './components/SlideProvider';
-import {IBearSlideImageProps} from './types';
+import {IAcroolSlideImageProps} from './types';
 
 
 
@@ -17,14 +18,14 @@ import {IBearSlideImageProps} from './types';
  * @param imageSize
  * @param onClick
  */
-const BearSlideImage = ({
+const AcroolSlideImage = ({
     className,
     style,
     imageUrl,
     imageAlt,
     imageSize,
     onClick,
-}: IBearSlideImageProps) => {
+}: IAcroolSlideImageProps) => {
     const slide = useSlide();
     const {imageRef, isPending, isFetching} = useLazyLoadImage({
         enabled: slide.isLazy ?? false,
@@ -54,4 +55,4 @@ const BearSlideImage = ({
     </>;
 };
 
-export default BearSlideImage;
+export default AcroolSlideImage;

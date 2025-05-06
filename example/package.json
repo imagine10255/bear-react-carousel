@@ -7,15 +7,15 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "pages:dev": "wrangler pages dev --proxy 3000 -- yarn dev",
-    "pages:deploy": "NODE_VERSION=18 yarn build-storybook && wrangler pages deploy ./storybook-static --project-name=bear-react-carousel-storybook --branch main"
+    "pages:deploy": "NODE_VERSION=18 yarn build-storybook && wrangler pages deploy ./storybook-static --project-name=acrool-react-carousel-storybook --branch main"
   },
   "resolutions": {
     "styled-components": "6.1.17"
   },
   "dependencies": {
-    "@acrool/js-utils": "^3.2.16",
-    "@acrool/react-grid": "^6.0.2",
-    "bear-react-carousel": "link:..",
+    "@acrool/js-utils": "^3.2.20-alpha.2",
+    "@acrool/react-grid": "^6.0.5",
+    "@acrool/react-carousel": "link:..",
     "@chromatic-com/storybook": "^1.5.0",
     "@emotion/is-prop-valid": "^1.2.2",
     "@storybook/addon-essentials": "^8.1.10",
@@ -40,7 +40,7 @@
     "storybook-dark-mode": "^4.0.2",
     "styled-components": "6.1.17",
     "typescript": "^5.2.2",
-    "vite": "^5.2.0",
+    "vite": "^6.3.4",
     "vite-plugin-svgr": "^4.2.0",
     "wrangler": "3.26.0"
   }

@@ -1,4 +1,5 @@
 import '@testing-library/jest-dom';
+
 import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
@@ -11,7 +12,7 @@ test('test navPage render', async () => {
     const {getByTestId} = render(<NavNextButton onClick={onNext}/>);
 
     // ACT
-    const element = getByTestId('bear-carousel-navNextButton');
+    const element = getByTestId('acrool-carousel-navNextButton');
     await userEvent.click(element);
 
     // ASSERT

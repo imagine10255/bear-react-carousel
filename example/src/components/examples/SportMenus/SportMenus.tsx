@@ -1,13 +1,14 @@
-import {useRef, useState} from 'react';
 import AcroolCarousel, {
     AcroolSlideCard,
-    TAcroolSlideItemDataList,
-    elClassName,
-    IInfo,
+    Controller,     elClassName,
     ICarouselState,
-    Controller, moveEffectFn, TMoveEffectFn
+    IInfo,
+    moveEffectFn,     TAcroolSlideItemDataList,
+    TMoveEffectFn
 } from '@acrool/react-carousel';
-import {baseImage} from "../../data";
+import {useRef, useState} from 'react';
+
+import {baseImage} from '../../data';
 
 
 
@@ -16,7 +17,7 @@ import {baseImage} from "../../data";
 
 
 
-function Effect() {
+function SportMenus() {
     const [carouselState, setCarouselState] = useState<ICarouselState>();
     const [enable, setEnable] = useState<boolean>(true);
     const [count, setCount] = useState<number>(0);
@@ -52,7 +53,7 @@ function Effect() {
             onSlideChange={setCarouselState}
             // onSlideChange={setCarouselState}
             slidesPerView={5}
-            isCenteredSlides={true}
+            isCenteredSlides
             height="200px"
             // height={{widthRatio: 21, heightRatio: 9}}
             isEnableNavButton
@@ -95,7 +96,7 @@ function Effect() {
 
 }
 
-export default Effect;
+export default SportMenus;
 
 
 

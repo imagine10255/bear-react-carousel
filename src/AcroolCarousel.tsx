@@ -1,27 +1,27 @@
-import * as React from 'react';
-import {booleanToDataAttr, isPropsDiff} from './utils';
-import logger from './logger';
-import {IBearCarouselProps} from './types';
-import elClassName from './el-class-name';
 import './styles.css';
 
-import Configurator, {getSetting} from './manager/Configurator';
-import WindowSizer from './manager/WindowSizer';
-import Stater from './manager/Stater';
-import SlideItem from './components/SlideItem';
-import Elementor from './manager/Elementor';
-import Controller from './manager/Controller';
-import AutoPlayer from './manager/AutoPlayer';
-import Dragger from './manager/Dragger';
-import SyncCarousel from './manager/SyncCarousel';
+import * as React from 'react';
 
-import WindowSize from './components/WindowSize';
-import Page from './components/Page';
-import {SlideProvider} from './components/SlideProvider/SlideProvider';
-import {NavNextButton, NavPrevButton} from './components/NavButton';
 import CarouselRoot from './components/CarouselRoot';
+import {NavNextButton, NavPrevButton} from './components/NavButton';
+import Page from './components/Page';
+import SlideItem from './components/SlideItem';
+import {SlideProvider} from './components/SlideProvider/SlideProvider';
+import WindowSize from './components/WindowSize';
 import {logEnable} from './config';
+import elClassName from './el-class-name';
+import logger from './logger';
+import AutoPlayer from './manager/AutoPlayer';
+import Configurator, {getSetting} from './manager/Configurator';
+import Controller from './manager/Controller';
+import Dragger from './manager/Dragger';
+import Elementor from './manager/Elementor';
 import ElState from './manager/Elementor/ElState';
+import Stater from './manager/Stater';
+import SyncCarousel from './manager/SyncCarousel';
+import WindowSizer from './manager/WindowSizer';
+import {IAcroolCarouselProps} from './types';
+import {booleanToDataAttr, isPropsDiff} from './utils';
 
 
 
@@ -34,8 +34,8 @@ interface IState {
 /**
  * Carousel Component
  */
-class BearCarousel extends React.Component<IBearCarouselProps, IState> {
-    static defaultProps: IBearCarouselProps = {
+class AcroolCarousel extends React.Component<IAcroolCarouselProps, IState> {
+    static defaultProps: IAcroolCarouselProps = {
         data: undefined,
         slidesPerView: 1,
         slidesPerGroup: 1, // 不可為小數
@@ -69,7 +69,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
     _syncCarousels?: SyncCarousel[];
 
 
-    constructor(props: IBearCarouselProps) {
+    constructor(props: IAcroolCarouselProps) {
         super(props);
         // this._device = checkIsMobile() ? EDevice.mobile : EDevice.desktop;
 
@@ -194,7 +194,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
    * @param nextProps
    * @param nextState
    */
-    shouldComponentUpdate(nextProps: IBearCarouselProps, nextState: IState) {
+    shouldComponentUpdate(nextProps: IAcroolCarouselProps, nextState: IState) {
         if(this._configurator?.setting.isDebug && logEnable.shouldComponentUpdate) logger.printInText('[shouldComponentUpdate]');
 
         const {windowSize, isClientReady} = this.state;
@@ -388,7 +388,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
         return formatElement?.map((row, i) => {
             const isActive = row.virtualIndex === virtual?.activeIndex;
             return <SlideItem
-                key={`bear-carousel_slide-item_${row.key}`}
+                key={`acrool-carousel_slide-item_${row.key}`}
                 ref={(el) => {
                     if(el){
                         this._elementor?.setSlideItemRefs(el, i);
@@ -471,7 +471,7 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
                 {this.state.isClientReady && this._stater?.isVisibleNavButton && this._renderNavButton()}
 
                 <div className={elClassName.content}>
-                    <div ref={this._elementor?._containerRef} className={elClassName.container} data-testid="bear-carousel-container">
+                    <div ref={this._elementor?._containerRef} className={elClassName.container} data-testid="acrool-carousel-container">
                         <SlideProvider
                             isLazy={isLazy}
                             renderLazyPreloader={!!renderLazyPreloader ? renderLazyPreloader: () => <div>loading...</div>}
@@ -493,6 +493,6 @@ class BearCarousel extends React.Component<IBearCarouselProps, IState> {
 }
 
 
-export default BearCarousel;
+export default AcroolCarousel;
 
 

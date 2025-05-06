@@ -21,7 +21,7 @@ export default defineConfig({
         lib: {
             entry: path.resolve(__dirname, 'src/index.ts'),
             formats: ['es'],
-            fileName: (format) => `bear-react-carousel.${format}.js`,
+            fileName: (format) => `acrool-react-carousel.${format}.js`,
         },
         cssTarget: 'chrome61',
         rollupOptions: {

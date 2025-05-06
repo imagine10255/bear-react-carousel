@@ -1,11 +1,12 @@
-import {forwardRef, useCallback, ReactNode} from 'react';
 import clsx from 'clsx';
+import {forwardRef, ReactNode,useCallback} from 'react';
+
 import elClassName from '../../el-class-name';
 import {booleanToDataAttr} from '../../utils';
 
 
 interface IProps {
-    page: number,
+    page: number
     isActive?: boolean
     onSlideToPage: (page: number) => void
     pageContent?: ReactNode
@@ -32,7 +33,7 @@ const Page = forwardRef<HTMLDivElement, IProps>(({
         ref={ref}
         role='button'
         onClick={handleSlideToPage}
-        data-testid="bear-carousel-page-button"
+        data-testid="acrool-carousel-page-button"
         data-active={booleanToDataAttr(isActive)}
         data-page={page}
     >

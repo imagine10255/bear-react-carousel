@@ -2,15 +2,15 @@ import styled from 'styled-components';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {Grid, Flex, minmax} from '@acrool/react-grid';
 import Icons from './_components/Icons';
-import BearCarousel, {
+import AcroolCarousel, {
     TMoveEffectFn,
-    TBearSlideItemDataList,
-    BearSlideCard,
+    TAcroolSlideItemDataList,
+    AcroolSlideCard,
     elClassName,
     Controller,
     TOnSlideChange,
     ICarouselState
-} from 'bear-react-carousel';
+} from '@acrool/react-carousel';
 import Phone from './_components/Phone';
 import Avatar from './_components/Avatar';
 import Progress from './_components/Progress';
@@ -112,9 +112,9 @@ export const dataList = [
  * @constructor
  */
 const JuejinVip = () => {
-    const carouselMainRef = useRef<BearCarousel>(null);
-    const carouselMetaRef = useRef<BearCarousel>(null);
-    const carouselLineRef = useRef<BearCarousel>(null);
+    const carouselMainRef = useRef<AcroolCarousel>(null);
+    const carouselMetaRef = useRef<AcroolCarousel>(null);
+    const carouselLineRef = useRef<AcroolCarousel>(null);
     const [carouselMainController, setMainController] = useState<Controller>();
     const [currLevel, setCurrLevel] = useState<{lv: number,count: number}|undefined>();
 
@@ -150,8 +150,8 @@ const JuejinVip = () => {
 
     const renderSlideData = useCallback(() => {
 
-        const data: TBearSlideItemDataList = dataList.map(row => {
-            return <BearSlideCard key={row.id}>
+        const data: TAcroolSlideItemDataList = dataList.map(row => {
+            return <AcroolSlideCard key={row.id}>
                 <LevelCard col={1} style={{backgroundColor: row.bg}} className="align-content-start row-gap-5">
                     {row.status && <CurrLv>
                         {row.status === 'Locked' && <Icons.Locked/>}
@@ -168,7 +168,7 @@ const JuejinVip = () => {
 
                     <Progress value={row.progressRate}/>
                 </LevelCard>
-            </BearSlideCard>;
+            </AcroolSlideCard>;
         });
 
         return data;
@@ -176,24 +176,24 @@ const JuejinVip = () => {
 
 
     const renderMeta = useCallback(() => {
-        const metaData: TBearSlideItemDataList = dataList.map(row => {
-            return <BearSlideCard key={row.id}>
+        const metaData: TAcroolSlideItemDataList = dataList.map(row => {
+            return <AcroolSlideCard key={row.id}>
                 <MetaCard>
                     <MetaLv>LV.{row.lv}</MetaLv>
                     <Do/>
                 </MetaCard>
-            </BearSlideCard>;
+            </AcroolSlideCard>;
         });
 
-        const lineData: TBearSlideItemDataList = dataList.map(row => {
-            return <BearSlideCard key={row.id} className="position-relative">
+        const lineData: TAcroolSlideItemDataList = dataList.map(row => {
+            return <AcroolSlideCard key={row.id} className="position-relative">
                 <Line/>
-            </BearSlideCard>;
+            </AcroolSlideCard>;
         });
 
 
         return <LevelMeta>
-            <BearCarousel
+            <AcroolCarousel
                 ref={carouselMetaRef}
                 data={metaData}
                 // style={{paddingTop: '100px'}}
@@ -209,7 +209,7 @@ const JuejinVip = () => {
             />
 
             <LevelLine>
-                <LineBearCarousel
+                <LineAcroolCarousel
                     ref={carouselLineRef}
                     data={lineData}
                     height="auto"
@@ -239,7 +239,7 @@ const JuejinVip = () => {
             <Avatar/>
             <Wave1Wapper>
                 <Wave1>
-                    <BearCarousel
+                    <AcroolCarousel
                         style={{paddingTop: '20px'}}
 
                         ref={carouselMainRef}
@@ -331,7 +331,7 @@ const Line = styled.div`
 
 
 
-const LineBearCarousel = styled(BearCarousel)`
+const LineAcroolCarousel = styled(AcroolCarousel)`
     .${elClassName.slideItem}:first-child{
         ${Line}{
           width: 100px;

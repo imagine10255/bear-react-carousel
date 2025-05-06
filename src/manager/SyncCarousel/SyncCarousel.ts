@@ -1,12 +1,13 @@
 import {RefObject} from 'react';
-import BearCarousel from '../../BearCarousel';
+
+import AcroolCarousel from '../../AcroolCarousel';
 import {logEnable} from '../../config';
 import logger from '../../logger';
 
 class SyncCarousel {
-    private readonly _carouselRef: RefObject<BearCarousel|null>;
+    private readonly _carouselRef: RefObject<AcroolCarousel|null>;
 
-    constructor(carouselRef: RefObject<BearCarousel|null>) {
+    constructor(carouselRef: RefObject<AcroolCarousel|null>) {
         this._carouselRef = carouselRef;
     }
 

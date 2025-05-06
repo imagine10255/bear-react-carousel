@@ -1,4 +1,5 @@
 import '@testing-library/jest-dom';
+
 import {render, screen} from '@testing-library/react';
 
 import WindowSize from './WindowSize';
@@ -8,7 +9,7 @@ test('test WindowSize render', async () => {
     render(<WindowSize size={992}/>);
 
     // ACT
-    const element = screen.getByTestId('bear-carousel-windowSize');
+    const element = screen.getByTestId('acrool-carousel-windowSize');
 
     // ASSERT
     expect(element).toBeInTheDocument();

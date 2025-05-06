@@ -1,9 +1,9 @@
 import {useState} from 'react';
-import BearCarousel, {
-    BearSlideCard,
-    TBearSlideItemDataList,
+import AcroolCarousel, {
+    AcroolSlideCard,
+    TAcroolSlideItemDataList,
     ICarouselState
-} from 'bear-react-carousel';
+} from '@acrool/react-carousel';
 import {baseImage} from "../../data";
 
 
@@ -17,9 +17,9 @@ function UpdateSlideItem() {
     const [carouselState, setCarouselState] = useState<ICarouselState>();
     const [activeId, setActiveId] = useState<string>('1');
 
-    const bearSlideItemData1: TBearSlideItemDataList = baseImage.map(row => {
+    const acroolSlideItemData1: TAcroolSlideItemDataList = baseImage.map(row => {
         console.log('activeId', activeId);
-        return <BearSlideCard
+        return <AcroolSlideCard
             key={row.id}
             bgUrl={row.imageUrl}
             style={{
@@ -35,8 +35,8 @@ function UpdateSlideItem() {
     return <div>
         click card active id: {activeId}
         {/*測試依照比例設定容器高度*/}
-        <BearCarousel
-            data={bearSlideItemData1}
+        <AcroolCarousel
+            data={acroolSlideItemData1}
             onSlideChange={setCarouselState}
             slidesPerView={4}
             isCenteredSlides

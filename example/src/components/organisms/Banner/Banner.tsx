@@ -1,8 +1,9 @@
-import styled from 'styled-components';
-import {useRef} from 'react';
-import domtoimage from 'dom-to-image';
-import Github from './github.svg?react';
 import {media} from '@acrool/react-grid';
+import domtoimage from 'dom-to-image';
+import React, {useRef} from 'react';
+import styled from 'styled-components';
+
+import Github from './github.svg?react';
 
 
 interface IProps {
@@ -60,31 +61,31 @@ export default Banner;
 
 
 const DownloadWrapper = styled.div`
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  height: 200px;
-  width: 920px;
-  gap: 12px;
-  background-color: #000;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    height: 200px;
+    width: 920px;
+    gap: 12px;
+    background-color: #000;
 
-  > img{
-    height: 100px;
-  }
+    > img{
+        height: 100px;
+    }
 
-  > h1{
-    word-wrap:break-word;
+    > h1{
+        word-wrap:break-word;
 
-    font-size: 20px;
-    color: #fff;
-    font-weight: 700;
-    line-height: 0;
-  }
+        font-size: 20px;
+        color: #fff;
+        font-weight: 700;
+        line-height: 0;
+    }
 
-  ${media.sm`
+    ${media.sm`
     > h1{
         font-size: 40px;
         color: #fff;
@@ -97,30 +98,30 @@ const DownloadWrapper = styled.div`
 
 
 const A = styled.a`
-  display: flex;
-  color: #fff;
-  font-size: 12px;
-  align-items: center;
-  gap: 10px;
+    display: flex;
+    color: #fff;
+    font-size: 12px;
+    align-items: center;
+    gap: 10px;
 `;
 
 const InfoWrapper = styled.div`
-  background-color: #000;
-  width: 100%;
-  padding: 10px;
-  display: flex;
-  justify-content: space-between;
+    background-color: #000;
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
 `;
 
 const DownloadButton = styled.button`
-  color: #fff;
+    color: #fff;
 `;
 
 
 const BannerRoot = styled.div`
-  position: relative;
-  margin-bottom: 12px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    position: relative;
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `;

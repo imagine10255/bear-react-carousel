@@ -1,10 +1,10 @@
 import {
+    GlobalWindow,         IAcroolCarouselProps,
     IAspectRatio,
-    IBearCarouselProps,
     IBreakpointSetting,
     IBreakpointSettingActual,
     IPropsBreakpoints,
-    GlobalWindow, TSlidesPerView
+    TSlidesPerView
 } from '../../types';
 import {ISetting} from '../../types';
 import {anyToNumber, getSizeByRange, objectKeys} from '../../utils';
@@ -14,7 +14,7 @@ import {anyToNumber, getSizeByRange, objectKeys} from '../../utils';
  * 取得設定
  * @param props
  */
-export function getSetting(props: IBearCarouselProps): ISetting {
+export function getSetting(props: IAcroolCarouselProps): ISetting {
     return {
         slidesPerView: props.slidesPerView,
         slidesPerGroup: props.slidesPerGroup,
@@ -51,7 +51,7 @@ export function getSetting(props: IBearCarouselProps): ISetting {
 export function getMediaSetting(options?: {
     defaultBreakpoint?: IBreakpointSetting,
     breakpoints?: IPropsBreakpoints,
-    win?: GlobalWindow
+    win?: GlobalWindow,
 }): IBreakpointSettingActual {
     const breakpoints = options?.breakpoints;
     const win = options?.win;

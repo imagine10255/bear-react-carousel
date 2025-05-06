@@ -1,10 +1,10 @@
-import {TEventMap, InitData} from './types';
-import {IInfo, TBearSlideItemDataList} from '../../types';
-import {getInRangeIndex, getPrevPageFirstIndex, initDataList} from './utils';
-import {getNextPageFirstIndex} from './utils';
+import {IInfo, TAcroolSlideItemDataList} from '../../types';
+import {checkDataFormat} from '../../utils';
 import Configurator from '../Configurator';
 import Eventor from '../Eventor';
-import {checkDataFormat} from '../../utils';
+import {InitData,TEventMap} from './types';
+import {getInRangeIndex, getPrevPageFirstIndex, initDataList} from './utils';
+import {getNextPageFirstIndex} from './utils';
 
 
 class Stater {
@@ -14,7 +14,7 @@ class Stater {
     private _eventor = new Eventor<TEventMap>();
 
 
-    constructor(setter: Configurator, data?: TBearSlideItemDataList) {
+    constructor(setter: Configurator, data?: TAcroolSlideItemDataList) {
         this._configurator = setter;
         this._info = this.formatInfo(data);
 
@@ -22,8 +22,8 @@ class Stater {
 
 
         if(!checkDataFormat(data)){
-            throw new Error(`[bear-react-carousel] Data format error: must be ReactNode[] not Array<{key: string, children: ReactNode}>\n
-  Please read the 5.x upgrade guide: https://bear-react-carousel.pages.dev/docs/faqs/migration-to-5
+            throw new Error(`[acrool-react-carousel] Data format error: must be ReactNode[] not Array<{key: string, children: ReactNode}>\n
+  Please read the 5.x upgrade guide: https://acrool-react-carousel.pages.dev/docs/faqs/migration-to-5
 `);
         }
 
@@ -84,7 +84,7 @@ class Stater {
         return this._info?.isVisiblePagination;
     }
 
-    reset = (slideData: TBearSlideItemDataList = []) => {
+    reset = (slideData: TAcroolSlideItemDataList = []) => {
         this._info = this.formatInfo(slideData);
         this._eventor.emit('change');
     };
@@ -107,7 +107,7 @@ class Stater {
     };
 
 
-    formatInfo = (slideData: TBearSlideItemDataList = []): IInfo => {
+    formatInfo = (slideData: TAcroolSlideItemDataList = []): IInfo => {
         const {slidesPerView, slidesPerViewActual, slidesPerGroup, isCenteredSlides, isEnablePagination, isEnableNavButton, isEnableLoop} = this._configurator.setting;
 
         let sourceTotal = slideData.length;
@@ -166,7 +166,7 @@ class Stater {
         };
     };
 
-    updateData = (slideData: TBearSlideItemDataList = []) => {
+    updateData = (slideData: TAcroolSlideItemDataList = []) => {
         const {slidesPerViewActual, slidesPerGroup, isEnableLoop} = this._configurator.setting;
         this._formatElement = initDataList(
             slideData,

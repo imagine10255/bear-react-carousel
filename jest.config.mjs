@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     coverageDirectory: 'coverage',
     preset: 'ts-jest',
     testEnvironment: 'jsdom',
@@ -19,9 +19,8 @@ module.exports = {
     },
     moduleNameMapper: {
         '^@/(.*)$': '<rootDir>/src/$1',
-        "\\.(css)$": "identity-obj-proxy",
+        '\\.(css|scss)$': 'identity-obj-proxy',
     },
-    // moduleDirectories: ['node_modules', '<!----><rootDir>/src'],
-    // setupFilesAfterEnv: ['./jest.setup.js']
+    setupFilesAfterEnv: ['@testing-library/jest-dom'],
 };
 

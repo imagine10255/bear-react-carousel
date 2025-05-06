@@ -1,14 +1,12 @@
+import AcroolCarousel, {AcroolSlideImage, TAcroolSlideItemDataList} from '@acrool/react-carousel';
 import type {Meta, StoryObj} from '@storybook/react';
-import BearCarousel, {
-    TBearSlideItemDataList,
-    BearSlideImage
-} from 'bear-react-carousel';
-import {generatorBearSlideImageData} from "../../data";
+
+import {generatorAcroolSlideImageData} from '../../data';
 
 
 const meta = {
-    title: 'Primary/BearSlideImage',
-    component: BearSlideImage,
+    title: 'Primary/AcroolSlideImage',
+    component: AcroolSlideImage,
     parameters: {
         layout: 'centered',
         actions: {argTypesRegex: '^on.*'},
@@ -22,17 +20,18 @@ const meta = {
     argTypes: {},
     args: {
         imageAlt: 'cat',
-        imageSize: 'none' //'none'|'cover'|'contain'|'scaleDown',
+        imageSize: 'none', //'none'|'cover'|'contain'|'scaleDown',
+        imageUrl: '/images/sample/1.jpg',
     },
     render: function Render(args) {
 
-        const bearSlideItemData1: TBearSlideItemDataList = generatorBearSlideImageData(args);
+        const acroolSlideItemData1: TAcroolSlideItemDataList = generatorAcroolSlideImageData(args);
 
-        return <BearCarousel
-            data={bearSlideItemData1}
+        return <AcroolCarousel
+            data={acroolSlideItemData1}
         />;
     },
-} satisfies Meta<typeof BearSlideImage>;
+} satisfies Meta<typeof AcroolSlideImage>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -46,7 +45,7 @@ export const Primary: Story = {
 };
 export const WithCover: Story = {
     args: {
-        imageSize: 'cover'
+        imageSize: 'cover',
     }
 };
 export const WithContain: Story = {

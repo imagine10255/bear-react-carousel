@@ -1,8 +1,8 @@
 import Eventor from './Eventor';
 
 type EventMap = {
-    onResize: (args: { windowSize: number }) => void;
-    onFocus: () => void;
+    onResize: (args: { windowSize: number }) => void,
+    onFocus: () => void,
 };
 
 describe('Eventor', () => {

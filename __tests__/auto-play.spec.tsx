@@ -1,11 +1,12 @@
-import * as React from 'react';
 import '@testing-library/jest-dom';
-import userEvent from '@testing-library/user-event';
-import {act, cleanup, render, screen, waitFor} from '@testing-library/react';
 
-import BearCarousel from '../src/BearCarousel';
-import {getActiveElement, setSlideItemsSizes, setContainerSize} from './utils';
-import BearSlideCard from "../src/BearSlideCard";
+import {act, cleanup, render, screen} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import * as React from 'react';
+
+import AcroolCarousel from '../src/AcroolCarousel';
+import AcroolSlideCard from '../src/AcroolSlideCard';
+import {getActiveElement, setContainerSize,setSlideItemsSizes} from './utils';
 
 
 
@@ -17,30 +18,24 @@ describe('Auto play testing', () => {
 
     const autoPlayTime = 500;
 
-    beforeEach(() => {
+    beforeEach(async () => {
         jest.useFakeTimers();
 
         const containerSize = 400;
         const createData = Array.from({length: 6});
-        const data = createData.map((row, index) => ({key: index, children: <BearSlideCard>item{index}</BearSlideCard>}));
-        const onMount = () => {
-            container = screen.getByTestId('bear-carousel-container');
-            slideItems = screen.getAllByTestId('bear-carousel-slideItem');
-            navNextButton = screen.getByTestId('bear-carousel-navNextButton');
-            navPrevButton = screen.getByTestId('bear-carousel-navPrevButton');
-
-            setContainerSize(container, containerSize);
-            setSlideItemsSizes(slideItems, Math.floor(containerSize));
-        };
-
-        render(<BearCarousel
-            onMount={onMount}
+        const data = createData.map((row, index) => (<AcroolSlideCard>item{index}</AcroolSlideCard>));
+        render(<AcroolCarousel
             data={data}
             isEnableNavButton
             isEnableAutoPlay
             autoPlayTime={autoPlayTime}
         />);
-
+        container = await screen.findByTestId('acrool-carousel-container');
+        slideItems = await screen.findAllByTestId('acrool-carousel-slideItem');
+        navNextButton = await screen.findByTestId('acrool-carousel-navNextButton');
+        navPrevButton = await screen.findByTestId('acrool-carousel-navPrevButton');
+        setContainerSize(container, containerSize);
+        setSlideItemsSizes(slideItems, Math.floor(containerSize));
     });
 
     afterEach(() => {
@@ -55,14 +50,13 @@ describe('Auto play testing', () => {
     test('Auto navigates to next page after one second', async () => {
         // Act
         act(() => jest.advanceTimersByTime(autoPlayTime));
-        expect(getActiveSlideItem()).toHaveAttribute('data-page','1');
-
-        act(() => jest.advanceTimersByTime(autoPlayTime));
         expect(getActiveSlideItem()).toHaveAttribute('data-page','2');
 
         act(() => jest.advanceTimersByTime(autoPlayTime));
         expect(getActiveSlideItem()).toHaveAttribute('data-page','3');
 
+        act(() => jest.advanceTimersByTime(autoPlayTime));
+        expect(getActiveSlideItem()).toHaveAttribute('data-page','4');
     });
 
 
