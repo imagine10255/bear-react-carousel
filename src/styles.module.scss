@@ -4,11 +4,73 @@
     height: var(--carousel-height, inherit);
     aspect-ratio: var(--carousel-aspect-ratio);
     user-select: none;
+
+    img{
+        -webkit-user-drag: none;
+    }
+
+
+
+    &[data-touching]{
+        .pagination-group,
+        .slide-item {
+            pointer-events: none;
+        }
+        .nav-group{
+            pointer-events: none;
+        }
+    }
+
+    &[data-gpu-render] {
+        .container{
+            will-change: transform;
+        }
+    }
+
+    &[data-per-view-auto] {
+        .slide-item__card{
+            container-type: normal;
+        }
+    }
+
+    .slide-item__card{
+        container-type: inline-size; /* fix height & width auto */
+    }
+
+
+    &[data-first-page][data-last-page] .pagination-group,
+    &[data-first-page] .nav-prev-button,
+    &[data-last-page] .nav-next-button{
+        opacity: 0;
+        /*pointer-events: none; 避免連續點消失後點到背後 */
+    }
+
+
+    &[data-mouse-move] {
+        .container{
+            cursor: pointer;
+        }
+    }
+    &[data-debug] {
+        .slide-item[data-active]{
+            border: 1px solid #f64f4f;
+        }
+
+        .content:before {
+            content: '';
+            position: absolute;
+            left: calc(50%);
+            /*background-color: #a4a4a4;*/
+            height: 100%;
+            width: 0;
+            border-left: 1px dashed #a4a4a4;
+            z-index: 50;
+            pointer-events: none;
+        }
+    }
+
 }
 
-.root img{
-    -webkit-user-drag: none;
-}
 
 .test-number{
     position: absolute;
@@ -55,20 +117,6 @@
     z-index: 10;
 }
 
-.root[data-touching] .pagination-group,
-.root[data-touching] .slide-item{
-    pointer-events: none;
-}
-.root[data-gpu-render] .container{
-    will-change: transform;
-}
-
-.root[data-per-view-auto] .slide-item__card{
-    container-type: normal;
-}
-.root .slide-item__card{
-    container-type: inline-size; /* fix height & width auto */
-}
 
 .pagination-group .pagination-button{
     width: .5rem;
@@ -79,8 +127,10 @@
     box-shadow: 3px 3px 9px 0 rgb(189 189 189 / 12%);
     margin: 0 6px;
 }
-.pagination-group .pagination-button[data-active]{
-    background-color: var(--primary-color, #00a3e0);
+.pagination-group {
+    .pagination-button[data-active]{
+        background-color: var(--primary-color, #00a3e0);
+    }
 }
 
 .pagination-button{
@@ -138,22 +188,15 @@
     height: 40px;
 }
 
-.root[data-touching] .nav-group{
-    pointer-events: none;
-}
-.root[data-first-page][data-last-page] .pagination-group,
-.root[data-first-page] .nav-prev-button,
-.root[data-last-page] .nav-next-button{
-    opacity: 0;
-    /*pointer-events: none; 避免連續點消失後點到背後 */
-}
 
-.nav-group > .nav-prev-button{
-    left: 10px;
-}
-.nav-group > .nav-next-button{
-    right: 10px ;
-    transform: rotate(180deg);
+.nav-group{
+    > .nav-prev-button{
+        left: 10px;
+    }
+    > .nav-next-button{
+        right: 10px ;
+        transform: rotate(180deg);
+    }
 }
 
 
@@ -247,10 +290,6 @@
 }
 
 
-
-
-
-
 .content{
     top: 0;
     right: 0;
@@ -266,26 +305,8 @@
 
 
 
-.root[data-mouse-move] .container{
-    cursor: pointer;
-}
-.root[data-debug] .slide-item[data-active]{
-    border: 1px solid #f64f4f;
-}
-
 .test-number{
     background-color: rgba(0, 0, 0, .5);
 }
 
 
-.root[data-debug] .content:before {
-    content: '';
-    position: absolute;
-    left: calc(50%);
-    /*background-color: #a4a4a4;*/
-    height: 100%;
-    width: 0;
-    border-left: 1px dashed #a4a4a4;
-    z-index: 50;
-    pointer-events: none;
-} 
