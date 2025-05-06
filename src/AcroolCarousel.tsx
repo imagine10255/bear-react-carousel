@@ -1,5 +1,3 @@
-import styles from './styles.module.scss';
-
 import * as React from 'react';
 
 import CarouselRoot from './components/CarouselRoot';
@@ -19,6 +17,7 @@ import ElState from './manager/Elementor/ElState';
 import Stater from './manager/Stater';
 import SyncCarousel from './manager/SyncCarousel';
 import WindowSizer from './manager/WindowSizer';
+import styles from './styles.module.scss';
 import {IAcroolCarouselProps} from './types';
 import {booleanToDataAttr, isPropsDiff} from './utils';
 

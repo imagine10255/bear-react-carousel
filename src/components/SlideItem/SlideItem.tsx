@@ -1,7 +1,7 @@
 import {forwardRef} from 'react';
 
-import styles from '../../styles.module.scss';
 import {CloneIcon} from '../../Icon';
+import styles from '../../styles.module.scss';
 import {booleanToDataAttr} from '../../utils';
 
 

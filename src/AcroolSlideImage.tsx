@@ -2,8 +2,8 @@ import clsx from 'clsx';
 import CSS from 'csstype';
 
 import {useSlide} from './components/SlideProvider';
-import styles from './styles.module.scss';
 import useLazyLoadImage from './hooks/useLazyLoadImage';
+import styles from './styles.module.scss';
 import {IAcroolSlideImageProps} from './types';
 
 

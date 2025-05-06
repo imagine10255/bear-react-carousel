@@ -3,8 +3,8 @@ import CSS from 'csstype';
 import React, {ReactNode} from 'react';
 
 import {useSlide} from './components/SlideProvider';
-import styles from './styles.module.scss';
 import useLazyLoadBackground from './hooks/useLazyLoadBackground';
+import styles from './styles.module.scss';
 import {IAcroolSlideCardProps} from './types';
 
 
