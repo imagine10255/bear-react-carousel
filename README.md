@@ -64,7 +64,7 @@
 ### Installation
 
 ```bash
-yarn add acrool-react-carousel
+yarn add @acrool/react-carousel
 ```
 
 ### Usage
