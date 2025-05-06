@@ -3,7 +3,7 @@ import CSS from 'csstype';
 import React, {ReactNode} from 'react';
 
 import {useSlide} from './components/SlideProvider';
-import elClassName from './el-class-name';
+import styles from './styles.module.scss';
 import useLazyLoadBackground from './hooks/useLazyLoadBackground';
 import {IAcroolSlideCardProps} from './types';
 
@@ -47,10 +47,10 @@ const AcroolSlideCard = ({
 
     return <div
         ref={imageRef}
-        className={clsx(className, elClassName.slideItemCard, {
-            [elClassName.slideItemCard100]: bgSize === '100%',
-            [elClassName.slideItemCardCover]: bgSize === 'cover',
-            [elClassName.slideItemCardContain]: bgSize === 'contain',
+        className={clsx(className, styles.slideItemCard, {
+            [styles.slideItemCard100]: bgSize === '100%',
+            [styles.slideItemCardCover]: bgSize === 'cover',
+            [styles.slideItemCardContain]: bgSize === 'contain',
         })}
         onClick={onClick}
         data-lazy-src={slide.isLazy && isPending ? bgUrl: undefined}
@@ -59,7 +59,7 @@ const AcroolSlideCard = ({
             '--slide-card-image': getImgBgImageCSSVar(),
         } as CSS.Properties}
     >
-        {isFetching ? <div className={elClassName.slideItemImagePreLoad}>
+        {isFetching ? <div className={styles.slideItemImagePreLoad}>
             {slide.renderLazyPreloader()}
         </div>: children}
     </div>;

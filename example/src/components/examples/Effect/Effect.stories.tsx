@@ -1,6 +1,7 @@
 import type {Meta, StoryObj} from '@storybook/react';
-import Effect from "./Effect";
-import Effect2 from "./Effect2";
+
+import Effect from './Effect';
+import Effect2 from './Effect2';
 
 
 const meta = {

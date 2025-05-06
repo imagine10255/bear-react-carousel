@@ -1,4 +1,4 @@
-import './styles.css';
+import styles from './styles.module.scss';
 
 import * as React from 'react';
 
@@ -9,7 +9,6 @@ import SlideItem from './components/SlideItem';
 import {SlideProvider} from './components/SlideProvider/SlideProvider';
 import WindowSize from './components/WindowSize';
 import {logEnable} from './config';
-import elClassName from './el-class-name';
 import logger from './logger';
 import AutoPlayer from './manager/AutoPlayer';
 import Configurator, {getSetting} from './manager/Configurator';
@@ -370,7 +369,7 @@ class AcroolCarousel extends React.Component<IAcroolCarouselProps, IState> {
 
         return (<div
             ref={this._elementor?._navGroupRef}
-            className={elClassName.navGroup}
+            className={styles.navGroup}
         >
             <NavPrevButton onClick={this._controller?.slideToPrevPage}/>
             <NavNextButton onClick={this._controller?.slideToNextPage}/>
@@ -441,7 +440,7 @@ class AcroolCarousel extends React.Component<IAcroolCarouselProps, IState> {
         return <div
             ref={this._elementor?._pageGroupRef}
             data-page-content={booleanToDataAttr(isEnablePageContent ?? false)}
-            className={elClassName.paginationGroup}
+            className={styles.paginationGroup}
         >
             {pageElement}
         </div>;
@@ -470,8 +469,8 @@ class AcroolCarousel extends React.Component<IAcroolCarouselProps, IState> {
             >
                 {this.state.isClientReady && this._stater?.isVisibleNavButton && this._renderNavButton()}
 
-                <div className={elClassName.content}>
-                    <div ref={this._elementor?._containerRef} className={elClassName.container} data-testid="acrool-carousel-container">
+                <div className={styles.content}>
+                    <div ref={this._elementor?._containerRef} className={styles.container} data-testid="acrool-carousel-container">
                         <SlideProvider
                             isLazy={isLazy}
                             renderLazyPreloader={!!renderLazyPreloader ? renderLazyPreloader: () => <div>loading...</div>}

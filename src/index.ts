@@ -1,5 +1,4 @@
 export {default} from './AcroolCarousel';
-export {default as elClassName} from './el-class-name';
 export {default as AcroolSlideImage} from './AcroolSlideImage';
 export {default as AcroolSlideCard} from './AcroolSlideCard';
 export {default as Controller} from './manager/Controller';

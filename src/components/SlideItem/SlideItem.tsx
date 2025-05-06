@@ -1,6 +1,6 @@
 import {forwardRef} from 'react';
 
-import elClassName from '../../el-class-name';
+import styles from '../../styles.module.scss';
 import {CloneIcon} from '../../Icon';
 import {booleanToDataAttr} from '../../utils';
 
@@ -30,7 +30,7 @@ const SlideItem = forwardRef<HTMLInputElement, IProps>(({
 }, ref) => {
 
     return <div
-        className={elClassName.slideItem}
+        className={styles.slideItem}
         ref={ref}
         data-testid="acrool-carousel-slideItem"
         data-virtual={virtualIndex}
@@ -43,11 +43,11 @@ const SlideItem = forwardRef<HTMLInputElement, IProps>(({
         {element}
 
         {isDebug && (
-            <div className={elClassName.testNumber}>
+            <div className={styles.testNumber}>
                 {sourceIndex}
                 {isClone && (
-                    <div className={elClassName.cloneIconGroup}>
-                        <div className={elClassName.cloneIcon}>
+                    <div className={styles.cloneIconGroup}>
+                        <div className={styles.cloneIcon}>
                             <CloneIcon/>
                         </div>
                         {index}

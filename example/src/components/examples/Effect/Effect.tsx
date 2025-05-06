@@ -1,27 +1,16 @@
-import {useRef, useState} from 'react';
-import AcroolCarousel, {
-    AcroolSlideCard,
-    TAcroolSlideItemDataList,
-    elClassName,
-    IInfo,
-    ICarouselState,
-    Controller, moveEffectFn, TMoveEffectFn
-} from '@acrool/react-carousel';
-import {baseImage} from "../../data";
+import AcroolCarousel, {AcroolSlideCard, Controller, ICarouselState, TAcroolSlideItemDataList, TMoveEffectFn} from '@acrool/react-carousel';
+import {useState} from 'react';
+
+import {baseImage} from '../../data';
 
 
-
-
-
-
-
-
+/**
+ * Effect
+ */
 function Effect() {
     const [carouselState, setCarouselState] = useState<ICarouselState>();
     const [enable, setEnable] = useState<boolean>(true);
-    const [count, setCount] = useState<number>(0);
     const [controller, setController] = useState<Controller>();
-    const [slidePreview, setSlidePreview] = useState(1);
 
 
     // 輪播項目1
@@ -52,7 +41,7 @@ function Effect() {
             onSlideChange={setCarouselState}
             // onSlideChange={setCarouselState}
             slidesPerView={5}
-            isCenteredSlides={true}
+            isCenteredSlides
             height="200px"
             // height={{widthRatio: 21, heightRatio: 9}}
             isEnableNavButton
@@ -69,28 +58,9 @@ function Effect() {
                 // moveFn: moveEffectFn.transformY(80),
             }}
             // effectFn={handleOnPercentage}
-
             isDebug
         />
 
-        {/*<button type="button" onClick={() => setCount(curr => curr += 1)}> count: {count}</button>*/}
-        {/*<button type="button" onClick={() => setEnable(curr => !curr)}> enable: {String(enable)}</button>*/}
-
-        {/*{Array.from({length: 5}).map((row, index) => {*/}
-        {/*    return <button key={index} type="button" onClick={() => controller?.slideToPage(index + 1)}> slideToPage {index +1} </button>;*/}
-        {/*})}*/}
-
-        {/*<br/>*/}
-
-        {/*<select onChange={event => setSlidePreview(Number(event.target.value))}>*/}
-        {/*    <option value={1}>1</option>*/}
-        {/*    <option value={2}>2</option>*/}
-        {/*    <option value={3}>3</option>*/}
-        {/*</select>*/}
-
-        {/*<pre>*/}
-        {/*    {JSON.stringify(carouselState, null, '\t')}*/}
-        {/*</pre>*/}
     </div>;
 
 }

@@ -1,6 +1,5 @@
 import AcroolCarousel, {
     AcroolSlideCard,
-    elClassName
 } from '@acrool/react-carousel';
 import type {Meta, StoryObj} from '@storybook/react';
 
@@ -166,11 +165,11 @@ export const WithCustomNav: Story = {
     args: {
         isEnableNavButton: true,
         renderNavButton: (toPrev, toNext) => {
-            return <div className={elClassName.navGroup}>
-                <button type="button" className={elClassName.navPrevButton} onClick={toPrev}>
+            return <div className="acrool-react-carousel__nav-group">
+                <button type="button" className="acrool-react-carousel__nav-prev-button" onClick={toPrev}>
                     {'く'}
                 </button>
-                <button type="button" className={elClassName.navNextButton} onClick={toNext}>
+                <button type="button" className="acrool-react-carousel__nav-next-button" onClick={toNext}>
                     {'く'}
                 </button>
             </div>;
