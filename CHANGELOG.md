@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.3.0](https://github.com/acrool/acrool-react-carousel/compare/v5.2.1...v5.3.0) (2025-05-06)
+
 ### [5.2.1](https://github.com/imagine10255/bear-react-carousel/compare/v5.2.0...v5.2.1) (2025-04-26)
 
 ## [5.2.0](https://github.com/imagine10255/bear-react-carousel/compare/v5.1.5-alpha.0...v5.2.0) (2025-04-23)
