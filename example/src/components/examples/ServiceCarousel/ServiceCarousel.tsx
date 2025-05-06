@@ -1,11 +1,10 @@
-import AcroolCarousel, {AcroolSlideCard, elClassName, ICarouselState, TAcroolSlideItemDataList} from '@acrool/react-carousel';
-import {media, defaultGridTheme, FCProps} from '@acrool/react-grid';
+import AcroolCarousel, {AcroolSlideCard, ICarouselState, TAcroolSlideItemDataList} from '@acrool/react-carousel';
+import {defaultGridTheme, FCProps,media} from '@acrool/react-grid';
 import {useState} from 'react';
 import styled from 'styled-components';
 
-
+import {data} from './data';
 import ServiceCard from './ServiceCard';
-import {data} from "./data";
 
 interface IProps extends FCProps {
 }
@@ -77,7 +76,7 @@ const ServiceCarouselRoot = styled.div`
           margin-bottom: 60px;
 
 
-          .${elClassName.slideItem}[data-active]:not(:hover){
+          .acrool-react-carousel__slide-item[data-active]:not(:hover){
                 .text{
                   color: #fff;
                 }

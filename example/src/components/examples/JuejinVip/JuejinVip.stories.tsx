@@ -1,5 +1,6 @@
 import type {Meta, StoryObj} from '@storybook/react';
-import JuejinVip from "./JuejinVip";
+
+import JuejinVip from './JuejinVip';
 
 
 const meta = {

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import elClassName from '../../el-class-name';
+import styles from '../../styles.module.scss';
 
 
 interface IProps {
@@ -21,7 +21,7 @@ const NavButton = ({
         className={className}
         onClick={onClick}
     >
-        <div className={elClassName.navIcon}/>
+        <div className={styles.navIcon}/>
     </button>;
 };
 
@@ -33,13 +33,13 @@ interface IPropsButton {
 export const NavNextButton = ({
     onClick,
 }: IPropsButton) => {
-    return <NavButton onClick={onClick} className={[elClassName.navButton, elClassName.navNextButton].join(' ')} testId="acrool-carousel-navNextButton"/>;
+    return <NavButton onClick={onClick} className={[styles.navButton, styles.navNextButton].join(' ')} testId="acrool-carousel-navNextButton"/>;
 };
 
 export const NavPrevButton = ({
     onClick,
 }: IPropsButton) => {
-    return <NavButton onClick={onClick} className={[elClassName.navButton, elClassName.navPrevButton].join(' ')} testId="acrool-carousel-navPrevButton"/>;
+    return <NavButton onClick={onClick} className={[styles.navButton, styles.navPrevButton].join(' ')} testId="acrool-carousel-navPrevButton"/>;
 };
 
 

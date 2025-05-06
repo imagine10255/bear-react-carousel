@@ -2,8 +2,8 @@ import clsx from 'clsx';
 import CSS from 'csstype';
 
 import {useSlide} from './components/SlideProvider';
-import elClassName from './el-class-name';
 import useLazyLoadImage from './hooks/useLazyLoadImage';
+import styles from './styles.module.scss';
 import {IAcroolSlideImageProps} from './types';
 
 
@@ -37,11 +37,11 @@ const AcroolSlideImage = ({
         <img
             ref={imageRef}
             style={style}
-            className={clsx(className, elClassName.slideItemImage, {
-                [elClassName.slideItemImageNone]: imageSize === 'none',
-                [elClassName.slideItemImageCover]: imageSize === 'cover',
-                [elClassName.slideItemImageContain]: imageSize === 'contain',
-                [elClassName.slideItemImageScaleDown]: imageSize === 'scaleDown',
+            className={clsx(className, styles.slideItemImage, {
+                [styles.slideItemImageNone]: imageSize === 'none',
+                [styles.slideItemImageCover]: imageSize === 'cover',
+                [styles.slideItemImageContain]: imageSize === 'contain',
+                [styles.slideItemImageScaleDown]: imageSize === 'scaleDown',
             })}
             src={(!slide.isLazy && imageUrl) ? imageUrl :undefined}
             alt={imageAlt}
@@ -49,7 +49,7 @@ const AcroolSlideImage = ({
             data-lazy-src={slide.isLazy && isPending ? imageUrl: undefined}
             onClick={onClick}
         />
-        {isFetching && <div className={elClassName.slideItemImagePreLoad}>
+        {isFetching && <div className={styles.slideItemImagePreLoad}>
             {slide.renderLazyPreloader()}
         </div>}
     </>;

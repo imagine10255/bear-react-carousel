@@ -1,17 +1,78 @@
-.acrool-react-carousel__root{
+.root{
     width: 100%;
     position: relative;
     height: var(--carousel-height, inherit);
     aspect-ratio: var(--carousel-aspect-ratio);
     user-select: none;
+
+    img{
+        -webkit-user-drag: none;
+    }
+
+
+
+    &[data-touching]{
+        .pagination-group,
+        .slide-item {
+            pointer-events: none;
+        }
+        .nav-group{
+            pointer-events: none;
+        }
+    }
+
+    &[data-gpu-render] {
+        .container{
+            will-change: transform;
+        }
+    }
+
+    &[data-per-view-auto] {
+        .slide-item__card{
+            container-type: normal;
+        }
+    }
+
+    .slide-item__card{
+        container-type: inline-size; /* fix height & width auto */
+    }
+
+
+    &[data-first-page][data-last-page] .pagination-group,
+    &[data-first-page] .nav-prev-button,
+    &[data-last-page] .nav-next-button{
+        opacity: 0;
+        /*pointer-events: none; 避免連續點消失後點到背後 */
+    }
+
+
+    &[data-mouse-move] {
+        .container{
+            cursor: pointer;
+        }
+    }
+    &[data-debug] {
+        .slide-item[data-active]{
+            border: 1px solid #f64f4f;
+        }
+
+        .content:before {
+            content: '';
+            position: absolute;
+            left: calc(50%);
+            /*background-color: #a4a4a4;*/
+            height: 100%;
+            width: 0;
+            border-left: 1px dashed #a4a4a4;
+            z-index: 50;
+            pointer-events: none;
+        }
+    }
+
 }
 
-.acrool-react-carousel__root img{
-    -webkit-user-drag: none;
-}
 
-
-.acrool-react-carousel__test-number{
+.test-number{
     position: absolute;
     top: 0;
     bottom: 0;
@@ -27,8 +88,7 @@
     overflow: auto;
 }
 
-
-.acrool-react-carousel__window-size{
+.window-size{
     position: absolute;
     bottom: 0;
     left: 0;
@@ -42,8 +102,7 @@
     padding: 5px 10px;
 }
 
-
-.acrool-react-carousel__pagination-group{
+.pagination-group{
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
@@ -58,22 +117,8 @@
     z-index: 10;
 }
 
-.acrool-react-carousel__root[data-touching] .acrool-react-carousel__pagination-group,
-.acrool-react-carousel__root[data-touching] .acrool-react-carousel__slide-item{
-    pointer-events: none;
-}
-.acrool-react-carousel__root[data-gpu-render] .acrool-react-carousel__container{
-    will-change: transform;
-}
 
-.acrool-react-carousel__root[data-per-view-auto] .acrool-react-carousel__slide-item__card{
-    container-type: normal;
-}
-.acrool-react-carousel__root .acrool-react-carousel__slide-item__card{
-    container-type: inline-size; /* fix height & width auto */
-}
-
-.acrool-react-carousel__pagination-group .acrool-react-carousel__pagination-button{
+.pagination-group .pagination-button{
     width: .5rem;
     height: .5rem;
     border-radius: 7px;
@@ -82,22 +127,24 @@
     box-shadow: 3px 3px 9px 0 rgb(189 189 189 / 12%);
     margin: 0 6px;
 }
-.acrool-react-carousel__pagination-group .acrool-react-carousel__pagination-button[data-active]{
-    background-color: var(--primary-color, #00a3e0);
+.pagination-group {
+    .pagination-button[data-active]{
+        background-color: var(--primary-color, #00a3e0);
+    }
 }
 
-.acrool-react-carousel__pagination-button{
+.pagination-button{
     position: relative;
     display: inline-grid;
     cursor: pointer;
 }
 
 
-.acrool-react-carousel__pagination-content{}
+.pagination-content{}
 
 
 
-.acrool-react-carousel__clone-icon-group{
+.clone-icon-group{
     position: absolute;
     top: 10px;
     left: 10px;
@@ -108,7 +155,7 @@
     color: #fff;
 }
 
-.acrool-react-carousel__clone-icon{
+.clone-icon{
     width: 20px;
     height: 20px;
     background: transparent no-repeat center center;
@@ -116,7 +163,7 @@
     opacity: .5;
 }
 
-.acrool-react-carousel__nav-button{
+.nav-button{
     background-color: rgba(255, 255, 255, .5);
     border-radius: 99em;
     opacity: .6;
@@ -124,7 +171,7 @@
     border: none;
     outline: none;
 }
-.acrool-react-carousel__nav-prev-button, .acrool-react-carousel__nav-next-button {
+.nav-prev-button, .nav-next-button {
     cursor: pointer;
     overflow: hidden;
     position: absolute;
@@ -141,26 +188,19 @@
     height: 40px;
 }
 
-.acrool-react-carousel__root[data-touching] .acrool-react-carousel__nav-group{
-    pointer-events: none;
-}
-.acrool-react-carousel__root[data-first-page][data-last-page] .acrool-react-carousel__pagination-group,
-.acrool-react-carousel__root[data-first-page] .acrool-react-carousel__nav-prev-button,
-.acrool-react-carousel__root[data-last-page] .acrool-react-carousel__nav-next-button{
-    opacity: 0;
-    /*pointer-events: none; 避免連續點消失後點到背後 */
-}
 
-.acrool-react-carousel__nav-group > .acrool-react-carousel__nav-prev-button{
-    left: 10px;
-}
-.acrool-react-carousel__nav-group > .acrool-react-carousel__nav-next-button{
-    right: 10px ;
-    transform: rotate(180deg);
+.nav-group{
+    > .nav-prev-button{
+        left: 10px;
+    }
+    > .nav-next-button{
+        right: 10px ;
+        transform: rotate(180deg);
+    }
 }
 
 
-.acrool-react-carousel__nav-icon{
+.nav-icon{
     height: 20px;
     width: 20px;
     background: transparent no-repeat center;
@@ -174,7 +214,7 @@
 
 
 
-.acrool-react-carousel__slide-item{
+.slide-item{
     box-sizing: border-box;
     transition-property: transform;
     position: relative;
@@ -188,27 +228,27 @@
     padding-right: calc(var(--carousel-space-between) / 2);
 }
 
-.acrool-react-carousel__slide-item__image{
+.slide-item__image{
     max-width: 100%;
     max-height: 100%;
     width: 100%; /* fix object-fit */
     height: 100%;
 }
 
-.acrool-react-carousel__slide-item__image-contain{
+.slide-item__image-contain{
     object-fit: contain;
 }
-.acrool-react-carousel__slide-item__image-cover{
+.slide-item__image-cover{
     object-fit: cover;
 }
-.acrool-react-carousel__slide-item__image-scale-down{
+.slide-item__image-scale-down{
     object-fit: scale-down;
 }
-.acrool-react-carousel__slide-item__image-none{
+.slide-item__image-none{
     object-fit: none;
 }
 
-.acrool-react-carousel__slide-item__image-preload{
+.slide-item__image-preload{
     position: absolute;
     left: 0;
     right: 0;
@@ -220,26 +260,26 @@
     height: 100%;
 }
 
-.acrool-react-carousel__slide-item__card{
+.slide-item__card{
     width: 100%;
     height: 100%;
     background-repeat: no-repeat;
     background-position: center;
     background-image: var(--slide-card-image);
 }
-.acrool-react-carousel__slide-item__card-contain{
+.slide-item__card-contain{
     background-size: contain;
 }
-.acrool-react-carousel__slide-item__card-cover{
+.slide-item__card-cover{
     background-size: cover;
 }
-.acrool-react-carousel__slide-item__card-100{
+.slide-item__card-100{
     background-size: 100%;
 }
 
 
 
-.acrool-react-carousel__container{
+.container{
     position: relative;
     display: flex;
     flex-direction: row;
@@ -250,11 +290,7 @@
 }
 
 
-
-
-
-
-.acrool-react-carousel__content{
+.content{
     top: 0;
     right: 0;
     min-width: 100%;
@@ -269,27 +305,8 @@
 
 
 
-
-.acrool-react-carousel__root[data-mouse-move] .acrool-react-carousel__container{
-    cursor: pointer;
-}
-.acrool-react-carousel__root[data-debug] .acrool-react-carousel__slide-item[data-active]{
-    border: 1px solid #f64f4f;
-}
-
-.acrool-react-carousel__test-number{
+.test-number{
     background-color: rgba(0, 0, 0, .5);
 }
 
 
-.acrool-react-carousel__root[data-debug] .acrool-react-carousel__content:before {
-    content: '';
-    position: absolute;
-    left: calc(50%);
-    /*background-color: #a4a4a4;*/
-    height: 100%;
-    width: 0;
-    border-left: 1px dashed #a4a4a4;
-    z-index: 50;
-    pointer-events: none;
-}

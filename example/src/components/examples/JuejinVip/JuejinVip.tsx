@@ -1,21 +1,20 @@
-import styled from 'styled-components';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {Grid, Flex, minmax} from '@acrool/react-grid';
-import Icons from './_components/Icons';
 import AcroolCarousel, {
-    TMoveEffectFn,
-    TAcroolSlideItemDataList,
     AcroolSlideCard,
-    elClassName,
     Controller,
-    TOnSlideChange,
-    ICarouselState
-} from '@acrool/react-carousel';
-import Phone from './_components/Phone';
+    ICarouselState,
+    TAcroolSlideItemDataList,
+    TMoveEffectFn,
+    TOnSlideChange} from '@acrool/react-carousel';
+import {Flex, Grid, minmax} from '@acrool/react-grid';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import styled from 'styled-components';
+
 import Avatar from './_components/Avatar';
-import Progress from './_components/Progress';
-import NavWrapper from './_components/NavWrapper';
+import Icons from './_components/Icons';
 import LvAboutWrapper from './_components/LvAboutWrapper';
+import NavWrapper from './_components/NavWrapper';
+import Phone from './_components/Phone';
+import Progress from './_components/Progress';
 
 
 
@@ -199,7 +198,7 @@ const JuejinVip = () => {
                 // style={{paddingTop: '100px'}}
                 height="70px"
                 slidesPerView={3}
-                isCenteredSlides={true}
+                isCenteredSlides
                 isEnableNavButton={false}
                 isEnablePagination={false}
                 isEnableMouseMove={false}
@@ -214,7 +213,7 @@ const JuejinVip = () => {
                     data={lineData}
                     height="auto"
                     slidesPerView={3}
-                    isCenteredSlides={true}
+                    isCenteredSlides
                     isEnableNavButton={false}
                     isEnablePagination={false}
                     isEnableMouseMove={false}
@@ -249,7 +248,7 @@ const JuejinVip = () => {
                         data={renderSlideData()}
                         slidesPerView={1.2}
                         spaceBetween={20}
-                        isCenteredSlides={true}
+                        isCenteredSlides
                         isEnableNavButton={false}
                         isEnablePagination={false}
                         moveEffect={{
@@ -320,10 +319,6 @@ const Line = styled.div`
   width: 356px;
   height: 100px;
   background-color: #0e86ff;
-  //position: absolute;
-  //left: 0;
-  //right: 0;
-  //bottom: 0;
   margin: auto;
 
 
@@ -332,16 +327,19 @@ const Line = styled.div`
 
 
 const LineAcroolCarousel = styled(AcroolCarousel)`
-    .${elClassName.slideItem}:first-child{
-        ${Line}{
-          width: 100px;
-          margin-left: 50%;
+    .acrool-react-carousel__slide-item{
+        &:first-child{
+            ${Line}{
+                width: 100px;
+                margin-left: 50%;
+            }
         }
-    }
-    .${elClassName.slideItem}:last-child{
-        ${Line}{
-          width: 55px;
-          margin-right: 50%;
+
+        :last-child{
+            ${Line}{
+                width: 55px;
+                margin-right: 50%;
+            }
         }
     }
 `;
@@ -350,58 +348,33 @@ const LineAcroolCarousel = styled(AcroolCarousel)`
 const LevelLine = styled.div`
     position: absolute;
     width: 100%;
-    //z-index: -1;
     overflow: hidden;
     transform-origin: bottom center;
     clip-path: url(#wave12);
 
-    //clip-path: ellipse(80% 20% at 50% 0%);
-    //clip-path: polygon(10% 10%,90% 10%,91.00% 63.00%,10.00% 63.00%);
     top: 12px;
-    //min-height: 250px;
-    //height: 100%;
-  padding-bottom: 100px;
-  //background-color: #000;
-   mask-image: linear-gradient(to right, transparent 0, white 30%, white 70%, transparent 100%);
-  //  background: linear-gradient(200.44deg, rgb(67, 22, 219) 13.57%, rgb(144, 118, 231) 58.38%);
-    //opacity: 0.2;
+    padding-bottom: 100px;
+    mask-image: linear-gradient(to right, transparent 0, white 30%, white 70%, transparent 100%);
 
-  > svg{
-    position: absolute;
-    z-index: -1;
-    top: 0;
-    height: 0;
-  }
-    //svg {
-    //  width: 100%;
-    //  padding: 200px;
-    //  //transform: rotate(180deg);
-    //  left: -20px;
-    //  position: absolute;
-    //}
+    > svg {
+        position: absolute;
+        z-index: -1;
+        top: 0;
+        height: 0;
+    }
+
     svg > clipPath {
-      transform: translate(-15px, 2px);
-
-      //transform: scale(.5);
+        transform: translate(-15px, 2px);
     }
 `;
 
 const Wave1 = styled.div`
-  //position: absolute;
   width: 100%;
-  //z-index: -1;
   overflow: hidden;
   transform-origin: bottom center;
   clip-path: url(#wave10);
-
-  //clip-path: ellipse(80% 20% at 50% 0%);
-  //clip-path: polygon(10% 10%,90% 10%,91.00% 63.00%,10.00% 63.00%);
   top: 0;
-  //min-height: 240px;
-  //height: 100%;
   background: rgb(9, 22, 44);
-  //opacity: 0.2;
-  //margin-bottom: 15px;
 
   > svg {
     position: absolute;
@@ -409,18 +382,6 @@ const Wave1 = styled.div`
     top: 0;
     height: 0;
   }
-
-  //svg {
-  //  width: 100%;
-  //  padding: 200px;
-  //  //transform: rotate(180deg);
-  //  left: -20px;
-  //  position: absolute;
-  //}
-  //svg > clipPath {
-  //
-  //  transform: scale(.5);
-  //}
 `;
 
 
@@ -474,8 +435,6 @@ const CardRoot = styled(Grid)`
 
 
   border-radius: 8px;
-  //background-color: #fff;
-  //height: 400px;
   width: 100%;
   position: relative;
     user-select: none;

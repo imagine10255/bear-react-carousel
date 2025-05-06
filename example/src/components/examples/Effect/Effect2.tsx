@@ -1,13 +1,7 @@
-import {useRef, useState} from 'react';
-import AcroolCarousel, {
-    AcroolSlideCard,
-    TAcroolSlideItemDataList,
-    elClassName,
-    IInfo,
-    ICarouselState,
-    Controller, moveEffectFn, TMoveEffectFn
-} from '@acrool/react-carousel';
-import {baseImage} from "../../data";
+import AcroolCarousel, {AcroolSlideCard, Controller, ICarouselState, TAcroolSlideItemDataList, TMoveEffectFn} from '@acrool/react-carousel';
+import {useState} from 'react';
+
+import {baseImage} from '../../data';
 
 
 
@@ -16,7 +10,7 @@ import {baseImage} from "../../data";
 
 // 輪播項目1
 const acroolSlideItemData1: TAcroolSlideItemDataList = baseImage.map(row => {
-            return <AcroolSlideCard key={row.id} bgUrl={row.imageUrl} style={{width: '200px', height: '200px'}}/>;
+    return <AcroolSlideCard key={row.id} bgUrl={row.imageUrl} style={{width: '200px', height: '200px'}}/>;
 
 });
 
@@ -53,7 +47,7 @@ function Effect2() {
             onSlideChange={setCarouselState}
             // onSlideChange={setCarouselState}
             slidesPerView={1.5}
-            isCenteredSlides={true}
+            isCenteredSlides
             height="200px"
             // height={{widthRatio: 21, heightRatio: 9}}
             isEnableNavButton

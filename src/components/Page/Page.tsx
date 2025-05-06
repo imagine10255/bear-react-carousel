@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import {forwardRef, ReactNode,useCallback} from 'react';
 
-import elClassName from '../../el-class-name';
+import styles from '../../styles.module.scss';
 import {booleanToDataAttr} from '../../utils';
 
 
@@ -27,8 +27,8 @@ const Page = forwardRef<HTMLDivElement, IProps>(({
 
     return <div
         className={clsx({
-            [elClassName.paginationButton]: !isPageContent,
-            [elClassName.paginationContent]: isPageContent
+            [styles.paginationButton]: !isPageContent,
+            [styles.paginationContent]: isPageContent
         })}
         ref={ref}
         role='button'

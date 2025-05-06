@@ -1,14 +1,14 @@
+import AcroolCarousel, {AcroolSlideCard, ICarouselState, TAcroolSlideItemDataList, TOnAnimationEnd} from '@acrool/react-carousel';
 import {useState} from 'react';
-import AcroolCarousel, {AcroolSlideCard, TAcroolSlideItemDataList, ICarouselState, Controller, TOnAnimationEnd} from '@acrool/react-carousel';
-
 import styled, {createGlobalStyle} from 'styled-components';
-import {baseImage} from "../../data";
+
+import {baseImage} from '../../data';
 
 
 const sample = {
-     title: 'Acrool React Carousel',
+    title: 'Acrool React Carousel',
     desc: 'Most modern slider for ReactJS',
-}
+};
 
 
 
@@ -95,11 +95,6 @@ const GlobalRoot = createGlobalStyle`
 
 const ModalRoot = styled.div`
     width: 100%;
-    //position: fixed;
-    //left: 0;
-    //bottom: 0;
-    //top: 0;
-    //right: 0;
     height: 100vh;
 
 
