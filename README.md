@@ -2,7 +2,7 @@
 
 
 <a href="https://acrool-react-carousel.pages.dev/" title="Acrool React Carousel - Most modern slider with hardware accelerated transitions for ReactJS">
-    <img src="https://raw.githubusercontent.com/acrool/acrool-react-carousel/main/example/public/og.webp" alt="Acrool React Carousel Logo"/>
+    <img src="https://raw.githubusercontent.com/acrool/acrool-react-carousel/main/example/public/og.png" alt="Acrool React Carousel Logo"/>
 </a>
 
 <p align="center">
