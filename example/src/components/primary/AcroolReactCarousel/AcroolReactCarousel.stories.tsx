@@ -22,6 +22,7 @@ const meta = {
     tags: ['autodocs'],
     argTypes: {},
     args: {
+        isDebug: false,
         data: generatorAcroolSlideCardData(),
         spaceBetween: 0,
         slidesPerView: 1,
@@ -38,7 +39,6 @@ const meta = {
         isEnablePagination: false,
         isLazy: false,
         isCenteredSlides: false,
-        isDebug: false,
     },
     render: function Render(args) {
         return <AcroolCarousel
@@ -182,6 +182,7 @@ export const WithCustomNav: Story = {
 export const WithLoop: Story = {
     args: {
         isEnableLoop: true,
+        isEnableNavButton: true,
     }
 };
 

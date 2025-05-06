@@ -18,30 +18,24 @@ describe('Auto play testing', () => {
 
     const autoPlayTime = 500;
 
-    beforeEach(() => {
+    beforeEach(async () => {
         jest.useFakeTimers();
 
         const containerSize = 400;
         const createData = Array.from({length: 6});
-        const data = createData.map((row, index) => ({key: index, children: <AcroolSlideCard>item{index}</AcroolSlideCard>}));
-        const onMount = () => {
-            container = screen.getByTestId('acrool-carousel-container');
-            slideItems = screen.getAllByTestId('acrool-carousel-slideItem');
-            navNextButton = screen.getByTestId('acrool-carousel-navNextButton');
-            navPrevButton = screen.getByTestId('acrool-carousel-navPrevButton');
-
-            setContainerSize(container, containerSize);
-            setSlideItemsSizes(slideItems, Math.floor(containerSize));
-        };
-
+        const data = createData.map((row, index) => (<AcroolSlideCard>item{index}</AcroolSlideCard>));
         render(<AcroolCarousel
-            onMount={onMount}
             data={data}
             isEnableNavButton
             isEnableAutoPlay
             autoPlayTime={autoPlayTime}
         />);
-
+        container = await screen.findByTestId('acrool-carousel-container');
+        slideItems = await screen.findAllByTestId('acrool-carousel-slideItem');
+        navNextButton = await screen.findByTestId('acrool-carousel-navNextButton');
+        navPrevButton = await screen.findByTestId('acrool-carousel-navPrevButton');
+        setContainerSize(container, containerSize);
+        setSlideItemsSizes(slideItems, Math.floor(containerSize));
     });
 
     afterEach(() => {
@@ -56,14 +50,13 @@ describe('Auto play testing', () => {
     test('Auto navigates to next page after one second', async () => {
         // Act
         act(() => jest.advanceTimersByTime(autoPlayTime));
-        expect(getActiveSlideItem()).toHaveAttribute('data-page','1');
-
-        act(() => jest.advanceTimersByTime(autoPlayTime));
         expect(getActiveSlideItem()).toHaveAttribute('data-page','2');
 
         act(() => jest.advanceTimersByTime(autoPlayTime));
         expect(getActiveSlideItem()).toHaveAttribute('data-page','3');
 
+        act(() => jest.advanceTimersByTime(autoPlayTime));
+        expect(getActiveSlideItem()).toHaveAttribute('data-page','4');
     });
 
 

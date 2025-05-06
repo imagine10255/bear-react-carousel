@@ -40,7 +40,7 @@ export function anyToNumber(value: any, defaultValue = 0): number {
  */
 export function getSizeByRange(innerWidth: number = 0, breakpointSizes: number[] = []): number{
     const filterArray = breakpointSizes
-        .filter(size => size < innerWidth)
+        .filter(size => size <= innerWidth)
         .sort((a, b) => Number(b) - Number(a));
 
     if (filterArray.length > 0) return filterArray[0];

@@ -1,6 +1,4 @@
-import AcroolCarousel, {
-    AcroolSlideImage,
-    TAcroolSlideItemDataList} from '@acrool/react-carousel';
+import AcroolCarousel, {AcroolSlideImage, TAcroolSlideItemDataList} from '@acrool/react-carousel';
 import type {Meta, StoryObj} from '@storybook/react';
 
 import {generatorAcroolSlideImageData} from '../../data';
@@ -22,7 +20,8 @@ const meta = {
     argTypes: {},
     args: {
         imageAlt: 'cat',
-        imageSize: 'none' //'none'|'cover'|'contain'|'scaleDown',
+        imageSize: 'none', //'none'|'cover'|'contain'|'scaleDown',
+        imageUrl: '/images/sample/1.jpg',
     },
     render: function Render(args) {
 
@@ -46,7 +45,7 @@ export const Primary: Story = {
 };
 export const WithCover: Story = {
     args: {
-        imageSize: 'cover'
+        imageSize: 'cover',
     }
 };
 export const WithContain: Story = {

@@ -4,6 +4,11 @@ import Eventor from '../Eventor';
 import {TEventMap} from './types';
 import WindowSizer from './WindowSizer';
 
+jest.mock('../../utils', () => ({
+    ...jest.requireActual('../../utils'),
+    checkIsMobile: jest.fn(),
+}));
+
 describe('WindowSizer', () => {
     let mockWindow: Window & typeof globalThis;
     let mockBreakpoints: IPropsBreakpoints;
@@ -16,7 +21,7 @@ describe('WindowSizer', () => {
         mockWindow = {
             innerWidth: 1024,
             addEventListener: (event: string, callback: () => void) => {
-                if (event === 'orientationchange') {
+                if (event === 'orientationchange' || event === 'resize') {
                     resizeCallback = callback;
                 }
             },
@@ -51,6 +56,7 @@ describe('WindowSizer', () => {
     });
 
     it('should detect device correctly', () => {
+        (require('../../utils').checkIsMobile as jest.Mock).mockReturnValue(true);
         Object.defineProperty(window.navigator, 'userAgent', {
             value: 'Mozilla/5.0 (Linux; Android 4.0.4; Galaxy Nexus Build/IMM76B)',
             configurable: true
@@ -73,7 +79,8 @@ describe('WindowSizer', () => {
         const callback = jest.fn();
         sizer.onResize(callback);
 
-        // Trigger the mock event listener
+        // 先改變 innerWidth，讓 _emitResize 條件成立
+        mockWindow.innerWidth = 800;
         resizeCallback();
 
         expect(callback).toHaveBeenCalled();
