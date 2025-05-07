@@ -335,7 +335,7 @@ const LineAcroolCarousel = styled(AcroolCarousel)`
             }
         }
 
-        :last-child{
+        &:last-child{
             ${Line}{
                 width: 55px;
                 margin-right: 50%;
