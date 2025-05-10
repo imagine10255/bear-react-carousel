@@ -90,10 +90,10 @@ class Controller {
         this._stater.setActiveActual(inRangeIndex, formatElement[inRangeIndex]?.inPage ?? 1);
 
         // 移動EL位置
-        const position = this._elState.getMoveDistance(inRangeIndex);
+        const {distance, height} = this._elState.getMoveDistance(inRangeIndex);
 
         this._elState
-            .transform(position, options?.isUseAnimation ?? true)
+            .transform(distance, height, options?.isUseAnimation ?? true)
             .moveEffect(slideIndex, options?.isUseAnimation ?? true)
             .syncActiveState();
 

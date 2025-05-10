@@ -20,6 +20,7 @@ export function getSetting(props: IAcroolCarouselProps): ISetting {
         slidesPerGroup: props.slidesPerGroup,
         slidesPerViewActual: 0,
         height: props.height,
+        isAutoMaxHeight: props.isAutoMaxHeight,
         spaceBetween: props.spaceBetween,
         isCenteredSlides: props.isCenteredSlides,
         isEnableNavButton: props.isEnableNavButton,

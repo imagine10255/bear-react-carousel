@@ -38,6 +38,7 @@ class AcroolCarousel extends React.Component<IAcroolCarouselProps, IState> {
         slidesPerView: 1,
         slidesPerGroup: 1, // 不可為小數
         breakpoints: {},
+        isAutoMaxHeight: false,
         isCenteredSlides: false,
         isEnableLoop: false,
         isEnablePageContent: false,
@@ -45,13 +46,13 @@ class AcroolCarousel extends React.Component<IAcroolCarouselProps, IState> {
         isEnableNavButton: false,
         isEnableMouseMove: true,
         isEnableAutoPlay: false,
+        isEnableGPURender: false,
         movePercentage: 0.1,
         isDebug: false,
         spaceBetween: 0,
         moveTime: 500,
         autoPlayTime: 5000,
         initStartPlayTime: 1500,
-        isEnableGPURender: false,
     };
     state: IState = {windowSize: 0, isClientReady: false};
     _isError: boolean = false;

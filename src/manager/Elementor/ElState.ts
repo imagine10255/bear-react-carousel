@@ -136,13 +136,21 @@ class ElState {
      * Get the target item distance width(px)
      * @param slideIndex
      */
-    getMoveDistance = (slideIndex: number): number => {
+    getMoveDistance = (slideIndex: number): { distance: number, height: number} => {
         if (this._elementor.slideItemEls && this._elementor.slideItemEls[slideIndex]) {
             const slideItemEl = this._elementor.slideItemEls[slideIndex];
-            return getMoveDistance(slideItemEl.offsetLeft, this._getStartPosition());
+            const maxHeight = slideItemEl.offsetHeight || 0;
+
+            return {
+                distance: getMoveDistance(slideItemEl.offsetLeft, this._getStartPosition()),
+                height: maxHeight,
+            };
         }
 
-        return 0;
+        return {
+            distance: 0,
+            height: 0,
+        };
     };
 
 
@@ -166,9 +174,12 @@ class ElState {
 
 
 
-    transform(translateX: number, isUseAnimation = false){
+    transform(translateX: number, height: number, isUseAnimation = false){
         if(this._elementor.containerEl){
             this._elementor.containerEl.style.transform = `translate(${translateX}px, 0px)`;
+
+            this._elementor.containerEl.style.height = this._configurator.autoHeight.isAutoMaxHeight ? `${height}px`: '';
+
             this._elementor.containerEl.style.transitionDuration = isUseAnimation
                 ? `${this._configurator.setting.moveTime}ms`
                 : '0ms';
