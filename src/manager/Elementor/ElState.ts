@@ -178,7 +178,7 @@ class ElState {
         if(this._elementor.containerEl){
             this._elementor.containerEl.style.transform = `translate(${translateX}px, 0px)`;
 
-            this._elementor.containerEl.style.height = this._configurator.autoHeight.isAutoMaxHeight && typeof height !== 'undefined' ? `${height}px`: '';
+            this._elementor.containerEl.style.height = this._configurator.autoHeight.isAutoMaxHeight ? `${height}px`: '';
 
             this._elementor.containerEl.style.transitionDuration = isUseAnimation
                 ? `${this._configurator.setting.moveTime}ms`
