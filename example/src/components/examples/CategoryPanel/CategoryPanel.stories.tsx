@@ -1,10 +1,11 @@
+import {Container} from '@acrool/react-grid';
 import type {Meta, StoryObj} from '@storybook/react';
+import styled from 'styled-components';
+
+import Phone, {NavWrapper} from '@/components/atoms/Phone';
+import Icon, {EIconCode} from '@/library/acrool-react-icon';
 
 import CategoryPanel from './_components/CategoryPanel';
-import Phone, {NavWrapper} from "@/components/atoms/Phone";
-import styled from "styled-components";
-import Icon, {EIconCode} from "@/library/acrool-react-icon";
-import {Container} from "@acrool/react-grid";
 
 
 const meta = {
@@ -68,11 +69,11 @@ export const Primary: Story = {
 
 
 
-export const SubHeaderWrapper = styled.div`
+const SubHeaderWrapper = styled.div`
     display: flex;
     justify-content: space-between;
 `;
-export const SubTitle = styled.h2`
+const SubTitle = styled.h2`
     font-size: 16px;
     font-weight: 600;
     color: var(--app__text-color, #fff);
