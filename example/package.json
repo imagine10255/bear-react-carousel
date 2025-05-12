@@ -7,7 +7,7 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "pages:dev": "wrangler pages dev --proxy 3000 -- yarn dev",
-    "pages:deploy": "NODE_VERSION=18 yarn build-storybook && wrangler pages deploy ./storybook-static --project-name=acrool-react-carousel-storybook --branch main"
+    "pages:deploy": "NODE_VERSION=20 yarn build-storybook && wrangler pages deploy ./storybook-static --project-name=acrool-react-carousel-storybook --branch main"
   },
   "resolutions": {
     "styled-components": "6.1.17"
