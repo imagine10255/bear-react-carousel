@@ -112,7 +112,7 @@ const Header = styled(Flex)`
     align-items: center;
     gap: 5px;
 
-    :after{
+    &:after{
         content: '';
         background: linear-gradient(180deg, #E8E8E8 0%, #A1A1A1 100%);
         height: 1px;

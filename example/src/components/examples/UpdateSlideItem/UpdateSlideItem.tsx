@@ -1,9 +1,9 @@
 import {useState} from 'react';
-import BearCarousel, {
-    BearSlideCard,
-    TBearSlideItemDataList,
+import AcroolCarousel, {
+    AcroolSlideCard,
+    TAcroolSlideItemDataList,
     ICarouselState
-} from 'bear-react-carousel';
+} from '@acrool/react-carousel';
 import {baseImage} from "../../data";
 
 
@@ -17,14 +17,15 @@ function UpdateSlideItem() {
     const [carouselState, setCarouselState] = useState<ICarouselState>();
     const [activeId, setActiveId] = useState<string>('1');
 
-    const bearSlideItemData1: TBearSlideItemDataList = baseImage.map(row => {
-        return <BearSlideCard
+    const acroolSlideItemData1: TAcroolSlideItemDataList = baseImage.map(row => {
+        console.log('activeId', activeId);
+        return <AcroolSlideCard
             key={row.id}
             bgUrl={row.imageUrl}
             style={{
-                width: '200px',
-                height: '200px',
-                border: row.id === activeId ? '5px solid #bdbdbd' : undefined
+                // width: '200px',
+                // height: '200px',
+                border: row.id === activeId ? '5px solid yellow' : undefined
         }}
             onClick={() => setActiveId(row.id)}
         />;
@@ -32,10 +33,10 @@ function UpdateSlideItem() {
 
 
     return <div>
-        activeId: {activeId}
+        click card active id: {activeId}
         {/*測試依照比例設定容器高度*/}
-        <BearCarousel
-            data={bearSlideItemData1}
+        <AcroolCarousel
+            data={acroolSlideItemData1}
             onSlideChange={setCarouselState}
             slidesPerView={4}
             isCenteredSlides

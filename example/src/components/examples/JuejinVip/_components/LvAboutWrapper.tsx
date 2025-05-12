@@ -42,7 +42,7 @@ const Avatar = styled.div`
   height: 40px;
   position: relative;
 
-  :after {
+  &:after {
     content: '';
     position: absolute;
     background-color: rgba(255, 159, 14, 0.65);
@@ -73,7 +73,7 @@ const Item = styled(Grid)`
     justify-self: center;
     color: #fff;
 
-    :nth-child(1){
+    &:nth-child(1){
       filter: grayscale(0);
     }
 `;

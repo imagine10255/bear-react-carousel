@@ -1,4 +1,4 @@
 
 export type TEventMap = {
-    timeout: () => void;
+    timeout: () => void,
 };

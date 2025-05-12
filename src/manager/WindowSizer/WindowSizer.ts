@@ -1,11 +1,10 @@
-import {TEventMap} from './types';
-
-import Eventor from '../Eventor';
-import {EDevice, IPropsBreakpoints, GlobalWindow} from '../../types';
-import {checkIsDesktop, checkIsMobile, getSizeByRange, objectKeys} from '../../utils';
 import {logEnable} from '../../config';
 import logger from '../../logger';
+import {EDevice, GlobalWindow,IPropsBreakpoints} from '../../types';
+import {checkIsDesktop, checkIsMobile, getSizeByRange, objectKeys} from '../../utils';
 import Configurator from '../Configurator';
+import Eventor from '../Eventor';
+import {TEventMap} from './types';
 
 
 const resizeEvent: Record<EDevice, string> = {
@@ -31,7 +30,7 @@ class WindowSizer {
 
     constructor(inject: {
         breakpoints?: IPropsBreakpoints,
-        win: GlobalWindow
+        win: GlobalWindow,
         configurator: Configurator,
     }) {
         this._breakpoints = inject.breakpoints;

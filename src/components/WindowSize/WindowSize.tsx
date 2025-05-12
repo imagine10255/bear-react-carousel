@@ -1,7 +1,7 @@
-import elClassName from '../../el-class-name';
+import styles from '../../styles.module.scss';
 
 interface IProps {
-    size: number,
+    size: number
 }
 
 /**
@@ -13,8 +13,8 @@ const WindowsSize = ({
     size = 0,
 }: IProps) => {
     return <div
-        data-testid="bear-carousel-windowSize"
-        className={elClassName.testWindowSize}
+        data-testid="acrool-carousel-windowSize"
+        className={styles.windowSize}
     >
         {size}
     </div>;

@@ -1,6 +1,7 @@
-import {RefObject, CSSProperties, ReactNode} from 'react';
 import * as CSS from 'csstype';
-import BearCarousel from './BearCarousel';
+import {CSSProperties, JSX,ReactNode, RefObject} from 'react';
+
+import AcroolCarousel from './AcroolCarousel';
 import Controller from './manager/Controller';
 import Elementor from './manager/Elementor';
 
@@ -21,22 +22,21 @@ export type TOnMount = () => void
 export type GlobalWindow = Window & typeof globalThis
 
 
-export interface IBearCarouselProps extends IBreakpointSetting{
+export interface IAcroolCarouselProps extends IBreakpointSetting{
   style?: CSS.Properties
   className?: string
   renderNavButton?: TRenderNavButton
   renderPagination?: TRenderPagination
-  data?: TBearSlideItemDataList
+  data?: TAcroolSlideItemDataList
   moveTime?: number
   autoPlayTime?: number
   initStartPlayTime?: number
   breakpoints?: IPropsBreakpoints
   isDebug?: boolean
-  // isSlideItemMemo?: boolean
   isLazy?: boolean
   isEnableGPURender?: boolean
   renderLazyPreloader?: TRenderLazyPreloader
-  syncCarouselRefs?: RefObject<BearCarousel>[]
+  syncCarouselRefs?: RefObject<AcroolCarousel|null>[]
   setController?: (controller: Controller) => void
   onSlideChange?: TOnSlideChange
   onAnimationEnd?: TOnAnimationEnd
@@ -53,21 +53,23 @@ export interface ICarouselState {
   // }
   // 額外整理過的資訊
   virtual: {
-    activeIndex: number
-    prevActiveIndex: number
-    lastIndex: number
-    total: number
+    activeIndex: number,
+    prevActiveIndex: number,
+    lastIndex: number,
+    total: number,
   }
   // 原始資料的資訊
   source: {
-    activeIndex: number
-    prevActiveIndex: number
-    lastIndex: number
-    total: number
+    activeIndex: number,
+    activeInPageIndex: number,
+    prevActiveIndex: number,
+    lastIndex: number,
+    total: number,
   }
   page: {
-    activePage: number
-    total: number
+    limit: number,
+    activePage: number,
+    total: number,
   }
 }
 
@@ -76,16 +78,16 @@ export interface IInfo extends ICarouselState{
   isVisiblePagination: boolean
   isVisibleNavButton: boolean
 }
-export interface IBearSlideItemData {
+export interface IAcroolSlideItemData {
   key: string|number
   children: ReactNode
 }
 
 
-export type TBearSlideItemDataList = ReactNode[];
+export type TAcroolSlideItemDataList = ReactNode[];
 
 export type heightUnit = 'px' | '%' | 'em' | 'rem' | 'vh';
-export type THeightUnitSize = 'auto'|`${number}${heightUnit}`;
+export type THeightUnitSize = 'auto'|number|`${number}${heightUnit}`;
 
 export interface IAspectRatio {
   widthRatio: number
@@ -94,22 +96,23 @@ export interface IAspectRatio {
 
 
 export interface IPercentageInfo {
-  calcPercentage: number,
-  percentage: number,
+  calcPercentage: number
+  percentage: number
   index: number
 }
 export type TMoveEffectFn = (percentageInfo: IPercentageInfo) => CSSProperties;
 
 
 interface IMoveEffect {
-  moveTime?: string,
-  moveFn?: TMoveEffectFn,
+  moveTime?: string
+  moveFn?: TMoveEffectFn
 }
 
 export interface IBreakpointSetting {
   slidesPerView: TSlidesPerView
   slidesPerGroup: number
-  height?: IAspectRatio|THeightUnitSize,
+  height?: IAspectRatio|THeightUnitSize
+  isAutoMaxHeight?: boolean
   spaceBetween?: number
   isCenteredSlides?: boolean
   isEnableLoop?: boolean
@@ -136,11 +139,32 @@ export type TToNext = () => void
 
 
 
+export interface IAcroolSlideCardProps {
+    className?: string
+    style?: CSS.Properties
+    bgUrl?: string
+    bgSize?: '100%'|'cover'|'contain'
+    children?: ReactNode
+    onClick?: () => void
+}
+
+export interface IAcroolSlideImageProps {
+    className?: string
+    style?: CSS.Properties
+    imageUrl: string
+    imageAlt?: string
+    imageSize?: 'none'|'cover'|'contain'|'scaleDown'
+    alt?: string
+    onClick?: () => void
+}
+
+
+
 export interface ISetting extends IBreakpointSetting {
   slidesPerViewActual: TSlidesPerViewActual
-  moveTime?: number,
-  autoPlayTime?: number,
-  initStartPlayTime?: number,
-  isEnableGPURender?: boolean,
-  isDebug?: boolean,
+  moveTime?: number
+  autoPlayTime?: number
+  initStartPlayTime?: number
+  isEnableGPURender?: boolean
+  isDebug?: boolean
 }

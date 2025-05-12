@@ -1,17 +1,16 @@
-import {calcMoveTranslatePx} from './utils';
-import {TEventMap} from './types';
-
-import Configurator from '../Configurator';
-import Elementor from '../Elementor';
-import Locator from '../Locator';
-import Stater from '../Stater';
-import Eventor from '../Eventor';
+import {logEnable} from '../../config';
 import {MobileTouchEvent, PointerTouchEvent} from '../../interface/DragEvent';
 import logger from '../../logger';
-import {logEnable} from '../../config';
-import ElState from '../Elementor/ElState';
 import {checkIsMobile, getNextIndexByPercentage, getPrevIndexByPercentage} from '../../utils';
+import Configurator from '../Configurator';
+import Elementor from '../Elementor';
+import ElState from '../Elementor/ElState';
+import Eventor from '../Eventor';
+import Locator from '../Locator';
+import Stater from '../Stater';
 import {checkLetItGo, getInRangeIndex} from '../Stater/utils';
+import {TEventMap} from './types';
+import {calcMoveTranslatePx} from './utils';
 
 
 /**
@@ -180,7 +179,7 @@ class Dragger {
             const {startPosition} = this._locator;
             const translateX = calcMoveTranslatePx(startPosition.x, event.clientX);
             this._elState
-                .transform(translateX, false);
+                .transform(translateX);
 
             // 設定移動 與 結束事件
             document.addEventListener('pointermove', this._onWebMouseMove, false);

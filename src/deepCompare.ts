@@ -1,4 +1,4 @@
-/* eslint-disable eqeqeq, indent */
+ 
 
 
 function keys(obj: object, hasKey: (obj: object, key: string) => boolean) {

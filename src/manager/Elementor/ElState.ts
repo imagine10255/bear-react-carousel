@@ -1,12 +1,12 @@
 
-import {getMoveDistance, getMovePercentage, getStartPosition} from './utils';
-import Configurator from '../Configurator';
-import Stater from '../Stater';
 import {IPercentageInfo} from '../../types';
 import {objectKeys} from '../../utils';
+import Configurator from '../Configurator';
+import Eventor from '../Eventor';
+import Stater from '../Stater';
 import Elementor from './Elementor';
 import {TEventMap} from './types';
-import Eventor from '../Eventor';
+import {getMoveDistance, getMovePercentage, getStartPosition} from './utils';
 
 class ElState {
     _elementor: Elementor;
@@ -136,13 +136,21 @@ class ElState {
      * Get the target item distance width(px)
      * @param slideIndex
      */
-    getMoveDistance = (slideIndex: number): number => {
+    getMoveDistance = (slideIndex: number): { distance: number, height: number} => {
         if (this._elementor.slideItemEls && this._elementor.slideItemEls[slideIndex]) {
             const slideItemEl = this._elementor.slideItemEls[slideIndex];
-            return getMoveDistance(slideItemEl.offsetLeft, this._getStartPosition());
+            const maxHeight = slideItemEl.offsetHeight || 0;
+
+            return {
+                distance: getMoveDistance(slideItemEl.offsetLeft, this._getStartPosition()),
+                height: maxHeight,
+            };
         }
 
-        return 0;
+        return {
+            distance: 0,
+            height: 0,
+        };
     };
 
 
@@ -166,9 +174,12 @@ class ElState {
 
 
 
-    transform(translateX: number, isUseAnimation = false){
+    transform(translateX: number, height?: number, isUseAnimation = false){
         if(this._elementor.containerEl){
             this._elementor.containerEl.style.transform = `translate(${translateX}px, 0px)`;
+
+            this._elementor.containerEl.style.height = this._configurator.autoHeight.isAutoMaxHeight ? `${height}px`: '';
+
             this._elementor.containerEl.style.transitionDuration = isUseAnimation
                 ? `${this._configurator.setting.moveTime}ms`
                 : '0ms';
@@ -267,6 +278,8 @@ class ElState {
 
 
         const activePage = this._stater.page.activePage;
+        const isFirstPage = (activePage === 1 && this._stater.source.activeInPageIndex === 0);
+        const isLastPage = (activePage >= this._stater.page.total && this._stater.source.activeInPageIndex === 0);
 
         // 更改顯示在第幾頁的樣式 (父元件使用可判定樣式設定)
         if (this._stater.isVisiblePagination && this._stater.page.activePage > 0) {
@@ -281,7 +294,7 @@ class ElState {
 
 
         const pageOnlyOne = this._stater.page.total === 1;
-        const notPage = this._stater.virtual.total < this._configurator.setting.slidesPerView;
+        const notPage = typeof this._configurator.setting.slidesPerView === 'number' && this._stater.virtual.total < this._configurator.setting.slidesPerView;
 
         // 重置先判斷是否存在
         if(typeof this._elementor.rootEl?.dataset.firstPage !== 'undefined'){
@@ -292,10 +305,10 @@ class ElState {
         }
         // 提供是否為第一頁/最後一頁的判斷屬性
         if(this._stater.isVisibleNavButton && !this._configurator.setting.isEnableLoop){
-            if(activePage <= 1 || pageOnlyOne || notPage){
+            if(isFirstPage || pageOnlyOne || notPage){
                 this._elementor.rootEl?.setAttribute('data-first-page', '');
             }
-            if(activePage >= this._stater.page.total || pageOnlyOne || notPage){
+            if(isLastPage || pageOnlyOne || notPage){
                 this._elementor.rootEl?.setAttribute('data-last-page',  '');
             }
         }

@@ -1,6 +1,6 @@
-import Stater from '../Stater';
 import Configurator from '../Configurator';
 import ElState from '../Elementor/ElState';
+import Stater from '../Stater';
 
 /**
  * 取得目標Index 使用 Page 計算

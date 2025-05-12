@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React from 'react';
-import {Grid, media} from 'bear-react-grid';
+import {media} from '@acrool/react-grid';
 
 interface IData {
     imageUrl: string,
@@ -49,7 +49,7 @@ const Text = styled.p`
 
 const FeatureCardRoot = styled.div`
 
-  
+
     width: 85px;
     height: 85px;
     background: linear-gradient(rgba(24, 32, 79, 0.72) 0%, rgba(24, 32, 79, 0.45) 100%);

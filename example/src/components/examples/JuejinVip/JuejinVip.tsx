@@ -1,108 +1,24 @@
-import styled from 'styled-components';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {Grid, Flex, minmax} from '@acrool/react-grid';
-import Icons from './_components/Icons';
-import BearCarousel, {
-    TMoveEffectFn,
-    TBearSlideItemDataList,
-    BearSlideCard,
-    elClassName,
+import AcroolCarousel, {
+    AcroolSlideCard,
     Controller,
-    TOnSlideChange,
-    ICarouselState
-} from 'bear-react-carousel';
-import Phone from './_components/Phone';
+    ICarouselState,
+    TAcroolSlideItemDataList,
+    TMoveEffectFn,
+    TOnSlideChange} from '@acrool/react-carousel';
+import {Flex, Grid, minmax} from '@acrool/react-grid';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import styled from 'styled-components';
+
 import Avatar from './_components/Avatar';
-import Progress from './_components/Progress';
-import NavWrapper from './_components/NavWrapper';
+import Icons from '../../atoms/Phone/Icons';
 import LvAboutWrapper from './_components/LvAboutWrapper';
+import Progress from './_components/Progress';
+import {mockDataList} from './mockData';
 
 
 
 
 
-
-export const dataList = [
-    {
-        id: 1,
-        lv: 1,
-        value: 100,
-        desc: 'Already achieved this level',
-        progressRate: 100,
-        bg: '#728cab',
-        count: 1,
-    },
-    {
-        id: 2,
-        lv: 2,
-        desc: 'still 51 points unlock the next level',
-        value: 200,
-        progressRate: 100,
-        bg: '#66bddc',
-        count: 2,
-
-    },
-    {
-        id: 3,
-        lv: 3,
-        value: 300,
-        desc: 'still 151 points unlock the next level',
-        progressRate: 100,
-        bg: '#459dde',
-        count: 4,
-
-    },
-    {
-        id: 4,
-        lv: 4,
-        value: 400,
-        desc: 'still 251 points unlock the next level',
-        progressRate: 100,
-        bg: '#2273ec',
-        count: 6,
-    },
-    {
-        id: 5,
-        lv: 5,
-        value: 500,
-        desc: 'still 351 points unlock the next level',
-        progressRate: 9,
-        bg: '#005fbd',
-        status: 'Current',
-        count: 7,
-    },
-    {
-        id: 6,
-        lv: 6,
-        value: 500,
-        desc: 'still 451 points unlock the next level',
-        progressRate: 9,
-        bg: '#01519f',
-        status: 'Locked',
-        count: 8,
-    },
-    {
-        id: 7,
-        lv: 7,
-        value: 500,
-        desc: 'still 551 points unlock the next level',
-        progressRate: 9,
-        bg: '#003a72',
-        status: 'Locked',
-        count: 9,
-
-    },
-    {
-        id: 8,
-        lv: 8,
-        value: 500,
-        desc: 'still 651 points unlock the next level',
-        progressRate: 9,
-        bg: '#001c34',
-        status: 'Locked',
-        count: 14,
-    },
-];
 
 
 /**
@@ -112,9 +28,9 @@ export const dataList = [
  * @constructor
  */
 const JuejinVip = () => {
-    const carouselMainRef = useRef<BearCarousel>(null);
-    const carouselMetaRef = useRef<BearCarousel>(null);
-    const carouselLineRef = useRef<BearCarousel>(null);
+    const carouselMainRef = useRef<AcroolCarousel>(null);
+    const carouselMetaRef = useRef<AcroolCarousel>(null);
+    const carouselLineRef = useRef<AcroolCarousel>(null);
     const [carouselMainController, setMainController] = useState<Controller>();
     const [currLevel, setCurrLevel] = useState<{lv: number,count: number}|undefined>();
 
@@ -140,7 +56,7 @@ const JuejinVip = () => {
 
 
     const handleSlideChange: TOnSlideChange = useCallback((state: ICarouselState) => {
-        const curr = dataList.find((row, index) => index === state.virtual.activeIndex);
+        const curr = mockDataList.find((row, index) => index === state.virtual.activeIndex);
         if(curr){
             setCurrLevel({lv: curr.lv, count: curr.count});
         }
@@ -150,8 +66,8 @@ const JuejinVip = () => {
 
     const renderSlideData = useCallback(() => {
 
-        const data: TBearSlideItemDataList = dataList.map(row => {
-            return <BearSlideCard key={row.id}>
+        const data: TAcroolSlideItemDataList = mockDataList.map(row => {
+            return <AcroolSlideCard key={row.id}>
                 <LevelCard col={1} style={{backgroundColor: row.bg}} className="align-content-start row-gap-5">
                     {row.status && <CurrLv>
                         {row.status === 'Locked' && <Icons.Locked/>}
@@ -168,7 +84,7 @@ const JuejinVip = () => {
 
                     <Progress value={row.progressRate}/>
                 </LevelCard>
-            </BearSlideCard>;
+            </AcroolSlideCard>;
         });
 
         return data;
@@ -176,30 +92,30 @@ const JuejinVip = () => {
 
 
     const renderMeta = useCallback(() => {
-        const metaData: TBearSlideItemDataList = dataList.map(row => {
-            return <BearSlideCard key={row.id}>
+        const metaData: TAcroolSlideItemDataList = mockDataList.map(row => {
+            return <AcroolSlideCard key={row.id}>
                 <MetaCard>
                     <MetaLv>LV.{row.lv}</MetaLv>
                     <Do/>
                 </MetaCard>
-            </BearSlideCard>;
+            </AcroolSlideCard>;
         });
 
-        const lineData: TBearSlideItemDataList = dataList.map(row => {
-            return <BearSlideCard key={row.id} className="position-relative">
+        const lineData: TAcroolSlideItemDataList = mockDataList.map(row => {
+            return <AcroolSlideCard key={row.id} className="position-relative">
                 <Line/>
-            </BearSlideCard>;
+            </AcroolSlideCard>;
         });
 
 
         return <LevelMeta>
-            <BearCarousel
+            <AcroolCarousel
                 ref={carouselMetaRef}
                 data={metaData}
                 // style={{paddingTop: '100px'}}
                 height="70px"
                 slidesPerView={3}
-                isCenteredSlides={true}
+                isCenteredSlides
                 isEnableNavButton={false}
                 isEnablePagination={false}
                 isEnableMouseMove={false}
@@ -209,12 +125,12 @@ const JuejinVip = () => {
             />
 
             <LevelLine>
-                <LineBearCarousel
+                <LineAcroolCarousel
                     ref={carouselLineRef}
                     data={lineData}
                     height="auto"
                     slidesPerView={3}
-                    isCenteredSlides={true}
+                    isCenteredSlides
                     isEnableNavButton={false}
                     isEnablePagination={false}
                     isEnableMouseMove={false}
@@ -234,45 +150,42 @@ const JuejinVip = () => {
 
 
     return <CardRoot col={minmax('300px', '500px')} className="gap-0 justify-content-center">
-        <Phone>
-            <NavWrapper/>
-            <Avatar/>
-            <Wave1Wapper>
-                <Wave1>
-                    <BearCarousel
-                        style={{paddingTop: '20px'}}
+        <Avatar/>
+        <Wave1Wapper>
+            <Wave1>
+                <AcroolCarousel
+                    style={{paddingTop: '20px'}}
 
-                        ref={carouselMainRef}
-                        syncCarouselRefs={[carouselMetaRef, carouselLineRef]}
-                        onSlideChange={handleSlideChange}
-                        setController={setMainController}
-                        data={renderSlideData()}
-                        slidesPerView={1.2}
-                        spaceBetween={20}
-                        isCenteredSlides={true}
-                        isEnableNavButton={false}
-                        isEnablePagination={false}
-                        moveEffect={{
-                            moveFn: customMoveEffectFn,
-                        }}
-                    />
+                    ref={carouselMainRef}
+                    syncCarouselRefs={[carouselMetaRef, carouselLineRef]}
+                    onSlideChange={handleSlideChange}
+                    setController={setMainController}
+                    data={renderSlideData()}
+                    slidesPerView={1.2}
+                    spaceBetween={20}
+                    isCenteredSlides
+                    isEnableNavButton={false}
+                    isEnablePagination={false}
+                    moveEffect={{
+                        moveFn: customMoveEffectFn,
+                    }}
+                />
 
-                    <svg height="100%" width="100%">
-                        <clipPath id="wave10">
-                            <path d="M 0,0 356,0 356,130 0,130" stroke="black" fill="transparent"/>
-                            {/* 圓弧 */}
-                            <path d="M 0 130 C 175 155 175 155 356 130" stroke="black" fill="transparent"/>
-                            {/* 下箭頭 */}
-                            <path d="M 140 143 L 164 153 L 166 153 L 190 143" stroke="black" fill="transparent"/>
-                        </clipPath>
-                    </svg>
-                </Wave1>
-            </Wave1Wapper>
+                <svg height="100%" width="100%">
+                    <clipPath id="wave10">
+                        <path d="M 0,0 356,0 356,130 0,130" stroke="black" fill="transparent"/>
+                        {/* 圓弧 */}
+                        <path d="M 0 130 C 175 155 175 155 356 130" stroke="black" fill="transparent"/>
+                        {/* 下箭頭 */}
+                        <path d="M 140 143 L 164 153 L 166 153 L 190 143" stroke="black" fill="transparent"/>
+                    </clipPath>
+                </svg>
+            </Wave1>
+        </Wave1Wapper>
 
-            {renderMeta()}
+        {renderMeta()}
 
-            <LvAboutWrapper level={currLevel?.lv ?? 1} count={currLevel?.count ?? 1}/>
-        </Phone>
+        <LvAboutWrapper level={currLevel?.lv ?? 1} count={currLevel?.count ?? 1}/>
     </CardRoot>;
 };
 
@@ -320,10 +233,6 @@ const Line = styled.div`
   width: 356px;
   height: 100px;
   background-color: #0e86ff;
-  //position: absolute;
-  //left: 0;
-  //right: 0;
-  //bottom: 0;
   margin: auto;
 
 
@@ -331,17 +240,20 @@ const Line = styled.div`
 
 
 
-const LineBearCarousel = styled(BearCarousel)`
-    .${elClassName.slideItem}:first-child{
-        ${Line}{
-          width: 100px;
-          margin-left: 50%;
+const LineAcroolCarousel = styled(AcroolCarousel)`
+    .acrool-react-carousel__slide-item{
+        &:first-child{
+            ${Line}{
+                width: 100px;
+                margin-left: 50%;
+            }
         }
-    }
-    .${elClassName.slideItem}:last-child{
-        ${Line}{
-          width: 55px;
-          margin-right: 50%;
+
+        &:last-child{
+            ${Line}{
+                width: 55px;
+                margin-right: 50%;
+            }
         }
     }
 `;
@@ -350,58 +262,33 @@ const LineBearCarousel = styled(BearCarousel)`
 const LevelLine = styled.div`
     position: absolute;
     width: 100%;
-    //z-index: -1;
     overflow: hidden;
     transform-origin: bottom center;
     clip-path: url(#wave12);
 
-    //clip-path: ellipse(80% 20% at 50% 0%);
-    //clip-path: polygon(10% 10%,90% 10%,91.00% 63.00%,10.00% 63.00%);
     top: 12px;
-    //min-height: 250px;
-    //height: 100%;
-  padding-bottom: 100px;
-  //background-color: #000;
-   mask-image: linear-gradient(to right, transparent 0, white 30%, white 70%, transparent 100%);
-  //  background: linear-gradient(200.44deg, rgb(67, 22, 219) 13.57%, rgb(144, 118, 231) 58.38%);
-    //opacity: 0.2;
+    padding-bottom: 100px;
+    mask-image: linear-gradient(to right, transparent 0, white 30%, white 70%, transparent 100%);
 
-  > svg{
-    position: absolute;
-    z-index: -1;
-    top: 0;
-    height: 0;
-  }
-    //svg {
-    //  width: 100%;
-    //  padding: 200px;
-    //  //transform: rotate(180deg);
-    //  left: -20px;
-    //  position: absolute;
-    //}
+    > svg {
+        position: absolute;
+        z-index: -1;
+        top: 0;
+        height: 0;
+    }
+
     svg > clipPath {
-      transform: translate(-15px, 2px);
-
-      //transform: scale(.5);
+        transform: translate(-15px, 2px);
     }
 `;
 
 const Wave1 = styled.div`
-  //position: absolute;
   width: 100%;
-  //z-index: -1;
   overflow: hidden;
   transform-origin: bottom center;
   clip-path: url(#wave10);
-
-  //clip-path: ellipse(80% 20% at 50% 0%);
-  //clip-path: polygon(10% 10%,90% 10%,91.00% 63.00%,10.00% 63.00%);
   top: 0;
-  //min-height: 240px;
-  //height: 100%;
   background: rgb(9, 22, 44);
-  //opacity: 0.2;
-  //margin-bottom: 15px;
 
   > svg {
     position: absolute;
@@ -409,18 +296,6 @@ const Wave1 = styled.div`
     top: 0;
     height: 0;
   }
-
-  //svg {
-  //  width: 100%;
-  //  padding: 200px;
-  //  //transform: rotate(180deg);
-  //  left: -20px;
-  //  position: absolute;
-  //}
-  //svg > clipPath {
-  //
-  //  transform: scale(.5);
-  //}
 `;
 
 
@@ -474,8 +349,6 @@ const CardRoot = styled(Grid)`
 
 
   border-radius: 8px;
-  //background-color: #fff;
-  //height: 400px;
   width: 100%;
   position: relative;
     user-select: none;

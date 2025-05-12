@@ -1,11 +1,10 @@
-import BearCarousel, {BearSlideCard, elClassName, ICarouselState, TBearSlideItemDataList} from 'bear-react-carousel';
-import {media, defaultGridTheme, FCProps} from '@acrool/react-grid';
+import AcroolCarousel, {AcroolSlideCard, ICarouselState, TAcroolSlideItemDataList} from '@acrool/react-carousel';
+import {defaultGridTheme, FCProps,media} from '@acrool/react-grid';
 import {useState} from 'react';
 import styled from 'styled-components';
 
-
+import {data} from './data';
 import ServiceCard from './ServiceCard';
-import {data} from "./data";
 
 interface IProps extends FCProps {
 }
@@ -23,20 +22,20 @@ const ServiceCarousel = ({
 
 
     // 輪播項目
-    const bearSlideItemData: TBearSlideItemDataList = data.map((row, index) => {
+    const acroolSlideItemData: TAcroolSlideItemDataList = data.map((row, index) => {
         const isActive = carouselState?.virtual.activeIndex === index;
-        return <BearSlideCard className="d-flex align-items-stretch">
+        return <AcroolSlideCard className="d-flex align-items-stretch">
             <MyServiceCard
                 title={row.title}
                 desc={row.desc}
                 isActive={isActive}
             />
-        </BearSlideCard>;
+        </AcroolSlideCard>;
     });
 
     return <ServiceCarouselRoot className={className}>
-        <BearCarousel
-            data={bearSlideItemData}
+        <AcroolCarousel
+            data={acroolSlideItemData}
             slidesPerView={1.2}
             isCenteredSlides
             spaceBetween={20}
@@ -77,12 +76,12 @@ const ServiceCarouselRoot = styled.div`
           margin-bottom: 60px;
 
 
-          .${elClassName.slideItem}[data-active]:not(:hover){
+          .acrool-react-carousel__slide-item[data-active]:not(:hover){
                 .text{
                   color: #fff;
                 }
                 ${MyServiceCard}{
-                  :before{
+                  &:before{
                     opacity: 0;
                   }
                  }
@@ -91,7 +90,7 @@ const ServiceCarouselRoot = styled.div`
                  .text{
                   color: transparent;
                 }
-                  :before{
+                  &:before{
                     opacity: 1;
                   }
           }

@@ -1,5 +1,5 @@
-import {EDirection} from './types';
 import {getMatrixValue} from '../../utils';
+import {EDirection} from './types';
 
 
 /**

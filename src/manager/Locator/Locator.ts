@@ -1,6 +1,6 @@
+import {DragEvent} from '../../interface/DragEvent';
 import {ITouchEnd, ITouchStart} from './types';
 import {getTranslateParams} from './utils';
-import {DragEvent} from '../../interface/DragEvent';
 
 const defaultStartPosition: ITouchStart = {
     pageX: 0,

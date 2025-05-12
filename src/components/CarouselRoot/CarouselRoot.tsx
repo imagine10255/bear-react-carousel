@@ -1,8 +1,9 @@
-import {forwardRef, CSSProperties, ReactNode} from 'react';
-import elClassName from '../../el-class-name';
-import {booleanToDataAttr} from '../../utils';
 import CSS from 'csstype';
+import {CSSProperties, forwardRef, ReactNode} from 'react';
+
+import styles from '../../styles.module.scss';
 import {ISetting} from '../../types';
+import {booleanToDataAttr} from '../../utils';
 
 
 interface IProps {
@@ -27,12 +28,12 @@ const CarouselRoot = forwardRef<HTMLDivElement, IProps>(({
 
     return <div
         ref={ref}
-        data-testid="bear-carousel"
+        data-testid="acrool-carousel"
         style={{
             ...style,
             ...extendStyle,
         }}
-        className={[className, elClassName.root].join(' ').trim()}
+        className={[className, styles.root].join(' ').trim()}
         data-gpu-render={booleanToDataAttr(isEnableGpuRender)}
         data-per-view-auto={booleanToDataAttr(setting?.slidesPerView === 'auto')}
         data-mouse-move={booleanToDataAttr(setting?.isEnableMouseMove ?? false)}

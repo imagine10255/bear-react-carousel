@@ -1,12 +1,11 @@
-import {TEventMap} from './types';
-import {getNextIndex, getPrevIndex, getSlideIndex} from './utils';
-
-import Configurator from '../Configurator';
-import Stater from '../Stater';
-import Eventor from '../Eventor';
 import {logEnable} from '../../config';
 import logger from '../../logger';
+import Configurator from '../Configurator';
 import ElState from '../Elementor/ElState';
+import Eventor from '../Eventor';
+import Stater from '../Stater';
+import {TEventMap} from './types';
+import {getNextIndex, getPrevIndex, getSlideIndex} from './utils';
 
 
 class Controller {
@@ -91,10 +90,10 @@ class Controller {
         this._stater.setActiveActual(inRangeIndex, formatElement[inRangeIndex]?.inPage ?? 1);
 
         // 移動EL位置
-        const position = this._elState.getMoveDistance(inRangeIndex);
+        const {distance, height} = this._elState.getMoveDistance(inRangeIndex);
 
         this._elState
-            .transform(position, options?.isUseAnimation ?? true)
+            .transform(distance, height, options?.isUseAnimation ?? true)
             .moveEffect(slideIndex, options?.isUseAnimation ?? true)
             .syncActiveState();
 

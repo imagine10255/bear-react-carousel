@@ -1,24 +1,30 @@
-import {BearSlideCard, TBearSlideItemDataList } from "bear-react-carousel";
+import {generatorArray} from '@acrool/js-utils/array';
+import {
+    AcroolSlideCard,
+    AcroolSlideImage,
+    IAcroolSlideCardProps,
+    IAcroolSlideImageProps,
+    TAcroolSlideItemDataList} from '@acrool/react-carousel';
+
 import {asset} from '../utils';
-import {generatorArray} from "@acrool/js-utils/array";
 
 
-export const baseImage = generatorArray(14, 'cat').map((key, idx) => {
-   return {
-       id: key,
-       imageUrl: asset(`/images/sample/${idx + 1}.jpg`)
-   };
+export const baseImage = generatorArray(6, 'cat').map((key, idx) => {
+    return {
+        id: key,
+        imageUrl: asset(`/images/racing/${idx + 1}.jpg`)
+    };
 });
 
 
 
 export interface IFoodImage {
-    id: number,
-    subTitle: string,
-    title: string,
-    desc: string,
-    imageUrl: string,
-    position: 'left'|'right',
+    id: number
+    subTitle: string
+    title: string
+    desc: string
+    imageUrl: string
+    position: 'left'|'right'
 }
 export const foodImages: IFoodImage[] = [
     {
@@ -51,6 +57,28 @@ export const foodImages: IFoodImage[] = [
 
 
 
-export const bearSlideItemData1: TBearSlideItemDataList = baseImage.map(row => {
-    return <BearSlideCard key={row.id} bgUrl={row.imageUrl}/>;
+export const acroolSlideItemData1: TAcroolSlideItemDataList = baseImage.map(row => {
+    return <AcroolSlideCard key={row.id} bgUrl={row.imageUrl}/>;
 });
+
+
+export const generatorAcroolSlideCardData = (args?: IAcroolSlideCardProps): TAcroolSlideItemDataList => {
+    return baseImage.map(row => {
+        return <AcroolSlideCard
+            {...args}
+            key={row.id}
+            bgUrl={row.imageUrl}
+        />;
+    });
+};
+
+
+export const generatorAcroolSlideImageData = (args?: IAcroolSlideImageProps): TAcroolSlideItemDataList => {
+    return baseImage.map(row => {
+        return <AcroolSlideImage
+            {...args}
+            key={row.id}
+            imageUrl={row.imageUrl}
+        />;
+    });
+};

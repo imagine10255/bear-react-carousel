@@ -1,18 +1,17 @@
-import BearCarousel, {
-    BearSlideCard,
+import AcroolCarousel, {
+    AcroolSlideCard,
     Controller,
-    elClassName,
-    TBearSlideItemDataList, TOnSlideChange, ICarouselState
-} from 'bear-react-carousel';
+    ICarouselState,
+    TAcroolSlideItemDataList, TOnSlideChange} from '@acrool/react-carousel';
 import {Flex} from '@acrool/react-grid';
 import React, {useCallback, useEffect, useState} from 'react';
 import styled from 'styled-components';
 
-import VipCard from './VipCard';
 import {asset} from '../../../utils';
 import Prices from './_components/Prices';
-import {IData} from "./type";
-import {data} from "./data";
+import {data} from './data';
+import {IData} from './type';
+import VipCard from './VipCard';
 
 
 
@@ -38,9 +37,9 @@ function X99VIP({
     }, [controller]);
 
 
-    const carouselData = (): TBearSlideItemDataList|undefined => {
+    const carouselData = (): TAcroolSlideItemDataList|undefined => {
         return data.map((row, index) => {
-            return <BearSlideCard key={index}>
+            return <AcroolSlideCard key={index}>
                 <VipCard
                     level={index + 1}
                     levelName={row.name}
@@ -48,7 +47,7 @@ function X99VIP({
                     month={row.keepLevelDurationMonths}
                     isUseOld={false} // 測試渲染卡頓的圖
                 />
-            </BearSlideCard>;
+            </AcroolSlideCard>;
         });
 
     };
@@ -75,7 +74,7 @@ function X99VIP({
         </Content>
 
         <LevelWrapper>
-            <BearCarousel
+            <AcroolCarousel
                 setController={setController}
                 isCenteredSlides
                 isEnableNavButton
@@ -142,7 +141,7 @@ const W99VipRoot = styled.div`
 
     --primary-color: #3e8564;
 
-    .${elClassName.navGroup} {
+    .acrool-react-carousel__nav-group {
         justify-content: flex-end;
         position: absolute;
         right: 20px;
@@ -153,7 +152,7 @@ const W99VipRoot = styled.div`
 
     }
 
-    .${elClassName.slideItem} {
+    .acrool-react-carousel__slide-item {
         transition: filter .3s;
 
         &:not([data-active]) {
@@ -162,7 +161,7 @@ const W99VipRoot = styled.div`
     }
 
 
-    .${elClassName.navPrevButton}, .${elClassName.navNextButton} {
+    .acrool-react-carousel__nav-prev-button, .acrool-react-carousel__nav-next-button {
         position: static;
         border-radius: 7px;
         color: #4E9467;
@@ -174,11 +173,11 @@ const W99VipRoot = styled.div`
         align-items: center;
         justify-content: center;
 
-        :hover {
+        &:hover {
             background: rgba(78, 148, 103, 0.10);
 
 
-            .${elClassName.navIcon} {
+            .acrool-react-carousel__nav-icon {
                 color: var(--primary-color);
             }
         }

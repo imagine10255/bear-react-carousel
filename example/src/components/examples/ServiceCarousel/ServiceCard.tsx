@@ -1,4 +1,4 @@
-import {media, FCProps} from '@acrool/react-grid';
+import {FCProps,media} from '@acrool/react-grid';
 import styled, {css} from 'styled-components';
 
 import {asset} from '../../../utils';
@@ -27,7 +27,7 @@ const ServiceCard = ({
 }: IProps) => {
     return <ServiceCardRoot className={className} isActive={isActive}>
         <ServiceIcon>
-            <img src={asset("/images/service_carousel/union.svg")} width="50" height="50"/>
+            <img src={asset('/images/service_carousel/union.svg')} width="50" height="50"/>
         </ServiceIcon>
         <ServiceTitle className="text">{title}</ServiceTitle>
         <ServiceDesc>{desc}</ServiceDesc>
@@ -87,10 +87,10 @@ const ServiceCardRoot = styled.div<{
 
     border: 1px solid transparent;
 
-    :before{
+    &:before{
       content: '';
       position: absolute;
-      background-image: url(asset("/images/service_carousel/union.svg"));
+      background-image: url(${asset('/images/service_carousel/union.svg')});
       background-size: cover;
       background-repeat: no-repeat;
       width: 100%;
@@ -111,7 +111,7 @@ const ServiceCardRoot = styled.div<{
       color: transparent;
     }
 
-    :before{
+    &:before{
       opacity: 1;
     }
   `}

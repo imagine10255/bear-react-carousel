@@ -1,7 +1,8 @@
 import {CSSProperties} from 'react';
-import {getHeight, getMediaSetting} from './utils';
+
 import {ISetting} from '../../types';
-import {IPropsBreakpoints, GlobalWindow} from '../../types';
+import {GlobalWindow,IPropsBreakpoints} from '../../types';
+import {getHeight, getMediaSetting} from './utils';
 
 
 /**
@@ -14,7 +15,7 @@ class Configurator {
     constructor(inject: {
         breakpoints?: IPropsBreakpoints,
         defaultBreakpoint?: ISetting,
-        win?: GlobalWindow
+        win?: GlobalWindow,
     }) {
         this._window = inject.win;
         this._setting = getMediaSetting(inject);
@@ -25,8 +26,17 @@ class Configurator {
         return this._setting;
     }
 
-    get isAutoHeight(){
-        return typeof this.setting.height === 'undefined' || this.setting.height === 'auto';
+    get autoHeight(){
+        if(typeof this.setting.height === 'undefined' || this.setting.height === 'auto'){
+            return {
+                isAutoHeight: true,
+                isAutoMaxHeight: this.setting.isAutoMaxHeight ?? false,
+            };
+        }
+        return {
+            isAutoHeight: false,
+            isAutoMaxHeight: false,
+        };
     }
     get rootHeight(){
         return getHeight(this.setting.height);
@@ -36,9 +46,10 @@ class Configurator {
         const styleVars = {
             '--carousel-height': this.rootHeight?.height,
             '--carousel-aspect-ratio': this.rootHeight?.aspectRatio,
-            '--carousel-content-position': this.isAutoHeight ? 'static': 'absolute', // 保護不被項目擠開
+            '--carousel-content-position': this.autoHeight.isAutoHeight ? 'static': 'absolute', // 保護不被項目擠開
             '--carousel-space-between': `${this.setting.spaceBetween}px`,
             '--carousel-slide-width': this.setting.slidesPerView === 'auto' ? 'auto' : `${100 / this.setting.slidesPerViewActual}%`,
+            '--carousel-slide-height': this.autoHeight.isAutoMaxHeight ? 'auto': '100%',
         } as CSSProperties;
 
         return styleVars;

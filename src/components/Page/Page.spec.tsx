@@ -1,4 +1,5 @@
 import '@testing-library/jest-dom';
+
 import {render, screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
@@ -15,7 +16,7 @@ test('test page render', async () => {
     />);
 
     // ACT
-    const element = screen.getByTestId('bear-carousel-page-button');
+    const element = screen.getByTestId('acrool-carousel-page-button');
 
     await userEvent.click(element);
 

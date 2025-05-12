@@ -1,5 +1,3 @@
-import elClassName from './el-class-name';
-
 const baseStyles = [
     'color: #fff',
     'display: block',
@@ -14,7 +12,7 @@ const baseStyles = [
  * @param watchData 需要印出的訊息
  */
 function messageConsole(title: string, styles: any, watchData?: any) {
-    // eslint-disable-next-line no-console
+
     console.log(`%c ${title}`, styles, watchData);
 }
 
@@ -85,7 +83,7 @@ function danger(title: string, watchData?: any) {
 
 
 function printInText(log: any, elseInfo = true){
-    const dom = document.getElementById(elClassName.console) as HTMLTextAreaElement;
+    const dom = document.getElementById('acrool-react-carousel__console') as HTMLTextAreaElement;
     if(dom){
         const day = new Date();
         const num = [day.getMinutes(), day.getSeconds()].join('');

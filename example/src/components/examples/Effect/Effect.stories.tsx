@@ -1,6 +1,6 @@
 import type {Meta, StoryObj} from '@storybook/react';
-import Effect from "./Effect";
-import Effect2 from "./Effect2";
+
+import Effect from './Effect';
 
 
 const meta = {
@@ -15,8 +15,10 @@ const meta = {
             },
         },
     },
-    argTypes: {},
-    args: {},
+    // argTypes: {},
+    args: {
+        slidesPerView: 5,
+    },
 } satisfies Meta<typeof Effect>;
 
 export default meta;
@@ -32,9 +34,8 @@ export const Primary: Story = {
 
 
 
-export const case2: Story = {
-    args: {},
-    render: function Render(args) {
-        return <Effect2/>;
+export const withSlide1d5: Story = {
+    args: {
+        slidesPerView: 1.5,
     },
 };

@@ -1,15 +1,15 @@
 import {createRef, RefObject} from 'react';
-import {IMultiRefObject} from './types';
 
 import Configurator from '../Configurator';
 import Stater from '../Stater';
+import {IMultiRefObject} from './types';
 
 
 class Elementor {
-    _rootRef: RefObject<HTMLDivElement> = createRef();
-    _containerRef: RefObject<HTMLDivElement> = createRef();
-    _pageGroupRef: RefObject<HTMLDivElement> = createRef();
-    _navGroupRef: RefObject<HTMLDivElement> = createRef();
+    _rootRef: RefObject<HTMLDivElement|null> = createRef();
+    _containerRef: RefObject<HTMLDivElement|null> = createRef();
+    _pageGroupRef: RefObject<HTMLDivElement|null> = createRef();
+    _navGroupRef: RefObject<HTMLDivElement|null> = createRef();
     _slideItemRefs: IMultiRefObject<Array<HTMLDivElement>> = createRef();
     _pageRefs: IMultiRefObject<Array<HTMLDivElement>> = createRef();
 
