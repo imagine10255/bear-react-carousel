@@ -15,93 +15,12 @@ import LvAboutWrapper from './_components/LvAboutWrapper';
 import NavWrapper from './_components/NavWrapper';
 import Phone from './_components/Phone';
 import Progress from './_components/Progress';
+import {mockDataList} from './mockData';
 
 
 
 
 
-
-export const dataList = [
-    {
-        id: 1,
-        lv: 1,
-        value: 100,
-        desc: 'Already achieved this level',
-        progressRate: 100,
-        bg: '#728cab',
-        count: 1,
-    },
-    {
-        id: 2,
-        lv: 2,
-        desc: 'still 51 points unlock the next level',
-        value: 200,
-        progressRate: 100,
-        bg: '#66bddc',
-        count: 2,
-
-    },
-    {
-        id: 3,
-        lv: 3,
-        value: 300,
-        desc: 'still 151 points unlock the next level',
-        progressRate: 100,
-        bg: '#459dde',
-        count: 4,
-
-    },
-    {
-        id: 4,
-        lv: 4,
-        value: 400,
-        desc: 'still 251 points unlock the next level',
-        progressRate: 100,
-        bg: '#2273ec',
-        count: 6,
-    },
-    {
-        id: 5,
-        lv: 5,
-        value: 500,
-        desc: 'still 351 points unlock the next level',
-        progressRate: 9,
-        bg: '#005fbd',
-        status: 'Current',
-        count: 7,
-    },
-    {
-        id: 6,
-        lv: 6,
-        value: 500,
-        desc: 'still 451 points unlock the next level',
-        progressRate: 9,
-        bg: '#01519f',
-        status: 'Locked',
-        count: 8,
-    },
-    {
-        id: 7,
-        lv: 7,
-        value: 500,
-        desc: 'still 551 points unlock the next level',
-        progressRate: 9,
-        bg: '#003a72',
-        status: 'Locked',
-        count: 9,
-
-    },
-    {
-        id: 8,
-        lv: 8,
-        value: 500,
-        desc: 'still 651 points unlock the next level',
-        progressRate: 9,
-        bg: '#001c34',
-        status: 'Locked',
-        count: 14,
-    },
-];
 
 
 /**
@@ -139,7 +58,7 @@ const JuejinVip = () => {
 
 
     const handleSlideChange: TOnSlideChange = useCallback((state: ICarouselState) => {
-        const curr = dataList.find((row, index) => index === state.virtual.activeIndex);
+        const curr = mockDataList.find((row, index) => index === state.virtual.activeIndex);
         if(curr){
             setCurrLevel({lv: curr.lv, count: curr.count});
         }
@@ -149,7 +68,7 @@ const JuejinVip = () => {
 
     const renderSlideData = useCallback(() => {
 
-        const data: TAcroolSlideItemDataList = dataList.map(row => {
+        const data: TAcroolSlideItemDataList = mockDataList.map(row => {
             return <AcroolSlideCard key={row.id}>
                 <LevelCard col={1} style={{backgroundColor: row.bg}} className="align-content-start row-gap-5">
                     {row.status && <CurrLv>
@@ -175,7 +94,7 @@ const JuejinVip = () => {
 
 
     const renderMeta = useCallback(() => {
-        const metaData: TAcroolSlideItemDataList = dataList.map(row => {
+        const metaData: TAcroolSlideItemDataList = mockDataList.map(row => {
             return <AcroolSlideCard key={row.id}>
                 <MetaCard>
                     <MetaLv>LV.{row.lv}</MetaLv>
@@ -184,7 +103,7 @@ const JuejinVip = () => {
             </AcroolSlideCard>;
         });
 
-        const lineData: TAcroolSlideItemDataList = dataList.map(row => {
+        const lineData: TAcroolSlideItemDataList = mockDataList.map(row => {
             return <AcroolSlideCard key={row.id} className="position-relative">
                 <Line/>
             </AcroolSlideCard>;
