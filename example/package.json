@@ -13,7 +13,7 @@
     "styled-components": "6.1.17"
   },
   "dependencies": {
-    "@acrool/js-utils": "^3.2.20-alpha.2",
+    "@acrool/js-utils": "^3.2.20",
     "@acrool/react-carousel": "link:..",
     "@acrool/react-grid": "^6.0.5",
     "@acrool/react-iconsvg": "^4.2.1",
@@ -44,6 +44,6 @@
     "typescript": "^5.2.2",
     "vite": "^6.3.4",
     "vite-plugin-svgr": "^4.2.0",
-    "wrangler": "3.26.0"
+    "wrangler": "4.14.4"
   }
 }
