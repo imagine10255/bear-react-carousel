@@ -33,7 +33,6 @@ export interface IAcroolCarouselProps extends IBreakpointSetting{
   initStartPlayTime?: number
   breakpoints?: IPropsBreakpoints
   isDebug?: boolean
-  // isSlideItemMemo?: boolean
   isLazy?: boolean
   isEnableGPURender?: boolean
   renderLazyPreloader?: TRenderLazyPreloader
@@ -113,6 +112,7 @@ export interface IBreakpointSetting {
   slidesPerView: TSlidesPerView
   slidesPerGroup: number
   height?: IAspectRatio|THeightUnitSize
+  isAutoMaxHeight?: boolean
   spaceBetween?: number
   isCenteredSlides?: boolean
   isEnableLoop?: boolean

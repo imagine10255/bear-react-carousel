@@ -9,10 +9,10 @@ import {
 import {asset} from '../utils';
 
 
-export const baseImage = generatorArray(14, 'cat').map((key, idx) => {
+export const baseImage = generatorArray(6, 'cat').map((key, idx) => {
     return {
         id: key,
-        imageUrl: asset(`/images/sample/${idx + 1}.jpg`)
+        imageUrl: asset(`/images/racing/${idx + 1}.jpg`)
     };
 });
 

@@ -1,6 +1,6 @@
+import {FCChildrenProps, media} from '@acrool/react-grid';
 import React from 'react';
 import styled from 'styled-components';
-import {FCChildrenProps, media} from '@acrool/react-grid';
 
 interface IProps extends FCChildrenProps {
 

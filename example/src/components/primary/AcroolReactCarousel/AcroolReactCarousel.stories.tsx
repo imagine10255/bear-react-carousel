@@ -67,13 +67,16 @@ export const WithStaticHeight: Story = {
     }
 };
 export const WithAutoHeight: Story = {
+    parameters: {
+        layout: 'none',
+    },
     args: {
         slidesPerView: 1,
         height: 'auto',
         data: baseImage.map((row, idx) => {
-            return <AcroolSlideCard key={row.id}>
+            return <AcroolSlideCard key={row.id} style={{backgroundColor: '#ccc'}}>
                 {Array.from({length: idx+1}).map((rRow, rIdx) => {
-                    return <div key={rIdx}>{rIdx}</div>;
+                    return <div key={rIdx} style={{backgroundColor: rIdx % 2 === 1 ?'green': 'red'}}>{rIdx}</div>;
                 })}
             </AcroolSlideCard>;
         }),
@@ -83,10 +86,37 @@ export const WithAutoHeight: Story = {
             <AcroolCarousel
                 {...args}
             />
-            <div>Test</div>
+            <div>Next curr</div>
         </div>;
     },
 };
+export const WithAutoHeightWithAutoMax: Story = {
+    parameters: {
+        layout: 'none',
+    },
+    args: {
+        slidesPerView: 1,
+        height: 'auto',
+        isAutoMaxHeight: true,
+        data: baseImage.map((row, idx) => {
+            return <AcroolSlideCard key={row.id} style={{backgroundColor: '#ccc'}}>
+                {Array.from({length: idx+1}).map((rRow, rIdx) => {
+                    return <div key={rIdx} style={{backgroundColor: rIdx % 2 === 1 ?'green': 'red'}}>{rIdx}</div>;
+                })}
+            </AcroolSlideCard>;
+        }),
+    },
+    render: function Render(args) {
+        return <div>
+            <AcroolCarousel
+                {...args}
+            />
+            <div>Next curr</div>
+        </div>;
+    },
+};
+
+
 export const WithStaticHeightByNumber: Story = {
     args: {
         slidesPerView: 1,

@@ -19,6 +19,26 @@
   resolved "https://registry.yarnpkg.com/@acrool/react-grid/-/react-grid-6.0.5.tgz#3ae9602ebb01283e7e41c52e0a3236953b8797d8"
   integrity sha512-nHMCfz4zbl3lenbBTXTt26eRU/w6H2IQ7FdJGhBja1DqoeB3K5F7jv2vyEa5AHkCe4/QfEuY6zD1AW7asv1n0g==
 
+"@acrool/react-hooks@1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@acrool/react-hooks/-/react-hooks-1.1.1.tgz#1819ed4cfd43a25fe50505a5713f5a1d8f174cfe"
+  integrity sha512-rgfQvRuxwenMamcpN4ASyjxdwnvBeKTnb3vh9xVqwN2LfBYn8+Lqtegm1RHKSa8NigRcnjHIXAs2MHak1LZxlA==
+
+"@acrool/react-iconsvg@^4.2.1":
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/@acrool/react-iconsvg/-/react-iconsvg-4.2.1.tgz#ab59d5b3fc2ac8953dcad395d670fae8c89698d7"
+  integrity sha512-BoBM2v1p5+b1RV3cNsxmOcDp0eMcjQSftgerPFlQzQsG5JdpR3PHhK4jN9jL9bVtmyaNT5rVlB7pKcvm7O/3Yw==
+  dependencies:
+    clsx "^2.1.1"
+
+"@acrool/react-img@^1.1.3":
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/@acrool/react-img/-/react-img-1.1.3.tgz#bdc53183a6d183c7199b73a5b9093015f9e54389"
+  integrity sha512-rUYRCnD7bMpIuq96mI55h8r7X80NvFLbQ8jYq8Jc/pwVtFNY6w5efTn3lKxxYHMQCzWmgTEn7xrNqfLro0UScg==
+  dependencies:
+    "@acrool/react-hooks" "1.1.1"
+    clsx "2.1.1"
+
 "@adobe/css-tools@^4.4.0":
   version "4.4.2"
   resolved "https://registry.yarnpkg.com/@adobe/css-tools/-/css-tools-4.4.2.tgz#c836b1bd81e6d62cd6cdf3ee4948bcdce8ea79c8"
@@ -1765,7 +1785,7 @@ chromatic@^11.4.0:
   resolved "https://registry.yarnpkg.com/chromatic/-/chromatic-11.28.2.tgz#c0b9f59dcc323ca8bf2c2790f3c9e3d285834efb"
   integrity sha512-aCmUPcZUs4/p9zRZdMreOoO/5JqO2DiJC3md1/vRx8dlMRcmR/YI5ZbgXZcai2absVR+6hsXZ5XiPxV2sboTuQ==
 
-clsx@2.1.1:
+clsx@2.1.1, clsx@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/clsx/-/clsx-2.1.1.tgz#eed397c9fd8bd882bfb18deab7102049a2f32999"
   integrity sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==

@@ -1,10 +1,11 @@
 import type {Meta, StoryObj} from '@storybook/react';
-import Modal from "./Modal";
+
+import ScrollViewCarousel from './ScrollViewCarousel';
 
 
 const meta = {
-    title: 'Examples/Modal',
-    component: Modal,
+    title: 'Examples/ScrollViewCarousel',
+    component: ScrollViewCarousel,
     parameters: {
         layout: 'centered',
         actions: {argTypesRegex: '^on.*'},
@@ -16,7 +17,7 @@ const meta = {
     },
     argTypes: {},
     args: {},
-} satisfies Meta<typeof Modal>;
+} satisfies Meta<typeof ScrollViewCarousel>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

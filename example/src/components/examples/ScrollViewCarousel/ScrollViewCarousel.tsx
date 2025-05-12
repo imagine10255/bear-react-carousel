@@ -12,14 +12,12 @@ const sample = {
 
 
 
-function Modal() {
+function ScrollViewCarousel() {
     const [carouselState, setCarouselState] = useState<ICarouselState>();
     const [enable, setEnable] = useState<boolean>(true);
 
 
     const handleOnAnimationEnd: TOnAnimationEnd = (carouselState, elementor) => {
-        console.log('stater', carouselState.virtual.prevActiveIndex);
-
         const preIndex = carouselState.virtual.prevActiveIndex;
 
         if(elementor._slideItemRefs.current){
@@ -63,7 +61,7 @@ function Modal() {
 
 }
 
-export default Modal;
+export default ScrollViewCarousel;
 
 
 const AcroolSlideScrollViewCard = styled(AcroolSlideCard)`
@@ -95,7 +93,7 @@ const GlobalRoot = createGlobalStyle`
 
 const ModalRoot = styled.div`
     width: 100%;
-    height: 100vh;
+    max-width: 400px;
 
 
     h2 {

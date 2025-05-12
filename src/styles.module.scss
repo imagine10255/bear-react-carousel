@@ -224,6 +224,7 @@
     flex: 0 0 auto;
     width: var(--carousel-slide-width);
     max-width: 100%; /* fix auto image  size */
+    height:  var(--carousel-slide-height);
     padding-left: calc(var(--carousel-space-between) / 2);
     padding-right: calc(var(--carousel-space-between) / 2);
 }
@@ -282,6 +283,7 @@
 .container{
     position: relative;
     display: flex;
+    align-items: flex-start;
     flex-direction: row;
     height: inherit;
     transition-timing-function: ease;

@@ -179,7 +179,7 @@ class Dragger {
             const {startPosition} = this._locator;
             const translateX = calcMoveTranslatePx(startPosition.x, event.clientX);
             this._elState
-                .transform(translateX, false);
+                .transform(translateX);
 
             // 設定移動 與 結束事件
             document.addEventListener('pointermove', this._onWebMouseMove, false);

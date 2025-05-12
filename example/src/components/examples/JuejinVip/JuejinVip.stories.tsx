@@ -1,6 +1,7 @@
 import type {Meta, StoryObj} from '@storybook/react';
 
 import JuejinVip from './JuejinVip';
+import Phone, {NavWrapper} from '@/components/atoms/Phone';
 
 
 const meta = {
@@ -14,6 +15,12 @@ const meta = {
                 component: 'Carousel item component'
             },
         },
+    },
+    render: function Render(args) {
+        return <Phone>
+            <NavWrapper/>
+            <JuejinVip/>
+        </Phone>;
     },
     argTypes: {},
     args: {},
