@@ -10,10 +10,8 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import styled from 'styled-components';
 
 import Avatar from './_components/Avatar';
-import Icons from './_components/Icons';
+import Icons from '../../atoms/Phone/Icons';
 import LvAboutWrapper from './_components/LvAboutWrapper';
-import NavWrapper from './_components/NavWrapper';
-import Phone from './_components/Phone';
 import Progress from './_components/Progress';
 import {mockDataList} from './mockData';
 
@@ -152,45 +150,42 @@ const JuejinVip = () => {
 
 
     return <CardRoot col={minmax('300px', '500px')} className="gap-0 justify-content-center">
-        <Phone>
-            <NavWrapper/>
-            <Avatar/>
-            <Wave1Wapper>
-                <Wave1>
-                    <AcroolCarousel
-                        style={{paddingTop: '20px'}}
+        <Avatar/>
+        <Wave1Wapper>
+            <Wave1>
+                <AcroolCarousel
+                    style={{paddingTop: '20px'}}
 
-                        ref={carouselMainRef}
-                        syncCarouselRefs={[carouselMetaRef, carouselLineRef]}
-                        onSlideChange={handleSlideChange}
-                        setController={setMainController}
-                        data={renderSlideData()}
-                        slidesPerView={1.2}
-                        spaceBetween={20}
-                        isCenteredSlides
-                        isEnableNavButton={false}
-                        isEnablePagination={false}
-                        moveEffect={{
-                            moveFn: customMoveEffectFn,
-                        }}
-                    />
+                    ref={carouselMainRef}
+                    syncCarouselRefs={[carouselMetaRef, carouselLineRef]}
+                    onSlideChange={handleSlideChange}
+                    setController={setMainController}
+                    data={renderSlideData()}
+                    slidesPerView={1.2}
+                    spaceBetween={20}
+                    isCenteredSlides
+                    isEnableNavButton={false}
+                    isEnablePagination={false}
+                    moveEffect={{
+                        moveFn: customMoveEffectFn,
+                    }}
+                />
 
-                    <svg height="100%" width="100%">
-                        <clipPath id="wave10">
-                            <path d="M 0,0 356,0 356,130 0,130" stroke="black" fill="transparent"/>
-                            {/* 圓弧 */}
-                            <path d="M 0 130 C 175 155 175 155 356 130" stroke="black" fill="transparent"/>
-                            {/* 下箭頭 */}
-                            <path d="M 140 143 L 164 153 L 166 153 L 190 143" stroke="black" fill="transparent"/>
-                        </clipPath>
-                    </svg>
-                </Wave1>
-            </Wave1Wapper>
+                <svg height="100%" width="100%">
+                    <clipPath id="wave10">
+                        <path d="M 0,0 356,0 356,130 0,130" stroke="black" fill="transparent"/>
+                        {/* 圓弧 */}
+                        <path d="M 0 130 C 175 155 175 155 356 130" stroke="black" fill="transparent"/>
+                        {/* 下箭頭 */}
+                        <path d="M 140 143 L 164 153 L 166 153 L 190 143" stroke="black" fill="transparent"/>
+                    </clipPath>
+                </svg>
+            </Wave1>
+        </Wave1Wapper>
 
-            {renderMeta()}
+        {renderMeta()}
 
-            <LvAboutWrapper level={currLevel?.lv ?? 1} count={currLevel?.count ?? 1}/>
-        </Phone>
+        <LvAboutWrapper level={currLevel?.lv ?? 1} count={currLevel?.count ?? 1}/>
     </CardRoot>;
 };
 

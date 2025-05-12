@@ -1,10 +1,13 @@
 import './reset.css';
 import '@acrool/react-grid/dist/index.css';
 import '@acrool/react-carousel/dist/index.css';
+import '@acrool/react-img/dist/index.css';
+import '@acrool/react-iconsvg/dist/index.css';
 
 import {GridThemeProvider} from '@acrool/react-grid';
 import type {Preview} from '@storybook/react';
 import {themes} from '@storybook/theming';
+import {SvgSymbol} from "../src/library/acrool-react-icon";
 
 
 const preview: Preview = {
@@ -24,6 +27,7 @@ const preview: Preview = {
         (Story) => (
             <GridThemeProvider>
                 <Story />
+                {SvgSymbol}
             </GridThemeProvider>
         ),
     ],

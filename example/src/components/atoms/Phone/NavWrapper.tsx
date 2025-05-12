@@ -1,7 +1,8 @@
-import styled from 'styled-components';
 import {Container, Grid} from '@acrool/react-grid';
-import Icons from './Icons';
 import React from 'react';
+import styled from 'styled-components';
+
+import Icons from './Icons';
 
 
 const NavWrapper = () => {
