@@ -19,7 +19,7 @@ body:
         Please copy and paste any relevant log output.
         Add the full stack trace if available.
         If possible, run the failing task with `--stacktrace` flag.
-        
+
         *This will be automatically formatted into code, so there is no need for backticks.*
       render: shell
 
@@ -34,16 +34,16 @@ body:
   - type: input
     id: version
     attributes:
-      label: Gradle IntelliJ Plugin version
-      placeholder: 1.16.0
+      label: Plugin version
+      placeholder: 5.3.1
     validations:
       required: true
 
   - type: input
-    id: gradle
+    id: react
     attributes:
-      label: Gradle version
-      placeholder: 8.2.1
+      label: React version
+      placeholder: 19.1.0
     validations:
       required: true
 
