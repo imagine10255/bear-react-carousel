@@ -1,38 +1,63 @@
----
 name: Bug report
-about: Create a report to help us improve
-title: ''
-labels: ''
-assignees: ''
+description: Create a report to help us improve
+labels: ["bug"]
+body:
 
----
+- type: textarea
+  id: issue
+  attributes:
+  label: What happened?
+  description: A clear and concise description of what the bug is.
+  validations:
+  required: true
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+- type: textarea
+  id: logs
+  attributes:
+  label: Relevant log output or stack trace
+  description: |
+  Please copy and paste any relevant log output.
+  Add the full stack trace if available.
+  If possible, run the failing task with `--stacktrace` flag.
 
-**To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+      *This will be automatically formatted into code, so there is no need for backticks.*
+  render: shell
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+- type: textarea
+  id: steps
+  attributes:
+  label: Steps to reproduce
+  description: Steps to reproduce the behavior – provide your build configuration.
+  validations:
+  required: true
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+- type: input
+  id: version
+  attributes:
+  label: Plugin version
+  placeholder: 1.16.0
+  validations:
+  required: true
 
-**Desktop (please complete the following information):**
- - OS: [e.g. iOS]
- - Browser [e.g. chrome, safari]
- - Version [e.g. 22]
+- type: input
+  id: gradle
+  attributes:
+  label: React version
+  placeholder: 19.1.0
+  validations:
+  required: true
 
-**Smartphone (please complete the following information):**
- - Device: [e.g. iPhone6]
- - OS: [e.g. iOS8.1]
- - Browser [e.g. stock browser, safari]
- - Version [e.g. 22]
+- type: dropdown
+  id: os
+  attributes:
+  label: Operating System
+  options:
+  - macOS
+  - Linux
+  - Windows
 
-**Additional context**
-Add any other context about the problem here.
+- type: input
+  id: url
+  attributes:
+  label: Link to build, i.e. failing GitHub Action job
+  placeholder: https://github.com/username/project/actions/runs/1234567890
