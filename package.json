@@ -72,6 +72,7 @@
     "@vitejs/plugin-react-swc": "^3.0.0",
     "cz-conventional-changelog": "3.3.0",
     "cz-customizable": "6.6.0",
+    "cz-git": "^1.11.1",
     "eslint": "^9.19.0",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-simple-import-sort": "^10.0.0",
