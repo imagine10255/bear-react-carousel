@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@acrool/js-utils@^3.2.20":
-  version "3.2.20"
-  resolved "https://registry.yarnpkg.com/@acrool/js-utils/-/js-utils-3.2.20.tgz#924d93c1f8724369728085a169bffca678639c1c"
-  integrity sha512-lFoi6digm9Czj76tEZLK6surLjwQrp3ZXk5oEcVtrrEutks6TSQa29zbyZQkdhNXD3hL+C4rVDre6/4d+p2nhQ==
+"@acrool/js-utils@^3.2.22":
+  version "3.2.22"
+  resolved "https://registry.yarnpkg.com/@acrool/js-utils/-/js-utils-3.2.22.tgz#ce460d0e789fc9d721d63c23d8c34c0ed93c3f66"
+  integrity sha512-CU/DxGcsuMFSNq4BDoDRS7W6DUVd8pD2JI1yVIYRRvGCIXpW8M/dXGAdIEtOBfZ3Akp//yFTrueGnPfyNRbIqQ==
   dependencies:
     big.js "^7.0.1"
     dayjs "^1.x"
@@ -14,10 +14,10 @@
   version "0.0.0"
   uid ""
 
-"@acrool/react-grid@^6.0.5":
-  version "6.0.5"
-  resolved "https://registry.yarnpkg.com/@acrool/react-grid/-/react-grid-6.0.5.tgz#3ae9602ebb01283e7e41c52e0a3236953b8797d8"
-  integrity sha512-nHMCfz4zbl3lenbBTXTt26eRU/w6H2IQ7FdJGhBja1DqoeB3K5F7jv2vyEa5AHkCe4/QfEuY6zD1AW7asv1n0g==
+"@acrool/react-grid@^6.0.7":
+  version "6.0.7"
+  resolved "https://registry.yarnpkg.com/@acrool/react-grid/-/react-grid-6.0.7.tgz#a01b04cca50b618e583a586850550a37784b1915"
+  integrity sha512-1qLfUJnwOmyRK6olIdDsHSkPjuq0wJ6sQPLHDwLteAKbP02XcM45IRE73xNFgaNhh+Zqfa+FH/bB8YB9FDlsNA==
 
 "@acrool/react-hooks@1.1.1":
   version "1.1.1"
