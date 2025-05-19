@@ -8,5 +8,6 @@ export interface IBallCategoryCarouselData {
 }
 
 export interface IBallCategoryCarouselProps {
+    data: IBallCategoryCarouselData[]
 }
 

@@ -5,7 +5,6 @@ import {Img} from '@acrool/react-img';
 import {useEffect, useState} from 'react';
 import styled, {css} from 'styled-components';
 
-import {mockData} from './mockData';
 import {IBallCategoryCarouselData, IBallCategoryCarouselProps} from './types';
 
 
@@ -17,37 +16,31 @@ import {IBallCategoryCarouselData, IBallCategoryCarouselProps} from './types';
  * Component / Molecules @ Live Event 輪播
  */
 const CategoryPanel = ({
+    data,
 }: IBallCategoryCarouselProps) => {
     const [activeId, onSetActiveId] = useState<string|null>(null);
     const [controller, setController] = useState<Controller|null>(null);
-    const [previewData, setPreviewData] = useState<IBallCategoryCarouselData[]|undefined>(undefined);
-    const [startIndex, setStartIndex] = useState<number>(0);
+    const [previewData, setPreviewData] = useState<IBallCategoryCarouselData[]|undefined>(data?.slice(0, 6));
 
 
     useEffect(() => {
-        setTimeout(() => {
-            setPreviewData(mockData.slice(0, 6));
-        },1);
-    }, []);
+        setPreviewData(data.slice(0, 6));
+    }, [data]);
 
 
 
 
     const handleOnClick = (id: string) => {
-        const currIndex = mockData.findIndex(row => row.id === id);
+        const currIndex = data.findIndex(row => row.id === id);
         if(currIndex === -1) return;
 
 
         const pageIndex = Math.floor(currIndex / 6);
         const startIndex = pageIndex * 6;
         const endIndex = startIndex + 6;
-        const filterData = mockData.slice(startIndex, endIndex);
+        const filterData = data.slice(startIndex, endIndex);
 
         setPreviewData(filterData);
-        setStartIndex(startIndex);
-        // setTimeout(() => {
-        // }, 1);
-
         onSetActiveId(id);
         controller?.slideToPage(1);
 
@@ -55,36 +48,37 @@ const CategoryPanel = ({
 
 
     const getCarouselData = (): TAcroolSlideItemDataList => {
-        const dataPaginate = mockData ? arraySplit(mockData,18) : undefined;
+        const dataPaginate = data ? arraySplit(data,18) : undefined;
 
 
-        const dataList2 = [
-            <AcroolSlideCard key={`preview_${startIndex}`}>
-                <Row className="flex-nowrap g-2">
-                    {
-                        previewData
-                            ?.map(row => {
-                                const isActive = row.id === activeId;
+        return [
+            ...(previewData ? [
+                <AcroolSlideCard key={'preview_'}>
+                    <Row className="flex-nowrap g-2">
+                        {
+                            previewData
+                                ?.map(row => {
+                                    const isActive = row.id === activeId;
 
-                                return <Col col={12/6}
-                                    key={`preview_col_${row.id}`}
-                                >
-                                    <Card $active={row.id === activeId} onClick={() => {
-                                        onSetActiveId(row.id);
-                                    }}>
-                                        <div className="position-relative">
-                                            <Img src={isActive ? row.activePath: row.path} width={28} height={28} className="mt-1"/>
-                                            <Count>{row.count}</Count>
-                                        </div>
-                                        <Name className="text-overflow">{row.name}</Name>
-                                        <ActiveLine/>
-                                    </Card>
-                                </Col>;
-                            })
-                    }
-                </Row>
+                                    return <Col col={12/6}
+                                        key={`preview_col_${row.id}`}
+                                    >
+                                        <Card $active={row.id === activeId} onClick={() => {
+                                            onSetActiveId(row.id);
+                                        }}>
+                                            <div className="position-relative">
+                                                <Img src={isActive ? row.activePath: row.path} width={28} height={28} className="mt-1"/>
+                                                <Count>{row.count}</Count>
+                                            </div>
+                                            <Name className="text-overflow">{row.name}</Name>
+                                            <ActiveLine/>
+                                        </Card>
+                                    </Col>;
+                                })
+                        }
+                    </Row>
 
-            </AcroolSlideCard>,
+                </AcroolSlideCard>]: []),
             ...dataPaginate?.map((page, idx) => {
                 return <AcroolSlideCard key={`real_${idx}`}>
                     <Row>
@@ -114,9 +108,6 @@ const CategoryPanel = ({
 
             }) ?? []
         ];
-
-        return dataList2;
-
     };
 
 
@@ -223,7 +214,7 @@ const Card = styled.div<{
 
 const CustomAcroolCarousel = styled(AcroolCarousel)`
     .acrool-react-carousel__container{
-        //min-height: 64px;
+        height: 64px;
     }
 `;
 

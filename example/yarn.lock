@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@acrool/js-utils@^3.2.23-alpha.0":
-  version "3.2.23-alpha.0"
-  resolved "https://registry.yarnpkg.com/@acrool/js-utils/-/js-utils-3.2.23-alpha.0.tgz#8cf9417b788f607cd124b23e4d0cc83fb679b6ab"
-  integrity sha512-cssAwTZauip01C2q+MHBuNRVhpGDspI155+VMlNho6dOUiHGxPrPEqvX6KHFpyJpsOVdp2rwh9B4zVj679RwpA==
+"@acrool/js-utils@^3.2.23":
+  version "3.2.23"
+  resolved "https://registry.yarnpkg.com/@acrool/js-utils/-/js-utils-3.2.23.tgz#43bbac5d92cf3318167ba246b57d0a52bfa382ac"
+  integrity sha512-Yy/yXg5+Q8VZC6CFLtJUrUhZltVzcIXAooAWhLJ9ONvWT+AEcy4DDBkv3YZUblOj5vNhE4s4RWt/ukWOB9aEIQ==
   dependencies:
     big.js "^7.0.1"
     dayjs "^1.x"

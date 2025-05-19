@@ -6,6 +6,7 @@ import Phone, {NavWrapper} from '@/components/atoms/Phone';
 import Icon, {EIconCode} from '@/library/acrool-react-icon';
 
 import CategoryPanel from './_components/CategoryPanel';
+import {mockData} from './_components/mockData';
 
 
 const meta = {
@@ -19,6 +20,9 @@ const meta = {
                 component: 'Carousel item component'
             },
         },
+    },
+    args: {
+        data: mockData,
     },
     render: function Render(args) {
         return <Phone>
@@ -49,9 +53,6 @@ const meta = {
 
 
         </Phone>;
-    },
-    // argTypes: {},
-    args: {
     },
 } satisfies Meta<typeof CategoryPanel>;
 
