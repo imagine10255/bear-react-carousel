@@ -1,10 +1,9 @@
+import {arraySplit} from '@acrool/js-utils/array';
 import AcroolCarousel, {AcroolSlideCard, Controller, TAcroolSlideItemDataList} from '@acrool/react-carousel';
 import {Col, Row} from '@acrool/react-grid';
 import {Img} from '@acrool/react-img';
 import {useEffect, useState} from 'react';
 import styled, {css} from 'styled-components';
-
-import {BaseButton} from '@/components/atoms/Button';
 
 import {mockData} from './mockData';
 import {IBallCategoryCarouselData, IBallCategoryCarouselProps} from './types';
@@ -22,6 +21,7 @@ const CategoryPanel = ({
     const [activeId, onSetActiveId] = useState<string|null>(null);
     const [controller, setController] = useState<Controller|null>(null);
     const [previewData, setPreviewData] = useState<IBallCategoryCarouselData[]|undefined>(undefined);
+    const [startIndex, setStartIndex] = useState<number>(0);
 
 
     useEffect(() => {
@@ -44,6 +44,7 @@ const CategoryPanel = ({
         const filterData = mockData.slice(startIndex, endIndex);
 
         setPreviewData(filterData);
+        setStartIndex(startIndex);
         // setTimeout(() => {
         // }, 1);
 
@@ -54,45 +55,45 @@ const CategoryPanel = ({
 
 
     const getCarouselData = (): TAcroolSlideItemDataList => {
-        const dataList = [];
+        const dataPaginate = mockData ? arraySplit(mockData,18) : undefined;
 
-        if(previewData){
-            dataList.push(
-                <AcroolSlideCard key="preview">
-                    <Row className="flex-nowrap g-2">
-                        {
-                            previewData
-                                ?.map(row => {
-                                    const isActive = row.id === activeId;
 
-                                    return <Col col={12/6} key={`preview_sport_${row.id}`}>
-                                        <Card $active={row.id === activeId} onClick={() => {
-                                            onSetActiveId(row.id);
-                                        }}>
-                                            <div className="position-relative">
-                                                <Img src={isActive ? row.activePath: row.path} width={28} height={28} className="mt-1"/>
-                                                <Count>{row.count}</Count>
-                                            </div>
-                                            <Name className="text-overflow">{row.name}</Name>
-                                            <ActiveLine/>
-                                        </Card>
-                                    </Col>;
-                                })
-                        }
-                    </Row>
-
-                </AcroolSlideCard>
-            );
-
-            dataList.push(<AcroolSlideCard>
-                <Row className="g-0">
+        const dataList2 = [
+            <AcroolSlideCard key={`preview_${startIndex}`}>
+                <Row className="flex-nowrap g-2">
                     {
-                        mockData?.map(row => {
+                        previewData
+                            ?.map(row => {
+                                const isActive = row.id === activeId;
+
+                                return <Col col={12/6}
+                                    key={`preview_col_${row.id}`}
+                                >
+                                    <Card $active={row.id === activeId} onClick={() => {
+                                        onSetActiveId(row.id);
+                                    }}>
+                                        <div className="position-relative">
+                                            <Img src={isActive ? row.activePath: row.path} width={28} height={28} className="mt-1"/>
+                                            <Count>{row.count}</Count>
+                                        </div>
+                                        <Name className="text-overflow">{row.name}</Name>
+                                        <ActiveLine/>
+                                    </Card>
+                                </Col>;
+                            })
+                    }
+                </Row>
+
+            </AcroolSlideCard>,
+            ...dataPaginate?.map((page, idx) => {
+                return <AcroolSlideCard key={`real_${idx}`}>
+                    <Row>
+                        {page?.map(row => {
                             const isActive = row.id === activeId;
 
                             return <Col
                                 col={12/6}
-                                key={`top_sport_${row.id}`}
+                                key={`real_col_${row.id}`}
                             >
                                 <Card $active={row.id === activeId}
                                     onClick={() => {
@@ -106,15 +107,15 @@ const CategoryPanel = ({
                                     <ActiveLine/>
                                 </Card>
                             </Col>;
-                        })
-                    }
-                </Row>
-            </AcroolSlideCard>);
-        }
+                        }) ?? []}
+                    </Row>
 
+                </AcroolSlideCard>;
 
+            }) ?? []
+        ];
 
-        return dataList;
+        return dataList2;
 
     };
 
@@ -221,6 +222,9 @@ const Card = styled.div<{
 
 
 const CustomAcroolCarousel = styled(AcroolCarousel)`
+    .acrool-react-carousel__container{
+        //min-height: 64px;
+    }
 `;
 
 const CarouselWrapper = styled.div`

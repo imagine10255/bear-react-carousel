@@ -56,6 +56,23 @@ class Controller {
         }
     };
 
+    /**
+     * 僅用於 autoHeight 設定時，初始重設高度
+     */
+    resetHeight = (): void => {
+        if (this._configurator.setting.isDebug && this._configurator.setting.isAutoMaxHeight && logEnable.controller.onResetHeight) {
+            logger.printInText('[Controller.resetHeight]');
+        }
+
+        const {virtual, formatElement} = this._stater;
+
+        const {height} = this._elState.getMoveDistance(formatElement[virtual.activeIndex].matchIndex);
+
+        this._elState
+            .transform({height}, false)
+            .syncActiveState();
+    };
+
 
     /**
      * 包含 Clone 的 Index
@@ -93,7 +110,7 @@ class Controller {
         const {distance, height} = this._elState.getMoveDistance(inRangeIndex);
 
         this._elState
-            .transform(distance, height, options?.isUseAnimation ?? true)
+            .transform({translateX: distance, height}, options?.isUseAnimation ?? true)
             .moveEffect(slideIndex, options?.isUseAnimation ?? true)
             .syncActiveState();
 

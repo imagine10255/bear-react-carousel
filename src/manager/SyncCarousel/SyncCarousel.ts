@@ -30,7 +30,7 @@ class SyncCarousel {
             // 將進度比例換算成 movePx
             const moveX = this._elementor.getPercentageToMovePx(percentage);
             this._elementor
-                .transform(moveX)
+                .transform({translateX: moveX})
                 .moveEffect(percentage);
         }
     };

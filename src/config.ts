@@ -17,6 +17,7 @@ export const logEnable = {
     },
     controller: {
         onSlideResetToMatchIndex: true,
+        onResetHeight: true,
     },
     autoPlayer: {
         play: true,

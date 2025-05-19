@@ -224,13 +224,13 @@ class AcroolCarousel extends React.Component<IAcroolCarouselProps, IState> {
         if(windowSize !== nextWindowSize ||
             isPropsDiff(otherProps, otherNextProps, ['moveEffect'])
         ){
-            const activeIndex = this._stater?.source.activeIndex;
             this._configurator?.init({
                 defaultBreakpoint: getSetting(nextProps),
                 breakpoints: nextProps.breakpoints,
             });
             this._stater?.reset(nextProps.data);
             setTimeout(() => {
+                const activeIndex = this._stater?.source.activeIndex;
                 this._controller?.slideToSourceIndex(activeIndex ?? 0, {isUseAnimation: false});
             }, 0);
 
@@ -240,6 +240,11 @@ class AcroolCarousel extends React.Component<IAcroolCarouselProps, IState> {
         // 只需要更新資料內容的部分 (不進行資料深比對)
         if(data !== nextData){
             this._stater?.updateData(nextProps.data);
+
+            setTimeout(() => {
+                this._controller?.resetHeight();
+            }, 0);
+
             return true;
         }
 

@@ -174,15 +174,26 @@ class ElState {
 
 
 
-    transform(translateX: number, height?: number, isUseAnimation = false){
+    transform(args: {translateX?: number, height?: number}, isUseAnimation = false){
         if(this._elementor.containerEl){
-            this._elementor.containerEl.style.transform = `translate(${translateX}px, 0px)`;
+            let isModify = false;
+            if(typeof args.translateX !== undefined){
+                this._elementor.containerEl.style.transform = `translate(${args.translateX}px, 0px)`;
+                isModify = true;
+            }
 
-            this._elementor.containerEl.style.height = this._configurator.autoHeight.isAutoMaxHeight ? `${height}px`: '';
+            if(typeof args.height !== undefined) {
+                this._elementor.containerEl.style.height = this._configurator.autoHeight.isAutoMaxHeight ? `${args.height}px` : '';
+                isModify = true;
+            }
 
-            this._elementor.containerEl.style.transitionDuration = isUseAnimation
-                ? `${this._configurator.setting.moveTime}ms`
-                : '0ms';
+
+            if(isModify){
+                this._elementor.containerEl.style.transitionDuration = isUseAnimation
+                    ? `${this._configurator.setting.moveTime}ms`
+                    : '0ms';
+            }
+
         }
 
         return this;
